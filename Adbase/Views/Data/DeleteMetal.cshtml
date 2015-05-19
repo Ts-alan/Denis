@@ -1,0 +1,87 @@
+﻿@model Sciencecom.Models.MetalConstruction
+@using Microsoft.AspNet.Identity.EntityFramework
+@using Microsoft.AspNet.Identity
+@using Sciencecom.Models
+@{
+    ViewBag.Title = "Удаление констуркции";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Удаление конструкции</h2>
+@{
+    var um = new UserManager<ApplicationUser>
+        (new UserStore<ApplicationUser>
+            (new ApplicationDbContext()));
+    ApplicationUser user = um.FindByName(User.Identity.GetUserName());
+    string role = user.Roles.Select(m => m.Role.Name).First().ToString();
+    if ( ((role == "Admin") || (role == "ChiefEditAll") || (role == "SupplierEditAll")) ||
+          (((role == "ChiefEditOwn") || (role == "SupplierEditOwn")) && ((user.Company == Model.OwnerWhoAdded.Name) 
+          || (Model.OwnerWhoAdded.Name == "Неизвестно"))) )
+    { 
+        <h3>Вы уверены, что хотите удалить эту конструкцию?</h3>
+        <div>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Owner.Name)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Owner.Name)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Street1)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Street1)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Street2)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Street2)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.FromStreet)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.FromStreet)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Support)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Support)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.StartDate)
+                </dt>
+
+                <dd>
+                    @{
+                        string date = Model.StartDate.Date.ToString();
+                        date = date.Replace(" 0:00:00", "");
+                       @date;
+                    }
+                </dd>
+            </dl>
+
+            @using (Html.BeginForm())
+            {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Да, удалить" class="btn btn-danger" /> |
+                @Html.ActionLink("Вернуться к списку", "Metal")
+            </div>
+            }
+        </div>
+   }
+}

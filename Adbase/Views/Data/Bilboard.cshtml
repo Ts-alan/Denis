@@ -1,0 +1,20 @@
+﻿@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.EntityFramework
+@using Sciencecom.Models
+
+@{
+    ViewBag.Title = "Bilboard";
+    var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+    ApplicationUser user = um.FindByName(User.Identity.GetUserName());
+    string role = user.Roles.Select(m => m.Role.Name).First().ToString();
+}
+
+<h2>Билбордер</h2>
+@{
+    if (role != "ReadOnly")
+    {
+        <p>
+            <b>@Html.ActionLink("+ Добавить новый билбодер", "CreateBilboard", new { type = "Metal" })</b>
+        </p>
+    }
+}

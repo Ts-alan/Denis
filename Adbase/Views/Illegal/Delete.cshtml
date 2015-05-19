@@ -1,0 +1,21 @@
+﻿@model Sciencecom.Models.IllegalConstruction
+
+@{
+    ViewBag.Title = "Удаление конструкции";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Удаление конструкции</h2>
+
+<h3>Вы уверены, что хотите удалить конструкцию?</h3>
+<div>
+    <hr />
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Удалить" class="btn btn-danger" /> |
+            @Html.ActionLink("Вернуться к списку", "Index")
+        </div>
+    }
+</div>

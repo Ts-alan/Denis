@@ -1,0 +1,161 @@
+﻿@using Sciencecom.Models;
+@using Microsoft.AspNet.Identity;
+@using Microsoft.AspNet.Identity.EntityFramework
+@using Microsoft.AspNet.Identity
+@using Sciencecom.Models
+@using Enums.Selectors;
+@using Sciencecom.Models.Users
+@{
+    ViewBag.Title = "Управление учетными записями";
+    Entities usersContext = new Entities();
+    var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+    ApplicationUser user = um.FindByName(User.Identity.GetUserName());
+    string role = user.Roles.Select(m => m.Role.Name).First().ToString();
+    string message = "Ваш уровень доступа: " + RolesList.Roles.FirstOrDefault(f => f.StoredValue == role).DisplayValue;
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+<p>@message</p>
+
+
+@if ((role != "ReadOnly") && (role != "SupplierEditAll") && (role != "SupplierEditOwn") && (role != "IllegalEdit"))
+{
+    @Html.ActionLink("+ Добавить пользователя", "Register")<br />
+    @Html.ActionLink("Компании", "Index", "Owners")<br />
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table-striped" cellpadding="5">
+                <tr>
+                    <th>
+                        Имя
+                    </th>
+                    <th>
+                        Компания
+                    </th>
+                    <th>
+                        Права
+                    </th>
+                    <th>
+                        Права доступны до
+                    </th>
+
+                    <th>
+                        Назначить права
+                    </th>
+                    <th>
+                        До
+                    </th>
+                    <th>
+                        Действие
+                    </th>
+                </tr>
+                @{
+    foreach (var item in usersContext.AspNetUsers)
+    {
+        ApplicationUser userFromDataBase = um.FindByName(item.UserName);
+        string roleOfUserFromDataBase = userFromDataBase.Roles.Select(m => m.Role.Name).First().ToString();
+
+        if ((role == "ChiefEditAll") && ((roleOfUserFromDataBase == "Admin") || (roleOfUserFromDataBase == "ChiefEditAll")
+            || (roleOfUserFromDataBase == "ChiefEditOwn") || (item.Company != user.Company))) { continue; }
+
+        if ((role == "ChiefEditOwn") && ((roleOfUserFromDataBase == "Admin") || (roleOfUserFromDataBase == "ChiefEditAll")
+           || (roleOfUserFromDataBase == "ChiefEditOwn") || (roleOfUserFromDataBase == "SupplierEditAll")
+           || (item.Company != user.Company))) { continue; }
+        using (Html.BeginForm("ChangeUser", "Account", FormMethod.Post, null))
+        {
+            @Html.HiddenFor(model => item.UserName)
+                    <tr>
+                        <td>
+                            <input type="text" value=@item.UserName name="userName" readonly="readonly" />
+                        </td>
+                        <td>
+                            @item.Company
+                        </td>
+                        <td>
+                            @Html.Label(RolesList.Roles.FirstOrDefault(f => f.StoredValue == roleOfUserFromDataBase).DisplayValue)
+                        </td>
+                        <td>
+                            @{
+                                var date = usersContext.DatesOfRoles.Single(m => m.IdUser == item.Id).Date;
+                                var dateStr = date.Year > 2099 || date.Year < 1970 ? "Не ограничено" : date.ToShortDateString();
+                                @dateStr
+                            }
+                        </td>
+                        <td>
+                            @if (user.UserName != item.UserName)
+                            {
+                                if (role == "Admin")
+                                {
+                                    @Html.DropDownList("newRole", new SelectList(RolesList.Roles.Select(s => s.DisplayValue)))
+                                }
+                                if (role == "ChiefEditAll")
+                                {
+                                    @Html.DropDownList("newRole", new SelectList(new[]
+                                      {"Только чтение",
+                                       "Сотрудник",
+                                       "Сотрудник S"}))
+                                }
+                                if (role == "ChiefEditOwn")
+                                {
+                                    @Html.DropDownList("newRole", new SelectList(new[]
+                                      {"Только чтение",
+                                       "Сотрудник", }))
+                                }
+                            }
+                        </td>
+                        <td>
+                            @if (user.UserName != item.UserName)
+                            {
+                                @Html.DropDownList("dateForNewRole", new SelectList(new[]
+                              {
+                                 "Не ограничено",
+                                 "30 дней",
+                                 "10 дней",
+                                 "5 дней",
+                                 "1 день",
+                             }))
+                            }
+                        </td>
+                        <td>
+                            @if (user.UserName != item.UserName)
+                            {
+                                <input type="submit" value="Сохранить" class="btn btn-info" />
+                                string deleteHref = "DeleteUser/" + item.UserName;
+                                <a href=@deleteHref class="btn btn-danger">Удалить</a>
+                            }
+                        </td>
+                    </tr>
+        }
+    }
+                }
+            </table>
+        </div>
+    </div>
+
+
+}
+<div class="row">
+    <div class="col-md-12">
+        @if (ViewBag.HasLocalPassword)
+        {
+            @Html.Partial("_ChangePasswordPartial")
+        }
+        else
+        {
+            @Html.Partial("_SetPasswordPartial")
+        }
+
+        @*<section id="externalLogins">
+                @Html.Action("RemoveAccountList")
+                @Html.Partial("_ExternalLoginsListPartial", new { Action = "LinkLogin", ReturnUrl = ViewBag.ReturnUrl })
+            </section>*@
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<footer>
+    <p>&copy; @DateTime.Now.Year – <a href="http://scom.by" target="_blank">ООО "Сайнском"</a> @*| @Html.ActionLink("Лицензионное соглашение", "License", "Home")*@</p>
+</footer>
