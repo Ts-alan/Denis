@@ -1,9 +1,9 @@
-п»ї@model Sciencecom.Models.MetalConstruction
+@model Sciencecom.Models.MetalConstruction
 @using Microsoft.AspNet.Identity.EntityFramework
 @using Microsoft.AspNet.Identity
 @using Sciencecom.Models
 @{
-    ViewBag.Title = "Р”РѕР±Р°РІРёС‚СЊ РјРµС‚Р°Р»Р»РёС‡РµСЃРєСѓСЋ РєРѕРЅСЃС‚СЂСѓРєС†РёСЋ";
+    ViewBag.Title = "Добавить металлическую конструкцию";
     Layout = "~/Views/Shared/_Layout.cshtml";
     SelectList owners = new SelectList(new SciencecomEntities().Owners.Select(m=>m.Name).ToList());
 }
@@ -14,20 +14,20 @@
 <script src="~/Scripts/Autocomplete.js"></script>
 <script src="~/Scripts/AddPlacamerkToMap.js"></script>
 
-<h2>Р”РѕР±Р°РІРёС‚СЊ РјРµС‚Р°Р»Р»РёС‡РµСЃРєСѓСЋ РєРѕРЅСЃС‚СЂСѓРєС†РёСЋ</h2>
+<h2>Добавить металлическую конструкцию</h2>
 
 
 @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
-    <div class="">
+    <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true)
         @Html.ValidationMessage("Error")
 
         <div class="form-group">
-            @Html.Label("Р’Р»Р°РґРµР»РµС†:", new { @class = "control-label col-md-2" })
+            @Html.Label("Владелец:", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @{
                     var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
@@ -35,7 +35,7 @@
                     string role = user.Roles.Select(m => m.Role.Name).First().ToString();
                     if ((role == "ChiefEditOwn") || (role == "SupplierEditOwn"))
                     {
-                       @Html.DropDownList("Owner", new SelectList(new[] { user.Company, "РќРµРёР·РІРµСЃС‚РЅРѕ" }))
+                       @Html.DropDownList("Owner", new SelectList(new[] { user.Company, "Неизвестно" }))
                     }
                     else
                     {
@@ -48,7 +48,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Locality, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <input class="text-box single-line" id="Locality" name="Locality" type="text" value="РњРёРЅСЃРє" />
+                <input class="text-box single-line" id="Locality" name="Locality" type="text" value="Минск" />
                 @Html.ValidationMessageFor(model => model.Locality)
             </div>
         </div>
@@ -97,31 +97,31 @@
         </div>
         @Html.ValidationMessage("Photo")
         <div class="form-group">
-            @Html.Label("РџР°СЃРїРѕСЂС‚ РўРЎРњРћ (СЃС‚СЂ 1):", new { @class = "control-label col-md-2" })
+            @Html.Label("Паспорт ТСМО (стр 1):", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <input type="file" name="passport1" accept="image/jpeg" data-val-required="Р’С‹Р±РµСЂРёС‚Рµ С„Р°Р№Р» РґР»СЏ Р·Р°РіСЂСѓР·РєРё" /><br />
-                @Html.Raw("РќРµ Р±РѕР»РµРµ 1 РњР‘")
+                <input type="file" name="passport1" accept="image/jpeg" data-val-required="Выберите файл для загрузки" /><br />
+                @Html.Raw("Не более 1 МБ")
             </div>
         </div>
         <div class="form-group">
-            @Html.Label("РџР°СЃРїРѕСЂС‚ РўРЎРњРћ (СЃС‚СЂ 2):", new { @class = "control-label col-md-2" })
+            @Html.Label("Паспорт ТСМО (стр 2):", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <input type="file" name="passport2" accept="image/jpeg" data-val-required="Р’С‹Р±РµСЂРёС‚Рµ С„Р°Р№Р» РґР»СЏ Р·Р°РіСЂСѓР·РєРё" /><br />
-                @Html.Raw("РќРµ Р±РѕР»РµРµ 1 РњР‘")
+                <input type="file" name="passport2" accept="image/jpeg" data-val-required="Выберите файл для загрузки" /><br />
+                @Html.Raw("Не более 1 МБ")
             </div>
         </div>
         <div class="form-group">
-            @Html.Label("Р¤РѕС‚Рѕ:", new { @class = "control-label col-md-2" })
+            @Html.Label("Фото:", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <input type="file" name="photo" accept="image/jpeg" /><br />
-                @Html.Raw("РќРµ Р±РѕР»РµРµ 1 РњР‘")
+                @Html.Raw("Не более 1 МБ")
                
             </div>
         </div>
         <div class="form-group" style="width:600px; height:500px" id="map">
         </div>
         <div class="form-group">
-            <label class="control-label col-md-2" for="Shirota">РЁРёСЂРѕС‚Р°</label>
+            <label class="control-label col-md-2" for="Shirota">Широта</label>
             <div class="col-md-10">
                 <input type="text" id="Shirota" name="Shirota" readonly required />
                 @Html.ValidationMessageFor(model => model.Shirota)
@@ -129,7 +129,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-md-2" for="Dolgota">Р”РѕР»РіРѕС‚Р°</label>
+            <label class="control-label col-md-2" for="Dolgota">Долгота</label>
             <div class="col-md-10">
                 <input type="text" id="Dolgota" name="Dolgota" readonly required />
                 @Html.ValidationMessageFor(model => model.Shirota)
@@ -138,12 +138,12 @@
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Р”РѕР±Р°РІРёС‚СЊ" class="btn btn-default"/>
+                <input type="submit" value="Добавить" class="btn btn-default"/>
             </div>
         </div>
     </div>  
 }
 <div>
-    @Html.ActionLink("Р’РµСЂРЅСѓС‚СЊСЃСЏ Рє СЃРїРёСЃРєСѓ", "Metal")
+    @Html.ActionLink("Вернуться к списку", "Metal")
 </div>
 
