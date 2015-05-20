@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Sciencecom.Models.Owner">
+    <Position X="6.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAgAAAAAACAIAQAAAgAQA=</HashCode>
+      <FileName>Models\Owner.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sciencecom.Models.OwnerMetaData">
+    <Position X="8" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAAAAAACAIAAAAAAAAA=</HashCode>
+      <FileName>Models\OwnerPartial.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sciencecom.Models.MetalConstruction">
+    <Position X="1.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABCAACAAAAAAAAAAAAQAAAAgEwAAAgAACAAAEEAAAA=</HashCode>
+      <FileName>Models\MetalConstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sciencecom.Models.MetalConstructionMetaData">
+    <Position X="3" Y="7.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAACAACAAAAAAAAAAAAQAAAAgAwAAAgAACAAAEAAAAA=</HashCode>
+      <FileName>Models\MetalConstructionPartial.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sciencecom.Models.LightConstruction">
+    <Position X="4.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABCAACAAIACAJAAAAAQAAAAgEwAAAgAACAAAEEAAAA=</HashCode>
+      <FileName>Models\LightConstruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sciencecom.Models.LightConstructionMetaData">
+    <Position X="7" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAACAAIACABAAAAAQAAAAgAwAAAgAACAAAEAAAAA=</HashCode>
+      <FileName>Models\LightConstructionPartial.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
