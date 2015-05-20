@@ -1,31 +1,110 @@
-﻿
-
-@using Microsoft.AspNet.Identity
+﻿@using Microsoft.AspNet.Identity
 @using Microsoft.AspNet.Identity.EntityFramework
 @using Sciencecom.Models
-@model  Sciencecom.Models.SciencecomEntities
+@model  Sciencecom.Models.Billboard
 @{
     ViewBag.Title = "CreateBilboard";
- 
+    SelectList owners = new SelectList(new SciencecomEntities().Owners.Select(m=>m.Name).ToList());
+
 }
 
 <h2> Добавить новый билбодер</h2>
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
-@using (Html.BeginForm(null, null, FormMethod.Post, new {enctype = "multipart/form-data"}))
+@using (Html.BeginForm("Bilboard", "Data", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     <div class="form-horizontal">
-        <hr/>
+        <hr />
         @Html.ValidationSummary(true)
         @Html.ValidationMessage("Error")
-        
+        @*владелец*@
         <div class="form-group">
             @Html.Label("Владелец:", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("Owner", new SelectList(Model.Owners.Select(a => a.Name)), new { @class = "control-label col-md-2" })
-                @Html.ValidationMessageFor(model => model.Owners)
+             @Html.DropDownList("Owner", owners)
+
             </div>
         </div>
-    </div>
+        @*улица 1*@
+        <div class="form-group">
+            @Html.Label("Улица 1", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Street1)
+                @Html.ValidationMessageFor(model => model.Street1)
+            </div>
+        </div>
+        @*дом*@
+        <div class="form-group">
+            @Html.Label("Дом", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.House1)
+                @Html.ValidationMessageFor(model => model.House1)
+            </div>
+        </div>
+        @*улица 2*@
+        <div class="form-group">
+            @Html.Label("Улица 2", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Street2)
+                @Html.ValidationMessageFor(model => model.Street2)
+            </div>
+        </div>
+        @*со стороны улицы 3 *@
+        <div class="form-group">
+            @Html.Label("Cо стороны улицы 3 ", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FromStreet)
+                @Html.ValidationMessageFor(model => model.FromStreet)
+            </div>
+        </div>
+        @*комментарий*@
+        <div class="form-group">
+            @Html.Label("комментарий", new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Comment)
+                @Html.ValidationMessageFor(model => model.Comment)
+            </div>
+        </div>
+        @*номер договора *@
+        <div class="form-group">
+            @Html.Label("номер договора ", new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ContractNumber)
+                @Html.ValidationMessageFor(model => model.ContractNumber)
+            </div>
+        </div>
+       @*номер паспорта  *@
+        <div class="form-group">
+            @Html.Label("номер паспорта ", new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PassportNumber)
+                @Html.ValidationMessageFor(model => model.PassportNumber)
+            </div>
+        </div>
+
+        @*вид рекламы   *@
+        <div class="form-group">
+            @Html.Label("номер паспорта ", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PassportNumber)
+                @Html.ValidationMessageFor(model => model.PassportNumber)
+            </div>
+        </div>
+
+        <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Добавить" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
 
 }

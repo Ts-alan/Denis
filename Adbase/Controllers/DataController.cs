@@ -36,6 +36,7 @@ namespace Sciencecom.Controllers
         [Authorize]
         public ActionResult Metal(string owner, string locality, string street1, string street2, string fromStreet, string day, string month, string year)
         {
+            
             Owner o = new Owner();
             if (!string.IsNullOrEmpty(owner))
             {
@@ -1224,10 +1225,16 @@ namespace Sciencecom.Controllers
 
             return View();
         }
+        [HttpPost]
+        public ActionResult Bilboard(string Owner)
+        {
+
+            return View();
+        }
         public ActionResult CreateBilboard()
         {
             
-            return View(context);
+            return View();
         }
 
     }
