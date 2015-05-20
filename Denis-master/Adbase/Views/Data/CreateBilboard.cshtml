@@ -1,0 +1,31 @@
+﻿
+
+@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.EntityFramework
+@using Sciencecom.Models
+@model  Sciencecom.Models.SciencecomEntities
+@{
+    ViewBag.Title = "CreateBilboard";
+ 
+}
+
+<h2> Добавить новый билбодер</h2>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+@using (Html.BeginForm(null, null, FormMethod.Post, new {enctype = "multipart/form-data"}))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <hr/>
+        @Html.ValidationSummary(true)
+        @Html.ValidationMessage("Error")
+        
+        <div class="form-group">
+            @Html.Label("Владелец:", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Owner", new SelectList(Model.Owners.Select(a => a.Name)), new { @class = "control-label col-md-2" })
+                @Html.ValidationMessageFor(model => model.Owners)
+            </div>
+        </div>
+    </div>
+
+}

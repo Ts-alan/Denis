@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Sciencecom.Models.Owner>
+
+@{
+    ViewBag.Title = "Компании";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Компании</h2>
+
+<p>
+    @Html.ActionLink("Добавить компанию", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Telephone)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    if (item.Name == "Неизвестно") { continue; }
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Address)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Telephone)
+        </td>
+        <td>
+            @if (item.Name == "Сайнском")
+            { 
+               @Html.ActionLink("Изменить", "Edit", new { id = item.Id })
+            }
+            else
+            {
+               @Html.ActionLink("Изменить", "Edit", new { id=item.Id }) <br />  
+               @Html.ActionLink("Удалить", "Delete", new { id=item.Id })
+            }
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3f8f90a549d648598a9f63457593a87b" Name="Diagram1" ZoomLevel="81">
+        <EntityTypeShape EntityType="SciencecomModel.LightConstruction" Width="1.5" PointX="1.125" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SciencecomModel.MetalConstruction" Width="2" PointX="0.625" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SciencecomModel.Owner" Width="1.5" PointX="4.25" PointY="3.125" IsExpanded="true" />
+        <AssociationConnector Association="SciencecomModel.FK_LightConstructions_Owners" ManuallyRouted="false" />
+        <AssociationConnector Association="SciencecomModel.FK_MetalConstructions_Owners" ManuallyRouted="false" />
+        <AssociationConnector Association="SciencecomModel.FK_LightConstructions_Owners1" />
+        <AssociationConnector Association="SciencecomModel.FK_MetalConstructions_Owners1" />
+        <EntityTypeShape EntityType="SciencecomModel.Street" Width="1.5" PointX="4.125" PointY="0.5" />
+        <EntityTypeShape EntityType="SciencecomModel.IllegalConstruction" Width="1.5" PointX="15.625" PointY="0.875" />
+        <EntityTypeShape EntityType="SciencecomModel.Billboard" Width="1.5" PointX="7.75" PointY="2.125" />
+        <AssociationConnector Association="SciencecomModel.OwnerBillboards" />
+        <EntityTypeShape EntityType="SciencecomModel.AdType" Width="1.5" PointX="11.5" PointY="1.875" />
+        <EntityTypeShape EntityType="SciencecomModel.Side" Width="1.5" PointX="10.625" PointY="4.5" />
+        <AssociationConnector Association="SciencecomModel.BillboardSide" />
+        <EntityTypeShape EntityType="SciencecomModel.Surface" Width="1.5" PointX="13.25" PointY="5" />
+        <AssociationConnector Association="SciencecomModel.SideSurface" />
+        <AssociationConnector Association="SciencecomModel.AdTypeBillboard" />
+        <EntityTypeShape EntityType="SciencecomModel.sysdiagram" Width="1.5" PointX="3.375" PointY="6.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
