@@ -171,10 +171,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\AdType.cs">
-      <DependentUpon>ContructionsModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Billboard.cs">
+    <Compile Include="Models\Billboards1.cs">
       <DependentUpon>ContructionsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Constructions.cs" />

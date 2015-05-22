@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNet.Identity
 @using Microsoft.AspNet.Identity.EntityFramework
 @using Sciencecom.Models
-@model  Sciencecom.Models.Billboard
+@model  Sciencecom.Models.Billboards1
 @{
     ViewBag.Title = "CreateBilboard";
     SelectList owners = new SelectList(new SciencecomEntities().Owners.Select(m=>m.Name).ToList());
@@ -20,11 +20,19 @@
         @Html.ValidationMessage("Error")
         @*владелец*@
         <div class="form-group">
-            @Html.Label("Владелец:", new { @class = "control-label col-md-2" })
+            @Html.Label("Владелец:", new {@class = "control-label col-md-2"})
             <div class="col-md-10">
-             @Html.DropDownList("Owner", owners)
+                @Html.DropDownList("Owner", owners)
 
             </div>
+        </div>
+        @*Населенный Пункт*@
+        <div class="form-group">
+            @Html.Label("Населенный Пункт:", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Locality)
+                @Html.ValidationMessageFor(model => model.Street1)
+                </div>
         </div>
         @*улица 1*@
         <div class="form-group">
@@ -85,9 +93,25 @@
 
         @*вид рекламы   *@
         <div class="form-group">
-            @Html.Label("номер паспорта ", new { @class = "control-label col-md-2" })
+            @Html.Label("Вид рекламы ", new {@class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.EditorFor(model => model.PassportNumber)
+                @Html.DropDownList("TypeOfAdvertising", new SelectList(new[] {"Социальная", "Беларуская ", "Иная"}))@*над будет точно разобраться*@
+                @Html.ValidationMessageFor(model => model.PassportNumber)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("На согласование", new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.DropDownListFor(model=>model.OnAgreement, new SelectList(new[] {"Да ", "Нет"}))
+                @Html.ValidationMessageFor(model => model.PassportNumber)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Количество старон", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("TypeOfAdvertising", new SelectList(new[] { "1", "2" ,"3"}))
                 @Html.ValidationMessageFor(model => model.PassportNumber)
             </div>
         </div>
