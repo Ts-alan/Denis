@@ -279,6 +279,7 @@
     <Content Include="Content\Icons\1.png" />
     <Content Include="Content\Icons\add.png" />
     <Content Include="Content\jquery.bxslider.css" />
+    <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -371,11 +372,13 @@
     <Content Include="Scripts\Dialog\messi.js" />
     <Content Include="Scripts\Dialog\ObjectOnMap.js" />
     <Content Include="Scripts\EditPlacemark.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
     <Content Include="Scripts\jquery-2.1.1.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-ui-1.11.1.js" />
+    <Content Include="Scripts\jquery-ui-1.11.0.js" />
     <Content Include="Scripts\jquery-ui.min-1.11.1.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />

@@ -16,8 +16,8 @@
         myMap.controls.add('searchControl');
         myMap.controls.add('typeSelector');
 
-
-        myMap.events.add('click', function (e) {
+            //присвоение  коодинат при клике  
+            myMap.events.add('click', function (e) {
             if (!havePlacemark) {
                 var coords = e.get('coordPosition');
                 myPlacemark = new ymaps.Placemark([coords[0].toPrecision(6), coords[1].toPrecision(6)],
@@ -36,6 +36,7 @@
             str = str.replace('.', ',');
             $("#Dolgota").val(str);
 
+            //присвоение коодинат при перетаскивание метки  
             myPlacemark.events.add('dragend', function (e) {
                 var coords = myPlacemark.geometry.getCoordinates();
                 var str = String(coords[0].toPrecision(6));

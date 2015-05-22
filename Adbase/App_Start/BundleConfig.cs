@@ -36,6 +36,11 @@ namespace Sciencecom
                       "~/Content/messi.css",
                       "~/Content/themes/flick/jquery-ui.css",
                       "~/Content/jquery.bxslider.css"));
+            
+            bundles.Add(new StyleBundle("~/Content/Map").Include(
+            "~/Scripts/Autocomplete.js",
+            "~/Scripts/AddPlacamerkToMap.js"
+           ));
 
         }
     }
