@@ -9,12 +9,12 @@
     string role = user.Roles.Select(m => m.Role.Name).First().ToString();
 }
 
-<h2>Билбордер</h2>
+<h2>Билборд</h2>
 @{
     if (role != "ReadOnly")
     {
         <p>
-            <b>@Html.ActionLink("+ Добавить новый билбодер", "CreateBilboard", new { type = "Metal" })</b>
+            <b>@Html.ActionLink("+ Добавить новый билборд", "CreateBilboard", new { type = "Metal" })</b>
         </p>
     }
 }
