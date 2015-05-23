@@ -202,6 +202,7 @@
       <DependentUpon>ContructionsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\LightConstructionPartial.cs" />
+    <Compile Include="Models\MapJsonModels\BillBoardJsonModel.cs" />
     <Compile Include="Models\MapJsonModels\IllegalConstructionJsonModel.cs" />
     <Compile Include="Models\MapJsonModels\LightConstructionJsonModel.cs" />
     <Compile Include="Models\MapJsonModels\MetalConstructionJsonModel.cs" />
@@ -445,6 +446,7 @@
     <Content Include="Views\Home\BillboardsIndex.cshtml" />
     <Content Include="Views\Data\Bilboard.cshtml" />
     <Content Include="Views\Data\CreateBilboard.cshtml" />
+    <Content Include="Views\Data\ShowBillboardTablePartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Start\App_Data\" />

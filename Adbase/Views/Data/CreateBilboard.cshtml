@@ -1,6 +1,4 @@
-﻿
-
-@model Sciencecom.Models.MetalConstruction  
+﻿@model Sciencecom.Models.Billboard
 @using Microsoft.AspNet.Identity.EntityFramework
 @using Microsoft.AspNet.Identity
 @using Sciencecom.Models
@@ -128,7 +126,7 @@
             <label class="control-label col-md-2" for="Shirota">Широта</label>
             <div class="col-md-10">
                 <input type="text" id="Shirota" name="Shirota" readonly required />
-                @Html.ValidationMessageFor(model => model.Shirota)
+                @Html.ValidationMessageFor(model => model.Latitude)
                 @*<span class="field-validation-valid" data-valmsg-for="Shirota" data-valmsg-replace="true"></span>*@
             </div>
         </div>
@@ -136,7 +134,7 @@
             <label class="control-label col-md-2" for="Dolgota">Долгота</label>
             <div class="col-md-10">
                 <input type="text" id="Dolgota" name="Dolgota" readonly required />
-                @Html.ValidationMessageFor(model => model.Shirota)
+                @Html.ValidationMessageFor(model => model.Latitude)
                 @*<span class="field-validation-valid" data-valmsg-for="Dolgota" data-valmsg-replace="true"></span>*@
             </div>
         </div>

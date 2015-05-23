@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="SciencecomModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="SciencecomModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AdTypes">
           <Key>
             <PropertyRef Name="Id" />
@@ -32,6 +32,7 @@
           <Property Name="Longitude" Type="float" Nullable="false" />
           <Property Name="Owner_Id" Type="int" Nullable="false" />
           <Property Name="AdType_Id" Type="int" Nullable="false" />
+          <Property Name="Locality" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="IllegalConstructions">
           <Key>
@@ -478,6 +479,7 @@
           <NavigationProperty Name="AdType" Relationship="SciencecomModel.AdTypeBillboard" FromRole="Billboard" ToRole="AdType" />
           <Property Name="Latitude" Type="Double" Nullable="false" />
           <Property Name="Longitude" Type="Double" Nullable="false" />
+          <Property Name="Locality" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="OwnerBillboards">
           <End Type="SciencecomModel.Owner" Role="Owner" Multiplicity="1" />
@@ -625,7 +627,8 @@
     <EntitySetMapping Name="Billboards1">
       <EntityTypeMapping TypeName="IsTypeOf(SciencecomModel.Billboard)">
         <MappingFragment StoreEntitySet="Billboards1">
-          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Locality" ColumnName="Locality" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Street1" ColumnName="Street1" />
           <ScalarProperty Name="House1" ColumnName="House1" />
           <ScalarProperty Name="Street2" ColumnName="Street2" />

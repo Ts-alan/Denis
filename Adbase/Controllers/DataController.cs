@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.Ajax.Utilities;
 
 namespace Sciencecom.Controllers
 {
@@ -1058,6 +1059,46 @@ namespace Sciencecom.Controllers
             }
             return result;
         }
+
+        
+        public IEnumerable<Billboard> SearchBillboard(Billboard billboard, string day, string month, string year)
+        {
+            context = new SciencecomEntities();
+            IEnumerable<Billboard> result = context.Billboards1;
+            if (billboard.Owner.Id != 0)
+            {
+                result = result.Where(m => m.Owner.Id == billboard.Owner.Id);
+            }
+            if (billboard.Street1 != "")
+            {
+                result = result.Where(m => m.Street1.ToLower().Contains(billboard.Street1.ToLower()));
+            }
+            if (billboard.Street2 != "")
+            {
+                result = result.Where(m => m.Street2.ToLower().Contains(billboard.Street2.ToLower()));
+            }
+            if (billboard.FromStreet != "")
+            {
+                result = result.Where(m => m.FromStreet.ToLower().Contains(billboard.FromStreet.ToLower()));
+            }
+            if (billboard.Locality != "")
+            {
+                result = result.Where(m => m.Locality.ToLower().Contains(billboard.Locality.ToLower()));
+            }
+            if (day != "")
+            {
+                result = result.Where(m => m.StartDate.Day == int.Parse(day));
+            }
+            if (month != "")
+            {
+                result = result.Where(m => m.StartDate.Month == int.Parse(month));
+            }
+            if (year != "")
+            {
+                result = result.Where(m => m.StartDate.Year == int.Parse(year));
+            }
+            return result;
+        }
        
         
         #endregion
@@ -1230,26 +1271,26 @@ namespace Sciencecom.Controllers
             return View(context);
         }
 
-        //[Authorize]
-        //public ActionResult ShowBillboardTablePartial(Billboard billboard, string locality, string day, string month, string year)
-        //{
-        //    if (billboard == null)
-        //    {
-        //        ViewBag.Results = null;
-        //        return View(context.MetalConstructions.OrderByDescending(m => m.StartDate));
-        //    }
-        //    else
-        //    {
-        //        billboard.Locality = locality;
-        //        IEnumerable<MetalConstruction> result = SearchMetal(metalConstruction, day, month, year);
-        //        //if (metalConstruction.StartDate.Date != Convert.ToDateTime("01.01.0001"))
-        //        //{
-        //        //    result = result.Where(m => m.StartDate == metalConstruction.StartDate);
-        //        //}
-        //        ViewBag.Results = result.Count();
-        //        return View(result.OrderByDescending(m => m.StartDate));
-        //    }
-        //}
+        [Authorize]
+        public ActionResult ShowBillboardTablePartial(Billboard billboard, string locality, string day, string month, string year)
+        {
+            if (billboard == null)
+            {
+                ViewBag.Results = null;
+                return View(context.Billboards1.OrderByDescending(m => m.StartDate));
+            }
+            else
+            {
+                billboard.Locality = locality;
+                IEnumerable<Billboard> result = SearchBillboard(billboard, day, month, year); //ToDO Implement commented SearchBillboard method above
+                //if (metalConstruction.StartDate.Date != Convert.ToDateTime("01.01.0001"))
+                //{
+                //    result = result.Where(m => m.StartDate == metalConstruction.StartDate);
+                //}
+                ViewBag.Results = result.Count();
+                return View(result.OrderByDescending(m => m.StartDate));
+            }
+        }
 
     }
 
