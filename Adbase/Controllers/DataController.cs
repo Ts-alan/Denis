@@ -36,7 +36,6 @@ namespace Sciencecom.Controllers
         [Authorize]
         public ActionResult Metal(string owner, string locality, string street1, string street2, string fromStreet, string day, string month, string year)
         {
-            
             Owner o = new Owner();
             if (!string.IsNullOrEmpty(owner))
             {
@@ -1219,14 +1218,8 @@ namespace Sciencecom.Controllers
             }
             return View();
         }
-        //билбордер
+        //билборд
         public ActionResult Bilboard()
-        {
-
-            return View();
-        }
-        [HttpPost]
-        public ActionResult Bilboard(string Owner)
         {
 
             return View();
@@ -1234,8 +1227,29 @@ namespace Sciencecom.Controllers
         public ActionResult CreateBilboard()
         {
             
-            return View();
+            return View(context);
         }
+
+        //[Authorize]
+        //public ActionResult ShowBillboardTablePartial(Billboard billboard, string locality, string day, string month, string year)
+        //{
+        //    if (billboard == null)
+        //    {
+        //        ViewBag.Results = null;
+        //        return View(context.MetalConstructions.OrderByDescending(m => m.StartDate));
+        //    }
+        //    else
+        //    {
+        //        billboard.Locality = locality;
+        //        IEnumerable<MetalConstruction> result = SearchMetal(metalConstruction, day, month, year);
+        //        //if (metalConstruction.StartDate.Date != Convert.ToDateTime("01.01.0001"))
+        //        //{
+        //        //    result = result.Where(m => m.StartDate == metalConstruction.StartDate);
+        //        //}
+        //        ViewBag.Results = result.Count();
+        //        return View(result.OrderByDescending(m => m.StartDate));
+        //    }
+        //}
 
     }
 

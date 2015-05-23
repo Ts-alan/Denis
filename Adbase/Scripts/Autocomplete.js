@@ -1,5 +1,4 @@
-﻿//автозаполнение инпутов
-$(function () {
+﻿$(function () {
     var autocompleteUrl = '/Data/FindStreets';
     $("#Street1").autocomplete({
         source: autocompleteUrl,

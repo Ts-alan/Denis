@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNet.Identity
 @using Microsoft.AspNet.Identity.EntityFramework
 @using Sciencecom.Models
+@model  Sciencecom.Models.SciencecomEntities
 
 @{
     ViewBag.Title = "Bilboard";
@@ -9,7 +10,7 @@
     string role = user.Roles.Select(m => m.Role.Name).First().ToString();
 }
 
-<h2>Билборд</h2>
+<h2>Билборды</h2>
 @{
     if (role != "ReadOnly")
     {
@@ -17,4 +18,114 @@
             <b>@Html.ActionLink("+ Добавить новый билборд", "CreateBilboard", new { type = "Metal" })</b>
         </p>
     }
+}
+
+@{ AjaxOptions ajax = new AjaxOptions
+   {
+       UpdateTargetId = "Billboards",
+       Url = Url.Action("ShowBilloardTablePartial"),
+   };
+}
+
+<h2> Добавить новый билборд</h2>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.ValidationMessage("Error")
+
+        <div class="form-group">
+            @Html.Label("Владелец:", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Owner", new SelectList(Model.Owners.Select(a => a.Name)), new { @class = "control-label col-md-2" })
+                @Html.ValidationMessageFor(model => model.Owners)
+            </div>
+        </div>
+    </div>
+
+}
+
+<p>
+    <h3>Поиск указателей по параметрам:</h3>
+</p>
+
+@using (Ajax.BeginForm(ajax)) //ToDo Make form for creating billboards
+{
+    <table class="table-bordered" cellpadding="5">
+        <tr>
+            <th>
+                @*@Html.DisplayNameFor(model => model.Owner.Name)*@
+                @Html.DisplayNameFor(model => model.Owners)
+            </th>
+            <th>
+                Нас. пункт
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Street1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Street2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FromStreet)
+            </th>
+            <th>
+                Число
+            </th>
+            <th>
+                Месяц
+            </th>
+            <th>
+                Год
+            </th>
+            <th>
+                Действие
+            </th>
+        </tr>
+        <tr>
+            <td>
+                @Html.DropDownList("owner", owners)
+            </td>
+            <td>
+                <input type="text" name="locality" value="Минск" />
+            </td>
+            <td>
+                @Html.Editor("street1")
+            </td>
+            <td>
+                @Html.Editor("street2")
+            </td>
+            <td>
+                @Html.Editor("fromStreet")
+            </td>
+            <td>
+                @*<input type="text" name="day" size="5" />*@
+                @Html.DropDownList("Day", new SelectList(new[] { "", "1", "2", "3", "4", "5", "6", "7", "8",
+                                                                 "9", "10", "11", "12", "13", "14", "15", "16",
+                                                                 "17", "18", "19", "20", "21", "22", "23", "24", "25",
+                                                                 "26", "27", "28", "29", "30", "31"}))
+            </td>
+            <td>
+                @*<input type="text" name="day" size="5" />*@
+                @Html.DropDownList("Month", new SelectList(new[] { "", "1", "2", "3", "4", "5", "6", "7", "8",
+                                                                 "9", "10", "11", "12"}))
+            </td>
+            <td>
+                <input type="text" name="year" size="10" />
+            </td>
+            <td>
+                <input type="submit" value="Поиск" class="btn btn-info" />
+            </td>
+        </tr>
+    </table>
+    <p>
+        <h3>Таблица данных</h3>
+        @Html.ActionLink("Показать всё", "Metal")
+        <table class="table" cellpadding="5" id="BillboardsTable">
+            @Html.Action("ShowBillboardTablePartial", new { metalConstruction = ViewBag.Data, day = ViewBag.Day, month = ViewBag.Month, year = ViewBag.Year })
+        </table>
+    </p>
 }
