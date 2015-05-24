@@ -1,64 +1,64 @@
-﻿@using Microsoft.AspNet.Identity
+﻿@model  IEnumerable<Sciencecom.Models.Billboard>
+@using Microsoft.AspNet.Identity
 @using Microsoft.AspNet.Identity.EntityFramework
 @using Sciencecom.Models
-@model  Sciencecom.Models.SciencecomEntities
+
 
 @{
     ViewBag.Title = "Bilboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    AjaxOptions ajax = new AjaxOptions
+    {
+        UpdateTargetId = "billboardsTable",
+        Url = Url.Action("ShowBillboardTablePartial"),
+    };
     var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
     ApplicationUser user = um.FindByName(User.Identity.GetUserName());
     string role = user.Roles.Select(m => m.Role.Name).First().ToString();
+    List<string> o = new List<string>();
+    o.Add("");
+    foreach (var item in new SciencecomEntities().Owners.Select(m => m.Name))
+    {
+        o.Add(item);
+    }
+    SelectList owners = new SelectList(o);
 }
+
+<script src="~/Scripts/Dialog/ObjectOnMap.js"></script>
+<script src="~/Scripts/Autocomplete.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("a").click(function (e) {
+            if ($(e.currentTarget).hasClass("dropdown-toggle")) {
+                if ($(".dropdown").hasClass("open")) {
+                    $(".dropdown").removeClass("open");
+                } else {
+                    $(".dropdown").addClass("open");
+                }
+            }
+        })
+    })
+</script>
 
 <h2>Билборды</h2>
 @{
     if (role != "ReadOnly")
     {
         <p>
-            <b>@Html.ActionLink("+ Добавить новый билборд", "CreateBilboard", new { type = "Metal" })</b>
+            <b>@Html.ActionLink("+ Добавить новый билборд", "CreateBilboard", new { type = "Billboard" })</b>
         </p>
     }
-}
-
-@{ AjaxOptions ajax = new AjaxOptions
-   {
-       UpdateTargetId = "Billboards",
-       Url = Url.Action("ShowBillboardTablePartial"),
-   };
-}
-
-<h2> Добавить новый билборд</h2>
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
-@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    @Html.AntiForgeryToken()
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true)
-        @Html.ValidationMessage("Error")
-
-        <div class="form-group">
-            @Html.Label("Владелец:", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("Owner", new SelectList(Model.Owners.Select(a => a.Name)), new { @class = "control-label col-md-2" })
-                @Html.ValidationMessageFor(model => model.Owners)
-            </div>
-        </div>
-    </div>
-
 }
 
 <p>
     <h3>Поиск указателей по параметрам:</h3>
 </p>
-
-@using (Ajax.BeginForm(ajax)) //ToDo Make form for creating billboards
+@using (Ajax.BeginForm(ajax))
 {
     <table class="table-bordered" cellpadding="5">
         <tr>
             <th>
-                @*@Html.DisplayNameFor(model => model.Owner.Name)*@
-                @Html.DisplayNameFor(model => model.Owners)
+                @Html.DisplayNameFor(model => model.Owner.Name)
             </th>
             <th>
                 Нас. пункт
@@ -123,9 +123,13 @@
     </table>
     <p>
         <h3>Таблица данных</h3>
-        @Html.ActionLink("Показать всё", "Metal")
-        <table class="table" cellpadding="5" id="BillboardsTable">
-            @Html.Action("ShowBillboardTablePartial", new { metalConstruction = ViewBag.Data, day = ViewBag.Day, month = ViewBag.Month, year = ViewBag.Year })
+        @Html.ActionLink("Показать всё", "Bilboard")
+        <table class="table" cellpadding="5" id="constructionsTable">
+            @Html.Action("ShowBillboardTablePartial", new { Billboard = ViewBag.Data, day = ViewBag.Day, month = ViewBag.Month, year = ViewBag.Year })
         </table>
     </p>
 }
+<hr />
+<footer>
+    <p>&copy; @DateTime.Now.Year – <a href="http://scom.by" target="_blank">ООО "Сайнском"</a> @*| @Html.ActionLink("Лицензионное соглашение", "License", "Home")*@</p>
+</footer>

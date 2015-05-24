@@ -1259,16 +1259,46 @@ namespace Sciencecom.Controllers
             }
             return View();
         }
+       
         //билборд
+
+        [Authorize]
         public ActionResult Bilboard()
         {
+            ViewBag.Data = null;
+            return View();
+            
+        }
 
+        [HttpPost]
+        [Authorize]
+        public ActionResult Bilboard(string owner, string locality, string street1, string street2, string fromStreet, string day, string month, string year)
+        {
+            Owner o = new Owner();
+            if (!string.IsNullOrEmpty(owner))
+            {
+                o = context.Owners.Where(m => m.Name == owner).Single();
+            }
+            Billboard mc = new Billboard()
+            {
+                Street1 = street1,
+                Street2 = street2,
+                FromStreet = fromStreet,
+                Owner = o,
+                Locality = locality
+            };
+            ViewBag.Data = mc;
+            ViewBag.Day = day;
+            ViewBag.Month = month;
+            ViewBag.Year = year;
             return View();
         }
+
+        [Authorize]
         public ActionResult CreateBilboard()
         {
             
-            return View(context);
+            return View();
         }
 
         [Authorize]
