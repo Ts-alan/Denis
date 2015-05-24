@@ -57,7 +57,10 @@
             @Html.DisplayFor(modelItem => item.Id)
         </td>
         <td>
-            @Html.ActionLink(item.Owner.Name, "Owner", new { name = item.Owner.Name, backTo = "Metal" })
+            @*@Html.ActionLink(item.Owner.Name, "Owner", new { name = item.Owner.Name, backTo = "Billboard" })*@
+            @*@Html.DisplayFor(modelItem => item.Owner.Name)*@ 
+            Допили меня
+            @* ToDo ДОПИЛИТЬ! *@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Locality)
@@ -111,7 +114,7 @@
             @Html.ActionLink("Изменить", "EditMetal", new { id = item.Id })<br />
                 @Html.ActionLink("Удалить", "DeleteMetal", new { id = item.Id })<br />
 
-        }*@
+        } ToDo ДОПИЛИТЬ!*@
     }
             }
         </td>

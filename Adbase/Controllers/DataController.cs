@@ -1065,10 +1065,10 @@ namespace Sciencecom.Controllers
         {
             context = new SciencecomEntities();
             IEnumerable<Billboard> result = context.Billboards1;
-            if (billboard.Owner.Id != 0)
-            {
-                result = result.Where(m => m.Owner.Id == billboard.Owner.Id);
-            }
+            //if (billboard.Owner.Id != 0) ToDo Implement Properly!
+            //{
+            //    result = result.Where(m => m.Owner.Id == billboard.Owner.Id);
+            //}
             if (billboard.Street1 != "")
             {
                 result = result.Where(m => m.Street1.ToLower().Contains(billboard.Street1.ToLower()));
