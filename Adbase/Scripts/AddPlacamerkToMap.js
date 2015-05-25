@@ -41,18 +41,20 @@
                 var coords = myPlacemark.geometry.getCoordinates();
                 var str = String(coords[0].toPrecision(6));
                 str = str.replace('.', ',');
-                if (!isNaN(str)) {
-                    $("#Shirota").val(str);
-                } else {
-                    $("#Shirota").val("");
-                }
+                //if (!isNaN(str)) {
+                //    $("#Shirota").val(str);
+                //} else {
+                //    $("#Shirota").val("");
+                //}
+                $("#Shirota").val(str);
                 str = String(coords[1].toPrecision(6));
                 str = str.replace('.', ',');
-                if (!isNaN(str)) {
-                    $("#Dolgota").val(str);
-                } else {
-                    $("#Dolgota").val("");
-                }  
+                //if (!isNaN(str)) {
+                //    $("#Dolgota").val(str);
+                //} else {
+                //    $("#Dolgota").val("");
+                //} 
+                $("#Dolgota").val(str);
             });
         });
 

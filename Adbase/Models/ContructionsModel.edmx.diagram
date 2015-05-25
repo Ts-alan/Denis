@@ -15,13 +15,13 @@
         <EntityTypeShape EntityType="SciencecomModel.Street" Width="1.5" PointX="4.125" PointY="0.5" />
         <EntityTypeShape EntityType="SciencecomModel.IllegalConstruction" Width="1.5" PointX="15.625" PointY="0.875" />
         <EntityTypeShape EntityType="SciencecomModel.sysdiagram" Width="1.5" PointX="3.375" PointY="6.75" />
-        <EntityTypeShape EntityType="SciencecomModel.Billboards1" Width="1.5" PointX="6.5" PointY="2.5" />
+        <EntityTypeShape EntityType="SciencecomModel.Billboards1" Width="1.5" PointX="6.5" PointY="2.375" />
         <EntityTypeShape EntityType="SciencecomModel.Side" Width="1.5" PointX="8.75" PointY="3.5" />
         <EntityTypeShape EntityType="SciencecomModel.Surface" Width="1.5" PointX="11" PointY="2.875" />
         <AssociationConnector Association="SciencecomModel.FK_BillboardSide" />
         <AssociationConnector Association="SciencecomModel.FK_OwnerBillboards" />
         <AssociationConnector Association="SciencecomModel.FK_SideSurface" />
-      </Diagram>
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

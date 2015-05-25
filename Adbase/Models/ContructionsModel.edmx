@@ -10,6 +10,8 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Height" Type="real" />
+          <Property Name="Breadth" Type="real" />
           <Property Name="Street1" Type="nvarchar(max)" Nullable="false" />
           <Property Name="House1" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Street2" Type="nvarchar(max)" Nullable="false" />
@@ -442,6 +444,8 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Height" Type="Single" />
+          <Property Name="Breadth" Type="Single" />
           <Property Name="Street1" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="House1" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Street2" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -630,6 +634,8 @@
                 <ScalarProperty Name="Street2" ColumnName="Street2" />
                 <ScalarProperty Name="House1" ColumnName="House1" />
                 <ScalarProperty Name="Street1" ColumnName="Street1" />
+                <ScalarProperty Name="Breadth" ColumnName="Breadth" />
+                <ScalarProperty Name="Height" ColumnName="Height" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

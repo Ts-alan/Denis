@@ -20,6 +20,8 @@ namespace Sciencecom.Models
         }
     
         public int Id { get; set; }
+        public Nullable<float> Height { get; set; }
+        public Nullable<float> Breadth { get; set; }
         public string Street1 { get; set; }
         public string House1 { get; set; }
         public string Street2 { get; set; }
