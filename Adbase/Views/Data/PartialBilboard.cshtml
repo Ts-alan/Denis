@@ -1,0 +1,56 @@
+﻿@model Sciencecom.Models.Surface
+<h3 style="margin-left: 150px">Поверхность </h3>
+<div class="form-group each1">
+    @Html.Label("Высота", new { @class = "control-label col-md-2 " })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.Height)
+        @Html.ValidationMessageFor(model => model.Height)
+    </div>
+</div>
+
+@*<div class="form-group each2">
+    @Html.Label("Ширина", new { @class = "control-label col-md-2 " })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.Width)
+        @Html.ValidationMessageFor(model => model.Width)
+    </div>
+</div>
+
+<div class="form-group each3">
+    @Html.Label("Площадь", new { @class = "control-label col-md-2 " })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.Space)
+        @Html.ValidationMessageFor(model => model.Space)
+    </div>
+</div>
+
+<div class="form-group each4">
+    @Html.Label("Социальная", new { @class = "control-label col-md-2 " })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.IsSocial)
+        @Html.ValidationMessageFor(model => model.IsSocial)
+    </div>
+</div>
+
+<div class="form-group each5">
+    @Html.Label("Сюжет", new { @class = "control-label col-md-2 " })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.Story)
+        @Html.ValidationMessageFor(model => model.Story)
+    </div>
+</div>
+
+<div class="form-group each6">
+    @Html.Label("Период размещения с", new { @class = "control-label col-md-2 " })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.StartDate)
+        @Html.ValidationMessageFor(model => model.StartDate)
+    </div>
+</div>
+<div class="form-group each7">
+    @Html.Label("по", new { @class = "control-label col-md-2 " })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.EndDate)
+        @Html.ValidationMessageFor(model => model.EndDate)
+    </div>
+</div>*@

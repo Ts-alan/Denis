@@ -445,7 +445,7 @@
     <Content Include="Views\Home\BillboardsIndex.cshtml" />
     <Content Include="Views\Data\Bilboard.cshtml" />
     <Content Include="Views\Data\CreateBilboard.cshtml" />
-    <Content Include="Views\Shared\PartialView\AddSurface.cshtml" />
+    <Content Include="Views\Data\PartialBilboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Start\App_Data\" />

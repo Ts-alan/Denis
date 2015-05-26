@@ -1220,15 +1220,18 @@ namespace Sciencecom.Controllers
             return View();
         }
         //билбордер
+        [HttpGet]
         public ActionResult Bilboard()
         {
 
             return View();
         }
-        [HttpPost]
-        public ActionResult Bilboard(string Owner)
-        {
+        
 
+        [HttpPost]
+        public ActionResult Bilboard(Sciencecom.Models.Billboards1 Billboard, IEnumerable<Sciencecom.Models.Surface> test)
+        {
+            
             return View();
         }
         public ActionResult CreateBilboard()
@@ -1237,6 +1240,12 @@ namespace Sciencecom.Controllers
             return View();
         }
 
+
+        public ActionResult PartialBilboard()
+        {
+          
+            return PartialView();
+        }
     }
 
     

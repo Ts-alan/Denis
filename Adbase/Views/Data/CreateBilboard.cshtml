@@ -1,5 +1,7 @@
-﻿@using Microsoft.AspNet.Identity
+﻿@using System.Web.Razor.Generator
+@using Microsoft.AspNet.Identity
 @using Microsoft.AspNet.Identity.EntityFramework
+@using Newtonsoft.Json
 @using Sciencecom.Models
 @model  Sciencecom.Models.Billboards1
 @{
@@ -9,7 +11,7 @@
 }
 <script type="text/javascript">
     $(document).ready(function() {
-
+        //выпадающий список
         $("#SideIndex").change(function() {
             var selectIndex = document.getElementById("SideIndex").selectedIndex;
             if (selectIndex == 0) {
@@ -25,18 +27,86 @@
                 $("#SizeC").css("display", "block");
             }
         });
+        function InsertOn() {
+            $(".each1 input").eq(0).on('change', function (e) {
+                var temp1= $(this).val();
+                $(".each1 input").each(function(indx) {
+                    $(this).val(temp1);
+                });
+            });
+            $(".each2 input").eq(0).on('change', function (e) {
+                var temp1 = $(this).val();
+                $(".each2 input").each(function (indx) {
+                    $(this).val(temp1);
+                });
+            });
+            $(".each3 input").eq(0).on('change', function (e) {
+                var temp1 = $(this).val();
+                $(".each3 input").each(function (indx) {
+                    $(this).val(temp1);
+                });
+            });
+            $(".each4 input").eq(0).on('change', function (e) {
+                var temp1 = $(this).attr();
+                $(".each4 input").each(function (indx) {
+                    $(this).val(temp1);
+                });
+            });
+            $(".each5 input").eq(0).on('change', function (e) {
+                var temp1 = $(this).val();
+                $(".each5 input").each(function (indx) {
+                    $(this).val(temp1);
+                });
+            });
+            $(".each6 input").eq(0).on('change', function (e) {
+                var temp1 = $(this).val();
+                $(".each6 input").each(function (indx) {
+                    $(this).val(temp1);
+                });
+            });
+            $(".each7 input").eq(0).on('change', function (e) {
+                var temp1 = $(this).val();
+                $(".each7 input").each(function (indx) {
+                    $(this).val(temp1);
+                });
+            });
 
-        //$("#Add1").click(function() {
-        //    $("#PartialView1").
-        //});
+        }
+        //скрипт для добавить площадь
+        $("#AddButton1").click(function () {
+            $.get('@Url.Action("PartialBilboard","Data")').success(function(e) {
+                $("#InsertPartial1").before(e);
+                InsertOn();
+                @*'@TempData["select"]' = 1;*@
+            });
+
+        });
+        $("#AddButton2").click(function () {
+            $.get('@Url.Action("PartialBilboard","Data")').success(function (e) {
+                $("#InsertPartial2").before(e);
+                @*@TempData["select"] = 2;*@
+            });
+        });
+        $("#AddButton3").click(function () {
+            $.get('@Url.Action("PartialBilboard","Data")').success(function (e) {
+                $("#InsertPartial3").before(e);
+                @*@TempData["select"] = 3;*@
+            });
+        });
+        //дублирование для остальных поверхностей
+
 
     });
+
 </script>
 <h2> Добавить новый билбодер</h2>
+
 @*<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">*@
 @Scripts.Render("~/Content/Map")
 @using (Html.BeginForm("Bilboard", "Data", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
+    <input type="text" name="Surface[0].Height" value="werra">
+    <input type="text" name="Surface[1].Height" value="werra">
     @Html.AntiForgeryToken()
     <div class="form-horizontal">
         <hr />
@@ -136,14 +206,16 @@
         <div class="form-group">
             @Html.Label("Разрешен с ", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.StartDate)
+                <input type="date"  name="StartDate" >
+                @*@Html.Editor("StartDate")*@
                 @Html.ValidationMessageFor(model => model.StartDate)
             </div>
         </div>
         <div class="form-group">
             @Html.Label("до", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.EndDate)
+                <input type="date" name="EndDate">
+                @*@Html.EditorFor(model => model.EndDate)*@
                 @Html.ValidationMessageFor(model => model.EndDate)
             </div>
         </div>
@@ -164,14 +236,14 @@
                 @Html.Label("Сторона А", new {@class = "control-label col-md-2", style = "margin-left: 55px"})
                 @Html.HiddenFor(model => model.Sides.Single().Name)
             </div>
-            @{Html.RenderPartial("~/Views/Shared/PartialView/AddSurface.cshtml", Model);}
+            @*@{Html.RenderPartial("~/Views/Shared/PartialView/AddSurface.cshtml", Model);}*@
             @*Добавить площадь*@
             <div class="form-group">
                 <div class="col-md-10">
-                    <a href="#" id="Add1" style="color: #428bca; font-weight: bold;">+Добавить площадь</a>
+                    <a href="#" id="AddButton1" style="color: #428bca; font-weight: bold;">+Добавить площадь</a>
                 </div>
             </div>
-
+            <div id="InsertPartial1"></div>
         </div>
         
         @*Сторона Б*@
@@ -180,14 +252,14 @@
                 @Html.HiddenFor(model => model.Sides.Single().Name)
                 @Html.Label("Сторона Б", new {@class = "control-label col-md-2", style = "margin-left:45px"})
             </div>
-            @{Html.RenderPartial("~/Views/Shared/PartialView/AddSurface.cshtml", Model);}
+            @*@{Html.RenderPartial("~/Views/Shared/PartialView/AddSurface.cshtml", Model);}*@
             @*Добавить площадь*@
             <div class="form-group">
                 <div class="col-md-10">
-                    <a href="#" id="Add2" style="color: #428bca; font-weight: bold;">+Добавить площадь</a>
+                    <a href="#" id="AddButton2" style="color: #428bca; font-weight: bold;">+Добавить площадь</a>
                 </div>
             </div>
-
+            <div id="InsertPartial2"></div>
         </div>
 
         @*Сторона C*@
@@ -196,14 +268,14 @@
                 @Html.HiddenFor(model => model.Sides.Single().Name)
                 @Html.Label("Сторона C", new {@class = "control-label col-md-2", style = "margin-left:45px"})
             </div>
-            @{Html.RenderPartial("~/Views/Shared/PartialView/AddSurface.cshtml", Model);}
+            @*@{Html.RenderPartial("~/Views/Shared/PartialView/AddSurface.cshtml", Model);}*@
             @*Добавить площадь*@
             <div class="form-group">
                 <div class="col-md-10">
-                    <a href="#" id="Add3" style="color: #428bca; font-weight: bold;">+Добавить площадь</a>
+                    <a href="#" id="AddButton3" style="color: #428bca; font-weight: bold;">+Добавить площадь</a>
                 </div>
             </div>
-
+           <div id="InsertPartial3"></div>
         </div>
 
         <div class="form-group" style="width: 600px; height: 500px" id="map">
@@ -226,8 +298,6 @@
                 @*<span class="field-validation-valid" data-valmsg-for="Dolgota" data-valmsg-replace="true"></span>*@
             </div>
         </div>
-
-
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Добавить" class="btn btn-default" />
