@@ -1278,7 +1278,9 @@ namespace Sciencecom.Controllers
             if (billboard == null)
             {
                 ViewBag.Results = null;
-                return View(context.Billboards1.OrderByDescending(m => m.StartDate));
+                context.Billboards1.OrderByDescending(m => m.StartDate);
+                //return View(context.Billboards1.OrderByDescending(m => m.StartDate));
+                return View(context);
             }
             else
             {
@@ -1288,13 +1290,16 @@ namespace Sciencecom.Controllers
                 //{
                 //    result = result.Where(m => m.StartDate == metalConstruction.StartDate);
                 //}
+                SciencecomEntities TempContex;
                 ViewBag.Results = result.Count();
-                return View(result.OrderByDescending(m => m.StartDate));
+                result.OrderByDescending(m => m.StartDate);
+                return View(result);
             }
         }
 
         public IEnumerable<Billboards1> SearchBillboard(Billboards1 billboard, string day, string month, string year)
         {
+            SciencecomEntities SearchBillboard;
             context = new SciencecomEntities();
             IEnumerable<Billboards1> result = context.Billboards1;
             //if (billboard.Owner.Id != 0) ToDo Implement Properly!
@@ -1329,6 +1334,7 @@ namespace Sciencecom.Controllers
             {
                 result = result.Where(m => m.StartDate.Year == int.Parse(year));
             }
+            //context.Billboards1.Contains(result);
             return result;
         }
 

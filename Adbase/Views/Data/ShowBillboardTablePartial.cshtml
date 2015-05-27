@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Sciencecom.Models.Billboards1>
+﻿@model Sciencecom.Models.SciencecomEntities
 @using Sciencecom.Models
 @using Microsoft.AspNet.Identity.EntityFramework
 @using Microsoft.AspNet.Identity
@@ -22,43 +22,47 @@
         №
     </th>
     <th>
-        @Html.DisplayNameFor(model => model.Owner.Name)
+        Владелец
     </th>
     <th>
-        @Html.DisplayNameFor(model => model.Locality)
+        Населенный пункт
     </th>
     <th>
-        @Html.DisplayNameFor(model => model.Street1)
+        Улица 1
     </th>
     <th>
-        @Html.DisplayNameFor(model => model.House1)
+        Дом
     </th>
     <th>
-        @Html.DisplayNameFor(model => model.Street2)
+        Улица 2
     </th>
     <th>
-        @Html.DisplayNameFor(model => model.FromStreet)
+        Сторона
     </th>
     <th>
-        @Html.DisplayNameFor(model => model.StartDate)
+        Поверхность
     </th>
-    @*<th>
-            Паспорт
-        </th>*@
     <th>
-        @Html.DisplayNameFor(model => model.EndDate)
+        Со стороны
     </th>
+    <th>
+        Разрешен С
+    </th>
+
+    <th>
+        Разрешен До.
+    </th>
+
 </tr>
 
-@foreach (var item in Model)
+@foreach (var item in Model.Billboards1)
 {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Id_show)
         </td>
         <td>
-            @*@Html.ActionLink(item.Owner.Name, "Owner", new { name = item.Owner.Name, backTo = "Billboard" })*@
-            @Html.DisplayFor(modelItem => item.Owner.Name) 
+           @Html.DisplayFor(modelItem => item.Owner.Name) 
 
         </td>
         <td>
@@ -76,6 +80,13 @@
         <td>
             @Html.DisplayFor(modelItem => item.FromStreet)
         </td>
+        <td>
+            @foreach (var size in item.Sides)
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => size.Name)
+                </td>
+            }
         <td>
             @item.StartDate.Date.ToShortDateString()
         </td>
