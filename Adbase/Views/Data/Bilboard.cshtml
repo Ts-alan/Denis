@@ -26,7 +26,7 @@
 <script src="~/Scripts/Autocomplete.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        $("a").click(function (e) {
+        $("a").click(function(e) {
             if ($(e.currentTarget).hasClass("dropdown-toggle")) {
                 if ($(".dropdown").hasClass("open")) {
                     $(".dropdown").removeClass("open");
@@ -34,7 +34,7 @@
                     $(".dropdown").addClass("open");
                 }
             }
-        })
+        });
     })
 </script>
 
@@ -51,7 +51,7 @@
 <p>
     <h3>Поиск указателей по параметрам:</h3>
 </p>
-@using (Ajax.BeginForm(ajax))
+@using (Ajax.BeginForm("ShowBillboardTablePartial","Data",ajax))
 {
     <table class="table-bordered" cellpadding="5">
         <tr>
@@ -122,7 +122,7 @@
     <p>
         <h3>Таблица данных</h3>
         @Html.ActionLink("Показать всё", "Bilboard")
-        <table class="table" cellpadding="5" id="constructionsTable">
+        <table class="table" cellpadding="5" id="billboardsTable">
             @Html.Action("ShowBillboardTablePartial", new { Billboard = ViewBag.Data, day = ViewBag.Day, month = ViewBag.Month, year = ViewBag.Year })
         </table>
     </p>

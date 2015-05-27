@@ -54,13 +54,12 @@
 {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Id)
+            @Html.DisplayFor(modelItem => item.Id_show)
         </td>
         <td>
             @*@Html.ActionLink(item.Owner.Name, "Owner", new { name = item.Owner.Name, backTo = "Billboard" })*@
-            @*@Html.DisplayFor(modelItem => item.Owner.Name)*@ 
-            Допили меня
-            @* ToDo ДОПИЛИТЬ! *@
+            @Html.DisplayFor(modelItem => item.Owner.Name) 
+
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Locality)

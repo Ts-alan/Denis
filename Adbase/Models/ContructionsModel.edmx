@@ -24,6 +24,7 @@
           <Property Name="OnAgreement" Type="bit" Nullable="false" />
           <Property Name="Owner_Id" Type="int" Nullable="false" />
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Id_show" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="IllegalConstructions">
           <Key>
@@ -460,6 +461,7 @@
           <Property Name="Id" Type="Guid" Nullable="false" />
           <NavigationProperty Name="Owner" Relationship="SciencecomModel.FK_Billboards1_Owners" FromRole="Billboards1" ToRole="Owner" />
           <NavigationProperty Name="Sides" Relationship="SciencecomModel.FK_Sides_Billboards1" FromRole="Billboards1" ToRole="Side" />
+          <Property Name="Id_show" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="Side">
           <Key>
@@ -622,6 +624,7 @@
           <EntitySetMapping Name="Billboards1">
             <EntityTypeMapping TypeName="SciencecomModel.Billboards1">
               <MappingFragment StoreEntitySet="Billboards1">
+                <ScalarProperty Name="Id_show" ColumnName="Id_show" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Owner_Id" ColumnName="Owner_Id" />
                 <ScalarProperty Name="OnAgreement" ColumnName="OnAgreement" />

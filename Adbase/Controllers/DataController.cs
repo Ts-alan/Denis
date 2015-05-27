@@ -1301,19 +1301,19 @@ namespace Sciencecom.Controllers
             //{
             //    result = result.Where(m => m.Owner.Id == billboard.Owner.Id);
             //}
-            if (billboard.Street1 != "")
+            if (billboard.Street1 != "" && billboard.Street1 != null)
             {
                 result = result.Where(m => m.Street1.ToLower().Contains(billboard.Street1.ToLower()));
             }
-            if (billboard.Street2 != "")
+            if (billboard.Street2 != "" && billboard.Street2!=null)
             {
                 result = result.Where(m => m.Street2.ToLower().Contains(billboard.Street2.ToLower()));
             }
-            if (billboard.FromStreet != "")
+            if (billboard.FromStreet != "" && billboard.FromStreet != null)
             {
                 result = result.Where(m => m.FromStreet.ToLower().Contains(billboard.FromStreet.ToLower()));
             }
-            if (billboard.Locality != "")
+            if (billboard.Locality != "" && billboard.Locality != null)
             {
                 result = result.Where(m => m.Locality.ToLower().Contains(billboard.Locality.ToLower()));
             }

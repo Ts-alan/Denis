@@ -34,6 +34,7 @@ namespace Sciencecom.Models
         public bool OnAgreement { get; set; }
         public int Owner_Id { get; set; }
         public System.Guid Id { get; set; }
+        public int Id_show { get; set; }
     
         public virtual Owner Owner { get; set; }
         public virtual ICollection<Side> Sides { get; set; }
