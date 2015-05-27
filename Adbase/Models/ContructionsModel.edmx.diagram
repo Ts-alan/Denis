@@ -18,9 +18,9 @@
         <EntityTypeShape EntityType="SciencecomModel.Billboards1" Width="1.5" PointX="6.5" PointY="2.375" />
         <EntityTypeShape EntityType="SciencecomModel.Side" Width="1.5" PointX="8.75" PointY="3.5" />
         <EntityTypeShape EntityType="SciencecomModel.Surface" Width="1.5" PointX="11" PointY="2.875" />
-        <AssociationConnector Association="SciencecomModel.FK_BillboardSide" />
-        <AssociationConnector Association="SciencecomModel.FK_OwnerBillboards" />
-        <AssociationConnector Association="SciencecomModel.FK_SideSurface" />
+        <AssociationConnector Association="SciencecomModel.FK_Billboards1_Owners" />
+        <AssociationConnector Association="SciencecomModel.FK_Sides_Billboards1" />
+        <AssociationConnector Association="SciencecomModel.FK_Surfaces_Sides" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

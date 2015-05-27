@@ -1232,26 +1232,35 @@ namespace Sciencecom.Controllers
 
         [HttpPost]
         [Authorize]
-        
-        public ActionResult Bilboard(string owner, string locality, string street1, string street2, string fromStreet, string day, string month, string year)
+
+        public ActionResult Bilboard(Sciencecom.Models.Billboards1 billboards, List<Sciencecom.Models.Surface> surfaces,  IEnumerable<string> size, string Owner )
         {
-            Owner o = new Owner();
-            if (!string.IsNullOrEmpty(owner))
+            var idOwner = context.Owners.Single(m => m.Name == Owner).Id;
+            billboards.Owner_Id = idOwner;
+            Guid BillboardsId = Guid.NewGuid();
+            billboards.Id = BillboardsId;
+            List<Side> ListSide= new List<Side>();
+            if (size != null)
             {
-                o = context.Owners.Where(m => m.Name == owner).Single();
+                foreach (var i in size)
+                {
+                    
+                   
+                    for (var j = 0; j < surfaces.Count; j++)
+                    {
+                        Guid SideId = Guid.NewGuid();
+                        ListSide.Add(new Side() {Billboard_Id = BillboardsId, Id = SideId, Name = i});
+                        surfaces.ElementAt(j).Side_Id = SideId;
+                    }
+
+                }
+                context.Sides.AddRange(ListSide);
+                context.Surfaces.AddRange(surfaces);
             }
-            Billboards1 mc = new Billboards1()
-            {
-                Street1 = street1,
-                Street2 = street2,
-                FromStreet = fromStreet,
-                Owner = o,
-                Locality = locality
-            };
-            ViewBag.Data = mc;
-            ViewBag.Day = day;
-            ViewBag.Month = month;
-            ViewBag.Year = year;
+            context.Billboards1.Add(billboards);
+
+            context.SaveChanges();
+
             return View();
         }
 
@@ -1323,10 +1332,11 @@ namespace Sciencecom.Controllers
             return result;
         }
 
-        public ActionResult PartialBilboard()
+        public ActionResult PartialBilboard(int param , string size)
         {
-
-            return PartialView();
+            ViewBag.Incerment = param;
+            ViewBag.Size = size;
+            return View();
         }
 
     }

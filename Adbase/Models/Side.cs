@@ -19,9 +19,9 @@ namespace Sciencecom.Models
             this.Surfaces = new HashSet<Surface>();
         }
     
-        public int Id { get; set; }
         public string Name { get; set; }
-        public int Billboard_Id { get; set; }
+        public System.Guid Billboard_Id { get; set; }
+        public System.Guid Id { get; set; }
     
         public virtual Billboards1 Billboards1 { get; set; }
         public virtual ICollection<Surface> Surfaces { get; set; }

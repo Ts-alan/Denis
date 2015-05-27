@@ -9,7 +9,6 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Height" Type="real" />
           <Property Name="Breadth" Type="real" />
           <Property Name="Street1" Type="nvarchar(max)" Nullable="false" />
@@ -24,6 +23,7 @@
           <Property Name="Locality" Type="nchar" MaxLength="10" />
           <Property Name="OnAgreement" Type="bit" Nullable="false" />
           <Property Name="Owner_Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="IllegalConstructions">
           <Key>
@@ -95,9 +95,9 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Billboard_Id" Type="int" Nullable="false" />
+          <Property Name="Billboard_Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="Streets">
           <Key>
@@ -111,7 +111,6 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Height" Type="int" Nullable="false" />
           <Property Name="Width" Type="int" Nullable="false" />
           <Property Name="Space" Type="int" Nullable="false" />
@@ -120,7 +119,8 @@
           <Property Name="Story" Type="nvarchar(max)" Nullable="false" />
           <Property Name="StartDate" Type="datetime" Nullable="false" />
           <Property Name="EndDate" Type="datetime" Nullable="false" />
-          <Property Name="Side_Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Side_Id" Type="uniqueidentifier" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -132,15 +132,15 @@
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
-        <Association Name="FK_BillboardSide">
-          <End Role="Billboards1" Type="Self.Billboards1" Multiplicity="1" />
-          <End Role="Sides" Type="Self.Sides" Multiplicity="*" />
+        <Association Name="FK_Billboards1_Owners">
+          <End Role="Owners" Type="Self.Owners" Multiplicity="1" />
+          <End Role="Billboards1" Type="Self.Billboards1" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Billboards1">
+            <Principal Role="Owners">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Sides">
-              <PropertyRef Name="Billboard_Id" />
+            <Dependent Role="Billboards1">
+              <PropertyRef Name="Owner_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -192,20 +192,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_OwnerBillboards">
-          <End Role="Owners" Type="Self.Owners" Multiplicity="1" />
-          <End Role="Billboards1" Type="Self.Billboards1" Multiplicity="*" />
+        <Association Name="FK_Sides_Billboards1">
+          <End Role="Billboards1" Type="Self.Billboards1" Multiplicity="1" />
+          <End Role="Sides" Type="Self.Sides" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Owners">
+            <Principal Role="Billboards1">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Billboards1">
-              <PropertyRef Name="Owner_Id" />
+            <Dependent Role="Sides">
+              <PropertyRef Name="Billboard_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_SideSurface">
-          <End Role="Sides" Type="Self.Sides" Multiplicity="1" />
+        <Association Name="FK_Surfaces_Sides">
+          <End Role="Sides" Type="Self.Sides" Multiplicity="0..1" />
           <End Role="Surfaces" Type="Self.Surfaces" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Sides">
@@ -226,9 +226,9 @@
           <EntitySet Name="Streets" EntityType="Self.Streets" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Surfaces" EntityType="Self.Surfaces" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_BillboardSide" Association="Self.FK_BillboardSide">
+          <AssociationSet Name="FK_Billboards1_Owners" Association="Self.FK_Billboards1_Owners">
+            <End Role="Owners" EntitySet="Owners" />
             <End Role="Billboards1" EntitySet="Billboards1" />
-            <End Role="Sides" EntitySet="Sides" />
           </AssociationSet>
           <AssociationSet Name="FK_LightConstructions_Owners" Association="Self.FK_LightConstructions_Owners">
             <End Role="Owners" EntitySet="Owners" />
@@ -246,11 +246,11 @@
             <End Role="Owners" EntitySet="Owners" />
             <End Role="MetalConstructions" EntitySet="MetalConstructions" />
           </AssociationSet>
-          <AssociationSet Name="FK_OwnerBillboards" Association="Self.FK_OwnerBillboards">
-            <End Role="Owners" EntitySet="Owners" />
+          <AssociationSet Name="FK_Sides_Billboards1" Association="Self.FK_Sides_Billboards1">
             <End Role="Billboards1" EntitySet="Billboards1" />
+            <End Role="Sides" EntitySet="Sides" />
           </AssociationSet>
-          <AssociationSet Name="FK_SideSurface" Association="Self.FK_SideSurface">
+          <AssociationSet Name="FK_Surfaces_Sides" Association="Self.FK_Surfaces_Sides">
             <End Role="Sides" EntitySet="Sides" />
             <End Role="Surfaces" EntitySet="Surfaces" />
           </AssociationSet>
@@ -311,7 +311,7 @@
           <NavigationProperty Name="MetalConstructions" Relationship="Self.FK_MetalConstructions_Owners" FromRole="Owners" ToRole="MetalConstructions" />
           <NavigationProperty Name="LightConstructionsWhoAdded" Relationship="SciencecomModel.FK_LightConstructions_Owners1" FromRole="Owner" ToRole="LightConstruction" />
           <NavigationProperty Name="MetalConstructionsWhoAdded" Relationship="SciencecomModel.FK_MetalConstructions_Owners1" FromRole="Owner" ToRole="MetalConstruction" />
-          <NavigationProperty Name="Billboards1" Relationship="SciencecomModel.FK_OwnerBillboards" FromRole="Owner" ToRole="Billboards1" />
+          <NavigationProperty Name="Billboards1" Relationship="SciencecomModel.FK_Billboards1_Owners" FromRole="Owner" ToRole="Billboards1" />
         </EntityType>
         <Association Name="FK_LightConstructions_Owners">
           <End Role="Owners" Type="Self.Owner" Multiplicity="1" />
@@ -363,15 +363,15 @@
           <EntitySet Name="Billboards1" EntityType="SciencecomModel.Billboards1" />
           <EntitySet Name="Sides" EntityType="SciencecomModel.Side" />
           <EntitySet Name="Surfaces" EntityType="SciencecomModel.Surface" />
-          <AssociationSet Name="FK_BillboardSide" Association="SciencecomModel.FK_BillboardSide">
-            <End Role="Billboards1" EntitySet="Billboards1" />
-            <End Role="Side" EntitySet="Sides" />
-          </AssociationSet>
-          <AssociationSet Name="FK_OwnerBillboards" Association="SciencecomModel.FK_OwnerBillboards">
+          <AssociationSet Name="FK_Billboards1_Owners" Association="SciencecomModel.FK_Billboards1_Owners">
             <End Role="Owner" EntitySet="Owners" />
             <End Role="Billboards1" EntitySet="Billboards1" />
           </AssociationSet>
-          <AssociationSet Name="FK_SideSurface" Association="SciencecomModel.FK_SideSurface">
+          <AssociationSet Name="FK_Sides_Billboards1" Association="SciencecomModel.FK_Sides_Billboards1">
+            <End Role="Billboards1" EntitySet="Billboards1" />
+            <End Role="Side" EntitySet="Sides" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Surfaces_Sides" Association="SciencecomModel.FK_Surfaces_Sides">
             <End Role="Side" EntitySet="Sides" />
             <End Role="Surface" EntitySet="Surfaces" />
           </AssociationSet>
@@ -443,7 +443,6 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Height" Type="Single" />
           <Property Name="Breadth" Type="Single" />
           <Property Name="Street1" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -458,24 +457,24 @@
           <Property Name="Locality" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="OnAgreement" Type="Boolean" Nullable="false" />
           <Property Name="Owner_Id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Sides" Relationship="SciencecomModel.FK_BillboardSide" FromRole="Billboards1" ToRole="Side" />
-          <NavigationProperty Name="Owner" Relationship="SciencecomModel.FK_OwnerBillboards" FromRole="Billboards1" ToRole="Owner" />
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Owner" Relationship="SciencecomModel.FK_Billboards1_Owners" FromRole="Billboards1" ToRole="Owner" />
+          <NavigationProperty Name="Sides" Relationship="SciencecomModel.FK_Sides_Billboards1" FromRole="Billboards1" ToRole="Side" />
         </EntityType>
         <EntityType Name="Side">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Billboard_Id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Billboards1" Relationship="SciencecomModel.FK_BillboardSide" FromRole="Side" ToRole="Billboards1" />
-          <NavigationProperty Name="Surfaces" Relationship="SciencecomModel.FK_SideSurface" FromRole="Side" ToRole="Surface" />
+          <Property Name="Billboard_Id" Type="Guid" Nullable="false" />
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Billboards1" Relationship="SciencecomModel.FK_Sides_Billboards1" FromRole="Side" ToRole="Billboards1" />
+          <NavigationProperty Name="Surfaces" Relationship="SciencecomModel.FK_Surfaces_Sides" FromRole="Side" ToRole="Surface" />
         </EntityType>
         <EntityType Name="Surface">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Height" Type="Int32" Nullable="false" />
           <Property Name="Width" Type="Int32" Nullable="false" />
           <Property Name="Space" Type="Int32" Nullable="false" />
@@ -484,22 +483,11 @@
           <Property Name="Story" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Side_Id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Side" Relationship="SciencecomModel.FK_SideSurface" FromRole="Surface" ToRole="Side" />
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Side_Id" Type="Guid" />
+          <NavigationProperty Name="Side" Relationship="SciencecomModel.FK_Surfaces_Sides" FromRole="Surface" ToRole="Side" />
         </EntityType>
-        <Association Name="FK_BillboardSide">
-          <End Type="SciencecomModel.Billboards1" Role="Billboards1" Multiplicity="1" />
-          <End Type="SciencecomModel.Side" Role="Side" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Billboards1">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Side">
-              <PropertyRef Name="Billboard_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_OwnerBillboards">
+        <Association Name="FK_Billboards1_Owners">
           <End Type="SciencecomModel.Owner" Role="Owner" Multiplicity="1" />
           <End Type="SciencecomModel.Billboards1" Role="Billboards1" Multiplicity="*" />
           <ReferentialConstraint>
@@ -511,8 +499,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_SideSurface">
-          <End Type="SciencecomModel.Side" Role="Side" Multiplicity="1" />
+        <Association Name="FK_Sides_Billboards1">
+          <End Type="SciencecomModel.Billboards1" Role="Billboards1" Multiplicity="1" />
+          <End Type="SciencecomModel.Side" Role="Side" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Billboards1">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Side">
+              <PropertyRef Name="Billboard_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Surfaces_Sides">
+          <End Type="SciencecomModel.Side" Role="Side" Multiplicity="0..1" />
           <End Type="SciencecomModel.Surface" Role="Surface" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Side">
@@ -622,6 +622,7 @@
           <EntitySetMapping Name="Billboards1">
             <EntityTypeMapping TypeName="SciencecomModel.Billboards1">
               <MappingFragment StoreEntitySet="Billboards1">
+                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Owner_Id" ColumnName="Owner_Id" />
                 <ScalarProperty Name="OnAgreement" ColumnName="OnAgreement" />
                 <ScalarProperty Name="Locality" ColumnName="Locality" />
@@ -636,16 +637,15 @@
                 <ScalarProperty Name="Street1" ColumnName="Street1" />
                 <ScalarProperty Name="Breadth" ColumnName="Breadth" />
                 <ScalarProperty Name="Height" ColumnName="Height" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Sides">
             <EntityTypeMapping TypeName="SciencecomModel.Side">
               <MappingFragment StoreEntitySet="Sides">
+                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Billboard_Id" ColumnName="Billboard_Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -653,6 +653,7 @@
             <EntityTypeMapping TypeName="SciencecomModel.Surface">
               <MappingFragment StoreEntitySet="Surfaces">
                 <ScalarProperty Name="Side_Id" ColumnName="Side_Id" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="EndDate" ColumnName="EndDate" />
                 <ScalarProperty Name="StartDate" ColumnName="StartDate" />
                 <ScalarProperty Name="Story" ColumnName="Story" />
@@ -661,7 +662,6 @@
                 <ScalarProperty Name="Space" ColumnName="Space" />
                 <ScalarProperty Name="Width" ColumnName="Width" />
                 <ScalarProperty Name="Height" ColumnName="Height" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

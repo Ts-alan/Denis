@@ -11,6 +11,7 @@
 }
 <script type="text/javascript">
     $(document).ready(function() {
+        var i=0;
         //выпадающий список
         $("#SideIndex").change(function() {
             var selectIndex = document.getElementById("SideIndex").selectedIndex;
@@ -72,25 +73,29 @@
             });
 
         }
+
+        function Increment() {
+            return i++;
+        }
         //скрипт для добавить площадь
         $("#AddButton1").click(function () {
-            $.get('@Url.Action("PartialBilboard","Data")').success(function(e) {
+            $.get('@Url.Action("PartialBilboard","Data")', { param: Increment(), size: "А" }).success(function (e) {
                 $("#InsertPartial1").before(e);
                 InsertOn();
-                @*'@TempData["select"]' = 1;*@
+                
             });
 
         });
         $("#AddButton2").click(function () {
-            $.get('@Url.Action("PartialBilboard","Data")').success(function (e) {
+            $.get('@Url.Action("PartialBilboard","Data")', { param: Increment(), size: "B" }).success(function (e) {
                 $("#InsertPartial2").before(e);
-                @*@TempData["select"] = 2;*@
+                
             });
         });
         $("#AddButton3").click(function () {
-            $.get('@Url.Action("PartialBilboard","Data")').success(function (e) {
+            $.get('@Url.Action("PartialBilboard","Data")', { param: Increment(), size: "C" }).success(function (e) {
                 $("#InsertPartial3").before(e);
-                @*@TempData["select"] = 3;*@
+                
             });
         });
         //дублирование для остальных поверхностей
@@ -105,8 +110,6 @@
 @Scripts.Render("~/Content/Map")
 @using (Html.BeginForm("Bilboard", "Data", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    <input type="text" name="Surface[0].Height" value="werra">
-    <input type="text" name="Surface[1].Height" value="werra">
     @Html.AntiForgeryToken()
     <div class="form-horizontal">
         <hr />

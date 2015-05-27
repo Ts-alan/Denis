@@ -19,7 +19,6 @@ namespace Sciencecom.Models
             this.Sides = new HashSet<Side>();
         }
     
-        public int Id { get; set; }
         public Nullable<float> Height { get; set; }
         public Nullable<float> Breadth { get; set; }
         public string Street1 { get; set; }
@@ -34,8 +33,9 @@ namespace Sciencecom.Models
         public string Locality { get; set; }
         public bool OnAgreement { get; set; }
         public int Owner_Id { get; set; }
-
-        public virtual ICollection<Side> Sides { get; set; }
+        public System.Guid Id { get; set; }
+    
         public virtual Owner Owner { get; set; }
+        public virtual ICollection<Side> Sides { get; set; }
     }
 }

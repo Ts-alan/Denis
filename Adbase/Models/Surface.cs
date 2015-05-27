@@ -14,7 +14,6 @@ namespace Sciencecom.Models
     
     public partial class Surface
     {
-        public int Id { get; set; }
         public int Height { get; set; }
         public int Width { get; set; }
         public int Space { get; set; }
@@ -23,7 +22,8 @@ namespace Sciencecom.Models
         public string Story { get; set; }
         public System.DateTime StartDate { get; set; }
         public System.DateTime EndDate { get; set; }
-        public int Side_Id { get; set; }
+        public int Id { get; set; }
+        public Nullable<System.Guid> Side_Id { get; set; }
     
         public virtual Side Side { get; set; }
     }
