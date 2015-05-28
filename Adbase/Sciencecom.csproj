@@ -450,6 +450,7 @@
     <Content Include="Views\Data\CreateBilboard.cshtml" />
     <Content Include="Views\Data\PartialBilboard.cshtml" />
     <Content Include="Views\Data\ShowBillboardTablePartial.cshtml" />
+    <Content Include="Views\Data\DeleteBilboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Start\App_Data\" />

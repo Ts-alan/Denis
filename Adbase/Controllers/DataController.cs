@@ -1272,6 +1272,51 @@ namespace Sciencecom.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Admin, ChiefEditAll,ChiefEditOwn, SupplierEditAll, SupplierEditOwn")]
+        public ActionResult DeleteBilboard(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Billboards1 mc = context.Billboards1.Find(id);
+            if (mc == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.Owners = context.Owners.Select(m => m.Name);
+            return View(mc);
+        }
+        [HttpPost]
+        [Authorize(Roles = "Admin, ChiefEditAll,ChiefEditOwn, SupplierEditAll, SupplierEditOwn")]
+        public ActionResult DeleteBilboard(Guid id)
+        {
+            Billboards1 mc = context.Billboards1.Find(id);
+            context.Billboards1.Remove(mc);
+            IQueryable<Side> sideDelete = context.Sides.Where(a => a.Billboard_Id == id);
+            context.Sides.RemoveRange(sideDelete);
+            IQueryable<Surface> surfaceDelete = context.Surfaces;
+            
+            for (int i = 0; i < sideDelete.Count(); i++)
+            {
+                surfaceDelete.Where(a => a.Side_Id == sideDelete.ElementAt(i).Id);
+            }
+            context.Surfaces.RemoveRange(surfaceDelete);
+            context.SaveChanges();
+
+            //string src = "~/Images/Metal/" + id + "1.jpg";
+            //string path = Server.MapPath(src);
+            //if (System.IO.File.Exists(path)) System.IO.File.Delete(path);
+
+            //src = "~/Images/Metal/" + id + "2.jpg";
+            //path = Server.MapPath(src);
+            //if (System.IO.File.Exists(path)) System.IO.File.Delete(path);
+
+            //src = "~/Images/Metal/p" + id + ".jpg";
+            //path = Server.MapPath(src);
+            //if (System.IO.File.Exists(path)) System.IO.File.Delete(path);
+            return RedirectToAction("Bilboard", context.MetalConstructions);
+        }
         [Authorize]
         public ActionResult ShowBillboardTablePartial(Billboards1 billboard, string locality, string day, string month, string year)
         {
