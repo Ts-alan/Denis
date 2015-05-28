@@ -5,10 +5,11 @@
 @using Sciencecom.Models
 @model  Sciencecom.Models.Billboards1
 @{
-    ViewBag.Title = "CreateBilboard";
-    SelectList owners = new SelectList(new SciencecomEntities().Owners.Select(m=>m.Name).ToList());
+    ViewBag.Title = "EditBilboard";
+    SelectList owners = new SelectList(new SciencecomEntities().Owners.Select(m => m.Name).ToList());
 
 }
+@Scripts.Render("~/Content/Map")
 <script type="text/javascript">
     $(document).ready(function() {
         var i=0;
@@ -82,33 +83,33 @@
             $.get('@Url.Action("PartialBilboard","Data")', { param: Increment(), size: "А" }).success(function (e) {
                 $("#InsertPartial1").before(e);
                 InsertOn();
-                
+
             });
 
         });
         $("#AddButton2").click(function () {
             $.get('@Url.Action("PartialBilboard","Data")', { param: Increment(), size: "B" }).success(function (e) {
                 $("#InsertPartial2").before(e);
-                
+
             });
         });
         $("#AddButton3").click(function () {
             $.get('@Url.Action("PartialBilboard","Data")', { param: Increment(), size: "C" }).success(function (e) {
                 $("#InsertPartial3").before(e);
-                
+
             });
         });
-        //дублирование для остальных поверхностей
-
 
     });
-
+    function SetCoordinate() {
+        var mass = [55.8, 37.8];
+        return mass;
+    }
 </script>
 <h2> Добавить новый билбодер</h2>
-
 @*<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">*@
-@Scripts.Render("~/Content/Map")
-@using (Html.BeginForm("Bilboard", "Data", FormMethod.Post, new { enctype = "multipart/form-data" }))
+
+@using (Html.BeginForm("EditBillboard", "Data", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     <div class="form-horizontal">
@@ -209,16 +210,16 @@
         <div class="form-group">
             @Html.Label("Разрешен с ", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <input type="date"  name="StartDate" >
-                @*@Html.Editor("StartDate")*@
+                <input type="text" name="StartDate" value="@Model.StartDate.ToString().Substring(0,10)"  >
+                @*@Html.EditorFor(model => model.StartDate )*@
                 @Html.ValidationMessageFor(model => model.StartDate)
             </div>
         </div>
         <div class="form-group">
             @Html.Label("до", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <input type="date" name="EndDate">
-                @*@Html.EditorFor(model => model.EndDate)*@
+                <input type="text" name="EndDate" value="@Model.EndDate.ToString().Substring(0, 10)">
+                @*@Html.EditorFor(model => model.EndDate.Date)*@
                 @Html.ValidationMessageFor(model => model.EndDate)
             </div>
         </div>
@@ -232,14 +233,13 @@
                 @Html.ValidationMessageFor(model => model.PassportNumber)
             </div>
         </div>
-
         @*Сторона А*@
         <div class="form-group">
             <div class="form-group">
-                @Html.Label("Сторона А", new {@class = "control-label col-md-2", style = "margin-left: 55px"})
+                @Html.Label("Сторона А", new { @class = "control-label col-md-2", style = "margin-left: 55px" })
                 @*@Html.HiddenFor(model => model.Sides.Single().Name)*@
             </div>
-           @*Добавить площадь*@
+         @*Добавить площадь*@
             <div class="form-group">
                 <div class="col-md-10">
                     <a href="#" id="AddButton1" style="color: #428bca; font-weight: bold;">+Добавить площадь</a>
@@ -247,13 +247,14 @@
             </div>
             <div id="InsertPartial1"></div>
         </div>
-        
+
         @*Сторона Б*@
         <div class="form-group" id="SizeB" style="display: none">
             <div class="form-group">
                 @*@Html.HiddenFor(model => model.Sides.Single().Name)*@
-                @Html.Label("Сторона Б", new {@class = "control-label col-md-2", style = "margin-left:45px"})
+                @Html.Label("Сторона Б", new { @class = "control-label col-md-2", style = "margin-left:45px" })
             </div>
+            
             @*Добавить площадь*@
             <div class="form-group">
                 <div class="col-md-10">
@@ -267,17 +268,17 @@
         <div class="form-group" id="SizeC" style="display: none">
             <div class="form-group">
                 @*@Html.HiddenFor(model => model.Sides.Single().Name)*@
-                @Html.Label("Сторона C", new {@class = "control-label col-md-2", style = "margin-left:45px"})
+                @Html.Label("Сторона C", new { @class = "control-label col-md-2", style = "margin-left:45px" })
             </div>
-            @*@{Html.RenderPartial("~/Views/Shared/PartialView/AddSurface.cshtml", Model);}*@
             @*Добавить площадь*@
             <div class="form-group">
                 <div class="col-md-10">
                     <a href="#" id="AddButton3" style="color: #428bca; font-weight: bold;">+Добавить площадь</a>
                 </div>
             </div>
-           <div id="InsertPartial3"></div>
+            <div id="InsertPartial3"></div>
         </div>
+       
 
         <div class="form-group" style="width: 600px; height: 500px" id="map">
         </div>
@@ -285,7 +286,7 @@
         <div class="form-group">
             <label class="control-label col-md-2" for="Shirota">Широта</label>
             <div class="col-md-10">
-                <input type="text" id="Shirota" name="Height" readonly required/>
+                <input type="text" id="Shirota" name="Height" readonly required />
                 @Html.ValidationMessageFor(model => model.Height)
                 @*<span class="field-validation-valid" data-valmsg-for="Shirota" data-valmsg-replace="true"></span>*@
             </div>
@@ -301,7 +302,7 @@
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Добавить" class="btn btn-default" />
+                <input type="submit" value="Сохранить" class="btn btn-default" />
             </div>
         </div>
     </div>
@@ -310,3 +311,4 @@
 
 
 }
+

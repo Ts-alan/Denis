@@ -122,7 +122,7 @@
     string role = user.Roles.Select(m => m.Role.Name).First().ToString();
     if ((role == "Admin") || (role == "ChiefEditAll") || (role == "SupplierEditAll"))
     {
-        @Html.ActionLink("Изменить", "EditMetal", new { id = item.Id })<br />
+        @Html.ActionLink("Изменить", "EditBillboard", new { id = item.Id })<br />
                         @Html.ActionLink("Удалить", "DeleteBilboard", new { id = item.Id })<br />
     }
     else

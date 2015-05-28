@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.Ajax.Utilities;
 
 namespace Sciencecom.Controllers
 {
@@ -1394,6 +1395,53 @@ namespace Sciencecom.Controllers
             ViewBag.Incerment = param;
             ViewBag.Size = size;
             return View();
+        }
+        public ActionResult EditBillboard(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Billboards1 mc = context.Billboards1.Find(id);
+            if (mc == null)
+            {
+                return HttpNotFound();
+            }
+            
+            return View(mc);
+        }
+        [HttpPost]
+        public ActionResult EditBillboard(Billboards1 BillboardConstruction, string Owner, HttpPostedFileBase passport1, HttpPostedFileBase passport2, HttpPostedFileBase photo)
+        {
+
+            var mc = context.Billboards1.Find(BillboardConstruction.Id);
+            var idOwner = context.Owners.Where(m => m.Name == Owner).Single().Id;
+            mc.Owner_Id = idOwner;
+            mc.Street1 = BillboardConstruction.Street1;
+            mc.Street2 = BillboardConstruction.Street2;
+            mc.FromStreet = BillboardConstruction.FromStreet;
+            mc.Breadth = BillboardConstruction.Breadth;
+            mc.StartDate = BillboardConstruction.StartDate;
+            mc.EndDate = BillboardConstruction.EndDate;
+            mc.Height = BillboardConstruction.Height;
+            mc.Comment = BillboardConstruction.Comment;
+            mc.ContractNumber = BillboardConstruction.ContractNumber;
+            mc.Locality = BillboardConstruction.Locality;
+            mc.House1 = BillboardConstruction.House1;
+            mc.OnAgreement = BillboardConstruction.OnAgreement;
+            mc.PassportNumber = BillboardConstruction.PassportNumber;
+            
+            ModelState["Owner"].Errors.Clear();
+            //if (ModelState.IsValid)
+            //{
+                context.SaveChanges();
+                return RedirectToAction("Bilboard", context.MetalConstructions);
+            //}
+            //else
+            //{
+            //    return View(mc);
+            //}
         }
 
     }

@@ -53,13 +53,6 @@
             }
         
     });
-    //var myPlacemark = new ymaps.GeoObject({
-    //    geometry: {
-    //        type: "Point",
-    //        coordinates: [53.9074, 27.5426]
-    //    }
-    //});
-    //geoObjects.add(myPlacemark);
     return geoObjects;
 }
 
