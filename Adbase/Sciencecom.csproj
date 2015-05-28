@@ -200,6 +200,7 @@
       <DependentUpon>ContructionsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\LightConstructionPartial.cs" />
+    <Compile Include="Models\MapJsonModels\BilboardConstructionJsonModel.cs" />
     <Compile Include="Models\MapJsonModels\IllegalConstructionJsonModel.cs" />
     <Compile Include="Models\MapJsonModels\LightConstructionJsonModel.cs" />
     <Compile Include="Models\MapJsonModels\MetalConstructionJsonModel.cs" />
@@ -382,6 +383,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\Map\BilboardConstuctions.js" />
     <Content Include="Scripts\Map\IllegalConstructions.js" />
     <Content Include="Scripts\Map\LightConstructions.js" />
     <Content Include="Scripts\Map\MetalConstructions.js" />

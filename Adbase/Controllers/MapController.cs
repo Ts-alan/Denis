@@ -65,6 +65,24 @@ namespace Sciencecom.Controllers
             }
             return Json(objectsForJson, JsonRequestBehavior.AllowGet);
         }
+        [HttpPost]
+        [Authorize]
+        public JsonResult GetBilboard(string owner, string locality, string street1, string street2, string fromStreet, string startDay, string startMonth, string startYear, int? id = null)
+        {
+            SciencecomEntities context = new SciencecomEntities();
+            List<BilboardConstructionJsonModel> objectsForJson = new List<BilboardConstructionJsonModel>();
+            if (id.HasValue)
+            {
+                var construction = context.Billboards1.Single(a=>a.Id_show==id);            //используется для отображения едининого объекта при прееходе по ссылке "Показать на карте"
+                if (construction != null)
+                {
+                    objectsForJson.Add(new BilboardConstructionJsonModel(construction));
+                }
+                return Json(objectsForJson, JsonRequestBehavior.AllowGet);
+            }
+            
+            return Json(objectsForJson, JsonRequestBehavior.AllowGet);
+        }
 
         [HttpPost]
         [Authorize]

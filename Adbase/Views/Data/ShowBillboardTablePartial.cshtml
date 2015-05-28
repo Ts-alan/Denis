@@ -16,6 +16,7 @@
     @ViewBag.Results;
         }
     }
+ 
 }
 <tr>
     <th>
@@ -43,9 +44,6 @@
         Поверхность
     </th>
     <th>
-        Со стороны
-    </th>
-    <th>
         Разрешен С
     </th>
 
@@ -57,47 +55,57 @@
 
 @foreach (var item in Model.Billboards1)
 {
+    
     <tr>
-        <td>
+        <td >
             @Html.DisplayFor(modelItem => item.Id_show)
         </td>
-        <td>
-           @Html.DisplayFor(modelItem => item.Owner.Name) 
+        <td >
+            @Html.DisplayFor(modelItem => item.Owner.Name)
 
         </td>
-        <td>
+        <td >
             @Html.DisplayFor(modelItem => item.Locality)
         </td>
-        <td>
+        <td >
             @Html.DisplayFor(modelItem => item.Street1)
         </td>
-        <td>
+        <td >
             @Html.DisplayFor(modelItem => item.House1)
         </td>
-        <td>
+        <td >
             @Html.DisplayFor(modelItem => item.Street2)
         </td>
-        <td>
+        <td >
             @Html.DisplayFor(modelItem => item.FromStreet)
         </td>
+
         <td>
-            @foreach (var size in item.Sides)
-            {
-                <td>
-                    @Html.DisplayFor(modelItem => size.Name)
-                </td>
-            }
-        <td>
+                      @*@foreach (var size in Model.Surfaces)
+                      {
+
+                          <tr>
+                              <td>
+                                  @size.IsSocial
+                              </td>
+                          </tr>
+                      }*@
+               
+ 
+        </td>
+
+           
+         <td>
             @item.StartDate.Date.ToShortDateString()
-        </td>
-        <td>
+          </td>
+           <td>
             @item.EndDate.Date.ToShortDateString()
-        </td>
+           </td>
 
-        <td>
-            @{
+                <td>
+                    @{
 
-                <b>@Html.ActionLink("Документы", "Documents", new { id = item.Id, type = "m" })</b><br />
+                        <b>@Html.ActionLink("Документы", "Documents", new { id = item.Id, type = "m" })</b><br />
     string idLink = "mapLink" + item.Id.ToString();
     @*<a style="cursor: pointer" id="@idLink">Показать на карте</a><br />
         <script>
@@ -107,7 +115,7 @@
                  ShowMap("@item.Shirota", "@item.Dolgota");
              });
         </script>*@
-    string mapLink = "/Map/?type=m&id=" + item.Id;
+    string mapLink = "/Map/?type=b&id=" + item.Id_show;
     <a href="@mapLink" target="_blank">Показать на карте</a><br />
     var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
     ApplicationUser user = um.FindByName(User.Identity.GetUserName());
@@ -115,18 +123,18 @@
     if ((role == "Admin") || (role == "ChiefEditAll") || (role == "SupplierEditAll"))
     {
         @Html.ActionLink("Изменить", "EditMetal", new { id = item.Id })<br />
-                @Html.ActionLink("Удалить", "DeleteMetal", new { id = item.Id })<br />
+                        @Html.ActionLink("Удалить", "DeleteMetal", new { id = item.Id })<br />
     }
     else
     {
         @*if (((role == "ChiefEditOwn") || (role == "SupplierEditOwn")) && ((user.Company == item.OwnerWhoAdded.Name) || (item.OwnerWhoAdded.Name == "Неизвестно")))
-        {
-            @Html.ActionLink("Изменить", "EditMetal", new { id = item.Id })<br />
-                @Html.ActionLink("Удалить", "DeleteMetal", new { id = item.Id })<br />
+            {
+                @Html.ActionLink("Изменить", "EditMetal", new { id = item.Id })<br />
+                    @Html.ActionLink("Удалить", "DeleteMetal", new { id = item.Id })<br />
 
-        } ToDo ДОПИЛИТЬ!*@
+            } ToDo ДОПИЛИТЬ!*@
     }
-            }
-        </td>
-    </tr>
+                    }
+                </td>
+            </tr>
 }

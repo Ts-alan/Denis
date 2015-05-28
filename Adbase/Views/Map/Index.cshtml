@@ -36,64 +36,69 @@
     <script src="~/Scripts/Map/MetalConstructions.js"></script>
     <script src="~/Scripts/Map/LightConstructions.js"></script>
     <script src="~/Scripts/Map/IllegalConstructions.js"></script>
+    <script src="~/Scripts/Map/BilboardConstuctions.js"></script>
     <script src="/Scripts/Autocomplete.js"></script>
 
     <script type="text/javascript">
-        function CreateMap() {
-            $("#map").empty();
-            ymaps.ready(init);
-            var myMap;
-            var role = "@role";
-            var companyUser = "@user.Company";
-            var objectId = "@ViewBag.Id";
-            var type = "@ViewBag.Type";
-            var flag = false;
-            if ((objectId.length > 0) && (type.length > 0)) flag = true;
-            function init() {
-                myMap = new ymaps.Map("map", {
-                    center: [53.901, 27.5601],
-                    zoom: 11,
-                    behaviors: ['default', 'scrollZoom']
-                });
-                myMap.controls.add('typeSelector');
-                myMap.controls.add('zoomControl');
-                myMap.controls.add('searchControl');
-                var geoObjects = new ymaps.GeoObjectCollection();
-                if (!flag)
-                {
-                    if ($("#showMetal").is(':checked')) {
-                        geoObjects.add(GetMetalPoints("@role", "@user.Company"));
+    function CreateMap() {
+        $("#map").empty();
+        ymaps.ready(init);
+        var myMap;
+        var role = "@role";
+        var companyUser = "@user.Company";
+        var objectId = "@ViewBag.Id";
+        var type = "@ViewBag.Type";
+        var flag = false;
+        if ((objectId.length > 0) && (type.length > 0)) flag = true;
+        function init() {
+            myMap = new ymaps.Map("map", {
+                center: [53.901, 27.5601],
+                zoom: 11,
+                behaviors: ['default', 'scrollZoom']
+            });
+            myMap.controls.add('typeSelector');
+            myMap.controls.add('zoomControl');
+            myMap.controls.add('searchControl');
+            var geoObjects = new ymaps.GeoObjectCollection();
+            if (!flag) {
+                if ($("#showMetal").is(':checked')) {
+                    geoObjects.add(GetMetalPoints("@role", "@user.Company"));
+                }
+                if ($("#showLight").is(':checked')) {
+                    geoObjects.add(GetLightPoints("@role", "@user.Company"));
+                }
+                if ($("#showIllegal").is(':checked')) {
+                    geoObjects.add(GetIllegalPoints("@role"));
+                }
+            } else {
+                if (type === "m") {
+                    geoObjects.add(GetMetalPoints("@role", "@user.Company", objectId));
+                } else if (type === "l") {
+                    geoObjects.add(GetLightPoints("@role", "@user.Company", objectId));
+                } else if (type === "i") {
+                    geoObjects.add(GetIllegalPoints("@role", objectId));
                     }
-                    if ($("#showLight").is(':checked')) {
-                        geoObjects.add(GetLightPoints("@role", "@user.Company"));
-                    }
-                    if ($("#showIllegal").is(':checked')) {
-                        geoObjects.add(GetIllegalPoints("@role"));
-                    }
-                } else {
-                    if (type === "m") {
-                        geoObjects.add(GetMetalPoints("@role", "@user.Company", objectId));
-                    } else if (type === "l") {
-                        geoObjects.add(GetLightPoints("@role", "@user.Company", objectId));
-                    } else if (type === "i") {
-                        geoObjects.add(GetIllegalPoints("@role", objectId));
+                else if (type === "b") {
+                    console.log(objectId);
+                        geoObjects.add(GetBilboardPoints("@role", objectId));
                     }
                     flag = false;
                 }
-                myMap.geoObjects.add(geoObjects);
-            }
+            myMap.geoObjects.add(geoObjects);
+            console.log(geoObjects);
+        }
         }
         CreateMap();
         $(document).ready(function () {
             $("#addLinks").hide();
-            $("#addLinkImage").click(function () {
+            $("#addLinkImage").click(function() {
                 $("#addLinkImage").hide();
                 $("#addLinks").show();
-            })
-            $("#addLinks").mouseleave(function () {
+            });
+            $("#addLinks").mouseleave(function() {
                 $("#addLinkImage").show();
                 $("#addLinks").hide();
-            })
+            });
         });
     </script>
 </head>

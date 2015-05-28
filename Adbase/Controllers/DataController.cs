@@ -1285,19 +1285,20 @@ namespace Sciencecom.Controllers
             else
             {
                 billboard.Locality = locality;
-                IEnumerable<Billboards1> result = SearchBillboard(billboard, day, month, year); //ToDO Implement commented SearchBillboard method above
+                SciencecomEntities result = SearchBillboard(billboard, day, month, year); //ToDO Implement commented SearchBillboard method above
                 //if (metalConstruction.StartDate.Date != Convert.ToDateTime("01.01.0001"))
                 //{
                 //    result = result.Where(m => m.StartDate == metalConstruction.StartDate);
                 //}
                 SciencecomEntities TempContex;
-                ViewBag.Results = result.Count();
-                result.OrderByDescending(m => m.StartDate);
+                ViewBag.Results = result.Billboards1.Count();
+                result.Billboards1.OrderByDescending(m => m.StartDate);
+                
                 return View(result);
             }
         }
 
-        public IEnumerable<Billboards1> SearchBillboard(Billboards1 billboard, string day, string month, string year)
+        public SciencecomEntities SearchBillboard(Billboards1 billboard, string day, string month, string year)
         {
             SciencecomEntities SearchBillboard;
             context = new SciencecomEntities();
@@ -1334,8 +1335,13 @@ namespace Sciencecom.Controllers
             {
                 result = result.Where(m => m.StartDate.Year == int.Parse(year));
             }
+            foreach (var i in result)
+            {
+                context.Billboards1.Contains(i);  
+            }
+            
             //context.Billboards1.Contains(result);
-            return result;
+            return context;
         }
 
         public ActionResult PartialBilboard(int param , string size)
