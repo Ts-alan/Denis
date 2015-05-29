@@ -7,7 +7,7 @@
 @{
     ViewBag.Title = "CreateBilboard";
     SelectList owners = new SelectList(new SciencecomEntities().Owners.Select(m=>m.Name).ToList());
-
+    Guid IdGuid = new Guid();
 }
 <script type="text/javascript">
     $(document).ready(function() {
@@ -18,14 +18,17 @@
             if (selectIndex == 0) {
                 $("#SizeB").css("display", "none");
                 $("#SizeC").css("display", "none");
+                $("#CountSize").val("1");
             }
             if (selectIndex == 1) {
                 $("#SizeB").css("display", "block");
                 $("#SizeC").css("display", "none");
+                $("#CountSize").val("2");
             }
             if (selectIndex == 2) {
                 $("#SizeB").css("display", "block");
                 $("#SizeC").css("display", "block");
+                $("#CountSize").val("3");
             }
         });
         function InsertOn() {
@@ -112,7 +115,8 @@
 {
     @Html.AntiForgeryToken()
     <div class="form-horizontal">
-        <hr />
+    <hr/>
+        <input type="hidden" id="CountSize" name="CountSize" value="">
         @Html.ValidationSummary(true)
         @Html.ValidationMessage("Error")
         @*владелец*@
@@ -232,7 +236,21 @@
                 @Html.ValidationMessageFor(model => model.PassportNumber)
             </div>
         </div>
-
+        @Html.ValidationMessage("Photo")
+        <div class="form-group">
+            @Html.Label("Паспорт", new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                <input type="file" name="passport" accept="image/jpeg" data-val-required="Выберите файл для загрузки"/><br/>
+                @Html.Raw("Не более 1 МБ")
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Фото", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" name="photo" accept="image/jpeg" data-val-required="Выберите файл для загрузки" /><br />
+                @Html.Raw("Не более 1 МБ")
+            </div>
+        </div>
         @*Сторона А*@
         <div class="form-group">
             <div class="form-group">
@@ -269,7 +287,7 @@
                 @*@Html.HiddenFor(model => model.Sides.Single().Name)*@
                 @Html.Label("Сторона C", new {@class = "control-label col-md-2", style = "margin-left:45px"})
             </div>
-            @*@{Html.RenderPartial("~/Views/Shared/PartialView/AddSurface.cshtml", Model);}*@
+        
             @*Добавить площадь*@
             <div class="form-group">
                 <div class="col-md-10">
@@ -285,7 +303,7 @@
         <div class="form-group">
             <label class="control-label col-md-2" for="Shirota">Широта</label>
             <div class="col-md-10">
-                <input type="text" id="Shirota" name="Height" readonly required/>
+                <input type="text" id="Shirota" name="Height" readonly required />
                 @Html.ValidationMessageFor(model => model.Height)
                 @*<span class="field-validation-valid" data-valmsg-for="Shirota" data-valmsg-replace="true"></span>*@
             </div>

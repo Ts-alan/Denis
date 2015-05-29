@@ -4,6 +4,7 @@
 @using Microsoft.AspNet.Identity
 
 @{
+   
     if (ViewBag.Results != null)
     {
         if (ViewBag.Results == 0)
@@ -81,17 +82,18 @@
         </td>
 
         <td>
-                      @*@foreach (var size in Model.Surfaces)
-                      {
+            <table>
+            @foreach (var size in Model.Surfaces)
+            {
 
-                          <tr>
-                              <td>
-                                  @size.IsSocial
-                              </td>
-                          </tr>
-                      }*@
-               
- 
+                <tr>
+                    <td>
+                        @size.IsSocial
+                    </td>
+                </tr>
+            }
+            </table>
+
         </td>
 
            

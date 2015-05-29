@@ -212,6 +212,7 @@
       <DependentUpon>ContructionsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\OwnerPartial.cs" />
+    <Compile Include="Models\PartialClassForEF.cs" />
     <Compile Include="Models\Side.cs">
       <DependentUpon>ContructionsModel.tt</DependentUpon>
     </Compile>
@@ -455,6 +456,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Start\App_Data\" />
+    <Folder Include="Images\Billboard\A\" />
+    <Folder Include="Images\Billboard\B\" />
+    <Folder Include="Images\Billboard\C\" />
     <Folder Include="Images\Illegal\" />
     <Folder Include="Images\Light\" />
     <Folder Include="Images\Metal\" />

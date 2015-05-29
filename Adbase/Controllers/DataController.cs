@@ -1234,33 +1234,39 @@ namespace Sciencecom.Controllers
         [HttpPost]
         [Authorize]
 
-        public ActionResult Bilboard(Sciencecom.Models.Billboards1 billboards, List<Sciencecom.Models.Surface> surfaces,  IEnumerable<string> size, string Owner )
+        public ActionResult Bilboard(Sciencecom.Models.Billboards1 billboards, List<Sciencecom.Models.Surface> surfaces, string Owner, int CountSize, HttpPostedFileBase passport, HttpPostedFileBase photo)
         {
+           
             var idOwner = context.Owners.Single(m => m.Name == Owner).Id;
             billboards.Owner_Id = idOwner;
             Guid BillboardsId = Guid.NewGuid();
             billboards.Id = BillboardsId;
             List<Side> ListSide= new List<Side>();
-            if (size != null)
-            {
-                foreach (var i in size)
-                {
+            //if (surfaces != null)
+            //{
+                //foreach (var i in surfaces)
+                //{
                     
                    
-                    for (var j = 0; j < surfaces.Count; j++)
-                    {
-                        Guid SideId = Guid.NewGuid();
-                        ListSide.Add(new Side() {Billboard_Id = BillboardsId, Id = SideId, Name = i});
-                        surfaces.ElementAt(j).Side_Id = SideId;
-                    }
+                //    for (var j = 0; j < surfaces.Count; j++)
+                //    {
+                //        Guid SideId = Guid.NewGuid();
+                //        ListSide.Add(new Side() {Billboard_Id = BillboardsId, Id = SideId, Name = i});
+                //        surfaces.ElementAt(j).Side_Id = SideId;
+                //    }
 
-                }
-                context.Sides.AddRange(ListSide);
-                context.Surfaces.AddRange(surfaces);
-            }
-            context.Billboards1.Add(billboards);
+                //}
+            //    foreach (var i in surfaces)
+            //    {
+                    
+                      
+            //    }
+            //    context.Sides.AddRange(ListSide);
+            //    context.Surfaces.AddRange(surfaces);
+            //}
+            //context.Billboards1.Add(billboards);
 
-            context.SaveChanges();
+            //context.SaveChanges();
 
             return View();
         }

@@ -1,8 +1,11 @@
 ﻿@model List<Sciencecom.Models.Surface>
 @{
     int i = ViewBag.Incerment;
+    string side = ViewBag.Size;
+    
 }
-@Html.Hidden("size", (string)ViewBag.Size);
+
+<input type="hidden" name="[0].Surface" value="@side">
 <h3 style="margin-left: 150px">Поверхность </h3>
 <div class="form-group each1">
     @Html.Label("Высота", new { @class = "control-label col-md-2 " })
@@ -52,9 +55,18 @@
     </div>
 </div>
 <div class="form-group each7">
-    @Html.Label("по", new { @class = "control-label col-md-2 " })
+    @Html.Label("по", new {@class = "control-label col-md-2 "})
     <div class="col-md-10">
         @Html.EditorFor(model => model[i].EndDate)
         @Html.ValidationMessageFor(model => model[i].EndDate)
+    </div>
+</div>
+
+@*<input type="hidden" id="Shirota" name="[0].SizeForPhoto" value="@ViewBag.Size" />*@
+<div class="form-group">
+    @Html.Label("Фото для поверхности", new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        <input type="file" name="[0].severalPhoto" accept="image/jpeg" data-val-required="Выберите файл для загрузки" /><br />
+        @Html.Raw("Не более 1 МБ")
     </div>
 </div>
