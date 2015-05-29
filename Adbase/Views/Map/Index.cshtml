@@ -85,10 +85,27 @@
                     flag = false;
                 }
             myMap.geoObjects.add(geoObjects);
-            console.log(geoObjects);
+            //console.log(geoObjects);
         }
         }
         CreateMap();
+        function check() {
+            if ($("#showLight").is(':checked')) {
+                $("#lights").css("display", "block");
+                console.log($("#lights"));
+            } else {
+                $("#lights").css("display", "none");
+            }
+            if ($("#showIllegal").is(':checked')) {
+                $("#illegal").css("display", "block");
+            }
+            else {
+                $("#illegal").css("display", "none");
+            }
+            if ($("#showBillboard").is(':checked')) {
+
+            }
+        }
         $(document).ready(function () {
             $("#addLinks").hide();
             $("#addLinkImage").click(function() {
@@ -99,6 +116,9 @@
                 $("#addLinkImage").show();
                 $("#addLinks").hide();
             });
+
+            //Разделил фильтры по группам
+         
         });
     </script>
 </head>
@@ -138,10 +158,11 @@
                         {
                             <a href="#"><img src="~/Content/Icons/add.png" style="height: 40px" id="addLinkImage" /></a><br />
                             <p id="addLinks" style="border: solid 1px">
-                                @Html.ActionLink("+ Добавить металлический указатель", "CreateMetal", "Data")<br />
-                                @Html.ActionLink("+ Добавить световой указатель с заявлением", "CreateLightOnStatement", "Data")<br />
-                                @Html.ActionLink("+ Добавить согласованный световой указатель", "CreateLight", "Data")<br />
-                                @Html.ActionLink("+ Добавить неопознанную конструкцию", "CreateLight", "Data")<br />
+                                @Html.ActionLink("+ Добавить новый билборд", "CreateBilboard", "Data")<br />
+                                @Html.ActionLink("+ Добавить металлический указатель", "CreateMetal", "Data")<br/>
+                                @Html.ActionLink("+ Добавить световой указатель с заявлением", "CreateLightOnStatement", "Data")<br/>
+                                @Html.ActionLink("+ Добавить согласованный световой указатель", "CreateLight", "Data")<br/>
+                                @Html.ActionLink("+ Добавить неопознанную конструкцию", "CreateLight", "Data")<br/>
                             </p>
                         }
                         if (role == "IllegalEdit")
@@ -152,10 +173,10 @@
                             </p>
                         }
                     }
-                    <input type="checkbox" id="showMetal" name="showMetal" checked>&nbsp;Металлические указатели<br />
-                    <input type="checkbox" id="showLight" name="showLight">&nbsp;Световые короба<br />
-                    <input type="checkbox" id="showIllegal" name="showIllegal">&nbsp;Из раздела "Неопознанные конструкции"<br />
-
+                    <input type="checkbox" id="showMetal"  name="showMetal" checked>&nbsp;Металлические указатели<br />
+                    <input type="checkbox" id="showLight" onchange="check()" name="showLight">&nbsp;Световые короба<br />
+                    <input type="checkbox" id="showIllegal" onchange="check()" name="showIllegal">&nbsp;Из раздела "Неопознанные конструкции"<br />
+                    <input type="checkbox" id="showBillboard" onchange="check()" name="showBillboard" checked>&nbsp;Биллборд<br />
                     <table id="all">
                         <tr>
                             <td colspan="2"><b>Kритерии:</b>
@@ -233,7 +254,7 @@
                             </td>
                         </tr>
                     </table>
-                    <table id="lights">
+                    <table id="lights" style="display:none">
                         <tr>
                             <td colspan="2">
                                 <b>Критерии для коробов:</b>
@@ -291,7 +312,7 @@
                             </td>
                         </tr>
                     </table>
-                    <table id="illegal">
+                    <table id="illegal" style="display: none">
                         <tr>
                             <td colspan="2">
                                 <b>Критерии для объектов из раздела "Неопознанные конструкции":</b>
