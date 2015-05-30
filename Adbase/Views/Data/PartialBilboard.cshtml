@@ -1,11 +1,9 @@
-﻿@model List<Sciencecom.Models.Surface>
+﻿@model System.Collections.Generic.List<Sciencecom.Models.Surface>
 @{
     int i = ViewBag.Incerment;
-    string side = ViewBag.Size;
-    
 }
 
-<input type="hidden" name="[0].Surface" value="@side">
+<input type="hidden" name="[@i].SideOfSurface" value="@ViewBag.Side">
 <h3 style="margin-left: 150px">Поверхность </h3>
 <div class="form-group each1">
     @Html.Label("Высота", new { @class = "control-label col-md-2 " })
@@ -66,7 +64,8 @@
 <div class="form-group">
     @Html.Label("Фото для поверхности", new { @class = "control-label col-md-2" })
     <div class="col-md-10">
-        <input type="file" name="[0].severalPhoto" accept="image/jpeg" data-val-required="Выберите файл для загрузки" /><br />
+        <input type="file" name="[@i].SeveralPhoto" accept="image/jpeg" data-val-required="Выберите файл для загрузки" /><br />
         @Html.Raw("Не более 1 МБ")
+
     </div>
 </div>

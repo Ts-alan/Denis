@@ -82,7 +82,7 @@
         }
         //скрипт для добавить площадь
         $("#AddButton1").click(function () {
-            $.get('@Url.Action("PartialBilboard","Data")', { param: Increment(), size: "А" }).success(function (e) {
+            $.get('@Url.Action("PartialBilboard","Data")', { param: Increment(), side: "А" }).success(function (e) {
                 $("#InsertPartial1").before(e);
                 InsertOn();
                 
@@ -90,13 +90,13 @@
 
         });
         $("#AddButton2").click(function () {
-            $.get('@Url.Action("PartialBilboard","Data")', { param: Increment(), size: "B" }).success(function (e) {
+            $.get('@Url.Action("PartialBilboard","Data")', { param: Increment(), side: "B" }).success(function (e) {
                 $("#InsertPartial2").before(e);
                 
             });
         });
         $("#AddButton3").click(function () {
-            $.get('@Url.Action("PartialBilboard","Data")', { param: Increment(), size: "C" }).success(function (e) {
+            $.get('@Url.Action("PartialBilboard","Data")', { param: Increment(), side: "C" }).success(function (e) {
                 $("#InsertPartial3").before(e);
                 
             });

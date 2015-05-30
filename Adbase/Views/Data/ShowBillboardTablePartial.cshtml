@@ -42,7 +42,10 @@
         Сторона
     </th>
     <th>
-        Поверхность
+        Социальная
+    </th>
+    <th>
+        Сюжет
     </th>
     <th>
         Разрешен С
@@ -83,21 +86,38 @@
 
         <td>
             <table>
-            @foreach (var size in Model.Surfaces)
+            @foreach (var side in Model.Sides.Where(a=>a.Billboard_Id==item.Id))
             {
+                 foreach (var surface in Model.Surfaces.Where(a=>a.Side_Id==side.Id))
+                  {
 
-                <tr>
-                    <td>
-                        @size.IsSocial
-                    </td>
-                </tr>
+                      <tr>
+                          <td>
+                              @surface.IsSocial
+                          </td>
+                      </tr>
+                  }
             }
             </table>
 
         </td>
+        <td>
+            <table>
+                @foreach (var side in Model.Sides.Where(a => a.Billboard_Id == item.Id))
+                {
+                    foreach (var surface in Model.Surfaces.Where(a => a.Side_Id == side.Id))
+                    {
 
-           
-         <td>
+                        <tr>
+                            <td>
+                                @surface.Story
+                            </td>
+                        </tr>
+                    }
+                }
+            </table>
+        </td>
+<td>
             @item.StartDate.Date.ToShortDateString()
           </td>
            <td>

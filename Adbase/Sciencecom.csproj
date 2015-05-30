@@ -456,9 +456,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Start\App_Data\" />
-    <Folder Include="Images\Billboard\A\" />
-    <Folder Include="Images\Billboard\B\" />
-    <Folder Include="Images\Billboard\C\" />
+    <Folder Include="Images\Billboard\surfaces\" />
     <Folder Include="Images\Illegal\" />
     <Folder Include="Images\Light\" />
     <Folder Include="Images\Metal\" />

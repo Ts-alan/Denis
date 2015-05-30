@@ -1234,40 +1234,55 @@ namespace Sciencecom.Controllers
         [HttpPost]
         [Authorize]
 
-        public ActionResult Bilboard(Sciencecom.Models.Billboards1 billboards, List<Sciencecom.Models.Surface> surfaces, string Owner, int CountSize, HttpPostedFileBase passport, HttpPostedFileBase photo)
+        public ActionResult Bilboard(Sciencecom.Models.Billboards1 billboards, List<Sciencecom.Models.Surface> surfaces, string Owner, HttpPostedFileBase passport, HttpPostedFileBase photo, int CountSize = 1)
         {
-           
+
             var idOwner = context.Owners.Single(m => m.Name == Owner).Id;
             billboards.Owner_Id = idOwner;
             Guid BillboardsId = Guid.NewGuid();
             billboards.Id = BillboardsId;
-            List<Side> ListSide= new List<Side>();
-            //if (surfaces != null)
-            //{
-                //foreach (var i in surfaces)
-                //{
-                    
-                   
-                //    for (var j = 0; j < surfaces.Count; j++)
-                //    {
-                //        Guid SideId = Guid.NewGuid();
-                //        ListSide.Add(new Side() {Billboard_Id = BillboardsId, Id = SideId, Name = i});
-                //        surfaces.ElementAt(j).Side_Id = SideId;
-                //    }
+            string[] arraySize = new string[3] { "А", "B", "C" };
+            List<Side> ListSide = new List<Side>();
+            for (int j = 0; j < CountSize; j++)
+            {
+                ListSide.Add(new Side() { Billboard_Id = BillboardsId, Name = arraySize[j], Id = Guid.NewGuid() });
+            }
+            foreach (var i in surfaces)
+            {
+                i.Side_Id = ListSide.Single(a => a.Name == i.SideOfSurface).Id;
+            }
 
-                //}
-            //    foreach (var i in surfaces)
-            //    {
-                    
-                      
-            //    }
-            //    context.Sides.AddRange(ListSide);
-            //    context.Surfaces.AddRange(surfaces);
-            //}
-            //context.Billboards1.Add(billboards);
+            context.Sides.AddRange(ListSide);
+            context.Surfaces.AddRange(surfaces);
 
-            //context.SaveChanges();
+            context.Billboards1.Add(billboards);
 
+            context.SaveChanges();
+            if (passport != null)
+            {
+                string src = "~/Images/Billboard/" + billboards.Id + "passport.jpg";
+                string path = Server.MapPath(src);
+                passport.SaveAs(path);
+            }
+            if (photo != null)
+            {
+                string src = "~/Images/Billboard/" + billboards.Id + "photo.jpg";
+                string path = Server.MapPath(src);
+                photo.SaveAs(path);
+            }
+
+
+            foreach (var surface in surfaces)
+            {
+              if (surface.SeveralPhoto!= null)
+                {
+
+                       string src = "~/Images/Billboard/surfaces/" + surface.Id + ".jpg";
+                       string path = Server.MapPath(src);
+                       surface.SeveralPhoto.SaveAs(path);
+                }  
+            }
+            
             return View();
         }
 
@@ -1396,10 +1411,10 @@ namespace Sciencecom.Controllers
             return context;
         }
 
-        public ActionResult PartialBilboard(int param , string size)
+        public ActionResult PartialBilboard(int param , string side)
         {
             ViewBag.Incerment = param;
-            ViewBag.Size = size;
+            ViewBag.Side = side;
             return View();
         }
         public ActionResult EditBillboard(Guid? id)

@@ -7,7 +7,7 @@ namespace Sciencecom.Models
 {
     public partial class Surface
     {
-        public string Size;
-        public HttpPostedFileBase Photo;
+        public string SideOfSurface { get; set; }
+        public HttpPostedFileBase SeveralPhoto{ get; set;}
     }
 }
