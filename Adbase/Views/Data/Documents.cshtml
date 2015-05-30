@@ -183,3 +183,37 @@
         @Html.ActionLink("Вернуться к списку", "Light")
     </p>
 }
+@if (ViewBag.Type == "Bilboard")
+{
+    <div id="image" style="width:80%">
+        <p>
+            <h3>@Html.Raw("Паспорт")</h3><br />
+        </p>
+        @if (ViewBag.passport)
+        {
+            string image = "/Images/Billboard/" + ViewBag.Id + "passport.jpg";
+            <p>
+                <a href=@image target="_blank"><img src=@image height="500"></a><br />
+            </p>
+        }
+        else
+        {
+            @Html.Raw("Страница c паспортом отсутствует.")<br />
+        }
+        @if (ViewBag.photo)
+        {
+         <p>
+            <h3>@Html.Raw("Фото")</h3><br />
+        </p>
+            string image = "/Images/Billboard/" + ViewBag.Id + "photo.jpg" ;
+            <p>
+                <a href=@image target="_blank"><img src=@image height="500"></a><br />
+            </p>
+        }
+        else
+        {
+            @Html.Raw("Страница с фото отсутствует.")<br />
+        }
+      
+    </div>
+}

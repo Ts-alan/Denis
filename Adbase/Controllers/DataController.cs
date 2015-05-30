@@ -1184,7 +1184,7 @@ namespace Sciencecom.Controllers
                     {
                         ViewBag.Type = "LightOnStatement";
                         ViewBag.Id = id;
-                        string src = "~/Images/Light/passport" + id + "1.jpg";
+                        string src = "~/Images/Light/passport" + id + ".jpg";
                         string path = Server.MapPath(src);
                         if (System.IO.File.Exists(path))
                         {
@@ -1194,7 +1194,7 @@ namespace Sciencecom.Controllers
                         {
                             ViewBag.TSMO1 = false;
                         }
-                        src = "~/Images/Light/passport" + id + "2.jpg";
+                        src = "~/Images/Light/photo" + id + ".jpg";
                         path = Server.MapPath(src);
                         if (System.IO.File.Exists(path))
                         {
@@ -1216,6 +1216,33 @@ namespace Sciencecom.Controllers
                         }
                     }
                     break;
+                case "b":
+                    {
+                        ViewBag.Type = "Bilboard";
+                        ViewBag.Id = id;
+                        string src = "~/Images/Billboard/" + id + "passport.jpg";
+                        string path = Server.MapPath(src);
+                        if (System.IO.File.Exists(path))
+                        {
+                            ViewBag.passport = true;
+                        }
+                        else
+                        {
+                            ViewBag.passport = false;
+                        }
+                        src = "~/Images/Billboard/" + id + "photo.jpg";
+                        path = Server.MapPath(src);
+                        if (System.IO.File.Exists(path))
+                        {
+                            ViewBag.photo = true;
+                        }
+                        else
+                        {
+                            ViewBag.photo = false;
+                        }
+
+                    }
+                break;
                 default:
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -1260,13 +1287,13 @@ namespace Sciencecom.Controllers
             context.SaveChanges();
             if (passport != null)
             {
-                string src = "~/Images/Billboard/" + billboards.Id + "passport.jpg";
+                string src = "~/Images/Billboard/" + billboards.Id_show + "passport.jpg";
                 string path = Server.MapPath(src);
                 passport.SaveAs(path);
             }
             if (photo != null)
             {
-                string src = "~/Images/Billboard/" + billboards.Id + "photo.jpg";
+                string src = "~/Images/Billboard/" + billboards.Id_show + "photo.jpg";
                 string path = Server.MapPath(src);
                 photo.SaveAs(path);
             }

@@ -127,7 +127,7 @@
                 <td>
                     @{
 
-                        <b>@Html.ActionLink("Документы", "Documents", new { id = item.Id, type = "m" })</b><br />
+                        <b>@Html.ActionLink("Документы", "Documents", new { id = item.Id_show, type = "b" })</b><br />
     string idLink = "mapLink" + item.Id.ToString();
     @*<a style="cursor: pointer" id="@idLink">Показать на карте</a><br />
         <script>
