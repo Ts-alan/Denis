@@ -111,7 +111,7 @@
 
 @*<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">*@
 @Scripts.Render("~/Content/Map")
-@using (Html.BeginForm("Bilboard", "Data", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("GreateBilboard", "Data", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     <div class="form-horizontal">
@@ -132,7 +132,7 @@
             @Html.Label("Населенный Пункт:", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Locality)
-                @Html.ValidationMessageFor(model => model.Street1)
+                @Html.ValidationMessageFor(model => model.Locality)
             </div>
         </div>
         @*улица 1*@

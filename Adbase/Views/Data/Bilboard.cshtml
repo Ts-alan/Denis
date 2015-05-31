@@ -51,7 +51,7 @@
 <p>
     <h3>Поиск указателей по параметрам:</h3>
 </p>
-@using (Ajax.BeginForm("ShowBillboardTablePartial","Data",ajax))
+@using (Ajax.BeginForm("Bilboard", "Data", ajax))
 {
     <table class="table-bordered" cellpadding="5">
         <tr>
@@ -88,13 +88,13 @@
                 @Html.DropDownList("owner", owners)
             </td>
             <td>
-                <input type="text" name="locality" value="Минск" />
+                <input type="text" name="locality" value="" />
             </td>
             <td>
-                @Html.Editor("street1")
+                @Html.Editor("Street1")
             </td>
             <td>
-                @Html.Editor("street2")
+                @Html.Editor("Street2")
             </td>
             <td>
                 @Html.Editor("fromStreet")

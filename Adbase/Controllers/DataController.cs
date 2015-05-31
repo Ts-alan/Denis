@@ -1257,11 +1257,35 @@ namespace Sciencecom.Controllers
             return View();
 
         }
-
-        [HttpPost]
         [Authorize]
+        [HttpPost]
+        public ActionResult Bilboard(string owner, string locality, string street1, string street2, string fromStreet, string day, string month, string year)
+        {
+            Owner proprietor = new Owner();
+            if (!string.IsNullOrEmpty(owner))
+            {
+                proprietor = context.Owners.Where(m => m.Name == owner).Single();
+            }
+            Billboards1 mc = new Billboards1()
+            {
+                Street1 = street1,
+                Street2 = street2,
+                FromStreet = fromStreet,
+                Owner_Id = proprietor.Id,
+                Locality = locality
+            };
+            ViewBag.Data = mc;
+            ViewBag.Day = day;
+            ViewBag.Month = month;
+            ViewBag.Year = year;
+            return View();
 
-        public ActionResult Bilboard(Sciencecom.Models.Billboards1 billboards, List<Sciencecom.Models.Surface> surfaces, string Owner, HttpPostedFileBase passport, HttpPostedFileBase photo, int CountSize = 1)
+        }
+
+        
+        [Authorize]
+        [HttpPost]
+        public ActionResult GreateBilboard(Sciencecom.Models.Billboards1 billboards, List<Sciencecom.Models.Surface> surfaces, string Owner, HttpPostedFileBase passport, HttpPostedFileBase photo, int CountSize = 1)
         {
 
             var idOwner = context.Owners.Single(m => m.Name == Owner).Id;
@@ -1309,12 +1333,12 @@ namespace Sciencecom.Controllers
                        surface.SeveralPhoto.SaveAs(path);
                 }  
             }
-            
-            return View();
+
+            return RedirectToAction("Bilboard"); ;
         }
 
         [Authorize]
-        
+        [HttpGet]
         public ActionResult CreateBilboard()
         {
 
@@ -1367,24 +1391,18 @@ namespace Sciencecom.Controllers
             return RedirectToAction("Bilboard", context.MetalConstructions);
         }
         [Authorize]
-        public ActionResult ShowBillboardTablePartial(Billboards1 billboard, string locality, string day, string month, string year)
+        public ActionResult ShowBillboardTablePartial(Billboards1 billboard, string day, string month, string year, string owner)
         {
             if (billboard == null)
             {
                 ViewBag.Results = null;
                 context.Billboards1.OrderByDescending(m => m.StartDate);
-                //return View(context.Billboards1.OrderByDescending(m => m.StartDate));
+                
                 return View(context);
             }
             else
             {
-                billboard.Locality = locality;
-                SciencecomEntities result = SearchBillboard(billboard, day, month, year); //ToDO Implement commented SearchBillboard method above
-                //if (metalConstruction.StartDate.Date != Convert.ToDateTime("01.01.0001"))
-                //{
-                //    result = result.Where(m => m.StartDate == metalConstruction.StartDate);
-                //}
-                SciencecomEntities TempContex;
+                SciencecomEntities result = SearchBillboard(billboard, day, month, year, owner); 
                 ViewBag.Results = result.Billboards1.Count();
                 result.Billboards1.OrderByDescending(m => m.StartDate);
                 
@@ -1392,13 +1410,15 @@ namespace Sciencecom.Controllers
             }
         }
 
-        public SciencecomEntities SearchBillboard(Billboards1 billboard, string day, string month, string year)
+        public SciencecomEntities SearchBillboard(Sciencecom.Models.Billboards1 billboard, string day, string month, string year,string owner)
         {
-            SciencecomEntities SearchBillboard;
+            
             context = new SciencecomEntities();
             IEnumerable<Billboards1> result = context.Billboards1;
-            //if (billboard.Owner.Id != 0) ToDo Implement Properly!
+            //if (owner != ""&&owner !=null) 
             //{
+            //    var id_Owner = context.Owners.Single(a => a.Name.ToLower() == owner.ToLower()).Id;
+            //    billboard.Owner_Id = id_Owner;
             //    result = result.Where(m => m.Owner.Id == billboard.Owner.Id);
             //}
             if (billboard.Street1 != "" && billboard.Street1 != null)
@@ -1429,11 +1449,23 @@ namespace Sciencecom.Controllers
             {
                 result = result.Where(m => m.StartDate.Year == int.Parse(year));
             }
-            foreach (var i in result)
+            var t1 = result.ToList();
+             IEnumerable<Billboards1> t=null ;
+            foreach(var i in result)
             {
-                context.Billboards1.Contains(i);  
+
+             t = context.Billboards1.Where(a=>a.Street1.Contains(i.Street1));
+                 
+        
             }
-            
+            int g = 0;
+            foreach (var s in t)
+            {
+                g++;
+            }
+            var t2 = context.Billboards1.ToList(); 
+          
+
             //context.Billboards1.Contains(result);
             return context;
         }
