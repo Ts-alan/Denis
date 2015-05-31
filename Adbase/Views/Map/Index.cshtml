@@ -38,7 +38,7 @@
     <script src="~/Scripts/Map/IllegalConstructions.js"></script>
     <script src="~/Scripts/Map/BilboardConstuctions.js"></script>
     <script src="/Scripts/Autocomplete.js"></script>
-    @*<script src="/Images/Billboard/surfaces/"></script>*@
+    @*<script src="/Contro"></script>*@
     <script type="text/javascript">
     function CreateMap() {
         $("#map").empty();
@@ -89,6 +89,7 @@
         }
         }
         CreateMap();
+        //Разделил фильтры по группам
         function check() {
             if ($("#showLight").is(':checked')) {
                 $("#lights").css("display", "block");
@@ -119,7 +120,7 @@
                 $("#addLinks").hide();
             });
 
-            //Разделил фильтры по группам
+           
          
         });
     </script>
@@ -390,7 +391,7 @@
                                 Социальная:
                             </td>
                             <td>
-                                @Html.DropDownList("IsSocial", new SelectList(new[] { "Да", "Нет" }))
+                                @Html.DropDownList("IsBillboardSocial", new SelectList(new[] { "Да", "Нет" }))
                             </td>
                         </tr>
                     </table>

@@ -12,6 +12,11 @@
             startDay: $("#startDay option:selected").val(),
             startMonth: $("#startMonth option:selected").val(),
             startYear: $("#startYear").val(),
+            endDay: $("#lBillboardFinishDay").val(),
+            endMonth: $("#lBillboardFinishMonth").val(),
+            endYear: $("#lBillboardFinishYear").val(),
+            OnAgreement: $("#OnAgreement").val(),
+            IsSocial: $("#IsSocial").val(),
             id: parseInt(objectId)
         }
     }).success(function (data) {

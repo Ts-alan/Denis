@@ -1253,6 +1253,7 @@ namespace Sciencecom.Controllers
         [HttpGet]
         public ActionResult Bilboard()
         {
+
             ViewBag.Data = null;
             return View();
 
@@ -1346,6 +1347,7 @@ namespace Sciencecom.Controllers
         }
 
         [Authorize(Roles = "Admin, ChiefEditAll,ChiefEditOwn, SupplierEditAll, SupplierEditOwn")]
+        [HttpGet]
         public ActionResult DeleteBilboard(Guid? id)
         {
             if (id == null)

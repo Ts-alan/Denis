@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 
 namespace Sciencecom.Controllers
 {
@@ -69,20 +70,41 @@ namespace Sciencecom.Controllers
         [Authorize]
         public JsonResult GetBilboard(string owner, string locality, string street1, string street2, string fromStreet, string startDay, string startMonth, string startYear, int? id = null)
         {
-            SciencecomEntities context = new SciencecomEntities();
-            List<BilboardConstructionJsonModel> objectsForJson = new List<BilboardConstructionJsonModel>();
-            if (id.HasValue)
-            {
-                var construction = context.Billboards1.Single(a=>a.Id_show==id);            //используется для отображения едининого объекта при прееходе по ссылке "Показать на карте"
-                if (construction != null)
+                SciencecomEntities context = new SciencecomEntities();
+                List<BilboardConstructionJsonModel> objectsForJson = new List<BilboardConstructionJsonModel>();
+
+                if (id.HasValue)
                 {
-                    objectsForJson.Add(new BilboardConstructionJsonModel(construction));
+                    //используется для отображения едининого объекта при прееходе по ссылке "Показать на карте"
+
+                    var construction = context.Billboards1.Single(a => a.Id_show == id);
+                    var Owner = context.Owners.Single(a => a.Id == construction.Owner_Id).Name;
+                    construction.OwnerName = Owner;
+                    var enumeratorSide = context.Billboards1.Single(a => a.Id_show == id).Sides;
+                    List<Surface> Surfaces = new List<Surface>();
+                    for (int i = 0; i < enumeratorSide.Count; i++)
+                    {
+                        for (int j = 0;
+                            j < context.Billboards1.Single(a => a.Id_show == id).Sides.ElementAt(i).Surfaces.Count;
+                            j++)
+                        {
+                            Surfaces.Add(
+                                context.Billboards1.Single(a => a.Id_show == id)
+                                    .Sides.ElementAt(i)
+                                    .Surfaces.ElementAt(j));
+                        }
+                    }
+                    if (construction != null)
+                    {
+                        objectsForJson.Add(new BilboardConstructionJsonModel(construction,Surfaces));
+                    }
+
+                    return Json(objectsForJson, JsonRequestBehavior.AllowGet);
                 }
+
                 return Json(objectsForJson, JsonRequestBehavior.AllowGet);
             }
-            
-            return Json(objectsForJson, JsonRequestBehavior.AllowGet);
-        }
+ 
 
         [HttpPost]
         [Authorize]

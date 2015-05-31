@@ -7,9 +7,9 @@ namespace Sciencecom.Models.MapJsonModels
 {
     public class BilboardConstructionJsonModel
     {
-        public BilboardConstructionJsonModel(Billboards1 mc)
+        public BilboardConstructionJsonModel(Billboards1 mc, List<Surface> surfaces)
         {
-            this.Height =mc.Height;
+            this.Height = mc.Height;
             this.Breadth = mc.Breadth;
             this.Street1 = mc.Street1;
             this.House1 = mc.House1;
@@ -25,7 +25,8 @@ namespace Sciencecom.Models.MapJsonModels
             this.Owner_Id = mc.Owner_Id;
             this.Id = mc.Id;
             this.Id_show = mc.Id_show;
-
+            this.OwnerName = mc.OwnerName;
+            this.Surfaces = surfaces.Select(a=>a.Id);
         }
     
         public Nullable<float> Height { get; set; }
@@ -44,5 +45,8 @@ namespace Sciencecom.Models.MapJsonModels
         public int Owner_Id { get; set; }
         public System.Guid Id { get; set; }
         public int Id_show { get; set; }
+        public string OwnerName { get; set; }
+
+        public IEnumerable<int> Surfaces { get; set; }
     }
 }
