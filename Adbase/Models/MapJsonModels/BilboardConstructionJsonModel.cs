@@ -27,6 +27,7 @@ namespace Sciencecom.Models.MapJsonModels
             this.Id_show = mc.Id_show;
             this.OwnerName = mc.OwnerName;
             this.Surfaces = surfaces.Select(a=>a.Id);
+            this.IsSocial = surfaces.Select(a => a.IsSocial);
         }
     
         public Nullable<float> Height { get; set; }
@@ -48,5 +49,6 @@ namespace Sciencecom.Models.MapJsonModels
         public string OwnerName { get; set; }
 
         public IEnumerable<int> Surfaces { get; set; }
+        public IEnumerable<bool> IsSocial { get; set; }
     }
 }

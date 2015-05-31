@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNet.Identity
 @using Microsoft.AspNet.Identity.EntityFramework
 @using Sciencecom.Models
-@model  IEnumerable<Sciencecom.Models.Billboards1>
+@model  IEnumerable<Billboards1>
 @{
     ViewBag.Title = "Bilboard";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -56,19 +56,19 @@
     <table class="table-bordered" cellpadding="5">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Owner.Name)
-            </th>
+                Владелец
+            </th>    
             <th>
                 Нас. пункт
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Street1)
+               Улица 1
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Street2)
+                Улица 2
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FromStreet)
+                Со стороны улицы
             </th>
             <th>
                 Число

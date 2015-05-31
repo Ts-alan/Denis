@@ -217,3 +217,17 @@
       
     </div>
 }
+@if (ViewBag.Type == "Balyn")
+{
+    <div id="image" style="width:80%">
+        <p>
+            <h3>@Html.Raw("Поверхность")</h3><br/>
+        </p>
+       @{
+           string image = "/Images/Billboard/surfaces/" + ViewBag.Id + ".jpg";
+       }
+        <p>
+            <a href=@image target="_blank"><img src=@image height="500"></a><br />
+        </p>
+    </div>
+}

@@ -21,7 +21,6 @@
             id: parseInt(objectId)
         }
     }).success(function (data) {
-        alert("всё гуд");
        if (data.length > 0) {
             //var myBilboardClusterer = new ymaps.Clusterer(
             //{
@@ -70,14 +69,16 @@
 
 function getReferencesBillboard(construction) {
     var result = "";
-    var several = "";
-    for (var i = 0; i < construction.count; i++) {
-        several +='<br/><img src = "/Images/Billboard/surfaces/' + construction.Id + '.jpg" height = "180">';
-    };
+    console.log(construction.Surfaces);
     result += '</br><a href="/Data/EditBillboard/' + construction.Id + '" target="_blank">Изменить</a>'
-        + '</br><a href="/Data/DeleteBilboard/' + construction.Id + '" target="_blank">Удалить</a></b>'
-        + several;
-    ;
+        + '</br><a href="/Data/DeleteBilboard/' + construction.Id + '" target="_blank">Удалить</a></b>';
+       
+    for (var i = 0; i < construction.Surfaces.length; i++) {
+        result += '</br><a href="/Data/Documents/' + construction.Surfaces[i] + '?type=doc" target="_blank">Документы</a>' 
+         +"</br><div>Социальная</div>" 
+        +"<div>" + construction.IsSocial[i]+"</div>"
+        + '<br/><img src = "/Images/Billboard/surfaces/' + construction.Surfaces[i] + '.jpg" height = "180">';
+    };
     return result;
 }
 

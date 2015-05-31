@@ -1243,6 +1243,12 @@ namespace Sciencecom.Controllers
 
                     }
                 break;
+                case "doc":
+                {
+                    ViewBag.Type = "Balyn";
+                    ViewBag.Id = id;
+                }
+                break;
                 default:
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
