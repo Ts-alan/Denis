@@ -1,5 +1,12 @@
 ﻿function GetBilboardPoints(role, userCompany ,objectId) {
     var geoObjects = new ymaps.GeoObjectCollection();
+    $('input[type=radio]')
+    var onAgreement;
+    if ($("#OnAgreement option:selected").val() == "Да") {
+        onAgreement = true;
+    } else {
+        onAgreement = false;
+    };
     $.ajax({
         type: "POST",
         url: "/Map/GetBilboard",
@@ -16,7 +23,7 @@
             lBillboardFinishMonth: $("#lBillboardFinishMonth option:selected").val(),
             lBillboardFinishYear: $("#lBillboardFinishYear").val(),
             Story: $("#Story option:selected").val(),
-            OnAgreement: $("#OnAgreement option:selected").val(),
+            OnAgreement: onAgreement,
             IsBillboardSocial: $("#IsBillboardSocial option:selected").val(),
             id: parseInt(objectId)
         }
@@ -62,7 +69,7 @@
         
     }).error(function () {
       
-        alert("Ошибка запроса");
+        alert("Ошибка запроса кукарекку");
     });
     return geoObjects;
 }

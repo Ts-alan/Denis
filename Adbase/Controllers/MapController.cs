@@ -98,21 +98,24 @@ namespace Sciencecom.Controllers
                     }
                     if (construction != null)
                     {
-                        objectsForJson.Add(new BilboardConstructionJsonModel(construction,Surfaces));
+                        objectsForJson.Add(new BilboardConstructionJsonModel(construction, Surfaces));
                     }
 
                     return Json(objectsForJson, JsonRequestBehavior.AllowGet);
                 }
                 DataController dataController = new DataController();
-   
-            Billboards1 mc = new Billboards1()
-            {
-                Locality = locality,
-                Street1 = street1,
-                Street2 = street2,
-                FromStreet = fromStreet,
-                OnAgreement=OnAgreement
-            };
+
+                Billboards1 mc = new Billboards1()
+                {
+                    Locality = locality,
+                    Street1 = street1,
+                    Street2 = street2,
+                    FromStreet = fromStreet,
+                    OnAgreement = OnAgreement
+                };
+                IEnumerable<Billboards1> result =
+                dataController.SearchBillbord(mc, startDay, startMonth, startYear, lBillboardFinishDay,
+                    lBillboardFinishMonth, lBillboardFinishYear, Story, IsBillboardSocial);
                 return Json(objectsForJson, JsonRequestBehavior.AllowGet);
             }
  

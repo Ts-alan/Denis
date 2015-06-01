@@ -1064,7 +1064,49 @@ namespace Sciencecom.Controllers
        
         
         #endregion
+        public IEnumerable<Billboards1> SearchBillbord(Billboards1 billboard, string startDay, string startMonth, string startYear, string finishDay, string finishMonth, string finishYear, string Story, string IsBillboardSocial, string owner)
+        {
+            context = new SciencecomEntities();
+            IEnumerable<Billboards1> result = context.Billboards1;
+            if (owner != "" && owner != null)
+            {
+                var id_Owner = context.Owners.Single(a => a.Name.ToLower() == owner.ToLower()).Id;
+                result = result.Where(m => m.Owner.Id == id_Owner);
+            }
+            {
+                result = result.Where(m => m.Street1.ToLower().Contains(billboard.Street1.ToLower()));
+            }
+            if (billboard.Street2 != "")
+            {
+                result = result.Where(m => m.Street2.ToLower().Contains(billboard.Street2.ToLower()));
+            }
+            if (billboard.FromStreet != "")
+            {
+                result = result.Where(m => m.FromStreet.ToLower().Contains(billboard.FromStreet.ToLower()));
+            }
+            if (billboard.Locality != "")
+            {
+                result = result.Where(m => m.Locality.ToLower().Contains(billboard.Locality.ToLower()));
+            }
 
+            result = result.Where(m => m.OnAgreement == billboard.OnAgreement);
+
+            if (startDay != "" && startMonth != "" && startYear != "")
+            {
+                DateTime startDate = new DateTime(Int32.Parse(startYear), Int32.Parse(startMonth), Int32.Parse(startDay));
+ 
+                result = result.Where(m => m.StartDate.Date == startDate.Date);
+            }
+            if (finishDay != "" && finishMonth != "" && finishYear != "")
+            {
+                DateTime endDate = new DateTime(Int32.Parse(finishDay), Int32.Parse(finishMonth), Int32.Parse(finishYear));
+
+                result = result.Where(m => m.EndDate.Date == endDate.Date);
+            }
+
+
+            return result;
+        }
         public ActionResult FindStreets(string term)
         {
             var streets = from m in context.Streets where m.Name.Contains(term) select m;
