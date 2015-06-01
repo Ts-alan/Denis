@@ -40,101 +40,106 @@
     <script src="/Scripts/Autocomplete.js"></script>
     @*<script src="/Contro"></script>*@
     <script type="text/javascript">
-    function CreateMap() {
-        $("#map").empty();
-        ymaps.ready(init);
-        var myMap;
-        var role = "@role";
-        var companyUser = "@user.Company";
-        var objectId = "@ViewBag.Id";
-        var type = "@ViewBag.Type";
-        var flag = false;
-        if ((objectId.length > 0) && (type.length > 0)) flag = true;
-        function init() {
-            myMap = new ymaps.Map("map", {
-                center: [53.901, 27.5601],
-                zoom: 11,
-                behaviors: ['default', 'scrollZoom']
-            });
-            myMap.controls.add('typeSelector');
-            myMap.controls.add('zoomControl');
-            myMap.controls.add('searchControl');
-            var geoObjects = new ymaps.GeoObjectCollection();
-            if (!flag) {
-                if ($("#showMetal").is(':checked')) {
-                    geoObjects.add(GetMetalPoints("@role", "@user.Company"));
-                }
-                if ($("#showLight").is(':checked')) {
-                    geoObjects.add(GetLightPoints("@role", "@user.Company"));
-                }
-                if ($("#showIllegal").is(':checked')) {
-                    geoObjects.add(GetIllegalPoints("@role"));
-                }
-                if ($("#showBillboard").is(':checked')) {
-                    geoObjects.add(GetBilboardPoints("@role", "@user.Company"));
-                }
+        var param = true;
+        function CreateMap(param) {
+            $("#map").empty();
+            ymaps.ready(init);
+            var myMap;
+            var role = "@role";
+            var companyUser = "@user.Company";
+            var objectId = "@ViewBag.Id";
+            var type = "@ViewBag.Type";
+            var flag = false;
+            //if ((objectId.length > 0) && (type.length > 0)) flag = true;
+            if (param == true) {
+                flag = true;
             } else {
-                if (type === "m") {
-                    geoObjects.add(GetMetalPoints("@role", "@user.Company", objectId));
-                } else if (type === "l") {
-                    geoObjects.add(GetLightPoints("@role", "@user.Company", objectId));
-                } else if (type === "i") {
-                    geoObjects.add(GetIllegalPoints("@role", objectId));
-                }
-                else if (type === "b") {
-                    geoObjects.add(GetBilboardPoints("@role", "@user.Company", objectId));
-                }
                 flag = false;
             }
-            myMap.geoObjects.add(geoObjects);
-            
+            function init() {
+                myMap = new ymaps.Map("map", {
+                    center: [53.901, 27.5601],
+                    zoom: 11,
+                    behaviors: ['default', 'scrollZoom']
+                });
+                myMap.controls.add('typeSelector');
+                myMap.controls.add('zoomControl');
+                myMap.controls.add('searchControl');
+                var geoObjects = new ymaps.GeoObjectCollection();
+                if (!flag) {
+                    if ($("#showMetal").is(':checked')) {
+                        geoObjects.add(GetMetalPoints("@role", "@user.Company"));
+                    }
+                    if ($("#showLight").is(':checked')) {
+                        geoObjects.add(GetLightPoints("@role", "@user.Company"));
+                    }
+                    if ($("#showIllegal").is(':checked')) {
+                        geoObjects.add(GetIllegalPoints("@role"));
+                    }
+                    if ($("#showBillboard").is(':checked')) {
+                        geoObjects.add(GetBilboardPoints("@role", "@user.Company"));
+                    }
+                } else {
+                    if (type === "m") {
+                        geoObjects.add(GetMetalPoints("@role", "@user.Company", objectId));
+                    } else if (type === "l") {
+                        geoObjects.add(GetLightPoints("@role", "@user.Company", objectId));
+                    } else if (type === "i") {
+                        geoObjects.add(GetIllegalPoints("@role", objectId));
+                    }
+                    else if (type === "b") {
+                        geoObjects.add(GetBilboardPoints("@role", "@user.Company", objectId));
+                    }
+                }
+                myMap.geoObjects.add(geoObjects);
+                console.log(flag);
+            }
         }
-    }
-        CreateMap();
+
+        
+        CreateMap(param);
         //Добавления сюжета
         function AddA() {
-            console.log("12121");
-            $("#insertA").append("<a href='#' onclick='DeleteA(this)' >" + $("#Story").val() + "</a>       ");
+            $("#insertA").append("<a href='#' onclick='DeleteA(this)' class='storyList' >" + $("#Story").val() + "</a>       ");
 
         }
         //Удаление сюжета
         function DeleteA(par) {
             $(par).remove();
         }
-    //Разделил фильтры по группам
-    function check() {
-        if ($("#showLight").is(':checked')) {
-            $("#lights").css("display", "block");
-            console.log($("#lights"));
-        } else {
-            $("#lights").css("display", "none");
+        //Разделил фильтры по группам
+        function check() {
+            if ($("#showLight").is(':checked')) {
+                $("#lights").css("display", "block");
+            } else {
+                $("#lights").css("display", "none");
+            }
+            if ($("#showIllegal").is(':checked')) {
+                $("#illegal").css("display", "block");
+            }
+            else {
+                $("#illegal").css("display", "none");
+            }
+            if ($("#showBillboard").is(':checked')) {
+                $("#billboard").css("display", "block");
+            } else {
+                $("#billboard").css("display", "none");
+            }
         }
-        if ($("#showIllegal").is(':checked')) {
-            $("#illegal").css("display", "block");
-        }
-        else {
-            $("#illegal").css("display", "none");
-        }
-        if ($("#showBillboard").is(':checked')) {
-            $("#billboard").css("display", "block");
-        } else {
-            $("#billboard").css("display", "none");
-        }
-    }
-    $(document).ready(function () {
-        $("#addLinks").hide();
-        $("#addLinkImage").click(function () {
-            $("#addLinkImage").hide();
-            $("#addLinks").show();
-        });
-        $("#addLinks").mouseleave(function () {
-            $("#addLinkImage").show();
+        $(document).ready(function () {
             $("#addLinks").hide();
+            $("#addLinkImage").click(function () {
+                $("#addLinkImage").hide();
+                $("#addLinks").show();
+            });
+            $("#addLinks").mouseleave(function () {
+                $("#addLinkImage").show();
+                $("#addLinks").hide();
+            });
+
+
+
         });
-
-
-
-    });
     </script>
 </head>
 <body>
@@ -435,7 +440,7 @@
         </td>
     </tr>
 </table>
-<a class="btn btn-info" href="#" id="showMap" onclick="CreateMap()">Показать</a>
+<a class="btn btn-info" href="#" id="showMap" onclick="CreateMap(false)">Показать</a>
 </td>
 <td width="80%" valign="top" id="map"></td>
 </tr>

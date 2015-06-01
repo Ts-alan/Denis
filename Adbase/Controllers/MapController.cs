@@ -70,11 +70,11 @@ namespace Sciencecom.Controllers
         [Authorize]
         public JsonResult GetBilboard(string owner, string locality, string street1, string street2,
             string fromStreet, string startDay, string startMonth, string startYear,
-            string lBillboardFinishDay, string lBillboardFinishMonth, string lBillboardFinishYear, string Story, bool OnAgreement,string IsBillboardSocial, int? id = null)
+            string lBillboardFinishDay, string lBillboardFinishMonth, string lBillboardFinishYear, string[] Story, bool OnAgreement, string IsBillboardSocial, int? id = null)
         {
                 SciencecomEntities context = new SciencecomEntities();
                 List<BilboardConstructionJsonModel> objectsForJson = new List<BilboardConstructionJsonModel>();
-
+                List<Surface> Surfaces = new List<Surface>();
                 if (id.HasValue)
                 {
                     //используется для отображения едининого объекта при прееходе по ссылке "Показать на карте"
@@ -83,7 +83,7 @@ namespace Sciencecom.Controllers
                     var Owner = context.Owners.Single(a => a.Id == construction.Owner_Id).Name;
                     construction.OwnerName = Owner;
                     var enumeratorSide = context.Billboards1.Single(a => a.Id_show == id).Sides;
-                    List<Surface> Surfaces = new List<Surface>();
+                   
                     for (int i = 0; i < enumeratorSide.Count; i++)
                     {
                         for (int j = 0;
@@ -115,7 +115,48 @@ namespace Sciencecom.Controllers
                 };
                 IEnumerable<Billboards1> result =
                 dataController.SearchBillbord(mc, startDay, startMonth, startYear, lBillboardFinishDay,
-                    lBillboardFinishMonth, lBillboardFinishYear, Story, IsBillboardSocial);
+                    lBillboardFinishMonth, lBillboardFinishYear, Story, IsBillboardSocial,owner).ToList();
+                //foreach (var Billboards in result)
+                //{
+                //    foreach (var sides in Billboards.Sides)
+                //    {
+                //        foreach (var surface in sides.Surfaces)
+                //        {
+                //            Surfaces.Add(surface);
+                //        }
+                //    }
+                //}
+                //for (int i = 0; i < result.Count(); i++)
+                //{
+                //    for (int z = 0; z < result.ElementAt(i).Sides.Count; z++)
+                //    {
+                //        for (int j = 0;
+                //            j < context.Billboards1.AsEnumerable().ElementAt(i).Sides.AsEnumerable().ElementAt(z).Surfaces.Count;
+                //            j++)
+                //        {
+                //            Surfaces.Add(
+                //                context.Billboards1.AsEnumerable().ElementAt(i).Sides.AsEnumerable().ElementAt(z)
+                //                    .Surfaces.AsEnumerable().ElementAt(j));
+
+                //        }
+                //    }
+            foreach (var i in result.AsEnumerable())
+            {
+
+                Surfaces=new List<Surface>();
+                foreach (var j in i.Sides)
+                {
+                    foreach (var z in j.Surfaces)
+                    {
+                         Surfaces.Add(z);
+                    }
+ 
+                }
+                    objectsForJson.Add(new BilboardConstructionJsonModel(i, Surfaces));
+                    Surfaces = null;
+           }
+                    
+            
                 return Json(objectsForJson, JsonRequestBehavior.AllowGet);
             }
  

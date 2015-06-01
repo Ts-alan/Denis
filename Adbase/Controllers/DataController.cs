@@ -1064,15 +1064,26 @@ namespace Sciencecom.Controllers
        
         
         #endregion
-        public IEnumerable<Billboards1> SearchBillbord(Billboards1 billboard, string startDay, string startMonth, string startYear, string finishDay, string finishMonth, string finishYear, string Story, string IsBillboardSocial, string owner)
+        public IEnumerable<Billboards1> SearchBillbord(Billboards1 billboard, string startDay, string startMonth, string startYear, string finishDay, string finishMonth, string finishYear, string[] Story, string IsBillboardSocial, string owner)
         {
+            bool isSocial;
+            if (IsBillboardSocial == "Да")
+            {
+                isSocial = true;
+            }
+            else
+            {
+                isSocial = false;
+            }
             context = new SciencecomEntities();
-            IEnumerable<Billboards1> result = context.Billboards1;
+            IEnumerable<Billboards1> result = context.Billboards1.ToList();
+            int i = 1;
             if (owner != "" && owner != null)
             {
                 var id_Owner = context.Owners.Single(a => a.Name.ToLower() == owner.ToLower()).Id;
                 result = result.Where(m => m.Owner.Id == id_Owner);
             }
+            if (billboard.Street1 != "")
             {
                 result = result.Where(m => m.Street1.ToLower().Contains(billboard.Street1.ToLower()));
             }
@@ -1089,22 +1100,58 @@ namespace Sciencecom.Controllers
                 result = result.Where(m => m.Locality.ToLower().Contains(billboard.Locality.ToLower()));
             }
 
-            result = result.Where(m => m.OnAgreement == billboard.OnAgreement);
+            //result = result.Where(m => m.OnAgreement == billboard.OnAgreement);
 
             if (startDay != "" && startMonth != "" && startYear != "")
             {
                 DateTime startDate = new DateTime(Int32.Parse(startYear), Int32.Parse(startMonth), Int32.Parse(startDay));
- 
-                result = result.Where(m => m.StartDate.Date == startDate.Date);
+                result.Where(m => m.StartDate.Date >= startDate.Date);
+               
             }
             if (finishDay != "" && finishMonth != "" && finishYear != "")
             {
-                DateTime endDate = new DateTime(Int32.Parse(finishDay), Int32.Parse(finishMonth), Int32.Parse(finishYear));
+                DateTime endDate = new DateTime(Int32.Parse(finishYear), Int32.Parse(finishMonth), Int32.Parse(finishDay));
 
-                result = result.Where(m => m.EndDate.Date == endDate.Date);
+                result.Where(m => m.EndDate.Date <= endDate.Date);
+
             }
-
-
+            var t = result.ToList();
+            //result.Where(a =>
+            //{
+            //    foreach (var side in a.Sides)
+            //    {
+            //        foreach (var surface in side.Surfaces)
+            //        {
+            //            if (surface.IsSocial == true)
+            //            {
+            //                return true;
+            //                break;
+            //            }
+            //        }
+            //    }
+            //    return false;
+            //});
+            //if (Story != null)
+            //{
+            //    result.Where(a =>
+            //    {
+            //        foreach (var j in Story)
+            //        {
+            //            foreach (var side in a.Sides)
+            //            {
+            //                foreach (var surface in side.Surfaces)
+            //                {
+            //                    if (surface.Story == j)
+            //                    {
+            //                        return true;
+            //                        break;
+            //                    }
+            //                }
+            //            }
+            //        }
+            //        return false;
+            //    });
+            //}
             return result;
         }
         public ActionResult FindStreets(string term)

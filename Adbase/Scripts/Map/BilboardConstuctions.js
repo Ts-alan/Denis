@@ -1,6 +1,10 @@
 ﻿function GetBilboardPoints(role, userCompany ,objectId) {
     var geoObjects = new ymaps.GeoObjectCollection();
-    $('input[type=radio]')
+    var story = {};
+    $('.storyList').each(function (i) {
+        story[i]=($(this).text());
+    });
+
     var onAgreement;
     if ($("#OnAgreement option:selected").val() == "Да") {
         onAgreement = true;
@@ -22,7 +26,7 @@
             lBillboardFinishDay: $("#lBillboardFinishDay option:selected").val(),
             lBillboardFinishMonth: $("#lBillboardFinishMonth option:selected").val(),
             lBillboardFinishYear: $("#lBillboardFinishYear").val(),
-            Story: $("#Story option:selected").val(),
+            Story: story,
             OnAgreement: onAgreement,
             IsBillboardSocial: $("#IsBillboardSocial option:selected").val(),
             id: parseInt(objectId)
