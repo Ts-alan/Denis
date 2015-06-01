@@ -1,10 +1,10 @@
-﻿@model Sciencecom.Models.SciencecomEntities
+﻿@model IEnumerable<Sciencecom.Models.Billboards1>
 @using Sciencecom.Models
 @using Microsoft.AspNet.Identity.EntityFramework
 @using Microsoft.AspNet.Identity
 
 @{
-   
+
     if (ViewBag.Results != null)
     {
         if (ViewBag.Results == 0)
@@ -17,7 +17,7 @@
     @ViewBag.Results;
         }
     }
- 
+
 }
 <tr>
     <th>
@@ -57,55 +57,60 @@
 
 </tr>
 
-@foreach (var item in Model.Billboards1)
+@foreach (var item in Model)
 {
-    
+
     <tr>
-        <td >
+        <td>
             @Html.DisplayFor(modelItem => item.Id_show)
         </td>
-        <td >
+        <td>
             @Html.DisplayFor(modelItem => item.Owner.Name)
 
         </td>
-        <td >
+        <td>
             @Html.DisplayFor(modelItem => item.Locality)
         </td>
-        <td >
+        <td>
             @Html.DisplayFor(modelItem => item.Street1)
         </td>
-        <td >
+        <td>
             @Html.DisplayFor(modelItem => item.House1)
         </td>
-        <td >
+        <td>
             @Html.DisplayFor(modelItem => item.Street2)
         </td>
-        <td >
+        <td>
             @Html.DisplayFor(modelItem => item.FromStreet)
         </td>
 
         <td>
-            <table>
-            @foreach (var side in Model.Sides.Where(a=>a.Billboard_Id==item.Id))
-            {
-                 foreach (var surface in Model.Surfaces.Where(a=>a.Side_Id==side.Id))
-                  {
 
-                      <tr>
-                          <td>
-                              @surface.IsSocial
-                          </td>
-                      </tr>
-                  }
-            }
-            </table>
-
-        </td>
-        <td>
             <table>
-                @foreach (var side in Model.Sides.Where(a => a.Billboard_Id == item.Id))
+                @foreach (var Billboard in Model.Where(a=>a.Id==item.Id))
                 {
-                    foreach (var surface in Model.Surfaces.Where(a => a.Side_Id == side.Id))
+                    foreach (var side in Billboard.Sides)
+                    {
+                        foreach (var surface in side.Surfaces)
+                        {
+
+                            <tr>
+                                <td>
+                                    @surface.IsSocial
+                                </td>
+                            </tr>
+                        }
+                    }
+                }
+            </table>
+        </td>
+    <td>
+        <table>
+            @foreach (var Billboard in Model.Where(a=>a.Id==item.Id))
+            {
+                foreach (var side in Billboard.Sides)
+                {
+                    foreach (var surface in side.Surfaces)
                     {
 
                         <tr>
@@ -115,19 +120,20 @@
                         </tr>
                     }
                 }
-            </table>
+            }
+        </table>
         </td>
-<td>
-            @item.StartDate.Date.ToShortDateString()
-          </td>
-           <td>
-            @item.EndDate.Date.ToShortDateString()
-           </td>
+            <td>
+                @item.StartDate.Date.ToShortDateString()
+            </td>
+            <td>
+                @item.EndDate.Date.ToShortDateString()
+            </td>
 
-                <td>
-                    @{
+            <td>
+                @{
 
-                        <b>@Html.ActionLink("Документы", "Documents", new { id = item.Id_show, type = "b" })</b><br />
+                    <b>@Html.ActionLink("Документы", "Documents", new { id = item.Id_show, type = "b" })</b><br />
     string idLink = "mapLink" + item.Id.ToString();
     @*<a style="cursor: pointer" id="@idLink">Показать на карте</a><br />
         <script>
@@ -145,7 +151,7 @@
     if ((role == "Admin") || (role == "ChiefEditAll") || (role == "SupplierEditAll"))
     {
         @Html.ActionLink("Изменить", "EditBillboard", new { id = item.Id })<br />
-                        @Html.ActionLink("Удалить", "DeleteBilboard", new { id = item.Id })<br />
+                    @Html.ActionLink("Удалить", "DeleteBilboard", new { id = item.Id })<br />
     }
     else
     {
@@ -156,7 +162,7 @@
 
             } ToDo ДОПИЛИТЬ!*@
     }
-                    }
-                </td>
+                }
+            </td>
             </tr>
 }

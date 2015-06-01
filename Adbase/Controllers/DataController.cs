@@ -1404,31 +1404,26 @@ namespace Sciencecom.Controllers
             if (billboard == null)
             {
                 ViewBag.Results = null;
-                context.Billboards1.OrderByDescending(m => m.StartDate);
-                
-                return View(context);
+                return View(context.Billboards1.OrderByDescending(m => m.StartDate));
             }
             else
             {
-                SciencecomEntities result = SearchBillboard(billboard, day, month, year, owner); 
-                ViewBag.Results = result.Billboards1.Count();
-                result.Billboards1.OrderByDescending(m => m.StartDate);
-                
-                return View(result);
+                IEnumerable<Billboards1> result = SearchBillboard(billboard, day, month, year, owner);
+                ViewBag.Results = result.Count();
+                return View(result.OrderByDescending(m => m.StartDate));
             }
         }
 
-        public SciencecomEntities SearchBillboard(Sciencecom.Models.Billboards1 billboard, string day, string month, string year,string owner)
+        public IEnumerable<Billboards1> SearchBillboard(Sciencecom.Models.Billboards1 billboard, string day, string month, string year,string owner)
         {
-            
+
             context = new SciencecomEntities();
             IEnumerable<Billboards1> result = context.Billboards1;
-            //if (owner != ""&&owner !=null) 
-            //{
-            //    var id_Owner = context.Owners.Single(a => a.Name.ToLower() == owner.ToLower()).Id;
-            //    billboard.Owner_Id = id_Owner;
-            //    result = result.Where(m => m.Owner.Id == billboard.Owner.Id);
-            //}
+            if (owner != "" && owner != null)
+            {
+                var id_Owner = context.Owners.Single(a => a.Name.ToLower() == owner.ToLower()).Id;
+                 result = result.Where(m => m.Owner.Id == id_Owner);
+            }
             if (billboard.Street1 != "" && billboard.Street1 != null)
             {
                 result = result.Where(m => m.Street1.ToLower().Contains(billboard.Street1.ToLower()));
@@ -1457,25 +1452,8 @@ namespace Sciencecom.Controllers
             {
                 result = result.Where(m => m.StartDate.Year == int.Parse(year));
             }
-            var t1 = result.ToList();
-             IEnumerable<Billboards1> t=null ;
-            foreach(var i in result)
-            {
 
-             t = context.Billboards1.Where(a=>a.Street1.Contains(i.Street1));
-                 
-        
-            }
-            int g = 0;
-            foreach (var s in t)
-            {
-                g++;
-            }
-            var t2 = context.Billboards1.ToList(); 
-          
-
-            //context.Billboards1.Contains(result);
-            return context;
+            return result;
         }
 
         public ActionResult PartialBilboard(int param , string side)
