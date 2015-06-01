@@ -70,6 +70,9 @@
                 if ($("#showIllegal").is(':checked')) {
                     geoObjects.add(GetIllegalPoints("@role"));
                 }
+                if ($("#showBillboard").is(':checked')) {
+                    geoObjects.add(GetBilboardPoints("@role", "@user.Company"));
+                }
             } else {
                 if (type === "m") {
                     geoObjects.add(GetMetalPoints("@role", "@user.Company", objectId));
@@ -77,52 +80,52 @@
                     geoObjects.add(GetLightPoints("@role", "@user.Company", objectId));
                 } else if (type === "i") {
                     geoObjects.add(GetIllegalPoints("@role", objectId));
-                    }
+                }
                 else if (type === "b") {
                     console.log(objectId);
-                        geoObjects.add(GetBilboardPoints("@role", objectId));
-                    }
-                    flag = false;
+                    geoObjects.add(GetBilboardPoints("@role", objectId));
                 }
+                flag = false;
+            }
             myMap.geoObjects.add(geoObjects);
             //console.log(geoObjects);
         }
+    }
+    CreateMap();
+    //Разделил фильтры по группам
+    function check() {
+        if ($("#showLight").is(':checked')) {
+            $("#lights").css("display", "block");
+            console.log($("#lights"));
+        } else {
+            $("#lights").css("display", "none");
         }
-        CreateMap();
-        //Разделил фильтры по группам
-        function check() {
-            if ($("#showLight").is(':checked')) {
-                $("#lights").css("display", "block");
-                console.log($("#lights"));
-            } else {
-                $("#lights").css("display", "none");
-            }
-            if ($("#showIllegal").is(':checked')) {
-                $("#illegal").css("display", "block");
-            }
-            else {
-                $("#illegal").css("display", "none");
-            }
-            if ($("#showBillboard").is(':checked')) {
-                $("#billboard").css("display", "block");
-            } else {
-                $("#billboard").css("display", "none");
-            }
+        if ($("#showIllegal").is(':checked')) {
+            $("#illegal").css("display", "block");
         }
-        $(document).ready(function () {
-            $("#addLinks").hide();
-            $("#addLinkImage").click(function() {
-                $("#addLinkImage").hide();
-                $("#addLinks").show();
-            });
-            $("#addLinks").mouseleave(function() {
-                $("#addLinkImage").show();
-                $("#addLinks").hide();
-            });
-
-           
-         
+        else {
+            $("#illegal").css("display", "none");
+        }
+        if ($("#showBillboard").is(':checked')) {
+            $("#billboard").css("display", "block");
+        } else {
+            $("#billboard").css("display", "none");
+        }
+    }
+    $(document).ready(function () {
+        $("#addLinks").hide();
+        $("#addLinkImage").click(function () {
+            $("#addLinkImage").hide();
+            $("#addLinks").show();
         });
+        $("#addLinks").mouseleave(function () {
+            $("#addLinkImage").show();
+            $("#addLinks").hide();
+        });
+
+
+
+    });
     </script>
 </head>
 <body>

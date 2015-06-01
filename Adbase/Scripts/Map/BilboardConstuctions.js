@@ -1,4 +1,4 @@
-﻿function GetBilboardPoints(role, objectId) {
+﻿function GetBilboardPoints(role, userCompany ,objectId) {
     var geoObjects = new ymaps.GeoObjectCollection();
     $.ajax({
         type: "POST",
@@ -12,12 +12,12 @@
             startDay: $("#startDay option:selected").val(),
             startMonth: $("#startMonth option:selected").val(),
             startYear: $("#startYear").val(),
-            //lBillboardFinishDay: $("#lBillboardFinishDay option:selected").val(),
-            //lBillboardFinishMonth: $("#lBillboardFinishMonth option:selected").val(),
-            //lBillboardFinishYear: $("#lBillboardFinishYear").val(),
-            //Story: $("#Story option:selected").val(),
-            //OnAgreement: $("#OnAgreement option:selected").val(),
-            //IsBillboardSocial: $("#IsBillboardSocial option:selected").val(),
+            lBillboardFinishDay: $("#lBillboardFinishDay option:selected").val(),
+            lBillboardFinishMonth: $("#lBillboardFinishMonth option:selected").val(),
+            lBillboardFinishYear: $("#lBillboardFinishYear").val(),
+            Story: $("#Story option:selected").val(),
+            OnAgreement: $("#OnAgreement option:selected").val(),
+            IsBillboardSocial: $("#IsBillboardSocial option:selected").val(),
             id: parseInt(objectId)
         }
     }).success(function (data) {

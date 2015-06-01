@@ -68,7 +68,9 @@ namespace Sciencecom.Controllers
         }
         [HttpPost]
         [Authorize]
-        public JsonResult GetBilboard(string owner, string locality, string street1, string street2, string fromStreet, string startDay, string startMonth, string startYear, int? id = null)
+        public JsonResult GetBilboard(string owner, string locality, string street1, string street2,
+            string fromStreet, string startDay, string startMonth, string startYear,
+            string lBillboardFinishDay, string lBillboardFinishMonth, string lBillboardFinishYear, string Story, bool OnAgreement,string IsBillboardSocial, int? id = null)
         {
                 SciencecomEntities context = new SciencecomEntities();
                 List<BilboardConstructionJsonModel> objectsForJson = new List<BilboardConstructionJsonModel>();
@@ -101,7 +103,16 @@ namespace Sciencecom.Controllers
 
                     return Json(objectsForJson, JsonRequestBehavior.AllowGet);
                 }
-
+                DataController dataController = new DataController();
+   
+            Billboards1 mc = new Billboards1()
+            {
+                Locality = locality,
+                Street1 = street1,
+                Street2 = street2,
+                FromStreet = fromStreet,
+                OnAgreement=OnAgreement
+            };
                 return Json(objectsForJson, JsonRequestBehavior.AllowGet);
             }
  
