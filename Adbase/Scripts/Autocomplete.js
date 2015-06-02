@@ -50,3 +50,13 @@ $(function () {
         }
     });
 });
+$(function () {
+    var autocompleteUrl = '/Data/FindStory';
+    $("#Story").autocomplete({
+        source: autocompleteUrl,
+        minLength: 2,
+        select: function (event, ui) {
+
+        }
+    });
+});

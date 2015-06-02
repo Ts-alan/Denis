@@ -1178,6 +1178,17 @@ namespace Sciencecom.Controllers
                              };
             return Json(projection.ToList(), JsonRequestBehavior.AllowGet);
         }
+        public ActionResult FindStory(string term)
+        {
+            var streets = from m in context.Surfaces where m.Story.Contains(term) select m;
+            var projection = from street in streets
+                             select new
+                             {
+                                 label = street.Story,
+                                 value = street.Story
+                             };
+            return Json(projection.ToList(), JsonRequestBehavior.AllowGet);
+        }
 
         [Authorize]
         [HttpGet]
