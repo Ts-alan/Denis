@@ -204,10 +204,14 @@
         <div class="form-group">
             @Html.Label("На согласование", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.OnAgreement, new SelectList(new[] { "Да ", "Нет" }))
-                @Html.ValidationMessageFor(model => model.PassportNumber)
+                @*@Html.DropDownListFor(model => model.OnAgreement, new SelectList(new[] { "Да ", "Нет" }))*@
+                <select name="OnAgreement">
+                    <option value="true">Да</option>
+                    <option value="false">Нет</option>
+                </select>
+                    @Html.ValidationMessageFor(model => model.OnAgreement)
             </div>
-        </div>
+       </div>
 
         @*разрешен с-до*@
         <div class="form-group">

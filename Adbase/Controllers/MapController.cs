@@ -116,44 +116,21 @@ namespace Sciencecom.Controllers
                 IEnumerable<Billboards1> result =
                 dataController.SearchBillbord(mc, startDay, startMonth, startYear, lBillboardFinishDay,
                     lBillboardFinishMonth, lBillboardFinishYear, Story, IsBillboardSocial,owner).ToList();
-                //foreach (var Billboards in result)
-                //{
-                //    foreach (var sides in Billboards.Sides)
-                //    {
-                //        foreach (var surface in sides.Surfaces)
-                //        {
-                //            Surfaces.Add(surface);
-                //        }
-                //    }
-                //}
-                //for (int i = 0; i < result.Count(); i++)
-                //{
-                //    for (int z = 0; z < result.ElementAt(i).Sides.Count; z++)
-                //    {
-                //        for (int j = 0;
-                //            j < context.Billboards1.AsEnumerable().ElementAt(i).Sides.AsEnumerable().ElementAt(z).Surfaces.Count;
-                //            j++)
-                //        {
-                //            Surfaces.Add(
-                //                context.Billboards1.AsEnumerable().ElementAt(i).Sides.AsEnumerable().ElementAt(z)
-                //                    .Surfaces.AsEnumerable().ElementAt(j));
-
-                //        }
-                //    }
-            foreach (var i in result.AsEnumerable())
+ 
+            foreach (var biboard in result.AsEnumerable())
             {
 
-                Surfaces=new List<Surface>();
-                foreach (var j in i.Sides)
+
+                foreach (var side in biboard.Sides)
                 {
-                    foreach (var z in j.Surfaces)
+                    foreach (var Surface in side.Surfaces)
                     {
-                         Surfaces.Add(z);
+                        Surfaces.Add(Surface);
                     }
  
                 }
-                    objectsForJson.Add(new BilboardConstructionJsonModel(i, Surfaces));
-                    Surfaces = null;
+                objectsForJson.Add(new BilboardConstructionJsonModel(biboard, Surfaces));
+                    Surfaces.Clear();
            }
                     
             

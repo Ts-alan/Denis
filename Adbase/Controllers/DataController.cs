@@ -1077,7 +1077,6 @@ namespace Sciencecom.Controllers
             }
             context = new SciencecomEntities();
             IEnumerable<Billboards1> result = context.Billboards1.ToList();
-            int i = 1;
             if (owner != "" && owner != null)
             {
                 var id_Owner = context.Owners.Single(a => a.Name.ToLower() == owner.ToLower()).Id;
@@ -1100,59 +1099,72 @@ namespace Sciencecom.Controllers
                 result = result.Where(m => m.Locality.ToLower().Contains(billboard.Locality.ToLower()));
             }
 
-            //result = result.Where(m => m.OnAgreement == billboard.OnAgreement);
-
+            result = result.Where(m => m.OnAgreement == billboard.OnAgreement).ToList();
+            int d = 0;
+          
             if (startDay != "" && startMonth != "" && startYear != "")
             {
                 DateTime startDate = new DateTime(Int32.Parse(startYear), Int32.Parse(startMonth), Int32.Parse(startDay));
-                result.Where(m => m.StartDate.Date >= startDate.Date);
-               
-            }
+                result = result.Where(a => a.StartDate.Date >= startDate.Date).ToList();
+               }
             if (finishDay != "" && finishMonth != "" && finishYear != "")
             {
                 DateTime endDate = new DateTime(Int32.Parse(finishYear), Int32.Parse(finishMonth), Int32.Parse(finishDay));
-
-                result.Where(m => m.EndDate.Date <= endDate.Date);
-
+                result= result.Where(m => m.EndDate.Date <= endDate.Date).ToList();
+               
             }
-            var t = result.ToList();
-            //result.Where(a =>
-            //{
-            //    foreach (var side in a.Sides)
-            //    {
-            //        foreach (var surface in side.Surfaces)
-            //        {
-            //            if (surface.IsSocial == true)
-            //            {
-            //                return true;
-            //                break;
-            //            }
-            //        }
-            //    }
-            //    return false;
-            //});
-            //if (Story != null)
-            //{
-            //    result.Where(a =>
-            //    {
-            //        foreach (var j in Story)
-            //        {
-            //            foreach (var side in a.Sides)
-            //            {
-            //                foreach (var surface in side.Surfaces)
-            //                {
-            //                    if (surface.Story == j)
-            //                    {
-            //                        return true;
-            //                        break;
-            //                    }
-            //                }
-            //            }
-            //        }
-            //        return false;
-            //    });
-            //}
-            return result;
+                 result = result.Where(a =>
+                {
+                    foreach (var side in a.Sides)
+                    {
+                        foreach (var surface in side.Surfaces)
+                        {
+                            if (isSocial == true)
+                            {
+                                if (surface.IsSocial == true)
+                                {
+                                    return true;
+                                }
+                            }
+                            else
+                            {
+                                if (surface.IsSocial == true)
+                                {
+                                    return false;
+                                }
+                            }
+                        }
+                    }
+                    if (isSocial == true)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }).ToList();
+                 if (Story != null)
+                 {
+                     result = result.Where(a =>
+                      {
+                          foreach (var j in Story)
+                          {
+                              foreach (var side in a.Sides)
+                              {
+                                  foreach (var surface in side.Surfaces)
+                                  {
+                                      if (surface.Story == j)
+                                      {
+                                          return true;
+                                      }
+                                  }
+                              }
+                          }
+                          return false;
+                      });
+                 }
+          return result;
         }
         public ActionResult FindStreets(string term)
         {
