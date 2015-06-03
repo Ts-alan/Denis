@@ -1,0 +1,189 @@
+﻿@model IEnumerable<Sciencecom.Models.LightConstruction>
+@using Sciencecom.Models
+@using Microsoft.AspNet.Identity.EntityFramework
+@using Microsoft.AspNet.Identity
+@using Sciencecom.Enums
+@{
+    if (ViewBag.Results != null)
+    {
+        if (ViewBag.Results == 0)
+        {
+            @Html.Label("Поиск не дал результатов. Проверье введённые Вами данные.");
+        }
+        else
+        {
+            @Html.Label("Найдено записей по Вашему запросу: ");
+    @ViewBag.Results;
+        }
+    }
+}
+<tr>
+    <th>
+        №
+    </th>
+    <th>
+        @Html.DisplayNameFor(model => model.Owner.Name)
+    </th>
+    <th>
+        @Html.DisplayNameFor(model => model.Locality)
+    </th>
+    <th>
+        @Html.DisplayNameFor(model => model.Street1)
+    </th>
+    <th>
+        @Html.DisplayNameFor(model => model.Street2)
+    </th>
+    <th>
+        @Html.DisplayNameFor(model => model.FromStreet)
+    </th>
+    <th>
+        @Html.DisplayNameFor(model => model.Support)
+    </th>
+    <th>
+        @Html.DisplayNameFor(model => model.StartDate)
+    </th>
+    <th>
+        @Html.DisplayNameFor(model => model.FinishDate)
+    </th>
+    <th>
+        @Html.DisplayNameFor(model => model.IsSocial)
+    </th>
+    <th> 
+    </th>
+</tr>
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Id)
+        </td>
+        <td>
+            @Html.ActionLink(item.Owner.Name, "Owner", new { name = item.Owner.Name, backTo = "Light" })
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Locality)<br />
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Street1)<br />
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Street2)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FromStreet)
+        </td>
+        <td>
+            @if (item.Support == 0)
+            {
+               @Html.Raw("Стойка")
+            }
+            else
+            {
+               @Html.DisplayFor(modelItem => item.Support)
+            }
+        </td>
+        <td>
+            @{
+               @item.StartDate.Date.ToShortDateString()
+               if (item.OnStatement)
+               {
+                   <br />
+                   @Html.Label("Заявление");
+               }
+            }
+        </td>
+        <td>
+            @{
+                if (item.OnStatement)
+                {
+                   @Html.Label("-");
+                }
+                else
+                { 
+                   @item.FinishDate.Date.ToShortDateString()
+                }
+             }
+        </td>
+        <td>           
+            @{
+                if (item.IsSocial)
+                {
+                    @Html.Label("C ")
+                    @Html.DisplayFor(modelItem=>item.DateOfSocial)
+                }
+                else
+                {
+                    @Html.Label("Нет")
+                }
+            }
+        </td>
+        <td>
+            @{
+                if (item.OnStatement)
+                {
+                    <b>@Html.ActionLink("Документы", "Documents", new { id =item.Id, type = "ls"})</b><br />
+                }
+                else
+                {
+                    <b>@Html.ActionLink("Документы", "Documents", new { id =item.Id, type = "l"})</b><br />
+                }
+                string idLink = "mapLink" + item.Id.ToString();
+                string mapLink = "/Map/?type=l&id=" + item.Id;
+                <a href="@mapLink" target="_blank">Показать на карте</a> <br />
+                @*<a style="cursor: pointer" id="@idLink">Показать на карте</a><br />
+               <script>
+                    $("#@idLink").on("click", function () {
+                        new Messi('<div id="map" style="width: 464px; height: 320px"></div>',
+                       { title: 'Объект на карте', titleClass: 'info',  buttons: [{ id: 0, label: 'Закрыть', val: 'X' }] });
+                        ShowMap("@item.Shirota", "@item.Dolgota");
+                    });
+               </script>*@
+                var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+                ApplicationUser user = um.FindByName(User.Identity.GetUserName());
+                string role = user.Roles.Select(m => m.Role.Name).First().ToString();
+                if ((role == "Admin") || (role == "ChiefEditAll") || (role == "SupplierEditAll"))
+                {
+                   if (item.OnStatement)
+                   {
+                      @Html.ActionLink("Изменить", "EditLight", new { id = item.Id })<br />
+                      @Html.ActionLink("В согласованные", "AddPassport", new { id = item.Id })<br />
+                      @Html.ActionLink("Удалить", "DeleteLight", new { id = item.Id })<br />
+                   }
+                   else
+                   {
+                      @Html.ActionLink("Изменить", "EditLight", new { id = item.Id })<br /> 
+                      @Html.ActionLink("Удалить", "DeleteLight", new { id = item.Id })<br />  
+                   }
+                }
+                else if (((role == "ChiefEditOwn") || (role == "SupplierEditOwn")) && ((user.Company == item.OwnerWhoAdded.Name) || (item.OwnerWhoAdded.Name == "Неизвестно")))
+                {
+                         if (item.OnStatement)
+                         {
+                           @Html.ActionLink("Изменить", "EditLight", new { id = item.Id })<br />
+                           @Html.ActionLink("В согласованные", "AddPassport", new { id = item.Id })<br />
+                           @Html.ActionLink("Удалить", "DeleteLight", new { id = item.Id })<br />
+                         }
+                         else
+                         {
+                           @Html.ActionLink("Изменить", "EditLight", new { id = item.Id })<br /> 
+                           @Html.ActionLink("Удалить", "DeleteLight", new { id = item.Id })<br />
+                         }
+                }
+                else if ((role == "OnlyLightBoxes") && (item.IdOwner != (int)MainCompany.Scom))
+                {
+                    if (item.OnStatement)
+                    {
+                        @Html.ActionLink("Изменить", "EditLight", new { id = item.Id })<br />
+                        @Html.ActionLink("В согласованные", "AddPassport", new { id = item.Id })<br />
+                        @Html.ActionLink("Удалить", "DeleteLight", new { id = item.Id })<br />
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Изменить", "EditLight", new { id = item.Id })<br />
+                        @Html.ActionLink("Удалить", "DeleteLight", new { id = item.Id })<br />
+                    }
+                }
+}
+        </td>
+    </tr>
+}

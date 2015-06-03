@@ -1,0 +1,344 @@
+﻿@using Sciencecom.Models
+@using Microsoft.AspNet.Identity.EntityFramework
+@using Microsoft.AspNet.Identity
+@using System.Web.Script.Serialization
+@model Constructions
+@{
+    Layout = null;
+    var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+    ApplicationUser user = um.FindByName(User.Identity.GetUserName());
+    string role = user.Roles.Select(m => m.Role.Name).First().ToString();
+    List<string> o = new List<string>();
+    o.Add("");
+    foreach (var item in new SciencecomEntities().Owners.Select(m => m.Name))
+    {
+        o.Add(item);
+    }
+    SelectList owners = new SelectList(o);
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Карта объектов</title>
+    @Styles.Render("~/Content/css")
+    <link href="~/Content/themes/flick/jquery-ui.css" rel="stylesheet" />
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jquery-ui")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/messi")
+
+    <script src="http://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+    <script src="~/Scripts/Map/MetalConstructions.js"></script>
+    <script src="~/Scripts/Map/LightConstructions.js"></script>
+    <script src="~/Scripts/Map/IllegalConstructions.js"></script>
+    <script src="/Scripts/Autocomplete.js"></script>
+
+    <script type="text/javascript">
+        function CreateMap() {
+            $("#map").empty();
+            ymaps.ready(init);
+            var myMap;
+            var role = "@role";
+            var companyUser = "@user.Company";
+            var objectId = "@ViewBag.Id";
+            var type = "@ViewBag.Type";
+            var flag = false;
+            if ((objectId.length > 0) && (type.length > 0)) flag = true;
+            function init() {
+                myMap = new ymaps.Map("map", {
+                    center: [53.901, 27.5601],
+                    zoom: 11,
+                    behaviors: ['default', 'scrollZoom']
+                });
+                myMap.controls.add('typeSelector');
+                myMap.controls.add('zoomControl');
+                myMap.controls.add('searchControl');
+                var geoObjects = new ymaps.GeoObjectCollection();
+                if (!flag)
+                {
+                    if ($("#showMetal").is(':checked')) {
+                        geoObjects.add(GetMetalPoints("@role", "@user.Company"));
+                    }
+                    if ($("#showLight").is(':checked')) {
+                        geoObjects.add(GetLightPoints("@role", "@user.Company"));
+                    }
+                    if ($("#showIllegal").is(':checked')) {
+                        geoObjects.add(GetIllegalPoints("@role"));
+                    }
+                } else {
+                    if (type === "m") {
+                        geoObjects.add(GetMetalPoints("@role", "@user.Company", objectId));
+                    } else if (type === "l") {
+                        geoObjects.add(GetLightPoints("@role", "@user.Company", objectId));
+                    } else if (type === "i") {
+                        geoObjects.add(GetIllegalPoints("@role", objectId));
+                    }
+                    flag = false;
+                }
+                myMap.geoObjects.add(geoObjects);
+            }
+        }
+        CreateMap();
+        $(document).ready(function () {
+            $("#addLinks").hide();
+            $("#addLinkImage").click(function () {
+                $("#addLinkImage").hide();
+                $("#addLinks").show();
+            })
+            $("#addLinks").mouseleave(function () {
+                $("#addLinkImage").show();
+                $("#addLinks").hide();
+            })
+        });
+    </script>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <b>@Html.ActionLink("adbase.by", "Index", "Home", null, new { @class = "navbar-brand" })</b>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Таблицы<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            @if (role != "OnlyLightBoxes")
+                            {
+                                <li>@Html.ActionLink("Металлические указатели", "Metal", "Data")</li>
+                            }
+                            <li>@Html.ActionLink("Световые указатели", "Light", "Data")</li>
+                            @if (role != "OnlyLightBoxes")
+                            {
+                                <li>@Html.ActionLink("Неопознанные конструкции", "Index", "Illegal")</li>
+                            }
+                        </ul>
+                    </li>
+                    <li>@Html.ActionLink("Карта", "Index", "Map")</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        <table class="table-bordered" cellpadding="5">
+            <tr>
+                <td width="100px">
+                    @{
+                        if (role == "OnlyLightBoxes")
+                        {
+                            <a href="#"><img src="~/Content/Icons/add.png" style="height: 40px" id="addLinkImage" /></a><br />
+                            <p id="addLinks" style="border: solid 1px">
+                                @Html.ActionLink("+ Добавить световой указатель с заявлением", "CreateLightOnStatement", "Data")<br />
+                                @Html.ActionLink("+ Добавить согласованный световой указатель", "CreateLight", "Data")<br />
+                            </p>
+                        } 
+                        else if ((role != "ReadOnly") && (role != "IllegalEdit"))
+                        {
+                            <a href="#"><img src="~/Content/Icons/add.png" style="height: 40px" id="addLinkImage" /></a><br />
+                            <p id="addLinks" style="border: solid 1px">
+                                @Html.ActionLink("+ Добавить металлический указатель", "CreateMetal", "Data")<br />
+                                @Html.ActionLink("+ Добавить световой указатель с заявлением", "CreateLightOnStatement", "Data")<br />
+                                @Html.ActionLink("+ Добавить согласованный световой указатель", "CreateLight", "Data")<br />
+                                @Html.ActionLink("+ Добавить неопознанную конструкцию", "CreateLight", "Data")<br />
+                            </p>
+                        }
+                        else if (role == "IllegalEdit")
+                        {
+                            <a href="#"><img src="~/Content/Icons/add.png" style="height: 40px" id="addLinkImage" /></a><br />
+                            <p id="addLinks">
+                                @Html.ActionLink("+ Добавить неопознанную конструкцию", "CreateLight", "Data")<br />
+                            </p>
+                        }
+                    }
+                    @if (role == "OnlyLightBoxes")
+                    {
+                        <input type="checkbox" id="showLight" name="showLight" checked><span>Световые короба</span><br />
+                    } 
+                    else
+                    {
+                        <input type="checkbox" id="showMetal" name="showMetal" checked><span>Металлические указатели</span><br />
+                        <input type="checkbox" id="showLight" name="showLight"><span>Световые короба</span><br />
+                        <input type="checkbox" id="showIllegal" name="showIllegal"><span>Неопознанные конструкции</span><br />
+                    }
+                    <table id="all">
+                        <tr>
+                            <td colspan="2"><b>Kритерии:</b>
+                            <td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Владелец:
+                            </td>
+                            <td>
+                                @Html.DropDownList("owner", owners)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Нас. пункт:
+                            </td>
+                            <td>
+                                <input type="text" name="Locality" id="locality" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Улица 1:
+                            </td>
+                            <td>
+                                <input type="text" name="street1" id="street1" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Улица 2:
+                            </td>
+                            <td>
+                                <input type="text" name="street2" id="street2" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Со стороны
+                            </td>
+                            <td>
+                                <input type="text" name="fromStreet" id="fromStreet" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Разрешено с:</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                День:
+                            </td>
+                            <td>
+                                @Html.DropDownList("startDay", new SelectList(new[] { "", "1", "2", "3", "4", "5", "6", "7", "8",
+                                                                 "9", "10", "11", "12", "13", "14", "15", "16",
+                                                                 "17", "18", "19", "20", "21", "22", "23", "24", "25",
+                                                                 "26", "27", "28", "29", "30", "31"}))
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Месяц:
+                            </td>
+                            <td>
+                                @Html.DropDownList("startMonth", new SelectList(new[] { "", "1", "2", "3", "4", "5", "6", "7", "8",
+                                                                 "9", "10", "11", "12"}))
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Год:
+                            </td>
+                            <td>
+                                <input type="text" name="startYear" size="10" id="startYear" />
+                            </td>
+                        </tr>
+                    </table>
+                    <table id="lights">
+                       @if (role != "OnlyLightBoxes")
+                       {
+                         <tr>
+                            <td colspan="2">
+                                <b>Критерии для коробов:</b>
+                            </td>
+                         </tr>
+                       }
+                        <tr>
+                            <td>
+                                Разрешено до:
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                День:
+                            </td>
+                            <td>
+                                @Html.DropDownList("lFinishDay", new SelectList(new[] { "", "1", "2", "3", "4", "5", "6", "7", "8",
+                                                                 "9", "10", "11", "12", "13", "14", "15", "16",
+                                                                 "17", "18", "19", "20", "21", "22", "23", "24", "25",
+                                                                 "26", "27", "28", "29", "30", "31"}))
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Месяц:
+                            </td>
+                            <td>
+                                @Html.DropDownList("lFinishMonth", new SelectList(new[] { "","1", "2", "3", "4", "5", "6", "7", "8",
+                                                                 "9", "10", "11", "12"}))
+                            </td>
+                        </tr>
+                        <tr>
+
+
+                            <td>
+                                Год:
+                            </td>
+                            <td>
+                                <input type="text" name="lFinishYear" size="10" id="lFinishYear" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                На соласовании:
+                            </td>
+                            <td>
+                                @Html.DropDownList("onStatement", new SelectList(new[] { "Не важно", "Да", "Нет" }))
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Социальная:
+                            </td>
+                            <td>
+                                @Html.DropDownList("isSocial", new SelectList(new[] { "Не важно", "Да", "Нет" }))
+                            </td>
+                        </tr>
+                    </table>
+                    @if (role != "OnlyLightBoxes")
+                    {
+                      <table id="illegal">
+                        <tr>
+                            <td colspan="2">
+                                <b>Критерии для объектов из раздела "Неопознанные конструкции":</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Статус объекта:
+                            </td>
+                            <td>
+                                @Html.DropDownList("status", new SelectList(new[] { "", "Новый", "Рассматривается", "Нелегальный", "Легальный", "Демонтирован" }))
+                            </td>
+                        </tr>
+                      </table>
+                    }
+                    <a class="btn btn-info" href="#" id="showMap" onclick="CreateMap()">Показать</a>
+                </td>
+                <td width="80%" valign="top" id="map"></td>
+            </tr>
+        </table>
+    </div>
+    <div class="container body-content">
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year – <a href="http://scom.by">ООО "Сайнском"</a></p>
+        </footer>
+    </div>
+    @Scripts.Render("~/bundles/bootstrap")
+</body>
+</html>
