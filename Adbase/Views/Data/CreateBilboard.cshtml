@@ -197,8 +197,7 @@
             @Html.Label("Вид рекламы ", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("TypeOfAdvertising", new SelectList(new[] { "Социальная", "Беларуская ", "Иная" }))@*над будет точно разобраться*@
-                @Html.ValidationMessageFor(model => model.PassportNumber)
-            </div>
+               </div>
         </div>
         @*На согласование *@
         <div class="form-group">
@@ -237,7 +236,6 @@
                 @Html.DropDownList("TypeOfAdvertising", new SelectList(new[] { "1", "2", "3" }), new
            {
                id = "SideIndex", @*onchange = "ShowHideDate()"*@})
-                @Html.ValidationMessageFor(model => model.PassportNumber)
             </div>
         </div>
         @Html.ValidationMessage("Photo")

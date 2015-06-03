@@ -212,7 +212,7 @@
       <DependentUpon>ContructionsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\OwnerPartial.cs" />
-    <Compile Include="Models\PartialClassForEF.cs" />
+    <Compile Include="Models\Billboards1ConstructionPartial.cs" />
     <Compile Include="Models\Side.cs">
       <DependentUpon>ContructionsModel.tt</DependentUpon>
     </Compile>
