@@ -1422,9 +1422,9 @@ namespace Sciencecom.Controllers
                 i.Side_Id = ListSide.Single(a => a.Name == i.SideOfSurface).Id;
             }
 
-            context.Sides.AddRange(ListSide);
-            context.Surfaces.AddRange(surfaces);
 
+            context.Surfaces.AddRange(surfaces);
+            context.Sides.AddRange(ListSide);
             context.Billboards1.Add(billboards);
 
             context.SaveChanges();

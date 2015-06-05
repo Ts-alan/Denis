@@ -11,10 +11,11 @@
 }
 @Scripts.Render("~/Content/Map")
 <script type="text/javascript">
-    $(document).ready(function() {
-        var i=0;
+    $(document).ready(function () {
+        var i = 0;
+
         //выпадающий список
-        $("#SideIndex").change(function() {
+        $("#SideIndex").change(function () {
             var selectIndex = document.getElementById("SideIndex").selectedIndex;
             if (selectIndex == 0) {
                 $("#SizeB").css("display", "none");
@@ -29,10 +30,11 @@
                 $("#SizeC").css("display", "block");
             }
         });
+
         function InsertOn() {
             $(".each1 input").eq(0).on('change', function (e) {
-                var temp1= $(this).val();
-                $(".each1 input").each(function(indx) {
+                var temp1 = $(this).val();
+                $(".each1 input").each(function (indx) {
                     $(this).val(temp1);
                 });
             });
@@ -94,17 +96,62 @@
             });
         });
         $("#AddButton3").click(function () {
-            $.get('@Url.Action("PartialBilboard","Data")', { param: Increment(), size: "C" }).success(function (e) {
+            $.get('@Url.Action("PartialBilboard", "Data")', { param: Increment(), size: "C" }).success(function (e) {
                 $("#InsertPartial3").before(e);
 
             });
         });
 
+        //выпадающий списко и поверхности
+        switch ("@Model.Sides.Count") {
+            case "1":
+                $("#SideIndex")[0].value = 1;
+                $('#SideIndex').trigger('change');
+                FillingSideA();
+                break;
+            case "2":
+                $("#SideIndex")[0].value = 2;
+                $('#SideIndex').trigger('change');
+                FillingSideA();
+                FillingSideB();
+                break;
+            case "3":
+                $("#SideIndex")[0].value = 3;
+                $('#SideIndex').trigger('change');
+                FillingSideA();
+                FillingSideB();
+                FillingSideC();
+                break;
+            default:
+                alert('Я таких значений не знаю');
+
+
+        }
+
+
     });
-    function SetCoordinate() {
-        var mass = [55.8, 37.8];
-        return mass;
+    console.log("@Model.Sides.SingleOrDefault(a => a.Name == "B").Surfaces.Count");
+
+    function FillingSideA() {
+        for (var i1 = 0; i1 < "@Model.Sides.Single(a => a.Name == "А").Surfaces.Count"; i1++) {
+            $('#AddButton1').trigger('click');
+        }
     }
+
+    function FillingSideB() {
+        @*if ("@Model.Sides.SingleOrDefault(a => a.Name == "B").Surfaces.Count" != null) {*@
+            @*for (var i2 = 0; i2 < "@Model.Sides.SingleOrDefault(a => a.Name == "B").Surfaces.Count"; i2++) {
+                $('#AddButton2').trigger('click');*@
+            //}
+        //}
+    }
+
+    function FillingSideC() {
+        @*for (var i3 = 0; i3 < "@Model.Sides.Single(a => a.Name == "C").Surfaces.Count"; i3++) {
+                $('#AddButton3').trigger('click');
+            }*@
+        }
+
 </script>
 <h2> Добавить новый билбодер</h2>
 @*<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">*@
