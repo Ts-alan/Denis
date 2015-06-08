@@ -1,4 +1,5 @@
-﻿@using System.Web.Razor.Generator
+﻿@using System.Data.Entity.Core.Common.EntitySql
+@using System.Web.Razor.Generator
 @using Microsoft.AspNet.Identity
 @using Microsoft.AspNet.Identity.EntityFramework
 @using Newtonsoft.Json
@@ -7,6 +8,36 @@
 @{
     ViewBag.Title = "EditBilboard";
     SelectList owners = new SelectList(new SciencecomEntities().Owners.Select(m => m.Name).ToList());
+    int increment = 0;
+    int sideA;
+    int sideB;
+    int sideC;
+    
+    try
+    {
+        sideA = Model.Sides.SingleOrDefault(a => a.Name == "А").Surfaces.Count;
+    }
+    catch
+    {
+        sideA = 0;
+    }
+    try
+    {
+        sideB = Model.Sides.SingleOrDefault(a => a.Name == "B").Surfaces.Count;
+    }
+    catch
+    {
+        sideB =0;
+    }
+    try
+    {
+        sideC = Model.Sides.Single(a => a.Name == "C").Surfaces.Count;
+    }
+    catch
+    {
+        sideC = 0;
+    }
+    
 
 }
 @Scripts.Render("~/Content/Map")
@@ -80,9 +111,10 @@
         function Increment() {
             return i++;
         }
+
         //скрипт для добавить площадь
         $("#AddButton1").click(function () {
-            $.get('@Url.Action("PartialBilboard","Data")', { param: Increment(), size: "А" }).success(function (e) {
+            $.get('@Url.Action("PartialBilboard", "Data")', { param: Increment(), size: "А" }).success(function (e) {
                 $("#InsertPartial1").before(e);
                 InsertOn();
 
@@ -90,7 +122,7 @@
 
         });
         $("#AddButton2").click(function () {
-            $.get('@Url.Action("PartialBilboard","Data")', { param: Increment(), size: "B" }).success(function (e) {
+            $.get('@Url.Action("PartialBilboard", "Data")', { param: Increment(), size: "B" }).success(function (e) {
                 $("#InsertPartial2").before(e);
 
             });
@@ -128,30 +160,32 @@
 
         }
 
-
     });
-    console.log("@Model.Sides.SingleOrDefault(a => a.Name == "B").Surfaces.Count");
-
     function FillingSideA() {
-        for (var i1 = 0; i1 < "@Model.Sides.Single(a => a.Name == "А").Surfaces.Count"; i1++) {
+        for (var i1 = 0; i1 < "@sideA"; i1++) {
             $('#AddButton1').trigger('click');
+            $("[name=[" + i + "].Height").val('@Model.Sides.SingleOrDefault(a => a.Name == "+ side +").Surfaces.ElementAt(increment++)');
         }
+
     }
 
     function FillingSideB() {
-        @*if ("@Model.Sides.SingleOrDefault(a => a.Name == "B").Surfaces.Count" != null) {*@
-            @*for (var i2 = 0; i2 < "@Model.Sides.SingleOrDefault(a => a.Name == "B").Surfaces.Count"; i2++) {
-                $('#AddButton2').trigger('click');*@
-            //}
-        //}
+        for (var i2 = 0; i2 < "@sideB"; i2++) {
+            $('#AddButton2').trigger('click');
+        }
     }
 
     function FillingSideC() {
-        @*for (var i3 = 0; i3 < "@Model.Sides.Single(a => a.Name == "C").Surfaces.Count"; i3++) {
-                $('#AddButton3').trigger('click');
-            }*@
+        for (var i3 = 0; i3 < "@sideC"; i3++) {
+            $('#AddButton3').trigger('click');
         }
 
+        function insertDataToSurface(i,side) {
+
+            $("[name=[" + i + "].Height").val('@Model.Sides.SingleOrDefault(a => a.Name == "+ side +").Surfaces.ElementAt(increment++)');
+
+        }
+    }
 </script>
 <h2> Добавить новый билбодер</h2>
 @*<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">*@

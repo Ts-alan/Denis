@@ -1417,13 +1417,12 @@ namespace Sciencecom.Controllers
             {
                 ListSide.Add(new Side() { Billboard_Id = BillboardsId, Name = arraySize[j], Id = Guid.NewGuid() });
             }
+            if(surfaces!=null)
             foreach (var i in surfaces)
             {
                 i.Side_Id = ListSide.Single(a => a.Name == i.SideOfSurface).Id;
+                context.Surfaces.AddRange(surfaces);
             }
-
-
-            context.Surfaces.AddRange(surfaces);
             context.Sides.AddRange(ListSide);
             context.Billboards1.Add(billboards);
 
@@ -1441,16 +1440,18 @@ namespace Sciencecom.Controllers
                 photo.SaveAs(path);
             }
 
-
-            foreach (var surface in surfaces)
+            if (surfaces != null)
             {
-              if (surface.SeveralPhoto!= null)
+                foreach (var surface in surfaces)
                 {
+                    if (surface.SeveralPhoto != null)
+                    {
 
-                       string src = "~/Images/Billboard/surfaces/" + surface.Id + ".jpg";
-                       string path = Server.MapPath(src);
-                       surface.SeveralPhoto.SaveAs(path);
-                }  
+                        string src = "~/Images/Billboard/surfaces/" + surface.Id + ".jpg";
+                        string path = Server.MapPath(src);
+                        surface.SeveralPhoto.SaveAs(path);
+                    }
+                }
             }
 
             return RedirectToAction("Bilboard"); ;
