@@ -45,6 +45,8 @@
     $(document).ready(function () {
         var i = 0;
         var j = 0;
+        var B = 0;
+        var C = 0;
        //выпадающий список
         $("#SideIndex").change(function () {
             var selectIndex = document.getElementById("SideIndex").selectedIndex;
@@ -123,7 +125,6 @@
                 {
                  ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                 }));
-                console.log(ArrayOfSurfacesA[0]);
                 $("[name='[" + j + "].Height']").val(ArrayOfSurfacesA[j].Height);
                 $("[name='[" + j + "].Width']").val(ArrayOfSurfacesA[j].Width);
                 $("[name='[" + j + "].Space']").val(ArrayOfSurfacesA[j].Space);
@@ -141,13 +142,39 @@
         $("#AddButton2").click(function () {
             $.get('@Url.Action("PartialBilboard", "Data")', { param: Increment(), size: "B" }).success(function (e) {
                 $("#InsertPartial2").before(e);
-
+                var ArrayOfSurfacesB = @Html.Raw(JsonConvert.SerializeObject(Model.Sides.SingleOrDefault(a => a.Name == "B").Surfaces, Formatting.Indented, new JsonSerializerSettings
+                {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                }));
+            $("[name='[" + j + "].Height']").val(ArrayOfSurfacesB[B].Height);
+            $("[name='[" + j + "].Width']").val(ArrayOfSurfacesB[B].Width);
+            $("[name='[" + j + "].Space']").val(ArrayOfSurfacesB[B].Space);
+            $("[name='[" + j + "].Story']").val(ArrayOfSurfacesB[B].Story);
+            $("[name='[" + j + "].StartDate']").val(ArrayOfSurfacesB[B].StartDate.substring(0,10));
+            $("[name='[" + j + "].EndDate']").val(ArrayOfSurfacesB[B].EndDate.substring(0,10));
+            if (ArrayOfSurfacesB[B].IsSocial == true) {
+                $("[name='[" + j + "].IsSocial']").attr('checked', "");
+            }
+            j++;B++;
             });
         });
         $("#AddButton3").click(function () {
             $.get('@Url.Action("PartialBilboard", "Data")', { param: Increment(), size: "C" }).success(function (e) {
                 $("#InsertPartial3").before(e);
-
+                var ArrayOfSurfacesB = @Html.Raw(JsonConvert.SerializeObject(Model.Sides.SingleOrDefault(a => a.Name == "C").Surfaces, Formatting.Indented, new JsonSerializerSettings
+                {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                }));
+                $("[name='[" + j + "].Height']").val(ArrayOfSurfacesB[C].Height);
+                $("[name='[" + j + "].Width']").val(ArrayOfSurfacesB[C].Width);
+                $("[name='[" + j + "].Space']").val(ArrayOfSurfacesB[C].Space);
+                $("[name='[" + j + "].Story']").val(ArrayOfSurfacesB[C].Story);
+                $("[name='[" + j + "].StartDate']").val(ArrayOfSurfacesB[C].StartDate.substring(0,10));
+                $("[name='[" + j + "].EndDate']").val(ArrayOfSurfacesB[C].EndDate.substring(0,10));
+                if (ArrayOfSurfacesB[C].IsSocial == true) {
+                $("[name='[" + j + "].IsSocial']").attr('checked', "");
+            }
+            j++;C++;
             });
         });
 
@@ -196,17 +223,6 @@
         for (var i3 = 0; i3 < "@sideC"; i3++) {
             $('#AddButton3').trigger('click');
         }
-
-        function insertDataToSurface(i, side) {
-
-            @*$("[name=[" + i + "].Height").val('@Model.Sides.SingleOrDefault(a => a.Name == "+ side +").Surfaces.ElementAt(increment++)');*@
-
-        }
-    }
-
-    function Test() {
-        console.log("1111");
-        $("[name='[0].Height']").val('4444');
     }
 </script>
 <h2> Добавить новый билбодер</h2>
