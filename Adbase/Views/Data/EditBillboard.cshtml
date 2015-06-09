@@ -47,7 +47,7 @@
         var j = 0;
         var B = 0;
         var C = 0;
-       //выпадающий список
+        //выпадающий список
         $("#SideIndex").change(function () {
             var selectIndex = document.getElementById("SideIndex").selectedIndex;
             if (selectIndex == 0) {
@@ -118,13 +118,12 @@
         //скрипт для добавить площадь
         $("#AddButton1").click(function () {
             $.get('@Url.Action("PartialBilboard", "Data")', { param: Increment(), size: "А" }).success(function (e) {
-
-                $("#InsertPartial1").before(e);
-                InsertOn();
                 var ArrayOfSurfacesA = @Html.Raw(JsonConvert.SerializeObject(Model.Sides.SingleOrDefault(a => a.Name == "А").Surfaces, Formatting.Indented, new JsonSerializerSettings
                 {
-                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                 }));
+                $("#InsertPartial1").before(e);
+                InsertOn();
                 $("[name='[" + j + "].Height']").val(ArrayOfSurfacesA[j].Height);
                 $("[name='[" + j + "].Width']").val(ArrayOfSurfacesA[j].Width);
                 $("[name='[" + j + "].Space']").val(ArrayOfSurfacesA[j].Space);
@@ -141,11 +140,11 @@
         });
         $("#AddButton2").click(function () {
             $.get('@Url.Action("PartialBilboard", "Data")', { param: Increment(), size: "B" }).success(function (e) {
-                $("#InsertPartial2").before(e);
                 var ArrayOfSurfacesB = @Html.Raw(JsonConvert.SerializeObject(Model.Sides.SingleOrDefault(a => a.Name == "B").Surfaces, Formatting.Indented, new JsonSerializerSettings
                 {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                 }));
+            $("#InsertPartial2").before(e);
             $("[name='[" + j + "].Height']").val(ArrayOfSurfacesB[B].Height);
             $("[name='[" + j + "].Width']").val(ArrayOfSurfacesB[B].Width);
             $("[name='[" + j + "].Space']").val(ArrayOfSurfacesB[B].Space);
@@ -160,17 +159,18 @@
         });
         $("#AddButton3").click(function () {
             $.get('@Url.Action("PartialBilboard", "Data")', { param: Increment(), size: "C" }).success(function (e) {
-                $("#InsertPartial3").before(e);
-                var ArrayOfSurfacesB = @Html.Raw(JsonConvert.SerializeObject(Model.Sides.SingleOrDefault(a => a.Name == "C").Surfaces, Formatting.Indented, new JsonSerializerSettings
+                var ArrayOfSurfacesС = @Html.Raw(JsonConvert.SerializeObject(Model.Sides.SingleOrDefault(a => a.Name == "C").Surfaces, Formatting.Indented, new JsonSerializerSettings
                 {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                 }));
-                $("[name='[" + j + "].Height']").val(ArrayOfSurfacesB[C].Height);
-                $("[name='[" + j + "].Width']").val(ArrayOfSurfacesB[C].Width);
-                $("[name='[" + j + "].Space']").val(ArrayOfSurfacesB[C].Space);
-                $("[name='[" + j + "].Story']").val(ArrayOfSurfacesB[C].Story);
-                $("[name='[" + j + "].StartDate']").val(ArrayOfSurfacesB[C].StartDate.substring(0,10));
-                $("[name='[" + j + "].EndDate']").val(ArrayOfSurfacesB[C].EndDate.substring(0,10));
+                
+                $("#InsertPartial3").before(e);
+                $("[name='[" + j + "].Height']").val(ArrayOfSurfacesС[C].Height);
+                $("[name='[" + j + "].Width']").val(ArrayOfSurfacesС[C].Width);
+                $("[name='[" + j + "].Space']").val(ArrayOfSurfacesС[C].Space);
+                $("[name='[" + j + "].Story']").val(ArrayOfSurfacesС[C].Story);
+                $("[name='[" + j + "].StartDate']").val(ArrayOfSurfacesС[C].StartDate.substring(0,10));
+                $("[name='[" + j + "].EndDate']").val(ArrayOfSurfacesС[C].EndDate.substring(0,10));
                 if (ArrayOfSurfacesB[C].IsSocial == true) {
                 $("[name='[" + j + "].IsSocial']").attr('checked', "");
             }
@@ -210,8 +210,7 @@
             $('#AddButton1').trigger('click');
 
         }
-        $("[name='[0].Height']").val('4423232');
-    }
+      }
 
     function FillingSideB() {
         for (var i2 = 0; i2 < "@sideB"; i2++) {
