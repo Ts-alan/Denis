@@ -7,7 +7,7 @@
 @model  Sciencecom.Models.Billboards1
 @{
     ViewBag.Title = "EditBilboard";
-    SelectList owners = new SelectList(new SciencecomEntities().Owners.Select(m => m.Name).ToList());
+    SelectList owners = new SelectList(new SciencecomEntities().Owners.Select(m => m.Name));
     int increment = 0;
     int sideA;
     int sideB;
@@ -37,15 +37,15 @@
     {
         sideC = 0;
     }
+   
     
-
 }
 @Scripts.Render("~/Content/Map")
 <script type="text/javascript">
     $(document).ready(function () {
         var i = 0;
-
-        //выпадающий список
+        var j = 0;
+       //выпадающий список
         $("#SideIndex").change(function () {
             var selectIndex = document.getElementById("SideIndex").selectedIndex;
             if (selectIndex == 0) {
@@ -110,15 +110,32 @@
 
         function Increment() {
             return i++;
-        }
+        };
+
 
         //скрипт для добавить площадь
         $("#AddButton1").click(function () {
             $.get('@Url.Action("PartialBilboard", "Data")', { param: Increment(), size: "А" }).success(function (e) {
+
                 $("#InsertPartial1").before(e);
                 InsertOn();
-
+                var ArrayOfSurfacesA = @Html.Raw(JsonConvert.SerializeObject(Model.Sides.SingleOrDefault(a => a.Name == "А").Surfaces, Formatting.Indented, new JsonSerializerSettings
+                {
+                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                }));
+                console.log(ArrayOfSurfacesA[0]);
+                $("[name='[" + j + "].Height']").val(ArrayOfSurfacesA[j].Height);
+                $("[name='[" + j + "].Width']").val(ArrayOfSurfacesA[j].Width);
+                $("[name='[" + j + "].Space']").val(ArrayOfSurfacesA[j].Space);
+                $("[name='[" + j + "].Story']").val(ArrayOfSurfacesA[j].Story);
+                $("[name='[" + j + "].StartDate']").val(ArrayOfSurfacesA[j].StartDate.substring(0,10));
+                $("[name='[" + j + "].EndDate']").val(ArrayOfSurfacesA[j].EndDate.substring(0,10));
+                if (ArrayOfSurfacesA[j].IsSocial == true) {
+                    $("[name='[" + j + "].IsSocial']").attr('checked', "");
+                }
+                j++;
             });
+
 
         });
         $("#AddButton2").click(function () {
@@ -164,9 +181,9 @@
     function FillingSideA() {
         for (var i1 = 0; i1 < "@sideA"; i1++) {
             $('#AddButton1').trigger('click');
-            $("[name=[" + i + "].Height").val('@Model.Sides.SingleOrDefault(a => a.Name == "+ side +").Surfaces.ElementAt(increment++)');
-        }
 
+        }
+        $("[name='[0].Height']").val('4423232');
     }
 
     function FillingSideB() {
@@ -180,11 +197,16 @@
             $('#AddButton3').trigger('click');
         }
 
-        function insertDataToSurface(i,side) {
+        function insertDataToSurface(i, side) {
 
-            $("[name=[" + i + "].Height").val('@Model.Sides.SingleOrDefault(a => a.Name == "+ side +").Surfaces.ElementAt(increment++)');
+            @*$("[name=[" + i + "].Height").val('@Model.Sides.SingleOrDefault(a => a.Name == "+ side +").Surfaces.ElementAt(increment++)');*@
 
         }
+    }
+
+    function Test() {
+        console.log("1111");
+        $("[name='[0].Height']").val('4444');
     }
 </script>
 <h2> Добавить новый билбодер</h2>
@@ -376,7 +398,7 @@
         <div class="form-group">
             <label class="control-label col-md-2" for="Dolgota">Долгота</label>
             <div class="col-md-10">
-                <input type="text" id="Dolgota" name="Breadth" readonly required />
+                <input type="text" id="Dolgota" name="Breadth"  readonly required />
                 @Html.ValidationMessageFor(model => model.Breadth)
                 @*<span class="field-validation-valid" data-valmsg-for="Dolgota" data-valmsg-replace="true"></span>*@
             </div>

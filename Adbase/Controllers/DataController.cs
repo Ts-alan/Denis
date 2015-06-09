@@ -1593,7 +1593,7 @@ namespace Sciencecom.Controllers
         [HttpPost]
         public ActionResult EditBillboard(Billboards1 BillboardConstruction, string Owner, HttpPostedFileBase passport1, HttpPostedFileBase passport2, HttpPostedFileBase photo)
         {
-
+            
             var mc = context.Billboards1.Find(BillboardConstruction.Id);
             var idOwner = context.Owners.Where(m => m.Name == Owner).Single().Id;
             mc.Owner_Id = idOwner;

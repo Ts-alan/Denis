@@ -225,6 +225,7 @@
     <Compile Include="Models\sysdiagram.cs">
       <DependentUpon>ContructionsModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TableAdapterExtensions.cs" />
     <Compile Include="Models\Users\AspNetRole.cs">
       <DependentUpon>UsersModel.tt</DependentUpon>
     </Compile>
