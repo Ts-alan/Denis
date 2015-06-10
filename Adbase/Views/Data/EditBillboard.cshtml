@@ -117,64 +117,22 @@
 
         //скрипт для добавить площадь
         $("#AddButton1").click(function () {
-            $.get('@Url.Action("PartialBilboard", "Data")', { param: Increment(), size: "А" }).success(function (e) {
-                var ArrayOfSurfacesA = @Html.Raw(JsonConvert.SerializeObject(Model.Sides.SingleOrDefault(a => a.Name == "А").Surfaces, Formatting.Indented, new JsonSerializerSettings
-                {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-                }));
+            $.get('@Url.Action("PartialBilboard","Data")', { param: Increment(), side: "А" }).success(function (e) {
                 $("#InsertPartial1").before(e);
                 InsertOn();
-                $("[name='[" + j + "].Height']").val(ArrayOfSurfacesA[j].Height);
-                $("[name='[" + j + "].Width']").val(ArrayOfSurfacesA[j].Width);
-                $("[name='[" + j + "].Space']").val(ArrayOfSurfacesA[j].Space);
-                $("[name='[" + j + "].Story']").val(ArrayOfSurfacesA[j].Story);
-                $("[name='[" + j + "].StartDate']").val(ArrayOfSurfacesA[j].StartDate.substring(0,10));
-                $("[name='[" + j + "].EndDate']").val(ArrayOfSurfacesA[j].EndDate.substring(0,10));
-                if (ArrayOfSurfacesA[j].IsSocial == true) {
-                    $("[name='[" + j + "].IsSocial']").attr('checked', "");
-                }
-                j++;
+                
             });
-
-
         });
         $("#AddButton2").click(function () {
-            $.get('@Url.Action("PartialBilboard", "Data")', { param: Increment(), size: "B" }).success(function (e) {
-                var ArrayOfSurfacesB = @Html.Raw(JsonConvert.SerializeObject(Model.Sides.SingleOrDefault(a => a.Name == "B").Surfaces, Formatting.Indented, new JsonSerializerSettings
-                {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-                }));
-            $("#InsertPartial2").before(e);
-            $("[name='[" + j + "].Height']").val(ArrayOfSurfacesB[B].Height);
-            $("[name='[" + j + "].Width']").val(ArrayOfSurfacesB[B].Width);
-            $("[name='[" + j + "].Space']").val(ArrayOfSurfacesB[B].Space);
-            $("[name='[" + j + "].Story']").val(ArrayOfSurfacesB[B].Story);
-            $("[name='[" + j + "].StartDate']").val(ArrayOfSurfacesB[B].StartDate.substring(0,10));
-            $("[name='[" + j + "].EndDate']").val(ArrayOfSurfacesB[B].EndDate.substring(0,10));
-            if (ArrayOfSurfacesB[B].IsSocial == true) {
-                $("[name='[" + j + "].IsSocial']").attr('checked', "");
-            }
-            j++;B++;
+            $.get('@Url.Action("PartialBilboard","Data")', { param: Increment(), side: "B" }).success(function (e) {
+                $("#InsertPartial2").before(e);
+                
             });
         });
         $("#AddButton3").click(function () {
-            $.get('@Url.Action("PartialBilboard", "Data")', { param: Increment(), size: "C" }).success(function (e) {
-                var ArrayOfSurfacesС = @Html.Raw(JsonConvert.SerializeObject(Model.Sides.SingleOrDefault(a => a.Name == "C").Surfaces, Formatting.Indented, new JsonSerializerSettings
-                {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-                }));
-                
+            $.get('@Url.Action("PartialBilboard","Data")', { param: Increment(), side: "C" }).success(function (e) {
                 $("#InsertPartial3").before(e);
-                $("[name='[" + j + "].Height']").val(ArrayOfSurfacesС[C].Height);
-                $("[name='[" + j + "].Width']").val(ArrayOfSurfacesС[C].Width);
-                $("[name='[" + j + "].Space']").val(ArrayOfSurfacesС[C].Space);
-                $("[name='[" + j + "].Story']").val(ArrayOfSurfacesС[C].Story);
-                $("[name='[" + j + "].StartDate']").val(ArrayOfSurfacesС[C].StartDate.substring(0,10));
-                $("[name='[" + j + "].EndDate']").val(ArrayOfSurfacesС[C].EndDate.substring(0,10));
-                if (ArrayOfSurfacesB[C].IsSocial == true) {
-                $("[name='[" + j + "].IsSocial']").attr('checked', "");
-            }
-            j++;C++;
+                
             });
         });
 
@@ -204,25 +162,88 @@
 
         }
 
+
+        function FillingSideA() {
+            for (var i1 = 0; i1 < "@sideA"; i1++) {
+                fillSideA();
+
+            }
+        }
+
+        function FillingSideB() {
+            for (var i2 = 0; i2 < "@sideB"; i2++) {
+                fillSideB();
+            }
+        }
+
+        function FillingSideC() {
+            for (var i3 = 0; i3 < "@sideC"; i3++) {
+                fillSideC();
+            }
+        }
+
+          function fillSideA() {
+                $.ajax('@Url.Action("PartialBilboard", "Data")',{async:false,data:{ param: Increment(), size: "А" }}).success(function (e) {
+                    var ArrayOfSurfacesA = @Html.Raw(JsonConvert.SerializeObject(Model.Sides.SingleOrDefault(a => a.Name == "А").Surfaces, Formatting.Indented, new JsonSerializerSettings
+                    {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                    }));
+                    $("#InsertPartial1").before(e);
+                    InsertOn();
+                    $("[name='[" + j + "].Height']").val(ArrayOfSurfacesA[j].Height);
+                    $("[name='[" + j + "].Width']").val(ArrayOfSurfacesA[j].Width);
+                    $("[name='[" + j + "].Space']").val(ArrayOfSurfacesA[j].Space);
+                    $("[name='[" + j + "].Story']").val(ArrayOfSurfacesA[j].Story);
+                    $("[name='[" + j + "].StartDate']").val(ArrayOfSurfacesA[j].StartDate.substring(0, 10));
+                    $("[name='[" + j + "].EndDate']").val(ArrayOfSurfacesA[j].EndDate.substring(0, 10));
+                    if (ArrayOfSurfacesA[j].IsSocial == true) {
+                        $("[name='[" + j + "].IsSocial']").attr('checked', "");
+                    }
+                    j++;
+                });
+          }
+
+          function fillSideB() {
+            $.ajax('@Url.Action("PartialBilboard", "Data")', { async: false, data: { param: Increment(), size: "B" } }).success(function(e) {
+                var ArrayOfSurfacesB = @Html.Raw(JsonConvert.SerializeObject(Model.Sides.SingleOrDefault(a => a.Name == "B").Surfaces, Formatting.Indented, new JsonSerializerSettings
+                                       {
+                                           ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                                       }));
+                $("#InsertPartial2").before(e);
+                $("[name='[" + j + "].Height']").val(ArrayOfSurfacesB[B].Height);
+                $("[name='[" + j + "].Width']").val(ArrayOfSurfacesB[B].Width);
+                $("[name='[" + j + "].Space']").val(ArrayOfSurfacesB[B].Space);
+                $("[name='[" + j + "].Story']").val(ArrayOfSurfacesB[B].Story);
+                $("[name='[" + j + "].StartDate']").val(ArrayOfSurfacesB[B].StartDate.substring(0,10));
+                $("[name='[" + j + "].EndDate']").val(ArrayOfSurfacesB[B].EndDate.substring(0,10));
+                if (ArrayOfSurfacesB[B].IsSocial == true) {
+                    $("[name='[" + j + "].IsSocial']").attr('checked', "");
+                }
+                j++;B++;
+            });
+
+          }
+        function fillSideC() {
+            $.ajax('@Url.Action("PartialBilboard", "Data")',{async:false,data:{ param: Increment(), size: "C" }}).success(function (e) {
+                var ArrayOfSurfacesС = @Html.Raw(JsonConvert.SerializeObject(Model.Sides.SingleOrDefault(a => a.Name == "C").Surfaces, Formatting.Indented, new JsonSerializerSettings
+                {
+           ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                }));
+
+            $("#InsertPartial3").before(e);
+            $("[name='[" + j + "].Height']").val(ArrayOfSurfacesС[C].Height);
+            $("[name='[" + j + "].Width']").val(ArrayOfSurfacesС[C].Width);
+            $("[name='[" + j + "].Space']").val(ArrayOfSurfacesС[C].Space);
+            $("[name='[" + j + "].Story']").val(ArrayOfSurfacesС[C].Story);
+            $("[name='[" + j + "].StartDate']").val(ArrayOfSurfacesС[C].StartDate.substring(0,10));
+            $("[name='[" + j + "].EndDate']").val(ArrayOfSurfacesС[C].EndDate.substring(0,10));
+            if (ArrayOfSurfacesС[C].IsSocial == true) {
+                $("[name='[" + j + "].IsSocial']").attr('checked', "");
+            }
+            j++;C++;
+        });
+    }
     });
-    function FillingSideA() {
-        for (var i1 = 0; i1 < "@sideA"; i1++) {
-            $('#AddButton1').trigger('click');
-
-        }
-      }
-
-    function FillingSideB() {
-        for (var i2 = 0; i2 < "@sideB"; i2++) {
-            $('#AddButton2').trigger('click');
-        }
-    }
-
-    function FillingSideC() {
-        for (var i3 = 0; i3 < "@sideC"; i3++) {
-            $('#AddButton3').trigger('click');
-        }
-    }
 </script>
 <h2> Добавить новый билбодер</h2>
 @*<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">*@

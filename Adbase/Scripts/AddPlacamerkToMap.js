@@ -57,13 +57,5 @@
                 $("#Dolgota").val(str);
             });
         });
-            //var Billboard = SetCoordinate();
-            //var coordinate = ymaps.GeoObject({
-            //    geometry: {
-            //        type: "Point",// тип геометрии - точка
-            //        coordinates: [Billboard[0], Billboard[1]] // координаты точки
-            //    }
-            //});
-            //myMap.geoObjects.add(coordinate);
     }
 });
