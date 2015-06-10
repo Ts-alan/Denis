@@ -9,38 +9,46 @@
     ViewBag.Title = "EditBilboard";
     SelectList owners = new SelectList(new SciencecomEntities().Owners.Select(m => m.Name));
     int increment = 0;
-    int sideA;
-    int sideB;
-    int sideC;
+    int sideACount;
+    int sideBCount;
+    int sideCCount;
+    
+    ICollection<Surface> sideA=null;
+    ICollection<Surface> sideB=null;
+    ICollection<Surface> sideC=null;
     
     try
     {
-        sideA = Model.Sides.SingleOrDefault(a => a.Name == "А").Surfaces.Count;
+        sideACount = Model.Sides.SingleOrDefault(a => a.Name == "А").Surfaces.Count;
+        sideA= Model.Sides.SingleOrDefault(a => a.Name == "А").Surfaces;
     }
     catch
     {
-        sideA = 0;
+        sideACount = 0;
     }
     try
     {
-        sideB = Model.Sides.SingleOrDefault(a => a.Name == "B").Surfaces.Count;
+        sideBCount = Model.Sides.SingleOrDefault(a => a.Name == "B").Surfaces.Count;
+        sideB = Model.Sides.SingleOrDefault(a => a.Name == "B").Surfaces;
     }
     catch
     {
-        sideB =0;
+        sideBCount =0;
     }
     try
     {
-        sideC = Model.Sides.Single(a => a.Name == "C").Surfaces.Count;
+      sideCCount = Model.Sides.Single(a => a.Name == "C").Surfaces.Count;
+      sideC = Model.Sides.SingleOrDefault(a => a.Name == "C").Surfaces;
     }
     catch
     {
-        sideC = 0;
+        sideCCount = 0;
     }
-   
-    
+
 }
-@Scripts.Render("~/Content/Map")
+@*@Scripts.Render("~/Content/Map")*@
+<script src="~/Scripts/EditPlacemark.js"></script>
+<script src="~/Scripts/Autocomplete.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         var i = 0;
@@ -141,20 +149,20 @@
             case "1":
                 $("#SideIndex")[0].value = 1;
                 $('#SideIndex').trigger('change');
-                FillingSideA();
+                FillingsideACount();
                 break;
             case "2":
                 $("#SideIndex")[0].value = 2;
                 $('#SideIndex').trigger('change');
-                FillingSideA();
-                FillingSideB();
+                FillingsideACount();
+                FillingsideBCount();
                 break;
             case "3":
                 $("#SideIndex")[0].value = 3;
                 $('#SideIndex').trigger('change');
-                FillingSideA();
-                FillingSideB();
-                FillingSideC();
+                FillingsideACount();
+                FillingsideBCount();
+                FillingsideCCount();
                 break;
             default:
                 alert('Я таких значений не знаю');
@@ -163,28 +171,28 @@
         }
 
 
-        function FillingSideA() {
-            for (var i1 = 0; i1 < "@sideA"; i1++) {
-                fillSideA();
+        function FillingsideACount() {
+            for (var i1 = 0; i1 < "@sideACount"; i1++) {
+                fillsideACount();
 
             }
         }
 
-        function FillingSideB() {
-            for (var i2 = 0; i2 < "@sideB"; i2++) {
-                fillSideB();
+        function FillingsideBCount() {
+            for (var i2 = 0; i2 < "@sideBCount"; i2++) {
+                fillsideBCount();
             }
         }
 
-        function FillingSideC() {
-            for (var i3 = 0; i3 < "@sideC"; i3++) {
-                fillSideC();
+        function FillingsideCCount() {
+            for (var i3 = 0; i3 < "@sideCCount"; i3++) {
+                fillsideCCount();
             }
         }
 
-          function fillSideA() {
+          function fillsideACount() {
                 $.ajax('@Url.Action("PartialBilboard", "Data")',{async:false,data:{ param: Increment(), size: "А" }}).success(function (e) {
-                    var ArrayOfSurfacesA = @Html.Raw(JsonConvert.SerializeObject(Model.Sides.SingleOrDefault(a => a.Name == "А").Surfaces, Formatting.Indented, new JsonSerializerSettings
+                    var ArrayOfSurfacesA = @Html.Raw(JsonConvert.SerializeObject(sideA, Formatting.Indented, new JsonSerializerSettings
                     {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                     }));
@@ -203,9 +211,9 @@
                 });
           }
 
-          function fillSideB() {
+          function fillsideBCount() {
             $.ajax('@Url.Action("PartialBilboard", "Data")', { async: false, data: { param: Increment(), size: "B" } }).success(function(e) {
-                var ArrayOfSurfacesB = @Html.Raw(JsonConvert.SerializeObject(Model.Sides.SingleOrDefault(a => a.Name == "B").Surfaces, Formatting.Indented, new JsonSerializerSettings
+                var ArrayOfSurfacesB = @Html.Raw(JsonConvert.SerializeObject(sideB, Formatting.Indented, new JsonSerializerSettings
                                        {
                                            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                                        }));
@@ -223,12 +231,12 @@
             });
 
           }
-        function fillSideC() {
-            $.ajax('@Url.Action("PartialBilboard", "Data")',{async:false,data:{ param: Increment(), size: "C" }}).success(function (e) {
-                var ArrayOfSurfacesС = @Html.Raw(JsonConvert.SerializeObject(Model.Sides.SingleOrDefault(a => a.Name == "C").Surfaces, Formatting.Indented, new JsonSerializerSettings
-                {
-           ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-                }));
+        function fillsideCCount() {
+            $.ajax('@Url.Action("PartialBilboard", "Data")', { async: false, data: { param: Increment(), size: "C" } }).success(function(e) {
+                var ArrayOfSurfacesС = @Html.Raw(JsonConvert.SerializeObject(sideC, Formatting.Indented, new JsonSerializerSettings
+                                       {
+                                           ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                                       }));
 
             $("#InsertPartial3").before(e);
             $("[name='[" + j + "].Height']").val(ArrayOfSurfacesС[C].Height);
@@ -243,6 +251,9 @@
             j++;C++;
         });
     }
+    });
+    $(function () {
+        EditPlacemark("@Model.Breadth", "@Model.Height");
     });
 </script>
 <h2> Добавить новый билбодер</h2>

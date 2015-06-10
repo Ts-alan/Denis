@@ -1486,6 +1486,26 @@ namespace Sciencecom.Controllers
         public ActionResult DeleteBilboard(Guid id)
         {
             Billboards1 mc = context.Billboards1.Find(id);
+
+            
+            string src = "~/Images/Billboard/" + mc.Id_show + "passport.jpg";
+            string path = Server.MapPath(src);
+            if (System.IO.File.Exists(path)) System.IO.File.Delete(path);
+
+            src = "~/Images/Billboard/" + mc.Id_show + "photo.jpg";
+            path = Server.MapPath(src);
+            if (System.IO.File.Exists(path)) System.IO.File.Delete(path);
+            var t = mc.Sides.First();
+            foreach (var side in mc.Sides)
+            {
+                foreach (var surface in side.Surfaces)
+                {
+                    src = "~/Images/Billboard/surfaces/" + surface.Id + ".jpg";
+                    path = Server.MapPath(src);
+                    if (System.IO.File.Exists(path))
+                        System.IO.File.Delete(path);
+                }
+            }
             context.Billboards1.Remove(mc);
             IQueryable<Side> sideDelete = context.Sides.Where(a => a.Billboard_Id == id);
             context.Sides.RemoveRange(sideDelete);
@@ -1496,21 +1516,16 @@ namespace Sciencecom.Controllers
                 surfaceDelete.Where(a => a.Side_Id == sideDelete.ElementAt(i).Id);
             }
             context.Surfaces.RemoveRange(surfaceDelete);
+
             context.SaveChanges();
 
-            //string src = "~/Images/Metal/" + id + "1.jpg";
-            //string path = Server.MapPath(src);
-            //if (System.IO.File.Exists(path)) System.IO.File.Delete(path);
 
-            //src = "~/Images/Metal/" + id + "2.jpg";
-            //path = Server.MapPath(src);
-            //if (System.IO.File.Exists(path)) System.IO.File.Delete(path);
+            return RedirectToAction("Bilboard", context.MetalConstructions); 
+            }
 
-            //src = "~/Images/Metal/p" + id + ".jpg";
-            //path = Server.MapPath(src);
-            //if (System.IO.File.Exists(path)) System.IO.File.Delete(path);
-            return RedirectToAction("Bilboard", context.MetalConstructions);
-        }
+
+            
+    
         [Authorize]
         public ActionResult ShowBillboardTablePartial(Billboards1 billboard, string day, string month, string year, string owner)
         {
