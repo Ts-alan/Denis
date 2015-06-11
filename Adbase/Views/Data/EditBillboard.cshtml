@@ -12,10 +12,14 @@
     int sideACount;
     int sideBCount;
     int sideCCount;
+    int sideDCount=0;
+    int sideECount=0;
     
     ICollection<Surface> sideA=null;
     ICollection<Surface> sideB=null;
     ICollection<Surface> sideC=null;
+    ICollection<Surface> sideD =null;
+    ICollection<Surface> sideE =null;
     
     try
     {
@@ -44,6 +48,24 @@
     {
         sideCCount = 0;
     }
+    try
+    {
+        sideDCount = Model.Sides.Single(a => a.Name == "D").Surfaces.Count;
+        sideD = Model.Sides.SingleOrDefault(a => a.Name == "D").Surfaces;
+    }
+    catch
+    {
+        sideDCount = 0;
+    }
+    try
+    {
+        sideECount = Model.Sides.Single(a => a.Name == "E").Surfaces.Count;
+        sideE = Model.Sides.SingleOrDefault(a => a.Name == "E").Surfaces;
+    }
+    catch
+    {
+        sideECount = 0;
+    }
 
 }
 @*@Scripts.Render("~/Content/Map")*@
@@ -55,20 +77,45 @@
         var j = 0;
         var B = 0;
         var C = 0;
+        var D = 0;
+        var E = 0;
         //выпадающий список
-        $("#SideIndex").change(function () {
+        $("#SideIndex").change(function() {
             var selectIndex = document.getElementById("SideIndex").selectedIndex;
             if (selectIndex == 0) {
                 $("#SizeB").css("display", "none");
                 $("#SizeC").css("display", "none");
+                $("#SizeD").css("display", "none");
+                $("#SizeE").css("display", "none");
+                $("#CountSize").val("1");
             }
             if (selectIndex == 1) {
                 $("#SizeB").css("display", "block");
                 $("#SizeC").css("display", "none");
+                $("#SizeD").css("display", "none");
+                $("#SizeE").css("display", "none");
+                $("#CountSize").val("2");
             }
             if (selectIndex == 2) {
                 $("#SizeB").css("display", "block");
                 $("#SizeC").css("display", "block");
+                $("#SizeD").css("display", "none");
+                $("#SizeE").css("display", "none");
+                $("#CountSize").val("3");
+            }
+            if (selectIndex == 3) {
+                $("#SizeB").css("display", "block");
+                $("#SizeC").css("display", "block");
+                $("#SizeD").css("display", "block");
+                $("#SizeE").css("display", "none");
+                $("#CountSize").val("4");
+            }
+            if (selectIndex == 4) {
+                $("#SizeB").css("display", "block");
+                $("#SizeC").css("display", "block");
+                $("#SizeD").css("display", "block");
+                $("#SizeE").css("display", "block");
+                $("#CountSize").val("5");
             }
         });
 
@@ -143,6 +190,21 @@
                 
             });
         });
+        $("#AddButton4").click(function () {
+            var tempIncrement = Increment();
+            $.get('@Url.Action("PartialBilboard","Data")', { param: tempIncrement, side: "D" }).success(function (e) {
+                $("#InsertPartial4").before(e);
+                
+                duplicationSurfaces();
+            });
+        });
+        $("#AddButton5").click(function () {
+            var tempIncrement = Increment();
+            $.get('@Url.Action("PartialBilboard","Data")', { param: tempIncrement, side: "E" }).success(function (e) {
+                $("#InsertPartial5").before(e);
+                duplicationSurfaces();
+            });
+        });
 
         //выпадающий списко и поверхности
         switch ("@Model.Sides.Count") {
@@ -163,6 +225,23 @@
                 FillingsideACount();
                 FillingsideBCount();
                 FillingsideCCount();
+                break;
+            case "4":
+                $("#SideIndex")[0].value = 4;
+                $('#SideIndex').trigger('change');
+                FillingsideACount();
+                FillingsideBCount();
+                FillingsideCCount();
+                FillingsideDCount();
+                break;
+            case "5":
+                $("#SideIndex")[0].value = 5;
+                $('#SideIndex').trigger('change');
+                FillingsideACount();
+                FillingsideBCount();
+                FillingsideCCount();
+                FillingsideDCount();
+                FillingsideECount();
                 break;
             default:
                 alert('Я таких значений не знаю');
@@ -190,28 +269,40 @@
             }
         }
 
-          function fillsideACount() {
-                $.ajax('@Url.Action("PartialBilboard", "Data")',{async:false,data:{ param: Increment(), size: "А" }}).success(function (e) {
-                    var ArrayOfSurfacesA = @Html.Raw(JsonConvert.SerializeObject(sideA, Formatting.Indented, new JsonSerializerSettings
-                    {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-                    }));
-                    $("#InsertPartial1").before(e);
-                    InsertOn();
-                    $("[name='[" + j + "].Height']").val(ArrayOfSurfacesA[j].Height);
-                    $("[name='[" + j + "].Width']").val(ArrayOfSurfacesA[j].Width);
-                    $("[name='[" + j + "].Space']").val(ArrayOfSurfacesA[j].Space);
-                    $("[name='[" + j + "].Story']").val(ArrayOfSurfacesA[j].Story);
-                    $("[name='[" + j + "].StartDate']").val(ArrayOfSurfacesA[j].StartDate.substring(0, 10));
-                    $("[name='[" + j + "].EndDate']").val(ArrayOfSurfacesA[j].EndDate.substring(0, 10));
-                    if (ArrayOfSurfacesA[j].IsSocial == true) {
-                        $("[name='[" + j + "].IsSocial']").attr('checked', "");
-                    }
-                    j++;
-                });
-          }
+        function FillingsideDCount() {
+            for (var i3 = 0; i3 < "@sideDCount"; i3++) {
+                fillingsideDCount();
+            }
+        }
 
-          function fillsideBCount() {
+        function FillingsideECount() {
+            for (var i3 = 0; i3 < "@sideECount"; i3++) {
+                fillingsideECount();
+            }
+        }
+
+              function fillsideACount() {
+                    $.ajax('@Url.Action("PartialBilboard", "Data")',{async:false,data:{ param: Increment(), size: "А" }}).success(function (e) {
+                        var ArrayOfSurfacesA = @Html.Raw(JsonConvert.SerializeObject(sideA, Formatting.Indented, new JsonSerializerSettings
+                        {
+                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                        }));
+                $("#InsertPartial1").before(e);
+                InsertOn();
+                $("[name='[" + j + "].Height']").val(ArrayOfSurfacesA[j].Height);
+                $("[name='[" + j + "].Width']").val(ArrayOfSurfacesA[j].Width);
+                $("[name='[" + j + "].Space']").val(ArrayOfSurfacesA[j].Space);
+                $("[name='[" + j + "].Story']").val(ArrayOfSurfacesA[j].Story);
+                $("[name='[" + j + "].StartDate']").val(ArrayOfSurfacesA[j].StartDate.substring(0, 10));
+                $("[name='[" + j + "].EndDate']").val(ArrayOfSurfacesA[j].EndDate.substring(0, 10));
+                if (ArrayOfSurfacesA[j].IsSocial == true) {
+                    $("[name='[" + j + "].IsSocial']").attr('checked', "");
+                }
+                j++;
+            });
+        }
+
+        function fillsideBCount() {
             $.ajax('@Url.Action("PartialBilboard", "Data")', { async: false, data: { param: Increment(), size: "B" } }).success(function(e) {
                 var ArrayOfSurfacesB = @Html.Raw(JsonConvert.SerializeObject(sideB, Formatting.Indented, new JsonSerializerSettings
                                        {
@@ -222,15 +313,17 @@
                 $("[name='[" + j + "].Width']").val(ArrayOfSurfacesB[B].Width);
                 $("[name='[" + j + "].Space']").val(ArrayOfSurfacesB[B].Space);
                 $("[name='[" + j + "].Story']").val(ArrayOfSurfacesB[B].Story);
-                $("[name='[" + j + "].StartDate']").val(ArrayOfSurfacesB[B].StartDate.substring(0,10));
-                $("[name='[" + j + "].EndDate']").val(ArrayOfSurfacesB[B].EndDate.substring(0,10));
+                $("[name='[" + j + "].StartDate']").val(ArrayOfSurfacesB[B].StartDate.substring(0, 10));
+                $("[name='[" + j + "].EndDate']").val(ArrayOfSurfacesB[B].EndDate.substring(0, 10));
                 if (ArrayOfSurfacesB[B].IsSocial == true) {
                     $("[name='[" + j + "].IsSocial']").attr('checked', "");
                 }
-                j++;B++;
+                j++;
+                B++;
             });
 
-          }
+        }
+
         function fillsideCCount() {
             $.ajax('@Url.Action("PartialBilboard", "Data")', { async: false, data: { param: Increment(), size: "C" } }).success(function(e) {
                 var ArrayOfSurfacesС = @Html.Raw(JsonConvert.SerializeObject(sideC, Formatting.Indented, new JsonSerializerSettings
@@ -238,17 +331,63 @@
                                            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                                        }));
 
-            $("#InsertPartial3").before(e);
-            $("[name='[" + j + "].Height']").val(ArrayOfSurfacesС[C].Height);
-            $("[name='[" + j + "].Width']").val(ArrayOfSurfacesС[C].Width);
-            $("[name='[" + j + "].Space']").val(ArrayOfSurfacesС[C].Space);
-            $("[name='[" + j + "].Story']").val(ArrayOfSurfacesС[C].Story);
-            $("[name='[" + j + "].StartDate']").val(ArrayOfSurfacesС[C].StartDate.substring(0,10));
-            $("[name='[" + j + "].EndDate']").val(ArrayOfSurfacesС[C].EndDate.substring(0,10));
-            if (ArrayOfSurfacesС[C].IsSocial == true) {
+                $("#InsertPartial3").before(e);
+                $("[name='[" + j + "].Height']").val(ArrayOfSurfacesС[C].Height);
+                $("[name='[" + j + "].Width']").val(ArrayOfSurfacesС[C].Width);
+                $("[name='[" + j + "].Space']").val(ArrayOfSurfacesС[C].Space);
+                $("[name='[" + j + "].Story']").val(ArrayOfSurfacesС[C].Story);
+                $("[name='[" + j + "].StartDate']").val(ArrayOfSurfacesС[C].StartDate.substring(0, 10));
+                $("[name='[" + j + "].EndDate']").val(ArrayOfSurfacesС[C].EndDate.substring(0, 10));
+                if (ArrayOfSurfacesС[C].IsSocial == true) {
+                    $("[name='[" + j + "].IsSocial']").attr('checked', "");
+                }
+                j++;
+                C++;
+
+            });
+        }
+
+        function fillingsideDCount() {
+            $.ajax('@Url.Action("PartialBilboard", "Data")', { async: false, data: { param: Increment(), size: "D" } }).success(function(e) {
+                var ArrayOfSurfacesD = @Html.Raw(JsonConvert.SerializeObject(sideD, Formatting.Indented, new JsonSerializerSettings
+                                       {
+                                           ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                                       }));
+
+                $("#InsertPartial4").before(e);
+                $("[name='[" + j + "].Height']").val(ArrayOfSurfacesD[D].Height);
+                $("[name='[" + j + "].Width']").val(ArrayOfSurfacesD[D].Width);
+                $("[name='[" + j + "].Space']").val(ArrayOfSurfacesD[D].Space);
+                $("[name='[" + j + "].Story']").val(ArrayOfSurfacesD[D].Story);
+                $("[name='[" + j + "].StartDate']").val(ArrayOfSurfacesD[D].StartDate.substring(0,10));
+                $("[name='[" + j + "].EndDate']").val(ArrayOfSurfacesD[D].EndDate.substring(0,10));
+                if (ArrayOfSurfacesD[D].IsSocial == true) {
+                    $("[name='[" + j + "].IsSocial']").attr('checked', "");
+                }
+                j++;D++;
+
+            });
+        }
+
+        function fillingsideECount() {
+            $.ajax('@Url.Action("PartialBilboard", "Data")', { async: false, data: { param: Increment(), size: "E" } }).success(function(e) {
+                var ArrayOfSurfacesE = @Html.Raw(JsonConvert.SerializeObject(sideE, Formatting.Indented, new JsonSerializerSettings
+                {
+                                           ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                }));
+
+            $("#InsertPartial5").before(e);
+            $("[name='[" + j + "].Height']").val(ArrayOfSurfacesE[E].Height);
+            $("[name='[" + j + "].Width']").val(ArrayOfSurfacesE[E].Width);
+            $("[name='[" + j + "].Space']").val(ArrayOfSurfacesE[E].Space);
+            $("[name='[" + j + "].Story']").val(ArrayOfSurfacesE[E].Story);
+            $("[name='[" + j + "].StartDate']").val(ArrayOfSurfacesE[E].StartDate.substring(0,10));
+            $("[name='[" + j + "].EndDate']").val(ArrayOfSurfacesE[E].EndDate.substring(0,10));
+            if (ArrayOfSurfacesE[E].IsSocial == true) {
                 $("[name='[" + j + "].IsSocial']").attr('checked', "");
             }
-            j++;C++;
+            j++;E++;
+
         });
     }
     });
@@ -377,10 +516,7 @@
         <div class="form-group">
             @Html.Label("Количество сторон", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("TypeOfAdvertising", new SelectList(new[] { "1", "2", "3" }), new
-           {
-               id = "SideIndex", @*onchange = "ShowHideDate()"*@})
-                @Html.ValidationMessageFor(model => model.PassportNumber)
+                @Html.DropDownList("TypeOfAdvertising", new SelectList(new[] { "1", "2", "3", "4", "5" }), new { id = "SideIndex" })
             </div>
         </div>
         @*Сторона А*@
@@ -428,7 +564,35 @@
             </div>
             <div id="InsertPartial3"></div>
         </div>
-       
+
+        @*Сторона D*@
+        <div class="form-group" id="SizeD" style="display: none">
+            <div class="form-group">
+                 @Html.Label("Сторона D", new { @class = "control-label col-md-2", style = "margin-left:45px" })
+            </div>
+            @*Добавить площадь*@
+            <div class="form-group">
+                <div class="col-md-10">
+                    <a href="#" id="AddButton4" style="color: #428bca; font-weight: bold;">+Добавить площадь</a>
+                </div>
+            </div>
+            <div id="InsertPartial4"></div>
+        </div>
+
+
+        @*Сторона E*@
+        <div class="form-group" id="SizeE" style="display: none">
+            <div class="form-group">
+                @Html.Label("Сторона E", new { @class = "control-label col-md-2", style = "margin-left:45px" })
+            </div>
+            @*Добавить площадь*@
+            <div class="form-group">
+                <div class="col-md-10">
+                    <a href="#" id="AddButton5" style="color: #428bca; font-weight: bold;">+Добавить площадь</a>
+                </div>
+            </div>
+            <div id="InsertPartial5"></div>
+        </div>
 
         <div class="form-group" style="width: 600px; height: 500px" id="map">
         </div>

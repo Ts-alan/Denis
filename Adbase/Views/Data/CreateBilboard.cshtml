@@ -116,7 +116,7 @@
         $("#AddButton4").click(function () {
             var tempIncrement = Increment();
             $.get('@Url.Action("PartialBilboard","Data")', { param: tempIncrement, side: "D" }).success(function (e) {
-                $("#InsertPartial3").before(e);
+                $("#InsertPartial4").before(e);
                 InsertOn();
                 duplicationSurfaces();
             });
@@ -125,7 +125,7 @@
         $("#AddButton5").click(function () {
             var tempIncrement = Increment();
             $.get('@Url.Action("PartialBilboard","Data")', { param: tempIncrement, side: "E" }).success(function (e) {
-                $("#InsertPartial3").before(e);
+                $("#InsertPartial5").before(e);
                 InsertOn();
                 duplicationSurfaces();
             });
@@ -322,26 +322,24 @@
         </div>
 
         @*Сторона D*@
-        <div class="form-group" id="SizeD" style="display: none">
-            <div class="form-group">
-                @*@Html.HiddenFor(model => model.Sides.Single().Name)*@
-                @Html.Label("Сторона D", new { @class = "control-label col-md-2", style = "margin-left:45px" })
-            </div>
-            @*Добавить площадь*@
-            <div class="form-group">
-                <div class="col-md-10">
-                    <a href="#" id="AddButton4" style="color: #428bca; font-weight: bold;">+Добавить площадь</a>
-                </div>
-            </div>
-            <div id="InsertPartial2"></div>
+    <div class="form-group" id="SizeD" style="display: none">
+        <div class="form-group">
+            @*@Html.HiddenFor(model => model.Sides.Single().Name)*@
+            @Html.Label("Сторона D", new {@class = "control-label col-md-2", style = "margin-left:45px"})
         </div>
-    <div class="form-group" style="width: 600px; height: 500px" id="map">
+        @*Добавить площадь*@
+        <div class="form-group">
+            <div class="col-md-10">
+                <a href="#" id="AddButton4" style="color: #428bca; font-weight: bold;">+Добавить площадь</a>
+            </div>
+        </div>
+        <div id="InsertPartial4"></div>
     </div>
+
 
         @*Сторона E*@
         <div class="form-group" id="SizeE" style="display: none">
             <div class="form-group">
-                @*@Html.HiddenFor(model => model.Sides.Single().Name)*@
                 @Html.Label("Сторона E", new { @class = "control-label col-md-2", style = "margin-left:45px" })
             </div>
             @*Добавить площадь*@
@@ -350,8 +348,9 @@
                     <a href="#" id="AddButton5" style="color: #428bca; font-weight: bold;">+Добавить площадь</a>
                 </div>
             </div>
-            <div id="InsertPartial2"></div>
+            <div id="InsertPartial5"></div>
         </div>
+    
         <div class="form-group" style="width: 600px; height: 500px" id="map">
         </div>
 

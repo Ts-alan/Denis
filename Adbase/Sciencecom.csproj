@@ -216,6 +216,12 @@
     <Compile Include="Models\Side.cs">
       <DependentUpon>ContructionsModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>ContructionsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_helpdiagrams_Result.cs">
+      <DependentUpon>ContructionsModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Street.cs">
       <DependentUpon>ContructionsModel.tt</DependentUpon>
     </Compile>

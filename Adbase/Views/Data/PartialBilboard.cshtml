@@ -2,7 +2,18 @@
 @{
     int i = ViewBag.Incerment;
 }
-
+<script type="text/javascript">
+    @*$(document).ready(function () {
+        $('[name=[0].IsSocial]').on('change', function () {
+            alert('Вы нажали на элемент "foo"');
+            if ($(this).is(':checked')) {
+                $("#[" + @i + "].socialSurface").css("display", "block");
+            } else {
+                $("#[" + @i + "].socialSurface").css("display", "none");
+            }
+        });
+    });*@
+</script>
 <input type="hidden" name="[@i].SideOfSurface" value="@ViewBag.Side">
 <h3 style="margin-left: 150px">Поверхность </h3>
 <div class="form-group each1">
@@ -33,10 +44,10 @@
 <div class="form-group">
     @Html.Label("Вид рекламы ", new { @class = "control-label col-md-2" })
     <div class="col-md-10">
-        <select name="TypeOfAdvertising">
-            <option value="true">Социальная</option>
-            <option value="false">Белорусская</option>
-            <option value="false">Иная</option>
+        <select name="[@i].TypeOfAdvertising">
+            <option value="social">Социальная</option>
+            <option value="belarusian">Белорусская</option>
+            <option value="other">Иная</option>
         </select>
     </div>
 </div>
@@ -47,7 +58,16 @@
         @Html.ValidationMessageFor(model => model[i].IsSocial)
     </div>
 </div>
-
+<div class="form-group" id="[@i] " style="display: block">
+    @Html.Label("Социальная поверхность ", new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        <select name="[@i].Test">
+            <option value="social">Наркомания</option>
+            <option value="belarusian">МЧС</option>
+            <option value="other">Полиция</option>
+        </select>
+    </div>
+</div>
 <div class="form-group each5">
     @Html.Label("Сюжет", new { @class = "control-label col-md-2 " })
     <div class="col-md-10">

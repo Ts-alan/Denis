@@ -17,7 +17,7 @@
     @ViewBag.Results;
         }
     }
-
+    
 }
 <tr>
     <th>
@@ -126,23 +126,18 @@
             <td>
                 @item.StartDate.Date.ToShortDateString()
             </td>
-            <td>
-                @item.EndDate.Date.ToShortDateString()
-            </td>
+        <td>
+            @if (item.EndDate.HasValue)
+            {
+                @item.EndDate.Value.Date.ToShortDateString();
+            }
+        </td>
 
             <td>
                 @{
 
                     <b>@Html.ActionLink("Документы", "Documents", new { id = item.Id_show, type = "b" })</b><br />
     string idLink = "mapLink" + item.Id.ToString();
-    @*<a style="cursor: pointer" id="@idLink">Показать на карте</a><br />
-        <script>
-             $("#@idLink").on("click", function () {
-                 new Messi('<div id="map" style="width: 464px; height: 320px"></div>',
-                { title: 'Объект на карте', titleClass: 'info',  buttons: [{ id: 0, label: 'Закрыть', val: 'X' }] });
-                 ShowMap("@item.Shirota", "@item.Dolgota");
-             });
-        </script>*@
     string mapLink = "/Map/?type=b&id=" + item.Id_show;
     <a href="@mapLink" target="_blank">Показать на карте</a><br />
     var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));

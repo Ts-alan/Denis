@@ -37,7 +37,7 @@ namespace Sciencecom.Models
         public string FromStreet { get; set; }
         [Required(ErrorMessage = "Введите значение")]
         [Display(Name = "Дата согласования")]
-        public System.DateTime StartDate { get; set; }
+        public DateTime StartDate { get; set; }
         [Required(ErrorMessage = "Введите значение")]
         [Display(Name = "Владелец")]
         public virtual Owner Owner { get; set; }

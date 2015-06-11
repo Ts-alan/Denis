@@ -1110,7 +1110,7 @@ namespace Sciencecom.Controllers
             if (finishDay != "" && finishMonth != "" && finishYear != "")
             {
                 DateTime endDate = new DateTime(Int32.Parse(finishYear), Int32.Parse(finishMonth), Int32.Parse(finishDay));
-                result= result.Where(m => m.EndDate.Date <= endDate.Date).ToList();
+                result= result.Where(m => m.EndDate.Value.Date <= endDate.Date).ToList();
                
             }
                  result = result.Where(a =>
@@ -1411,7 +1411,7 @@ namespace Sciencecom.Controllers
             billboards.Owner_Id = idOwner;
             Guid BillboardsId = Guid.NewGuid();
             billboards.Id = BillboardsId;
-            string[] arraySize = new string[3] { "А", "B", "C" };
+            string[] arraySize = new string[5] { "А", "B", "C", "D", "E"};
             List<Side> ListSide = new List<Side>();
             for (int j = 0; j < CountSize; j++)
             {

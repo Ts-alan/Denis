@@ -19,7 +19,7 @@ namespace Sciencecom.Models.MapJsonModels
             this.ContractNumber = mc.ContractNumber;
             this.PassportNumber = mc.PassportNumber;
             this.StartDate = mc.StartDate;
-            this.EndDate = mc.EndDate;
+            this.EndDate = mc.EndDate.Value;
             this.Locality = mc.Locality;
             this.OnAgreement = mc.OnAgreement;
             this.Owner_Id = mc.Owner_Id;

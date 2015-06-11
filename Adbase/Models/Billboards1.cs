@@ -19,8 +19,8 @@ namespace Sciencecom.Models
             this.Sides = new HashSet<Side>();
         }
     
-        public Nullable<float> Height { get; set; }
-        public Nullable<float> Breadth { get; set; }
+        public float Height { get; set; }
+        public float Breadth { get; set; }
         public string Street1 { get; set; }
         public string House1 { get; set; }
         public string Street2 { get; set; }
@@ -29,7 +29,7 @@ namespace Sciencecom.Models
         public string ContractNumber { get; set; }
         public string PassportNumber { get; set; }
         public System.DateTime StartDate { get; set; }
-        public System.DateTime EndDate { get; set; }
+        public Nullable<System.DateTime> EndDate { get; set; }
         public string Locality { get; set; }
         public bool OnAgreement { get; set; }
         public int Owner_Id { get; set; }
