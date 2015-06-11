@@ -65,29 +65,39 @@
         }
         //скрипт для добавить площадь
         $("#AddButton1").click(function () {
-            $.get('@Url.Action("PartialBilboard","Data")', { param: Increment(), side: "А" }).success(function (e) {
+            var tempIncrement = Increment();
+            $.get('@Url.Action("PartialBilboard","Data")', { param: tempIncrement, side: "А" }).success(function (e) {
                 $("#InsertPartial1").before(e);
                 InsertOn();
-                
+               if (tempIncrement != 0) {
+                    duplicationSurfaces();
+              }
             });
 
         });
         $("#AddButton2").click(function () {
-            $.get('@Url.Action("PartialBilboard","Data")', { param: Increment(), side: "B" }).success(function (e) {
+            var tempIncrement = Increment();
+            $.get('@Url.Action("PartialBilboard","Data")', { param: tempIncrement, side: "B" }).success(function (e) {
                 $("#InsertPartial2").before(e);
-                
-            });
+                InsertOn();
+                duplicationSurfaces();
+               });
         });
         $("#AddButton3").click(function () {
-            $.get('@Url.Action("PartialBilboard","Data")', { param: Increment(), side: "C" }).success(function (e) {
+            var tempIncrement = Increment();
+            $.get('@Url.Action("PartialBilboard","Data")', { param: tempIncrement, side: "C" }).success(function (e) {
                 $("#InsertPartial3").before(e);
-                
-            });
+                InsertOn();
+                duplicationSurfaces();
+              });
         });
-        //дублирование для остальных поверхностей
-
-
-    });
+        //дублирование для остальных поверхностей при добавлении
+        function duplicationSurfaces() {
+                $(".each1 input").trigger('change');
+                $(".each2 input").trigger('change');
+                $(".each3 input").trigger('change');
+            }
+       });
 
 </script>
 <h2> Добавить новый билбодер</h2>
