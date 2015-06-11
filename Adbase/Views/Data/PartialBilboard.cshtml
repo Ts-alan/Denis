@@ -29,6 +29,17 @@
     </div>
 </div>
 
+@*@*вид рекламы   *@
+<div class="form-group">
+    @Html.Label("Вид рекламы ", new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        <select name="TypeOfAdvertising">
+            <option value="true">Социальная</option>
+            <option value="false">Белорусская</option>
+            <option value="false">Иная</option>
+        </select>
+    </div>
+</div>
 <div class="form-group each4">
     @Html.Label("Социальная", new { @class = "control-label col-md-2 " })
     <div class="col-md-10">
@@ -48,19 +59,18 @@
 <div class="form-group each6">
     @Html.Label("Период размещения с", new { @class = "control-label col-md-2 " })
     <div class="col-md-10">
-        @Html.EditorFor(model => model[i].StartDate)
+        <input type="date" name="[@i].StartDate">
         @Html.ValidationMessageFor(model => model[i].StartDate)
     </div>
 </div>
 <div class="form-group each7">
     @Html.Label("по", new {@class = "control-label col-md-2 "})
     <div class="col-md-10">
-        @Html.EditorFor(model => model[i].EndDate)
+        <input type="date" name="[@i].EndDate">
         @Html.ValidationMessageFor(model => model[i].EndDate)
     </div>
 </div>
 
-@*<input type="hidden" id="Shirota" name="[0].SizeForPhoto" value="@ViewBag.Size" />*@
 <div class="form-group">
     @Html.Label("Фото для поверхности", new { @class = "control-label col-md-2" })
     <div class="col-md-10">

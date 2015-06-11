@@ -18,17 +18,37 @@
             if (selectIndex == 0) {
                 $("#SizeB").css("display", "none");
                 $("#SizeC").css("display", "none");
+                $("#SizeD").css("display", "none");
+                $("#SizeE").css("display", "none");
                 $("#CountSize").val("1");
             }
             if (selectIndex == 1) {
                 $("#SizeB").css("display", "block");
                 $("#SizeC").css("display", "none");
+                $("#SizeD").css("display", "none");
+                $("#SizeE").css("display", "none");
                 $("#CountSize").val("2");
             }
             if (selectIndex == 2) {
                 $("#SizeB").css("display", "block");
                 $("#SizeC").css("display", "block");
+                $("#SizeD").css("display", "none");
+                $("#SizeE").css("display", "none");
                 $("#CountSize").val("3");
+            }
+            if (selectIndex == 3) {
+                $("#SizeB").css("display", "block");
+                $("#SizeC").css("display", "block");
+                $("#SizeD").css("display", "block");
+                $("#SizeE").css("display", "none");
+                $("#CountSize").val("4");
+            }
+            if (selectIndex == 4) {
+                $("#SizeB").css("display", "block");
+                $("#SizeC").css("display", "block");
+                $("#SizeD").css("display", "block");
+                $("#SizeE").css("display", "block");
+                $("#CountSize").val("5");
             }
         });
         function InsertOn() {
@@ -73,8 +93,8 @@
                     duplicationSurfaces();
               }
             });
-
         });
+
         $("#AddButton2").click(function () {
             var tempIncrement = Increment();
             $.get('@Url.Action("PartialBilboard","Data")', { param: tempIncrement, side: "B" }).success(function (e) {
@@ -83,6 +103,7 @@
                 duplicationSurfaces();
                });
         });
+
         $("#AddButton3").click(function () {
             var tempIncrement = Increment();
             $.get('@Url.Action("PartialBilboard","Data")', { param: tempIncrement, side: "C" }).success(function (e) {
@@ -90,6 +111,24 @@
                 InsertOn();
                 duplicationSurfaces();
               });
+        });
+
+        $("#AddButton4").click(function () {
+            var tempIncrement = Increment();
+            $.get('@Url.Action("PartialBilboard","Data")', { param: tempIncrement, side: "D" }).success(function (e) {
+                $("#InsertPartial3").before(e);
+                InsertOn();
+                duplicationSurfaces();
+            });
+        });
+
+        $("#AddButton5").click(function () {
+            var tempIncrement = Increment();
+            $.get('@Url.Action("PartialBilboard","Data")', { param: tempIncrement, side: "E" }).success(function (e) {
+                $("#InsertPartial3").before(e);
+                InsertOn();
+                duplicationSurfaces();
+            });
         });
         //дублирование для остальных поверхностей при добавлении
         function duplicationSurfaces() {
@@ -162,7 +201,7 @@
         </div>
         @*комментарий*@
         <div class="form-group">
-            @Html.Label("комментарий", new { @class = "control-label col-md-2" })
+            @Html.Label("Комментарий", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Comment)
                 @Html.ValidationMessageFor(model => model.Comment)
@@ -170,7 +209,7 @@
         </div>
         @*номер договора *@
         <div class="form-group">
-            @Html.Label("номер договора ", new { @class = "control-label col-md-2" })
+            @Html.Label("Номер договора ", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.ContractNumber)
                 @Html.ValidationMessageFor(model => model.ContractNumber)
@@ -178,25 +217,17 @@
         </div>
         @*номер паспорта  *@
         <div class="form-group">
-            @Html.Label("номер паспорта ", new { @class = "control-label col-md-2" })
+            @Html.Label("Номер паспорта ", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.PassportNumber)
                 @Html.ValidationMessageFor(model => model.PassportNumber)
             </div>
         </div>
 
-        @*вид рекламы   *@
-        <div class="form-group">
-            @Html.Label("Вид рекламы ", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("TypeOfAdvertising", new SelectList(new[] { "Социальная", "Беларуская ", "Иная" }))@*над будет точно разобраться*@
-               </div>
-        </div>
         @*На согласование *@
         <div class="form-group">
-            @Html.Label("На согласование", new { @class = "control-label col-md-2" })
+            @Html.Label("На согласовании", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @*@Html.DropDownListFor(model => model.OnAgreement, new SelectList(new[] { "Да ", "Нет" }))*@
                 <select name="OnAgreement">
                     <option value="true">Да</option>
                     <option value="false">Нет</option>
@@ -226,9 +257,7 @@
         <div class="form-group">
             @Html.Label("Количество сторон", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("TypeOfAdvertising", new SelectList(new[] { "1", "2", "3" }), new
-           {
-               id = "SideIndex", @*onchange = "ShowHideDate()"*@})
+                @Html.DropDownList("TypeOfAdvertising", new SelectList(new[] { "1", "2", "3", "4", "5"}), new {id = "SideIndex"})
             </div>
         </div>
         @Html.ValidationMessage("Photo")
@@ -292,10 +321,41 @@
            <div id="InsertPartial3"></div>
         </div>
 
+        @*Сторона D*@
+        <div class="form-group" id="SizeD" style="display: none">
+            <div class="form-group">
+                @*@Html.HiddenFor(model => model.Sides.Single().Name)*@
+                @Html.Label("Сторона D", new { @class = "control-label col-md-2", style = "margin-left:45px" })
+            </div>
+            @*Добавить площадь*@
+            <div class="form-group">
+                <div class="col-md-10">
+                    <a href="#" id="AddButton4" style="color: #428bca; font-weight: bold;">+Добавить площадь</a>
+                </div>
+            </div>
+            <div id="InsertPartial2"></div>
+        </div>
+    <div class="form-group" style="width: 600px; height: 500px" id="map">
+    </div>
+
+        @*Сторона E*@
+        <div class="form-group" id="SizeE" style="display: none">
+            <div class="form-group">
+                @*@Html.HiddenFor(model => model.Sides.Single().Name)*@
+                @Html.Label("Сторона E", new { @class = "control-label col-md-2", style = "margin-left:45px" })
+            </div>
+            @*Добавить площадь*@
+            <div class="form-group">
+                <div class="col-md-10">
+                    <a href="#" id="AddButton5" style="color: #428bca; font-weight: bold;">+Добавить площадь</a>
+                </div>
+            </div>
+            <div id="InsertPartial2"></div>
+        </div>
         <div class="form-group" style="width: 600px; height: 500px" id="map">
         </div>
 
-        <div class="form-group">
+    <div class="form-group">
             <label class="control-label col-md-2" for="Shirota">Широта</label>
             <div class="col-md-10">
                 <input type="text" id="Shirota" name="Height" readonly required />

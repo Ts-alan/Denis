@@ -54,6 +54,12 @@ namespace Sciencecom.Models
        [Required(ErrorMessage = "Введите номер паспорта")]
         public string PassportNumber { get; set; }
 
+       [Required(ErrorMessage = "Введите значение начальной даты")]
+       public string StartDate { get; set; }
+
+       [Required(ErrorMessage = "Введите значение конечной даты")]
+       public string EndDate { get; set; }
+
        [Required(ErrorMessage = "Введите значение Населенный пункт")]
        public string Locality { get; set; }
 

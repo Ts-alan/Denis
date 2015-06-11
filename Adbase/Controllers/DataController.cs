@@ -1404,7 +1404,7 @@ namespace Sciencecom.Controllers
         
         [Authorize]
         [HttpPost]
-        public ActionResult GreateBilboard(Sciencecom.Models.Billboards1 billboards, List<Sciencecom.Models.Surface> surfaces, string Owner, HttpPostedFileBase passport, HttpPostedFileBase photo, int CountSize = 1)
+        public ActionResult GreateBilboard(Billboards1 billboards, List<Sciencecom.Models.Surface> surfaces, string Owner, HttpPostedFileBase passport, HttpPostedFileBase photo, int CountSize = 1)
         {
 
             var idOwner = context.Owners.Single(m => m.Name == Owner).Id;
