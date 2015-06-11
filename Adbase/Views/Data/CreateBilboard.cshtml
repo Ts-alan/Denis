@@ -32,49 +32,32 @@
             }
         });
         function InsertOn() {
-            $(".each1 input").eq(0).on('change', function (e) {
-                var temp1= $(this).val();
-                $(".each1 input").each(function(indx) {
-                    $(this).val(temp1);
-                });
-            });
-            $(".each2 input").eq(0).on('change', function (e) {
+            $(".each1 input").eq(0).on('change', function () {
                 var temp1 = $(this).val();
-                $(".each2 input").each(function (indx) {
-                    $(this).val(temp1);
-                });
-            });
-            $(".each3 input").eq(0).on('change', function (e) {
-                var temp1 = $(this).val();
-                $(".each3 input").each(function (indx) {
-                    $(this).val(temp1);
-                });
-            });
-            $(".each4 input").eq(0).on('change', function (e) {
-                var temp1 = $(this).attr();
-                $(".each4 input").each(function (indx) {
-                    $(this).val(temp1);
-                });
-            });
-            $(".each5 input").eq(0).on('change', function (e) {
-                var temp1 = $(this).val();
-                $(".each5 input").each(function (indx) {
-                    $(this).val(temp1);
-                });
-            });
-            $(".each6 input").eq(0).on('change', function (e) {
-                var temp1 = $(this).val();
-                $(".each6 input").each(function (indx) {
-                    $(this).val(temp1);
-                });
-            });
-            $(".each7 input").eq(0).on('change', function (e) {
-                var temp1 = $(this).val();
-                $(".each7 input").each(function (indx) {
-                    $(this).val(temp1);
-                });
-            });
+                //вычисление площади
+                var temp2 = $(".each2 input").val();
+                $(".each3 input").val(temp1*(temp2===""?0:temp2));
 
+                $(".each1 input").each(function() {
+                    $(this).val(temp1);
+                });
+            });
+            $(".each2 input").eq(0).on('change', function () {
+                var temp1 = $(this).val();
+                //вычисление площади
+                var temp2 = $(".each1 input").val();
+                $(".each3 input").val(temp1 * (temp2 === "" ? 0 : temp2));
+
+                $(".each2 input").each(function () {
+                    $(this).val(temp1);
+                });
+            });
+            $(".each3 input").eq(0).on('change', function () {
+                var temp1 = $(this).val();
+                $(".each3 input").each(function () {
+                    $(this).val(temp1);
+                });
+            });
         }
 
         function Increment() {
