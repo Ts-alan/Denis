@@ -4,11 +4,11 @@
 }
 <script type="text/javascript">
     $(document).ready(function() {
-        $('[name="[0].IsSocial"]').on('change', function() {
+        $('[name="['+@i+'].IsSocial"]').on('change', function() {
             if ($(this).is(':checked')) {
-                $("#\\[0\\]\\.\\socialSurface").css("display", "block");
+                $("#\\["+@i+"\\]\\.\\socialSurface").css("display", "block");
             } else {
-                $("#\\[0\\]\\.\\socialSurface").css("display", "none");
+                $("#\\["+@i+"\\]\\.\\socialSurface").css("display", "none");
             }
         });
     });
