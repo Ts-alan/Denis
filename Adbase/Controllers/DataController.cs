@@ -1353,6 +1353,16 @@ namespace Sciencecom.Controllers
                             ViewBag.photo = false;
                         }
 
+                         Dictionary<string, string> surfaces = new Dictionary<string,string>();
+                         Billboards1 mc=new Billboards1();
+                        foreach (var Side in mc.Sides)
+                        {
+                             foreach (var surface in Side.Surfaces)
+                            {
+                             surfaces.Add(Side.Name,"~/Images/Billboard/surfaces/" + surface.Id + ".jpg");   
+                            }
+                        }
+                        ViewBag.Surfaces = surfaces;
                     }
                 break;
                 case "doc":

@@ -6,9 +6,9 @@
     $(document).ready(function() {
         $('[name="['+@i+'].IsSocial"]').on('change', function() {
             if ($(this).is(':checked')) {
-                $("#\\["+@i+"\\]\\.\\socialSurface").css("display", "block");
+                $("#\\[" +@i +"\\]\\.\\socialSurface").css("display", "block");
             } else {
-                $("#\\["+@i+"\\]\\.\\socialSurface").css("display", "none");
+                $("#\\[" +@i +"\\]\\.\\socialSurface").css("display", "none");
             }
         });
     });

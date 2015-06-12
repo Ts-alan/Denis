@@ -214,7 +214,13 @@
         {
             @Html.Raw("Страница с фото отсутствует.")<br />
         }
-      
+        @if (ViewBag.Surfaces)
+        {
+            if(ViewBag.Surfaces)
+            <p>
+                <h3>@Html.Raw("Фото")</h3><br />
+            </p>
+        }
     </div>
 }
 @if (ViewBag.Type == "Balyn")
