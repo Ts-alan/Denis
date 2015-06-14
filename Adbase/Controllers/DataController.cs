@@ -1360,7 +1360,7 @@ namespace Sciencecom.Controllers
                         }
 
                         List<Lookup> numberSurfaces = new List<Lookup>();
-                        Billboards1 mc=new Billboards1();
+                        Billboards1 mc=context.Billboards1.Single(a=>a.Id_show==id);
                         foreach (var Side in mc.Sides)
                         {
                              foreach (var surface in Side.Surfaces)
