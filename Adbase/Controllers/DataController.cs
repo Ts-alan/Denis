@@ -1189,6 +1189,12 @@ namespace Sciencecom.Controllers
                              };
             return Json(projection.ToList(), JsonRequestBehavior.AllowGet);
         }
+        //обслуживающий класс для Documents
+        class Lookup
+        {
+            public string Key;
+            public string Value;
+        }
 
         [Authorize]
         [HttpGet]
@@ -1330,7 +1336,7 @@ namespace Sciencecom.Controllers
                     break;
                 case "b":
                     {
-                        ViewBag.Type = "Bilboard";
+                        ViewBag.Type = "Billboard";
                         ViewBag.Id = id;
                         string src = "~/Images/Billboard/" + id + "passport.jpg";
                         string path = Server.MapPath(src);
@@ -1353,16 +1359,18 @@ namespace Sciencecom.Controllers
                             ViewBag.photo = false;
                         }
 
-                         Dictionary<string, string> surfaces = new Dictionary<string,string>();
-                         Billboards1 mc=new Billboards1();
+                        List<Lookup> numberSurfaces = new List<Lookup>();
+                        Billboards1 mc=new Billboards1();
                         foreach (var Side in mc.Sides)
                         {
                              foreach (var surface in Side.Surfaces)
                             {
-                             surfaces.Add(Side.Name,"~/Images/Billboard/surfaces/" + surface.Id + ".jpg");   
+                                numberSurfaces.Add(new Lookup(){Key  = Side.Name,Value = "~/Images/Billboard/surfaces/" + surface.Id + ".jpg"});   
                             }
                         }
-                        ViewBag.Surfaces = surfaces;
+                        Lookup<string, string> LookUp =
+                            (Lookup<string, string>)numberSurfaces.ToLookup(p => p.Key, p => p.Value);
+                        ViewBag.Surfaces = LookUp;
                     }
                 break;
                 case "doc":

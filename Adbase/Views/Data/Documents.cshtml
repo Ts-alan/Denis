@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Просмотр документов";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var t = (string[])ViewBag.Surfaces["А"];
 }
 
 <h2>Просмотр документов объекта</h2>
@@ -183,7 +184,7 @@
         @Html.ActionLink("Вернуться к списку", "Light")
     </p>
 }
-@if (ViewBag.Type == "Bilboard")
+@if (ViewBag.Type == "Billboard")
 {
     <div id="image" style="width:80%">
         <p>
@@ -214,13 +215,29 @@
         {
             @Html.Raw("Страница с фото отсутствует.")<br />
         }
-        @*@if (ViewBag.Surfaces)
+        @if (ViewBag.Surfaces != null)
         {
-            if(ViewBag.Surfaces)
-            <p>
-                <h3>@Html.Raw("Фото")</h3><br />
-            </p>
-        }*@
+            if (ViewBag.Surfaces["А"] != null)
+            {
+                <p>
+                    <h3>@Html.Raw("Сторона А")</h3><br/>
+                </p>
+                
+                @t.Count();
+                @*foreach (var sideA in ViewBag.Surfaces["А"])
+                {
+                    
+                    string image = "/Images/Billboard/surfaces/" + sideA.Id + ".jpg";
+                    <p>
+                      <a href=@image target="_blank">11<img src=@image height="500"></a><br/>
+                    </p>
+                }*@
+            }
+        }
+        else
+        {
+             @Html.Raw("Поверхности отсутствуют")<br />
+        }
     </div>
 }
 @if (ViewBag.Type == "Balyn")
