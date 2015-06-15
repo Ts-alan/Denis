@@ -1479,7 +1479,6 @@ namespace Sciencecom.Controllers
         [HttpGet]
         public ActionResult CreateBilboard()
         {
-
             return View();
         }
 
@@ -1604,6 +1603,7 @@ namespace Sciencecom.Controllers
 
         public ActionResult PartialBilboard(int param , string side)
         {
+            ViewBag.Topic = context.TopicForSocialAdvertisings;
             ViewBag.Incerment = param;
             ViewBag.Side = side;
             return View();

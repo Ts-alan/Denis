@@ -14,10 +14,16 @@ namespace Sciencecom.Models
     
     public partial class Object
     {
+        public Object()
+        {
+            this.RelationshipOfAdvertisings = new HashSet<RelationshipOfAdvertising>();
+        }
+    
         public string Name { get; set; }
         public bool Visible { get; set; }
         public System.Guid id { get; set; }
     
         public virtual RelationshipOfAdvertising RelationshipOfAdvertising { get; set; }
+        public virtual ICollection<RelationshipOfAdvertising> RelationshipOfAdvertisings { get; set; }
     }
 }

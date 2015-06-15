@@ -28,6 +28,8 @@
         <AssociationConnector Association="SciencecomModel.FK_Object_RelationshipOfAdvertising" />
         <AssociationConnector Association="SciencecomModel.FK_RelationshipOfAdvertising_SubtopicForSocialAdvertising" />
         <AssociationConnector Association="SciencecomModel.FK_RelationshipOfAdvertising_TopicForSocialAdvertising" />
+        <AssociationConnector Association="SciencecomModel.FK_RelationshipOfAdvertising_Object1" />
+        <AssociationConnector Association="SciencecomModel.FK_RelationshipOfAdvertising_TopicForSocialAdvertising1" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -18,9 +18,12 @@ namespace Sciencecom.Models
         public System.Guid idOfTopicForSocialAdvertising { get; set; }
         public System.Guid idOfSubtopicForSocialAdvertising { get; set; }
         public bool Visible { get; set; }
+        public System.Guid id_Object { get; set; }
     
         public virtual Object Object { get; set; }
         public virtual SubtopicForSocialAdvertising SubtopicForSocialAdvertising { get; set; }
         public virtual TopicForSocialAdvertising TopicForSocialAdvertising { get; set; }
+        public virtual Object Object1 { get; set; }
+        public virtual TopicForSocialAdvertising TopicForSocialAdvertising1 { get; set; }
     }
 }

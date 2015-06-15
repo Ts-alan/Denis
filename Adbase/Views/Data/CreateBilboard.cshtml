@@ -8,6 +8,7 @@
     ViewBag.Title = "CreateBilboard";
     SelectList owners = new SelectList(new SciencecomEntities().Owners.Select(m=>m.Name).ToList());
     Guid IdGuid = new Guid();
+    
 }
 <script type="text/javascript">
     $(document).ready(function() {

@@ -1,4 +1,5 @@
-﻿@model System.Collections.Generic.List<Sciencecom.Models.Surface>
+﻿@using System.Data.Entity
+@model System.Collections.Generic.List<Sciencecom.Models.Surface>
 @{
     int i = ViewBag.Incerment;
 }
@@ -60,10 +61,19 @@
 <div class="form-group" id="[@i].socialSurface" style="display: none">
     @Html.Label("Социальная поверхность ", new { @class = "control-label col-md-2" })
     <div class="col-md-10">
+          Тема
         <select name="[@i].Test">
-            <option value="social">Наркомания</option>
-            <option value="belarusian">МЧС</option>
-            <option value="other">Полиция</option>
+            @foreach (var topic in (DbSet<Sciencecom.Models.TopicForSocialAdvertising>) ViewBag.Topic)
+            {
+                <option value=@topic.id>@topic.Name</option>
+            }
+        </select>
+        Подтема
+        <select name="[@i].Test">
+            @foreach (var topic in (DbSet<Sciencecom.Models.TopicForSocialAdvertising>) ViewBag.Topic)
+            {
+                <option value=@topic.id>@topic.Name</option>
+            }
         </select>
     </div>
 </div>

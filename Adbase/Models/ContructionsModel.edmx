@@ -108,6 +108,7 @@
           <Property Name="idOfTopicForSocialAdvertising" Type="uniqueidentifier" Nullable="false" />
           <Property Name="idOfSubtopicForSocialAdvertising" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Visible" Type="bit" Nullable="false" />
+          <Property Name="id_Object" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="Sides">
           <Key>
@@ -226,15 +227,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Object_RelationshipOfAdvertising">
-          <End Role="RelationshipOfAdvertising" Type="Self.RelationshipOfAdvertising" Multiplicity="1" />
-          <End Role="Object" Type="Self.Object" Multiplicity="0..1" />
+        <Association Name="FK_RelationshipOfAdvertising_Object1">
+          <End Role="Object" Type="Self.Object" Multiplicity="1" />
+          <End Role="RelationshipOfAdvertising" Type="Self.RelationshipOfAdvertising" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="RelationshipOfAdvertising">
+            <Principal Role="Object">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="Object">
-              <PropertyRef Name="id" />
+            <Dependent Role="RelationshipOfAdvertising">
+              <PropertyRef Name="id_Object" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -258,7 +259,7 @@
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="RelationshipOfAdvertising">
-              <PropertyRef Name="idOfSubtopicForSocialAdvertising" />
+              <PropertyRef Name="idOfTopicForSocialAdvertising" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -351,9 +352,9 @@
             <End Role="Owners" EntitySet="Owners" />
             <End Role="MetalConstructions" EntitySet="MetalConstructions" />
           </AssociationSet>
-          <AssociationSet Name="FK_Object_RelationshipOfAdvertising" Association="Self.FK_Object_RelationshipOfAdvertising">
-            <End Role="RelationshipOfAdvertising" EntitySet="RelationshipOfAdvertising" />
+          <AssociationSet Name="FK_RelationshipOfAdvertising_Object1" Association="Self.FK_RelationshipOfAdvertising_Object1">
             <End Role="Object" EntitySet="Object" />
+            <End Role="RelationshipOfAdvertising" EntitySet="RelationshipOfAdvertising" />
           </AssociationSet>
           <AssociationSet Name="FK_RelationshipOfAdvertising_SubtopicForSocialAdvertising" Association="Self.FK_RelationshipOfAdvertising_SubtopicForSocialAdvertising">
             <End Role="SubtopicForSocialAdvertising" EntitySet="SubtopicForSocialAdvertising" />
@@ -538,6 +539,14 @@
             <End Role="TopicForSocialAdvertising" EntitySet="TopicForSocialAdvertisings" />
             <End Role="RelationshipOfAdvertising" EntitySet="RelationshipOfAdvertisings" />
           </AssociationSet>
+          <AssociationSet Name="FK_RelationshipOfAdvertising_Object1" Association="SciencecomModel.FK_RelationshipOfAdvertising_Object1">
+            <End Role="Object" EntitySet="Objects" />
+            <End Role="RelationshipOfAdvertising" EntitySet="RelationshipOfAdvertisings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RelationshipOfAdvertising_TopicForSocialAdvertising1" Association="SciencecomModel.FK_RelationshipOfAdvertising_TopicForSocialAdvertising1">
+            <End Role="TopicForSocialAdvertising" EntitySet="TopicForSocialAdvertisings" />
+            <End Role="RelationshipOfAdvertising" EntitySet="RelationshipOfAdvertisings" />
+          </AssociationSet>
           </EntityContainer>
         <Association Name="FK_LightConstructions_Owners1">
           <End Type="SciencecomModel.Owner" Role="Owner" Multiplicity="1" />
@@ -706,6 +715,7 @@
           <Property Name="Visible" Type="Boolean" Nullable="false" />
           <Property Name="id" Type="Guid" Nullable="false" />
           <NavigationProperty Name="RelationshipOfAdvertising" Relationship="SciencecomModel.FK_Object_RelationshipOfAdvertising" FromRole="Object" ToRole="RelationshipOfAdvertising" />
+          <NavigationProperty Name="RelationshipOfAdvertisings" Relationship="SciencecomModel.FK_RelationshipOfAdvertising_Object1" FromRole="Object" ToRole="RelationshipOfAdvertising" />
         </EntityType>
         <EntityType Name="RelationshipOfAdvertising">
           <Key>
@@ -718,6 +728,9 @@
           <NavigationProperty Name="Object" Relationship="SciencecomModel.FK_Object_RelationshipOfAdvertising" FromRole="RelationshipOfAdvertising" ToRole="Object" />
           <NavigationProperty Name="SubtopicForSocialAdvertising" Relationship="SciencecomModel.FK_RelationshipOfAdvertising_SubtopicForSocialAdvertising" FromRole="RelationshipOfAdvertising" ToRole="SubtopicForSocialAdvertising" />
           <NavigationProperty Name="TopicForSocialAdvertising" Relationship="SciencecomModel.FK_RelationshipOfAdvertising_TopicForSocialAdvertising" FromRole="RelationshipOfAdvertising" ToRole="TopicForSocialAdvertising" />
+          <Property Name="id_Object" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Object1" Relationship="SciencecomModel.FK_RelationshipOfAdvertising_Object1" FromRole="RelationshipOfAdvertising" ToRole="Object" />
+          <NavigationProperty Name="TopicForSocialAdvertising1" Relationship="SciencecomModel.FK_RelationshipOfAdvertising_TopicForSocialAdvertising1" FromRole="RelationshipOfAdvertising" ToRole="TopicForSocialAdvertising" />
         </EntityType>
         <EntityType Name="SubtopicForSocialAdvertising">
           <Key>
@@ -736,6 +749,7 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Visible" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="RelationshipOfAdvertisings" Relationship="SciencecomModel.FK_RelationshipOfAdvertising_TopicForSocialAdvertising" FromRole="TopicForSocialAdvertising" ToRole="RelationshipOfAdvertising" />
+          <NavigationProperty Name="RelationshipOfAdvertisings1" Relationship="SciencecomModel.FK_RelationshipOfAdvertising_TopicForSocialAdvertising1" FromRole="TopicForSocialAdvertising" ToRole="RelationshipOfAdvertising" />
         </EntityType>
         <Association Name="FK_Object_RelationshipOfAdvertising">
           <End Type="SciencecomModel.RelationshipOfAdvertising" Role="RelationshipOfAdvertising" Multiplicity="1" />
@@ -770,6 +784,30 @@
             </Principal>
             <Dependent Role="RelationshipOfAdvertising">
               <PropertyRef Name="idOfSubtopicForSocialAdvertising" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RelationshipOfAdvertising_Object1">
+          <End Type="SciencecomModel.Object" Role="Object" Multiplicity="1" />
+          <End Type="SciencecomModel.RelationshipOfAdvertising" Role="RelationshipOfAdvertising" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Object">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="RelationshipOfAdvertising">
+              <PropertyRef Name="id_Object" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RelationshipOfAdvertising_TopicForSocialAdvertising1">
+          <End Type="SciencecomModel.TopicForSocialAdvertising" Role="TopicForSocialAdvertising" Multiplicity="1" />
+          <End Type="SciencecomModel.RelationshipOfAdvertising" Role="RelationshipOfAdvertising" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TopicForSocialAdvertising">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="RelationshipOfAdvertising">
+              <PropertyRef Name="idOfTopicForSocialAdvertising" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -952,6 +990,7 @@
           <EntitySetMapping Name="RelationshipOfAdvertisings">
             <EntityTypeMapping TypeName="SciencecomModel.RelationshipOfAdvertising">
               <MappingFragment StoreEntitySet="RelationshipOfAdvertising">
+                <ScalarProperty Name="id_Object" ColumnName="id_Object" />
                 <ScalarProperty Name="Visible" ColumnName="Visible" />
                 <ScalarProperty Name="idOfSubtopicForSocialAdvertising" ColumnName="idOfSubtopicForSocialAdvertising" />
                 <ScalarProperty Name="idOfTopicForSocialAdvertising" ColumnName="idOfTopicForSocialAdvertising" />
