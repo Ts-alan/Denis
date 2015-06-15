@@ -13,6 +13,7 @@
             }
         });
     });
+    $("")
 </script>
 <input type="hidden" name="[@i].SideOfSurface" value="@ViewBag.Side">
 <h3 style="margin-left: 150px">Поверхность </h3>
@@ -69,7 +70,7 @@
             }
         </select>
         Подтема
-        <select name="[@i].Test">
+        <select>
             @foreach (var topic in (DbSet<Sciencecom.Models.TopicForSocialAdvertising>) ViewBag.Topic)
             {
                 <option value=@topic.id>@topic.Name</option>
