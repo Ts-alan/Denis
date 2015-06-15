@@ -36,6 +36,7 @@ namespace Sciencecom.Controllers
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
+            ViewBag.MappingContent = false;
             return View();
         }
 
