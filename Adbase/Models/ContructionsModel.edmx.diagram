@@ -21,6 +21,13 @@
         <AssociationConnector Association="SciencecomModel.FK_Billboards1_Owners" />
         <AssociationConnector Association="SciencecomModel.FK_Sides_Billboards1" />
         <AssociationConnector Association="SciencecomModel.FK_Surfaces_Sides" />
+        <EntityTypeShape EntityType="SciencecomModel.Object" Width="1.5" PointX="9.875" PointY="8.25" />
+        <EntityTypeShape EntityType="SciencecomModel.RelationshipOfAdvertising" Width="1.5" PointX="7.625" PointY="8" />
+        <EntityTypeShape EntityType="SciencecomModel.SubtopicForSocialAdvertising" Width="1.5" PointX="5.375" PointY="8.25" />
+        <EntityTypeShape EntityType="SciencecomModel.TopicForSocialAdvertising" Width="1.5" PointX="5.375" PointY="11.25" />
+        <AssociationConnector Association="SciencecomModel.FK_Object_RelationshipOfAdvertising" />
+        <AssociationConnector Association="SciencecomModel.FK_RelationshipOfAdvertising_SubtopicForSocialAdvertising" />
+        <AssociationConnector Association="SciencecomModel.FK_RelationshipOfAdvertising_TopicForSocialAdvertising" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

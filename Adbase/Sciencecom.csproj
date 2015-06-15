@@ -208,11 +208,17 @@
       <DependentUpon>ContructionsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MetalConstructionPartial.cs" />
+    <Compile Include="Models\Object.cs">
+      <DependentUpon>ContructionsModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Owner.cs">
       <DependentUpon>ContructionsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\OwnerPartial.cs" />
     <Compile Include="Models\Billboards1ConstructionPartial.cs" />
+    <Compile Include="Models\RelationshipOfAdvertising.cs">
+      <DependentUpon>ContructionsModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Side.cs">
       <DependentUpon>ContructionsModel.tt</DependentUpon>
     </Compile>
@@ -225,6 +231,9 @@
     <Compile Include="Models\Street.cs">
       <DependentUpon>ContructionsModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SubtopicForSocialAdvertising.cs">
+      <DependentUpon>ContructionsModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Surface.cs">
       <DependentUpon>ContructionsModel.tt</DependentUpon>
     </Compile>
@@ -232,6 +241,9 @@
       <DependentUpon>ContructionsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TableAdapterExtensions.cs" />
+    <Compile Include="Models\TopicForSocialAdvertising.cs">
+      <DependentUpon>ContructionsModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Users\AspNetRole.cs">
       <DependentUpon>UsersModel.tt</DependentUpon>
     </Compile>

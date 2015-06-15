@@ -36,6 +36,10 @@ namespace Sciencecom.Models
         public virtual DbSet<Billboards1> Billboards1 { get; set; }
         public virtual DbSet<Side> Sides { get; set; }
         public virtual DbSet<Surface> Surfaces { get; set; }
+        public virtual DbSet<Object> Objects { get; set; }
+        public virtual DbSet<RelationshipOfAdvertising> RelationshipOfAdvertisings { get; set; }
+        public virtual DbSet<SubtopicForSocialAdvertising> SubtopicForSocialAdvertisings { get; set; }
+        public virtual DbSet<TopicForSocialAdvertising> TopicForSocialAdvertisings { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
