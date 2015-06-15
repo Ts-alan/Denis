@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Просмотр документов";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var t = (string[])ViewBag.Surfaces["А"];
+    var t = ViewBag.Surfaces["А"];
 }
 
 <h2>Просмотр документов объекта</h2>
@@ -223,7 +223,7 @@
                     <h3>@Html.Raw("Сторона А")</h3><br/>
                 </p>
                 
-                @t.Count();
+                @*@t.Count();*@
                 @*foreach (var sideA in ViewBag.Surfaces["А"])
                 {
                     
