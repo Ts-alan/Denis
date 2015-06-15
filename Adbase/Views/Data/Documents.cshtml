@@ -222,16 +222,65 @@
                 <p>
                     <h3>@Html.Raw("Сторона А")</h3><br/>
                 </p>
-                
-                @*@t.Count();*@
-                @*foreach (var sideA in ViewBag.Surfaces["А"])
+                foreach (var sideA in ViewBag.Surfaces["А"])
                 {
-                    
-                    string image = "/Images/Billboard/surfaces/" + sideA.Id + ".jpg";
+                    string image = sideA;
                     <p>
-                      <a href=@image target="_blank">11<img src=@image height="500"></a><br/>
+                      <a href=@image target="_blank"><img src=@image height="500"></a><br/>
                     </p>
-                }*@
+                }
+            }
+            if (ViewBag.Surfaces["B"] != null)
+            {
+                <p>
+                    <h3>@Html.Raw("Сторона B")</h3><br />
+                </p>
+                foreach (var sideA in ViewBag.Surfaces["B"])
+                {
+                    string image = sideA;
+                    <p>
+                        <a href=@image target="_blank"><img src=@image height="500"></a><br />
+                    </p>
+                }
+            }
+            if (ViewBag.Surfaces["C"] != null)
+            {
+                <p>
+                    <h3>@Html.Raw("Сторона C")</h3><br />
+                </p>
+                foreach (var sideA in ViewBag.Surfaces["C"])
+                {
+                    string image = sideA;
+                    <p>
+                        <a href=@image target="_blank"><img src=@image height="500"></a><br />
+                    </p>
+                }
+            }
+            if (ViewBag.Surfaces["D"] != null)
+            {
+                <p>
+                    <h3>@Html.Raw("Сторона D")</h3><br />
+                </p>
+                foreach (var sideA in ViewBag.Surfaces["D"])
+                {
+                    string image = sideA;
+                    <p>
+                        <a href=@image target="_blank"><img src=@image height="500"></a><br />
+                    </p>
+                }
+            }
+            if (ViewBag.Surfaces["E"] != null)
+            {
+                <p>
+                    <h3>@Html.Raw("Сторона E")</h3><br />
+                </p>
+                foreach (var sideA in ViewBag.Surfaces["E"])
+                {
+                    string image = sideA;
+                    <p>
+                        <a href=@image target="_blank"><img src=@image height="500"></a><br />
+                    </p>
+                }
             }
         }
         else

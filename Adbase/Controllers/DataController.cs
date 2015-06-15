@@ -1365,7 +1365,7 @@ namespace Sciencecom.Controllers
                         {
                              foreach (var surface in Side.Surfaces)
                             {
-                                numberSurfaces.Add(new Lookup(){Key  = Side.Name,Value = "~/Images/Billboard/surfaces/" + surface.Id + ".jpg"});   
+                                numberSurfaces.Add(new Lookup(){Key  = Side.Name,Value = "/Images/Billboard/surfaces/" + surface.Id + ".jpg"});   
                             }
                         }
                         Lookup<string, string> LookUp =
