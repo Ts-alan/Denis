@@ -18,6 +18,7 @@ namespace Sciencecom.Controllers
             {
                 var Subtopic = _ctx.RelationshipOfAdvertisings.Where(a => a.idOfTopicForSocialAdvertising == id).Select(a=>a.idOfSubtopicForSocialAdvertising).ToList();
                 List<SubtopicForSocialAdvertising> GuidSubtopic = null;
+                var t = _ctx.SubtopicForSocialAdvertisings.ToList();
                 foreach (var i in Subtopic)
                 {
                     GuidSubtopic = _ctx.SubtopicForSocialAdvertisings.AsEnumerable().Where(a => a.id.ToString().Contains(Subtopic.ToString())).ToList();   
