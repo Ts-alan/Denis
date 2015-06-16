@@ -6,6 +6,7 @@ using System.Web;
 
 namespace Sciencecom.Models
 {
+    [MetadataType(typeof(SurfaceConstructionMetaData))]
     public partial class Surface
     {
         public string SideOfSurface { get; set; }
@@ -13,6 +14,28 @@ namespace Sciencecom.Models
 
         public Guid Id_Bilboard { get; set; }
     }
+
+    public  class SurfaceConstructionMetaData
+    {
+        [Required(ErrorMessage = "Введите значение начальной даты")]
+        public int Height { get; set; }
+         [Required(ErrorMessage = "Введите значение начальной даты")]
+        public int Width { get; set; }
+         [Required(ErrorMessage = "Введите значение начальной даты")]
+        public int Space { get; set; }
+         [Required(ErrorMessage = "Введите значение начальной даты")]
+        public bool IsSocial { get; set; }
+         [Required(ErrorMessage = "Введите значение начальной даты")]
+        public string TypeOfAdvertising { get; set; }
+        public string Story { get; set; }
+        [Required(ErrorMessage = "Введите значение начальной даты")]
+        public System.DateTime StartDate { get; set; }
+        [Required(ErrorMessage = "Введите значение конечной даты")]
+        public System.DateTime EndDate { get; set; }
+        public int Id { get; set; }
+      
+    }
+
      [MetadataType(typeof(Billboards1ConstructionMetaData))]
     public partial class Billboards1
     {
@@ -45,7 +68,7 @@ namespace Sciencecom.Models
         [Required(ErrorMessage = "Введите значение Со стороны")]
         [Display(Name = "Со стороны")]
         public string FromStreet { get; set; }
-        [Required(ErrorMessage = "Введите значение комментария")]
+      
         public string Comment { get; set; }
         
         [Required(ErrorMessage = "Введите номер договора")]

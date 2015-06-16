@@ -1384,7 +1384,7 @@ namespace Sciencecom.Controllers
             }
             return View();
         }
-        //билбордер
+        //билборд
         [Authorize]
         [HttpGet]
         public ActionResult Bilboard()

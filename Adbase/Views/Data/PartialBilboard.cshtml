@@ -4,8 +4,8 @@
     int i = ViewBag.Incerment;
 }
 <script type="text/javascript">
-    $(document).ready(function() {
-        $('[name="['+@i+'].IsSocial"]').on('change', function() {
+    $(document).ready(function () {
+        $('[name="[' +@i +'].IsSocial"]').on('change', function () {
             if ($(this).is(':checked')) {
                 $("#\\[" +@i +"\\]\\.\\socialSurface").css("display", "block");
             } else {
@@ -13,7 +13,15 @@
             }
         });
     });
-    $("")
+
+    $('[name="[' + @i + '].Topic"]').on('change', function () {
+        $.get('@Url.Action("GetSubTopic","BackEndServices")', { id: $('[name="[' +@i +'].Topic"] option:selected').val() })
+            .success(function (e) {
+            console.log(e);
+        }).error(function () {
+            alert("Ошибка запроса");
+        });
+    });
 </script>
 <input type="hidden" name="[@i].SideOfSurface" value="@ViewBag.Side">
 <h3 style="margin-left: 150px">Поверхность </h3>
@@ -46,6 +54,7 @@
     @Html.Label("Вид рекламы ", new { @class = "control-label col-md-2" })
     <div class="col-md-10">
         <select name="[@i].TypeOfAdvertising">
+            <option></option>
             <option value="social">Социальная</option>
             <option value="belarusian">Белорусская</option>
             <option value="other">Иная</option>
@@ -63,19 +72,22 @@
     @Html.Label("Социальная поверхность ", new { @class = "control-label col-md-2" })
     <div class="col-md-10">
           Тема
-        <select name="[@i].Test">
-            @foreach (var topic in (DbSet<Sciencecom.Models.TopicForSocialAdvertising>) ViewBag.Topic)
+        <select name="[@i].Topic"  class="text-box single-line valid" data-val="true" data-val-required="Выбирите значение" >
+            <option></option>
+            @foreach (var topic in (DbSet<Sciencecom.Models.TopicForSocialAdvertising>)ViewBag.Topic)
             {
                 <option value=@topic.id>@topic.Name</option>
             }
         </select>
         Подтема
         <select>
-            @foreach (var topic in (DbSet<Sciencecom.Models.TopicForSocialAdvertising>) ViewBag.Topic)
+            <option></option>
+            @*@foreach (var topic in (DbSet<Sciencecom.Models.SubtopicForSocialAdvertising>) ViewBag.Topic)
             {
                 <option value=@topic.id>@topic.Name</option>
-            }
+            }*@
         </select>
+        <span class="field-validation-valid" data-valmsg-for="[@i].Test" data-valmsg-replace="true" style="display: block"></span>
     </div>
 </div>
 <div class="form-group each5">
