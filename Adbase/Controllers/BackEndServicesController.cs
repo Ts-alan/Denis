@@ -11,17 +11,16 @@ namespace Sciencecom.Controllers
     {
         
         [Authorize]
-        public IQueryable<SubtopicForSocialAdvertising> GetSubTopic(Guid id)
+        public List<SubtopicForSocialAdvertising> GetSubTopic(Guid id)
         {
          
             using (SciencecomEntities _ctx =new SciencecomEntities())
             {
                 var Subtopic = _ctx.RelationshipOfAdvertisings.Where(a => a.idOfTopicForSocialAdvertising == id).Select(a=>a.idOfSubtopicForSocialAdvertising).ToList();
-                var test = _ctx.SubtopicForSocialAdvertisings.ToList();
-                IQueryable<SubtopicForSocialAdvertising> GuidSubtopic=null;
+                List<SubtopicForSocialAdvertising> GuidSubtopic = null;
                 foreach (var i in Subtopic)
                 {
-                    GuidSubtopic = _ctx.SubtopicForSocialAdvertisings.Where(a => a.id.ToString().Contains(i.ToString()));   
+                    GuidSubtopic = _ctx.SubtopicForSocialAdvertisings.AsEnumerable().Where(a => a.id.ToString().Contains(Subtopic.ToString())).ToList();   
                 }
                 return GuidSubtopic;
             }
