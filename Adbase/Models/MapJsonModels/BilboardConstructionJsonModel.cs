@@ -27,8 +27,7 @@ namespace Sciencecom.Models.MapJsonModels
             this.Id_show = mc.Id_show;
             this.OwnerName = mc.OwnerName;
             this.Surfaces = surfaces.Select(a=>a.Id);
-            this.IsSocial = surfaces.Select(a => a.IsSocial);
-        }
+          }
     
         public Nullable<float> Height { get; set; }
         public Nullable<float> Breadth { get; set; }

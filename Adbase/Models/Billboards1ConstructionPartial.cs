@@ -24,8 +24,6 @@ namespace Sciencecom.Models
          [Required(ErrorMessage = "Введите значение начальной даты")]
         public int Space { get; set; }
          [Required(ErrorMessage = "Введите значение начальной даты")]
-        public bool IsSocial { get; set; }
-         [Required(ErrorMessage = "Введите значение начальной даты")]
         public string TypeOfAdvertising { get; set; }
         public string Story { get; set; }
         [Required(ErrorMessage = "Введите значение начальной даты")]

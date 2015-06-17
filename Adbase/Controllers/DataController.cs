@@ -1121,14 +1121,14 @@ namespace Sciencecom.Controllers
                         {
                             if (isSocial == true)
                             {
-                                if (surface.IsSocial == true)
+                                if (surface.TypeOfAdvertising == "social")
                                 {
                                     return true;
                                 }
                             }
                             else
                             {
-                                if (surface.IsSocial == true)
+                                if (surface.TypeOfAdvertising == "social")
                                 {
                                     return false;
                                 }

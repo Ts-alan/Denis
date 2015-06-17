@@ -96,7 +96,14 @@
 
                             <tr>
                                 <td>
-                                    @surface.IsSocial
+                                    @if (surface.TypeOfAdvertising == "social")
+                                    {
+                                        <div>социальная</div>
+                                    }
+                                    else
+                                    {
+                                        <div> не социальная</div>
+                                    }
                                 </td>
                             </tr>
                         }

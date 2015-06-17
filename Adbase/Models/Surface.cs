@@ -17,7 +17,6 @@ namespace Sciencecom.Models
         public int Height { get; set; }
         public int Width { get; set; }
         public int Space { get; set; }
-        public bool IsSocial { get; set; }
         public string TypeOfAdvertising { get; set; }
         public string Story { get; set; }
         public System.DateTime StartDate { get; set; }

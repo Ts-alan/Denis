@@ -4,33 +4,35 @@
     int i = ViewBag.Incerment;
 }
 <script type="text/javascript">
-    $(document).ready(function () {
-        $('[name="[' +@i +'].IsSocial"]').on('change', function () {
-            if ($(this).is(':checked')) {
-                $("#\\[" +@i +"\\]\\.\\socialSurface").css("display", "block");
+    $(document).ready(function() {
+
+        //выпадающий список
+        $('[name="[' + @i + '].TypeOfAdvertising').change(function() {
+            var selectIndex = document.getElementById("[" + @i + "].TypeOfAdvertising").selectedIndex;
+            if (selectIndex == 1) {
+                $("#\\[" + @i + "\\]\\.\\socialSurface").css("display", "block");
             } else {
-                $("#\\[" +@i +"\\]\\.\\socialSurface").css("display", "none");
+                $("#\\[" + @i + "\\]\\.\\socialSurface").css("display", "none");
             }
         });
-    });
 
-    $('[name="[' + @i + '].Topic"]').on('change', function () {
-        $.get('@Url.Action("GetSubTopic","BackEndServices")', { id: $('[name="[' +@i +'].Topic"] option:selected').val() })
-            .success(function (e) {
-                var SubTopic = document.getElementById("["+@i+"].SubTopic");
-                //jочистить список Subtopic
-                for (var i = SubTopic.options.length - 1; i >= 0; i--) {
-                    SubTopic.remove(i);
-                }
-                //заполнить список Subtopic
-                var Json = $.parseJSON(e);
-                console.log(Json.length);
-                for (var j = 1; j < Json.length ; j++) {
-                    SubTopic.options[j] = new Option(Json[j].Name.toString(), Json[j].id.toString());
-                };
+        $('[name="[' + @i + '].Topic"]').on('change', function() {
+            $.get('@Url.Action("GetSubTopic", "BackEndServices")', { id: $('[name="[' + @i + '].Topic"] option:selected').val() })
+                .success(function(e) {
+                    var SubTopic = document.getElementById("[" + @i + "].SubTopic");
+                    //jочистить список Subtopic
+                    for (var i = SubTopic.options.length - 1; i >= 0; i--) {
+                        SubTopic.remove(i);
+                    }
+                    //заполнить список Subtopic
+                    var Json = $.parseJSON(e);
+                    for (var j = 1; j < Json.length; j++) {
+                        SubTopic.options[j] = new Option(Json[j].Name.toString(), Json[j].id.toString());
+                    };
 
-            }).error(function () {
-            alert("Ошибка запроса");
+                }).error(function() {
+                    alert("Ошибка запроса");
+                });
         });
     });
 </script>
@@ -64,21 +66,16 @@
 <div class="form-group">
     @Html.Label("Вид рекламы ", new { @class = "control-label col-md-2" })
     <div class="col-md-10">
-        <select name="[@i].TypeOfAdvertising">
+        <select id="[@i].TypeOfAdvertising" name="[@i].TypeOfAdvertising" class="text-box single-line valid" data-val="true" data-val-required="Выбирите значение">
             <option></option>
             <option value="social">Социальная</option>
             <option value="belarusian">Белорусская</option>
             <option value="other">Иная</option>
         </select>
+        <span class="field-validation-valid" data-valmsg-for="[@i].TypeOfAdvertising" data-valmsg-replace="true" style="display: block"></span>
     </div>
 </div>
-<div class="form-group each4">
-    @Html.Label("Социальная", new { @class = "control-label col-md-2 " })
-    <div class="col-md-10">
-        @Html.EditorFor(model => model[i].IsSocial)
-        @Html.ValidationMessageFor(model => model[i].IsSocial)
-    </div>
-</div>
+
 <div class="form-group" id="[@i].socialSurface" style="display: none">
     @Html.Label("Социальная поверхность ", new { @class = "control-label col-md-2" })
     <div class="col-md-10">
