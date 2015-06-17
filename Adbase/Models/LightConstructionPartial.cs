@@ -53,8 +53,8 @@ namespace Sciencecom.Models
         [Display(Name = "Заявление")]
         public bool OnStatement { get; set; }
 
-        [Required(ErrorMessage = "Введите значение Владелец")]
-        [Display(Name = "Владелец")]
+        [Required(ErrorMessage = "Введите значение Собственник")]
+        [Display(Name = "Собственник")]
         public virtual Owner Owner { get; set; }
 
         [Display(Name = "Широта")]

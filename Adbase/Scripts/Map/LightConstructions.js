@@ -120,7 +120,7 @@ function getReferencesLightOnStatement(role, userCompany, construction)
 }
 
 function getBaloon(role, userCompany, construction) {
-    return '<b>Владелец:&nbsp;' + construction.Owner
+    return '<b>Собственник:&nbsp;' + construction.Owner
            + '</br>Улица 1:&nbsp;' + construction.Street1
            + '</br>Улица 2:&nbsp;' + construction.Street2
            + '</br>Со стороны:&nbsp;' + construction.FromStreet
@@ -133,7 +133,7 @@ function getBaloon(role, userCompany, construction) {
 }
 
 function getBaloonForOnStatement(role, userCompany, construction) {
-    return '<b>Владелец:&nbsp;' + construction.Owner
+    return '<b>Собственник:&nbsp;' + construction.Owner
            + '</br>Улица 1:&nbsp;' + construction.Street1
            + '</br>Улица 2:&nbsp;' + construction.Street2
            + '</br>Со стороны:&nbsp;' + construction.FromStreet

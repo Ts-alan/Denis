@@ -39,7 +39,7 @@ namespace Sciencecom.Models
         [Display(Name = "Дата согласования")]
         public DateTime StartDate { get; set; }
         [Required(ErrorMessage = "Введите значение")]
-        [Display(Name = "Владелец")]
+        [Display(Name = "Собственник")]
         public virtual Owner Owner { get; set; }
     }
 }

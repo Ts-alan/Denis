@@ -25,7 +25,7 @@
         @Html.ValidationSummary(true)
         @Html.ValidationMessage("Error")
         <div class="form-group">
-            @Html.Label("Владелец:", new { @class = "control-label col-md-2" })
+            @Html.Label("Собственник:", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @{
     var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
