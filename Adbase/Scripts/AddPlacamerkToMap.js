@@ -56,6 +56,37 @@
                 //} 
                 $("#Dolgota").val(str);
             });
+
+
+                //присвоение координат при задание координат в инпутах
+            $("#Shirota").change(function () {
+                    SetCoordinates();
+                }
+              );
+            
+            $("#Dolgota").change(function () {
+                    SetCoordinates();
+                }
+             );
+            function SetCoordinates() {
+                console.log(myPlacemark);
+                //console.log(myPlacemark.geometry._ec[0]);
+                //console.log(myPlacemark.geometry._ec[1]);
+                myMap.geoObjects.remove(myPlacemark);
+                //console.log($("#Shirota").val());
+                //console.log($("#Dolgota").val());
+                if ($("#Shirota").val() != undefined && $("#Dolgota").val() != undefined) {
+                    myPlacemark = new ymaps.Placemark([$("#Shirota").val(), $("#Dolgota").val()],
+                    {},
+                    {
+                        draggable: true
+                    });
+                    console.log(myPlacemark);
+                    //console.log(myPlacemark.geometry._ec[0]);
+                    //console.log(myPlacemark.geometry._ec[1]);
+                    myMap.geoObjects.add(myPlacemark);
+                }
+            }
         });
     }
 });
