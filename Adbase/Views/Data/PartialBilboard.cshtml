@@ -17,8 +17,19 @@
     $('[name="[' + @i + '].Topic"]').on('change', function () {
         $.get('@Url.Action("GetSubTopic","BackEndServices")', { id: $('[name="[' +@i +'].Topic"] option:selected').val() })
             .success(function (e) {
-            console.log(e);
-        }).error(function () {
+                var SubTopic = document.getElementById("["+@i+"].SubTopic");
+                //jочистить список Subtopic
+                for (var i = SubTopic.options.length - 1; i >= 0; i--) {
+                    SubTopic.remove(i);
+                }
+                //заполнить список Subtopic
+                var Json = $.parseJSON(e);
+                console.log(Json.length);
+                for (var j = 1; j < Json.length ; j++) {
+                    SubTopic.options[j] = new Option(Json[j].Name.toString(), Json[j].id.toString());
+                };
+
+            }).error(function () {
             alert("Ошибка запроса");
         });
     });
@@ -80,14 +91,11 @@
             }
         </select>
         Подтема
-        <select>
+        <select id="[@i].SubTopic" name="[@i].SubTopic" class="text-box single-line valid" data-val="true" data-val-required="Выбирите значение">
             <option></option>
-            @*@foreach (var topic in (DbSet<Sciencecom.Models.SubtopicForSocialAdvertising>) ViewBag.Topic)
-            {
-                <option value=@topic.id>@topic.Name</option>
-            }*@
         </select>
-        <span class="field-validation-valid" data-valmsg-for="[@i].Test" data-valmsg-replace="true" style="display: block"></span>
+        <span class="field-validation-valid" data-valmsg-for="[@i].Topic" data-valmsg-replace="true" style="display: block;float: left"></span>
+        <span class="field-validation-valid" data-valmsg-for="[@i].SubTopic" data-valmsg-replace="true" style="display: block"></span>
     </div>
 </div>
 <div class="form-group each5">

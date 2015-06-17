@@ -148,6 +148,8 @@
           <Property Name="EndDate" Type="datetime" Nullable="false" />
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Side_Id" Type="uniqueidentifier" />
+          <Property Name="Topic" Type="uniqueidentifier" />
+          <Property Name="SubTopic" Type="uniqueidentifier" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -287,6 +289,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Surfaces_SubtopicForSocialAdvertising">
+          <End Role="SubtopicForSocialAdvertising" Type="Self.SubtopicForSocialAdvertising" Multiplicity="0..1" />
+          <End Role="Surfaces" Type="Self.Surfaces" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubtopicForSocialAdvertising">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Surfaces">
+              <PropertyRef Name="SubTopic" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Surfaces_TopicForSocialAdvertising">
+          <End Role="TopicForSocialAdvertising" Type="Self.TopicForSocialAdvertising" Multiplicity="0..1" />
+          <End Role="Surfaces" Type="Self.Surfaces" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TopicForSocialAdvertising">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Surfaces">
+              <PropertyRef Name="Topic" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
@@ -370,6 +396,14 @@
           </AssociationSet>
           <AssociationSet Name="FK_Surfaces_Sides" Association="Self.FK_Surfaces_Sides">
             <End Role="Sides" EntitySet="Sides" />
+            <End Role="Surfaces" EntitySet="Surfaces" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Surfaces_SubtopicForSocialAdvertising" Association="Self.FK_Surfaces_SubtopicForSocialAdvertising">
+            <End Role="SubtopicForSocialAdvertising" EntitySet="SubtopicForSocialAdvertising" />
+            <End Role="Surfaces" EntitySet="Surfaces" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Surfaces_TopicForSocialAdvertising" Association="Self.FK_Surfaces_TopicForSocialAdvertising">
+            <End Role="TopicForSocialAdvertising" EntitySet="TopicForSocialAdvertising" />
             <End Role="Surfaces" EntitySet="Surfaces" />
           </AssociationSet>
         </EntityContainer>
@@ -509,8 +543,12 @@
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
           <EntitySet Name="Billboards1" EntityType="SciencecomModel.Billboards1" />
+          <EntitySet Name="Objects" EntityType="SciencecomModel.Object" />
+          <EntitySet Name="RelationshipOfAdvertisings" EntityType="SciencecomModel.RelationshipOfAdvertising" />
           <EntitySet Name="Sides" EntityType="SciencecomModel.Side" />
+          <EntitySet Name="SubtopicForSocialAdvertisings" EntityType="SciencecomModel.SubtopicForSocialAdvertising" />
           <EntitySet Name="Surfaces" EntityType="SciencecomModel.Surface" />
+          <EntitySet Name="TopicForSocialAdvertisings" EntityType="SciencecomModel.TopicForSocialAdvertising" />
           <AssociationSet Name="FK_Billboards1_Owners" Association="SciencecomModel.FK_Billboards1_Owners">
             <End Role="Owner" EntitySet="Owners" />
             <End Role="Billboards1" EntitySet="Billboards1" />
@@ -519,17 +557,9 @@
             <End Role="Billboards1" EntitySet="Billboards1" />
             <End Role="Side" EntitySet="Sides" />
           </AssociationSet>
-          <AssociationSet Name="FK_Surfaces_Sides" Association="SciencecomModel.FK_Surfaces_Sides">
-            <End Role="Side" EntitySet="Sides" />
-            <End Role="Surface" EntitySet="Surfaces" />
-          </AssociationSet>
-          <EntitySet Name="Objects" EntityType="SciencecomModel.Object" />
-          <EntitySet Name="RelationshipOfAdvertisings" EntityType="SciencecomModel.RelationshipOfAdvertising" />
-          <EntitySet Name="SubtopicForSocialAdvertisings" EntityType="SciencecomModel.SubtopicForSocialAdvertising" />
-          <EntitySet Name="TopicForSocialAdvertisings" EntityType="SciencecomModel.TopicForSocialAdvertising" />
-          <AssociationSet Name="FK_Object_RelationshipOfAdvertising" Association="SciencecomModel.FK_Object_RelationshipOfAdvertising">
-            <End Role="RelationshipOfAdvertising" EntitySet="RelationshipOfAdvertisings" />
+          <AssociationSet Name="FK_RelationshipOfAdvertising_Object1" Association="SciencecomModel.FK_RelationshipOfAdvertising_Object1">
             <End Role="Object" EntitySet="Objects" />
+            <End Role="RelationshipOfAdvertising" EntitySet="RelationshipOfAdvertisings" />
           </AssociationSet>
           <AssociationSet Name="FK_RelationshipOfAdvertising_SubtopicForSocialAdvertising" Association="SciencecomModel.FK_RelationshipOfAdvertising_SubtopicForSocialAdvertising">
             <End Role="SubtopicForSocialAdvertising" EntitySet="SubtopicForSocialAdvertisings" />
@@ -539,13 +569,17 @@
             <End Role="TopicForSocialAdvertising" EntitySet="TopicForSocialAdvertisings" />
             <End Role="RelationshipOfAdvertising" EntitySet="RelationshipOfAdvertisings" />
           </AssociationSet>
-          <AssociationSet Name="FK_RelationshipOfAdvertising_Object1" Association="SciencecomModel.FK_RelationshipOfAdvertising_Object1">
-            <End Role="Object" EntitySet="Objects" />
-            <End Role="RelationshipOfAdvertising" EntitySet="RelationshipOfAdvertisings" />
+          <AssociationSet Name="FK_Surfaces_Sides" Association="SciencecomModel.FK_Surfaces_Sides">
+            <End Role="Side" EntitySet="Sides" />
+            <End Role="Surface" EntitySet="Surfaces" />
           </AssociationSet>
-          <AssociationSet Name="FK_RelationshipOfAdvertising_TopicForSocialAdvertising1" Association="SciencecomModel.FK_RelationshipOfAdvertising_TopicForSocialAdvertising1">
+          <AssociationSet Name="FK_Surfaces_SubtopicForSocialAdvertising" Association="SciencecomModel.FK_Surfaces_SubtopicForSocialAdvertising">
+            <End Role="SubtopicForSocialAdvertising" EntitySet="SubtopicForSocialAdvertisings" />
+            <End Role="Surface" EntitySet="Surfaces" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Surfaces_TopicForSocialAdvertising" Association="SciencecomModel.FK_Surfaces_TopicForSocialAdvertising">
             <End Role="TopicForSocialAdvertising" EntitySet="TopicForSocialAdvertisings" />
-            <End Role="RelationshipOfAdvertising" EntitySet="RelationshipOfAdvertisings" />
+            <End Role="Surface" EntitySet="Surfaces" />
           </AssociationSet>
           </EntityContainer>
         <Association Name="FK_LightConstructions_Owners1">
@@ -645,6 +679,28 @@
           <NavigationProperty Name="Owner" Relationship="SciencecomModel.FK_Billboards1_Owners" FromRole="Billboards1" ToRole="Owner" />
           <NavigationProperty Name="Sides" Relationship="SciencecomModel.FK_Sides_Billboards1" FromRole="Billboards1" ToRole="Side" />
         </EntityType>
+        <EntityType Name="Object">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Visible" Type="Boolean" Nullable="false" />
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="RelationshipOfAdvertisings" Relationship="SciencecomModel.FK_RelationshipOfAdvertising_Object1" FromRole="Object" ToRole="RelationshipOfAdvertising" />
+        </EntityType>
+        <EntityType Name="RelationshipOfAdvertising">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="idOfTopicForSocialAdvertising" Type="Guid" Nullable="false" />
+          <Property Name="idOfSubtopicForSocialAdvertising" Type="Guid" Nullable="false" />
+          <Property Name="Visible" Type="Boolean" Nullable="false" />
+          <Property Name="id_Object" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Object" Relationship="SciencecomModel.FK_RelationshipOfAdvertising_Object1" FromRole="RelationshipOfAdvertising" ToRole="Object" />
+          <NavigationProperty Name="SubtopicForSocialAdvertising" Relationship="SciencecomModel.FK_RelationshipOfAdvertising_SubtopicForSocialAdvertising" FromRole="RelationshipOfAdvertising" ToRole="SubtopicForSocialAdvertising" />
+          <NavigationProperty Name="TopicForSocialAdvertising" Relationship="SciencecomModel.FK_RelationshipOfAdvertising_TopicForSocialAdvertising" FromRole="RelationshipOfAdvertising" ToRole="TopicForSocialAdvertising" />
+        </EntityType>
         <EntityType Name="Side">
           <Key>
             <PropertyRef Name="Id" />
@@ -654,6 +710,16 @@
           <Property Name="Id" Type="Guid" Nullable="false" />
           <NavigationProperty Name="Billboards1" Relationship="SciencecomModel.FK_Sides_Billboards1" FromRole="Side" ToRole="Billboards1" />
           <NavigationProperty Name="Surfaces" Relationship="SciencecomModel.FK_Surfaces_Sides" FromRole="Side" ToRole="Surface" />
+        </EntityType>
+        <EntityType Name="SubtopicForSocialAdvertising">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Visible" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="RelationshipOfAdvertisings" Relationship="SciencecomModel.FK_RelationshipOfAdvertising_SubtopicForSocialAdvertising" FromRole="SubtopicForSocialAdvertising" ToRole="RelationshipOfAdvertising" />
+          <NavigationProperty Name="Surfaces" Relationship="SciencecomModel.FK_Surfaces_SubtopicForSocialAdvertising" FromRole="SubtopicForSocialAdvertising" ToRole="Surface" />
         </EntityType>
         <EntityType Name="Surface">
           <Key>
@@ -669,7 +735,21 @@
           <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Side_Id" Type="Guid" />
+          <Property Name="Topic" Type="Guid" />
+          <Property Name="SubTopic" Type="Guid" />
           <NavigationProperty Name="Side" Relationship="SciencecomModel.FK_Surfaces_Sides" FromRole="Surface" ToRole="Side" />
+          <NavigationProperty Name="SubtopicForSocialAdvertising" Relationship="SciencecomModel.FK_Surfaces_SubtopicForSocialAdvertising" FromRole="Surface" ToRole="SubtopicForSocialAdvertising" />
+          <NavigationProperty Name="TopicForSocialAdvertising" Relationship="SciencecomModel.FK_Surfaces_TopicForSocialAdvertising" FromRole="Surface" ToRole="TopicForSocialAdvertising" />
+        </EntityType>
+        <EntityType Name="TopicForSocialAdvertising">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Visible" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="RelationshipOfAdvertisings" Relationship="SciencecomModel.FK_RelationshipOfAdvertising_TopicForSocialAdvertising" FromRole="TopicForSocialAdvertising" ToRole="RelationshipOfAdvertising" />
+          <NavigationProperty Name="Surfaces" Relationship="SciencecomModel.FK_Surfaces_TopicForSocialAdvertising" FromRole="TopicForSocialAdvertising" ToRole="Surface" />
         </EntityType>
         <Association Name="FK_Billboards1_Owners">
           <End Type="SciencecomModel.Owner" Role="Owner" Multiplicity="1" />
@@ -695,71 +775,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Surfaces_Sides">
-          <End Type="SciencecomModel.Side" Role="Side" Multiplicity="0..1" />
-          <End Type="SciencecomModel.Surface" Role="Surface" Multiplicity="*" />
+        <Association Name="FK_RelationshipOfAdvertising_Object1">
+          <End Type="SciencecomModel.Object" Role="Object" Multiplicity="1" />
+          <End Type="SciencecomModel.RelationshipOfAdvertising" Role="RelationshipOfAdvertising" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Side">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Surface">
-              <PropertyRef Name="Side_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Object">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Visible" Type="Boolean" Nullable="false" />
-          <Property Name="id" Type="Guid" Nullable="false" />
-          <NavigationProperty Name="RelationshipOfAdvertising" Relationship="SciencecomModel.FK_Object_RelationshipOfAdvertising" FromRole="Object" ToRole="RelationshipOfAdvertising" />
-          <NavigationProperty Name="RelationshipOfAdvertisings" Relationship="SciencecomModel.FK_RelationshipOfAdvertising_Object1" FromRole="Object" ToRole="RelationshipOfAdvertising" />
-        </EntityType>
-        <EntityType Name="RelationshipOfAdvertising">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Guid" Nullable="false" />
-          <Property Name="idOfTopicForSocialAdvertising" Type="Guid" Nullable="false" />
-          <Property Name="idOfSubtopicForSocialAdvertising" Type="Guid" Nullable="false" />
-          <Property Name="Visible" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Object" Relationship="SciencecomModel.FK_Object_RelationshipOfAdvertising" FromRole="RelationshipOfAdvertising" ToRole="Object" />
-          <NavigationProperty Name="SubtopicForSocialAdvertising" Relationship="SciencecomModel.FK_RelationshipOfAdvertising_SubtopicForSocialAdvertising" FromRole="RelationshipOfAdvertising" ToRole="SubtopicForSocialAdvertising" />
-          <NavigationProperty Name="TopicForSocialAdvertising" Relationship="SciencecomModel.FK_RelationshipOfAdvertising_TopicForSocialAdvertising" FromRole="RelationshipOfAdvertising" ToRole="TopicForSocialAdvertising" />
-          <Property Name="id_Object" Type="Guid" Nullable="false" />
-          <NavigationProperty Name="Object1" Relationship="SciencecomModel.FK_RelationshipOfAdvertising_Object1" FromRole="RelationshipOfAdvertising" ToRole="Object" />
-          <NavigationProperty Name="TopicForSocialAdvertising1" Relationship="SciencecomModel.FK_RelationshipOfAdvertising_TopicForSocialAdvertising1" FromRole="RelationshipOfAdvertising" ToRole="TopicForSocialAdvertising" />
-        </EntityType>
-        <EntityType Name="SubtopicForSocialAdvertising">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Guid" Nullable="false" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Visible" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="RelationshipOfAdvertisings" Relationship="SciencecomModel.FK_RelationshipOfAdvertising_SubtopicForSocialAdvertising" FromRole="SubtopicForSocialAdvertising" ToRole="RelationshipOfAdvertising" />
-        </EntityType>
-        <EntityType Name="TopicForSocialAdvertising">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Guid" Nullable="false" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Visible" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="RelationshipOfAdvertisings" Relationship="SciencecomModel.FK_RelationshipOfAdvertising_TopicForSocialAdvertising" FromRole="TopicForSocialAdvertising" ToRole="RelationshipOfAdvertising" />
-          <NavigationProperty Name="RelationshipOfAdvertisings1" Relationship="SciencecomModel.FK_RelationshipOfAdvertising_TopicForSocialAdvertising1" FromRole="TopicForSocialAdvertising" ToRole="RelationshipOfAdvertising" />
-        </EntityType>
-        <Association Name="FK_Object_RelationshipOfAdvertising">
-          <End Type="SciencecomModel.RelationshipOfAdvertising" Role="RelationshipOfAdvertising" Multiplicity="1" />
-          <End Type="SciencecomModel.Object" Role="Object" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="RelationshipOfAdvertising">
+            <Principal Role="Object">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="Object">
-              <PropertyRef Name="id" />
+            <Dependent Role="RelationshipOfAdvertising">
+              <PropertyRef Name="id_Object" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -783,31 +807,43 @@
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="RelationshipOfAdvertising">
-              <PropertyRef Name="idOfSubtopicForSocialAdvertising" />
+              <PropertyRef Name="idOfTopicForSocialAdvertising" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_RelationshipOfAdvertising_Object1">
-          <End Type="SciencecomModel.Object" Role="Object" Multiplicity="1" />
-          <End Type="SciencecomModel.RelationshipOfAdvertising" Role="RelationshipOfAdvertising" Multiplicity="*" />
+        <Association Name="FK_Surfaces_Sides">
+          <End Type="SciencecomModel.Side" Role="Side" Multiplicity="0..1" />
+          <End Type="SciencecomModel.Surface" Role="Surface" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Object">
+            <Principal Role="Side">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Surface">
+              <PropertyRef Name="Side_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Surfaces_SubtopicForSocialAdvertising">
+          <End Type="SciencecomModel.SubtopicForSocialAdvertising" Role="SubtopicForSocialAdvertising" Multiplicity="0..1" />
+          <End Type="SciencecomModel.Surface" Role="Surface" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubtopicForSocialAdvertising">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="RelationshipOfAdvertising">
-              <PropertyRef Name="id_Object" />
+            <Dependent Role="Surface">
+              <PropertyRef Name="SubTopic" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_RelationshipOfAdvertising_TopicForSocialAdvertising1">
-          <End Type="SciencecomModel.TopicForSocialAdvertising" Role="TopicForSocialAdvertising" Multiplicity="1" />
-          <End Type="SciencecomModel.RelationshipOfAdvertising" Role="RelationshipOfAdvertising" Multiplicity="*" />
+        <Association Name="FK_Surfaces_TopicForSocialAdvertising">
+          <End Type="SciencecomModel.TopicForSocialAdvertising" Role="TopicForSocialAdvertising" Multiplicity="0..1" />
+          <End Type="SciencecomModel.Surface" Role="Surface" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TopicForSocialAdvertising">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="RelationshipOfAdvertising">
-              <PropertyRef Name="idOfTopicForSocialAdvertising" />
+            <Dependent Role="Surface">
+              <PropertyRef Name="Topic" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -953,31 +989,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Sides">
-            <EntityTypeMapping TypeName="SciencecomModel.Side">
-              <MappingFragment StoreEntitySet="Sides">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Billboard_Id" ColumnName="Billboard_Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Surfaces">
-            <EntityTypeMapping TypeName="SciencecomModel.Surface">
-              <MappingFragment StoreEntitySet="Surfaces">
-                <ScalarProperty Name="Side_Id" ColumnName="Side_Id" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="Story" ColumnName="Story" />
-                <ScalarProperty Name="TypeOfAdvertising" ColumnName="TypeOfAdvertising" />
-                <ScalarProperty Name="IsSocial" ColumnName="IsSocial" />
-                <ScalarProperty Name="Space" ColumnName="Space" />
-                <ScalarProperty Name="Width" ColumnName="Width" />
-                <ScalarProperty Name="Height" ColumnName="Height" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Objects">
             <EntityTypeMapping TypeName="SciencecomModel.Object">
               <MappingFragment StoreEntitySet="Object">
@@ -998,12 +1009,39 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Sides">
+            <EntityTypeMapping TypeName="SciencecomModel.Side">
+              <MappingFragment StoreEntitySet="Sides">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Billboard_Id" ColumnName="Billboard_Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="SubtopicForSocialAdvertisings">
             <EntityTypeMapping TypeName="SciencecomModel.SubtopicForSocialAdvertising">
               <MappingFragment StoreEntitySet="SubtopicForSocialAdvertising">
                 <ScalarProperty Name="Visible" ColumnName="Visible" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Surfaces">
+            <EntityTypeMapping TypeName="SciencecomModel.Surface">
+              <MappingFragment StoreEntitySet="Surfaces">
+                <ScalarProperty Name="SubTopic" ColumnName="SubTopic" />
+                <ScalarProperty Name="Topic" ColumnName="Topic" />
+                <ScalarProperty Name="Side_Id" ColumnName="Side_Id" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="Story" ColumnName="Story" />
+                <ScalarProperty Name="TypeOfAdvertising" ColumnName="TypeOfAdvertising" />
+                <ScalarProperty Name="IsSocial" ColumnName="IsSocial" />
+                <ScalarProperty Name="Space" ColumnName="Space" />
+                <ScalarProperty Name="Width" ColumnName="Width" />
+                <ScalarProperty Name="Height" ColumnName="Height" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

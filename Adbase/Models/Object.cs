@@ -23,7 +23,6 @@ namespace Sciencecom.Models
         public bool Visible { get; set; }
         public System.Guid id { get; set; }
     
-        public virtual RelationshipOfAdvertising RelationshipOfAdvertising { get; set; }
         public virtual ICollection<RelationshipOfAdvertising> RelationshipOfAdvertisings { get; set; }
     }
 }

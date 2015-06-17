@@ -24,7 +24,11 @@ namespace Sciencecom.Models
         public System.DateTime EndDate { get; set; }
         public int Id { get; set; }
         public Nullable<System.Guid> Side_Id { get; set; }
+        public Nullable<System.Guid> Topic { get; set; }
+        public Nullable<System.Guid> SubTopic { get; set; }
     
         public virtual Side Side { get; set; }
+        public virtual SubtopicForSocialAdvertising SubtopicForSocialAdvertising { get; set; }
+        public virtual TopicForSocialAdvertising TopicForSocialAdvertising { get; set; }
     }
 }

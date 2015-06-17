@@ -23,7 +23,5 @@ namespace Sciencecom.Models
         public virtual Object Object { get; set; }
         public virtual SubtopicForSocialAdvertising SubtopicForSocialAdvertising { get; set; }
         public virtual TopicForSocialAdvertising TopicForSocialAdvertising { get; set; }
-        public virtual Object Object1 { get; set; }
-        public virtual TopicForSocialAdvertising TopicForSocialAdvertising1 { get; set; }
     }
 }
