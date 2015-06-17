@@ -34,7 +34,7 @@
                             <ul class="dropdown-menu">
                                 @if (!RolesList.IsInRole(RolesEnum.OnlyBillboards, User))
                                 {
-                                    <li>@Html.ActionLink("Металлические указатели", "Metal", "Data")</li>
+                                    @*<li>@Html.ActionLink("Металлические указатели", "Metal", "Data")</li>*@
                                     <li>@Html.ActionLink("Световые указатели", "Light", "Data")</li>
                                     <li>@Html.ActionLink("Неопознанные конструкции", "Index", "Illegal")</li>
                                 }
