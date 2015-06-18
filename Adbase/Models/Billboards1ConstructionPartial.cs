@@ -68,13 +68,7 @@ namespace Sciencecom.Models
         public string FromStreet { get; set; }
       
         public string Comment { get; set; }
-        
-        [Required(ErrorMessage = "Введите номер договора")]
-        public string ContractNumber { get; set; }
-
-       [Required(ErrorMessage = "Введите номер паспорта")]
-        public string PassportNumber { get; set; }
-
+       
        [Required(ErrorMessage = "Введите значение начальной даты")]
        public string StartDate { get; set; }
 

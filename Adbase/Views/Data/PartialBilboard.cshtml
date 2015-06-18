@@ -104,18 +104,20 @@
 </div>
 
 <div class="form-group each6">
-    @Html.Label("Период размещения с", new { @class = "control-label col-md-2 " })
+    @Html.Label("Период размещения с", new {@class = "control-label col-md-2 "})
     <div class="col-md-10">
-        <input type="date" name="[@i].StartDate">
-        @Html.ValidationMessageFor(model => model[i].StartDate)
+        <input type="date" name="[@i].StartDate" class="text-box single-line valid" data-val="true" data-val-required="Выбирите значение">
+
     </div>
+    <span class="field-validation-valid" data-valmsg-for="[@i].StartDatee" data-valmsg-replace="true" style="display: block; float: left"></span>
 </div>
+<span class="field-validation-valid" data-valmsg-for="[@i].EndDate" data-valmsg-replace="true" style="display: block;float: left"></span>
 <div class="form-group each7">
     @Html.Label("по", new {@class = "control-label col-md-2 "})
     <div class="col-md-10">
-        <input type="date" name="[@i].EndDate">
-        @Html.ValidationMessageFor(model => model[i].EndDate)
+        <input type="date" name="[@i].EndDate" class="text-box single-line valid" data-val="true" data-val-required="Выбирите значение">
     </div>
+    <span class="field-validation-valid" data-valmsg-for="[@i].EndDate" data-valmsg-replace="true" style="display: block;float: left"></span>
 </div>
 
 <div class="form-group">

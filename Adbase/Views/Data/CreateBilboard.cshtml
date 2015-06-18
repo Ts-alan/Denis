@@ -52,6 +52,18 @@
                 $("#CountSize").val("5");
             }
         });
+       //выпадающий список на согласование
+        $("[name=OnAgreement]").change(function () {
+            var selectIndex = $("[name=OnAgreement] option:selected").val();
+            console.log(selectIndex);
+            if (selectIndex == "true") {
+                $("#ContractHide").css("display", "block");
+            }
+            if (selectIndex == "false") {
+                $("#ContractHide").css("display", "none");
+            }
+
+        });
         function InsertOn() {
             $(".each1 input").eq(0).on('change', function () {
                 var temp1 = $(this).val();
@@ -90,9 +102,9 @@
             $.get('@Url.Action("PartialBilboard","Data")', { param: tempIncrement, side: "А" }).success(function (e) {
                 $("#InsertPartial1").before(e);
                 InsertOn();
-               if (tempIncrement != 0) {
+                if (tempIncrement != 0) {
                     duplicationSurfaces();
-              }
+                }
             });
         });
 
@@ -102,7 +114,7 @@
                 $("#InsertPartial2").before(e);
                 InsertOn();
                 duplicationSurfaces();
-               });
+            });
         });
 
         $("#AddButton3").click(function () {
@@ -111,7 +123,7 @@
                 $("#InsertPartial3").before(e);
                 InsertOn();
                 duplicationSurfaces();
-              });
+            });
         });
 
         $("#AddButton4").click(function () {
@@ -133,11 +145,11 @@
         });
         //дублирование для остальных поверхностей при добавлении
         function duplicationSurfaces() {
-                $(".each1 input").trigger('change');
-                $(".each2 input").trigger('change');
-                $(".each3 input").trigger('change');
-            }
-       });
+            $(".each1 input").trigger('change');
+            $(".each2 input").trigger('change');
+            $(".each3 input").trigger('change');
+        }
+        });
 
 </script>
 <h2> Добавить новый билборд</h2>
@@ -153,88 +165,90 @@
         @Html.ValidationSummary(true)
         @Html.ValidationMessage("Error")
         @*Собственник*@
-        <div class="form-group">
-            @Html.Label("Собственник:", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("Owner", owners)
+            <div class="form-group">
+                @Html.Label("Собственник:", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("Owner", owners)
 
+                </div>
             </div>
-        </div>
-        @*Населенный Пункт*@
-        <div class="form-group">
-            @Html.Label("Населенный Пункт:", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Locality)
-                @Html.ValidationMessageFor(model => model.Locality)
+            @*Населенный Пункт*@
+            <div class="form-group">
+                @Html.Label("Населенный Пункт:", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Locality)
+                    @Html.ValidationMessageFor(model => model.Locality)
+                </div>
             </div>
-        </div>
-        @*улица 1*@
-        <div class="form-group">
-            @Html.Label("Улица 1", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Street1)
-                @Html.ValidationMessageFor(model => model.Street1)
+            @*улица 1*@
+            <div class="form-group">
+                @Html.Label("Улица 1", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Street1)
+                    @Html.ValidationMessageFor(model => model.Street1)
+                </div>
             </div>
-        </div>
-        @*дом*@
-        <div class="form-group">
-            @Html.Label("Дом", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.House1)
-                @Html.ValidationMessageFor(model => model.House1)
+            @*дом*@
+            <div class="form-group">
+                @Html.Label("Дом", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.House1)
+                    @Html.ValidationMessageFor(model => model.House1)
+                </div>
             </div>
-        </div>
-        @*улица 2*@
-        <div class="form-group">
-            @Html.Label("Улица 2", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Street2)
-                @Html.ValidationMessageFor(model => model.Street2)
+            @*улица 2*@
+            <div class="form-group">
+                @Html.Label("Улица 2", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Street2)
+                    @Html.ValidationMessageFor(model => model.Street2)
+                </div>
             </div>
-        </div>
-        @*со стороны улицы 3 *@
-        <div class="form-group">
-            @Html.Label("Cо стороны улицы 3 ", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.FromStreet)
-                @Html.ValidationMessageFor(model => model.FromStreet)
+            @*со стороны улицы 3 *@
+            <div class="form-group">
+                @Html.Label("Cо стороны улицы 3 ", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.FromStreet)
+                    @Html.ValidationMessageFor(model => model.FromStreet)
+                </div>
             </div>
-        </div>
-        @*комментарий*@
+            @*комментарий*@
         <div class="form-group">
-            @Html.Label("Комментарий", new { @class = "control-label col-md-2" })
+            @Html.Label("Комментарий", new {@class = "control-label col-md-2"})
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Comment)
                 @Html.ValidationMessageFor(model => model.Comment)
             </div>
         </div>
-        @*номер договора *@
-        <div class="form-group">
-            @Html.Label("Номер договора ", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ContractNumber)
-                @Html.ValidationMessageFor(model => model.ContractNumber)
+
+        <div id="ContractHide">
+            @*номер договора *@
+            <div class="form-group">
+                @Html.Label("Номер договора ", new {@class = "control-label col-md-2"})
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ContractNumber)
+                    @Html.ValidationMessageFor(model => model.ContractNumber)
+                </div>
             </div>
-        </div>
-        @*номер паспорта  *@
-        <div class="form-group">
-            @Html.Label("Номер паспорта ", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.PassportNumber)
-                @Html.ValidationMessageFor(model => model.PassportNumber)
+            @*номер паспорта  *@
+            <div class="form-group">
+                @Html.Label("Номер паспорта ", new {@class = "control-label col-md-2"})
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.PassportNumber)
+                    @Html.ValidationMessageFor(model => model.PassportNumber)
+                </div>
             </div>
         </div>
 
-        @*На согласование *@
         <div class="form-group">
             @Html.Label("На согласовании", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <select name="OnAgreement">
+                <select name="OnAgreement" class="text-box single-line valid" data-val="true" data-val-required="Выбирите значение">
                     <option></option>
                     <option value="true">Да</option>
                     <option value="false">Нет</option>
                 </select>
-                    @Html.ValidationMessageFor(model => model.OnAgreement)
+                <span class="field-validation-valid" data-valmsg-for="OnAgreement" data-valmsg-replace="true" style="display: block;float: left"></span>
             </div>
        </div>
 
@@ -242,17 +256,15 @@
         <div class="form-group">
             @Html.Label("Разрешен с ", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <input type="date"  name="StartDate" >
-                @*@Html.Editor("StartDate")*@
-                @Html.ValidationMessageFor(model => model.StartDate)
+                <input type="date" name="StartDate" class="text-box single-line valid" data-val="true" data-val-required="Выбирите значение">
+                <span class="field-validation-valid" data-valmsg-for="StartDate" data-valmsg-replace="true" style="display: block"></span>
             </div>
         </div>
         <div class="form-group">
             @Html.Label("до", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <input type="date" name="EndDate">
-                @*@Html.EditorFor(model => model.EndDate)*@
-                @Html.ValidationMessageFor(model => model.EndDate)
+                <input type="date" name="EndDate" class="text-box single-line valid" data-val="true" data-val-required="Выбирите значение">
+                <span class="field-validation-valid" data-valmsg-for="EndDate" data-valmsg-replace="true" style="display: block"></span>
             </div>
         </div>
         @*Количество сторон*@
@@ -281,7 +293,6 @@
         <div class="form-group">
             <div class="form-group">
                 @Html.Label("Сторона А", new {@class = "control-label col-md-2", style = "margin-left: 55px"})
-                @*@Html.HiddenFor(model => model.Sides.Single().Name)*@
             </div>
            @*Добавить площадь*@
             <div class="form-group">
@@ -295,8 +306,7 @@
         @*Сторона Б*@
         <div class="form-group" id="SizeB" style="display: none">
             <div class="form-group">
-                @*@Html.HiddenFor(model => model.Sides.Single().Name)*@
-                @Html.Label("Сторона Б", new {@class = "control-label col-md-2", style = "margin-left:45px"})
+                   @Html.Label("Сторона Б", new {@class = "control-label col-md-2", style = "margin-left:45px"})
             </div>
             @*Добавить площадь*@
             <div class="form-group">
@@ -310,7 +320,6 @@
         @*Сторона C*@
         <div class="form-group" id="SizeC" style="display: none">
             <div class="form-group">
-                @*@Html.HiddenFor(model => model.Sides.Single().Name)*@
                 @Html.Label("Сторона C", new {@class = "control-label col-md-2", style = "margin-left:45px"})
             </div>
         
@@ -326,8 +335,7 @@
         @*Сторона D*@
     <div class="form-group" id="SizeD" style="display: none">
         <div class="form-group">
-            @*@Html.HiddenFor(model => model.Sides.Single().Name)*@
-            @Html.Label("Сторона D", new {@class = "control-label col-md-2", style = "margin-left:45px"})
+              @Html.Label("Сторона D", new {@class = "control-label col-md-2", style = "margin-left:45px"})
         </div>
         @*Добавить площадь*@
         <div class="form-group">

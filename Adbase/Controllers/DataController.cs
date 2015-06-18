@@ -1425,54 +1425,56 @@ namespace Sciencecom.Controllers
         public ActionResult GreateBilboard(Billboards1 billboards, List<Sciencecom.Models.Surface> surfaces, string Owner, HttpPostedFileBase passport, HttpPostedFileBase photo, int CountSize = 1)
         {
 
-            var idOwner = context.Owners.Single(m => m.Name == Owner).Id;
-            billboards.Owner_Id = idOwner;
-            Guid BillboardsId = Guid.NewGuid();
-            billboards.Id = BillboardsId;
-            string[] arraySize = new string[5] { "А", "B", "C", "D", "E"};
-            List<Side> ListSide = new List<Side>();
-            for (int j = 0; j < CountSize; j++)
-            {
-                ListSide.Add(new Side() { Billboard_Id = BillboardsId, Name = arraySize[j], Id = Guid.NewGuid() });
-            }
-            if(surfaces!=null)
-            foreach (var i in surfaces)
-            {
-                i.Side_Id = ListSide.Single(a => a.Name == i.SideOfSurface).Id;
-                context.Surfaces.AddRange(surfaces);
-            }
-            context.Sides.AddRange(ListSide);
-            context.Billboards1.Add(billboards);
-
-            context.SaveChanges();
-            if (passport != null)
-            {
-                string src = "~/Images/Billboard/" + billboards.Id_show + "passport.jpg";
-                string path = Server.MapPath(src);
-                passport.SaveAs(path);
-            }
-            if (photo != null)
-            {
-                string src = "~/Images/Billboard/" + billboards.Id_show + "photo.jpg";
-                string path = Server.MapPath(src);
-                photo.SaveAs(path);
-            }
-
-            if (surfaces != null)
-            {
-                foreach (var surface in surfaces)
+                var idOwner = context.Owners.Single(m => m.Name == Owner).Id;
+                billboards.Owner_Id = idOwner;
+                Guid BillboardsId = Guid.NewGuid();
+                billboards.Id = BillboardsId;
+                string[] arraySize = new string[5] {"А", "B", "C", "D", "E"};
+                List<Side> ListSide = new List<Side>();
+                for (int j = 0; j < CountSize; j++)
                 {
-                    if (surface.SeveralPhoto != null)
+                    ListSide.Add(new Side() {Billboard_Id = BillboardsId, Name = arraySize[j], Id = Guid.NewGuid()});
+                }
+                if (surfaces != null)
+                    foreach (var i in surfaces)
                     {
+                        i.Side_Id = ListSide.Single(a => a.Name == i.SideOfSurface).Id;
+                        context.Surfaces.AddRange(surfaces);
+                    }
+                context.Sides.AddRange(ListSide);
+                context.Billboards1.Add(billboards);
 
-                        string src = "~/Images/Billboard/surfaces/" + surface.Id + ".jpg";
-                        string path = Server.MapPath(src);
-                        surface.SeveralPhoto.SaveAs(path);
+                context.SaveChanges();
+                if (passport != null)
+                {
+                    string src = "~/Images/Billboard/" + billboards.Id_show + "passport.jpg";
+                    string path = Server.MapPath(src);
+                    passport.SaveAs(path);
+                }
+                if (photo != null)
+                {
+                    string src = "~/Images/Billboard/" + billboards.Id_show + "photo.jpg";
+                    string path = Server.MapPath(src);
+                    photo.SaveAs(path);
+                }
+
+                if (surfaces != null)
+                {
+                    foreach (var surface in surfaces)
+                    {
+                        if (surface.SeveralPhoto != null)
+                        {
+
+                            string src = "~/Images/Billboard/surfaces/" + surface.Id + ".jpg";
+                            string path = Server.MapPath(src);
+                            surface.SeveralPhoto.SaveAs(path);
+                        }
                     }
                 }
-            }
 
-            return RedirectToAction("Bilboard"); ;
+                return RedirectToAction("Bilboard");
+ 
+
         }
 
         [Authorize]

@@ -16,8 +16,8 @@
           <Property Name="Street2" Type="nvarchar(max)" Nullable="false" />
           <Property Name="FromStreet" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Comment" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="ContractNumber" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="PassportNumber" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ContractNumber" Type="nvarchar(max)" />
+          <Property Name="PassportNumber" Type="nvarchar(max)" />
           <Property Name="StartDate" Type="datetime" Nullable="false" />
           <Property Name="EndDate" Type="datetime" />
           <Property Name="Locality" Type="nchar" MaxLength="10" Nullable="false" />
@@ -546,6 +546,7 @@
           <EntitySet Name="RelationshipOfAdvertisings" EntityType="SciencecomModel.RelationshipOfAdvertising" />
           <EntitySet Name="Sides" EntityType="SciencecomModel.Side" />
           <EntitySet Name="SubtopicForSocialAdvertisings" EntityType="SciencecomModel.SubtopicForSocialAdvertising" />
+          <EntitySet Name="Surfaces" EntityType="SciencecomModel.Surface" />
           <EntitySet Name="TopicForSocialAdvertisings" EntityType="SciencecomModel.TopicForSocialAdvertising" />
           <AssociationSet Name="FK_Billboards1_Owners" Association="SciencecomModel.FK_Billboards1_Owners">
             <End Role="Owner" EntitySet="Owners" />
@@ -567,7 +568,6 @@
             <End Role="TopicForSocialAdvertising" EntitySet="TopicForSocialAdvertisings" />
             <End Role="RelationshipOfAdvertising" EntitySet="RelationshipOfAdvertisings" />
           </AssociationSet>
-          <EntitySet Name="Surfaces" EntityType="SciencecomModel.Surface" />
           <AssociationSet Name="FK_Surfaces_Sides" Association="SciencecomModel.FK_Surfaces_Sides">
             <End Role="Side" EntitySet="Sides" />
             <End Role="Surface" EntitySet="Surfaces" />
@@ -666,8 +666,8 @@
           <Property Name="Street2" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="FromStreet" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Comment" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ContractNumber" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PassportNumber" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ContractNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PassportNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="EndDate" Type="DateTime" Precision="3" />
           <Property Name="Locality" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
@@ -719,6 +719,25 @@
           <Property Name="Visible" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="RelationshipOfAdvertisings" Relationship="SciencecomModel.FK_RelationshipOfAdvertising_SubtopicForSocialAdvertising" FromRole="SubtopicForSocialAdvertising" ToRole="RelationshipOfAdvertising" />
           <NavigationProperty Name="Surfaces" Relationship="SciencecomModel.FK_Surfaces_SubtopicForSocialAdvertising" FromRole="SubtopicForSocialAdvertising" ToRole="Surface" />
+        </EntityType>
+        <EntityType Name="Surface">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Height" Type="Int32" Nullable="false" />
+          <Property Name="Width" Type="Int32" Nullable="false" />
+          <Property Name="Space" Type="Int32" Nullable="false" />
+          <Property Name="TypeOfAdvertising" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Story" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Side_Id" Type="Guid" />
+          <Property Name="Topic" Type="Guid" />
+          <Property Name="SubTopic" Type="Guid" />
+          <NavigationProperty Name="Side" Relationship="SciencecomModel.FK_Surfaces_Sides" FromRole="Surface" ToRole="Side" />
+          <NavigationProperty Name="SubtopicForSocialAdvertising" Relationship="SciencecomModel.FK_Surfaces_SubtopicForSocialAdvertising" FromRole="Surface" ToRole="SubtopicForSocialAdvertising" />
+          <NavigationProperty Name="TopicForSocialAdvertising" Relationship="SciencecomModel.FK_Surfaces_TopicForSocialAdvertising" FromRole="Surface" ToRole="TopicForSocialAdvertising" />
         </EntityType>
         <EntityType Name="TopicForSocialAdvertising">
           <Key>
@@ -790,25 +809,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Surface">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Height" Type="Int32" Nullable="false" />
-          <Property Name="Width" Type="Int32" Nullable="false" />
-          <Property Name="Space" Type="Int32" Nullable="false" />
-          <Property Name="TypeOfAdvertising" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="Story" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Side_Id" Type="Guid" />
-          <Property Name="Topic" Type="Guid" />
-          <Property Name="SubTopic" Type="Guid" />
-          <NavigationProperty Name="Side" Relationship="SciencecomModel.FK_Surfaces_Sides" FromRole="Surface" ToRole="Side" />
-          <NavigationProperty Name="SubtopicForSocialAdvertising" Relationship="SciencecomModel.FK_Surfaces_SubtopicForSocialAdvertising" FromRole="Surface" ToRole="SubtopicForSocialAdvertising" />
-          <NavigationProperty Name="TopicForSocialAdvertising" Relationship="SciencecomModel.FK_Surfaces_TopicForSocialAdvertising" FromRole="Surface" ToRole="TopicForSocialAdvertising" />
-        </EntityType>
         <Association Name="FK_Surfaces_Sides">
           <End Type="SciencecomModel.Side" Role="Side" Multiplicity="0..1" />
           <End Type="SciencecomModel.Surface" Role="Surface" Multiplicity="*" />
@@ -1025,15 +1025,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TopicForSocialAdvertisings">
-            <EntityTypeMapping TypeName="SciencecomModel.TopicForSocialAdvertising">
-              <MappingFragment StoreEntitySet="TopicForSocialAdvertising">
-                <ScalarProperty Name="Visible" ColumnName="Visible" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Surfaces">
             <EntityTypeMapping TypeName="SciencecomModel.Surface">
               <MappingFragment StoreEntitySet="Surfaces">
@@ -1048,6 +1039,15 @@
                 <ScalarProperty Name="Space" ColumnName="Space" />
                 <ScalarProperty Name="Width" ColumnName="Width" />
                 <ScalarProperty Name="Height" ColumnName="Height" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TopicForSocialAdvertisings">
+            <EntityTypeMapping TypeName="SciencecomModel.TopicForSocialAdvertising">
+              <MappingFragment StoreEntitySet="TopicForSocialAdvertising">
+                <ScalarProperty Name="Visible" ColumnName="Visible" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

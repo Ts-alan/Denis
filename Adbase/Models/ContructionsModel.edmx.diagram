@@ -19,14 +19,14 @@
         <EntityTypeShape EntityType="SciencecomModel.Object" Width="1.5" PointX="11.75" PointY="8.25" />
         <EntityTypeShape EntityType="SciencecomModel.RelationshipOfAdvertising" Width="1.5" PointX="14" PointY="6.875" />
         <EntityTypeShape EntityType="SciencecomModel.Side" Width="1.5" PointX="8.75" PointY="4.125" />
-        <EntityTypeShape EntityType="SciencecomModel.SubtopicForSocialAdvertising" Width="1.5" PointX="8.75" PointY="0.75" />
-        <EntityTypeShape EntityType="SciencecomModel.TopicForSocialAdvertising" Width="1.5" PointX="8.75" PointY="7.5" />
+        <EntityTypeShape EntityType="SciencecomModel.SubtopicForSocialAdvertising" Width="1.5" PointX="8.75" PointY="7.5" />
+        <EntityTypeShape EntityType="SciencecomModel.Surface" Width="1.5" PointX="11" PointY="3.25" />
+        <EntityTypeShape EntityType="SciencecomModel.TopicForSocialAdvertising" Width="1.5" PointX="8.75" PointY="0.75" />
         <AssociationConnector Association="SciencecomModel.FK_Billboards1_Owners" />
         <AssociationConnector Association="SciencecomModel.FK_Sides_Billboards1" />
         <AssociationConnector Association="SciencecomModel.FK_RelationshipOfAdvertising_Object1" />
         <AssociationConnector Association="SciencecomModel.FK_RelationshipOfAdvertising_SubtopicForSocialAdvertising" />
         <AssociationConnector Association="SciencecomModel.FK_RelationshipOfAdvertising_TopicForSocialAdvertising" />
-        <EntityTypeShape EntityType="SciencecomModel.Surface" Width="1.5" PointX="11" PointY="3.25" />
         <AssociationConnector Association="SciencecomModel.FK_Surfaces_Sides" />
         <AssociationConnector Association="SciencecomModel.FK_Surfaces_SubtopicForSocialAdvertising" />
         <AssociationConnector Association="SciencecomModel.FK_Surfaces_TopicForSocialAdvertising" />
