@@ -230,6 +230,7 @@
             @Html.Label("На согласовании", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <select name="OnAgreement">
+                    <option></option>
                     <option value="true">Да</option>
                     <option value="false">Нет</option>
                 </select>
@@ -364,14 +365,15 @@
             </div>
         </div>
 
-        <div class="form-group">
-            <label class="control-label col-md-2" for="Dolgota">Долгота</label>
-            <div class="col-md-10">
-                <input type="text" id="Dolgota" name="Breadth"  required />
-                @Html.ValidationMessageFor(model => model.Breadth)
-                @*<span class="field-validation-valid" data-valmsg-for="Dolgota" data-valmsg-replace="true"></span>*@
-            </div>
+    <div class="form-group" >
+        <label class="control-label col-md-2" for="Dolgota">Долгота</label>
+        <div class="col-md-10">
+            <input type="text" id="Dolgota" name="Breadth" required/>
+            @Html.ValidationMessageFor(model => model.Breadth)
+            @*<span class="field-validation-valid" data-valmsg-for="Dolgota" data-valmsg-replace="true"></span>*@
         </div>
+    </div>
+    <input type="button" value="Задать координаты" onclick="SetCoordinates()"/>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Добавить" class="btn btn-default" />
