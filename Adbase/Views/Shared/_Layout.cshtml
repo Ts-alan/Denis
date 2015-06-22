@@ -11,8 +11,9 @@
     @Scripts.Render("~/bundles/jquery-ui")
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/messi")
-    <link href="~/Content/themes/flick/jquery-ui.css" rel="stylesheet" />
+    <link href="~/Scripts/jqGrid/jquery.jqGrid.min.js" rel="stylesheet" />
     <script src="http://api-maps.yandex.ru/2.0-stable/?load=package.standard&lang=ru-RU" type="text/javascript"></script>
+
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -37,7 +38,7 @@
                                 }
                                 @if (RolesList.IsInRole(RolesEnum.Admin, User) || RolesList.IsInRole(RolesEnum.OnlyBillboards, User))
                                 {
-                                    <li>@Html.ActionLink("Билборды", "Bilboard", "Data")</li>
+                                    <li>@Html.ActionLink("Билборды", "AdvertisingDesign", "Data")</li>
                                 }
                             </ul>
                         </li>

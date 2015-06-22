@@ -1387,16 +1387,14 @@ namespace Sciencecom.Controllers
         //билборд
         [Authorize]
         [HttpGet]
-        public ActionResult Bilboard()
+        public ActionResult AdvertisingDesign()
         {
-
-            ViewBag.Data = null;
             return View();
 
         }
         [Authorize]
         [HttpPost]
-        public ActionResult Bilboard(string owner, string locality, string street1, string street2, string fromStreet, string day, string month, string year)
+        public ActionResult AdvertisingDesign(string owner, string locality, string street1, string street2, string fromStreet, string day, string month, string year)
         {
             Owner proprietor = new Owner();
             if (!string.IsNullOrEmpty(owner))

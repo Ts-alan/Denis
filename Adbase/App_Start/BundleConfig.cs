@@ -41,6 +41,18 @@ namespace Sciencecom
             "~/Scripts/Autocomplete.js",
             "~/Scripts/AddPlacamerkToMap.js"
            ));
+            //css для Grid
+            bundles.Add(new StyleBundle("~/Content/jqCrid").Include(
+            "~/Content/jqGrid/ui.jqgrid.css",
+            "~/Content/jqGrid/searchFilter.css",
+            "~/Content/jqGrid/ui.jqgrid-bootstarp.css",
+            "~/Content/jqGrid/ui.multiselect.css"
+           ));
+            //javascript для Grid
+            bundles.Add(new StyleBundle("~/bundles/jqCrid").Include(
+           "~/Scripts/jqGrid/i18n/grid.locale-ru.js",
+           "~/Scripts/jqGrid/jquery.jqGrid.min.js"
+            ));
 
         }
     }
