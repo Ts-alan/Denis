@@ -1,43 +1,37 @@
 ﻿@{
     ViewBag.Title = "База данных рекламных объектов - Добро пожаловать";
+    var date = "Cегодня " + DateTime.Now.ToShortDateString();
+    var time = "Время    " + DateTime.Now.TimeOfDay.ToString(@"hh\:mm");
 }
 
 <div class="jumbotron">
     <h2>Добро пожаловать!</h2>
     <p>
-        @{
-            var date = "Cегодня " + DateTime.Now.ToShortDateString();
-        }
-        @date
+        @date &nbsp;&nbsp;@time
     </p>
 </div>
 
 <div class="row">
-    @*<div class="col-md-3">
-        <h2>Металлические указатели</h2>
-        <p>Соверашйте поиск, добавляйте новую, актуальную информацию.</p>
-        <p><a class="btn btn-info" href="../Data/Metal">Перейти &raquo;</a></p>
-    </div>*@
     <div class="col-md-3">
-        <h2>Световые короба</h2>
-        <p>Всегда актульная информация о конструкциях. Гибкий поиск, большие возможности.</p>
-        <p><a class="btn btn-info" href="../Data/Light">Перейти &raquo;</a></p>
+        <h3>Таблица рекламных конструкций</h3>
+        <p></p>
+        <p><a class="btn btn-info" href="../Data/Bilboard">Перейти &raquo;</a></p>
     </div>
     <div class="col-md-3">
-        <h2>Неопознанные конструкции</h2>
-        <p>Сообщите о подозрительных конструкциях, которые, возможно, установлены нелегально.</p>
-        <p><a class="btn btn-info" href="../Illegal/">Перейти &raquo;</a></p>
+        <h3>Карта рекламных конструкций</h3>
+        <p></p>
+        <p><a class="btn btn-info" href="../Map">Перейти &raquo;</a></p>
     </div>
     <div class="col-md-3">
-        <h2>Карта объектов</h2>
-        <p>Наглядная информация о размещении объектов, гибкий поиск и подробная информация о каждом объекте.</p>
-        <p><a class="btn btn-info" href="../Map">Перейти &raquo;</a>
+        <h3>Отчеты</h3>
+        <p></p>
+        <p><a class="btn btn-info" href="#">Перейти &raquo;</a>
         </p>
     </div>
     <div class="col-md-3">
-        <h2>Билбордеры</h2>
-        <p>Всегда актульная информации о Билбордах.Соверашйте поиск, добавляйте новую, актуальную информацию.</p>
-        <p><a class="btn btn-info" href="../Data/Bilboard">Перейти &raquo;</a></p>
+        <h3>Админисрирование</h3>
+        <p></p>
+        <p><a class="btn btn-info" href="../Account/Manage">Перейти &raquo;</a></p>
     </div>
 </div>
 <hr />

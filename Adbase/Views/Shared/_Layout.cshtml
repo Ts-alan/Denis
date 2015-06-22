@@ -23,20 +23,17 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <b>@Html.ActionLink("adbase.by", "Index", "Home", null, new { @class = "navbar-brand" })</b>
+                    <b><a class="navbar-brand" href="/">Главная страница <br/> AdBase</a></b>
             </div>
             <div class="navbar-collapse collapse">
                 @if (ViewBag.MappingContent??true)
                 {
                     <ul class="nav navbar-nav">
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Таблицы<b class="caret"></b></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Таблица рекламных <br/>конструкций<b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 @if (!RolesList.IsInRole(RolesEnum.OnlyBillboards, User))
                                 {
-                                    @*<li>@Html.ActionLink("Металлические указатели", "Metal", "Data")</li>*@
-                                    <li>@Html.ActionLink("Световые указатели", "Light", "Data")</li>
-                                    <li>@Html.ActionLink("Неопознанные конструкции", "Index", "Illegal")</li>
                                 }
                                 @if (RolesList.IsInRole(RolesEnum.Admin, User) || RolesList.IsInRole(RolesEnum.OnlyBillboards, User))
                                 {
@@ -44,7 +41,9 @@
                                 }
                             </ul>
                         </li>
-                        <li>@Html.ActionLink("Карта", "Index", "Map")</li>
+                        <li><a href="/Map">Карта рекламных <br/> конструкций</a></li>
+                        <li><a href="#">Отчёты</a></li>
+                        <li><a href="#">Администрирование</a></li>
                     </ul>
                 }
                 @Html.Partial("_LoginPartial")
