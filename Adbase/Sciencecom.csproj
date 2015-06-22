@@ -218,6 +218,8 @@
     </Compile>
     <Compile Include="Models\OwnerPartial.cs" />
     <Compile Include="Models\Billboards1ConstructionPartial.cs" />
+    <Compile Include="Models\Patterns\GenericRepository.cs" />
+    <Compile Include="Models\Patterns\UnitOfWork.cs" />
     <Compile Include="Models\RelationshipOfAdvertising.cs">
       <DependentUpon>ContructionsModel.tt</DependentUpon>
     </Compile>
@@ -552,6 +554,7 @@
     <Folder Include="Images\Illegal\" />
     <Folder Include="Images\Light\" />
     <Folder Include="Images\Metal\" />
+    <Folder Include="Images\Patterns\" />
     <Folder Include="Views\BackEndServices\" />
   </ItemGroup>
   <ItemGroup>
