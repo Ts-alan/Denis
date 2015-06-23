@@ -174,7 +174,7 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdType.cs" />
-    <Compile Include="Models\Billboards1.cs">
+    <Compile Include="Models\AdvertisingStructure.cs">
       <DependentUpon>ContructionsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Constructions.cs" />
@@ -198,17 +198,11 @@
       <DependentUpon>ContructionsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IllegalConstructionPartial.cs" />
-    <Compile Include="Models\LightConstruction.cs">
-      <DependentUpon>ContructionsModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\LightConstructionPartial.cs" />
     <Compile Include="Models\MapJsonModels\BilboardConstructionJsonModel.cs" />
     <Compile Include="Models\MapJsonModels\IllegalConstructionJsonModel.cs" />
     <Compile Include="Models\MapJsonModels\LightConstructionJsonModel.cs" />
     <Compile Include="Models\MapJsonModels\MetalConstructionJsonModel.cs" />
-    <Compile Include="Models\MetalConstruction.cs">
-      <DependentUpon>ContructionsModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\MetalConstructionPartial.cs" />
     <Compile Include="Models\Object.cs">
       <DependentUpon>ContructionsModel.tt</DependentUpon>
@@ -246,6 +240,9 @@
     </Compile>
     <Compile Include="Models\TableAdapterExtensions.cs" />
     <Compile Include="Models\TopicForSocialAdvertising.cs">
+      <DependentUpon>ContructionsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TypeOfAdvertisingStructure.cs">
       <DependentUpon>ContructionsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Users\AspNetRole.cs">

@@ -12,9 +12,9 @@ namespace Sciencecom.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Billboards1
+    public partial class AdvertisingStructure
     {
-        public Billboards1()
+        public AdvertisingStructure()
         {
             this.Sides = new HashSet<Side>();
         }
@@ -35,7 +35,20 @@ namespace Sciencecom.Models
         public int Owner_Id { get; set; }
         public System.Guid Id { get; set; }
         public int Id_show { get; set; }
+        public System.Guid Code { get; set; }
+        public string UniqueNumber { get; set; }
+        public string Status { get; set; }
+        public string C_ContractFinancialManagement { get; set; }
+        public string C_PassportAdvertising { get; set; }
+        public System.DateTime PlannedInstallationDate { get; set; }
+        public System.DateTime DateOfReceiptOfTheApplication { get; set; }
+        public System.DateTime DateOfTakenPassport { get; set; }
+        public System.DateTime DateOfActualInstallation { get; set; }
+        public System.DateTime DateDismantling { get; set; }
+        public System.DateTime RevisionDate { get; set; }
+        public string Note_controller { get; set; }
     
+        public virtual TypeOfAdvertisingStructure TypeOfAdvertisingStructure { get; set; }
         public virtual Owner Owner { get; set; }
         public virtual ICollection<Side> Sides { get; set; }
     }

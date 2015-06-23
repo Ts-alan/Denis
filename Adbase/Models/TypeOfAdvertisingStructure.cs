@@ -12,19 +12,17 @@ namespace Sciencecom.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Side
+    public partial class TypeOfAdvertisingStructure
     {
-        public Side()
+        public TypeOfAdvertisingStructure()
         {
-            this.Surfaces = new HashSet<Surface>();
+            this.AdvertisingStructures = new HashSet<AdvertisingStructure>();
         }
     
+        public System.Guid id { get; set; }
         public string Name { get; set; }
-        public System.Guid Billboard_Id { get; set; }
-        public System.Guid Id { get; set; }
-        public string DateDismantling { get; set; }
+        public string Code { get; set; }
     
-        public virtual AdvertisingStructure AdvertisingStructure { get; set; }
-        public virtual ICollection<Surface> Surfaces { get; set; }
+        public virtual ICollection<AdvertisingStructure> AdvertisingStructures { get; set; }
     }
 }

@@ -16,11 +16,7 @@ namespace Sciencecom.Models
     {
         public Owner()
         {
-            this.LightConstructions = new HashSet<LightConstruction>();
-            this.MetalConstructions = new HashSet<MetalConstruction>();
-            this.LightConstructionsWhoAdded = new HashSet<LightConstruction>();
-            this.MetalConstructionsWhoAdded = new HashSet<MetalConstruction>();
-            this.Billboards1 = new HashSet<Billboards1>();
+            this.AdvertisingStructures = new HashSet<AdvertisingStructure>();
         }
     
         public int Id { get; set; }
@@ -28,10 +24,6 @@ namespace Sciencecom.Models
         public string Address { get; set; }
         public string Telephone { get; set; }
     
-        public virtual ICollection<LightConstruction> LightConstructions { get; set; }
-        public virtual ICollection<MetalConstruction> MetalConstructions { get; set; }
-        public virtual ICollection<LightConstruction> LightConstructionsWhoAdded { get; set; }
-        public virtual ICollection<MetalConstruction> MetalConstructionsWhoAdded { get; set; }
-        public virtual ICollection<Billboards1> Billboards1 { get; set; }
+        public virtual ICollection<AdvertisingStructure> AdvertisingStructures { get; set; }
     }
 }
