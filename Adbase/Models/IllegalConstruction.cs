@@ -25,8 +25,8 @@ namespace Sciencecom.Models
         public Nullable<System.DateTime> SolvingDate { get; set; }
         public int Status { get; set; }
         public string Note { get; set; }
-        public float Shirota { get; set; }
-        public float Dolgota { get; set; }
+        public double Shirota { get; set; }
+        public double Dolgota { get; set; }
         public string WhoAdded { get; set; }
         public string WhoTakeNote { get; set; }
         public string WhoLastEdited { get; set; }

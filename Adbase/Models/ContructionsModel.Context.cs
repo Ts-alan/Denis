@@ -27,19 +27,18 @@ namespace Sciencecom.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<LightConstruction> LightConstructions { get; set; }
-        public virtual DbSet<MetalConstruction> MetalConstructions { get; set; }
-        public virtual DbSet<Owner> Owners { get; set; }
-        public virtual DbSet<Street> Streets { get; set; }
+        public virtual DbSet<AdvertisingStructure> AdvertisingStructures { get; set; }
         public virtual DbSet<IllegalConstruction> IllegalConstructions { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
-        public virtual DbSet<Billboards1> Billboards1 { get; set; }
         public virtual DbSet<Object> Objects { get; set; }
+        public virtual DbSet<Owner> Owners { get; set; }
         public virtual DbSet<RelationshipOfAdvertising> RelationshipOfAdvertisings { get; set; }
         public virtual DbSet<Side> Sides { get; set; }
+        public virtual DbSet<Street> Streets { get; set; }
         public virtual DbSet<SubtopicForSocialAdvertising> SubtopicForSocialAdvertisings { get; set; }
         public virtual DbSet<Surface> Surfaces { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<TopicForSocialAdvertising> TopicForSocialAdvertisings { get; set; }
+        public virtual DbSet<TypeOfAdvertisingStructure> TypeOfAdvertisingStructures { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
