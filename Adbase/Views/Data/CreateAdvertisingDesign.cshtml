@@ -7,52 +7,13 @@
     ViewBag.Title = "CreateBilboard";
     SelectList owners = new SelectList(new SciencecomEntities().Owners.Select(m => m.Name).ToList());
     Guid IdGuid = new Guid();
+    int i = 1;
 
 }
 <script type="text/javascript">
     $(document).ready(function () {
         var i = 0;
-        //выпадающий список
-        //$("#SideIndex").change(function () {
-        //    var selectIndex = document.getElementById("SideIndex").selectedIndex;
-        //    if (selectIndex == 0) {
-        //        $("#SizeB").css("display", "none");
-        //        $("#SizeC").css("display", "none");
-        //        $("#SizeD").css("display", "none");
-        //        $("#SizeE").css("display", "none");
-        //        $("#CountSize").val("1");
-        //    }
-        //    if (selectIndex == 1) {
-        //        $("#SizeB").css("display", "block");
-        //        $("#SizeC").css("display", "none");
-        //        $("#SizeD").css("display", "none");
-        //        $("#SizeE").css("display", "none");
-        //        $("#CountSize").val("2");
-        //    }
-        //    if (selectIndex == 2) {
-        //        $("#SizeB").css("display", "block");
-        //        $("#SizeC").css("display", "block");
-        //        $("#SizeD").css("display", "none");
-        //        $("#SizeE").css("display", "none");
-        //        $("#CountSize").val("3");
-        //    }
-        //    if (selectIndex == 3) {
-        //        $("#SizeB").css("display", "block");
-        //        $("#SizeC").css("display", "block");
-        //        $("#SizeD").css("display", "block");
-        //        $("#SizeE").css("display", "none");
-        //        $("#CountSize").val("4");
-        //    }
-        //    if (selectIndex == 4) {
-        //        $("#SizeB").css("display", "block");
-        //        $("#SizeC").css("display", "block");
-        //        $("#SizeD").css("display", "block");
-        //        $("#SizeE").css("display", "block");
-        //        $("#CountSize").val("5");
-        //    }
-        //});
-     
-     
+    
         //выпадающий список на согласование
         $("[name=OnAgreement]").change(function () {
             var selectIndex = $("[name=OnAgreement] option:selected").val();
@@ -150,12 +111,19 @@
             $(".each2 input").trigger('change');
             $(".each3 input").trigger('change');
         }
+        
         //кол-во сторон
-        function SetCountSize() {
-            //$()
-        }
     });
-
+    function SetCountSize() {
+        var CountSizes = $('#CountSizes').val();
+        if (CountSizes != "") {
+            $("[code]").each(function(indx, element) {
+                element.remove();
+            });
+            for(var i=0;i<CountSizes;i++)
+            $("#InsertSide").before('@Html.Side(TableAdapterExtensions.Increment())');
+        }
+    }
 </script>
 <h3> ДОБАВИТЬ РЕКЛАМНУЮ КОНСТРУКЦИЮ</h3>
 
@@ -348,14 +316,14 @@
 
     <div class="form-horizontal">
         <div class="form-group">
-            <label for="DateDismantling">Количество сторон</label>
-            <input class="text-box single-line" id="CountSize" name="CountSize" type="text" data-val="true" data-val-required="Укажите кол-во сторон" />
-            <span class="field-validation-validr" data-valmsg-for="CountSize" data-valmsg-replace="true">
+            <label for="CountSizes">Количество сторон</label>
+            <input class="text-box single-line" id="CountSizes" name="CountSizes"  type="text" data-val="true" data-val-required="Укажите кол-во сторон" />
+            <span class="field-validation-validr" data-valmsg-for="CountSizes" data-valmsg-replace="true">
             </span>
             <input type="button" value="Задать количество сторон" onclick="SetCountSize()" />
         </div>
     </div>
-
+      <div id="InsertSide"></div>
     <h3>5.Данные контроля</h3>
 
     <div class="form-inline">
@@ -377,19 +345,16 @@
     <div class="form-horizontal">
         <div class="form-group">
             <label for="PhotoController">Фотография</label>
-            <input type="file" name="PhotoController" accept="image/jpeg" data-val-required="Выберите файл для загрузки" /><br />
+            <input type="file" name="PhotoController" accept="image/jpeg" data-val-required="Выберите файл для загрузки"/><br/>
             @Html.Raw("Не более 1 МБ")
         </div>
     </div>
-  
-
-      
-        @*Сторона *@
-        <div class="form-group">
+    
+ @*<div class="form-group">
             <div class="form-group">
                 @Html.Label("Сторона А", new { @class = "control-label col-md-2", style = "margin-left: 55px" })
             </div>
-            @*Добавить площадь*@
+           
             <div class="form-group">
                 <div class="col-md-10">
                     <a href="#" id="AddButton1" style="color: #428bca; font-weight: bold;">+Добавить площадь</a>
@@ -399,7 +364,7 @@
         </div>
 
       
-        <input type="button" value="Задать координаты" onclick="SetCoordinates()" />
+        <input type="button" value="Задать координаты" onclick="SetCoordinates()" />*@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Добавить" class="btn btn-default" />
