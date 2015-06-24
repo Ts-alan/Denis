@@ -1399,10 +1399,10 @@ namespace Sciencecom.Controllers
 
         }
 
-        //[Authorize]
-        //[HttpPost]
-        //public ActionResult AdvertisingDesign(string owner, string locality, string street1, string street2, string fromStreet, string day, string month, string year)
-        //{
+        [Authorize]
+        [HttpPost]
+        public ActionResult AdvertisingDesign(string owner, string locality, string street1, string street2, string fromStreet, string day, string month, string year)
+        {
         //    Owner proprietor = new Owner();
         //    if (!string.IsNullOrEmpty(owner))
         //    {
@@ -1420,15 +1420,15 @@ namespace Sciencecom.Controllers
         //    ViewBag.Day = day;
         //    ViewBag.Month = month;
         //    ViewBag.Year = year;
-        //    return View();
+            return View();
 
-        //}
+        }
 
 
-        //[Authorize]
-        //[HttpPost]
-        //public ActionResult GreateBilboard(Billboards1 billboards, List<Sciencecom.Models.Surface> surfaces, string Owner, HttpPostedFileBase passport, HttpPostedFileBase photo, int CountSize = 1)
-        //{
+        [Authorize]
+        [HttpPost]
+        public ActionResult GreateAdvertisingStructure(AdvertisingStructure billboards, List<Sciencecom.Models.Surface> surfaces, string Owner, HttpPostedFileBase passport, HttpPostedFileBase photo, int CountSize = 1)
+        {
 
         //        var idOwner = context.Owners.Single(m => m.Name == Owner).Id;
         //        billboards.Owner_Id = idOwner;
@@ -1478,13 +1478,13 @@ namespace Sciencecom.Controllers
         //        }
 
         //        return RedirectToAction("Bilboard");
+            return null;
 
-
-        //}
+        }
 
         [Authorize]
         [HttpGet]
-        public ActionResult CreateBilboard()
+        public ActionResult CreateAdvertisingStructure()
         {
             return View();
         }

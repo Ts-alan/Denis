@@ -1,0 +1,95 @@
+﻿@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.EntityFramework
+@using Sciencecom.Models
+@*@model  IEnumerable<Billboards1>*@
+@{
+    ViewBag.Title = "Bilboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    AjaxOptions ajax = new AjaxOptions
+    {
+        UpdateTargetId = "billboardsTable"
+        //Url = Url.Action("ShowBillboardTablePartial"),
+    };
+    var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+    ApplicationUser user = um.FindByName(User.Identity.GetUserName());
+    string role = user.Roles.Select(m => m.Role.Name).First().ToString();
+}
+
+@Styles.Render("~/Content/jqCrid")
+@Scripts.Render("~/bundles/jqCrid")
+<script type="text/javascript">
+    $(document).ready(function () {
+        //спрятать убрать всплывающие окна
+        $("#AddNewAD").click(function () {
+            if ($('#divForAddNewAD').css("visibility") == "hidden") {
+                $('#divForAddNewAD').css("visibility", "visible");
+            }
+            else  {
+                $('#divForAddNewAD').css("visibility", "hidden");
+            }
+        });
+        $("#EditStatusAD").click(function () {
+            if ($('#divEditStatusAD').css("visibility") == "hidden") {
+                $('#divEditStatusAD').css("visibility", "visible");
+            }
+            else {
+                $('#divEditStatusAD').css("visibility", "hidden");
+            }
+        });
+
+        //таблица jqGrid
+        $("#table").jqGrid({
+            url: "example.php",
+            datatype: "xml",
+            mtype: "GET",
+            colNames: ["Inv No", "Date", "Amount", "Tax", "Total", "Notes"],
+            colModel: [
+                { name: "invid", width: 55 },
+                { name: "invdate", width: 90 },
+                { name: "amount", width: 80, align: "right" },
+                { name: "tax", width: 80, align: "right" },
+                { name: "total", width: 80, align: "right" },
+                { name: "note", width: 150, sortable: false }
+            ],
+            pager: "#pager",
+            rowNum: 10,
+            rowList: [10, 20, 30],
+            sortname: "invid",
+            sortorder: "desc",
+            viewrecords: true,
+            gridview: true,
+            autoencode: true,
+            caption: "My first grid"
+        });
+    });
+   
+</script>
+
+<h2>Таблица рекламных конструкций</h2>
+@{
+    if (role != "ReadOnly")
+    {
+        <p>
+            <b><a href="#" style="margin-right: 140px" id="AddNewAD">+ Добавить новую рекламную конструкцию</a></b>
+            <b><a href="#"  id="EditStatusAD">+ Изменить статус рекламной конструкции</a></b>
+        </p>
+    }
+}
+<div id="divForAddNewAD" style="margin-left: 40px; margin-right: 80px; margin-bottom: 10px; float: left;visibility: hidden">
+    <b>@Html.ActionLink("+ Добавить существующую рекламную конструкцию", "CreateBilboard", new { type = "Billboard" })</b>
+    <b>@Html.ActionLink("+ Подать заявку на согласование паспорта рекламы", "CreateBilboard", new { type = "Billboard" }, new { style = "display: block" })</b>
+</div>
+
+<div id="divEditStatusAD" style="visibility: hidden">
+    <b>@Html.ActionLink("+ Ввести данные паспорта рекламы", "CreateBilboard", new { type = "Billboard" }, new { style = "margin-right:140px" })</b>
+    <b>@Html.ActionLink("+ Ввести данные об установке рекламной конструкции", "CreateBilboard", new { type = "Billboard" }, new { style = "margin-right:140px;display: block" })</b>
+    <b>@Html.ActionLink("+ Ввести данные об демонтаже рекламной контсрукции", "CreateBilboard", new { type = "Billboard" }, new { style = "margin-right:140px;display: block" })</b>
+</div>
+
+<table id="table"><tr><td></td></tr></table>
+<div id="pager"></div> 
+
+<hr />
+<footer>
+    <p>&copy; @DateTime.Now.Year – <a href="http://scom.by" target="_blank">"OnCloud"</a> @*| @Html.ActionLink("Лицензионное соглашение", "License", "Home")*@</p>
+</footer>

@@ -12,17 +12,17 @@ namespace Sciencecom.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class AdType
-    {
-        public AdType()
-        {
-            this.Billboards = new HashSet<Billboards1>();
-        }
+    //public partial class AdType
+    //{
+    //    public AdType()
+    //    {
+    //        this.Billboards = new HashSet<Billboards1>();
+    //    }
     
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string DisplayName { get; set; }
+    //    public int Id { get; set; }
+    //    public string Name { get; set; }
+    //    public string DisplayName { get; set; }
     
-        public virtual ICollection<Billboards1> Billboards { get; set; }
-    }
+    //    public virtual ICollection<Billboards1> Billboards { get; set; }
+    //}
 }
