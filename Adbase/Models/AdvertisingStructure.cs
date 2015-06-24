@@ -47,6 +47,7 @@ namespace Sciencecom.Models
         public System.DateTime DateDismantling { get; set; }
         public System.DateTime RevisionDate { get; set; }
         public string Note_controller { get; set; }
+        public string TheElementOfTheRoadNetwork { get; set; }
     
         public virtual TypeOfAdvertisingStructure TypeOfAdvertisingStructure { get; set; }
         public virtual Owner Owner { get; set; }

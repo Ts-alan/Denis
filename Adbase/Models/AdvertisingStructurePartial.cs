@@ -12,7 +12,7 @@ namespace Sciencecom.Models
         public string SideOfSurface { get; set; }
         public HttpPostedFileBase SeveralPhoto{ get; set;}
 
-        public Guid Id_Bilboard { get; set; }
+        //public Guid Id_Bilboard { get; set; }
     }
 
     public  class SurfaceConstructionMetaData
@@ -43,6 +43,9 @@ namespace Sciencecom.Models
 
      public class AdvertisingStructureConstructionMetaData
     {
+        
+        public string Status { get; set; }
+
         [Required(ErrorMessage = "Введите значение Широта")]
         public Nullable<float> Height { get; set; }
         
@@ -68,7 +71,7 @@ namespace Sciencecom.Models
         public string FromStreet { get; set; }
       
         public string Comment { get; set; }
-       
+       [DataType(DataType.Date)]
        [Required(ErrorMessage = "Введите значение начальной даты")]
        public string StartDate { get; set; }
 

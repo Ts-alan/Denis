@@ -1486,6 +1486,8 @@ namespace Sciencecom.Controllers
         [HttpGet]
         public ActionResult CreateAdvertisingDesign()
         {
+            Guid code = new Guid("2a113891-d901-44cd-a247-8954c4cda089");
+            ViewBag.Code = code;
             return View();
         }
 
