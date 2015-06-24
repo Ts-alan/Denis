@@ -25,6 +25,5 @@ namespace Sciencecom.Models
         public string DateDismantling { get; set; }
     
         public virtual ICollection<Surface> Surfaces { get; set; }
-        public virtual AdvertisingStructure AdvertisingStructure { get; set; }
     }
 }

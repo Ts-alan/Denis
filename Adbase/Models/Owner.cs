@@ -14,16 +14,9 @@ namespace Sciencecom.Models
     
     public partial class Owner
     {
-        public Owner()
-        {
-            this.AdvertisingStructures = new HashSet<AdvertisingStructure>();
-        }
-    
         public int Id { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
         public string Telephone { get; set; }
-    
-        public virtual ICollection<AdvertisingStructure> AdvertisingStructures { get; set; }
     }
 }
