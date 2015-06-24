@@ -1427,7 +1427,7 @@ namespace Sciencecom.Controllers
 
         [Authorize]
         [HttpPost]
-        public ActionResult GreateAdvertisingStructure(AdvertisingStructure billboards, List<Sciencecom.Models.Surface> surfaces, string Owner, HttpPostedFileBase passport, HttpPostedFileBase photo, int CountSize = 1)
+        public ActionResult CreateAdvertisingDesign(AdvertisingStructure billboards, List<Sciencecom.Models.Surface> surfaces, string Owner, HttpPostedFileBase passport, HttpPostedFileBase photo, int CountSize = 1)
         {
 
         //        var idOwner = context.Owners.Single(m => m.Name == Owner).Id;
@@ -1484,7 +1484,7 @@ namespace Sciencecom.Controllers
 
         [Authorize]
         [HttpGet]
-        public ActionResult CreateAdvertisingStructure()
+        public ActionResult CreateAdvertisingDesign()
         {
             return View();
         }

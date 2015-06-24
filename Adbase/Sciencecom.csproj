@@ -536,7 +536,7 @@
     <Content Include="Views\Illegal\_Status.cshtml" />
     <Content Include="Views\Home\BillboardsIndex.cshtml" />
     <Content Include="Views\Data\AdvertisingDesign.cshtml" />
-    <Content Include="Views\Data\CreateAdvertisingStructure.cshtml" />
+    <Content Include="Views\Data\CreateAdvertisingDesign.cshtml" />
     <Content Include="Views\Data\PartialBilboard.cshtml" />
     <Content Include="Views\Data\ShowBillboardTablePartial.cshtml" />
     <Content Include="Views\Data\DeleteBilboard.cshtml" />

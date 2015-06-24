@@ -38,29 +38,29 @@
         });
 
         //таблица jqGrid
-        $("#table").jqGrid({
-            url: "example.php",
-            datatype: "xml",
-            mtype: "GET",
-            colNames: ["Inv No", "Date", "Amount", "Tax", "Total", "Notes"],
-            colModel: [
-                { name: "invid", width: 55 },
-                { name: "invdate", width: 90 },
-                { name: "amount", width: 80, align: "right" },
-                { name: "tax", width: 80, align: "right" },
-                { name: "total", width: 80, align: "right" },
-                { name: "note", width: 150, sortable: false }
-            ],
-            pager: "#pager",
-            rowNum: 10,
-            rowList: [10, 20, 30],
-            sortname: "invid",
-            sortorder: "desc",
-            viewrecords: true,
-            gridview: true,
-            autoencode: true,
-            caption: "My first grid"
-        });
+    //    $("#table").jqGrid({
+    //        //url: "example.php",
+    //        datatype: "xml",
+    //        mtype: "GET",
+    //        colNames: ["Inv No", "Date", "Amount", "Tax", "Total", "Notes"],
+    //        colModel: [
+    //            { name: "invid", width: 55 },
+    //            { name: "invdate", width: 90 },
+    //            { name: "amount", width: 80, align: "right" },
+    //            { name: "tax", width: 80, align: "right" },
+    //            { name: "total", width: 80, align: "right" },
+    //            { name: "note", width: 150, sortable: false }
+    //        ],
+    //        pager: "#pager",
+    //        rowNum: 10,
+    //        rowList: [10, 20, 30],
+    //        sortname: "invid",
+    //        sortorder: "desc",
+    //        viewrecords: true,
+    //        gridview: true,
+    //        autoencode: true,
+    //        caption: "My first grid"
+    //    });
     });
    
 </script>
@@ -76,14 +76,14 @@
     }
 }
 <div id="divForAddNewAD" style="margin-left: 40px; margin-right: 80px; margin-bottom: 10px; float: left;visibility: hidden">
-    <b>@Html.ActionLink("+ Добавить существующую рекламную конструкцию", "CreateBilboard", new { type = "Billboard" })</b>
-    <b>@Html.ActionLink("+ Подать заявку на согласование паспорта рекламы", "CreateBilboard", new { type = "Billboard" }, new { style = "display: block" })</b>
+    <b>@Html.ActionLink("+ Добавить существующую рекламную конструкцию", "CreateAdvertisingDesign", new { type = "Billboard" })</b>
+    <b>@Html.ActionLink("+ Подать заявку на согласование паспорта рекламы", "CreateAdvertisingDesign", new { type = "Billboard" }, new { style = "display: block" })</b>
 </div>
 
 <div id="divEditStatusAD" style="visibility: hidden">
     <b>@Html.ActionLink("+ Ввести данные паспорта рекламы", "CreateBilboard", new { type = "Billboard" }, new { style = "margin-right:140px" })</b>
-    <b>@Html.ActionLink("+ Ввести данные об установке рекламной конструкции", "CreateBilboard", new { type = "Billboard" }, new { style = "margin-right:140px;display: block" })</b>
-    <b>@Html.ActionLink("+ Ввести данные об демонтаже рекламной контсрукции", "CreateBilboard", new { type = "Billboard" }, new { style = "margin-right:140px;display: block" })</b>
+    <b>@Html.ActionLink("+ Ввести данные об установке рекламной конструкции", "CreateAdvertisingDesign", new { type = "Billboard" }, new { style = "margin-right:140px;display: block" })</b>
+    <b>@Html.ActionLink("+ Ввести данные об демонтаже рекламной контсрукции", "CreateAdvertisingDesign", new { type = "Billboard" }, new { style = "margin-right:140px;display: block" })</b>
 </div>
 
 <table id="table"><tr><td></td></tr></table>
