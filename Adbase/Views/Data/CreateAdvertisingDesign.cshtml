@@ -7,15 +7,15 @@
     ViewBag.Title = "CreateBilboard";
     SelectList owners = new SelectList(new SciencecomEntities().Owners.Select(m => m.Name).ToList());
     Guid IdGuid = new Guid();
-    int i = 1;
+    
 
 }
 <script type="text/javascript">
-    $(document).ready(function () {
+    $(document).ready(function() {
         var i = 0;
-    
+
         //выпадающий список на согласование
-        $("[name=OnAgreement]").change(function () {
+        $("[name=OnAgreement]").change(function() {
             var selectIndex = $("[name=OnAgreement] option:selected").val();
             console.log(selectIndex);
             if (selectIndex == "true") {
@@ -26,30 +26,31 @@
             }
 
         });
+
         function InsertOn() {
-            $(".each1 input").eq(0).on('change', function () {
+            $(".each1 input").eq(0).on('change', function() {
                 var temp1 = $(this).val();
                 //вычисление площади
                 var temp2 = $(".each2 input").val();
                 $(".each3 input").val(temp1 * (temp2 === "" ? 0 : temp2));
 
-                $(".each1 input").each(function () {
+                $(".each1 input").each(function() {
                     $(this).val(temp1);
                 });
             });
-            $(".each2 input").eq(0).on('change', function () {
+            $(".each2 input").eq(0).on('change', function() {
                 var temp1 = $(this).val();
                 //вычисление площади
                 var temp2 = $(".each1 input").val();
                 $(".each3 input").val(temp1 * (temp2 === "" ? 0 : temp2));
 
-                $(".each2 input").each(function () {
+                $(".each2 input").each(function() {
                     $(this).val(temp1);
                 });
             });
-            $(".each3 input").eq(0).on('change', function () {
+            $(".each3 input").eq(0).on('change', function() {
                 var temp1 = $(this).val();
-                $(".each3 input").each(function () {
+                $(".each3 input").each(function() {
                     $(this).val(temp1);
                 });
             });
@@ -58,72 +59,53 @@
         function Increment() {
             return i++;
         }
-        //скрипт для добавить площадь
-        $("#AddButton1").click(function () {
-            var tempIncrement = Increment();
-            $.get('@Url.Action("PartialBilboard","Data")', { param: tempIncrement, side: "А" }).success(function (e) {
-                $("#InsertPartial1").before(e);
-                InsertOn();
-                if (tempIncrement != 0) {
-                    duplicationSurfaces();
-                }
-            });
-        });
 
-        $("#AddButton2").click(function () {
-            var tempIncrement = Increment();
-            $.get('@Url.Action("PartialBilboard","Data")', { param: tempIncrement, side: "B" }).success(function (e) {
-                $("#InsertPartial2").before(e);
-                InsertOn();
-                duplicationSurfaces();
-            });
-        });
+//скрипт для добавить площадь
 
-        $("#AddButton3").click(function () {
-            var tempIncrement = Increment();
-            $.get('@Url.Action("PartialBilboard","Data")', { param: tempIncrement, side: "C" }).success(function (e) {
-                $("#InsertPartial3").before(e);
-                InsertOn();
-                duplicationSurfaces();
-            });
-        });
 
-        $("#AddButton4").click(function () {
-            var tempIncrement = Increment();
-            $.get('@Url.Action("PartialBilboard","Data")', { param: tempIncrement, side: "D" }).success(function (e) {
-                $("#InsertPartial4").before(e);
-                InsertOn();
-                duplicationSurfaces();
-            });
-        });
-
-        $("#AddButton5").click(function () {
-            var tempIncrement = Increment();
-            $.get('@Url.Action("PartialBilboard","Data")', { param: tempIncrement, side: "E" }).success(function (e) {
-                $("#InsertPartial5").before(e);
-                InsertOn();
-                duplicationSurfaces();
-            });
-        });
-        //дублирование для остальных поверхностей при добавлении
+//дублирование для остальных поверхностей при добавлении
         function duplicationSurfaces() {
             $(".each1 input").trigger('change');
             $(".each2 input").trigger('change');
             $(".each3 input").trigger('change');
         }
-        
+
         //кол-во сторон
     });
+
     function SetCountSize() {
         var CountSizes = $('#CountSizes').val();
         if (CountSizes != "") {
             $("[code]").each(function(indx, element) {
                 element.remove();
             });
-            for(var i=0;i<CountSizes;i++)
-            $("#InsertSide").before('@Html.Side(TableAdapterExtensions.Increment())');
+            for (var i = 1; i <= CountSizes; i++) {
+
+                $("#InsertSide").before("<div class=\"form-horizontal\" code>" +
+                    "<div class=\"form-group\">" +
+                    "<label class=\"control-label col-md-2\" for=\"\" style=\"margin-left: 55px\">Сторона  " + i + " </label>" +
+                    "</div>" +
+                    "<div class=\"form-group\">" +
+                    "<div class=\"col-md-10\">" +
+                    "<a href=\"#\" id=\"AddButton" + i + "\" onclick=AddSurface(" + i + ") style=\"color: #428bca; font-weight: bold;\">+Добавить площадь</a>" +
+                    "</div>" +
+                    "</div>" +
+                    "<div id=\"InsertPartial" + i + "\"></div>" +
+                    "</div>");
+            }
         }
     }
+
+    function AddSurface(i) {
+        $.get('@Url.Action("Surface", "Data")', { side: i }).success(function (e) {
+            $("#InsertPartial"+i+"").before(e);
+          
+            //if (tempIncrement != 0) {
+            //    duplicationSurfaces();
+            //}
+        });
+    }
+   
 </script>
 <h3> ДОБАВИТЬ РЕКЛАМНУЮ КОНСТРУКЦИЮ</h3>
 
@@ -133,7 +115,8 @@
     <h3> 1. Общие данные о рекламной конструкции</h3>
     @Html.AntiForgeryToken()
     <div class="form-inline">
-        <hr />
+        <hr/>
+
         <input type="hidden" id="CountSize" name="CountSize" value="">
         @Html.ValidationSummary(true)
         @Html.ValidationMessage("Error")
@@ -178,7 +161,6 @@
         <div class="form-group" style="margin-left: 200px">
             <label for="TheElementOfTheRoadNetwork">Элемент улично-дорожной сети</label>
             @Html.DropDownList("TheElementOfTheRoadNetwork", new SelectList(new[] { "Перекресток ", "Прегон", "Центр перекрестка" }))
-            @*@Html.ValidationMessageFor(model => model.TheElementOfTheRoadNetwork)*@
         </div>
     </div>
 

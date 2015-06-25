@@ -1195,12 +1195,12 @@ namespace Sciencecom.Controllers
             return Json(projection.ToList(), JsonRequestBehavior.AllowGet);
         }
 
-        //обслуживающий класс для Documents
-        private class Lookup
-        {
-            public string Key;
-            public string Value;
-        }
+        ////обслуживающий класс для Documents
+        //private class Lookup
+        //{
+        //    public string Key;
+        //    public string Value;
+        //}
 
         //[Authorize]
         //[HttpGet]
@@ -1610,13 +1610,13 @@ namespace Sciencecom.Controllers
         //    return result;
         //}
 
-        //public ActionResult PartialBilboard(int param , string side)
-        //{
-        //    ViewBag.Topic = context.TopicForSocialAdvertisings;
-        //    ViewBag.Incerment = param;
-        //    ViewBag.Side = side;
-        //    return View();
-        //}
+        public ActionResult Surface( string side)
+        {
+            //ViewBag.Topic = context.TopicForSocialAdvertisings;
+            //ViewBag.Incerment = param;
+            ViewBag.Side = side;
+            return View();
+        }
         //public ActionResult EditBillboard(Guid? id)
         //{
         //    if (id == null)
