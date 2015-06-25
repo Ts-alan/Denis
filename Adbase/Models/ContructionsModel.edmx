@@ -4,7 +4,41 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="SciencecomModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="SciencecomModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AdvertisingStructures">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Height" Type="real" Nullable="false" />
+          <Property Name="Breadth" Type="real" Nullable="false" />
+          <Property Name="Street1" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="House1" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Street2" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="FromStreet" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Comment" Type="nvarchar(max)" />
+          <Property Name="ContractNumber" Type="nvarchar(max)" />
+          <Property Name="PassportNumber" Type="nvarchar(max)" />
+          <Property Name="StartDate" Type="datetime" Nullable="false" />
+          <Property Name="EndDate" Type="datetime" />
+          <Property Name="Locality" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="OnAgreement" Type="bit" Nullable="false" />
+          <Property Name="Owner_Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Id_show" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UniqueNumber" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Status" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="№ContractFinancialManagement" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="№PassportAdvertising" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PlannedInstallationDate" Type="datetime" Nullable="false" />
+          <Property Name="DateOfReceiptOfTheApplication" Type="datetime" Nullable="false" />
+          <Property Name="DateOfTakenPassport" Type="datetime" Nullable="false" />
+          <Property Name="DateOfActualInstallation" Type="datetime" Nullable="false" />
+          <Property Name="DateDismantling" Type="datetime" Nullable="false" />
+          <Property Name="RevisionDate" Type="datetime" Nullable="false" />
+          <Property Name="Note controller" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="TheElementOfTheRoadNetwork" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
         <EntityType Name="IllegalConstructions">
           <Key>
             <PropertyRef Name="Id" />
@@ -114,6 +148,29 @@
           <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Visible" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="TypeOfAdvertisingStructures">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_AdvertisingStructures_TypeOfAdvertisingStructures' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK_AdvertisingStructures_TypeOfAdvertisingStructures" />-->
+        <Association Name="FK_Billboards1_Owners">
+          <End Role="Owners" Type="Self.Owners" Multiplicity="1" />
+          <End Role="AdvertisingStructures" Type="Self.AdvertisingStructures" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Owners">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AdvertisingStructures">
+              <PropertyRef Name="Owner_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_RelationshipOfAdvertising_Object1">
           <End Role="Object" Type="Self.Object" Multiplicity="1" />
           <End Role="RelationshipOfAdvertising" Type="Self.RelationshipOfAdvertising" Multiplicity="*" />
@@ -147,6 +204,18 @@
             </Principal>
             <Dependent Role="RelationshipOfAdvertising">
               <PropertyRef Name="idOfTopicForSocialAdvertising" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sides_Billboards1">
+          <End Role="AdvertisingStructures" Type="Self.AdvertisingStructures" Multiplicity="1" />
+          <End Role="Sides" Type="Self.Sides" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AdvertisingStructures">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sides">
+              <PropertyRef Name="Billboard_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -218,6 +287,7 @@
         </Function>
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="SciencecomModelStoreContainer">
+          <EntitySet Name="AdvertisingStructures" EntityType="Self.AdvertisingStructures" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IllegalConstructions" EntityType="Self.IllegalConstructions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Object" EntityType="Self.Object" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Owners" EntityType="Self.Owners" Schema="dbo" store:Type="Tables" />
@@ -228,6 +298,11 @@
           <EntitySet Name="Surfaces" EntityType="Self.Surfaces" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TopicForSocialAdvertising" EntityType="Self.TopicForSocialAdvertising" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TypeOfAdvertisingStructures" EntityType="Self.TypeOfAdvertisingStructures" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Billboards1_Owners" Association="Self.FK_Billboards1_Owners">
+            <End Role="Owners" EntitySet="Owners" />
+            <End Role="AdvertisingStructures" EntitySet="AdvertisingStructures" />
+          </AssociationSet>
           <AssociationSet Name="FK_RelationshipOfAdvertising_Object1" Association="Self.FK_RelationshipOfAdvertising_Object1">
             <End Role="Object" EntitySet="Object" />
             <End Role="RelationshipOfAdvertising" EntitySet="RelationshipOfAdvertising" />
@@ -239,6 +314,10 @@
           <AssociationSet Name="FK_RelationshipOfAdvertising_TopicForSocialAdvertising" Association="Self.FK_RelationshipOfAdvertising_TopicForSocialAdvertising">
             <End Role="TopicForSocialAdvertising" EntitySet="TopicForSocialAdvertising" />
             <End Role="RelationshipOfAdvertising" EntitySet="RelationshipOfAdvertising" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sides_Billboards1" Association="Self.FK_Sides_Billboards1">
+            <End Role="AdvertisingStructures" EntitySet="AdvertisingStructures" />
+            <End Role="Sides" EntitySet="Sides" />
           </AssociationSet>
           <AssociationSet Name="FK_Surfaces_Sides" Association="Self.FK_Surfaces_Sides">
             <End Role="Sides" EntitySet="Sides" />
@@ -322,6 +401,16 @@
             <End Role="TopicForSocialAdvertising" EntitySet="TopicForSocialAdvertisings" />
             <End Role="Surface" EntitySet="Surfaces" />
           </AssociationSet>
+          <EntitySet Name="AdvertisingStructures" EntityType="SciencecomModel.AdvertisingStructure" />
+          <EntitySet Name="TypeOfAdvertisingStructures" EntityType="SciencecomModel.TypeOfAdvertisingStructure" />
+          <AssociationSet Name="FK_Billboards1_Owners" Association="SciencecomModel.FK_Billboards1_Owners">
+            <End Role="Owner" EntitySet="Owners" />
+            <End Role="AdvertisingStructure" EntitySet="AdvertisingStructures" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sides_Billboards1" Association="SciencecomModel.FK_Sides_Billboards1">
+            <End Role="AdvertisingStructure" EntitySet="AdvertisingStructures" />
+            <End Role="Side" EntitySet="Sides" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -372,6 +461,7 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Telephone" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AdvertisingStructures" Relationship="SciencecomModel.FK_Billboards1_Owners" FromRole="Owner" ToRole="AdvertisingStructure" />
         </EntityType>
         <EntityType Name="RelationshipOfAdvertising">
           <Key>
@@ -395,6 +485,7 @@
           <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="DateDismantling" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Surfaces" Relationship="SciencecomModel.FK_Surfaces_Sides" FromRole="Side" ToRole="Surface" />
+          <NavigationProperty Name="AdvertisingStructure" Relationship="SciencecomModel.FK_Sides_Billboards1" FromRole="Side" ToRole="AdvertisingStructure" />
         </EntityType>
         <EntityType Name="Street">
           <Key>
@@ -524,6 +615,74 @@
             </Principal>
             <Dependent Role="Surface">
               <PropertyRef Name="Topic" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AdvertisingStructure">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Height" Type="Single" Nullable="false" />
+          <Property Name="Breadth" Type="Single" Nullable="false" />
+          <Property Name="Street1" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="House1" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Street2" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FromStreet" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ContractNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PassportNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="Locality" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="OnAgreement" Type="Boolean" Nullable="false" />
+          <Property Name="Owner_Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Id_show" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UniqueNumber" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="C_ContractFinancialManagement" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="C_PassportAdvertising" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PlannedInstallationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateOfReceiptOfTheApplication" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateOfTakenPassport" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateOfActualInstallation" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateDismantling" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RevisionDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Note_controller" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TheElementOfTheRoadNetwork" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Owner" Relationship="SciencecomModel.FK_Billboards1_Owners" FromRole="AdvertisingStructure" ToRole="Owner" />
+          <NavigationProperty Name="Sides" Relationship="SciencecomModel.FK_Sides_Billboards1" FromRole="AdvertisingStructure" ToRole="Side" />
+        </EntityType>
+        <EntityType Name="TypeOfAdvertisingStructure">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_Billboards1_Owners">
+          <End Type="SciencecomModel.Owner" Role="Owner" Multiplicity="1" />
+          <End Type="SciencecomModel.AdvertisingStructure" Role="AdvertisingStructure" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Owner">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AdvertisingStructure">
+              <PropertyRef Name="Owner_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sides_Billboards1">
+          <End Type="SciencecomModel.AdvertisingStructure" Role="AdvertisingStructure" Multiplicity="1" />
+          <End Type="SciencecomModel.Side" Role="Side" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AdvertisingStructure">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Side">
+              <PropertyRef Name="Billboard_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -671,6 +830,50 @@
             <EntityTypeMapping TypeName="SciencecomModel.TopicForSocialAdvertising">
               <MappingFragment StoreEntitySet="TopicForSocialAdvertising">
                 <ScalarProperty Name="Visible" ColumnName="Visible" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AdvertisingStructures">
+            <EntityTypeMapping TypeName="SciencecomModel.AdvertisingStructure">
+              <MappingFragment StoreEntitySet="AdvertisingStructures">
+                <ScalarProperty Name="TheElementOfTheRoadNetwork" ColumnName="TheElementOfTheRoadNetwork" />
+                <ScalarProperty Name="Note_controller" ColumnName="Note controller" />
+                <ScalarProperty Name="RevisionDate" ColumnName="RevisionDate" />
+                <ScalarProperty Name="DateDismantling" ColumnName="DateDismantling" />
+                <ScalarProperty Name="DateOfActualInstallation" ColumnName="DateOfActualInstallation" />
+                <ScalarProperty Name="DateOfTakenPassport" ColumnName="DateOfTakenPassport" />
+                <ScalarProperty Name="DateOfReceiptOfTheApplication" ColumnName="DateOfReceiptOfTheApplication" />
+                <ScalarProperty Name="PlannedInstallationDate" ColumnName="PlannedInstallationDate" />
+                <ScalarProperty Name="C_PassportAdvertising" ColumnName="№PassportAdvertising" />
+                <ScalarProperty Name="C_ContractFinancialManagement" ColumnName="№ContractFinancialManagement" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="UniqueNumber" ColumnName="UniqueNumber" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Id_show" ColumnName="Id_show" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Owner_Id" ColumnName="Owner_Id" />
+                <ScalarProperty Name="OnAgreement" ColumnName="OnAgreement" />
+                <ScalarProperty Name="Locality" ColumnName="Locality" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="PassportNumber" ColumnName="PassportNumber" />
+                <ScalarProperty Name="ContractNumber" ColumnName="ContractNumber" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="FromStreet" ColumnName="FromStreet" />
+                <ScalarProperty Name="Street2" ColumnName="Street2" />
+                <ScalarProperty Name="House1" ColumnName="House1" />
+                <ScalarProperty Name="Street1" ColumnName="Street1" />
+                <ScalarProperty Name="Breadth" ColumnName="Breadth" />
+                <ScalarProperty Name="Height" ColumnName="Height" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TypeOfAdvertisingStructures">
+            <EntityTypeMapping TypeName="SciencecomModel.TypeOfAdvertisingStructure">
+              <MappingFragment StoreEntitySet="TypeOfAdvertisingStructures">
+                <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>

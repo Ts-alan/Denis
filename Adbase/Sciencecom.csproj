@@ -173,6 +173,9 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdType.cs" />
+    <Compile Include="Models\AdvertisingStructure.cs">
+      <DependentUpon>ContructionsModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Constructions.cs" />
     <Compile Include="Models\ContructionsModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -234,6 +237,9 @@
     </Compile>
     <Compile Include="Models\TableAdapterExtensions.cs" />
     <Compile Include="Models\TopicForSocialAdvertising.cs">
+      <DependentUpon>ContructionsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TypeOfAdvertisingStructure.cs">
       <DependentUpon>ContructionsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Users\AspNetRole.cs">

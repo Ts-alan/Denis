@@ -21,6 +21,10 @@
         <AssociationConnector Association="SciencecomModel.FK_Surfaces_Sides" />
         <AssociationConnector Association="SciencecomModel.FK_Surfaces_SubtopicForSocialAdvertising" />
         <AssociationConnector Association="SciencecomModel.FK_Surfaces_TopicForSocialAdvertising" />
+        <EntityTypeShape EntityType="SciencecomModel.AdvertisingStructure" Width="1.5" PointX="3.75" PointY="18.75" />
+        <EntityTypeShape EntityType="SciencecomModel.TypeOfAdvertisingStructure" Width="1.5" PointX="8.375" PointY="0.75" />
+        <AssociationConnector Association="SciencecomModel.FK_Billboards1_Owners" />
+        <AssociationConnector Association="SciencecomModel.FK_Sides_Billboards1" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
