@@ -43,19 +43,14 @@
 <div class="form-inline">
     <hr />
     <div class="form-group">
-        
         <label for="[@i].Height">Высота</label>
         @Html.EditorFor(model => model[i].Height)
         @Html.ValidationMessageFor(model => model[i].Height)
-    </div>
 
-    <div class="form-group">
         <label for="[@i].Width">Ширина</label>
         @Html.EditorFor(model => model[i].Width)
         @Html.ValidationMessageFor(model => model[i].Width)
-    </div>
 
-    <div class="form-group">
         <label for="[@i].Space">Площадь</label>
         @Html.EditorFor(model => model[i].Space)
         @Html.ValidationMessageFor(model => model[i].Space)
@@ -113,7 +108,7 @@
             </div>
         </div>*@
 
-    <div class="form-group each6">
+    @*<div class="form-group each6">
             @Html.Label("Период размещения с", new {@class = "control-label col-md-2 "})
             <div class="col-md-10">
                 <input type="date" name="[@i].StartDate" class="text-box single-line valid" data-val="true" data-val-required="Выбирите значение">
@@ -128,6 +123,6 @@
                 <input type="date" name="[@i].EndDate" class="text-box single-line valid" data-val="true" data-val-required="Выбирите значение">
             </div>
             <span class="field-validation-valid" data-valmsg-for="[@i].EndDate" data-valmsg-replace="true" style="display: block;float: left"></span>
-        </div>
+        </div>*@
 
 

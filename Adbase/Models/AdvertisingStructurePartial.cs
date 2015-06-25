@@ -46,11 +46,11 @@ namespace Sciencecom.Models
         
         public string Status { get; set; }
 
-        [Required(ErrorMessage = "Введите значение Широта")]
-        public Nullable<float> Height { get; set; }
+        //[Required]
+        //public Nullable<float> Height { get; set; }
         
-        [Required(ErrorMessage = "Введите значение Долгота")]
-        public Nullable<float> Breadth { get; set; }
+        //[Required]
+        //public Nullable<float> Breadth { get; set; }
 
         [StringLength(50, ErrorMessage = "не более 50 символов")]
         [Required(ErrorMessage = "Введите значение Улица 1")]
@@ -105,5 +105,9 @@ namespace Sciencecom.Models
        
        [Required(ErrorMessage = "Введите значение комментария")]
        public string Note_controller { get; set; }
+
+       [Required(ErrorMessage = "Введите значение даты")]
+       [DataType(DataType.Date)]
+       public System.DateTime PlannedInstallationDate { get; set; }
     }
 }

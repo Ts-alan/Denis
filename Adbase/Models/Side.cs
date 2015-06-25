@@ -24,7 +24,7 @@ namespace Sciencecom.Models
         public System.Guid Id { get; set; }
         public string DateDismantling { get; set; }
     
-        public virtual ICollection<Surface> Surfaces { get; set; }
         public virtual AdvertisingStructure AdvertisingStructure { get; set; }
+        public virtual ICollection<Surface> Surfaces { get; set; }
     }
 }

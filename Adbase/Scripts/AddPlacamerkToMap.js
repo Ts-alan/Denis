@@ -61,11 +61,9 @@
 
 
             var str = String(coords[0].toPrecision(6));
-            str = str.replace('.', ',');
-            $("#Shirota").val(str);
+            $("#Breadth").val(str);
             str = String(coords[1].toPrecision(6));
-            str = str.replace('.', ',');
-            $("#Dolgota").val(str);
+            $("#Height").val(str);
             
             dragend();
         });
@@ -83,7 +81,7 @@
                 myMap.geoObjects.remove(myPlacemark);
             }
             //присвоить обьект
-            myPlacemark = new ymaps.Placemark([$("#Shirota").val().replace(',', '.'), $("#Dolgota").val().replace(',', '.')],
+            myPlacemark = new ymaps.Placemark([$("#Shirota").val(), $("#Dolgota").val()],
             {},
             {
                 draggable: true

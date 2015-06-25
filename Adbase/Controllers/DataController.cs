@@ -1427,9 +1427,9 @@ namespace Sciencecom.Controllers
 
         [Authorize]
         [HttpPost]
-        public ActionResult CreateAdvertisingDesign(AdvertisingStructure billboards, List<Sciencecom.Models.Surface> surfaces, string Owner, HttpPostedFileBase passport, HttpPostedFileBase photo, int CountSize = 1)
+        public ActionResult CreateAdvertisingDesign(AdvertisingStructure billboards, List<Sciencecom.Models.Surface> surfaces, string Owner, HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides, int CountSize = 1)
         {
-
+            int i = 1;
         //        var idOwner = context.Owners.Single(m => m.Name == Owner).Id;
         //        billboards.Owner_Id = idOwner;
         //        Guid BillboardsId = Guid.NewGuid();
@@ -1477,8 +1477,8 @@ namespace Sciencecom.Controllers
         //            }
         //        }
 
-        //        return RedirectToAction("Bilboard");
-            return null;
+            return RedirectToAction("AdvertisingDesign");
+
 
         }
 
@@ -1486,8 +1486,8 @@ namespace Sciencecom.Controllers
         [HttpGet]
         public ActionResult CreateAdvertisingDesign()
         {
-            Guid code = new Guid("2a113891-d901-44cd-a247-8954c4cda089");
-            ViewBag.Code = code;
+            //Guid code = new Guid("2a113891-d901-44cd-a247-8954c4cda089");
+            ViewBag.Code = "BB";
             return View();
         }
 
@@ -1610,7 +1610,7 @@ namespace Sciencecom.Controllers
         //    return result;
         //}
 
-        public ActionResult Surface( string side)
+        public ActionResult Surface(string side)
         {
             //ViewBag.Topic = context.TopicForSocialAdvertisings;
             //ViewBag.Incerment = param;
