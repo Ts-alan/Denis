@@ -1427,29 +1427,29 @@ namespace Sciencecom.Controllers
 
         [Authorize]
         [HttpPost]
-        public ActionResult CreateAdvertisingDesign(AdvertisingStructure billboards, List<Sciencecom.Models.Surface> surfaces, string Owner, HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides, int CountSize = 1)
+        public ActionResult CreateAdvertisingDesign(AdvertisingStructure Structures, System.Collections.Generic.List<Sciencecom.Models.Surface> surfaces, string Owner, HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides, int CountSize = 1)
         {
-            int i = 1;
-        //        var idOwner = context.Owners.Single(m => m.Name == Owner).Id;
-        //        billboards.Owner_Id = idOwner;
-        //        Guid BillboardsId = Guid.NewGuid();
-        //        billboards.Id = BillboardsId;
-        //        string[] arraySize = new string[5] {"А", "B", "C", "D", "E"};
-        //        List<Side> ListSide = new List<Side>();
-        //        for (int j = 0; j < CountSize; j++)
-        //        {
-        //            ListSide.Add(new Side() {Billboard_Id = BillboardsId, Name = arraySize[j], Id = Guid.NewGuid()});
-        //        }
-        //        if (surfaces != null)
-        //            foreach (var i in surfaces)
-        //            {
-        //                i.Side_Id = ListSide.Single(a => a.Name == i.SideOfSurface).Id;
-        //                context.Surfaces.AddRange(surfaces);
-        //            }
-        //        context.Sides.AddRange(ListSide);
-        //        context.Billboards1.Add(billboards);
 
-        //        context.SaveChanges();
+            var idOwner = context.Owners.Single(m => m.Name == Owner).Id;
+            Structures.Owner_Id = idOwner;
+            Guid StructuresId = Guid.NewGuid();
+            Structures.Id = StructuresId;
+         
+            //List<Side> ListSide = new List<Side>();
+            //for (int j = 1; j <= CountSize; j++)
+            //{
+            //    ListSide.Add(new Side() { AdvertisingStructures_Id = StructuresId, Name = j.ToString(), Id = Guid.NewGuid() });
+            //}
+            //if (surfaces != null)
+            //    foreach (var i in surfaces)
+            //    {
+            //        i.Side_Id = ListSide.Single(a => a.Name == i.SideOfSurface).Id;
+            //        context.Surfaces.AddRange(surfaces);
+            //    }
+            //context.Sides.AddRange(ListSide);
+            context.AdvertisingStructures.Add(Structures);
+
+            context.SaveChanges();
         //        if (passport != null)
         //        {
         //            string src = "~/Images/Billboard/" + billboards.Id_show + "passport.jpg";
@@ -1610,10 +1610,10 @@ namespace Sciencecom.Controllers
         //    return result;
         //}
 
-        public ActionResult Surface(string side)
+        public ActionResult Surface(string side,int id)
         {
             //ViewBag.Topic = context.TopicForSocialAdvertisings;
-            //ViewBag.Incerment = param;
+            ViewBag.Incerment = id;
             ViewBag.Side = side;
             return View();
         }

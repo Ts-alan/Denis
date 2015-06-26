@@ -19,8 +19,8 @@ namespace Sciencecom.Models
             this.Sides = new HashSet<Side>();
         }
     
-        public float Height { get; set; }
-        public float Breadth { get; set; }
+        public double Height { get; set; }
+        public double Breadth { get; set; }
         public string Street1 { get; set; }
         public string House1 { get; set; }
         public string Street2 { get; set; }
@@ -49,6 +49,7 @@ namespace Sciencecom.Models
         public string Note_controller { get; set; }
         public string TheElementOfTheRoadNetwork { get; set; }
     
+        public virtual TypeOfAdvertisingStructure TypeOfAdvertisingStructure { get; set; }
         public virtual Owner Owner { get; set; }
         public virtual ICollection<Side> Sides { get; set; }
     }

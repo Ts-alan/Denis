@@ -28,8 +28,8 @@ namespace Sciencecom.Models
         public string Identification { get; set; }
         public Nullable<int> Number { get; set; }
     
-        public virtual Side Side { get; set; }
         public virtual SubtopicForSocialAdvertising SubtopicForSocialAdvertising { get; set; }
         public virtual TopicForSocialAdvertising TopicForSocialAdvertising { get; set; }
+        public virtual Side Side { get; set; }
     }
 }

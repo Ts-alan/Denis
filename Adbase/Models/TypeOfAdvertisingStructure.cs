@@ -14,8 +14,15 @@ namespace Sciencecom.Models
     
     public partial class TypeOfAdvertisingStructure
     {
+        public TypeOfAdvertisingStructure()
+        {
+            this.AdvertisingStructures = new HashSet<AdvertisingStructure>();
+        }
+    
         public System.Guid id { get; set; }
         public string Name { get; set; }
         public string Code { get; set; }
+    
+        public virtual ICollection<AdvertisingStructure> AdvertisingStructures { get; set; }
     }
 }

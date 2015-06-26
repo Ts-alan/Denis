@@ -48,7 +48,7 @@ namespace Sciencecom.Models
 
         //[Required]
         //public Nullable<float> Height { get; set; }
-        
+
         //[Required]
         //public Nullable<float> Breadth { get; set; }
 
@@ -109,5 +109,8 @@ namespace Sciencecom.Models
        [Required(ErrorMessage = "Введите значение даты")]
        [DataType(DataType.Date)]
        public System.DateTime PlannedInstallationDate { get; set; }
+
+       [Required(ErrorMessage = "Введите значение уникального ключа")]
+       public string UniqueNumber { get; set; }
     }
 }

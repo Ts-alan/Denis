@@ -11,8 +11,9 @@
 
 }
 <script type="text/javascript">
+    var i = 0;
     $(document).ready(function() {
-        var i = 0;
+
 
         //выпадающий список на согласование
         $("[name=OnAgreement]").change(function() {
@@ -56,11 +57,7 @@
             });
         }
 
-        function Increment() {
-            return i++;
-        }
 
-//скрипт для добавить площадь
 
 
 //дублирование для остальных поверхностей при добавлении
@@ -75,6 +72,7 @@
 
     function SetCountSize() {
         var CountSizes = $('#CountSizes').val();
+        $("#CountSize").val(CountSizes);
         if (CountSizes != "") {
             $("[code]").each(function(indx, element) {
                 element.remove();
@@ -97,7 +95,7 @@
     }
 
     function AddSurface(i) {
-        $.get('@Url.Action("Surface", "Data")', { side: i }).success(function (e) {
+        $.get('@Url.Action("Surface", "Data")', {side: i, id: Increment()}).success(function (e) {
             $("#InsertPartial"+i+"").before(e);
           
             //if (tempIncrement != 0) {
@@ -105,7 +103,10 @@
             //}
         });
     }
-   
+     
+    function Increment() {
+        return i++;
+    }
 </script>
 <h3> ДОБАВИТЬ РЕКЛАМНУЮ КОНСТРУКЦИЮ</h3>
 
@@ -201,6 +202,7 @@
             <div>
                 <label for="Breadth">Широта </label>
                 @Html.EditorFor(model => model.Breadth)
+                <input type="text" name="AdvertisingStructure_Breadth" id="Breadth">
                 @Html.ValidationMessageFor(model => model.Breadth)
             </div>
 
@@ -357,5 +359,4 @@
 
 
 
-
-        }
+}

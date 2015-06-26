@@ -20,7 +20,7 @@ namespace Sciencecom.Models
         }
     
         public string Name { get; set; }
-        public System.Guid Billboard_Id { get; set; }
+        public System.Guid AdvertisingStructures_Id { get; set; }
         public System.Guid Id { get; set; }
         public string DateDismantling { get; set; }
     
