@@ -46,11 +46,11 @@ namespace Sciencecom.Models
         
         public string Status { get; set; }
 
-        //[Required]
-        //public Nullable<float> Height { get; set; }
+        [Required]
+        public Nullable<float> Height { get; set; }
 
-        //[Required]
-        //public Nullable<float> Breadth { get; set; }
+        [Required]
+        public Nullable<float> Breadth { get; set; }
 
         [StringLength(50, ErrorMessage = "не более 50 символов")]
         [Required(ErrorMessage = "Введите значение Улица 1")]

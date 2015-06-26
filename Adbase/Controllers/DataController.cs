@@ -1434,22 +1434,24 @@ namespace Sciencecom.Controllers
             Structures.Owner_Id = idOwner;
             Guid StructuresId = Guid.NewGuid();
             Structures.Id = StructuresId;
-         
-            //List<Side> ListSide = new List<Side>();
-            //for (int j = 1; j <= CountSize; j++)
-            //{
-            //    ListSide.Add(new Side() { AdvertisingStructures_Id = StructuresId, Name = j.ToString(), Id = Guid.NewGuid() });
-            //}
-            //if (surfaces != null)
-            //    foreach (var i in surfaces)
-            //    {
-            //        i.Side_Id = ListSide.Single(a => a.Name == i.SideOfSurface).Id;
-            //        context.Surfaces.AddRange(surfaces);
-            //    }
-            //context.Sides.AddRange(ListSide);
-            context.AdvertisingStructures.Add(Structures);
 
-            context.SaveChanges();
+            List<Side> ListSide = new List<Side>();
+            for (int j = 1; j <= CountSize; j++)
+            {
+                ListSide.Add(new Side() { AdvertisingStructures_Id = StructuresId, Name = j.ToString(), Id = Guid.NewGuid() });
+            }
+            context.Sides.AddRange(ListSide);
+            context.AdvertisingStructures.Add(Structures);
+            if (surfaces != null)
+                foreach (var i in surfaces)
+                {
+                    i.Side_Id = ListSide.Single(a => a.Name == i.SideOfSurface).Id;
+                    context.Surfaces.Add(i);
+                    context.SaveChanges();
+                }
+
+
+        
         //        if (passport != null)
         //        {
         //            string src = "~/Images/Billboard/" + billboards.Id_show + "passport.jpg";

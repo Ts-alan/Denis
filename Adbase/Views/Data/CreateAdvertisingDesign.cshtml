@@ -115,7 +115,7 @@
 {
     <input type="hidden" name="Code" value="@ViewBag.Code">
     <h3> 1. Общие данные о рекламной конструкции</h3>
-    @Html.AntiForgeryToken()
+    @*@Html.AntiForgeryToken()*@
     <div class="form-inline">
         <hr/>
 
@@ -201,14 +201,15 @@
             
             <div>
                 <label for="Breadth">Широта </label>
-                @Html.EditorFor(model => model.Breadth)
-                <input type="text" name="AdvertisingStructure_Breadth" id="Breadth">
+                <input class="text-box single-line ui-autocomplete-input" data-val="true" data-val-required="Введите значение " type="text" name="Breadth" id="Shirota">
+                <span class="field-validation-valid" data-valmsg-for="Breadth" data-valmsg-replace="true"></span>
                 @Html.ValidationMessageFor(model => model.Breadth)
             </div>
 
             <div>
                 <label for="Height">Долгота</label>
-                @Html.EditorFor(model => model.Height)
+                <input type="text" name="Height" id="Dolgota" data-val="true" data-val-required="Введите значение " id="Dolgota">
+                <span class="field-validation-valid" data-valmsg-for="Height" data-valmsg-replace="true"></span>
                 @Html.ValidationMessageFor(model => model.Height)
             
             </div>
