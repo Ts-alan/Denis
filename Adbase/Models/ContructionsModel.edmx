@@ -116,15 +116,15 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Height" Type="int" Nullable="false" />
-          <Property Name="Width" Type="int" Nullable="false" />
-          <Property Name="Space" Type="int" Nullable="false" />
+          <Property Name="Height" Type="int" />
+          <Property Name="Width" Type="int" />
+          <Property Name="Space" Type="int" />
           <Property Name="TypeOfAdvertising" Type="nchar" MaxLength="10" />
           <Property Name="Story" Type="nvarchar(max)" />
           <Property Name="StartDate" Type="datetime" />
           <Property Name="EndDate" Type="datetime" />
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Side_Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Side_Id" Type="uniqueidentifier" />
           <Property Name="Topic" Type="uniqueidentifier" />
           <Property Name="SubTopic" Type="uniqueidentifier" />
           <Property Name="Identification" Type="nvarchar(max)" />
@@ -229,7 +229,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Surfaces_Sides">
-          <End Role="Sides" Type="Self.Sides" Multiplicity="1" />
+          <End Role="Sides" Type="Self.Sides" Multiplicity="0..1" />
           <End Role="Surfaces" Type="Self.Surfaces" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Sides">
@@ -563,15 +563,15 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Height" Type="Int32" Nullable="false" />
-          <Property Name="Width" Type="Int32" Nullable="false" />
-          <Property Name="Space" Type="Int32" Nullable="false" />
+          <Property Name="Height" Type="Int32" />
+          <Property Name="Width" Type="Int32" />
+          <Property Name="Space" Type="Int32" />
           <Property Name="TypeOfAdvertising" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="Story" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="StartDate" Type="DateTime" Precision="3" />
           <Property Name="EndDate" Type="DateTime" Precision="3" />
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Side_Id" Type="Guid" Nullable="false" />
+          <Property Name="Side_Id" Type="Guid" />
           <Property Name="Topic" Type="Guid" />
           <Property Name="SubTopic" Type="Guid" />
           <Property Name="Identification" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -682,7 +682,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Surfaces_Sides">
-          <End Type="SciencecomModel.Side" Role="Side" Multiplicity="1" />
+          <End Type="SciencecomModel.Side" Role="Side" Multiplicity="0..1" />
           <End Type="SciencecomModel.Surface" Role="Surface" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Side">
