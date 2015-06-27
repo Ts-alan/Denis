@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="SciencecomModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="SciencecomModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AdvertisingStructures">
           <Key>
             <PropertyRef Name="Id" />
@@ -116,9 +116,9 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Height" Type="int" />
-          <Property Name="Width" Type="int" />
-          <Property Name="Space" Type="int" />
+          <Property Name="Height" Type="int" Nullable="false" />
+          <Property Name="Width" Type="int" Nullable="false" />
+          <Property Name="Space" Type="int" Nullable="false" />
           <Property Name="TypeOfAdvertising" Type="nchar" MaxLength="10" />
           <Property Name="Story" Type="nvarchar(max)" />
           <Property Name="StartDate" Type="datetime" />
@@ -563,9 +563,9 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Height" Type="Int32" />
-          <Property Name="Width" Type="Int32" />
-          <Property Name="Space" Type="Int32" />
+          <Property Name="Height" Type="Int32" Nullable="false" />
+          <Property Name="Width" Type="Int32" Nullable="false" />
+          <Property Name="Space" Type="Int32" Nullable="false" />
           <Property Name="TypeOfAdvertising" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="Story" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="StartDate" Type="DateTime" Precision="3" />

@@ -14,9 +14,9 @@ namespace Sciencecom.Models
     
     public partial class Surface
     {
-        public Nullable<int> Height { get; set; }
-        public Nullable<int> Width { get; set; }
-        public Nullable<int> Space { get; set; }
+        public int Height { get; set; }
+        public int Width { get; set; }
+        public int Space { get; set; }
         public string TypeOfAdvertising { get; set; }
         public string Story { get; set; }
         public Nullable<System.DateTime> StartDate { get; set; }
