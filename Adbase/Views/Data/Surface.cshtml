@@ -36,37 +36,39 @@
                 });
         });
     });*@
+
 </script>
-<input type="hidden" name="[@i].SideOfSurface" value="@ViewBag.Side">
-<h3 style="margin-left: 150px">Поверхность </h3>
+<div side="@ViewBag.Side">
+    <input type="hidden" name="[@i].SideOfSurface" value="@ViewBag.Side">
+    <h3 style="margin-left: 150px">Поверхность </h3>
 
-<div class="form-inline">
-    <hr />
-    <div class="form-group">
-        <label for="[@i].Height">Высота</label>
-        @Html.EditorFor(model => model[i].Height)
-        @Html.ValidationMessageFor(model => model[i].Height)
+    <div class="form-inline">
+        <hr />
+        <div class="form-group">
+            <label for="[@i].Height">Высота</label>
+            @Html.EditorFor(model => model[i].Height)
+            @Html.ValidationMessageFor(model => model[i].Height)
 
-        <label for="[@i].Width">Ширина</label>
-        @Html.EditorFor(model => model[i].Width)
-        @Html.ValidationMessageFor(model => model[i].Width)
+            <label for="[@i].Width">Ширина</label>
+            @Html.EditorFor(model => model[i].Width)
+            @Html.ValidationMessageFor(model => model[i].Width)
 
-        <label for="[@i].Space">Площадь</label>
-        @Html.EditorFor(model => model[i].Space)
-        @Html.ValidationMessageFor(model => model[i].Space)
+            <label for="[@i].Space">Площадь</label>
+            @Html.EditorFor(model => model[i].Space)
+            @Html.ValidationMessageFor(model => model[i].Space)
+        </div>
     </div>
-</div>
-<div class="form-horizontal">
-    <div class="form-group">
-        @Html.Label("Фотография", new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <input type="file" name="[@i].SeveralPhoto" accept="image/jpeg" data-val-required="Выберите файл для загрузки" /><br />
-            @Html.Raw("Не более 1 МБ")
+    <div class="form-horizontal">
+        <div class="form-group">
+            @Html.Label("Фотография", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" name="[@i].SeveralPhoto" accept="image/jpeg" data-val-required="Выберите файл для загрузки" /><br />
+                @Html.Raw("Не более 1 МБ")
 
+            </div>
         </div>
     </div>
 </div>
-
 
     @*<div class="form-group">
             @Html.Label("Вид рекламы ", new { @class = "control-label col-md-2" })

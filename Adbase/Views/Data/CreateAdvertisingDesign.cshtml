@@ -12,6 +12,7 @@
 }
 <script type="text/javascript">
     var i = 0;
+    
     $(document).ready(function() {
 
 
@@ -58,8 +59,6 @@
         }
 
 
-
-
 //дублирование для остальных поверхностей при добавлении
         function duplicationSurfaces() {
             $(".each1 input").trigger('change');
@@ -79,30 +78,43 @@
             });
             for (var i = 1; i <= CountSizes; i++) {
 
-                $("#InsertSide").before("<div class=\"form-horizontal\" code>" +
-                    "<div class=\"form-group\">" +
+                $("#InsertSide").before("<div class=\"form-horizontal\" >" +
+                    "<div class=\"form-group\" >" +
                     "<label class=\"control-label col-md-2\" for=\"\" style=\"margin-left: 55px\">Сторона  " + i + " </label>" +
                     "</div>" +
                     "<div class=\"form-group\">" +
                     "<div class=\"col-md-10\">" +
-                    "<a href=\"#\" id=\"AddButton" + i + "\" onclick=AddSurface(" + i + ") style=\"color: #428bca; font-weight: bold;\">+Добавить площадь</a>" +
+                    //"<a href=\"#\" id=\"AddButton" + i + "\" onclick=AddSurface(" + i + ") style=\"color: #428bca; font-weight: bold;\">+Добавить площадь</a>" +
+                    " <select class=\"text-box single-line\" id=\"AddButton" + i + "\" onchange=AddSurface(" + i + ") name=\"CountSurfuce\" type=\"text\" data-val=\"true\" data-val-required=\"Укажите кол-во сторон\">" +
+                    "<option></option>" +
+                    "<option>1</option>" +
+                    "<option>2</option>" +
+                    "<option>3</option>" +
+                    "<option>4</option>" +
+                    "<option>5</option>" +
+                    "<option>6</option>" +
+                    "<option>7</option>" +
+                    "<option>8</option>" +
+                    "</select>" +
                     "</div>" +
                     "</div>" +
-                    "<div id=\"InsertPartial" + i + "\"></div>" +
+                    "<div  id=\"InsertPartial" + i + "\"></div>" +
                     "</div>");
             }
         }
     }
 
     function AddSurface(i) {
-        $.get('@Url.Action("Surface", "Data")', {side: i, id: Increment()}).success(function (e) {
+        var count = $("#AddButton" + i + "").val();
+
+        $("[side=" + i + "]").remove();
+        for (var j = 0; j < count; j++) {
+            $.ajax('@Url.Action("Surface", "Data")', { async: false, data: { side: i, id: Increment() } })
+            .success(function (e) {
             $("#InsertPartial"+i+"").before(e);
-          
-            //if (tempIncrement != 0) {
-            //    duplicationSurfaces();
-            //}
-        });
-    }
+          });
+        }
+}
      
     function Increment() {
         return i++;
@@ -130,14 +142,14 @@
 
         <div class="form-group">
             <label for="Locality">Вид</label>
-            @*@Html.Editor("Билборд")*@
+            @Html.Editor("Билборд")
             @*@Html.EditorFor(model => model.Owner.Telephone)*@
             @*@Html.ValidationMessageFor(model => model.Sides.Single(a => a.Id == ViewBag.Code).Name)*@
         </div>
 
         <div class="form-group">
             <label for="Status">Статус</label>
-            @Html.DropDownList("Status", new SelectList(new[] { "На согласовании", "Согласовано", "Существующий", "Демонтировано" }))
+            @Html.DropDownList("Status", new SelectList(new[] {"", "На согласовании", "Согласовано", "Существующий", "Демонтировано" }))
             @Html.ValidationMessageFor(model => model.Status)
         </div>
 
@@ -162,7 +174,7 @@
 
         <div class="form-group" style="margin-left: 200px">
             <label for="TheElementOfTheRoadNetwork">Элемент улично-дорожной сети</label>
-            @Html.DropDownList("TheElementOfTheRoadNetwork", new SelectList(new[] { "Перекресток ", "Прегон", "Центр перекрестка" }))
+            @Html.DropDownList("TheElementOfTheRoadNetwork", new SelectList(new[] {"", "Перекресток ", "Прегон", "Центр перекрестка" }))
         </div>
     </div>
 
@@ -303,7 +315,18 @@
     <div class="form-horizontal">
         <div class="form-group">
             <label for="CountSizes">Количество сторон</label>
-            <input class="text-box single-line" id="CountSizes" name="CountSizes"  type="text" data-val="true" data-val-required="Укажите кол-во сторон" />
+            @*<input class="text-box single-line" id="CountSizes" name="CountSizes" type="text" data-val="true" data-val-required="Укажите кол-во сторон"/>*@
+            <select class="text-box single-line" id="CountSizes" name="CountSizes" type="text" data-val="true" data-val-required="Укажите кол-во сторон">
+                <option></option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+            </select>
             <span class="field-validation-validr" data-valmsg-for="CountSizes" data-valmsg-replace="true">
             </span>
             <input type="button" value="Задать количество сторон" onclick="SetCountSize()" />
