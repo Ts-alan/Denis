@@ -1170,30 +1170,30 @@ namespace Sciencecom.Controllers
         //         }
         //  return result;
         //}
-        public ActionResult FindStreets(string term)
-        {
-            var streets = from m in context.Streets where m.Name.Contains(term) select m;
-            var projection = from street in streets
-                select new
-                {
-                    id = street.Id,
-                    label = street.Name + " " + street.Type,
-                    value = street.Name + " " + street.Type
-                };
-            return Json(projection.ToList(), JsonRequestBehavior.AllowGet);
-        }
+        //public ActionResult FindStreets(string term)
+        //{
+        //    var streets = from m in context.Streets where m.Name.Contains(term) select m;
+        //    var projection = from street in streets
+        //        select new
+        //        {
+        //            id = street.Id,
+        //            label = street.Name + " " + street.Type,
+        //            value = street.Name + " " + street.Type
+        //        };
+        //    return Json(projection.ToList(), JsonRequestBehavior.AllowGet);
+        //}
 
-        public ActionResult FindStory(string term)
-        {
-            var streets = from m in context.Surfaces where m.Story.Contains(term) select m;
-            var projection = from street in streets
-                select new
-                {
-                    label = street.Story,
-                    value = street.Story
-                };
-            return Json(projection.ToList(), JsonRequestBehavior.AllowGet);
-        }
+        //public ActionResult FindStory(string term)
+        //{
+        //    var streets = from m in context.Surfaces where m.Story.Contains(term) select m;
+        //    var projection = from street in streets
+        //        select new
+        //        {
+        //            label = street.Story,
+        //            value = street.Story
+        //        };
+        //    return Json(projection.ToList(), JsonRequestBehavior.AllowGet);
+        //}
 
         ////обслуживающий класс для Documents
         //private class Lookup

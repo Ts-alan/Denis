@@ -17,19 +17,9 @@ namespace Sciencecom.Models
         public Nullable<int> Height { get; set; }
         public Nullable<int> Width { get; set; }
         public Nullable<int> Space { get; set; }
-        public string TypeOfAdvertising { get; set; }
-        public string Story { get; set; }
-        public Nullable<System.DateTime> StartDate { get; set; }
-        public Nullable<System.DateTime> EndDate { get; set; }
         public int Id { get; set; }
         public Nullable<System.Guid> Side_Id { get; set; }
-        public Nullable<System.Guid> Topic { get; set; }
-        public Nullable<System.Guid> SubTopic { get; set; }
-        public string Identification { get; set; }
-        public Nullable<int> Number { get; set; }
     
         public virtual Side Side { get; set; }
-        public virtual SubtopicForSocialAdvertising SubtopicForSocialAdvertising { get; set; }
-        public virtual TopicForSocialAdvertising TopicForSocialAdvertising { get; set; }
     }
 }

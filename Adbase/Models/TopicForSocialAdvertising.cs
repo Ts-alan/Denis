@@ -17,7 +17,6 @@ namespace Sciencecom.Models
         public TopicForSocialAdvertising()
         {
             this.RelationshipOfAdvertisings = new HashSet<RelationshipOfAdvertising>();
-            this.Surfaces = new HashSet<Surface>();
         }
     
         public System.Guid id { get; set; }
@@ -25,6 +24,5 @@ namespace Sciencecom.Models
         public bool Visible { get; set; }
     
         public virtual ICollection<RelationshipOfAdvertising> RelationshipOfAdvertisings { get; set; }
-        public virtual ICollection<Surface> Surfaces { get; set; }
     }
 }
