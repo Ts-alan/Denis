@@ -47,14 +47,15 @@
     if (role != "ReadOnly")
     {
         <p>
-            <b><a href="#" style="margin-right: 140px" id="AddNewAD">+ Добавить новую рекламную конструкцию</a></b>
+            <b><a href="#" style="margin-right: 140px" id="AddNewAD">+ Новая рекламная конструкция</a></b>
             <b><a href="#"  id="EditStatusAD">+ Изменить статус рекламной конструкции</a></b>
         </p>
     }
 }
 <div id="divForAddNewAD" style="margin-left: 40px; margin-right: 80px; margin-bottom: 10px; float: left;visibility: hidden">
     <b>@Html.ActionLink("+ Добавить существующую рекламную конструкцию", "CreateAdvertisingDesign", new { type = "Billboard" })</b>
-    <b>@Html.ActionLink("+ Подать заявку на согласование паспорта рекламы", "CreateAdvertisingDesign", new { type = "Billboard" }, new { style = "display: block" })</b>
+    <b>@Html.ActionLink("+ Подать заявку на согласование паспорта рекламы", "CreateAdvertisingDesign", new {type = "Billboard"}, new {style = "display: block"})</b>
+    <b>@Html.ActionLink("+ Изменить существующую рекламную конструкцию", "EditAdvertisingDesign", new { type = "Billboard" }, new { style = "display: block" })</b>
 </div>
 
 <div id="divEditStatusAD" style="visibility: hidden">
@@ -92,7 +93,7 @@
     </tr>
     @foreach (var i in Model)
     {
-        foreach (var side in i.Sides)
+        foreach (var side in i.Sides.OrderBy(a=>a.Name))
          {
              foreach (var surface in side.Surfaces)
              {

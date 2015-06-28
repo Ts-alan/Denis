@@ -1625,21 +1625,22 @@ namespace Sciencecom.Controllers
             ViewBag.Side = side;
             return View();
         }
-        //public ActionResult EditBillboard(Guid? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
+        public ActionResult EditAdvertisingDesign(Guid? id)
+        {
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
 
-        //    Billboards1 mc = context.Billboards1.Find(id);
-        //    if (mc == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
+            //AdvertisingStructure mc = context.AdvertisingStructures.Find(id);
+            AdvertisingStructure mc = context.AdvertisingStructures.First();
+            if (mc == null)
+            {
+                return HttpNotFound();
+            }
 
-        //    return View(mc);
-        //}
+            return View(mc);
+        }
         //    [HttpPost]
         //    public ActionResult EditBillboard(Billboards1 BillboardConstruction, string Owner, HttpPostedFileBase passport1, HttpPostedFileBase passport2, HttpPostedFileBase photo)
         //    {
