@@ -37,7 +37,9 @@
         });
     });*@
 
+
 </script>
+
 <div side="@ViewBag.Side">
     <input type="hidden" name="[@i].SideOfSurface" value="@ViewBag.Side">
     <h3 style="margin-left: 150px">Поверхность </h3>
@@ -65,7 +67,7 @@
                 <input type="file" name="[@i].SeveralPhoto" accept="image/jpeg" data-val-required="Выберите файл для загрузки" /><br />
                 @Html.Raw("Не более 1 МБ")
 
-            </div>
+            @*</div>*@
         </div>
     </div>
 </div>
