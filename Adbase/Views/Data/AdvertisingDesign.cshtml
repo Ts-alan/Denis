@@ -85,33 +85,44 @@
         <th> Дата фактической установки </th>
         <th> Дата демонтажа</th>
         <th> Дата проверки</th>
-        <th> Дата проверки</th>
-      
+        <th> Сторона</th>
+        <th>Площадь поверхности</th>
+        <th>Высота поверхности</th>
+        <th>Широта поверхности</th>
     </tr>
     @foreach (var i in Model)
     {
-        <tr>
-            <td>@i.Id_show</td>
-            <td>@i.Owner.Name</td>
-            <td>@i.Height</td>
-            <td>@i.Breadth</td>
-            <td>@i.Status</td>
-            <td>@i.UniqueNumber</td>
-            <td>@i.Locality</td>
-            <td>@i.Street1</td>
-            <td>@i.TheElementOfTheRoadNetwork</td>
-            <td>@i.House1</td>
-            <td>@i.Street2</td>
-            <td>@i.FromStreet</td>
-            <td>@i.C_ContractFinancialManagement</td>
-            <td>@i.C_PassportAdvertising</td>
-            <td>@i.PlannedInstallationDate</td>
-            <td>@i.DateOfTakenPassport</td>
-            <td>@i.DateOfActualInstallation</td>
-            <td>@i.DateDismantling</td>
-            <td>@i.RevisionDate</td>
-    
-        </tr>
+        foreach (var side in i.Sides)
+         {
+             foreach (var surface in side.Surfaces)
+             {
+                 <tr>
+                     <td>@i.Id_show</td>
+                     <td>@i.Owner.Name</td>
+                     <td>@i.Height</td>
+                     <td>@i.Breadth</td>
+                     <td>@i.Status</td>
+                     <td>@i.UniqueNumber</td>
+                     <td>@i.Locality</td>
+                     <td>@i.Street1</td>
+                     <td>@i.TheElementOfTheRoadNetwork</td>
+                     <td>@i.House1</td>
+                     <td>@i.Street2</td>
+                     <td>@i.FromStreet</td>
+                     <td>@i.C_ContractFinancialManagement</td>
+                     <td>@i.C_PassportAdvertising</td>
+                     <td>@i.PlannedInstallationDate</td>
+                     <td>@i.DateOfTakenPassport</td>
+                     <td>@i.DateOfActualInstallation</td>
+                     <td>@i.DateDismantling</td>
+                     <td>@i.RevisionDate</td>
+                     <td>@side.Name</td>
+                     <td>@surface.Space</td>
+                     <td>@surface.Width</td>
+                     <td>@surface.Height</td>
+                 </tr>
+             }
+         }
     }
 </table>
     <hr />
