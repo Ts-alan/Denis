@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNet.Identity
 @using Microsoft.AspNet.Identity.EntityFramework
 @using Sciencecom.Models
-@model  System.Data.Entity.DbSet<Side>
+@model  System.Data.Entity.DbSet<AdvertisingStructure>
 @{
     ViewBag.Title = "Advertisign";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -65,12 +65,52 @@
 
 
 <table id="table" class="table-bordered" cellpadding="5">
-    <tr><th>Name</th><th>Id</th></tr>
+    <tr>
+        <th>Id</th>
+        <th>Собственник</th>
+        <th>Долгота</th>
+        <th>Широта</th>
+        <th>Статус</th>
+        <th>Уникальный номер </th>
+        <th>Нас. пункт </th>
+        <th>Элемент улично-дорожной сети</th>
+        <th>Улица 1</th>
+        <th>Дом</th>
+        <th>Улица 2</th>
+        <th>Со стороны улицы </th>
+        <th>№ договора с финансовым управлением</th>
+        <th>№ паспорта рекламы</th>
+        <th>Планируемая дата установки</th>
+        <th> Дата выдачи паспорта</th>
+        <th> Дата фактической установки </th>
+        <th> Дата демонтажа</th>
+        <th> Дата проверки</th>
+        <th> Дата проверки</th>
+      
+    </tr>
     @foreach (var i in Model)
     {
         <tr>
-            <td>@i.Name</td>
-            <td>@i.Id</td>
+            <td>@i.Id_show</td>
+            <td>@i.Owner.Name</td>
+            <td>@i.Height</td>
+            <td>@i.Breadth</td>
+            <td>@i.Status</td>
+            <td>@i.UniqueNumber</td>
+            <td>@i.Locality</td>
+            <td>@i.Street1</td>
+            <td>@i.TheElementOfTheRoadNetwork</td>
+            <td>@i.House1</td>
+            <td>@i.Street2</td>
+            <td>@i.FromStreet</td>
+            <td>@i.C_ContractFinancialManagement</td>
+            <td>@i.C_PassportAdvertising</td>
+            <td>@i.PlannedInstallationDate</td>
+            <td>@i.DateOfTakenPassport</td>
+            <td>@i.DateOfActualInstallation</td>
+            <td>@i.DateDismantling</td>
+            <td>@i.RevisionDate</td>
+    
         </tr>
     }
 </table>

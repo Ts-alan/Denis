@@ -1395,8 +1395,8 @@ namespace Sciencecom.Controllers
         [HttpGet]
         public ActionResult AdvertisingDesign()
         {
-            var t = context.Sides;
-            return View(t);
+            var data = context.AdvertisingStructures;
+            return View(data);
 
         }
 
