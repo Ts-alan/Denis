@@ -23,14 +23,14 @@ namespace Sciencecom.Models
         public int Width { get; set; }
          [Required(ErrorMessage = "Введите значение начальной даты")]
         public int Space { get; set; }
-         [Required(ErrorMessage = "Введите значение начальной даты")]
-        public string TypeOfAdvertising { get; set; }
-        public string Story { get; set; }
-        [Required(ErrorMessage = "Введите значение начальной даты")]
-        public System.DateTime StartDate { get; set; }
-        [Required(ErrorMessage = "Введите значение конечной даты")]
-        public System.DateTime EndDate { get; set; }
-        public int Id { get; set; }
+         //[Required(ErrorMessage = "Введите значение начальной даты")]
+        //public string TypeOfAdvertising { get; set; }
+        //public string Story { get; set; }
+        //[Required(ErrorMessage = "Введите значение начальной даты")]
+        //public System.DateTime StartDate { get; set; }
+        //[Required(ErrorMessage = "Введите значение конечной даты")]
+        //public System.DateTime EndDate { get; set; }
+        //public int Id { get; set; }
       
     }
 
