@@ -12,7 +12,7 @@ namespace Sciencecom
                         "~/Scripts/jquery-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jquery-ui").Include(
-                        "~/Scripts/jquery-ui-{version}.js"));
+                        "~/Scripts/jquery-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -50,8 +50,10 @@ namespace Sciencecom
            ));
             //javascript для Grid
             bundles.Add(new StyleBundle("~/bundles/jqCrid").Include(
-           "~/Scripts/jqGrid/i18n/grid.locale-ru.js",
-           "~/Scripts/jqGrid/jquery.jqGrid.min.js"
+            "~/Scripts/jqGrid/i18n/grid.locale-en.js",
+            "~/Scripts/jqGrid/jquery.jqGrid.js",
+            "~/Scripts/jqGrid/plugins/grid.tbltogrid.js"
+          
             ));
 
         }
