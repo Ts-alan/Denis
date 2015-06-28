@@ -127,7 +127,7 @@
 {
     <input type="hidden" name="Code" value="@ViewBag.Code">
     <h3> 1. Общие данные о рекламной конструкции</h3>
-    @*@Html.AntiForgeryToken()*@
+    @Html.AntiForgeryToken()
     <div class="form-inline">
         <hr/>
 
@@ -142,8 +142,8 @@
 
         <div class="form-group">
             <label for="Locality">Вид</label>
-            @Html.Editor("Билборд")
-            @*@Html.EditorFor(model => model.Owner.Telephone)*@
+            @*@Html.Editor("Билборд")*@
+            <input class="text-box single-line" type="text" value="Билборд">
             @*@Html.ValidationMessageFor(model => model.Sides.Single(a => a.Id == ViewBag.Code).Name)*@
         </div>
 

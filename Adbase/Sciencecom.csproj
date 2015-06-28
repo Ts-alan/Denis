@@ -544,11 +544,14 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Start\App_Data\" />
-    <Folder Include="Images\Billboard\surfaces\" />
     <Folder Include="Images\Illegal\" />
     <Folder Include="Images\Light\" />
     <Folder Include="Images\Metal\" />
     <Folder Include="Images\Patterns\" />
+    <Folder Include="Images\PhotoController\" />
+    <Folder Include="Images\ScanPassport_1Sides\" />
+    <Folder Include="Images\ScanPassport_2Sides\" />
+    <Folder Include="Images\surfaces\" />
     <Folder Include="Views\BackEndServices\" />
   </ItemGroup>
   <ItemGroup>

@@ -1428,7 +1428,7 @@ namespace Sciencecom.Controllers
 
         [Authorize]
         [HttpPost]
-        public ActionResult CreateAdvertisingDesign(AdvertisingStructure Structures, System.Collections.Generic.List<Sciencecom.Models.Surface> surfaces, string Owner, HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides, int CountSize = 1)
+        public ActionResult CreateAdvertisingDesign(AdvertisingStructure Structures, System.Collections.Generic.List<Sciencecom.Models.Surface> surfaces, string Owner, HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides, HttpPostedFileBase PhotoController, int CountSize = 1)
         {
 
             var idOwner = context.Owners.Single(m => m.Name == Owner).Id;
@@ -1452,33 +1452,38 @@ namespace Sciencecom.Controllers
                 }
 
 
-        
-        //        if (passport != null)
-        //        {
-        //            string src = "~/Images/Billboard/" + billboards.Id_show + "passport.jpg";
-        //            string path = Server.MapPath(src);
-        //            passport.SaveAs(path);
-        //        }
-        //        if (photo != null)
-        //        {
-        //            string src = "~/Images/Billboard/" + billboards.Id_show + "photo.jpg";
-        //            string path = Server.MapPath(src);
-        //            photo.SaveAs(path);
-        //        }
 
-        //        if (surfaces != null)
-        //        {
-        //            foreach (var surface in surfaces)
-        //            {
-        //                if (surface.SeveralPhoto != null)
-        //                {
+            if (ScanPassport_1Sides != null)
+            {
+                string src = "~/Images/ScanPassport_1Sides/" + Structures.Id_show + "passport.jpg";
+                string path = Server.MapPath(src);
+                ScanPassport_1Sides.SaveAs(path);
+            }
+            if (ScanPassport_2Sides != null)
+            {
+                string src = "~/Images/ScanPassport_2Sides/" + Structures.Id_show + "ScanPassport_2Sides.jpg";
+                string path = Server.MapPath(src);
+                ScanPassport_2Sides.SaveAs(path);
+            }
+            if (PhotoController != null)
+            {
+                string src = "~/Images/PhotoController/" + Structures.Id_show + "PhotoController.jpg";
+                string path = Server.MapPath(src);
+                PhotoController.SaveAs(path);
+            }
+            if (surfaces != null)
+            {
+                foreach (var surface in surfaces)
+                {
+                    if (surface.SeveralPhoto != null)
+                    {
 
-        //                    string src = "~/Images/Billboard/surfaces/" + surface.Id + ".jpg";
-        //                    string path = Server.MapPath(src);
-        //                    surface.SeveralPhoto.SaveAs(path);
-        //                }
-        //            }
-        //        }
+                        string src = "~/Images/surfaces/" + surface.Id + ".jpg";
+                        string path = Server.MapPath(src);
+                        surface.SeveralPhoto.SaveAs(path);
+                    }
+                }
+            }
 
             return RedirectToAction("AdvertisingDesign");
 
