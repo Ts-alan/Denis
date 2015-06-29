@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewBag.Title = "AdministrationPage";
+}
+
+
+<h3 style="text-align: center">Отчеты</h3>
+
+<div class="row">
+    <div class="col-md-3">
+        <h3>Личный кабинет</h3>
+        <p></p>
+        <p><a class="btn btn-info" href="@Url.Action("Manage", "Account")">Перейти &raquo;</a></p>
+    </div>
+    <div class="col-md-3">
+        <h3>Назначение новых пользователей</h3>
+        <p></p>
+        <p><a class="btn btn-info" href="@Url.Action("Register", "Account")">Перейти &raquo;</a></p>
+    </div>
+    <div class="col-md-3">
+        <h3>Редактирование справочников</h3>
+        <p></p>
+        <p>
+            <a class="btn btn-info" href="#">Перейти &raquo;</a>
+        </p>
+    </div>
+
+</div>

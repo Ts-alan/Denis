@@ -541,6 +541,7 @@
     <Content Include="Views\Data\ShowBillboardTablePartial.cshtml" />
     <Content Include="Views\Data\DeleteBilboard.cshtml" />
     <Content Include="Views\Data\EditAdvertisingDesign.cshtml" />
+    <Content Include="Views\Account\AdministrationPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Start\App_Data\" />

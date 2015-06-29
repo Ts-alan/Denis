@@ -138,6 +138,11 @@ namespace Sciencecom.Controllers
             return RedirectToAction("Manage", new { Message = message });
         }
 
+        public ActionResult AdministrationPage()
+        {
+            return View();
+        }
+
         //
         // GET: /Account/Manage
         public ActionResult Manage(ManageMessageId? message)
@@ -153,7 +158,7 @@ namespace Sciencecom.Controllers
 
             return View();
         }
-
+   
         //
         // POST: /Account/Manage
         [HttpPost]
