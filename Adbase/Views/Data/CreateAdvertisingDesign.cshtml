@@ -2,12 +2,13 @@
 @using Microsoft.AspNet.Identity.EntityFramework
 @using Newtonsoft.Json
 @using Sciencecom.Models
+@using ModelBinderDictionary = System.Web.ModelBinding.ModelBinderDictionary
 @model  Sciencecom.Models.AdvertisingStructure
 @{
     ViewBag.Title = "CreateBilboard";
     SelectList owners = new SelectList(new SciencecomEntities().Owners.Select(m => m.Name).ToList());
-
-    
+    SelectList view = new SelectList(new SciencecomEntities().TypeOfAdvertisingStructures.Where(a => a.Code == "BB").Select(m => m.Name).ToList());
+    string UnickKey = ViewBag.Code + ViewBag.UniqueNumber;
 
 }
 <script type="text/javascript">
@@ -142,9 +143,7 @@
 
         <div class="form-group">
             <label for="Locality">Вид</label>
-            @*@Html.Editor("Билборд")*@
-            @Html.DropDownList("TypeAdvertising", new SelectList(new[] { "Билборд", "" }))
-    
+            @Html.DropDownList("TypeAdvertising",view)
             @*@Html.ValidationMessageFor(model => model.Sides.Single(a => a.Id == ViewBag.Code).Name)*@
         </div>
 
@@ -156,7 +155,8 @@
 
         <div class="form-group">
             <label for="UniqueNumber">Уникальный номер</label>
-            @Html.EditorFor(model => model.UniqueNumber)
+            <input class="text-box single-line" name="UniqueNumber" type="text" value="@UnickKey">
+            @*@Html.EditorFor(model => model.UniqueNumber)*@
             @Html.ValidationMessageFor(model => model.UniqueNumber)
         </div>
 

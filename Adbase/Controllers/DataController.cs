@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.Ajax.Utilities;
 
+
 namespace Sciencecom.Controllers
 {
     using Microsoft.AspNet.Identity;
@@ -1496,6 +1497,7 @@ namespace Sciencecom.Controllers
         {
             //Guid code = new Guid("2a113891-d901-44cd-a247-8954c4cda089");
             ViewBag.Code = "BB";
+            ViewBag.UniqueNumber = TableAdapterExtensions.StringSymvol();
             return View();
         }
 
