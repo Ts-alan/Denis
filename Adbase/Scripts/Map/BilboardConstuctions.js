@@ -44,8 +44,6 @@
             //    clusterDisableClickZoom: false
             //});
             for (var i = 0; i < data.length; i++) {
-
-                
                     var placemark = new ymaps.GeoObject(
                     {
                         geometry: {

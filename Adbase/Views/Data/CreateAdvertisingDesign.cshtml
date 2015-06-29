@@ -143,7 +143,7 @@
         <div class="form-group">
             <label for="Locality">Вид</label>
             @*@Html.Editor("Билборд")*@
-            @Html.DropDownList("TypeAdvertising", new SelectList(new[] { "", "Билборд" }))
+            @Html.DropDownList("TypeAdvertising", new SelectList(new[] { "Билборд", "" }))
     
             @*@Html.ValidationMessageFor(model => model.Sides.Single(a => a.Id == ViewBag.Code).Name)*@
         </div>
@@ -214,14 +214,14 @@
             
             <div>
                 <label for="Breadth">Широта </label>
-                <input class="text-box single-line ui-autocomplete-input" data-val="true" data-val-required="Введите значение " type="text" name="Breadth" id="Shirota">
+                <input class="text-box single-line ui-autocomplete-input" data-val="true" data-val-required="Введите значение " type="text" name="Breadth" id="Dolgota">
                 <span class="field-validation-valid" data-valmsg-for="Breadth" data-valmsg-replace="true"></span>
                 @Html.ValidationMessageFor(model => model.Breadth)
             </div>
 
             <div>
                 <label for="Height">Долгота</label>
-                <input type="text" name="Height" id="Dolgota" data-val="true" data-val-required="Введите значение " id="Dolgota">
+                <input type="text" name="Height" data-val="true" data-val-required="Введите значение " id="Shirota">
                 <span class="field-validation-valid" data-valmsg-for="Height" data-valmsg-replace="true"></span>
                 @Html.ValidationMessageFor(model => model.Height)
             

@@ -1068,108 +1068,108 @@ namespace Sciencecom.Controllers
 
 
         //#endregion
-        //public IEnumerable<Billboards1> SearchBillbord(Billboards1 billboard, string startDay, string startMonth, string startYear, string finishDay, string finishMonth, string finishYear, string[] Story, string IsBillboardSocial, string owner)
-        //{
-        //    bool isSocial;
-        //    if (IsBillboardSocial == "Да")
-        //    {
-        //        isSocial = true;
-        //    }
-        //    else
-        //    {
-        //        isSocial = false;
-        //    }
-        //    context = new SciencecomEntities();
-        //    IEnumerable<Billboards1> result = context.Billboards1.ToList();
-        //    if (owner != "" && owner != null)
-        //    {
-        //        var id_Owner = context.Owners.Single(a => a.Name.ToLower() == owner.ToLower()).Id;
-        //        result = result.Where(m => m.Owner.Id == id_Owner);
-        //    }
-        //    if (billboard.Street1 != "")
-        //    {
-        //        result = result.Where(m => m.Street1.ToLower().Contains(billboard.Street1.ToLower()));
-        //    }
-        //    if (billboard.Street2 != "")
-        //    {
-        //        result = result.Where(m => m.Street2.ToLower().Contains(billboard.Street2.ToLower()));
-        //    }
-        //    if (billboard.FromStreet != "")
-        //    {
-        //        result = result.Where(m => m.FromStreet.ToLower().Contains(billboard.FromStreet.ToLower()));
-        //    }
-        //    if (billboard.Locality != "")
-        //    {
-        //        result = result.Where(m => m.Locality.ToLower().Contains(billboard.Locality.ToLower()));
-        //    }
+        public IEnumerable<AdvertisingStructure> SearchBillbord(AdvertisingStructure billboard, string startDay, string startMonth, string startYear, string finishDay, string finishMonth, string finishYear, string[] Story, string IsBillboardSocial, string owner)
+        {
+            bool isSocial;
+            if (IsBillboardSocial == "Да")
+            {
+                isSocial = true;
+            }
+            else
+            {
+                isSocial = false;
+            }
+            context = new SciencecomEntities();
+            IEnumerable<AdvertisingStructure> result = context.AdvertisingStructures.ToList();
+            //if (owner != "" && owner != null)
+            //{
+            //    var id_Owner = context.Owners.Single(a => a.Name.ToLower() == owner.ToLower()).Id;
+            //    result = result.Where(m => m.Owner.Id == id_Owner);
+            //}
+            //if (billboard.Street1 != "")
+            //{
+            //    result = result.Where(m => m.Street1.ToLower().Contains(billboard.Street1.ToLower()));
+            //}
+            //if (billboard.Street2 != "")
+            //{
+            //    result = result.Where(m => m.Street2.ToLower().Contains(billboard.Street2.ToLower()));
+            //}
+            //if (billboard.FromStreet != "")
+            //{
+            //    result = result.Where(m => m.FromStreet.ToLower().Contains(billboard.FromStreet.ToLower()));
+            //}
+            //if (billboard.Locality != "")
+            //{
+            //    result = result.Where(m => m.Locality.ToLower().Contains(billboard.Locality.ToLower()));
+            //}
 
-        //    result = result.Where(m => m.OnAgreement == billboard.OnAgreement).ToList();
-        //    int d = 0;
+            //result = result.Where(m => m.OnAgreement == billboard.OnAgreement).ToList();
+            //int d = 0;
 
-        //    if (startDay != "" && startMonth != "" && startYear != "")
-        //    {
-        //        DateTime startDate = new DateTime(Int32.Parse(startYear), Int32.Parse(startMonth), Int32.Parse(startDay));
-        //        result = result.Where(a => a.StartDate.Date >= startDate.Date).ToList();
-        //       }
-        //    if (finishDay != "" && finishMonth != "" && finishYear != "")
-        //    {
-        //        DateTime endDate = new DateTime(Int32.Parse(finishYear), Int32.Parse(finishMonth), Int32.Parse(finishDay));
-        //        result= result.Where(m => m.EndDate.Value.Date <= endDate.Date).ToList();
+            //if (startDay != "" && startMonth != "" && startYear != "")
+            //{
+            //    DateTime startDate = new DateTime(Int32.Parse(startYear), Int32.Parse(startMonth), Int32.Parse(startDay));
+            //    result = result.Where(a => a.StartDate.Date >= startDate.Date).ToList();
+            //   }
+            //if (finishDay != "" && finishMonth != "" && finishYear != "")
+            //{
+            //    DateTime endDate = new DateTime(Int32.Parse(finishYear), Int32.Parse(finishMonth), Int32.Parse(finishDay));
+            //    result= result.Where(m => m.EndDate.Value.Date <= endDate.Date).ToList();
 
-        //    }
-        //         result = result.Where(a =>
-        //        {
-        //            foreach (var side in a.Sides)
-        //            {
-        //                foreach (var surface in side.Surfaces)
-        //                {
-        //                    if (isSocial == true)
-        //                    {
-        //                        if (surface.TypeOfAdvertising == "social")
-        //                        {
-        //                            return true;
-        //                        }
-        //                    }
-        //                    else
-        //                    {
-        //                        if (surface.TypeOfAdvertising == "social")
-        //                        {
-        //                            return false;
-        //                        }
-        //                    }
-        //                }
-        //            }
-        //            if (isSocial == true)
-        //            {
-        //                return false;
-        //            }
-        //            else
-        //            {
-        //                return true;
-        //            }
-        //        }).ToList();
-        //         if (Story != null)
-        //         {
-        //             result = result.Where(a =>
-        //              {
-        //                  foreach (var j in Story)
-        //                  {
-        //                      foreach (var side in a.Sides)
-        //                      {
-        //                          foreach (var surface in side.Surfaces)
-        //                          {
-        //                              if (surface.Story == j)
-        //                              {
-        //                                  return true;
-        //                              }
-        //                          }
-        //                      }
-        //                  }
-        //                  return false;
-        //              });
-        //         }
-        //  return result;
-        //}
+            //}
+            //     result = result.Where(a =>
+            //    {
+            //        foreach (var side in a.Sides)
+            //        {
+            //            foreach (var surface in side.Surfaces)
+            //            {
+            //                if (isSocial == true)
+            //                {
+            //                    if (surface.TypeOfAdvertising == "social")
+            //                    {
+            //                        return true;
+            //                    }
+            //                }
+            //                else
+            //                {
+            //                    if (surface.TypeOfAdvertising == "social")
+            //                    {
+            //                        return false;
+            //                    }
+            //                }
+            //            }
+            //        }
+            //        if (isSocial == true)
+            //        {
+            //            return false;
+            //        }
+            //        else
+            //        {
+            //            return true;
+            //        }
+            //    }).ToList();
+            //     if (Story != null)
+            //     {
+            //         result = result.Where(a =>
+            //          {
+            //              foreach (var j in Story)
+            //              {
+            //                  foreach (var side in a.Sides)
+            //                  {
+            //                      foreach (var surface in side.Surfaces)
+            //                      {
+            //                          if (surface.Story == j)
+            //                          {
+            //                              return true;
+            //                          }
+            //                      }
+            //                  }
+            //              }
+            //              return false;
+            //          });
+            //     }
+          return result;
+        }
         //public ActionResult FindStreets(string term)
         //{
         //    var streets = from m in context.Streets where m.Name.Contains(term) select m;

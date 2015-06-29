@@ -61,9 +61,9 @@
 
 
             var str = String(coords[0].toPrecision(6).replace('.', ','));
-            $("#Shirota").val(str);
-            str = String(coords[1].toPrecision(6).replace('.', ','));
             $("#Dolgota").val(str);
+            str = String(coords[1].toPrecision(6).replace('.', ','));
+            $("#Shirota").val(str);
             
             dragend();
         });
