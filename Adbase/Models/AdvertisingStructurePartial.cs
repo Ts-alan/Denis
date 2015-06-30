@@ -23,15 +23,7 @@ namespace Sciencecom.Models
         public int Width { get; set; }
          [Required(ErrorMessage = "Введите значение начальной даты")]
         public int Space { get; set; }
-         //[Required(ErrorMessage = "Введите значение начальной даты")]
-        //public string TypeOfAdvertising { get; set; }
-        //public string Story { get; set; }
-        //[Required(ErrorMessage = "Введите значение начальной даты")]
-        //public System.DateTime StartDate { get; set; }
-        //[Required(ErrorMessage = "Введите значение конечной даты")]
-        //public System.DateTime EndDate { get; set; }
-        //public int Id { get; set; }
-      
+     
     }
 
      [MetadataType(typeof(AdvertisingStructureConstructionMetaData))]
@@ -70,7 +62,7 @@ namespace Sciencecom.Models
         [Display(Name = "Со стороны")]
         public string FromStreet { get; set; }
       
-        public string Comment { get; set; }
+       
 
        [DataType(DataType.Date)]
        [Required(ErrorMessage = "Введите значение начальной даты")]

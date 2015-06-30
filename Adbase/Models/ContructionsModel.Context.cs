@@ -33,10 +33,12 @@ namespace Sciencecom.Models
         public virtual DbSet<Owner> Owners { get; set; }
         public virtual DbSet<RelationshipOfAdvertising> RelationshipOfAdvertisings { get; set; }
         public virtual DbSet<Side> Sides { get; set; }
+        public virtual DbSet<Status> Status { get; set; }
         public virtual DbSet<Street> Streets { get; set; }
         public virtual DbSet<SubtopicForSocialAdvertising> SubtopicForSocialAdvertisings { get; set; }
         public virtual DbSet<Surface> Surfaces { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<TheElementOfTheRoadNetwork> TheElementOfTheRoadNetworks { get; set; }
         public virtual DbSet<TopicForSocialAdvertising> TopicForSocialAdvertisings { get; set; }
         public virtual DbSet<TypeOfAdvertisingStructure> TypeOfAdvertisingStructures { get; set; }
     

@@ -224,6 +224,9 @@
     <Compile Include="Models\sp_helpdiagrams_Result.cs">
       <DependentUpon>ContructionsModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Status.cs">
+      <DependentUpon>ContructionsModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Street.cs">
       <DependentUpon>ContructionsModel.tt</DependentUpon>
     </Compile>
@@ -237,6 +240,9 @@
       <DependentUpon>ContructionsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TableAdapterExtensions.cs" />
+    <Compile Include="Models\TheElementOfTheRoadNetwork.cs">
+      <DependentUpon>ContructionsModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TopicForSocialAdvertising.cs">
       <DependentUpon>ContructionsModel.tt</DependentUpon>
     </Compile>

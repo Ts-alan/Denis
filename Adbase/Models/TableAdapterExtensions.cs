@@ -29,16 +29,16 @@ namespace Sciencecom.Models
             return j;
         }
         //формирование нулей для UnickKey
-        public static string StringSymvol()
-        {
-            string SymbolString = "";
-            int number = Increment();
-            for (int s=8;s>number.ToString().Length;s--)
-            {
-               SymbolString=  "0" + SymbolString;
-            }
-            return SymbolString;
-        }
+        //public static string StringSymvol()
+        //{
+        //    string SymbolString = "";
+        //    int number = Increment();
+        //    for (int s=8;s>number.ToString().Length;s--)
+        //    {
+        //       SymbolString=  "0" + SymbolString;
+        //    }
+        //    return SymbolString;
+        //}
     }
 
     //public static class CustomHtmlHelpers

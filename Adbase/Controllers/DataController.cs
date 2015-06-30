@@ -1497,7 +1497,7 @@ namespace Sciencecom.Controllers
         {
             //Guid code = new Guid("2a113891-d901-44cd-a247-8954c4cda089");
             ViewBag.Code = "BB";
-            ViewBag.UniqueNumber = TableAdapterExtensions.StringSymvol();
+            //ViewBag.UniqueNumber = TableAdapterExtensions.StringSymvol();
             return View();
         }
 

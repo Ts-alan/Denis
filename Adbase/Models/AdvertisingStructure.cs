@@ -19,36 +19,35 @@ namespace Sciencecom.Models
             this.Sides = new HashSet<Side>();
         }
     
-        public double Height { get; set; }
-        public double Breadth { get; set; }
+        public Nullable<double> Height { get; set; }
+        public Nullable<double> Breadth { get; set; }
         public string Street1 { get; set; }
         public string House1 { get; set; }
         public string Street2 { get; set; }
         public string FromStreet { get; set; }
-        public string Comment { get; set; }
-        public string ContractNumber { get; set; }
-        public string PassportNumber { get; set; }
-        public System.DateTime StartDate { get; set; }
+        public Nullable<System.DateTime> StartDate { get; set; }
         public Nullable<System.DateTime> EndDate { get; set; }
         public string Locality { get; set; }
-        public bool OnAgreement { get; set; }
-        public int Owner_Id { get; set; }
+        public Nullable<bool> OnAgreement { get; set; }
+        public Nullable<int> Owner_Id { get; set; }
         public System.Guid Id { get; set; }
         public int Id_show { get; set; }
         public string Code { get; set; }
         public string UniqueNumber { get; set; }
-        public string Status { get; set; }
         public string C_ContractFinancialManagement { get; set; }
         public string C_PassportAdvertising { get; set; }
-        public System.DateTime PlannedInstallationDate { get; set; }
-        public System.DateTime DateOfReceiptOfTheApplication { get; set; }
-        public System.DateTime DateOfTakenPassport { get; set; }
-        public System.DateTime DateOfActualInstallation { get; set; }
-        public System.DateTime DateDismantling { get; set; }
-        public System.DateTime RevisionDate { get; set; }
+        public Nullable<System.DateTime> PlannedInstallationDate { get; set; }
+        public Nullable<System.DateTime> DateOfReceiptOfTheApplication { get; set; }
+        public Nullable<System.DateTime> DateOfTakenPassport { get; set; }
+        public Nullable<System.DateTime> DateOfActualInstallation { get; set; }
+        public Nullable<System.DateTime> DateDismantling { get; set; }
+        public Nullable<System.DateTime> RevisionDate { get; set; }
         public string Note_controller { get; set; }
-        public string TheElementOfTheRoadNetwork { get; set; }
+        public Nullable<System.Guid> TheElementOfTheRoadNetwork_id { get; set; }
+        public Nullable<System.Guid> Status_Id { get; set; }
     
+        public virtual Status Status { get; set; }
+        public virtual TheElementOfTheRoadNetwork TheElementOfTheRoadNetwork { get; set; }
         public virtual TypeOfAdvertisingStructure TypeOfAdvertisingStructure { get; set; }
         public virtual Owner Owner { get; set; }
         public virtual ICollection<Side> Sides { get; set; }

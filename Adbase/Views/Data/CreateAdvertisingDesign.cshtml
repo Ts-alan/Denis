@@ -1,4 +1,5 @@
-﻿@using Microsoft.AspNet.Identity
+﻿@using System.Data.Entity
+@using Microsoft.AspNet.Identity
 @using Microsoft.AspNet.Identity.EntityFramework
 @using Newtonsoft.Json
 @using Sciencecom.Models
@@ -6,9 +7,19 @@
 @model  Sciencecom.Models.AdvertisingStructure
 @{
     ViewBag.Title = "CreateBilboard";
+    //Собственники
     SelectList owners = new SelectList(new SciencecomEntities().Owners.Select(m => m.Name).ToList());
-    SelectList view = new SelectList(new SciencecomEntities().TypeOfAdvertisingStructures.Where(a => a.Code == "BB").Select(m => m.Name).ToList());
-    string UnickKey = ViewBag.Code + ViewBag.UniqueNumber;
+    //Вид
+    List<string> ListTypeAdvertising = new SciencecomEntities().TypeOfAdvertisingStructures.Select(m => m.Name).ToList();
+    ListTypeAdvertising.Add("");
+    SelectList view = new SelectList(ListTypeAdvertising);
+    
+    //Элемент улично-дорожной сети
+    var ListTypeElementOfTheRoadNetworkName = new SciencecomEntities().TheElementOfTheRoadNetworks.Select(a => new { id = a.id, Value = a.TheElementOfTheRoadNetworkName }).ToList();
+    
+    //Статус
+    var Status = new SciencecomEntities().Status.Select(a => new { id = a.id, Value = a.NameStatus }).ToList();   
+
 
 }
 <script type="text/javascript">
@@ -57,7 +68,7 @@
                     $(this).val(temp1);
                 });
             });
-        }
+       }
 
 
 //дублирование для остальных поверхностей при добавлении
@@ -143,19 +154,19 @@
 
         <div class="form-group">
             <label for="Locality">Вид</label>
-            @Html.DropDownList("TypeAdvertising",view)
+            @Html.DropDownList("TypeAdvertising", view)
             @*@Html.ValidationMessageFor(model => model.Sides.Single(a => a.Id == ViewBag.Code).Name)*@
         </div>
 
         <div class="form-group">
             <label for="Status">Статус</label>
-            @Html.DropDownList("Status", new SelectList(new[] { "На согласовании", "Согласовано", "Существующий", "Демонтировано" }),"")
+            @Html.DropDownListFor(a => a.Status_Id, new SelectList(Status, "id", "Value"), "")
             @Html.ValidationMessageFor(model => model.Status)
         </div>
 
         <div class="form-group">
             <label for="UniqueNumber">Уникальный номер</label>
-            <input class="text-box single-line" name="UniqueNumber" type="text" value="@UnickKey">
+            <input class="text-box single-line" name="UniqueNumber" type="text" >
             @*@Html.EditorFor(model => model.UniqueNumber)*@
             @Html.ValidationMessageFor(model => model.UniqueNumber)
         </div>
@@ -175,7 +186,8 @@
 
         <div class="form-group" style="margin-left: 200px">
             <label for="TheElementOfTheRoadNetwork">Элемент улично-дорожной сети</label>
-            @Html.DropDownList("TheElementOfTheRoadNetwork", new SelectList(new[] {"", "Перекресток ", "Прегон", "Центр перекрестка" }))
+            @Html.DropDownListFor(a => a.TheElementOfTheRoadNetwork_id, new SelectList(ListTypeElementOfTheRoadNetworkName, "id", "Value"), "")
+            @Html.ValidationMessageFor(a => a.TheElementOfTheRoadNetwork);
         </div>
     </div>
 
