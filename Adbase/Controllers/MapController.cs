@@ -111,7 +111,7 @@ namespace Sciencecom.Controllers
                 Street1 = street1,
                 Street2 = street2,
                 FromStreet = fromStreet,
-                OnAgreement = OnAgreement
+            
             };
             IEnumerable<AdvertisingStructure> result =
             dataController.SearchBillbord(mc, startDay, startMonth, startYear, lBillboardFinishDay,

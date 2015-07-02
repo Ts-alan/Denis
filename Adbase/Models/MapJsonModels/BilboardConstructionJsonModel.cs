@@ -18,7 +18,7 @@ namespace Sciencecom.Models.MapJsonModels
             this.StartDate = mc.StartDate.Value;
             this.EndDate = mc.EndDate.Value;
             this.Locality = mc.Locality;
-            this.OnAgreement = mc.OnAgreement.Value;
+         
             this.Owner_Id = mc.Owner_Id.Value;
             this.Id = mc.Id;
             this.Id_show = mc.Id_show;
@@ -35,7 +35,7 @@ namespace Sciencecom.Models.MapJsonModels
         public System.DateTime StartDate { get; set; }
         public System.DateTime EndDate { get; set; }
         public string Locality { get; set; }
-        public bool OnAgreement { get; set; }
+       
         public int Owner_Id { get; set; }
         public System.Guid Id { get; set; }
         public int Id_show { get; set; }

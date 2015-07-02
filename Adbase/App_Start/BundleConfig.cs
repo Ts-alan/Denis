@@ -38,7 +38,7 @@ namespace Sciencecom
                       "~/Content/jquery.bxslider.css"));
             
             bundles.Add(new StyleBundle("~/Content/Map").Include(
-            "~/Scripts/Autocomplete.js",
+            //"~/Scripts/Autocomplete.js",
             "~/Scripts/AddPlacamerkToMap.js"
            ));
             //css для Grid

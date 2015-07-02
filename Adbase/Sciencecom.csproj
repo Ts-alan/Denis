@@ -202,6 +202,7 @@
     <Compile Include="Models\MapJsonModels\IllegalConstructionJsonModel.cs" />
     <Compile Include="Models\MapJsonModels\LightConstructionJsonModel.cs" />
     <Compile Include="Models\MapJsonModels\MetalConstructionJsonModel.cs" />
+    <Compile Include="Models\ModelsSupportForEf.cs" />
     <Compile Include="Models\Object.cs">
       <DependentUpon>ContructionsModel.tt</DependentUpon>
     </Compile>

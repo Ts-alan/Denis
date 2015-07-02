@@ -28,7 +28,6 @@ namespace Sciencecom.Models
         public Nullable<System.DateTime> StartDate { get; set; }
         public Nullable<System.DateTime> EndDate { get; set; }
         public string Locality { get; set; }
-        public Nullable<bool> OnAgreement { get; set; }
         public Nullable<int> Owner_Id { get; set; }
         public System.Guid Id { get; set; }
         public int Id_show { get; set; }

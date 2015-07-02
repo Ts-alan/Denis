@@ -1620,22 +1620,22 @@ namespace Sciencecom.Controllers
         //    return result;
         //}
 
-        public ActionResult Surface(string side,int id)
+        public ActionResult Surface(string side, int id, int numberSurface)
         {
             //ViewBag.Topic = context.TopicForSocialAdvertisings;
             ViewBag.Incerment = id;
             ViewBag.Side = side;
+            ViewBag.numberSurface = numberSurface;
             return View();
         }
         public ActionResult EditAdvertisingDesign(Guid? id)
         {
-            //if (id == null)
-            //{
-            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            //}
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
 
-            //AdvertisingStructure mc = context.AdvertisingStructures.Find(id);
-            AdvertisingStructure mc = context.AdvertisingStructures.First();
+            AdvertisingStructure mc = context.AdvertisingStructures.Find(id);
             if (mc == null)
             {
                 return HttpNotFound();

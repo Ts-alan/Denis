@@ -23,6 +23,9 @@ namespace Sciencecom.Models
         public int Width { get; set; }
          [Required(ErrorMessage = "Введите значение начальной даты")]
         public int Space { get; set; }
+
+         [Required(ErrorMessage = "Введите значение ")]
+         public string Identification { get; set; }
      
     }
 
@@ -104,5 +107,11 @@ namespace Sciencecom.Models
 
        [Required(ErrorMessage = "Введите значение уникального ключа")]
        public string UniqueNumber { get; set; }
+
+       [Required(ErrorMessage = "Выберете значение")]
+       public Nullable<System.Guid> TheElementOfTheRoadNetwork_id { get; set; }
+          
+       [Required(ErrorMessage = "Выберете значение")]
+       public Nullable<System.Guid> Status_Id { get; set; }
     }
 }

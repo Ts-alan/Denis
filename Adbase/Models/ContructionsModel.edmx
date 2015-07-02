@@ -18,7 +18,6 @@
           <Property Name="StartDate" Type="datetime" />
           <Property Name="EndDate" Type="datetime" />
           <Property Name="Locality" Type="nchar" MaxLength="10" />
-          <Property Name="OnAgreement" Type="bit" />
           <Property Name="Owner_Id" Type="int" />
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Id_show" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
@@ -125,6 +124,7 @@
           <Property Name="Space" Type="int" />
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Side_Id" Type="uniqueidentifier" />
+          <Property Name="Identification" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -460,7 +460,6 @@
           <Property Name="StartDate" Type="DateTime" Precision="3" />
           <Property Name="EndDate" Type="DateTime" Precision="3" />
           <Property Name="Locality" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="OnAgreement" Type="Boolean" />
           <Property Name="Owner_Id" Type="Int32" />
           <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="Id_show" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
@@ -581,6 +580,7 @@
           <Property Name="Space" Type="Int32" />
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Side_Id" Type="Guid" />
+          <Property Name="Identification" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Side" Relationship="SciencecomModel.FK_Surfaces_Sides" FromRole="Surface" ToRole="Side" />
         </EntityType>
         <EntityType Name="sysdiagram">
@@ -776,7 +776,6 @@
                 <ScalarProperty Name="Id_show" ColumnName="Id_show" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Owner_Id" ColumnName="Owner_Id" />
-                <ScalarProperty Name="OnAgreement" ColumnName="OnAgreement" />
                 <ScalarProperty Name="Locality" ColumnName="Locality" />
                 <ScalarProperty Name="EndDate" ColumnName="EndDate" />
                 <ScalarProperty Name="StartDate" ColumnName="StartDate" />
@@ -880,6 +879,7 @@
           <EntitySetMapping Name="Surfaces">
             <EntityTypeMapping TypeName="SciencecomModel.Surface">
               <MappingFragment StoreEntitySet="Surfaces">
+                <ScalarProperty Name="Identification" ColumnName="Identification" />
                 <ScalarProperty Name="Side_Id" ColumnName="Side_Id" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Space" ColumnName="Space" />

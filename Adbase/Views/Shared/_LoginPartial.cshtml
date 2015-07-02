@@ -6,9 +6,6 @@
     @Html.AntiForgeryToken()
 
     <ul class="nav navbar-nav navbar-right">
-        <li>
-            @Html.ActionLink("Личный кабинет: " + User.Identity.GetUserName(), "Manage", "Account", routeValues: null, htmlAttributes: new { title = "Управление" })
-        </li>
         <li><a href="javascript:document.getElementById('logoutForm').submit()">Выйти</a></li>
     </ul>
     }

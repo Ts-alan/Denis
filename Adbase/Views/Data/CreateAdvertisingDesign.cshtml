@@ -10,10 +10,12 @@
     //Собственники
     SelectList owners = new SelectList(new SciencecomEntities().Owners.Select(m => m.Name).ToList());
     //Вид
-    List<string> ListTypeAdvertising = new SciencecomEntities().TypeOfAdvertisingStructures.Select(m => m.Name).ToList();
-    ListTypeAdvertising.Add("");
-    SelectList view = new SelectList(ListTypeAdvertising);
-    
+    var ListTypeAdvertising = new SciencecomEntities().TypeOfAdvertisingStructures.ToList();
+    var ListTypeAdvertisingSelected = ListTypeAdvertising.Single(a => a.Code == ViewBag.Code).id;
+    ListTypeAdvertising.Add(null);
+    ListTypeAdvertising.Sort();
+   
+   
     //Элемент улично-дорожной сети
     var ListTypeElementOfTheRoadNetworkName = new SciencecomEntities().TheElementOfTheRoadNetworks.Select(a => new { id = a.id, Value = a.TheElementOfTheRoadNetworkName }).ToList();
     
@@ -25,8 +27,8 @@
 <script type="text/javascript">
     var i = 0;
     
-    $(document).ready(function() {
-
+    $(document).ready(function () {
+ 
 
         //выпадающий список на согласование
         $("[name=OnAgreement]").change(function() {
@@ -55,7 +57,7 @@
             $(".each2 input").eq(0).on('change', function() {
                 var temp1 = $(this).val();
                 //вычисление площади
-                var temp2 = $(".each1 input").val();
+                var temp2 = $(".each1 input").va();
                 $(".each3 input").val(temp1 * (temp2 === "" ? 0 : temp2));
 
                 $(".each2 input").each(function() {
@@ -96,7 +98,6 @@
                     "</div>" +
                     "<div class=\"form-group\">" +
                     "<div class=\"col-md-10\">" +
-                    //"<a href=\"#\" id=\"AddButton" + i + "\" onclick=AddSurface(" + i + ") style=\"color: #428bca; font-weight: bold;\">+Добавить площадь</a>" +
                     " <select class=\"text-box single-line\" id=\"AddButton" + i + "\" onchange=AddSurface(" + i + ") name=\"CountSurfuce\" type=\"text\" data-val=\"true\" data-val-required=\"Укажите кол-во сторон\">" +
                     "<option></option>" +
                     "<option>1</option>" +
@@ -115,13 +116,13 @@
             }
         }
     }
-
+    //Добавить поверхность
     function AddSurface(i) {
         var count = $("#AddButton" + i + "").val();
 
         $("[side=" + i + "]").remove();
-        for (var j = 0; j < count; j++) {
-            $.ajax('@Url.Action("Surface", "Data")', { async: false, data: { side: i, id: Increment() } })
+        for (var j = 1; j <= count; j++) {
+            $.ajax('@Url.Action("Surface", "Data")', { async: false, data: { side: i, id: Increment(),numberSurface:j } })
             .success(function (e) {
             $("#InsertPartial"+i+"").before(e);
           });
@@ -154,14 +155,14 @@
 
         <div class="form-group">
             <label for="Locality">Вид</label>
-            @Html.DropDownList("TypeAdvertising", view)
+            @Html.DropDownList("TypeAdvertising", new SelectList(ListTypeAdvertising, "id", "Name", ListTypeAdvertisingSelected))
             @*@Html.ValidationMessageFor(model => model.Sides.Single(a => a.Id == ViewBag.Code).Name)*@
         </div>
 
         <div class="form-group">
             <label for="Status">Статус</label>
             @Html.DropDownListFor(a => a.Status_Id, new SelectList(Status, "id", "Value"), "")
-            @Html.ValidationMessageFor(model => model.Status)
+            @Html.ValidationMessageFor(model => model.Status_Id)
         </div>
 
         <div class="form-group">
@@ -187,7 +188,7 @@
         <div class="form-group" style="margin-left: 200px">
             <label for="TheElementOfTheRoadNetwork">Элемент улично-дорожной сети</label>
             @Html.DropDownListFor(a => a.TheElementOfTheRoadNetwork_id, new SelectList(ListTypeElementOfTheRoadNetworkName, "id", "Value"), "")
-            @Html.ValidationMessageFor(a => a.TheElementOfTheRoadNetwork);
+            @Html.ValidationMessageFor(a => a.TheElementOfTheRoadNetwork_id);
         </div>
     </div>
 

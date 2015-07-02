@@ -42,11 +42,15 @@
 
 <div side="@ViewBag.Side">
     <input type="hidden" name="[@i].SideOfSurface" value="@ViewBag.Side">
-    <h3 style="margin-left: 150px">Поверхность </h3>
+    <h3 style="margin-left: 150px">Поверхность @ViewBag.numberSurface </h3>
 
     <div class="form-inline">
         <hr />
         <div class="form-group">
+            <label for="[@i].Identification">Идентификация поверхности</label>
+            @Html.EditorFor(model => model[i].Identification)
+            @Html.ValidationMessageFor(model => model[i].Identification)
+
             <label for="[@i].Height">Высота</label>
             @Html.EditorFor(model => model[i].Height)
             @Html.ValidationMessageFor(model => model[i].Height)
@@ -67,7 +71,7 @@
                 <input type="file" name="[@i].SeveralPhoto" accept="image/jpeg" data-val-required="Выберите файл для загрузки" /><br />
                 @Html.Raw("Не более 1 МБ")
 
-            @*</div>*@
+            </div>
         </div>
     </div>
 </div>
