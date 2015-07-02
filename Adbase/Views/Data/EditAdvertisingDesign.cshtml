@@ -1,24 +1,42 @@
-﻿@using Microsoft.AspNet.Identity
+﻿@using System.Data.Entity
+@using Microsoft.AspNet.Identity
 @using Microsoft.AspNet.Identity.EntityFramework
 @using Newtonsoft.Json
 @using Sciencecom.Models
+@using ModelBinderDictionary = System.Web.ModelBinding.ModelBinderDictionary
 @model  Sciencecom.Models.AdvertisingStructure
 @{
-    ViewBag.Title = "CreateAdvertisingDesign";
-    SelectList owners = new SelectList(new SciencecomEntities().Owners.Select(a => new { Id = a.Id, Value = a.Name }).ToList());
-    Layout = null;
+    ViewBag.Title = "CreateBilboard";
+    //Собственники
+    var owners =new SciencecomEntities().Owners.ToList();
+    owners.Insert(0, null);
+    
+   //Вид
+    var ListTypeAdvertising = new SciencecomEntities().TypeOfAdvertisingStructures.ToList();
+    var ListTypeAdvertisingSelected = Model.TypeOfAdvertisingStructure.id;
+    ListTypeAdvertising.Insert(0,null);
+  
 
+
+    //Элемент улично-дорожной сети
+    var ListTypeElementOfTheRoadNetworkName = new SciencecomEntities().TheElementOfTheRoadNetworks.Select(a => new { id = a.id, Value = a.TheElementOfTheRoadNetworkName }).ToList();
+    ListTypeElementOfTheRoadNetworkName.Insert(0, null);
+
+    //Статус
+    var Status = new SciencecomEntities().Status.Select(a => new { id = a.id, Value = a.NameStatus }).ToList();
+    Status.Insert(0, null);
 
 }
 <script type="text/javascript">
     var i = 0;
 
-    $(document).ready(function() {
+    $(document).ready(function () {
 
 
         //выпадающий список на согласование
-        $("[name=OnAgreement]").change(function() {
+        $("[name=OnAgreement]").change(function () {
             var selectIndex = $("[name=OnAgreement] option:selected").val();
+            console.log(selectIndex);
             if (selectIndex == "true") {
                 $("#ContractHide").css("display", "block");
             }
@@ -29,36 +47,36 @@
         });
 
         function InsertOn() {
-            $(".each1 input").eq(0).on('change', function() {
+            $(".each1 input").eq(0).on('change', function () {
                 var temp1 = $(this).val();
                 //вычисление площади
                 var temp2 = $(".each2 input").val();
                 $(".each3 input").val(temp1 * (temp2 === "" ? 0 : temp2));
 
-                $(".each1 input").each(function() {
+                $(".each1 input").each(function () {
                     $(this).val(temp1);
                 });
             });
-            $(".each2 input").eq(0).on('change', function() {
+            $(".each2 input").eq(0).on('change', function () {
                 var temp1 = $(this).val();
                 //вычисление площади
-                var temp2 = $(".each1 input").val();
+                var temp2 = $(".each1 input").va();
                 $(".each3 input").val(temp1 * (temp2 === "" ? 0 : temp2));
 
-                $(".each2 input").each(function() {
+                $(".each2 input").each(function () {
                     $(this).val(temp1);
                 });
             });
-            $(".each3 input").eq(0).on('change', function() {
+            $(".each3 input").eq(0).on('change', function () {
                 var temp1 = $(this).val();
-                $(".each3 input").each(function() {
-                   $(this).val(temp1);
+                $(".each3 input").each(function () {
+                    $(this).val(temp1);
                 });
             });
         }
 
 
-//дублирование для остальных поверхностей при добавлении
+        //дублирование для остальных поверхностей при добавлении
         function duplicationSurfaces() {
             $(".each1 input").trigger('change');
             $(".each2 input").trigger('change');
@@ -72,7 +90,7 @@
         var CountSizes = $('#CountSizes').val();
         $("#CountSize").val(CountSizes);
         if (CountSizes != "") {
-            $("[code]").each(function(indx, element) {
+            $("[code]").each(function (indx, element) {
                 element.remove();
             });
             for (var i = 1; i <= CountSizes; i++) {
@@ -101,18 +119,18 @@
             }
         }
     }
-
+    //Добавить поверхность
     function AddSurface(i) {
         var count = $("#AddButton" + i + "").val();
 
         $("[side=" + i + "]").remove();
-        for (var j = 0; j < count; j++) {
-            $.ajax('@Url.Action("Surface", "Data")', { async: false, data: { side: i, id: Increment() } })
+        for (var j = 1; j <= count; j++) {
+            $.ajax('@Url.Action("Surface", "Data")', { async: false, data: { side: i, id: Increment(), numberSurface: j } })
             .success(function (e) {
-            $("#InsertPartial"+i+"").before(e);
-          });
+                $("#InsertPartial" + i + "").before(e);
+            });
         }
-}
+    }
 
     function Increment() {
         return i++;
@@ -121,7 +139,7 @@
 <h3> ДОБАВИТЬ РЕКЛАМНУЮ КОНСТРУКЦИЮ</h3>
 
 @Scripts.Render("~/Content/Map")
-@using (Html.BeginForm("AdvertisingDesign", "Data", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("CreateAdvertisingDesign", "Data", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <input type="hidden" name="Code" value="@ViewBag.Code">
     <h3> 1. Общие данные о рекламной конструкции</h3>
@@ -135,26 +153,25 @@
 
         <div class="form-group">
             <label for="Owner">Собственник</label>
-            @Html.DropDownListFor(a => a.Owner.Name, new SelectList(owners, "id", "Value"), Model.Owner.Name)
+            @Html.DropDownList("SelectOwner", new SelectList(owners, "Id", "Name", Model.Owner.Id))
         </div>
 
         <div class="form-group">
             <label for="Locality">Вид</label>
-            @*@Html.Editor("Билборд")*@
-            @Html.DropDownList("TypeAdvertising", new SelectList(new[] { "", "Билборд" }))
-
+            @Html.DropDownList("TypeAdvertising", new SelectList(ListTypeAdvertising, "id", "Name", ListTypeAdvertisingSelected))
             @*@Html.ValidationMessageFor(model => model.Sides.Single(a => a.Id == ViewBag.Code).Name)*@
         </div>
 
         <div class="form-group">
             <label for="Status">Статус</label>
-            @Html.DropDownList("Status", new SelectList(new[] { "На согласовании", "Согласовано", "Существующий", "Демонтировано" }), "")
-            @Html.ValidationMessageFor(model => model.Status)
+            @Html.DropDownListFor(a => a.Status_Id, new SelectList(Status, "id", "Value"), Model.Status.id)
+            @Html.ValidationMessageFor(model => model.Status_Id)
         </div>
 
         <div class="form-group">
             <label for="UniqueNumber">Уникальный номер</label>
-            @Html.EditorFor(model => model.UniqueNumber)
+            @Html.EditorFor(a=>a.UniqueNumber)
+            @*@Html.EditorFor(model => model.UniqueNumber)*@
             @Html.ValidationMessageFor(model => model.UniqueNumber)
         </div>
 
@@ -173,7 +190,8 @@
 
         <div class="form-group" style="margin-left: 200px">
             <label for="TheElementOfTheRoadNetwork">Элемент улично-дорожной сети</label>
-            @Html.DropDownList("TheElementOfTheRoadNetwork", new SelectList(new[] { "", "Перекресток ", "Прегон", "Центр перекрестка" }))
+            @Html.DropDownListFor(a => a.TheElementOfTheRoadNetwork_id, new SelectList(ListTypeElementOfTheRoadNetworkName, "id", "Value"), "")
+            @Html.ValidationMessageFor(a => a.TheElementOfTheRoadNetwork_id)
         </div>
     </div>
 
@@ -212,14 +230,15 @@
 
             <div>
                 <label for="Breadth">Широта </label>
-                <input class="text-box single-line ui-autocomplete-input" data-val="true" data-val-required="Введите значение " type="text" name="Breadth" id="Shirota">
+                <input class="text-box single-line ui-autocomplete-input" data-val="true" data-val-required="Введите значение " type="text" name="Breadth" id="Dolgota">
+                @*@Html.EditorFor(a=>a.Breadth)*@
                 <span class="field-validation-valid" data-valmsg-for="Breadth" data-valmsg-replace="true"></span>
                 @Html.ValidationMessageFor(model => model.Breadth)
             </div>
 
             <div>
                 <label for="Height">Долгота</label>
-                <input type="text" name="Height" id="Dolgota" data-val="true" data-val-required="Введите значение " id="Dolgota">
+                <input type="text" name="Height" data-val="true" data-val-required="Введите значение " id="Shirota">
                 <span class="field-validation-valid" data-valmsg-for="Height" data-valmsg-replace="true"></span>
                 @Html.ValidationMessageFor(model => model.Height)
 
@@ -375,7 +394,7 @@
         <input type="button" value="Задать координаты" onclick="SetCoordinates()" />*@
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Изменить" class="btn btn-default" />
+            <input type="submit" value="Добавить" class="btn btn-default" />
         </div>
     </div>
 

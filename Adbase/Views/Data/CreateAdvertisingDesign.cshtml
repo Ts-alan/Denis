@@ -12,8 +12,8 @@
     //Вид
     var ListTypeAdvertising = new SciencecomEntities().TypeOfAdvertisingStructures.ToList();
     var ListTypeAdvertisingSelected = ListTypeAdvertising.Single(a => a.Code == ViewBag.Code).id;
-    ListTypeAdvertising.Add(null);
-    ListTypeAdvertising.Sort();
+    ListTypeAdvertising.Insert(0,null);
+    
    
    
     //Элемент улично-дорожной сети
@@ -188,7 +188,7 @@
         <div class="form-group" style="margin-left: 200px">
             <label for="TheElementOfTheRoadNetwork">Элемент улично-дорожной сети</label>
             @Html.DropDownListFor(a => a.TheElementOfTheRoadNetwork_id, new SelectList(ListTypeElementOfTheRoadNetworkName, "id", "Value"), "")
-            @Html.ValidationMessageFor(a => a.TheElementOfTheRoadNetwork_id);
+            @Html.ValidationMessageFor(a => a.TheElementOfTheRoadNetwork_id)
         </div>
     </div>
 
