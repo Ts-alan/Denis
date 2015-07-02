@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Sciencecom.Models
 {
@@ -44,7 +45,8 @@ namespace Sciencecom.Models
         [Required]
         public Nullable<float> Height { get; set; }
 
-        [Required]
+
+     
         public Nullable<float> Breadth { get; set; }
 
         [StringLength(50, ErrorMessage = "не более 50 символов")]
@@ -64,9 +66,9 @@ namespace Sciencecom.Models
         [Required(ErrorMessage = "Введите значение Со стороны")]
         [Display(Name = "Со стороны")]
         public string FromStreet { get; set; }
-      
-       
 
+
+      
        [DataType(DataType.Date)]
        [Required(ErrorMessage = "Введите значение начальной даты")]
        public string StartDate { get; set; }

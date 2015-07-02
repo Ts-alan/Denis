@@ -11,7 +11,6 @@
         myPlacemark.events.add('dragend', function (e) {
 
             var coords = myPlacemark.geometry.getCoordinates();
-            console.log(coords);
             var str = String(coords[0].toPrecision(6));
             str = str.replace('.', ',');
             //if (!isNaN(str)) {
@@ -19,7 +18,7 @@
             //} else {
             //    $("#Shirota").val("");
             //}
-            $("#Shirota").val(str);
+            $("#Height").val(str);
             str = String(coords[1].toPrecision(6));
             str = str.replace('.', ',');
             //if (!isNaN(str)) {
@@ -27,7 +26,7 @@
             //} else {
             //    $("#Dolgota").val("");
             //} 
-            $("#Dolgota").val(str);
+            $("#Breadth").val(str);
         });
     }
 
@@ -61,9 +60,9 @@
 
 
             var str = String(coords[0].toPrecision(6).replace('.', ','));
-            $("#Dolgota").val(str);
+            $("#Breadth").val(str);
             str = String(coords[1].toPrecision(6).replace('.', ','));
-            $("#Shirota").val(str);
+            $("#Height").val(str);
             
             dragend();
         });
@@ -74,14 +73,14 @@
 
     function SetCoordinates() {
 
-        if ($("#Shirota").val() != "" && $("#Dolgota").val() != "") {
+        if ($("#Height").val() != "" && $("#Breadth").val() != "") {
             //удалить обьект
             if (myPlacemark != undefined) {
 
                 myMap.geoObjects.remove(myPlacemark);
             }
             //присвоить обьект
-            myPlacemark = new ymaps.Placemark([$("#Shirota").val(), $("#Dolgota").val()],
+            myPlacemark = new ymaps.Placemark([$("#Height").val(), $("#Breadth").val()],
             {},
             {
                 draggable: true

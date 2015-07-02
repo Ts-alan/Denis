@@ -31,7 +31,13 @@
     var i = 0;
 
     $(document).ready(function () {
-
+        // добавление на карту обьектаиз инпутов при загрузке
+        myPlacemark = new ymaps.Placemark([$("#Height").val(), $("#Breadth").val()],
+       {},
+       {
+           draggable: true
+       });
+        myMap.geoObjects.add(myPlacemark);
 
         //выпадающий список на согласование
         $("[name=OnAgreement]").change(function () {
@@ -230,15 +236,15 @@
 
             <div>
                 <label for="Breadth">Широта </label>
-                <input class="text-box single-line ui-autocomplete-input" data-val="true" data-val-required="Введите значение " type="text" name="Breadth" id="Dolgota">
-                @*@Html.EditorFor(a=>a.Breadth)*@
+
+                @Html.EditorFor(a=>a.Breadth)
                 <span class="field-validation-valid" data-valmsg-for="Breadth" data-valmsg-replace="true"></span>
                 @Html.ValidationMessageFor(model => model.Breadth)
             </div>
 
             <div>
                 <label for="Height">Долгота</label>
-                <input type="text" name="Height" data-val="true" data-val-required="Введите значение " id="Shirota">
+                @Html.EditorFor(a => a.Height)
                 <span class="field-validation-valid" data-valmsg-for="Height" data-valmsg-replace="true"></span>
                 @Html.ValidationMessageFor(model => model.Height)
 
