@@ -3,6 +3,9 @@
 @model System.Collections.Generic.List<Sciencecom.Models.Surface>
 @{
     int i = ViewBag.Incerment;
+
+    //Идентификация
+    var Identification = new SciencecomEntities().Identifications.ToList();
 }
 <script type="text/javascript">
     @*$(document).ready(function() {
@@ -45,25 +48,32 @@
     <h3 style="margin-left: 150px">Поверхность @ViewBag.numberSurface </h3>
 
     <div class="form-inline">
-        <hr />
-        <div class="form-group">
-            <label for="[@i].Identification">Идентификация поверхности</label>
-            @Html.EditorFor(model => model[i].Identification)
-            @*@Html.ValidationMessageFor(model => model[i].Identification)*@
+        <hr/>
+            <div class="form-group">
+                <label for="[@i].Identification">Идентификация поверхности</label>
+                @Html.DropDownListFor(model => model[i].Identification, new SelectList(Identification, "id", "IdentificationName"), "")
+                @*@Html.ValidationMessageFor(model => model[i].Identification)*@
 
-            <label for="[@i].Height">Высота</label>
-            @Html.EditorFor(model => model[i].Height)
-            @*@Html.ValidationMessageFor(model => model[i].Height)*@
+                <label for="[@i].Identification">Номер поверхности </label>
+                @Html.EditorFor(model => model[i].NumberSurface)
+                @*@Html.ValidationMessageFor(model => model[i].Identification)*@
+            </div>
 
-            <label for="[@i].Width">Ширина</label>
-            @Html.EditorFor(model => model[i].Width)
-            @*@Html.ValidationMessageFor(model => model[i].Width)*@
+            <div class="form-group">
 
-            <label for="[@i].Space">Площадь</label>
-            @Html.EditorFor(model => model[i].Space)
-            @*@Html.ValidationMessageFor(model => model[i].Space)*@
+                <label for="[@i].Height">Высота</label>
+                @Html.EditorFor(model => model[i].Height)
+                @*@Html.ValidationMessageFor(model => model[i].Height)*@
+
+                <label for="[@i].Width">Ширина</label>
+                @Html.EditorFor(model => model[i].Width)
+                @*@Html.ValidationMessageFor(model => model[i].Width)*@
+
+                <label for="[@i].Space">Площадь</label>
+                @Html.EditorFor(model => model[i].Space)
+                @*@Html.ValidationMessageFor(model => model[i].Space)*@
+            </div>
         </div>
-    </div>
     <div class="form-horizontal">
         <div class="form-group">
             @Html.Label("Фотография", new { @class = "control-label col-md-2" })

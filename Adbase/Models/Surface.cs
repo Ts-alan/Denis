@@ -19,8 +19,10 @@ namespace Sciencecom.Models
         public Nullable<int> Space { get; set; }
         public int Id { get; set; }
         public Nullable<System.Guid> Side_Id { get; set; }
-        public string Identification { get; set; }
+        public Nullable<System.Guid> Identification_id { get; set; }
+        public Nullable<int> NumberSurface { get; set; }
     
+        public virtual Identification Identification { get; set; }
         public virtual Side Side { get; set; }
     }
 }

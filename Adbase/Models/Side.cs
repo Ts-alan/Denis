@@ -22,9 +22,11 @@ namespace Sciencecom.Models
         public string Name { get; set; }
         public System.Guid AdvertisingStructures_Id { get; set; }
         public System.Guid Id { get; set; }
+        public System.Guid DirectionSide_id { get; set; }
         public string DateDismantling { get; set; }
     
         public virtual AdvertisingStructure AdvertisingStructure { get; set; }
+        public virtual DirectionSide DirectionSide { get; set; }
         public virtual ICollection<Surface> Surfaces { get; set; }
     }
 }

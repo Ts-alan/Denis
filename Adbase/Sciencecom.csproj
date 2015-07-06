@@ -193,6 +193,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ContructionsModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\DirectionSide.cs">
+      <DependentUpon>ContructionsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Identification.cs">
+      <DependentUpon>ContructionsModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\IllegalConstruction.cs">
       <DependentUpon>ContructionsModel.tt</DependentUpon>
