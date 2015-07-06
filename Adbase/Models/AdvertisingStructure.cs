@@ -27,7 +27,7 @@ namespace Sciencecom.Models
         public string FromStreet { get; set; }
         public Nullable<System.DateTime> StartDate { get; set; }
         public Nullable<System.DateTime> EndDate { get; set; }
-        public string Locality { get; set; }
+        public Nullable<System.Guid> Locality_id { get; set; }
         public Nullable<int> Owner_Id { get; set; }
         public System.Guid Id { get; set; }
         public int Id_show { get; set; }
@@ -45,6 +45,7 @@ namespace Sciencecom.Models
         public Nullable<System.Guid> TheElementOfTheRoadNetwork_id { get; set; }
         public Nullable<System.Guid> Status_Id { get; set; }
     
+        public virtual Locality Locality { get; set; }
         public virtual Status Status { get; set; }
         public virtual TheElementOfTheRoadNetwork TheElementOfTheRoadNetwork { get; set; }
         public virtual TypeOfAdvertisingStructure TypeOfAdvertisingStructure { get; set; }

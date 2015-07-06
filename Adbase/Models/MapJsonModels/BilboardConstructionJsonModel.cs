@@ -17,7 +17,7 @@ namespace Sciencecom.Models.MapJsonModels
             this.FromStreet = mc.FromStreet;
             this.StartDate = mc.StartDate.Value;
             this.EndDate = mc.EndDate.Value;
-            this.Locality = mc.Locality;
+            this.Locality = mc.Locality.NameLocality;
          
             this.Owner_Id = mc.Owner_Id.Value;
             this.Id = mc.Id;

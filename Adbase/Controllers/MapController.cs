@@ -107,7 +107,7 @@ namespace Sciencecom.Controllers
 
             AdvertisingStructure mc = new AdvertisingStructure()
             {
-                Locality = locality,
+                //Locality = locality,
                 Street1 = street1,
                 Street2 = street2,
                 FromStreet = fromStreet,

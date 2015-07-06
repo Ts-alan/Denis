@@ -20,8 +20,10 @@
     var ListTypeElementOfTheRoadNetworkName = new SciencecomEntities().TheElementOfTheRoadNetworks.Select(a => new { id = a.id, Value = a.TheElementOfTheRoadNetworkName }).ToList();
     
     //Статус
-    var Status = new SciencecomEntities().Status.Select(a => new { id = a.id, Value = a.NameStatus }).ToList();   
-
+    var Status = new SciencecomEntities().Status.OrderBy(x=>x.OrderByStatus).Select(a => new { id = a.id, Value = a.NameStatus }).ToList();   
+    
+    //Населенный пункт выпадающий список
+    var Locality = new SciencecomEntities().Localities.ToList();
 
 }
 <script type="text/javascript">
@@ -180,7 +182,7 @@
         <hr />
         <div class="form-group">
             <label for="Locality">Нас. пункт</label>
-            @Html.EditorFor(model => model.Locality)
+            @Html.DropDownListFor(a => a.Locality_id, new SelectList(Locality, "id", "NameLocality"))
             @Html.ValidationMessageFor(model => model.Locality)
         </div>
 

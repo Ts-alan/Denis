@@ -21,6 +21,7 @@ namespace Sciencecom.Models
     
         public System.Guid id { get; set; }
         public string NameStatus { get; set; }
+        public Nullable<int> OrderByStatus { get; set; }
     
         public virtual ICollection<AdvertisingStructure> AdvertisingStructures { get; set; }
     }

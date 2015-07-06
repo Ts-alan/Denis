@@ -29,6 +29,7 @@ namespace Sciencecom.Models
     
         public virtual DbSet<AdvertisingStructure> AdvertisingStructures { get; set; }
         public virtual DbSet<IllegalConstruction> IllegalConstructions { get; set; }
+        public virtual DbSet<Locality> Localities { get; set; }
         public virtual DbSet<Object> Objects { get; set; }
         public virtual DbSet<Owner> Owners { get; set; }
         public virtual DbSet<RelationshipOfAdvertising> RelationshipOfAdvertisings { get; set; }

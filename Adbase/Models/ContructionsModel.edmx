@@ -17,7 +17,7 @@
           <Property Name="FromStreet" Type="nvarchar(max)" />
           <Property Name="StartDate" Type="datetime" />
           <Property Name="EndDate" Type="datetime" />
-          <Property Name="Locality" Type="nchar" MaxLength="10" />
+          <Property Name="Locality_id" Type="uniqueidentifier" />
           <Property Name="Owner_Id" Type="int" />
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Id_show" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
@@ -55,6 +55,13 @@
           <Property Name="WhoAdded" Type="nvarchar(max)" Nullable="false" />
           <Property Name="WhoTakeNote" Type="nvarchar(max)" />
           <Property Name="WhoLastEdited" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Locality">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="NameLocality" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Object">
           <Key>
@@ -98,6 +105,7 @@
           </Key>
           <Property Name="id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="NameStatus" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="OrderByStatus" Type="int" />
         </EntityType>
         <EntityType Name="Streets">
           <Key>
@@ -159,6 +167,18 @@
           <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <Association Name="FK_AdvertisingStructures_Locality">
+          <End Role="Locality" Type="Self.Locality" Multiplicity="0..1" />
+          <End Role="AdvertisingStructures" Type="Self.AdvertisingStructures" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Locality">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="AdvertisingStructures">
+              <PropertyRef Name="Locality_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_AdvertisingStructures_Status">
           <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
           <End Role="AdvertisingStructures" Type="Self.AdvertisingStructures" Multiplicity="*" />
@@ -301,6 +321,7 @@
         <EntityContainer Name="SciencecomModelStoreContainer">
           <EntitySet Name="AdvertisingStructures" EntityType="Self.AdvertisingStructures" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IllegalConstructions" EntityType="Self.IllegalConstructions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Locality" EntityType="Self.Locality" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Object" EntityType="Self.Object" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Owners" EntityType="Self.Owners" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RelationshipOfAdvertising" EntityType="Self.RelationshipOfAdvertising" Schema="dbo" store:Type="Tables" />
@@ -313,6 +334,10 @@
           <EntitySet Name="TheElementOfTheRoadNetwork" EntityType="Self.TheElementOfTheRoadNetwork" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TopicForSocialAdvertising" EntityType="Self.TopicForSocialAdvertising" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TypeOfAdvertisingStructures" EntityType="Self.TypeOfAdvertisingStructures" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AdvertisingStructures_Locality" Association="Self.FK_AdvertisingStructures_Locality">
+            <End Role="Locality" EntitySet="Locality" />
+            <End Role="AdvertisingStructures" EntitySet="AdvertisingStructures" />
+          </AssociationSet>
           <AssociationSet Name="FK_AdvertisingStructures_Status" Association="Self.FK_AdvertisingStructures_Status">
             <End Role="Status" EntitySet="Status" />
             <End Role="AdvertisingStructures" EntitySet="AdvertisingStructures" />
@@ -387,6 +412,7 @@
           <FunctionImport Name="sp_upgraddiagrams" />
           <EntitySet Name="AdvertisingStructures" EntityType="SciencecomModel.AdvertisingStructure" />
           <EntitySet Name="IllegalConstructions" EntityType="SciencecomModel.IllegalConstruction" />
+          <EntitySet Name="Localities" EntityType="SciencecomModel.Locality" />
           <EntitySet Name="Objects" EntityType="SciencecomModel.Object" />
           <EntitySet Name="Owners" EntityType="SciencecomModel.Owner" />
           <EntitySet Name="RelationshipOfAdvertisings" EntityType="SciencecomModel.RelationshipOfAdvertising" />
@@ -399,6 +425,10 @@
           <EntitySet Name="TheElementOfTheRoadNetworks" EntityType="SciencecomModel.TheElementOfTheRoadNetwork" />
           <EntitySet Name="TopicForSocialAdvertisings" EntityType="SciencecomModel.TopicForSocialAdvertising" />
           <EntitySet Name="TypeOfAdvertisingStructures" EntityType="SciencecomModel.TypeOfAdvertisingStructure" />
+          <AssociationSet Name="FK_AdvertisingStructures_Locality" Association="SciencecomModel.FK_AdvertisingStructures_Locality">
+            <End Role="Locality" EntitySet="Localities" />
+            <End Role="AdvertisingStructure" EntitySet="AdvertisingStructures" />
+          </AssociationSet>
           <AssociationSet Name="FK_AdvertisingStructures_Status" Association="SciencecomModel.FK_AdvertisingStructures_Status">
             <End Role="Status" EntitySet="Status" />
             <End Role="AdvertisingStructure" EntitySet="AdvertisingStructures" />
@@ -459,7 +489,7 @@
           <Property Name="FromStreet" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="StartDate" Type="DateTime" Precision="3" />
           <Property Name="EndDate" Type="DateTime" Precision="3" />
-          <Property Name="Locality" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Locality_id" Type="Guid" />
           <Property Name="Owner_Id" Type="Int32" />
           <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="Id_show" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
@@ -476,6 +506,7 @@
           <Property Name="Note_controller" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="TheElementOfTheRoadNetwork_id" Type="Guid" />
           <Property Name="Status_Id" Type="Guid" />
+          <NavigationProperty Name="Locality" Relationship="SciencecomModel.FK_AdvertisingStructures_Locality" FromRole="AdvertisingStructure" ToRole="Locality" />
           <NavigationProperty Name="Status" Relationship="SciencecomModel.FK_AdvertisingStructures_Status" FromRole="AdvertisingStructure" ToRole="Status" />
           <NavigationProperty Name="TheElementOfTheRoadNetwork" Relationship="SciencecomModel.FK_AdvertisingStructures_TheElementOfTheRoadNetwork" FromRole="AdvertisingStructure" ToRole="TheElementOfTheRoadNetwork" />
           <NavigationProperty Name="TypeOfAdvertisingStructure" Relationship="SciencecomModel.FK_AdvertisingStructures_TypeOfAdvertisingStructures" FromRole="AdvertisingStructure" ToRole="TypeOfAdvertisingStructure" />
@@ -502,6 +533,14 @@
           <Property Name="WhoAdded" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="WhoTakeNote" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="WhoLastEdited" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Locality">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="NameLocality" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AdvertisingStructures" Relationship="SciencecomModel.FK_AdvertisingStructures_Locality" FromRole="Locality" ToRole="AdvertisingStructure" />
         </EntityType>
         <EntityType Name="Object">
           <Key>
@@ -552,6 +591,7 @@
           </Key>
           <Property Name="id" Type="Guid" Nullable="false" />
           <Property Name="NameStatus" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OrderByStatus" Type="Int32" />
           <NavigationProperty Name="AdvertisingStructures" Relationship="SciencecomModel.FK_AdvertisingStructures_Status" FromRole="Status" ToRole="AdvertisingStructure" />
         </EntityType>
         <EntityType Name="Street">
@@ -619,6 +659,18 @@
           <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AdvertisingStructures" Relationship="SciencecomModel.FK_AdvertisingStructures_TypeOfAdvertisingStructures" FromRole="TypeOfAdvertisingStructure" ToRole="AdvertisingStructure" />
         </EntityType>
+        <Association Name="FK_AdvertisingStructures_Locality">
+          <End Type="SciencecomModel.Locality" Role="Locality" Multiplicity="0..1" />
+          <End Type="SciencecomModel.AdvertisingStructure" Role="AdvertisingStructure" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Locality">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="AdvertisingStructure">
+              <PropertyRef Name="Locality_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_AdvertisingStructures_Status">
           <End Type="SciencecomModel.Status" Role="Status" Multiplicity="0..1" />
           <End Type="SciencecomModel.AdvertisingStructure" Role="AdvertisingStructure" Multiplicity="*" />
@@ -776,7 +828,7 @@
                 <ScalarProperty Name="Id_show" ColumnName="Id_show" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Owner_Id" ColumnName="Owner_Id" />
-                <ScalarProperty Name="Locality" ColumnName="Locality" />
+                <ScalarProperty Name="Locality_id" ColumnName="Locality_id" />
                 <ScalarProperty Name="EndDate" ColumnName="EndDate" />
                 <ScalarProperty Name="StartDate" ColumnName="StartDate" />
                 <ScalarProperty Name="FromStreet" ColumnName="FromStreet" />
@@ -807,6 +859,14 @@
                 <ScalarProperty Name="Street2" ColumnName="Street2" />
                 <ScalarProperty Name="Street1" ColumnName="Street1" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Localities">
+            <EntityTypeMapping TypeName="SciencecomModel.Locality">
+              <MappingFragment StoreEntitySet="Locality">
+                <ScalarProperty Name="NameLocality" ColumnName="NameLocality" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -853,6 +913,7 @@
           <EntitySetMapping Name="Status">
             <EntityTypeMapping TypeName="SciencecomModel.Status">
               <MappingFragment StoreEntitySet="Status">
+                <ScalarProperty Name="OrderByStatus" ColumnName="OrderByStatus" />
                 <ScalarProperty Name="NameStatus" ColumnName="NameStatus" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>

@@ -68,13 +68,13 @@ namespace Sciencecom.Models
         public string FromStreet { get; set; }
 
 
-      
-       [DataType(DataType.Date)]
-       [Required(ErrorMessage = "Введите значение начальной даты")]
-       public string StartDate { get; set; }
 
-       [Required(ErrorMessage = "Введите значение Населенный пункт")]
-       public string Locality { get; set; }
+        [DataType(DataType.Date)]
+        [Required(ErrorMessage = "Введите значение начальной даты")]
+        public Nullable<System.DateTime> StartDate { get; set; }
+
+        [Required(ErrorMessage = "Введите значение Населенный пункт")]
+        public string Locality { get; set; }
         
        [Required(ErrorMessage = "Введите значение даты")]
        [DataType(DataType.Date)]
