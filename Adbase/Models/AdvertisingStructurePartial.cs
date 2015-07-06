@@ -11,23 +11,23 @@ namespace Sciencecom.Models
     public partial class Surface
     {
         public string SideOfSurface { get; set; }
-        public HttpPostedFileBase SeveralPhoto{ get; set;}
+        public HttpPostedFileBase SeveralPhoto { get; set; }
 
-        //public Guid Id_Bilboard { get; set; }
+
     }
 
-    public  class SurfaceConstructionMetaData
+    public class SurfaceConstructionMetaData
     {
         [Required(ErrorMessage = "Введите значение начальной даты")]
         public int Height { get; set; }
-         [Required(ErrorMessage = "Введите значение начальной даты")]
+        [Required(ErrorMessage = "Введите значение начальной даты")]
         public int Width { get; set; }
-         [Required(ErrorMessage = "Введите значение начальной даты")]
+        [Required(ErrorMessage = "Введите значение начальной даты")]
         public int Space { get; set; }
 
-         [Required(ErrorMessage = "Введите значение ")]
-         public string Identification { get; set; }
-     
+        [Required(ErrorMessage = "Введите значение ")]
+        public string Identification { get; set; }
+
     }
 
      [MetadataType(typeof(AdvertisingStructureConstructionMetaData))]
