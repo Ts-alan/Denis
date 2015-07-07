@@ -113,6 +113,7 @@
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="DirectionSide_id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="DateDismantling" Type="nvarchar(max)" />
+          <Property Name="Identification_id" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="Status">
           <Key>
@@ -148,7 +149,6 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Side_Id" Type="uniqueidentifier" />
           <Property Name="NumberSurface" Type="int" />
-          <Property Name="Identification_id" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -303,14 +303,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Surfaces_Identification">
+        <Association Name="FK_Sides_Identification">
           <End Role="Identification" Type="Self.Identification" Multiplicity="1" />
-          <End Role="Surfaces" Type="Self.Surfaces" Multiplicity="*" />
+          <End Role="Sides" Type="Self.Sides" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Identification">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="Surfaces">
+            <Dependent Role="Sides">
               <PropertyRef Name="Identification_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -416,9 +416,9 @@
             <End Role="DirectionSide" EntitySet="DirectionSide" />
             <End Role="Sides" EntitySet="Sides" />
           </AssociationSet>
-          <AssociationSet Name="FK_Surfaces_Identification" Association="Self.FK_Surfaces_Identification">
+          <AssociationSet Name="FK_Sides_Identification" Association="Self.FK_Sides_Identification">
             <End Role="Identification" EntitySet="Identification" />
-            <End Role="Surfaces" EntitySet="Surfaces" />
+            <End Role="Sides" EntitySet="Sides" />
           </AssociationSet>
           <AssociationSet Name="FK_Surfaces_Sides" Association="Self.FK_Surfaces_Sides">
             <End Role="Sides" EntitySet="Sides" />
@@ -505,9 +505,9 @@
             <End Role="DirectionSide" EntitySet="DirectionSides" />
             <End Role="Side" EntitySet="Sides" />
           </AssociationSet>
-          <AssociationSet Name="FK_Surfaces_Identification" Association="SciencecomModel.FK_Surfaces_Identification">
+          <AssociationSet Name="FK_Sides_Identification" Association="SciencecomModel.FK_Sides_Identification">
             <End Role="Identification" EntitySet="Identifications" />
-            <End Role="Surface" EntitySet="Surfaces" />
+            <End Role="Side" EntitySet="Sides" />
           </AssociationSet>
           <AssociationSet Name="FK_RelationshipOfAdvertising_Object1" Association="SciencecomModel.FK_RelationshipOfAdvertising_Object1">
             <End Role="Object" EntitySet="Objects" />
@@ -587,7 +587,7 @@
           </Key>
           <Property Name="id" Type="Guid" Nullable="false" />
           <Property Name="IdentificationName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Surfaces" Relationship="SciencecomModel.FK_Surfaces_Identification" FromRole="Identification" ToRole="Surface" />
+          <NavigationProperty Name="Sides" Relationship="SciencecomModel.FK_Sides_Identification" FromRole="Identification" ToRole="Side" />
         </EntityType>
         <EntityType Name="IllegalConstruction">
           <Key>
@@ -659,8 +659,10 @@
           <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="DirectionSide_id" Type="Guid" Nullable="false" />
           <Property Name="DateDismantling" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Identification_id" Type="Guid" Nullable="false" />
           <NavigationProperty Name="AdvertisingStructure" Relationship="SciencecomModel.FK_Sides_Billboards1" FromRole="Side" ToRole="AdvertisingStructure" />
           <NavigationProperty Name="DirectionSide" Relationship="SciencecomModel.FK_Sides_DirectionSide" FromRole="Side" ToRole="DirectionSide" />
+          <NavigationProperty Name="Identification" Relationship="SciencecomModel.FK_Sides_Identification" FromRole="Side" ToRole="Identification" />
           <NavigationProperty Name="Surfaces" Relationship="SciencecomModel.FK_Surfaces_Sides" FromRole="Side" ToRole="Surface" />
         </EntityType>
         <EntityType Name="Status">
@@ -699,8 +701,6 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Side_Id" Type="Guid" />
           <Property Name="NumberSurface" Type="Int32" />
-          <Property Name="Identification_id" Type="Guid" Nullable="false" />
-          <NavigationProperty Name="Identification" Relationship="SciencecomModel.FK_Surfaces_Identification" FromRole="Surface" ToRole="Identification" />
           <NavigationProperty Name="Side" Relationship="SciencecomModel.FK_Surfaces_Sides" FromRole="Surface" ToRole="Side" />
         </EntityType>
         <EntityType Name="sysdiagram">
@@ -823,14 +823,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Surfaces_Identification">
+        <Association Name="FK_Sides_Identification">
           <End Type="SciencecomModel.Identification" Role="Identification" Multiplicity="1" />
-          <End Type="SciencecomModel.Surface" Role="Surface" Multiplicity="*" />
+          <End Type="SciencecomModel.Side" Role="Side" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Identification">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="Surface">
+            <Dependent Role="Side">
               <PropertyRef Name="Identification_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -1023,6 +1023,7 @@
           <EntitySetMapping Name="Sides">
             <EntityTypeMapping TypeName="SciencecomModel.Side">
               <MappingFragment StoreEntitySet="Sides">
+                <ScalarProperty Name="Identification_id" ColumnName="Identification_id" />
                 <ScalarProperty Name="DateDismantling" ColumnName="DateDismantling" />
                 <ScalarProperty Name="DirectionSide_id" ColumnName="DirectionSide_id" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -1061,7 +1062,6 @@
           <EntitySetMapping Name="Surfaces">
             <EntityTypeMapping TypeName="SciencecomModel.Surface">
               <MappingFragment StoreEntitySet="Surfaces">
-                <ScalarProperty Name="Identification_id" ColumnName="Identification_id" />
                 <ScalarProperty Name="NumberSurface" ColumnName="NumberSurface" />
                 <ScalarProperty Name="Side_Id" ColumnName="Side_Id" />
                 <ScalarProperty Name="Id" ColumnName="Id" />

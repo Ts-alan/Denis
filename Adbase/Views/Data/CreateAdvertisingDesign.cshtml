@@ -6,6 +6,7 @@
 @using ModelBinderDictionary = System.Web.ModelBinding.ModelBinderDictionary
 @model  Sciencecom.Models.AdvertisingStructure
 @{
+    var i = 0;
     ViewBag.Title = "CreateBilboard";
     //Собственники
     SelectList owners = new SelectList(new SciencecomEntities().Owners.Select(m => m.Name).ToList());
@@ -25,15 +26,16 @@
     //Населенный пункт выпадающий список
     var Locality = new SciencecomEntities().Localities.ToList();
 
-    //Населенние стороны
+    //Направление стороны
     var DirectionSide = new SciencecomEntities().DirectionSides.ToList();
-
+    //Индификация поверхности
+    var IdentificationSide = new SciencecomEntities().Identifications.ToList();
 }
 <script type="text/javascript">
     var i = 0;
-    
+
     $(document).ready(function () {
- 
+
 
         //выпадающий список на согласование
         $("[name=OnAgreement]").change(function() {
@@ -75,17 +77,17 @@
                     $(this).val(temp1);
                 });
             });
-       }
+        }
 
 
-//дублирование для остальных поверхностей при добавлении
+        //дублирование для остальных поверхностей при добавлении
         function duplicationSurfaces() {
             $(".each1 input").trigger('change');
             $(".each2 input").trigger('change');
             $(".each3 input").trigger('change');
         }
 
-       
+
     });
     //кол-во сторон
     function SetCountSize() {
@@ -103,7 +105,7 @@
                     "</div>" +
                     "<div class=\"form-group\">" +
                     "<div class=\"col-md-10\">" +
-                    "<b>Количество поверхностей</b>"+
+                    "<b>Количество поверхностей</b>" +
                     " <select class=\"text-box single-line\" id=\"AddButton" + i + "\" onchange=AddSurface(" + i + ") name=\"CountSurfuce\" type=\"text\" data-val=\"true\" data-val-required=\"Укажите кол-во сторон\">" +
                     "<option></option>" +
                     "<option>1</option>" +
@@ -114,9 +116,9 @@
                     "<option>6</option>" +
                     "<option>7</option>" +
                     "<option>8</option>" +
-                    "</select>" +
+                    "</select> &nbsp;&nbsp;&nbsp;<b>Направление стороны</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("DirectionSide", new SelectList(DirectionSide, "id", "NameOfDirectionSide"), "").ToHtmlString())' +
                     "</div>" +
-                    "</div>" +
+                    "</div> <div style=\"margin-left: -15px\" id=\""+i+"HiddenIdentification\"> &nbsp;&nbsp;&nbsp;<b>Идентификация поверхностей</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("DirectionSide", new SelectList(IdentificationSide, "id", "IdentificationName"), "").ToHtmlString()) </div>' +
                     "<div  id=\"InsertPartial" + i + "\"></div>" +
                     "</div>");
             }
@@ -126,28 +128,33 @@
                          "<div class=\"form-group\">"+
                              "<label class=\"control-label col-md-2\" style=\"padding-right: 0\" >Фотография стороны "+ ++j + "</label>" +
                               "<div class=\"col-md-10\">"+
-                                 "<input type=\"file\" name=\"["+j+"].SeveralPhoto\" accept=\"image/jpeg\" data-val-required=\"Выберите файл для загрузки\"><br>"+ 
+                                 "<input type=\"file\" name=\"["+j+"].SeveralPhoto\" accept=\"image/jpeg\" data-val-required=\"Выберите файл для загрузки\"><br>"+
                                    "Не более 1 МБ"+
                               "</div>"+
                          "</div>"+
                     "</div>"
                     );
             }
+
         }
     }
     //Добавить поверхность
     function AddSurface(i) {
         var count = $("#AddButton" + i + "").val();
-
+        if (count == 1) {
+            $("#" + i + "HiddenIdentification").hide();
+        } else {
+            $("#" + i + "HiddenIdentification").show();
+        }
         $("[side=" + i + "]").remove();
         for (var j = 1; j <= count; j++) {
             $.ajax('@Url.Action("Surface", "Data")', { async: false, data: { side: i, id: Increment(),numberSurface:j } })
             .success(function (e) {
-            $("#InsertPartial"+i+"").before(e);
-          });
+                $("#InsertPartial"+i+"").before(e);
+            });
         }
-}
-     
+    }
+
     function Increment() {
         return i++;
     }
@@ -167,9 +174,9 @@
         @Html.ValidationSummary(true)
         @Html.ValidationMessage("Error")
 
-        <div class="form-group" >
+        <div class="form-group"  >
             <label for="Owner">Собственник </label>
-            @Html.DropDownList("Owner", owners,"")
+            @Html.DropDownList("Owner12", owners,"")
         </div>
 
         <div class="form-group" >
@@ -195,7 +202,7 @@
 
     <div class="form-inline">
         <hr />
-        <div class="form-group">
+        <div class="form-group" style="margin-left: -15px">
             <label for="Locality">Нас. пункт</label>
             @Html.DropDownListFor(a => a.Locality_id, new SelectList(Locality, "id", "NameLocality"))
             @Html.ValidationMessageFor(model => model.Locality)
@@ -251,7 +258,7 @@
 
             <div>
                 <label for="Height">Долгота</label>
-                <input type="text" name="Height" data-val="true" data-val-required="Введите значение " id="Height">
+               <input type="text" name="Height" data-val="true" data-val-required="Введите значение " id="Height">
                 <span class="field-validation-valid" data-valmsg-for="Height" data-valmsg-replace="true"></span>
                 @Html.ValidationMessageFor(model => model.Height)
             
@@ -380,16 +387,6 @@
 
     </div>
     
-    @*<div code class="form-horizontal">
-        <div class="form-group">
-            @Html.Label("Фотография", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input type="file" name="[1].SeveralPhoto" accept="image/jpeg" data-val-required="Выберите файл для загрузки" /><br />
-                @Html.Raw("Не более 1 МБ")
-
-            </div>
-        </div>
-    </div>*@
     <div id="InsertPhoto" ></div>
      <div  class="form-group">
         <div class="col-md-offset-2 col-md-10">

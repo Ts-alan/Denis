@@ -16,12 +16,12 @@ namespace Sciencecom.Models
     {
         public Identification()
         {
-            this.Surfaces = new HashSet<Surface>();
+            this.Sides = new HashSet<Side>();
         }
     
         public System.Guid id { get; set; }
         public string IdentificationName { get; set; }
     
-        public virtual ICollection<Surface> Surfaces { get; set; }
+        public virtual ICollection<Side> Sides { get; set; }
     }
 }

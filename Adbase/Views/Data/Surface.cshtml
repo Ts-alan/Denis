@@ -54,9 +54,8 @@
                 @Html.DropDownListFor(model => model[i].Identification, new SelectList(Identification, "id", "IdentificationName"), "")*@
                 @*@Html.ValidationMessageFor(model => model[i].Identification)*@
 
-                <label for="[@i].Identification">Номер поверхности </label>
-                @Html.EditorFor(model => model[i].NumberSurface)
-                @*@Html.ValidationMessageFor(model => model[i].Identification)*@
+
+                <input name="[0].NumberSurface" type="hidden" value="@ViewBag.Side">
 
                 <label for="[@i].Height">Высота</label>
                 @Html.EditorFor(model => model[i].Height)

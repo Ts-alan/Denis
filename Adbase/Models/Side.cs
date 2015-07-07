@@ -24,9 +24,11 @@ namespace Sciencecom.Models
         public System.Guid Id { get; set; }
         public System.Guid DirectionSide_id { get; set; }
         public string DateDismantling { get; set; }
+        public System.Guid Identification_id { get; set; }
     
         public virtual AdvertisingStructure AdvertisingStructure { get; set; }
         public virtual DirectionSide DirectionSide { get; set; }
+        public virtual Identification Identification { get; set; }
         public virtual ICollection<Surface> Surfaces { get; set; }
     }
 }
