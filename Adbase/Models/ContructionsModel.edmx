@@ -147,8 +147,8 @@
           <Property Name="Space" Type="int" />
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Side_Id" Type="uniqueidentifier" />
-          <Property Name="Identification_id" Type="uniqueidentifier" />
           <Property Name="NumberSurface" Type="int" />
+          <Property Name="Identification_id" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -304,7 +304,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Surfaces_Identification">
-          <End Role="Identification" Type="Self.Identification" Multiplicity="0..1" />
+          <End Role="Identification" Type="Self.Identification" Multiplicity="1" />
           <End Role="Surfaces" Type="Self.Surfaces" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Identification">
@@ -698,8 +698,8 @@
           <Property Name="Space" Type="Int32" />
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Side_Id" Type="Guid" />
-          <Property Name="Identification_id" Type="Guid" />
           <Property Name="NumberSurface" Type="Int32" />
+          <Property Name="Identification_id" Type="Guid" Nullable="false" />
           <NavigationProperty Name="Identification" Relationship="SciencecomModel.FK_Surfaces_Identification" FromRole="Surface" ToRole="Identification" />
           <NavigationProperty Name="Side" Relationship="SciencecomModel.FK_Surfaces_Sides" FromRole="Surface" ToRole="Side" />
         </EntityType>
@@ -824,7 +824,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Surfaces_Identification">
-          <End Type="SciencecomModel.Identification" Role="Identification" Multiplicity="0..1" />
+          <End Type="SciencecomModel.Identification" Role="Identification" Multiplicity="1" />
           <End Type="SciencecomModel.Surface" Role="Surface" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Identification">
@@ -1061,8 +1061,8 @@
           <EntitySetMapping Name="Surfaces">
             <EntityTypeMapping TypeName="SciencecomModel.Surface">
               <MappingFragment StoreEntitySet="Surfaces">
-                <ScalarProperty Name="NumberSurface" ColumnName="NumberSurface" />
                 <ScalarProperty Name="Identification_id" ColumnName="Identification_id" />
+                <ScalarProperty Name="NumberSurface" ColumnName="NumberSurface" />
                 <ScalarProperty Name="Side_Id" ColumnName="Side_Id" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Space" ColumnName="Space" />

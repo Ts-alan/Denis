@@ -103,6 +103,7 @@
                     "</div>" +
                     "<div class=\"form-group\">" +
                     "<div class=\"col-md-10\">" +
+                    "<b>Количество поверхностей</b>"+
                     " <select class=\"text-box single-line\" id=\"AddButton" + i + "\" onchange=AddSurface(" + i + ") name=\"CountSurfuce\" type=\"text\" data-val=\"true\" data-val-required=\"Укажите кол-во сторон\">" +
                     "<option></option>" +
                     "<option>1</option>" +
@@ -118,6 +119,19 @@
                     "</div>" +
                     "<div  id=\"InsertPartial" + i + "\"></div>" +
                     "</div>");
+            }
+            for (var j = 0; j < CountSizes; j++) {
+                $("#InsertPhoto").before(
+                    "<div code class=\"form-horizontal\">"+
+                         "<div class=\"form-group\">"+
+                             "<label class=\"control-label col-md-2\" style=\"padding-right: 0\" >Фотография стороны "+ ++j + "</label>" +
+                              "<div class=\"col-md-10\">"+
+                                 "<input type=\"file\" name=\"["+j+"].SeveralPhoto\" accept=\"image/jpeg\" data-val-required=\"Выберите файл для загрузки\"><br>"+ 
+                                   "Не более 1 МБ"+
+                              "</div>"+
+                         "</div>"+
+                    "</div>"
+                    );
             }
         }
     }
@@ -153,19 +167,18 @@
         @Html.ValidationSummary(true)
         @Html.ValidationMessage("Error")
 
-        <div class="form-group">
+        <div class="form-group" >
             <label for="Owner">Собственник </label>
             @Html.DropDownList("Owner", owners,"")
         </div>
 
-        <div class="form-group">
+        <div class="form-group" >
             <label for="Locality">Вид</label>
             @Html.DropDownList("Code", new SelectList(ListTypeAdvertising, "id", "Name", ListTypeAdvertisingSelected))
-            @*@Html.ValidationMessageFor(model => model.Sides.Single(a => a.Id == ViewBag.Code).Name)*@
-        </div>
+           </div>
 
-        <div class="form-group">
-            <label for="Status">Статус</label>
+        <div class="form-group" >
+            <label for="Status" >Статус</label>
             @Html.DropDownListFor(a => a.Status_Id, new SelectList(Status, "id", "Value"), "")
             @Html.ValidationMessageFor(model => model.Status_Id)
         </div>
@@ -173,7 +186,6 @@
         <div class="form-group">
             <label for="UniqueNumber">Уникальный номер</label>
             <input class="text-box single-line" name="UniqueNumber" type="text" >
-            @*@Html.EditorFor(model => model.UniqueNumber)*@
             @Html.ValidationMessageFor(model => model.UniqueNumber)
         </div>
 
@@ -334,7 +346,6 @@
     <div class="form-horizontal">
         <div class="form-group">
             <label for="CountSizes">Количество сторон</label>
-            @*<input class="text-box single-line" id="CountSizes" name="CountSizes" type="text" data-val="true" data-val-required="Укажите кол-во сторон"/>*@
             <select class="text-box single-line" id="CountSizes" onchange="SetCountSize()" name="CountSizes" type="text" data-val="true" data-val-required="Укажите кол-во сторон">
                 <option></option>
                 <option>1</option>
@@ -348,7 +359,6 @@
             </select>
             <span class="field-validation-validr" data-valmsg-for="CountSizes" data-valmsg-replace="true">
             </span>
-            @*<input type="button" value="Задать количество сторон" onclick="SetCountSize()" />*@
         </div>
     </div>
       <div id="InsertSide"></div>
@@ -369,32 +379,20 @@
         </div>
 
     </div>
-
-    <div class="form-horizontal">
-        <div class="form-group">
-            <label for="PhotoController">Фотография</label>
-            <input type="file" name="PhotoController" accept="image/jpeg" data-val-required="Выберите файл для загрузки"/><br/>
-            @Html.Raw("Не более 1 МБ")
-        </div>
-    </div>
     
- @*<div class="form-group">
-            <div class="form-group">
-                @Html.Label("Сторона А", new { @class = "control-label col-md-2", style = "margin-left: 55px" })
-            </div>
-           
-            <div class="form-group">
-                <div class="col-md-10">
-                    <a href="#" id="AddButton1" style="color: #428bca; font-weight: bold;">+Добавить площадь</a>
-                </div>
-            </div>
-            <div id="InsertPartial1"></div>
-        </div>
-
-      
-        <input type="button" value="Задать координаты" onclick="SetCoordinates()" />*@
+    @*<div code class="form-horizontal">
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
+            @Html.Label("Фотография", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" name="[1].SeveralPhoto" accept="image/jpeg" data-val-required="Выберите файл для загрузки" /><br />
+                @Html.Raw("Не более 1 МБ")
+
+            </div>
+        </div>
+    </div>*@
+    <div id="InsertPhoto" ></div>
+     <div  class="form-group">
+        <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Добавить" class="btn btn-default" />
             </div>
         </div>

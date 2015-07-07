@@ -11,10 +11,17 @@ namespace Sciencecom.Models
     public partial class Surface
     {
         public string SideOfSurface { get; set; }
+    
+
+
+    }
+    public partial class Side
+    {
         public HttpPostedFileBase SeveralPhoto { get; set; }
 
 
     }
+
 
     public class SurfaceConstructionMetaData
     {

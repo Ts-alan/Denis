@@ -12,17 +12,16 @@ namespace Sciencecom.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Surface
+    public partial class DirectionSide
     {
-        public Nullable<int> Height { get; set; }
-        public Nullable<int> Width { get; set; }
-        public Nullable<int> Space { get; set; }
-        public int Id { get; set; }
-        public Nullable<System.Guid> Side_Id { get; set; }
-        public Nullable<int> NumberSurface { get; set; }
-        public System.Guid Identification_id { get; set; }
+        public DirectionSide()
+        {
+            this.Sides = new HashSet<Side>();
+        }
     
-        public virtual Identification Identification { get; set; }
-        public virtual Side Side { get; set; }
+        public System.Guid id { get; set; }
+        public string NameOfDirectionSide { get; set; }
+    
+        public virtual ICollection<Side> Sides { get; set; }
     }
 }

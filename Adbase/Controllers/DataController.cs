@@ -1429,11 +1429,11 @@ namespace Sciencecom.Controllers
 
         [Authorize]
         [HttpPost]
-        public ActionResult CreateAdvertisingDesign(AdvertisingStructure Structures, System.Collections.Generic.List<Sciencecom.Models.Surface> surfaces, string Owner, HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides, HttpPostedFileBase PhotoController, int CountSize = 1)
+        public ActionResult CreateAdvertisingDesign(AdvertisingStructure Structures, IEnumerable<Side> SeveralPhoto, System.Collections.Generic.List<Sciencecom.Models.Surface> surfaces, string Owner, HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides, HttpPostedFileBase PhotoController, int CountSize = 1)
         {
 
-            var idOwner = context.Owners.Single(m => m.Name == Owner).Id;
-            Structures.Owner_Id = idOwner;
+            //var idOwner = context.Owners.Single(m => m.Name == Owner).Id;
+            //Structures.Owner_Id = idOwner;
             Guid StructuresId = Guid.NewGuid();
             Structures.Id = StructuresId;
 
@@ -1472,19 +1472,19 @@ namespace Sciencecom.Controllers
                 string path = Server.MapPath(src);
                 PhotoController.SaveAs(path);
             }
-            if (surfaces != null)
-            {
-                foreach (var surface in surfaces)
-                {
-                    if (surface.SeveralPhoto != null)
-                    {
+            //if (surfaces != null)
+            //{
+            //    foreach (var surface in surfaces)
+            //    {
+            //        if (surface.SeveralPhoto != null)
+            //        {
 
-                        string src = "~/Images/surfaces/" + surface.Id + ".jpg";
-                        string path = Server.MapPath(src);
-                        surface.SeveralPhoto.SaveAs(path);
-                    }
-                }
-            }
+            //            string src = "~/Images/surfaces/" + surface.Id + ".jpg";
+            //            string path = Server.MapPath(src);
+            //            surface.SeveralPhoto.SaveAs(path);
+            //        }
+            //    }
+            //}
 
             return RedirectToAction("AdvertisingDesign");
 

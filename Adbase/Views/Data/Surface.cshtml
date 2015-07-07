@@ -45,21 +45,18 @@
 
 <div side="@ViewBag.Side">
     <input type="hidden" name="[@i].SideOfSurface" value="@ViewBag.Side">
-    <h3 style="margin-left: 150px">Поверхность @ViewBag.numberSurface </h3>
+    <h3 style="margin-left: 150px">Поверхность @ViewBag.numberSurface &nbsp; Стороны @ViewBag.Side  </h3>
 
     <div class="form-inline">
         <hr/>
-            <div class="form-group">
-                <label for="[@i].Identification">Идентификация поверхности</label>
-                @Html.DropDownListFor(model => model[i].Identification, new SelectList(Identification, "id", "IdentificationName"), "")
+            <div class="form-group" >
+                @*<label for="[@i].Identification">Идентификация поверхности</label>
+                @Html.DropDownListFor(model => model[i].Identification, new SelectList(Identification, "id", "IdentificationName"), "")*@
                 @*@Html.ValidationMessageFor(model => model[i].Identification)*@
 
                 <label for="[@i].Identification">Номер поверхности </label>
                 @Html.EditorFor(model => model[i].NumberSurface)
                 @*@Html.ValidationMessageFor(model => model[i].Identification)*@
-            </div>
-
-            <div class="form-group">
 
                 <label for="[@i].Height">Высота</label>
                 @Html.EditorFor(model => model[i].Height)
@@ -74,16 +71,7 @@
                 @*@Html.ValidationMessageFor(model => model[i].Space)*@
             </div>
         </div>
-    <div class="form-horizontal">
-        <div class="form-group">
-            @Html.Label("Фотография", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input type="file" name="[@i].SeveralPhoto" accept="image/jpeg" data-val-required="Выберите файл для загрузки" /><br />
-                @Html.Raw("Не более 1 МБ")
 
-            </div>
-        </div>
-    </div>
 </div>
 
     @*<div class="form-group">
