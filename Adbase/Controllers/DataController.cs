@@ -1432,25 +1432,25 @@ namespace Sciencecom.Controllers
         public ActionResult CreateAdvertisingDesign(AdvertisingStructure Structures, IEnumerable<Side> SeveralPhoto, System.Collections.Generic.List<Sciencecom.Models.Surface> surfaces, string Owner12, HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides, HttpPostedFileBase PhotoController, int CountSize = 1)
         {
 
-            var idOwner = context.Owners.Single(m => m.Name == Owner12).Id;
-            Structures.Owner_Id = idOwner;
+            //var idOwner = context.Owners.Single(m => m.Name == Owner12).Id;
+            //Structures.Owner_Id = idOwner;
             Guid StructuresId = Guid.NewGuid();
             Structures.Id = StructuresId;
 
-            List<Side> ListSide = new List<Side>();
-            for (int j = 1; j <= CountSize; j++)
-            {
-                ListSide.Add(new Side() { AdvertisingStructures_Id = StructuresId, Name = j.ToString(), Id = Guid.NewGuid() });
-            }
-            context.Sides.AddRange(ListSide);
+            //List<Side> ListSide = new List<Side>();
+            //for (int j = 1; j <= CountSize; j++)
+            //{
+            //    ListSide.Add(new Side() { AdvertisingStructures_Id = StructuresId, Name = j.ToString(), Id = Guid.NewGuid() });
+            //}
+            //context.Sides.AddRange(ListSide);
             context.AdvertisingStructures.Add(Structures);
-            if (surfaces != null)
-                foreach (var i in surfaces)
-                {
-                    i.Side_Id = ListSide.Single(a => a.Name == i.SideOfSurface).Id;
-                    context.Surfaces.Add(i);
+            //if (surfaces != null)
+            //    foreach (var i in surfaces)
+            //    {
+            //        i.Side_Id = ListSide.Single(a => a.Name == i.SideOfSurface).Id;
+            //        context.Surfaces.Add(i);
 
-                }
+            //    }
             context.SaveChanges();
             
 

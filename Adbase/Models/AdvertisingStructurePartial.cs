@@ -31,10 +31,6 @@ namespace Sciencecom.Models
         public int Width { get; set; }
         [Required(ErrorMessage = "Введите значение начальной даты")]
         public int Space { get; set; }
-
-        [Required(ErrorMessage = "Введите значение ")]
-        public string Identification { get; set; }
-
     }
 
      [MetadataType(typeof(AdvertisingStructureConstructionMetaData))]

@@ -55,7 +55,7 @@
                 @*@Html.ValidationMessageFor(model => model[i].Identification)*@
 
 
-                <input name="[0].NumberSurface" type="hidden" value="@ViewBag.Side">
+                @*<input name="[0].NumberSurface" type="hidden" value="@ViewBag.Side">*@
 
                 <label for="[@i].Height">Высота</label>
                 @Html.EditorFor(model => model[i].Height)

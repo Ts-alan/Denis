@@ -9,7 +9,8 @@
     var i = 0;
     ViewBag.Title = "CreateBilboard";
     //Собственники
-    SelectList owners = new SelectList(new SciencecomEntities().Owners.Select(m => m.Name).ToList());
+    var owners = new SciencecomEntities().Owners.ToList();
+    
     //Вид
     var ListTypeAdvertising = new SciencecomEntities().TypeOfAdvertisingStructures.ToList();
     var ListTypeAdvertisingSelected = ListTypeAdvertising.Single(a => a.Code == ViewBag.Code).id;
@@ -176,7 +177,7 @@
 
         <div class="form-group"  >
             <label for="Owner">Собственник </label>
-            @Html.DropDownList("Owner12", owners,"")
+            @Html.DropDownListFor(a=>a.Owner_Id, new SelectList(owners, "id", "Name"), "")
         </div>
 
         <div class="form-group" >
