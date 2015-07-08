@@ -22,23 +22,29 @@ namespace Sciencecom.Models
         
         public static int Increment()
         {
-            
-            
-            int j= (int)cache.Get("increment", null);
-            cache.Set("increment", ++j, null, null);
-            return j;
+            int result;
+            int valueInrement;
+            using (SciencecomEntities context = new SciencecomEntities())
+            {
+                result = context.Increments.First().Counter;
+                valueInrement = result;
+
+                context.Increments.First().Counter = ++valueInrement;
+                context.SaveChanges();
+            }
+            return result;
         }
-        //формирование нулей для UnickKey
-        //public static string StringSymvol()
-        //{
-        //    string SymbolString = "";
-        //    int number = Increment();
-        //    for (int s=8;s>number.ToString().Length;s--)
-        //    {
-        //       SymbolString=  "0" + SymbolString;
-        //    }
-        //    return SymbolString;
-        //}
+       // формирование нулей для UnickKey
+        public static string StringSymvol()
+        {
+            string SymbolString = "";
+            int number = Increment();
+            for (int s=8;s>number.ToString().Length;s--)
+            {
+               SymbolString=  "0" + SymbolString;
+            }
+            return SymbolString+number.ToString();
+        }
     }
 
     //public static class CustomHtmlHelpers

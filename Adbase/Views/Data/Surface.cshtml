@@ -52,10 +52,10 @@
             $('[name="[' + @i + '].Space"]').val(Sum);
         }
     }
-    $('[name="[' + @i + '].Height"]').change(function () {
+    $('[name="[' + @i + '].Height"]').on("change",function () {
         CalculationOfTheArea();
     });
-    $('[name="[' + @i + '].Width"]').change(function () {
+    $('[name="[' + @i + '].Width"]').on("change", function () {
         CalculationOfTheArea();
     });
 </script>

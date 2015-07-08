@@ -31,6 +31,9 @@
     var DirectionSide = new SciencecomEntities().DirectionSides.OrderBy(x=>x.OrderBY).ToList();
     //Индификация поверхности
     var IdentificationSide = new SciencecomEntities().Identifications.ToList();
+    //уникальный номер
+    var UniqueNumber = ViewBag.Code + ViewBag.UniqueNumber;
+    
 }
 <script type="text/javascript">
     var i = 0;
@@ -193,7 +196,7 @@
 
         <div class="form-group">
             <label for="UniqueNumber">Уникальный номер</label>
-            <input class="text-box single-line" name="UniqueNumber" type="text" >
+            <input class="text-box single-line" name="UniqueNumber" type="text" value="@UniqueNumber" >
             @Html.ValidationMessageFor(model => model.UniqueNumber)
         </div>
 

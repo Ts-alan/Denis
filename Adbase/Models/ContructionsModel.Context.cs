@@ -44,6 +44,7 @@ namespace Sciencecom.Models
         public virtual DbSet<TopicForSocialAdvertising> TopicForSocialAdvertisings { get; set; }
         public virtual DbSet<TypeOfAdvertisingStructure> TypeOfAdvertisingStructures { get; set; }
         public virtual DbSet<DirectionSide> DirectionSides { get; set; }
+        public virtual DbSet<Increment> Increments { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

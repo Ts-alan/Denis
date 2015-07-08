@@ -71,6 +71,13 @@
           <Property Name="WhoTakeNote" Type="nvarchar(max)" />
           <Property Name="WhoLastEdited" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="Increment">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Counter" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Locality">
           <Key>
             <PropertyRef Name="id" />
@@ -364,6 +371,7 @@
           <EntitySet Name="DirectionSide" EntityType="Self.DirectionSide" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Identification" EntityType="Self.Identification" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IllegalConstructions" EntityType="Self.IllegalConstructions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Increment" EntityType="Self.Increment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Locality" EntityType="Self.Locality" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Object" EntityType="Self.Object" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Owners" EntityType="Self.Owners" Schema="dbo" store:Type="Tables" />
@@ -526,6 +534,7 @@
             <End Role="DirectionSide" EntitySet="DirectionSides" />
             <End Role="Side" EntitySet="Sides" />
           </AssociationSet>
+          <EntitySet Name="Increments" EntityType="SciencecomModel.Increment" />
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -885,6 +894,13 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Increment">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Counter" Type="Int32" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1107,6 +1123,14 @@
               <MappingFragment StoreEntitySet="DirectionSide">
                 <ScalarProperty Name="OrderBY" ColumnName="OrderBY" />
                 <ScalarProperty Name="NameOfDirectionSide" ColumnName="NameOfDirectionSide" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Increments">
+            <EntityTypeMapping TypeName="SciencecomModel.Increment">
+              <MappingFragment StoreEntitySet="Increment">
+                <ScalarProperty Name="Counter" ColumnName="Counter" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

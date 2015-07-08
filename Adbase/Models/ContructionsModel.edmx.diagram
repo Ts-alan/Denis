@@ -34,6 +34,7 @@
         <AssociationConnector Association="SciencecomModel.FK_Surfaces_Sides" />
         <EntityTypeShape EntityType="SciencecomModel.DirectionSide" Width="1.5" PointX="10.375" PointY="8.875" />
         <AssociationConnector Association="SciencecomModel.FK_Sides_DirectionSide" />
+        <EntityTypeShape EntityType="SciencecomModel.Increment" Width="1.5" PointX="8.375" PointY="11.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
