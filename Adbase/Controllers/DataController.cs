@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -1444,16 +1445,16 @@ namespace Sciencecom.Controllers
             //}
             //context.Sides.AddRange(ListSide);
             context.AdvertisingStructures.Add(Structures);
-            //if (surfaces != null)
+           //if (surfaces != null)
             //    foreach (var i in surfaces)
             //    {
             //        i.Side_Id = ListSide.Single(a => a.Name == i.SideOfSurface).Id;
             //        context.Surfaces.Add(i);
 
             //    }
-            context.SaveChanges();
-            
 
+                context.SaveChanges();
+ 
             if (ScanPassport_1Sides != null)
             {
                 string src = "~/Images/ScanPassport_1Sides/" + Structures.Id_show + "passport.jpg";

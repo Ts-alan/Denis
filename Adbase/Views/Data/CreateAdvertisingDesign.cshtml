@@ -259,8 +259,8 @@
 
             <div>
                 <label for="Height">Долгота</label>
-               <input type="text" name="Height" data-val="true" data-val-required="Введите значение " id="Height">
-                <span class="field-validation-valid" data-valmsg-for="Height" data-valmsg-replace="true"></span>
+                <input type="text" name="Height" data-val="true" data-val-required="Введите значение " id="Height">
+                @*@Html.EditorFor(a=>a.Height)*@
                 @Html.ValidationMessageFor(model => model.Height)
             
             </div>

@@ -50,12 +50,8 @@
     <div class="form-inline">
         <hr/>
             <div class="form-group" >
-                @*<label for="[@i].Identification">Идентификация поверхности</label>
-                @Html.DropDownListFor(model => model[i].Identification, new SelectList(Identification, "id", "IdentificationName"), "")*@
-                @*@Html.ValidationMessageFor(model => model[i].Identification)*@
-
-
-                @*<input name="[0].NumberSurface" type="hidden" value="@ViewBag.Side">*@
+                
+                <input name="[0].NumberSurface" type="hidden" value="@ViewBag.Side">
 
                 <label for="[@i].Height">Высота</label>
                 @Html.EditorFor(model => model[i].Height)
@@ -73,61 +69,5 @@
 
 </div>
 
-    @*<div class="form-group">
-            @Html.Label("Вид рекламы ", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <select id="[@i].TypeOfAdvertising" name="[@i].TypeOfAdvertising" class="text-box single-line valid" data-val="true" data-val-required="Выбирите значение">
-                    <option></option>
-                    <option value="social">Социальная</option>
-                    <option value="belarusian">Белорусская</option>
-                    <option value="other">Иная</option>
-                </select>
-                <span class="field-validation-valid" data-valmsg-for="[@i].TypeOfAdvertising" data-valmsg-replace="true" style="display: block"></span>
-            </div>
-        </div>*@
-
-    @*<div class="form-group" id="[@i].socialSurface" style="display: none">
-            @Html.Label("Социальная поверхность ", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                  Тема
-                <select name="[@i].Topic"  class="text-box single-line valid" data-val="true" data-val-required="Выбирите значение" >
-                    <option></option>
-                    @foreach (var topic in (DbSet<Sciencecom.Models.TopicForSocialAdvertising>)ViewBag.Topic)
-                    {
-                        <option value=@topic.id>@topic.Name</option>
-                    }
-                </select>
-                Подтема
-                <select id="[@i].SubTopic" name="[@i].SubTopic" class="text-box single-line valid" data-val="true" data-val-required="Выбирите значение">
-                    <option></option>
-                </select>
-                <span class="field-validation-valid" data-valmsg-for="[@i].Topic" data-valmsg-replace="true" style="display: block;float: left"></span>
-                <span class="field-validation-valid" data-valmsg-for="[@i].SubTopic" data-valmsg-replace="true" style="display: block"></span>
-            </div>
-        </div>
-        <div class="form-group each5">
-            @Html.Label("Сюжет", new { @class = "control-label col-md-2 " })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model[i].Story)
-                @Html.ValidationMessageFor(model => model[i].Story)
-            </div>
-        </div>*@
-
-    @*<div class="form-group each6">
-            @Html.Label("Период размещения с", new {@class = "control-label col-md-2 "})
-            <div class="col-md-10">
-                <input type="date" name="[@i].StartDate" class="text-box single-line valid" data-val="true" data-val-required="Выбирите значение">
-
-            </div>
-            <span class="field-validation-valid" data-valmsg-for="[@i].StartDatee" data-valmsg-replace="true" style="display: block; float: left"></span>
-        </div>
-        <span class="field-validation-valid" data-valmsg-for="[@i].EndDate" data-valmsg-replace="true" style="display: block;float: left"></span>
-        <div class="form-group each7">
-            @Html.Label("по", new {@class = "control-label col-md-2 "})
-            <div class="col-md-10">
-                <input type="date" name="[@i].EndDate" class="text-box single-line valid" data-val="true" data-val-required="Выбирите значение">
-            </div>
-            <span class="field-validation-valid" data-valmsg-for="[@i].EndDate" data-valmsg-replace="true" style="display: block;float: left"></span>
-        </div>*@
-
+  
 

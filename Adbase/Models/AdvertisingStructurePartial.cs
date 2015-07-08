@@ -70,14 +70,9 @@ namespace Sciencecom.Models
         [Display(Name = "Со стороны")]
         public string FromStreet { get; set; }
 
-
-
         [DataType(DataType.Date)]
         [Required(ErrorMessage = "Введите значение начальной даты")]
         public Nullable<System.DateTime> StartDate { get; set; }
-
-        [Required(ErrorMessage = "Введите значение Населенный пункт")]
-        public string Locality { get; set; }
         
        [Required(ErrorMessage = "Введите значение даты")]
        [DataType(DataType.Date)]
