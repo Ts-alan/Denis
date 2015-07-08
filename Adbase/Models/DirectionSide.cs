@@ -21,6 +21,7 @@ namespace Sciencecom.Models
     
         public System.Guid id { get; set; }
         public string NameOfDirectionSide { get; set; }
+        public Nullable<int> OrderBY { get; set; }
     
         public virtual ICollection<Side> Sides { get; set; }
     }

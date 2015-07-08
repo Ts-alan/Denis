@@ -41,6 +41,7 @@
           </Key>
           <Property Name="id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="NameOfDirectionSide" Type="nvarchar(max)" />
+          <Property Name="OrderBY" Type="int" />
         </EntityType>
         <EntityType Name="Identification">
           <Key>
@@ -461,7 +462,6 @@
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
           <EntitySet Name="AdvertisingStructures" EntityType="SciencecomModel.AdvertisingStructure" />
-          <EntitySet Name="DirectionSides" EntityType="SciencecomModel.DirectionSide" />
           <EntitySet Name="Identifications" EntityType="SciencecomModel.Identification" />
           <EntitySet Name="IllegalConstructions" EntityType="SciencecomModel.IllegalConstruction" />
           <EntitySet Name="Localities" EntityType="SciencecomModel.Locality" />
@@ -501,10 +501,6 @@
             <End Role="AdvertisingStructure" EntitySet="AdvertisingStructures" />
             <End Role="Side" EntitySet="Sides" />
           </AssociationSet>
-          <AssociationSet Name="FK_Sides_DirectionSide" Association="SciencecomModel.FK_Sides_DirectionSide">
-            <End Role="DirectionSide" EntitySet="DirectionSides" />
-            <End Role="Side" EntitySet="Sides" />
-          </AssociationSet>
           <AssociationSet Name="FK_Sides_Identification" Association="SciencecomModel.FK_Sides_Identification">
             <End Role="Identification" EntitySet="Identifications" />
             <End Role="Side" EntitySet="Sides" />
@@ -524,6 +520,11 @@
           <AssociationSet Name="FK_Surfaces_Sides" Association="SciencecomModel.FK_Surfaces_Sides">
             <End Role="Side" EntitySet="Sides" />
             <End Role="Surface" EntitySet="Surfaces" />
+          </AssociationSet>
+          <EntitySet Name="DirectionSides" EntityType="SciencecomModel.DirectionSide" />
+          <AssociationSet Name="FK_Sides_DirectionSide" Association="SciencecomModel.FK_Sides_DirectionSide">
+            <End Role="DirectionSide" EntitySet="DirectionSides" />
+            <End Role="Side" EntitySet="Sides" />
           </AssociationSet>
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
@@ -572,14 +573,6 @@
           <NavigationProperty Name="TypeOfAdvertisingStructure" Relationship="SciencecomModel.FK_AdvertisingStructures_TypeOfAdvertisingStructures" FromRole="AdvertisingStructure" ToRole="TypeOfAdvertisingStructure" />
           <NavigationProperty Name="Owner" Relationship="SciencecomModel.FK_Billboards1_Owners" FromRole="AdvertisingStructure" ToRole="Owner" />
           <NavigationProperty Name="Sides" Relationship="SciencecomModel.FK_Sides_Billboards1" FromRole="AdvertisingStructure" ToRole="Side" />
-        </EntityType>
-        <EntityType Name="DirectionSide">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Guid" Nullable="false" />
-          <Property Name="NameOfDirectionSide" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Sides" Relationship="SciencecomModel.FK_Sides_DirectionSide" FromRole="DirectionSide" ToRole="Side" />
         </EntityType>
         <EntityType Name="Identification">
           <Key>
@@ -661,9 +654,9 @@
           <Property Name="DateDismantling" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Identification_id" Type="Guid" Nullable="false" />
           <NavigationProperty Name="AdvertisingStructure" Relationship="SciencecomModel.FK_Sides_Billboards1" FromRole="Side" ToRole="AdvertisingStructure" />
-          <NavigationProperty Name="DirectionSide" Relationship="SciencecomModel.FK_Sides_DirectionSide" FromRole="Side" ToRole="DirectionSide" />
           <NavigationProperty Name="Identification" Relationship="SciencecomModel.FK_Sides_Identification" FromRole="Side" ToRole="Identification" />
           <NavigationProperty Name="Surfaces" Relationship="SciencecomModel.FK_Surfaces_Sides" FromRole="Side" ToRole="Surface" />
+          <NavigationProperty Name="DirectionSide" Relationship="SciencecomModel.FK_Sides_DirectionSide" FromRole="Side" ToRole="DirectionSide" />
         </EntityType>
         <EntityType Name="Status">
           <Key>
@@ -811,18 +804,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Sides_DirectionSide">
-          <End Type="SciencecomModel.DirectionSide" Role="DirectionSide" Multiplicity="1" />
-          <End Type="SciencecomModel.Side" Role="Side" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DirectionSide">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Side">
-              <PropertyRef Name="DirectionSide_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Sides_Identification">
           <End Type="SciencecomModel.Identification" Role="Identification" Multiplicity="1" />
           <End Type="SciencecomModel.Side" Role="Side" Multiplicity="*" />
@@ -880,6 +861,27 @@
             </Principal>
             <Dependent Role="Surface">
               <PropertyRef Name="Side_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="DirectionSide">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="NameOfDirectionSide" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OrderBY" Type="Int32" />
+          <NavigationProperty Name="Sides" Relationship="SciencecomModel.FK_Sides_DirectionSide" FromRole="DirectionSide" ToRole="Side" />
+        </EntityType>
+        <Association Name="FK_Sides_DirectionSide">
+          <End Type="SciencecomModel.DirectionSide" Role="DirectionSide" Multiplicity="1" />
+          <End Type="SciencecomModel.Side" Role="Side" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DirectionSide">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Side">
+              <PropertyRef Name="DirectionSide_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -941,14 +943,6 @@
                 <ScalarProperty Name="Street1" ColumnName="Street1" />
                 <ScalarProperty Name="Breadth" ColumnName="Breadth" />
                 <ScalarProperty Name="Height" ColumnName="Height" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="DirectionSides">
-            <EntityTypeMapping TypeName="SciencecomModel.DirectionSide">
-              <MappingFragment StoreEntitySet="DirectionSide">
-                <ScalarProperty Name="NameOfDirectionSide" ColumnName="NameOfDirectionSide" />
-                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1104,6 +1098,15 @@
               <MappingFragment StoreEntitySet="TypeOfAdvertisingStructures">
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DirectionSides">
+            <EntityTypeMapping TypeName="SciencecomModel.DirectionSide">
+              <MappingFragment StoreEntitySet="DirectionSide">
+                <ScalarProperty Name="OrderBY" ColumnName="OrderBY" />
+                <ScalarProperty Name="NameOfDirectionSide" ColumnName="NameOfDirectionSide" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

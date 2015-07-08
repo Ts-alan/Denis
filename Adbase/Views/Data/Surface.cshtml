@@ -8,10 +8,10 @@
     var Identification = new SciencecomEntities().Identifications.ToList();
 }
 <script type="text/javascript">
-    @*$(document).ready(function() {
+    $(document).ready(function () {
 
         //выпадающий список
-        $('[name="[' + @i + '].TypeOfAdvertising').change(function() {
+        @*$('[name="[' + @i + '].TypeOfAdvertising').change(function() {
             var selectIndex = document.getElementById("[" + @i + "].TypeOfAdvertising").selectedIndex;
             if (selectIndex == 1) {
                 $("#\\[" + @i + "\\]\\.\\socialSurface").css("display", "block");
@@ -37,10 +37,27 @@
                 }).error(function() {
                     alert("Ошибка запроса");
                 });
-        });
-    });*@
+        });*@
+        
+    });
 
+    //выщитывание площади для каждой поверхности
+    function CalculationOfTheArea() {
+        var Height=  $('[name="[' + @i + '].Height"]').val();
+        var Width = $('[name="[' + @i + '].Width"]').val();
 
+        if (Height != "" && Width != "") {
+            var Sum = Height * Width;
+            console.log(Sum);
+            $('[name="[' + @i + '].Space"]').val(Sum);
+        }
+    }
+    $('[name="[' + @i + '].Height"]').change(function () {
+        CalculationOfTheArea();
+    });
+    $('[name="[' + @i + '].Width"]').change(function () {
+        CalculationOfTheArea();
+    });
 </script>
 
 <div side="@ViewBag.Side">

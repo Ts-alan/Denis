@@ -28,7 +28,7 @@
     var Locality = new SciencecomEntities().Localities.ToList();
 
     //Направление стороны
-    var DirectionSide = new SciencecomEntities().DirectionSides.ToList();
+    var DirectionSide = new SciencecomEntities().DirectionSides.OrderBy(x=>x.OrderBY).ToList();
     //Индификация поверхности
     var IdentificationSide = new SciencecomEntities().Identifications.ToList();
 }
@@ -119,15 +119,15 @@
                     "<option>8</option>" +
                     "</select> &nbsp;&nbsp;&nbsp;<b>Направление стороны</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("DirectionSide", new SelectList(DirectionSide, "id", "NameOfDirectionSide"), "").ToHtmlString())' +
                     "</div>" +
-                    "</div> <div style=\"margin-left: -15px\" id=\""+i+"HiddenIdentification\"> &nbsp;&nbsp;&nbsp;<b>Идентификация поверхностей</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("DirectionSide", new SelectList(IdentificationSide, "id", "IdentificationName"), "").ToHtmlString()) </div>' +
+                    "</div> <div style=\"margin-left: -15px;display: none\" id=\"" + i + "HiddenIdentification\"> &nbsp;&nbsp;&nbsp;<b>Идентификация поверхностей</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("DirectionSide", new SelectList(IdentificationSide, "id", "IdentificationName"), "").ToHtmlString()) </div>' +
                     "<div  id=\"InsertPartial" + i + "\"></div>" +
                     "</div>");
             }
-            for (var j = 0; j < CountSizes; j++) {
+            for (var j = 0,z=1; j < CountSizes; j++,z++) {
                 $("#InsertPhoto").before(
                     "<div code class=\"form-horizontal\">"+
                          "<div class=\"form-group\">"+
-                             "<label class=\"control-label col-md-2\" style=\"padding-right: 0\" >Фотография стороны "+ ++j + "</label>" +
+                             "<label class=\"control-label col-md-2\" style=\"padding-right: 0\" >Фотография стороны " + z + "</label>" +
                               "<div class=\"col-md-10\">"+
                                  "<input type=\"file\" name=\"["+j+"].SeveralPhoto\" accept=\"image/jpeg\" data-val-required=\"Выберите файл для загрузки\"><br>"+
                                    "Не более 1 МБ"+
@@ -176,7 +176,7 @@
         @Html.ValidationMessage("Error")
 
         <div class="form-group"  >
-            <label for="Owner">Собственник </label>
+            <label for="Owner" >Собственник </label>
             @Html.DropDownListFor(a=>a.Owner_Id, new SelectList(owners, "id", "Name"), "")
         </div>
 
