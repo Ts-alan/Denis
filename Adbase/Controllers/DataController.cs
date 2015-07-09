@@ -1431,7 +1431,7 @@ namespace Sciencecom.Controllers
 
         [Authorize]
         [HttpPost]
-        public ActionResult CreateAdvertisingDesign(AdvertisingStructure Structures, IEnumerable<Side> SeveralPhoto, System.Collections.Generic.List<Sciencecom.Models.Surface> surfaces, HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides, HttpPostedFileBase PhotoController, int CountSize = 1)
+        public ActionResult CreateAdvertisingDesign(AdvertisingStructure Structures,IEnumerable<Side> Side, IEnumerable<Side> SeveralPhoto, System.Collections.Generic.List<Sciencecom.Models.Surface> surfaces, HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides, HttpPostedFileBase PhotoController, int CountSize = 1)
         {
 
 

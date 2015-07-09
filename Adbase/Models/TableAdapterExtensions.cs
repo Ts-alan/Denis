@@ -39,7 +39,7 @@ namespace Sciencecom.Models
        // формирование нулей для UnickKey
         public static string StringSymvol(string TypeConstruction="BB")
         {
-            DateTime ValueComparison = DateTime.Now.Add(-(new TimeSpan(4, 0, 0, 0)));
+            DateTime ValueComparison = DateTime.Now.Add(-(new TimeSpan(0, 1, 0, 0)));
             using (SciencecomEntities context = new SciencecomEntities())
             {
                 if (context.ListUniqueNumbers.OrderBy(a => a.id).Where(x => x.TimeOpen <= ValueComparison).Any())
