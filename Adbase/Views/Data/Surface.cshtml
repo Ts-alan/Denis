@@ -38,25 +38,19 @@
                     alert("Ошибка запроса");
                 });
         });*@
-        
+
     });
+
+   
 
     //выщитывание площади для каждой поверхности
-    function CalculationOfTheArea() {
-        var Height=  $('[name="[' + @i + '].Height"]').val();
-        var Width = $('[name="[' + @i + '].Width"]').val();
+    $('[name="[' + @i + '].Height"]').change( function () {
 
-        if (Height != "" && Width != "") {
-            var Sum = Height * Width;
-            console.log(Sum);
-            $('[name="[' + @i + '].Space"]').val(Sum);
-        }
-    }
-    $('[name="[' + @i + '].Height"]').on("change",function () {
-        CalculationOfTheArea();
+        CalculationOfTheArea(@i);
     });
-    $('[name="[' + @i + '].Width"]').on("change", function () {
-        CalculationOfTheArea();
+    $('[name="[' + @i + '].Width"]').change(function () {
+
+        CalculationOfTheArea(@i);
     });
 </script>
 

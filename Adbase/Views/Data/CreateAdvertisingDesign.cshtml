@@ -159,6 +159,20 @@
     function Increment() {
         return i++;
     }
+    //выщитывание площади для каждой поверхности
+    function CalculationOfTheArea(j) {
+        console.log(j);
+        var Height = $('[name="[' + j + '].Height"]').val();
+        var Width = $('[name="[' + j + '].Width"]').val();
+        console.log(Height);
+        console.log(Width);
+        if (Height != "" && Width != "") {
+
+            var Sum = Height * Width;
+
+            $('[name="[' + j + '].Space"]').val(Sum);
+        }
+    }
 </script>
 <h3> КАРТОЧКА РЕКЛАМНОЙ КОНСТРУКЦИИ</h3>
 
