@@ -54,34 +54,7 @@
 
         });
 
-        function InsertOn() {
-            $(".each1 input").eq(0).on('change', function() {
-                var temp1 = $(this).val();
-                //вычисление площади
-                var temp2 = $(".each2 input").val();
-                $(".each3 input").val(temp1 * (temp2 === "" ? 0 : temp2));
 
-                $(".each1 input").each(function() {
-                    $(this).val(temp1);
-                });
-            });
-            $(".each2 input").eq(0).on('change', function() {
-                var temp1 = $(this).val();
-                //вычисление площади
-                var temp2 = $(".each1 input").va();
-                $(".each3 input").val(temp1 * (temp2 === "" ? 0 : temp2));
-
-                $(".each2 input").each(function() {
-                    $(this).val(temp1);
-                });
-            });
-            $(".each3 input").eq(0).on('change', function() {
-                var temp1 = $(this).val();
-                $(".each3 input").each(function() {
-                    $(this).val(temp1);
-                });
-            });
-        }
 
 
 
@@ -96,6 +69,7 @@
             $("[code]").each(function(indx, element) {
                 element.remove();
             });
+            
             for (var i = 1; i <= CountSizes; i++) {
 
                 $("#InsertSide").before("<div code class=\"form-horizontal\" >" +
@@ -117,30 +91,36 @@
                     "<option>8</option>" +
                     "</select> &nbsp;&nbsp;&nbsp;<b>Направление стороны</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("DirectionSide", new SelectList(DirectionSide, "id", "NameOfDirectionSide"), "",new { SelectorForDS="" }).ToHtmlString())' +
                     "</div>" +
-                    "</div> <div style=\"margin-left: -15px;display: none\" id=\"" + i + "HiddenIdentification\"> &nbsp;&nbsp;&nbsp;<b>Идентификация поверхностей</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("DirectionSide", new SelectList(IdentificationSide, "id", "IdentificationName"), "").ToHtmlString()) </div>' +
+                    "</div> <div style=\"margin-left: -15px;display: none\" id=\"" + i + "HiddenIdentification\"> &nbsp;&nbsp;&nbsp;<b>Идентификация поверхностей</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("IdentificationSurface", new SelectList(IdentificationSide, "id", "IdentificationName"), "", new { SelectorForID = "" }).ToHtmlString()) </div>' +
                     "<div  id=\"InsertPartial" + i + "\"></div>" +
                     "</div>");
-            }
-            for (var j = 0,z=1; j < CountSizes; j++,z++) {
                 $("#InsertPhoto").before(
-                    "<div code class=\"form-horizontal\">"+
-                         "<div class=\"form-group\">"+
-                             "<label class=\"control-label col-md-2\" style=\"padding-right: 0\" >Фотография стороны " + z + "</label>" +
-                              "<div class=\"col-md-10\">"+
-                                 "<input type=\"file\" name=\"["+j+"].SeveralPhoto\" accept=\"image/jpeg\" data-val-required=\"Выберите файл для загрузки\"><br>"+
-                                   "Не более 1 МБ"+
-                              "</div>"+
-                         "</div>"+
-                    "</div>"
-                    );
+                        "<div code class=\"form-horizontal\">" +
+                             "<div class=\"form-group\">" +
+                                 "<label class=\"control-label col-md-2\" style=\"padding-right: 0\" >Фотография стороны " + i + "</label>" +
+                                  "<div class=\"col-md-10\">" +
+                                     "<input type=\"file\" name=\"[" + i + "].SeveralPhoto\" accept=\"image/jpeg\" data-val-required=\"Выберите файл для загрузки\"><br>" +
+                                       "Не более 1 МБ" +
+                                  "</div>" +
+                             "</div>" +
+                        "</div>"
+                        );
             }
+
+
+            //нормальный тег name для ds
             $('[selectorfords]').each(function(indx, element) {
                 $(element).attr("name", "[" + indx + "].DirectionSide");
             });
         }
     }
-    //Добавить поверхность
+    //Добавить поверхность+            //нормальный тег name для ds
     function AddSurface(i) {
+
+        $('[selectorforid]').each(function (indx, element) {
+            $(element).attr("name", "[" + indx + "].IdentificationSurface");
+        });
+
         var count = $("#AddButton" + i + "").val();
         if (count == 1) {
             $("#" + i + "HiddenIdentification").hide();
