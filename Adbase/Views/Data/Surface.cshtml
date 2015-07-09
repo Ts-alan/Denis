@@ -68,7 +68,7 @@
         <hr/>
             <div class="form-group" >
                 
-                <input name="[0].NumberSurface" type="hidden" value="@ViewBag.Side">
+                <input name="[@i].NumberSurface" type="hidden" value="@ViewBag.Side">
 
                 <label for="[@i].Height">Высота</label>
                 @Html.EditorFor(model => model[i].Height)

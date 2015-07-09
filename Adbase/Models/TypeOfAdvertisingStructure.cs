@@ -17,6 +17,8 @@ namespace Sciencecom.Models
         public TypeOfAdvertisingStructure()
         {
             this.AdvertisingStructures = new HashSet<AdvertisingStructure>();
+            this.Increments = new HashSet<Increment>();
+            this.ListUniqueNumbers = new HashSet<ListUniqueNumber>();
         }
     
         public System.Guid id { get; set; }
@@ -24,5 +26,7 @@ namespace Sciencecom.Models
         public string Code { get; set; }
     
         public virtual ICollection<AdvertisingStructure> AdvertisingStructures { get; set; }
+        public virtual ICollection<Increment> Increments { get; set; }
+        public virtual ICollection<ListUniqueNumber> ListUniqueNumbers { get; set; }
     }
 }

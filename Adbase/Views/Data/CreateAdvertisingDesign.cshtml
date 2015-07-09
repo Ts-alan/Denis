@@ -39,7 +39,7 @@
     var i = 0;
 
     $(document).ready(function () {
-
+     
 
         //выпадающий список на согласование
         $("[name=OnAgreement]").change(function() {
@@ -84,12 +84,7 @@
         }
 
 
-        //дублирование для остальных поверхностей при добавлении
-        function duplicationSurfaces() {
-            $(".each1 input").trigger('change');
-            $(".each2 input").trigger('change');
-            $(".each3 input").trigger('change');
-        }
+
 
 
     });
@@ -120,7 +115,7 @@
                     "<option>6</option>" +
                     "<option>7</option>" +
                     "<option>8</option>" +
-                    "</select> &nbsp;&nbsp;&nbsp;<b>Направление стороны</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("DirectionSide", new SelectList(DirectionSide, "id", "NameOfDirectionSide"), "").ToHtmlString())' +
+                    "</select> &nbsp;&nbsp;&nbsp;<b>Направление стороны</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("DirectionSide", new SelectList(DirectionSide, "id", "NameOfDirectionSide"), "",new { SelectorForDS="" }).ToHtmlString())' +
                     "</div>" +
                     "</div> <div style=\"margin-left: -15px;display: none\" id=\"" + i + "HiddenIdentification\"> &nbsp;&nbsp;&nbsp;<b>Идентификация поверхностей</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("DirectionSide", new SelectList(IdentificationSide, "id", "IdentificationName"), "").ToHtmlString()) </div>' +
                     "<div  id=\"InsertPartial" + i + "\"></div>" +
@@ -139,7 +134,9 @@
                     "</div>"
                     );
             }
-
+            $('[selectorfords]').each(function(indx, element) {
+                $(element).attr("name", "[" + indx + "].DirectionSide");
+            });
         }
     }
     //Добавить поверхность

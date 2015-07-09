@@ -20,14 +20,14 @@
 @Styles.Render("~/Content/jqCrid")
 @Scripts.Render("~/bundles/jqCrid")
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
 
         //создание таблицы
         tableToGrid("#table", { height: 700 });
         var $Tablebacklight;
 
         //подсветка
-        $('table tr').on("click", function() {
+        $('table tr').on("click", function () {
             if (typeof $Tablebacklight != 'undefined') {
                 $Tablebacklight.css("background-color", "");
             }
@@ -36,14 +36,14 @@
 
         });
         //спрятать убрать всплывающие окна
-        $("#AddNewAD").click(function() {
+        $("#AddNewAD").click(function () {
             if ($('#divForAddNewAD').css("visibility") == "hidden") {
                 $('#divForAddNewAD').css("visibility", "visible");
             } else {
                 $('#divForAddNewAD').css("visibility", "hidden");
             }
         });
-        $("#EditStatusAD").click(function() {
+        $("#EditStatusAD").click(function () {
             if ($('#divEditStatusAD').css("visibility") == "hidden") {
                 $('#divEditStatusAD').css("visibility", "visible");
             } else {
@@ -51,16 +51,17 @@
             }
         });
         //переход через ajax на edit billbord
-        $('#EditBillbord').click(function() {
+        $('#EditBillbord').click(function () {
             if ($Tablebacklight != "undefined") {
-                    var IdGuid = $Tablebacklight.children("td:last").children().text();
-                    $.get('@Url.Action("EditAdvertisingDesign", "Data")', { id: IdGuid }).success(function (result) {
+                var IdGuid = $Tablebacklight.children("td:last").children().text();
+                $.get('@Url.Action("EditAdvertisingDesign", "Data")', { id: IdGuid }).success(function (result) {
                     $("#Page").html(result);
-                }).error(function() {
+                }).error(function () {
                     alert("что то пошло не так");
                 });
-           }
+            }
         });
+
 
     });
 

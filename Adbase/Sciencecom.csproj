@@ -207,6 +207,9 @@
     <Compile Include="Models\Increment.cs">
       <DependentUpon>ContructionsModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ListUniqueNumber.cs">
+      <DependentUpon>ContructionsModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Locality.cs">
       <DependentUpon>ContructionsModel.tt</DependentUpon>
     </Compile>

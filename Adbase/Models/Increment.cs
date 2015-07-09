@@ -16,5 +16,8 @@ namespace Sciencecom.Models
     {
         public int id { get; set; }
         public int Counter { get; set; }
+        public string Code_id { get; set; }
+    
+        public virtual TypeOfAdvertisingStructure TypeOfAdvertisingStructure { get; set; }
     }
 }

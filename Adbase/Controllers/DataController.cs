@@ -1398,6 +1398,7 @@ namespace Sciencecom.Controllers
         public ActionResult AdvertisingDesign()
         {
             var data = context.AdvertisingStructures;
+    
             return View(data);
 
         }
@@ -1437,7 +1438,10 @@ namespace Sciencecom.Controllers
             //Structures.Owner_Id = idOwner;
             Guid StructuresId = Guid.NewGuid();
             Structures.Id = StructuresId;
-
+            if (context.ListUniqueNumbers.Any(a => a.UniqueNumber == Structures.UniqueNumber))
+            {
+                context.ListUniqueNumbers.Remove(context.ListUniqueNumbers.Single(x => x.UniqueNumber == Structures.UniqueNumber));
+            }
             //List<Side> ListSide = new List<Side>();
             //for (int j = 1; j <= CountSize; j++)
             //{

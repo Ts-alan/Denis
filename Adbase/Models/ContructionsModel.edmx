@@ -77,6 +77,16 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Counter" Type="int" Nullable="false" />
+          <Property Name="Code_id" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ListUniqueNumber">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="UniqueNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Code_id" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TimeOpen" Type="datetime" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="Locality">
           <Key>
@@ -251,6 +261,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Increment_TypeOfAdvertisingStructures">
+          <End Role="TypeOfAdvertisingStructures" Type="Self.TypeOfAdvertisingStructures" Multiplicity="0..1" />
+          <End Role="Increment" Type="Self.Increment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeOfAdvertisingStructures">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="Increment">
+              <PropertyRef Name="Code_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ListUniqueNumber_TypeOfAdvertisingStructures">
+          <End Role="TypeOfAdvertisingStructures" Type="Self.TypeOfAdvertisingStructures" Multiplicity="1" />
+          <End Role="ListUniqueNumber" Type="Self.ListUniqueNumber" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeOfAdvertisingStructures">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="ListUniqueNumber">
+              <PropertyRef Name="Code_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_RelationshipOfAdvertising_Object1">
           <End Role="Object" Type="Self.Object" Multiplicity="1" />
           <End Role="RelationshipOfAdvertising" Type="Self.RelationshipOfAdvertising" Multiplicity="*" />
@@ -372,6 +406,7 @@
           <EntitySet Name="Identification" EntityType="Self.Identification" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IllegalConstructions" EntityType="Self.IllegalConstructions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Increment" EntityType="Self.Increment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ListUniqueNumber" EntityType="Self.ListUniqueNumber" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Locality" EntityType="Self.Locality" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Object" EntityType="Self.Object" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Owners" EntityType="Self.Owners" Schema="dbo" store:Type="Tables" />
@@ -404,6 +439,14 @@
           <AssociationSet Name="FK_Billboards1_Owners" Association="Self.FK_Billboards1_Owners">
             <End Role="Owners" EntitySet="Owners" />
             <End Role="AdvertisingStructures" EntitySet="AdvertisingStructures" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Increment_TypeOfAdvertisingStructures" Association="Self.FK_Increment_TypeOfAdvertisingStructures">
+            <End Role="TypeOfAdvertisingStructures" EntitySet="TypeOfAdvertisingStructures" />
+            <End Role="Increment" EntitySet="Increment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ListUniqueNumber_TypeOfAdvertisingStructures" Association="Self.FK_ListUniqueNumber_TypeOfAdvertisingStructures">
+            <End Role="TypeOfAdvertisingStructures" EntitySet="TypeOfAdvertisingStructures" />
+            <End Role="ListUniqueNumber" EntitySet="ListUniqueNumber" />
           </AssociationSet>
           <AssociationSet Name="FK_RelationshipOfAdvertising_Object1" Association="Self.FK_RelationshipOfAdvertising_Object1">
             <End Role="Object" EntitySet="Object" />
@@ -470,8 +513,11 @@
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
           <EntitySet Name="AdvertisingStructures" EntityType="SciencecomModel.AdvertisingStructure" />
+          <EntitySet Name="DirectionSides" EntityType="SciencecomModel.DirectionSide" />
           <EntitySet Name="Identifications" EntityType="SciencecomModel.Identification" />
           <EntitySet Name="IllegalConstructions" EntityType="SciencecomModel.IllegalConstruction" />
+          <EntitySet Name="Increments" EntityType="SciencecomModel.Increment" />
+          <EntitySet Name="ListUniqueNumbers" EntityType="SciencecomModel.ListUniqueNumber" />
           <EntitySet Name="Localities" EntityType="SciencecomModel.Locality" />
           <EntitySet Name="Objects" EntityType="SciencecomModel.Object" />
           <EntitySet Name="Owners" EntityType="SciencecomModel.Owner" />
@@ -509,9 +555,21 @@
             <End Role="AdvertisingStructure" EntitySet="AdvertisingStructures" />
             <End Role="Side" EntitySet="Sides" />
           </AssociationSet>
+          <AssociationSet Name="FK_Sides_DirectionSide" Association="SciencecomModel.FK_Sides_DirectionSide">
+            <End Role="DirectionSide" EntitySet="DirectionSides" />
+            <End Role="Side" EntitySet="Sides" />
+          </AssociationSet>
           <AssociationSet Name="FK_Sides_Identification" Association="SciencecomModel.FK_Sides_Identification">
             <End Role="Identification" EntitySet="Identifications" />
             <End Role="Side" EntitySet="Sides" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Increment_TypeOfAdvertisingStructures" Association="SciencecomModel.FK_Increment_TypeOfAdvertisingStructures">
+            <End Role="TypeOfAdvertisingStructure" EntitySet="TypeOfAdvertisingStructures" />
+            <End Role="Increment" EntitySet="Increments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ListUniqueNumber_TypeOfAdvertisingStructures" Association="SciencecomModel.FK_ListUniqueNumber_TypeOfAdvertisingStructures">
+            <End Role="TypeOfAdvertisingStructure" EntitySet="TypeOfAdvertisingStructures" />
+            <End Role="ListUniqueNumber" EntitySet="ListUniqueNumbers" />
           </AssociationSet>
           <AssociationSet Name="FK_RelationshipOfAdvertising_Object1" Association="SciencecomModel.FK_RelationshipOfAdvertising_Object1">
             <End Role="Object" EntitySet="Objects" />
@@ -529,12 +587,6 @@
             <End Role="Side" EntitySet="Sides" />
             <End Role="Surface" EntitySet="Surfaces" />
           </AssociationSet>
-          <EntitySet Name="DirectionSides" EntityType="SciencecomModel.DirectionSide" />
-          <AssociationSet Name="FK_Sides_DirectionSide" Association="SciencecomModel.FK_Sides_DirectionSide">
-            <End Role="DirectionSide" EntitySet="DirectionSides" />
-            <End Role="Side" EntitySet="Sides" />
-          </AssociationSet>
-          <EntitySet Name="Increments" EntityType="SciencecomModel.Increment" />
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -583,6 +635,15 @@
           <NavigationProperty Name="Owner" Relationship="SciencecomModel.FK_Billboards1_Owners" FromRole="AdvertisingStructure" ToRole="Owner" />
           <NavigationProperty Name="Sides" Relationship="SciencecomModel.FK_Sides_Billboards1" FromRole="AdvertisingStructure" ToRole="Side" />
         </EntityType>
+        <EntityType Name="DirectionSide">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="NameOfDirectionSide" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OrderBY" Type="Int32" />
+          <NavigationProperty Name="Sides" Relationship="SciencecomModel.FK_Sides_DirectionSide" FromRole="DirectionSide" ToRole="Side" />
+        </EntityType>
         <EntityType Name="Identification">
           <Key>
             <PropertyRef Name="id" />
@@ -611,6 +672,25 @@
           <Property Name="WhoAdded" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="WhoTakeNote" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="WhoLastEdited" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Increment">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Counter" Type="Int32" Nullable="false" />
+          <Property Name="Code_id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TypeOfAdvertisingStructure" Relationship="SciencecomModel.FK_Increment_TypeOfAdvertisingStructures" FromRole="Increment" ToRole="TypeOfAdvertisingStructure" />
+        </EntityType>
+        <EntityType Name="ListUniqueNumber">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="UniqueNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Code_id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TimeOpen" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="TypeOfAdvertisingStructure" Relationship="SciencecomModel.FK_ListUniqueNumber_TypeOfAdvertisingStructures" FromRole="ListUniqueNumber" ToRole="TypeOfAdvertisingStructure" />
         </EntityType>
         <EntityType Name="Locality">
           <Key>
@@ -663,9 +743,9 @@
           <Property Name="DateDismantling" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Identification_id" Type="Guid" Nullable="false" />
           <NavigationProperty Name="AdvertisingStructure" Relationship="SciencecomModel.FK_Sides_Billboards1" FromRole="Side" ToRole="AdvertisingStructure" />
+          <NavigationProperty Name="DirectionSide" Relationship="SciencecomModel.FK_Sides_DirectionSide" FromRole="Side" ToRole="DirectionSide" />
           <NavigationProperty Name="Identification" Relationship="SciencecomModel.FK_Sides_Identification" FromRole="Side" ToRole="Identification" />
           <NavigationProperty Name="Surfaces" Relationship="SciencecomModel.FK_Surfaces_Sides" FromRole="Side" ToRole="Surface" />
-          <NavigationProperty Name="DirectionSide" Relationship="SciencecomModel.FK_Sides_DirectionSide" FromRole="Side" ToRole="DirectionSide" />
         </EntityType>
         <EntityType Name="Status">
           <Key>
@@ -740,6 +820,8 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AdvertisingStructures" Relationship="SciencecomModel.FK_AdvertisingStructures_TypeOfAdvertisingStructures" FromRole="TypeOfAdvertisingStructure" ToRole="AdvertisingStructure" />
+          <NavigationProperty Name="Increments" Relationship="SciencecomModel.FK_Increment_TypeOfAdvertisingStructures" FromRole="TypeOfAdvertisingStructure" ToRole="Increment" />
+          <NavigationProperty Name="ListUniqueNumbers" Relationship="SciencecomModel.FK_ListUniqueNumber_TypeOfAdvertisingStructures" FromRole="TypeOfAdvertisingStructure" ToRole="ListUniqueNumber" />
         </EntityType>
         <Association Name="FK_AdvertisingStructures_Locality">
           <End Type="SciencecomModel.Locality" Role="Locality" Multiplicity="0..1" />
@@ -813,6 +895,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Sides_DirectionSide">
+          <End Type="SciencecomModel.DirectionSide" Role="DirectionSide" Multiplicity="1" />
+          <End Type="SciencecomModel.Side" Role="Side" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DirectionSide">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Side">
+              <PropertyRef Name="DirectionSide_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Sides_Identification">
           <End Type="SciencecomModel.Identification" Role="Identification" Multiplicity="1" />
           <End Type="SciencecomModel.Side" Role="Side" Multiplicity="*" />
@@ -822,6 +916,30 @@
             </Principal>
             <Dependent Role="Side">
               <PropertyRef Name="Identification_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Increment_TypeOfAdvertisingStructures">
+          <End Type="SciencecomModel.TypeOfAdvertisingStructure" Role="TypeOfAdvertisingStructure" Multiplicity="0..1" />
+          <End Type="SciencecomModel.Increment" Role="Increment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeOfAdvertisingStructure">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="Increment">
+              <PropertyRef Name="Code_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ListUniqueNumber_TypeOfAdvertisingStructures">
+          <End Type="SciencecomModel.TypeOfAdvertisingStructure" Role="TypeOfAdvertisingStructure" Multiplicity="1" />
+          <End Type="SciencecomModel.ListUniqueNumber" Role="ListUniqueNumber" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeOfAdvertisingStructure">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="ListUniqueNumber">
+              <PropertyRef Name="Code_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -873,34 +991,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="DirectionSide">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Guid" Nullable="false" />
-          <Property Name="NameOfDirectionSide" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="OrderBY" Type="Int32" />
-          <NavigationProperty Name="Sides" Relationship="SciencecomModel.FK_Sides_DirectionSide" FromRole="DirectionSide" ToRole="Side" />
-        </EntityType>
-        <Association Name="FK_Sides_DirectionSide">
-          <End Type="SciencecomModel.DirectionSide" Role="DirectionSide" Multiplicity="1" />
-          <End Type="SciencecomModel.Side" Role="Side" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DirectionSide">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Side">
-              <PropertyRef Name="DirectionSide_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Increment">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Counter" Type="Int32" Nullable="false" />
-        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -962,6 +1052,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="DirectionSides">
+            <EntityTypeMapping TypeName="SciencecomModel.DirectionSide">
+              <MappingFragment StoreEntitySet="DirectionSide">
+                <ScalarProperty Name="OrderBY" ColumnName="OrderBY" />
+                <ScalarProperty Name="NameOfDirectionSide" ColumnName="NameOfDirectionSide" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Identifications">
             <EntityTypeMapping TypeName="SciencecomModel.Identification">
               <MappingFragment StoreEntitySet="Identification">
@@ -989,6 +1088,25 @@
                 <ScalarProperty Name="Street2" ColumnName="Street2" />
                 <ScalarProperty Name="Street1" ColumnName="Street1" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Increments">
+            <EntityTypeMapping TypeName="SciencecomModel.Increment">
+              <MappingFragment StoreEntitySet="Increment">
+                <ScalarProperty Name="Code_id" ColumnName="Code_id" />
+                <ScalarProperty Name="Counter" ColumnName="Counter" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ListUniqueNumbers">
+            <EntityTypeMapping TypeName="SciencecomModel.ListUniqueNumber">
+              <MappingFragment StoreEntitySet="ListUniqueNumber">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="TimeOpen" ColumnName="TimeOpen" />
+                <ScalarProperty Name="Code_id" ColumnName="Code_id" />
+                <ScalarProperty Name="UniqueNumber" ColumnName="UniqueNumber" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1114,23 +1232,6 @@
               <MappingFragment StoreEntitySet="TypeOfAdvertisingStructures">
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="DirectionSides">
-            <EntityTypeMapping TypeName="SciencecomModel.DirectionSide">
-              <MappingFragment StoreEntitySet="DirectionSide">
-                <ScalarProperty Name="OrderBY" ColumnName="OrderBY" />
-                <ScalarProperty Name="NameOfDirectionSide" ColumnName="NameOfDirectionSide" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Increments">
-            <EntityTypeMapping TypeName="SciencecomModel.Increment">
-              <MappingFragment StoreEntitySet="Increment">
-                <ScalarProperty Name="Counter" ColumnName="Counter" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

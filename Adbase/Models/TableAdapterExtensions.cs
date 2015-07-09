@@ -15,17 +15,19 @@ namespace Sciencecom.Models
         private static int i= 0;
         static TableAdapterExtensions()
         {
-            cache = MemoryCache.Default;
-            cache.Set("increment", i, null);
+            //cache = MemoryCache.Default;
+            //cache.Set("increment", i, null);
         }
-      
-        
-        public static int Increment()
+
+
+        public static int Increment(string TypeConstruction)
         {
             int result;
             int valueInrement;
+            
             using (SciencecomEntities context = new SciencecomEntities())
             {
+
                 result = context.Increments.First().Counter;
                 valueInrement = result;
 
@@ -35,15 +37,31 @@ namespace Sciencecom.Models
             return result;
         }
        // формирование нулей для UnickKey
-        public static string StringSymvol()
+        public static string StringSymvol(string TypeConstruction="BB")
         {
+            DateTime ValueComparison = DateTime.Now.Add(-(new TimeSpan(4, 0, 0, 0)));
+            using (SciencecomEntities context = new SciencecomEntities())
+            {
+                if (context.ListUniqueNumbers.OrderBy(a => a.id).Where(x => x.TimeOpen <= ValueComparison).Any())
+                {
+                    context.ListUniqueNumbers.OrderBy(a => a.id).Where(x => x.TimeOpen <= ValueComparison).First().TimeOpen=DateTime.Now;
+                    context.SaveChanges();
+                 return   context.ListUniqueNumbers.OrderBy(a => a.id).Where(x => x.TimeOpen <= ValueComparison).First().UniqueNumber;
+                }
+            }
             string SymbolString = "";
-            int number = Increment();
+            int number = Increment(TypeConstruction);
             for (int s=8;s>number.ToString().Length;s--)
             {
                SymbolString=  "0" + SymbolString;
             }
-            return SymbolString+number.ToString();
+            var ValueString = SymbolString + number.ToString();
+            using (SciencecomEntities context = new SciencecomEntities())
+            {
+                context.ListUniqueNumbers.Add(new ListUniqueNumber() { TimeOpen = DateTime.Now, UniqueNumber = ValueString, Code_id = TypeConstruction });
+                context.SaveChanges();
+            }
+            return ValueString;
         }
     }
 
