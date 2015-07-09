@@ -178,6 +178,7 @@
         <div class="form-group"  >
             <label for="Owner" >Собственник </label>
             @Html.DropDownListFor(a=>a.Owner_Id, new SelectList(owners, "id", "Name"), "")
+            @Html.ValidationMessageFor(model => model.Owner_Id)
         </div>
 
         <div class="form-group" >

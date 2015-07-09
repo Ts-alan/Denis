@@ -52,6 +52,8 @@ namespace Sciencecom.Models
      
         public Nullable<float> Breadth { get; set; }
 
+        [Required(ErrorMessage = "Введите значение ")]
+        public Nullable<int> Owner_Id { get; set; }
         [StringLength(50, ErrorMessage = "не более 50 символов")]
         [Required(ErrorMessage = "Введите значение Улица 1")]
         [Display(Name = "Улица 1")]
@@ -77,34 +79,7 @@ namespace Sciencecom.Models
        [Required(ErrorMessage = "Введите значение даты")]
        [DataType(DataType.Date)]
        public Nullable<System.DateTime> EndDate { get; set; }
-
-       [Required(ErrorMessage = "Введите значение даты")]
-       [DataType(DataType.Date)]
-       public System.DateTime DateOfReceiptOfTheApplication { get; set; }
-
-       [Required(ErrorMessage = "Введите значение даты")]
-       [DataType(DataType.Date)]
-       public System.DateTime DateOfTakenPassport { get; set; }
-      
-       [Required(ErrorMessage = "Введите значение даты")]
-       [DataType(DataType.Date)]
-       public System.DateTime DateOfActualInstallation { get; set; }
-
-       [Required(ErrorMessage = "Введите значение даты")]
-       [DataType(DataType.Date)]
-       public System.DateTime DateDismantling { get; set; }
-
-       [Required(ErrorMessage = "Введите значение даты")]
-       [DataType(DataType.Date)]
-       public System.DateTime RevisionDate { get; set; }
-       
-       [Required(ErrorMessage = "Введите значение комментария")]
-       public string Note_controller { get; set; }
-
-       [Required(ErrorMessage = "Введите значение даты")]
-       [DataType(DataType.Date)]
-       public System.DateTime PlannedInstallationDate { get; set; }
-
+ 
        [Required(ErrorMessage = "Введите значение уникального ключа")]
        public string UniqueNumber { get; set; }
 
