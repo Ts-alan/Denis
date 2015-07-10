@@ -83,7 +83,7 @@
                     "<option>6</option>" +
                     "<option>7</option>" +
                     "<option>8</option>" +
-                    "</select> &nbsp;&nbsp;&nbsp;<b>Направление стороны</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("DirectionSide", new SelectList(DirectionSide, "id", "NameOfDirectionSide"), "",new { SelectorForDS="" }).ToHtmlString())' +
+                    "</select> &nbsp;&nbsp;&nbsp;<b>Направление стороны</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("DirectionSide", new SelectList(DirectionSide, "id", "NameOfDirectionSide"), "", new { SelectorForDS = "" }).ToHtmlString().Replace("\"\"", "\""))' +
                     "</div>" +
                     "</div> <div style=\"margin-left: -15px;display: none\" id=\"" + i + "HiddenIdentification\"> &nbsp;&nbsp;&nbsp;<b>Идентификация поверхностей</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("IdentificationSurface", new SelectList(IdentificationSide, "id", "IdentificationName"), "", new { SelectorForID = "" }).ToHtmlString()) </div>' +
                     "<div  id=\"InsertPartial" + i + "\"></div>" +
@@ -104,7 +104,7 @@
 
             //нормальный тег name для ds
             $('[selectorfords]').each(function(indx, element) {
-                $(element).attr("name", "[" + indx + "].DirectionSide");
+                $(element).attr("name", "[" + indx + "].DirectionSide_id");
             });
         }
     }
@@ -112,7 +112,7 @@
     function AddSurface(i) {
 
         $('[selectorforid]').each(function (indx, element) {
-            $(element).attr("name", "[" + indx + "].IdentificationSurface");
+            $(element).attr("name", "[" + indx + "].Identification_id");
         });
 
         var count = $("#AddButton" + i + "").val();

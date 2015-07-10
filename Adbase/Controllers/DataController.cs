@@ -5,6 +5,7 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Mvc.Html;
 using Microsoft.Ajax.Utilities;
 
 
@@ -1499,7 +1500,8 @@ namespace Sciencecom.Controllers
         [HttpGet]
         public ActionResult CreateAdvertisingDesign()
         {
-            //Guid code = new Guid("2a113891-d901-44cd-a247-8954c4cda089");
+  
+
             ViewBag.Code = "BB";
             ViewBag.UniqueNumber = TableAdapterExtensions.StringSymvol();
             return View();

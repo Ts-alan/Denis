@@ -41,46 +41,70 @@ namespace Sciencecom.Models
     }
 
      public class AdvertisingStructureConstructionMetaData
+
     {
+
+
+         [DataType(DataType.Date)]
+         public Nullable<System.DateTime> PlannedInstallationDate { get; set; }
+
+         [DataType(DataType.Date)]
+         public Nullable<System.DateTime> RevisionDate { get; set; }
+
+         [DataType(DataType.Date)]
+         public string C_PassportAdvertising { get; set; }
+
+         [DataType(DataType.Date)]
+
+         public Nullable<System.DateTime> DateOfActualInstallation { get; set; }
+
+         [DataType(DataType.Date)]
+   
+         public Nullable<System.DateTime> DateDismantling { get; set; }
         
         public string Status { get; set; }
 
         [Required]
         public Nullable<float> Height { get; set; }
 
+        [DataType(DataType.Date)]
+         public Nullable<System.DateTime> DateOfReceiptOfTheApplication { get; set; }
 
+        [DataType(DataType.Date)]
+
+        public Nullable<System.DateTime> DateOfTakenPassport { get; set; }
      
         public Nullable<float> Breadth { get; set; }
 
         [Required(ErrorMessage = "Введите значение ")]
         public Nullable<int> Owner_Id { get; set; }
         [StringLength(50, ErrorMessage = "не более 50 символов")]
-        [Required(ErrorMessage = "Введите значение Улица 1")]
+        [Required(ErrorMessage = "Введите значение")]
         [Display(Name = "Улица 1")]
         public string Street1 { get; set; }
 
-        [Required(ErrorMessage = "Введите значение Дома")]
+        [Required(ErrorMessage = "Введите значение")]
         public string House1 { get; set; }
 
         [StringLength(50, ErrorMessage = "не более 50 символов")]
-        [Required(ErrorMessage = "Введите значение Улица 2")]
+        [Required(ErrorMessage = "Введите значение")]
         [Display(Name = "Улица 2")]
         public string Street2 { get; set; }
 
         [StringLength(50, ErrorMessage = "Не более 50 символов")]
-        [Required(ErrorMessage = "Введите значение Со стороны")]
+        [Required(ErrorMessage = "Введите значение")]
         [Display(Name = "Со стороны")]
         public string FromStreet { get; set; }
 
         [DataType(DataType.Date)]
-        [Required(ErrorMessage = "Введите значение начальной даты")]
+        [Required(ErrorMessage = "Введите значение")]
         public Nullable<System.DateTime> StartDate { get; set; }
         
        [Required(ErrorMessage = "Введите значение даты")]
        [DataType(DataType.Date)]
        public Nullable<System.DateTime> EndDate { get; set; }
  
-       [Required(ErrorMessage = "Введите значение уникального ключа")]
+       [Required(ErrorMessage = "Введите значение ")]
        public string UniqueNumber { get; set; }
 
        [Required(ErrorMessage = "Выберете значение")]
