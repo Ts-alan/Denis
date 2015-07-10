@@ -39,14 +39,19 @@ namespace Sciencecom.Models
        // формирование нулей для UnickKey
         public static string StringSymvol(string TypeConstruction="BB")
         {
-            DateTime ValueComparison = DateTime.Now.Add(-(new TimeSpan(0, 1, 0, 0)));
+            DateTime ValueComparison = DateTime.Now.Add(-(new TimeSpan(1, 0, 0, 0)));
             using (SciencecomEntities context = new SciencecomEntities())
             {
                 if (context.ListUniqueNumbers.OrderBy(a => a.id).Where(x => x.TimeOpen <= ValueComparison).Any())
                 {
+                    var valueReturn =
+                        context.ListUniqueNumbers.OrderBy(a => a.id)
+                            .Where(x => x.TimeOpen <= ValueComparison)
+                            .First()
+                            .UniqueNumber;
                     context.ListUniqueNumbers.OrderBy(a => a.id).Where(x => x.TimeOpen <= ValueComparison).First().TimeOpen=DateTime.Now;
                     context.SaveChanges();
-                 return   context.ListUniqueNumbers.OrderBy(a => a.id).Where(x => x.TimeOpen <= ValueComparison).First().UniqueNumber;
+                    return valueReturn;
                 }
             }
             string SymbolString = "";
@@ -55,7 +60,7 @@ namespace Sciencecom.Models
             {
                SymbolString=  "0" + SymbolString;
             }
-            var ValueString = SymbolString + number.ToString();
+            var ValueString = TypeConstruction + SymbolString + number;
             using (SciencecomEntities context = new SciencecomEntities())
             {
                 context.ListUniqueNumbers.Add(new ListUniqueNumber() { TimeOpen = DateTime.Now, UniqueNumber = ValueString, Code_id = TypeConstruction });

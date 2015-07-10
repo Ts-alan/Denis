@@ -51,7 +51,7 @@ namespace Sciencecom.Models
          [DataType(DataType.Date)]
          public Nullable<System.DateTime> RevisionDate { get; set; }
 
-         [DataType(DataType.Date)]
+         [Required(ErrorMessage = "Введите значение ")]
          public string C_PassportAdvertising { get; set; }
 
          [DataType(DataType.Date)]

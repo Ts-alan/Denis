@@ -32,7 +32,7 @@
     //Индификация поверхности
     var IdentificationSide = new SciencecomEntities().Identifications.ToList();
     //уникальный номер
-    var UniqueNumber = ViewBag.Code + ViewBag.UniqueNumber;
+    
     
 }
 <script type="text/javascript">
@@ -83,9 +83,9 @@
                     "<option>6</option>" +
                     "<option>7</option>" +
                     "<option>8</option>" +
-                    "</select> &nbsp;&nbsp;&nbsp;<b>Направление стороны</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("DirectionSide", new SelectList(DirectionSide, "id", "NameOfDirectionSide"), "", new { SelectorForDS = "" }).ToHtmlString().Replace("\"\"", "\""))' +
+                    "</select> &nbsp;&nbsp;&nbsp;<b>Направление стороны</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("DirectionSide", new SelectList(DirectionSide, "id", "NameOfDirectionSide"), "", new { SelectorForDS = "" }).ToHtmlString().Replace("\"", " "))' +
                     "</div>" +
-                    "</div> <div style=\"margin-left: -15px;display: none\" id=\"" + i + "HiddenIdentification\"> &nbsp;&nbsp;&nbsp;<b>Идентификация поверхностей</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("IdentificationSurface", new SelectList(IdentificationSide, "id", "IdentificationName"), "", new { SelectorForID = "" }).ToHtmlString()) </div>' +
+                    "</div> <div style=\"margin-left: -15px;display: none\" id=\"" + i + "HiddenIdentification\"> &nbsp;&nbsp;&nbsp;<b>Идентификация поверхностей</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("IdentificationSurface", new SelectList(IdentificationSide, "id", "IdentificationName"), "", new { SelectorForID = "" }).ToHtmlString().Replace("\"", " ")) </div>' +
                     "<div  id=\"InsertPartial" + i + "\"></div>" +
                     "</div>");
                 $("#InsertPhoto").before(
@@ -99,16 +99,15 @@
                              "</div>" +
                         "</div>"
                         );
+                //нормальный тег name для ds
+                $('[selectorfords]').each(function (indx, element) {
+                    $(element).attr("name", "[" + indx + "].DirectionSide_id");
+                });
             }
 
-
-            //нормальный тег name для ds
-            $('[selectorfords]').each(function(indx, element) {
-                $(element).attr("name", "[" + indx + "].DirectionSide_id");
-            });
         }
     }
-    //Добавить поверхность+            //нормальный тег name для ds
+    //Добавить поверхность+            //нормальный тег name для di
     function AddSurface(i) {
 
         $('[selectorforid]').each(function (indx, element) {
@@ -133,13 +132,14 @@
     function Increment() {
         return i++;
     }
+
+
     //выщитывание площади для каждой поверхности
     function CalculationOfTheArea(j) {
-        console.log(j);
+  
         var Height = $('[name="[' + j + '].Height"]').val();
         var Width = $('[name="[' + j + '].Width"]').val();
-        console.log(Height);
-        console.log(Width);
+
         if (Height != "" && Width != "") {
 
             var Sum = Height * Width;
@@ -147,6 +147,7 @@
             $('[name="[' + j + '].Space"]').val(Sum);
         }
     }
+
 </script>
 <h3> КАРТОЧКА РЕКЛАМНОЙ КОНСТРУКЦИИ</h3>
 
@@ -182,7 +183,7 @@
 
         <div class="form-group">
             <label for="UniqueNumber">Уникальный номер</label>
-            <input class="text-box single-line" name="UniqueNumber" type="text" value="@UniqueNumber" >
+            <input class="text-box single-line" name="UniqueNumber" type="text" value="@ViewBag.UniqueNumber">
             @Html.ValidationMessageFor(model => model.UniqueNumber)
         </div>
 

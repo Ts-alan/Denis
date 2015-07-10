@@ -1432,22 +1432,29 @@ namespace Sciencecom.Controllers
 
         [Authorize]
         [HttpPost]
-        public ActionResult CreateAdvertisingDesign(AdvertisingStructure Structures,IEnumerable<Side> Side, IEnumerable<Side> SeveralPhoto, System.Collections.Generic.List<Sciencecom.Models.Surface> surfaces, HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides, HttpPostedFileBase PhotoController, int CountSize = 1)
+        public ActionResult CreateAdvertisingDesign(AdvertisingStructure Structures, List<Side> Sides, System.Collections.Generic.List<Sciencecom.Models.Surface> surfaces, HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides, HttpPostedFileBase PhotoController, int CountSize = 1)
         {
-
+            //временное решение на удаление последнего элимента надо будет подправить
+            Sides.RemoveAt(Sides.Count()-1);
 
             Guid StructuresId = Guid.NewGuid();
             Structures.Id = StructuresId;
+            //удаление временно номера из базы данных
             if (context.ListUniqueNumbers.Any(a => a.UniqueNumber == Structures.UniqueNumber))
             {
+                var t = context.ListUniqueNumbers.Single(x => x.UniqueNumber == Structures.UniqueNumber);
                 context.ListUniqueNumbers.Remove(context.ListUniqueNumbers.Single(x => x.UniqueNumber == Structures.UniqueNumber));
+  
             }
-            //List<Side> ListSide = new List<Side>();
-            //for (int j = 1; j <= CountSize; j++)
-            //{
-            //    ListSide.Add(new Side() { AdvertisingStructures_Id = StructuresId, Name = j.ToString(), Id = Guid.NewGuid() });
-            //}
-            //context.Sides.AddRange(ListSide);
+
+            for (int j = 1; j <= CountSize; j++)
+            {
+                Sides.Add(new Side() { AdvertisingStructures_Id = StructuresId, Name = j.ToString(), Id = Guid.NewGuid() });
+                Sides[j].AdvertisingStructures_Id = StructuresId;
+                Sides[j].Id = Guid.NewGuid();
+                Sides[j].Name = j.ToString();
+            }
+            context.Sides.AddRange(Sides);
             context.AdvertisingStructures.Add(Structures);
            //if (surfaces != null)
             //    foreach (var i in surfaces)
@@ -1500,8 +1507,6 @@ namespace Sciencecom.Controllers
         [HttpGet]
         public ActionResult CreateAdvertisingDesign()
         {
-  
-
             ViewBag.Code = "BB";
             ViewBag.UniqueNumber = TableAdapterExtensions.StringSymvol();
             return View();
