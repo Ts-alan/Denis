@@ -101,8 +101,9 @@
                         );
                 //нормальный тег name для ds
                 $('[selectorfords]').each(function (indx, element) {
-                    $(element).attr("name", "[" + indx + "].DirectionSide_id");
+                    $(element).attr("name", "pa2");
                 });
+                $("#SizeOfCount").val(CountSizes);
             }
 
         }
@@ -111,7 +112,7 @@
     function AddSurface(i) {
 
         $('[selectorforid]').each(function (indx, element) {
-            $(element).attr("name", "[" + indx + "].Identification_id");
+            $(element).attr("name", "pa1");
         });
 
         var count = $("#AddButton" + i + "").val();
@@ -154,7 +155,7 @@
 @Scripts.Render("~/Content/Map")
 @using (Html.BeginForm("CreateAdvertisingDesign", "Data", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    <input type="hidden" name="Code" value="@ViewBag.Code">
+    <input type="hidden" name="Code" id="SizeOfCount" value="@ViewBag.Code">
     <h3> 1. Общие данные о рекламной конструкции</h3>
     @Html.AntiForgeryToken()
     <div class="form-inline">

@@ -1432,10 +1432,10 @@ namespace Sciencecom.Controllers
 
         [Authorize]
         [HttpPost]
-        public ActionResult CreateAdvertisingDesign(AdvertisingStructure Structures, List<Side> Sides, System.Collections.Generic.List<Sciencecom.Models.Surface> surfaces, HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides, HttpPostedFileBase PhotoController, int CountSize = 1)
+        public ActionResult CreateAdvertisingDesign(AdvertisingStructure Structures, IEnumerable<string> pa1, IEnumerable<string> pa2, System.Collections.Generic.List<Sciencecom.Models.Surface> surfaces, HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides, HttpPostedFileBase PhotoController, int CountSize = 1)
         {
             //временное решение на удаление последнего элимента надо будет подправить
-            Sides.RemoveAt(Sides.Count()-1);
+            
 
             Guid StructuresId = Guid.NewGuid();
             Structures.Id = StructuresId;
@@ -1447,16 +1447,15 @@ namespace Sciencecom.Controllers
   
             }
 
-            for (int j = 1; j <= CountSize; j++)
-            {
-                Sides.Add(new Side() { AdvertisingStructures_Id = StructuresId, Name = j.ToString(), Id = Guid.NewGuid() });
-                Sides[j].AdvertisingStructures_Id = StructuresId;
-                Sides[j].Id = Guid.NewGuid();
-                Sides[j].Name = j.ToString();
-            }
-            context.Sides.AddRange(Sides);
+            //for (int j = 1; j <= CountSize; j++)
+            //{
+            //    Sides[j-1].AdvertisingStructures_Id = StructuresId;
+            //    Sides[j-1].Id = Guid.NewGuid();
+            //    Sides[j-1].Name = j.ToString();
+            //}
+            //context.Sides.AddRange(Sides);
             context.AdvertisingStructures.Add(Structures);
-           //if (surfaces != null)
+            //if (surfaces != null)
             //    foreach (var i in surfaces)
             //    {
             //        i.Side_Id = ListSide.Single(a => a.Name == i.SideOfSurface).Id;
@@ -1465,7 +1464,8 @@ namespace Sciencecom.Controllers
             //    }
 
                 context.SaveChanges();
- 
+         
+
             if (ScanPassport_1Sides != null)
             {
                 string src = "~/Images/ScanPassport_1Sides/" + Structures.Id_show + "passport.jpg";

@@ -130,8 +130,7 @@
           <Property Name="AdvertisingStructures_Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="DirectionSide_id" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="DateDismantling" Type="nvarchar(max)" />
-          <Property Name="Identification_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Identification_id" Type="uniqueidentifier" />
         </EntityType>
         <EntityType Name="Status">
           <Key>
@@ -346,7 +345,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Sides_Identification">
-          <End Role="Identification" Type="Self.Identification" Multiplicity="1" />
+          <End Role="Identification" Type="Self.Identification" Multiplicity="0..1" />
           <End Role="Sides" Type="Self.Sides" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Identification">
@@ -522,7 +521,6 @@
           <EntitySet Name="Objects" EntityType="SciencecomModel.Object" />
           <EntitySet Name="Owners" EntityType="SciencecomModel.Owner" />
           <EntitySet Name="RelationshipOfAdvertisings" EntityType="SciencecomModel.RelationshipOfAdvertising" />
-          <EntitySet Name="Sides" EntityType="SciencecomModel.Side" />
           <EntitySet Name="Status" EntityType="SciencecomModel.Status" />
           <EntitySet Name="Streets" EntityType="SciencecomModel.Street" />
           <EntitySet Name="SubtopicForSocialAdvertisings" EntityType="SciencecomModel.SubtopicForSocialAdvertising" />
@@ -551,18 +549,6 @@
             <End Role="Owner" EntitySet="Owners" />
             <End Role="AdvertisingStructure" EntitySet="AdvertisingStructures" />
           </AssociationSet>
-          <AssociationSet Name="FK_Sides_Billboards1" Association="SciencecomModel.FK_Sides_Billboards1">
-            <End Role="AdvertisingStructure" EntitySet="AdvertisingStructures" />
-            <End Role="Side" EntitySet="Sides" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Sides_DirectionSide" Association="SciencecomModel.FK_Sides_DirectionSide">
-            <End Role="DirectionSide" EntitySet="DirectionSides" />
-            <End Role="Side" EntitySet="Sides" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Sides_Identification" Association="SciencecomModel.FK_Sides_Identification">
-            <End Role="Identification" EntitySet="Identifications" />
-            <End Role="Side" EntitySet="Sides" />
-          </AssociationSet>
           <AssociationSet Name="FK_Increment_TypeOfAdvertisingStructures" Association="SciencecomModel.FK_Increment_TypeOfAdvertisingStructures">
             <End Role="TypeOfAdvertisingStructure" EntitySet="TypeOfAdvertisingStructures" />
             <End Role="Increment" EntitySet="Increments" />
@@ -582,6 +568,19 @@
           <AssociationSet Name="FK_RelationshipOfAdvertising_TopicForSocialAdvertising" Association="SciencecomModel.FK_RelationshipOfAdvertising_TopicForSocialAdvertising">
             <End Role="TopicForSocialAdvertising" EntitySet="TopicForSocialAdvertisings" />
             <End Role="RelationshipOfAdvertising" EntitySet="RelationshipOfAdvertisings" />
+          </AssociationSet>
+          <EntitySet Name="Sides" EntityType="SciencecomModel.Side" />
+          <AssociationSet Name="FK_Sides_Billboards1" Association="SciencecomModel.FK_Sides_Billboards1">
+            <End Role="AdvertisingStructure" EntitySet="AdvertisingStructures" />
+            <End Role="Side" EntitySet="Sides" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sides_DirectionSide" Association="SciencecomModel.FK_Sides_DirectionSide">
+            <End Role="DirectionSide" EntitySet="DirectionSides" />
+            <End Role="Side" EntitySet="Sides" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sides_Identification" Association="SciencecomModel.FK_Sides_Identification">
+            <End Role="Identification" EntitySet="Identifications" />
+            <End Role="Side" EntitySet="Sides" />
           </AssociationSet>
           <AssociationSet Name="FK_Surfaces_Sides" Association="SciencecomModel.FK_Surfaces_Sides">
             <End Role="Side" EntitySet="Sides" />
@@ -732,21 +731,6 @@
           <NavigationProperty Name="SubtopicForSocialAdvertising" Relationship="SciencecomModel.FK_RelationshipOfAdvertising_SubtopicForSocialAdvertising" FromRole="RelationshipOfAdvertising" ToRole="SubtopicForSocialAdvertising" />
           <NavigationProperty Name="TopicForSocialAdvertising" Relationship="SciencecomModel.FK_RelationshipOfAdvertising_TopicForSocialAdvertising" FromRole="RelationshipOfAdvertising" ToRole="TopicForSocialAdvertising" />
         </EntityType>
-        <EntityType Name="Side">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="AdvertisingStructures_Id" Type="Guid" Nullable="false" />
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="DirectionSide_id" Type="Guid" Nullable="false" />
-          <Property Name="DateDismantling" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Identification_id" Type="Guid" Nullable="false" />
-          <NavigationProperty Name="AdvertisingStructure" Relationship="SciencecomModel.FK_Sides_Billboards1" FromRole="Side" ToRole="AdvertisingStructure" />
-          <NavigationProperty Name="DirectionSide" Relationship="SciencecomModel.FK_Sides_DirectionSide" FromRole="Side" ToRole="DirectionSide" />
-          <NavigationProperty Name="Identification" Relationship="SciencecomModel.FK_Sides_Identification" FromRole="Side" ToRole="Identification" />
-          <NavigationProperty Name="Surfaces" Relationship="SciencecomModel.FK_Surfaces_Sides" FromRole="Side" ToRole="Surface" />
-        </EntityType>
         <EntityType Name="Status">
           <Key>
             <PropertyRef Name="id" />
@@ -883,42 +867,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Sides_Billboards1">
-          <End Type="SciencecomModel.AdvertisingStructure" Role="AdvertisingStructure" Multiplicity="1" />
-          <End Type="SciencecomModel.Side" Role="Side" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AdvertisingStructure">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Side">
-              <PropertyRef Name="AdvertisingStructures_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Sides_DirectionSide">
-          <End Type="SciencecomModel.DirectionSide" Role="DirectionSide" Multiplicity="1" />
-          <End Type="SciencecomModel.Side" Role="Side" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DirectionSide">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Side">
-              <PropertyRef Name="DirectionSide_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Sides_Identification">
-          <End Type="SciencecomModel.Identification" Role="Identification" Multiplicity="1" />
-          <End Type="SciencecomModel.Side" Role="Side" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Identification">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Side">
-              <PropertyRef Name="Identification_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Increment_TypeOfAdvertisingStructures">
           <End Type="SciencecomModel.TypeOfAdvertisingStructure" Role="TypeOfAdvertisingStructure" Multiplicity="0..1" />
           <End Type="SciencecomModel.Increment" Role="Increment" Multiplicity="*" />
@@ -976,6 +924,56 @@
             </Principal>
             <Dependent Role="RelationshipOfAdvertising">
               <PropertyRef Name="idOfTopicForSocialAdvertising" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Side">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AdvertisingStructures_Id" Type="Guid" Nullable="false" />
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="DirectionSide_id" Type="Guid" Nullable="false" />
+          <Property Name="Identification_id" Type="Guid" />
+          <NavigationProperty Name="AdvertisingStructure" Relationship="SciencecomModel.FK_Sides_Billboards1" FromRole="Side" ToRole="AdvertisingStructure" />
+          <NavigationProperty Name="DirectionSide" Relationship="SciencecomModel.FK_Sides_DirectionSide" FromRole="Side" ToRole="DirectionSide" />
+          <NavigationProperty Name="Identification" Relationship="SciencecomModel.FK_Sides_Identification" FromRole="Side" ToRole="Identification" />
+          <NavigationProperty Name="Surfaces" Relationship="SciencecomModel.FK_Surfaces_Sides" FromRole="Side" ToRole="Surface" />
+        </EntityType>
+        <Association Name="FK_Sides_Billboards1">
+          <End Type="SciencecomModel.AdvertisingStructure" Role="AdvertisingStructure" Multiplicity="1" />
+          <End Type="SciencecomModel.Side" Role="Side" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AdvertisingStructure">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Side">
+              <PropertyRef Name="AdvertisingStructures_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sides_DirectionSide">
+          <End Type="SciencecomModel.DirectionSide" Role="DirectionSide" Multiplicity="1" />
+          <End Type="SciencecomModel.Side" Role="Side" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DirectionSide">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Side">
+              <PropertyRef Name="DirectionSide_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sides_Identification">
+          <End Type="SciencecomModel.Identification" Role="Identification" Multiplicity="0..1" />
+          <End Type="SciencecomModel.Side" Role="Side" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Identification">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Side">
+              <PropertyRef Name="Identification_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1148,18 +1146,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Sides">
-            <EntityTypeMapping TypeName="SciencecomModel.Side">
-              <MappingFragment StoreEntitySet="Sides">
-                <ScalarProperty Name="Identification_id" ColumnName="Identification_id" />
-                <ScalarProperty Name="DateDismantling" ColumnName="DateDismantling" />
-                <ScalarProperty Name="DirectionSide_id" ColumnName="DirectionSide_id" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="AdvertisingStructures_Id" ColumnName="AdvertisingStructures_Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Status">
             <EntityTypeMapping TypeName="SciencecomModel.Status">
               <MappingFragment StoreEntitySet="Status">
@@ -1233,6 +1219,17 @@
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sides">
+            <EntityTypeMapping TypeName="SciencecomModel.Side">
+              <MappingFragment StoreEntitySet="Sides">
+                <ScalarProperty Name="Identification_id" ColumnName="Identification_id" />
+                <ScalarProperty Name="DirectionSide_id" ColumnName="DirectionSide_id" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="AdvertisingStructures_Id" ColumnName="AdvertisingStructures_Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
