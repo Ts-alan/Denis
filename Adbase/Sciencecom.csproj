@@ -1513,7 +1513,7 @@
     <Folder Include="Images\PhotoController\" />
     <Folder Include="Images\ScanPassport_1Sides\" />
     <Folder Include="Images\ScanPassport_2Sides\" />
-    <Folder Include="Images\surfaces\" />
+    <Folder Include="Images\Sides\" />
     <Folder Include="Views\BackEndServices\" />
   </ItemGroup>
   <ItemGroup>

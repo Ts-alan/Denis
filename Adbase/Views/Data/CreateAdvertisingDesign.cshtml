@@ -83,9 +83,9 @@
                     "<option>6</option>" +
                     "<option>7</option>" +
                     "<option>8</option>" +
-                    "</select> &nbsp;&nbsp;&nbsp;<b>Направление стороны</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("DirectionSide", new SelectList(DirectionSide, "id", "NameOfDirectionSide"), "", new { SelectorForDS = "" }).ToHtmlString().Replace("\"", " "))' +
+                    "</select> &nbsp;&nbsp;&nbsp;<b>Направление стороны</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("DirectionSide", new SelectList(DirectionSide, "id", "NameOfDirectionSide"), "").ToHtmlString().Replace("\"", " "))' +
                     "</div>" +
-                    "</div> <div style=\"margin-left: -15px;display: none\" id=\"" + i + "HiddenIdentification\"> &nbsp;&nbsp;&nbsp;<b>Идентификация поверхностей</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("IdentificationSurface", new SelectList(IdentificationSide, "id", "IdentificationName"), "", new { SelectorForID = "" }).ToHtmlString().Replace("\"", " ")) </div>' +
+                    "</div> <div style=\"margin-left: -15px;display: none\" id=\"" + i + "HiddenIdentification\"> &nbsp;&nbsp;&nbsp;<b>Идентификация поверхностей</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("IdentificationSurface", new SelectList(IdentificationSide, "id", "IdentificationName"), "").ToHtmlString().Replace("\"", " ")) </div>' +
                     "<div  id=\"InsertPartial" + i + "\"></div>" +
                     "</div>");
                 $("#InsertPhoto").before(
@@ -93,27 +93,20 @@
                              "<div class=\"form-group\">" +
                                  "<label class=\"control-label col-md-2\" style=\"padding-right: 0\" >Фотография стороны " + i + "</label>" +
                                   "<div class=\"col-md-10\">" +
-                                     "<input type=\"file\" name=\"[" + i + "].SeveralPhoto\" accept=\"image/jpeg\" data-val-required=\"Выберите файл для загрузки\"><br>" +
+                                     "<input type=\"file\" name=\"SeveralPhoto\" accept=\"image/jpeg\" data-val-required=\"Выберите файл для загрузки\"><br>" +
                                        "Не более 1 МБ" +
                                   "</div>" +
                              "</div>" +
                         "</div>"
                         );
-                //нормальный тег name для ds
-                $('[selectorfords]').each(function (indx, element) {
-                    $(element).attr("name", "pa2");
-                });
+
                 $("#SizeOfCount").val(CountSizes);
             }
 
         }
     }
-    //Добавить поверхность+            //нормальный тег name для di
+    //Добавить поверхность+           
     function AddSurface(i) {
-
-        $('[selectorforid]').each(function (indx, element) {
-            $(element).attr("name", "pa1");
-        });
 
         var count = $("#AddButton" + i + "").val();
         if (count == 1) {
@@ -155,13 +148,13 @@
 @Scripts.Render("~/Content/Map")
 @using (Html.BeginForm("CreateAdvertisingDesign", "Data", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    <input type="hidden" name="Code" id="SizeOfCount" value="@ViewBag.Code">
+    <input type="hidden" name="Code" value="@ViewBag.Code">
     <h3> 1. Общие данные о рекламной конструкции</h3>
     @Html.AntiForgeryToken()
     <div class="form-inline">
         <hr/>
 
-        <input type="hidden" id="CountSize" name="CountSize" value="">
+        <input type="hidden" id="CountSize" id="SizeOfCount" name="CountSize" value="">
         @Html.ValidationSummary(true)
         @Html.ValidationMessage("Error")
 

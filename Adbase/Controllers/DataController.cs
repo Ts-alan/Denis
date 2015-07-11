@@ -1432,11 +1432,9 @@ namespace Sciencecom.Controllers
 
         [Authorize]
         [HttpPost]
-        public ActionResult CreateAdvertisingDesign(AdvertisingStructure Structures, IEnumerable<string> pa1, IEnumerable<string> pa2, System.Collections.Generic.List<Sciencecom.Models.Surface> surfaces, HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides, HttpPostedFileBase PhotoController, int CountSize = 1)
+        public ActionResult CreateAdvertisingDesign(AdvertisingStructure Structures, List<Guid> DirectionSide, List<Guid> IdentificationSurface, System.Collections.Generic.List<Sciencecom.Models.Surface> surfaces, HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides, List<HttpPostedFileBase> SeveralPhoto, int CountSize = 1)
         {
-            //временное решение на удаление последнего элимента надо будет подправить
             
-
             Guid StructuresId = Guid.NewGuid();
             Structures.Id = StructuresId;
             //удаление временно номера из базы данных
@@ -1446,22 +1444,28 @@ namespace Sciencecom.Controllers
                 context.ListUniqueNumbers.Remove(context.ListUniqueNumbers.Single(x => x.UniqueNumber == Structures.UniqueNumber));
   
             }
+            Guid nullGuid=new Guid("00000000000000000000000000000000");
+            List<Side> Sides=new List<Side>();
+            Guid? IndentificationTemp=null;
+            for (int j = 1; j <= CountSize; j++)
+            {
+                if (IdentificationSurface[j - 1]!=nullGuid)
+                {
+                    IndentificationTemp = IdentificationSurface[j - 1];
+                }
+                Sides.Add(new Side() { AdvertisingStructures_Id = StructuresId, Name = j.ToString(), Id = Guid.NewGuid(), DirectionSide_id = DirectionSide[j - 1], Identification_id = IndentificationTemp });
+                IndentificationTemp = null;
+            }
 
-            //for (int j = 1; j <= CountSize; j++)
-            //{
-            //    Sides[j-1].AdvertisingStructures_Id = StructuresId;
-            //    Sides[j-1].Id = Guid.NewGuid();
-            //    Sides[j-1].Name = j.ToString();
-            //}
-            //context.Sides.AddRange(Sides);
+            context.Sides.AddRange(Sides);
             context.AdvertisingStructures.Add(Structures);
-            //if (surfaces != null)
-            //    foreach (var i in surfaces)
-            //    {
-            //        i.Side_Id = ListSide.Single(a => a.Name == i.SideOfSurface).Id;
-            //        context.Surfaces.Add(i);
+            if (surfaces != null)
+                foreach (var i in surfaces)
+                {
+                    i.Side_Id = Sides.Single(a => a.Name == i.SideOfSurface).Id;
+                    context.Surfaces.Add(i);
 
-            //    }
+                }
 
                 context.SaveChanges();
          
@@ -1478,25 +1482,18 @@ namespace Sciencecom.Controllers
                 string path = Server.MapPath(src);
                 ScanPassport_2Sides.SaveAs(path);
             }
-            if (PhotoController != null)
-            {
-                string src = "~/Images/PhotoController/" + Structures.Id_show + "PhotoController.jpg";
-                string path = Server.MapPath(src);
-                PhotoController.SaveAs(path);
-            }
-            //if (surfaces != null)
-            //{
-            //    foreach (var surface in surfaces)
-            //    {
-            //        if (surface.SeveralPhoto != null)
-            //        {
 
-            //            string src = "~/Images/surfaces/" + surface.Id + ".jpg";
-            //            string path = Server.MapPath(src);
-            //            surface.SeveralPhoto.SaveAs(path);
-            //        }
-            //    }
-            //}
+            if (SeveralPhoto != null)
+            {
+                for(int i=0;i<Sides.Count;i++){
+                        
+                        string src = "~/Images/Sides/" + Sides[i].Id + ".jpg";
+                        string path = Server.MapPath(src);
+                        SeveralPhoto[i].SaveAs(path);
+                    }
+        
+               
+            }
 
             return RedirectToAction("AdvertisingDesign");
 

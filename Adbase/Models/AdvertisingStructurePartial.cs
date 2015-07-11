@@ -15,13 +15,6 @@ namespace Sciencecom.Models
 
 
     }
-    public partial class Side
-    {
-        public HttpPostedFileBase SeveralPhoto { get; set; }
-
-
-    }
-
 
     public class SurfaceConstructionMetaData
     {
