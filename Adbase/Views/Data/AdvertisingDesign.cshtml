@@ -14,6 +14,7 @@
     ApplicationUser user = um.FindByName(User.Identity.GetUserName());
     string role = user.Roles.Select(m => m.Role.Name).First();
     int SurfaceCOunt = 0;
+    int id = 1;
 }
 
 
@@ -124,12 +125,12 @@
     {
        
                 <tr >
-                    <td>@i.Id_show</td>
+                    <td> @id@{ ++id;}</td>
                     <td>@i.Owner.Name</td>
-                    <th>@i.TypeOfAdvertisingStructure.Name</th>
+                    <td>@i.TypeOfAdvertisingStructure.Name</td>
                     <td>@i.UniqueNumber</td>
                     <td>@i.Status.NameStatus</td>
-                    <td>@i.Locality</td>
+                    <td>@i.Locality.NameLocality</td>
                     <td>@i.Street1</td>
                     <td>@i.House1</td>
                     <td>@i.Street2</td>
