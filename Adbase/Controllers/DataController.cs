@@ -1173,18 +1173,18 @@ namespace Sciencecom.Controllers
             //     }
           return result;
         }
-        //public ActionResult FindStreets(string term)
-        //{
-        //    var streets = from m in context.Streets where m.Name.Contains(term) select m;
-        //    var projection = from street in streets
-        //        select new
-        //        {
-        //            id = street.Id,
-        //            label = street.Name + " " + street.Type,
-        //            value = street.Name + " " + street.Type
-        //        };
-        //    return Json(projection.ToList(), JsonRequestBehavior.AllowGet);
-        //}
+        public ActionResult FindStreets(string term)
+        {
+            var streets = from m in context.Streets where m.Street1.Contains(term) select m;
+            var projection = from street in streets
+                             select new
+                             {
+                                 id = street.id,
+                                 label = street.Street1 + " " + street.Type,
+                                 value = street.Street1 + " " + street.Type
+                             };
+            return Json(projection.ToList(), JsonRequestBehavior.AllowGet);
+        }
 
         //public ActionResult FindStory(string term)
         //{

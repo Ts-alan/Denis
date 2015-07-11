@@ -12,7 +12,7 @@ namespace Sciencecom
                         "~/Scripts/jquery-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jquery-ui").Include(
-                        "~/Scripts/jquery-{version}.js"));
+                        "~/Scripts/jquery-ui-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -38,7 +38,7 @@ namespace Sciencecom
                       "~/Content/jquery.bxslider.css"));
             
             bundles.Add(new StyleBundle("~/Content/Map").Include(
-            //"~/Scripts/Autocomplete.js",
+            "~/Scripts/Autocomplete.js",
             "~/Scripts/AddPlacamerkToMap.js"
            ));
             //css для Grid

@@ -14,8 +14,8 @@ namespace Sciencecom.Models
     
     public partial class Street
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+        public int id { get; set; }
+        public string Street1 { get; set; }
         public string Type { get; set; }
     }
 }

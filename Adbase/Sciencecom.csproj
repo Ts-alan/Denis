@@ -718,8 +718,6 @@
     <Content Include="Scripts\jqGrid\plugins\jquery.contextmenu.js" />
     <Content Include="Scripts\jqGrid\plugins\jquery.searchFilter.js" />
     <Content Include="Scripts\jqGrid\plugins\jquery.tablednd.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\jquery-1.11.3.js" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
