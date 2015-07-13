@@ -20,41 +20,44 @@
 
 @Styles.Render("~/Content/jqCrid")
 @Scripts.Render("~/bundles/jqCrid")
+
 <script type="text/javascript">
-    $(document).ready(function () {
+    $(document).ready(function() {
 
         //создание таблицы
         tableToGrid("#table", {
             height: 700,
-            colNames: ["Собственник", "Вид", "Уникальный номер", "Статус",
-                       "Нас. пункт", "Улица 1", "Дом", "Улица 2", "Со стороны улицы",
-                       "Элемент улично-дорожной сети", "Количество сторон",
-                       "Количестов поверхностей", "№ договора с финансовым управлением",
-                       "№ паспорта рекламы", "Паспорт выдан с", "Паспорт выдан по"],
+            colNames: [
+                "Собственник", "Вид", "Уникальный <br/> номер", "Статус",
+                "Нас. пункт", "Улица 1", "Дом", "Улица 2", "Со стороны улицы",
+                "Элемент улично-дорожной сети", "Количество сторон",
+                "Количестов поверхностей", "№ договора с финансовым управлением",
+                "№ паспорта рекламы", "Паспорт выдан с", "Паспорт выдан по"
+            ],
             colModel: [
-            { name: "Собственник", width: 120 },
-            { name: "Вид", width: 90 },
-            { name: "Уникальный_номер", width: 120 },
-            { name: "Статус", width: 80 },
-            { name: "Нас._пункт", width: 80 },
-            { name: "Улица1", width: 150 },
-            { name: "Дом", width: 55 },
-            { name: "Улица2", width: 90 },
-            { name: "Со_стороны_улицы", width: 80 },
-            { name: "Элемент_улично-дорожной_сети", width: 80 },
-            { name: "Количество_сторон", width: 80 },
-            { name: "Количестов_поверхностей", width: 150 },
-            { name: "№_договора_с_финансовым_управлением", width: 80 },
-            { name: "№_паспорта_рекламы", width: 80 },
-            { name: "Паспорт_выдан_с", width: 80 },
-            { name: "Паспорт_выдан_по", width: 150 }
+                { name: "Собственник", width: 25,align:"center" },
+                { name: "Вид", width: 15, align: "center" },
+                { name: "Уникальный_номер", width: 30, align: "center" },
+                { name: "Статус", width: 30, align: "center" },
+                { name: "Нас._пункт", width: 25, align: "center" },
+                { name: "Улица1", width: 30, align: "center" },
+                { name: "Дом", width: 30, align: "center" },
+                { name: "Улица2", width: 30, align: "center" },
+                { name: "Со_стороны_улицы", width: 20, align: "center" },
+                { name: "Элемент_улично-дорожной_сети", width: 25, align: "center" },
+                { name: "Количество_сторон", width: 20, align: "center" },
+                { name: "Количестов_поверхностей", width: 20, align: "center" },
+                { name: "№_договора_с_финансовым_управлением", width: 25, align: "center" },
+                { name: "№_паспорта_рекламы", width: 20, align: "center" },
+                { name: "Паспорт_выдан_с", width: 30, align: "center" },
+                { name: "Паспорт_выдан_по", width: 30, align: "center" }
             ]
         });
-        $('.ui-jqgrid-labels').height("100px");
+
         var $Tablebacklight;
 
         //подсветка
-        $('table tr').on("click", function () {
+        $('table tr').on("click", function() {
             if (typeof $Tablebacklight != 'undefined') {
                 $Tablebacklight.css("background-color", "");
             }
@@ -63,14 +66,14 @@
 
         });
         //спрятать убрать всплывающие окна
-        $("#AddNewAD").click(function () {
+        $("#AddNewAD").click(function() {
             if ($('#divForAddNewAD').css("visibility") == "hidden") {
                 $('#divForAddNewAD').css("visibility", "visible");
             } else {
                 $('#divForAddNewAD').css("visibility", "hidden");
             }
         });
-        $("#EditStatusAD").click(function () {
+        $("#EditStatusAD").click(function() {
             if ($('#divEditStatusAD').css("visibility") == "hidden") {
                 $('#divEditStatusAD').css("visibility", "visible");
             } else {
@@ -78,12 +81,12 @@
             }
         });
         //переход через ajax на edit billbord
-        $('#EditBillbord').click(function () {
+        $('#EditBillbord').click(function() {
             if ($Tablebacklight != "undefined") {
                 var IdGuid = $Tablebacklight.children("td:last").children().text();
-                $.get('@Url.Action("EditAdvertisingDesign", "Data")', { id: IdGuid }).success(function (result) {
+                $.get('@Url.Action("EditAdvertisingDesign", "Data")', { id: IdGuid }).success(function(result) {
                     $("#Page").html(result);
-                }).error(function () {
+                }).error(function() {
                     alert("что то пошло не так");
                 });
             }
@@ -93,6 +96,14 @@
     });
 
 </script>
+@*чтобы jqgtid разбивал на несколько строк*@
+<style type="text/css" media="screen">
+    th.ui-th-column div {
+        white-space: normal !important;
+        height: auto !important;
+        padding: 2px;
+    }
+</style>
 <div id ="Page">
 <h2>Таблица рекламных конструкций</h2>
 @{
