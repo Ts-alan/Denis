@@ -62,7 +62,7 @@ namespace Enums.Selectors
                             StoredValue = "Admin"
                         },
                         new RoleItem{
-                            DisplayValue = "Только билборды",
+                            DisplayValue = "Только Щиты",
                             StoredValue = "OnlyBillboards"
                         }
                     };

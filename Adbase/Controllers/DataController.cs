@@ -1393,7 +1393,7 @@ namespace Sciencecom.Controllers
         //    }
         //    return View();
         //}
-        //билборд
+        //Щит
         [Authorize]
         [HttpGet]
         public ActionResult AdvertisingDesign()

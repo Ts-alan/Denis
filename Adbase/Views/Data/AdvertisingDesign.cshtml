@@ -24,7 +24,27 @@
     $(document).ready(function () {
 
         //создание таблицы
-        tableToGrid("#table", { height: 700 });
+        tableToGrid("#table", {
+            height: 700 ,
+            colModel: [
+            {  index: 'invid', width: 100 },
+            {index: 'invdate', width: 90 },
+            {index: 'amount', width: 80, align: 'right' },
+            {index: 'tax', width: 80, align: 'right' },
+            {index: 'total', width: 80, align: 'right' },
+            {index: 'note', width: 150 },
+            {index: 'invid', width: 55 },
+            {index: 'invdate', width: 90 },
+            {index: 'amount', width: 80, align: 'right' },
+            {index: 'tax', width: 80, align: 'right' },
+            {index: 'total', width: 80, align: 'right' },
+            {index: 'note', width: 150 },
+            {index: 'amount', width: 80, align: 'right' },
+            {index: 'tax', width: 80, align: 'right' },
+            {index: 'total', width: 80, align: 'right' },
+            {index: 'note', width: 150 }
+            ]
+        });
         var $Tablebacklight;
 
         //подсветка
@@ -94,23 +114,22 @@
 
 <table id="table" class="table-bordered"  cellpadding="5">
     <tr>
-        <th>Id</th>
         <th>Собственник</th>
         <th>Вид</th>
-        <th>Уникальный номер </th>
+        <th>Уникальный <br>номер </th>
         <th>Статус</th>
         <th>Нас. пункт </th>
         <th>Улица 1</th>
         <th>Дом</th>
         <th>Улица 2</th>
-        <th>Со стороны улицы </th>
-        <th>Элемент улично-дорожной сети</th>
-        <th> Количество сторон</th>
-        <th> Количестов поверхностей</th>
-        <th>№ договора с финансовым управлением</th>
-        <th>№ паспорта рекламы</th>
-        <th> Паспорт выдан с</th>
-        <th> Паспорт выдан по</th>
+        <th>Со стороны <br>улицы </th>
+        <th>Элемент<br> улично-дорожной<br> сети</th>
+        <th> Количество <br>сторон</th>
+        <th> Количестов<br> поверхностей</th>
+        <th>№ договора<br> с финансовым <br> управлением</th>
+        <th>№ паспорта<br> рекламы</th>
+        <th> Паспорт<br> выдан с</th>
+        <th> Паспорт <br>выдан по</th>
 
         @*<th>Долгота</th>
         <th>Широта</th>        
@@ -125,8 +144,7 @@
     {
        
                 <tr >
-                    <td> @id@{ ++id;}</td>
-                    <td>@i.Owner.Name</td>
+                    <td>i.Owner.Name</td>
                     <td>@i.TypeOfAdvertisingStructure.Name</td>
                     <td>@i.UniqueNumber</td>
                     <td>@i.Status.NameStatus</td>
@@ -148,8 +166,8 @@
                     </td>
                     <td>@i.C_ContractFinancialManagement</td>
                     <td>@i.C_PassportAdvertising</td>
-                    <td>@i.StartDate</td>
-                    <td>@i.EndDate</td>
+                    <td>@i.StartDate.Value.ToString().Substring(0,10)</td>
+                    <td>@i.EndDate.Value.ToString().Substring(0, 10)</td>
 
                     @*<td>@i.Height</td>
                     <td>@i.Breadth</td>              

@@ -57,7 +57,7 @@
                                      + '</br>Со стороны:&nbsp;' + data[i].FromStreet
                             + getReferencesBillboard(data[i]),
                             iconContent: 'Б',
-                            hintContent: 'Билборд'
+                            hintContent: 'Щит'
                         }
 
                     },
