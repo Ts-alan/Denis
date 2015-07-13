@@ -146,7 +146,7 @@
                     <b>@Html.ActionLink("Документы", "Documents", new { id = item.Id_show, type = "b" })</b><br />
     string idLink = "mapLink" + item.Id.ToString();
     string mapLink = "/Map/?type=b&id=" + item.Id_show;
-    <a href="@mapLink" target="_blank">Показать на карте</a><br />
+    <a href="@mapLink" >Показать на карте</a><br />
     var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
     ApplicationUser user = um.FindByName(User.Identity.GetUserName());
     string role = user.Roles.Select(m => m.Role.Name).First().ToString();

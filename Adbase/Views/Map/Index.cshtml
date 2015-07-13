@@ -143,71 +143,22 @@
 </head>
 <body>
 
-@*<div class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <b>@Html.ActionLink("adbase.by", "Index", "Home", null, new {@class = "navbar-brand"})</b>
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Таблицы<b class="caret"></b></a>
-                    <ul class="dropdown-menu">*@
-                        @*<li>@Html.ActionLink("Металлические указатели", "Metal", "Data")</li>*@
-                        @*<li>@Html.ActionLink("Световые указатели", "Light", "Data")</li>
-                        <li>@Html.ActionLink("Неопознанные конструкции", "Index", "Illegal")</li>
-                        <li>@Html.ActionLink("Щиты", "Bilboard", "Data")</li>
-                    </ul>
-                </li>
-                <li>@Html.ActionLink("Карта", "Index", "Map")</li>
-            </ul>
-            @Html.Partial("_LoginPartial")
-        </div>
-    </div>
-</div>*@
+
 <div class="container body-content" >
 <h3 style="text-align: center">Добавить новую рекламную конструкцию</h3>
 <table class="table-bordered" cellpadding="5">
 <tr>
 <td width="100px">
-@{
-    @*if ((role != "ReadOnly") && (role != "IllegalEdit"))
-    {
-        <a href="#"><img src="~/Content/Icons/add.png" style="height: 40px" id="addLinkImage"/></a><br/>
-        <p id="addLinks" style="border: solid 1px">
-            @Html.ActionLink("+ Добавить новый Щит", "CreateBilboard", "Data")<br/>*@
-            @*@Html.ActionLink("+ Добавить металлический указатель", "CreateMetal", "Data")<br/>*@
-            @*@Html.ActionLink("+ Добавить световой указатель с заявлением", "CreateLightOnStatement", "Data")<br/>
-            @Html.ActionLink("+ Добавить согласованный световой указатель", "CreateLight", "Data")<br/>
-            @Html.ActionLink("+ Добавить неопознанную конструкцию", "CreateLight", "Data")<br/>
-        </p>*@
-    }
-    @*if (role == "IllegalEdit")
-    {
-        <a href="#"><img src="~/Content/Icons/add.png" style="height: 40px" id="addLinkImage"/></a><br/>
-        <p id="addLinks">
-            @Html.ActionLink("+ Добавить неопознанную конструкцию", "CreateLight", "Data")<br/>
-        </p>
-    }*@
-@*}*@
-@*<input type="checkbox" id="showMetal" onchange="check()" name="showMetal">&nbsp;Металлические указатели<br/>*@
-@*<input type="checkbox" id="showLight" onchange="check()" name="showLight">&nbsp;Световые короба<br/>
-<input type="checkbox" id="showIllegal" onchange="check()" name="showIllegal">&nbsp;Из раздела "Неопознанные конструкции"<br/>
-<input type="checkbox" id="showBillboard" onchange="check()" name="showBillboard">&nbsp;Биллборд<br/>*@
+
 <div id="divForAddNewAD">
     <b>@Html.ActionLink("+ Добавить новую рекламную конструкцию", "", new {type = "Billboard"})</b>
-    <b>@Html.ActionLink("+ Изменить рекламной конструкции", "", new {type = "Billboard"}, new {style = "display: block"})</b>
+    @*<b>@Html.ActionLink("+ Изменить рекламной конструкции", "", new {type = "Billboard"}, new {style = "display: block"})</b>*@
 
 </div>
     <h6><u><b>Сортировака рекламных конструкции</b></u></h6>
-    <input type="checkbox" style="float: left"> <h6><u> Вид рекламной конструкции </u></h6>
-        <input type="checkbox" style="float: left; margin-left: 20px"> <h6><u> Щит</u></h6>
-    <input type="checkbox" style="float: left"> <h6 ><u>Статус рекламной конструкции </u></h6>
+    <input type="checkbox" style="float: left" checked> <h6><u> Вид рекламной конструкции </u></h6>
+    <input type="checkbox" style="float: left; margin-left: 20px" checked> <h6><u> Щит</u></h6>
+    @*<input type="checkbox" style="float: left"> <h6 ><u>Статус рекламной конструкции </u></h6>
         <input type="checkbox" style="float: left"> <h6 style="float: left; display: block; margin-top: 0px; margin-right: 5px">На согласование</h6><input type="checkbox" style="float: left"> <h6>Согласовано</h6>
         <input type="checkbox" style="float: left"> <h6 style="float: left; display: block; margin-top: 0px; margin-right: 5px">Установлено</h6><input type="checkbox" style="float: left"> <h6>Демонтировано</h6>
     <input id="LocationAK"  type="checkbox" style="float: left"> <h6><u>Место расположения рекламных концструкции</u></h6>
@@ -223,7 +174,7 @@
     <div id="PermitsDList" style="display: none">
         <input type="checkbox" style="float: left"> <h6> Паспорт рекламы выдан с</h6>
         <input type="checkbox" style="float: left"> <h6> Паспорт рекламы выдан до</h6>
-    </div>
+    </div>*@
 <table id="all" style="visibility: hidden">
     <tr>
         <td colspan="2"><b>Kритерии:</b>
@@ -475,7 +426,7 @@
 <div class="container body-content">
     <hr/>
     <footer>
-        <p>&copy; @DateTime.Now.Year – <a href="http://scom.by">"OnCloud"</a>
+        <p>&copy; @DateTime.Now.Year – <a href="#">OnCloud</a>
         </p>
     </footer>
 </div>

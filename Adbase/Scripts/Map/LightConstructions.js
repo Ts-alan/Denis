@@ -81,13 +81,13 @@
 function getReferencesLight(role, userCompany, construction) {
     var result = "";
     if ((role == "Admin") || (role == "ChiefEditAll") || (role == "SupplierEditAll")) {
-        result += '</br><a href="/Data/EditLight/' + construction.Id + '" target="_blank">Изменить</a>'
-               + '</br><a href="/Data/DeleteLight/' + construction.Id + '" target="_blank">Удалить</a></b>';
+        result += '</br><a href="/Data/EditLight/' + construction.Id + '" >Изменить</a>'
+               + '</br><a href="/Data/DeleteLight/' + construction.Id + '" >Удалить</a></b>';
     }
     if ((role == "ChiefEditOwn") || (role == "SupplierEdotOwn")) {
         if (construction.Owner == userCompany) {
-            result += '</br><a href="/Data/EditLight/' + construction.Id + '" target="_blank">Изменить</a>'
-                  + '</br><a href="/Data/DeleteLight/' + construction.Id + '" target="_blank">Удалить</a></b>';
+            result += '</br><a href="/Data/EditLight/' + construction.Id + '" >Изменить</a>'
+                  + '</br><a href="/Data/DeleteLight/' + construction.Id + '" >Удалить</a></b>';
         }
     }
     if (construction.HasPhoto) {
@@ -102,15 +102,15 @@ function getReferencesLight(role, userCompany, construction) {
 function getReferencesLightOnStatement(role, userCompany, construction)
 {
     if ((role == "Admin") || (role == "ChiefEditAll") || (role == "SupplierEditAll")) {
-        return '</br><a href="/Data/AddPassport/' + construction.Id + '" target="_blank">В согласованные</a>'
-               + '</br><a href="/Data/EditLight/' + construction.Id + '" target="_blank">Изменить</a>'
-               + '</br><a href="/Data/DeleteLight/' + construction.Id + '" target="_blank">Удалить</a></b>';
+        return '</br><a href="/Data/AddPassport/' + construction.Id + '" >В согласованные</a>'
+               + '</br><a href="/Data/EditLight/' + construction.Id + '" >Изменить</a>'
+               + '</br><a href="/Data/DeleteLight/' + construction.Id + '" >Удалить</a></b>';
     }
     if ((role == "ChiefEditOwn") || (role == "SupplierEdotOwn")) {
         if (construction.Owner == userCompany) {
-            return '</br><a href="../Data/AddPassport/' + construction.Id + '" target="_blank">В согласованные</a>'
-                + '</br><a href="/Data/EditLight/' + construction.Id + '" target="_blank">Изменить</a>'
-                + '</br><a href="/Data/DeleteLight/' + construction.Id + '" target="_blank">Удалить</a></b>';
+            return '</br><a href="../Data/AddPassport/' + construction.Id + '" >В согласованные</a>'
+                + '</br><a href="/Data/EditLight/' + construction.Id + '" >Изменить</a>'
+                + '</br><a href="/Data/DeleteLight/' + construction.Id + '" >Удалить</a></b>';
         }
         else return '';
     }
@@ -128,7 +128,7 @@ function getBaloon(role, userCompany, construction) {
            + '</br>Разрешено с:&nbsp;' + construction.StartDate
            + '</br>Разрешено до:&nbsp;' + construction.FinishDate
            + '</br>' + construction.IsSocial
-           + '</br><a href="/Data/Documents/' + construction.Id + '?type=l" target="_blank">Документы</a>'
+           + '</br><a href="/Data/Documents/' + construction.Id + '?type=l" >Документы</a>'
     + getReferencesLight(role, userCompany, construction)
 }
 
@@ -139,6 +139,6 @@ function getBaloonForOnStatement(role, userCompany, construction) {
            + '</br>Со стороны:&nbsp;' + construction.FromStreet
            + '</br>Опора №:&nbsp;' + construction.Support
            + '</br>Заявление подано:&nbsp;' + construction.StartDate
-           + '</br><a href="/Data/Documents/' + construction.Id + '?type=ls" target="_blank">Документы</a>'
+           + '</br><a href="/Data/Documents/' + construction.Id + '?type=ls" >Документы</a>'
     + getReferencesLightOnStatement(role, userCompany, construction)
 }

@@ -22,7 +22,8 @@
     var ListTypeElementOfTheRoadNetworkName = new SciencecomEntities().TheElementOfTheRoadNetworks.Select(a => new { id = a.id, Value = a.TheElementOfTheRoadNetworkName }).ToList();
     
     //Статус
-    var Status = new SciencecomEntities().Status.OrderBy(x=>x.OrderByStatus).Select(a => new { id = a.id, Value = a.NameStatus }).ToList();   
+    var Status = new SciencecomEntities().Status.OrderBy(x=>x.OrderByStatus).Select(a => new { id = a.id, Value = a.NameStatus }).ToList();  
+    Status.Insert(0,null); 
     
     //Населенный пункт выпадающий список
     var Locality = new SciencecomEntities().Localities.ToList();
@@ -60,10 +61,10 @@
         var CountSizes = $('#CountSizes').val();
         $("#CountSize").val(CountSizes);
         if (CountSizes != "") {
-            $("[code]").each(function(indx, element) {
+            $("[code]").each(function (indx, element) {
                 element.remove();
             });
-            
+
             for (var i = 1; i <= CountSizes; i++) {
 
                 $("#InsertSide").before("<div code class=\"form-horizontal\" >" +
@@ -73,7 +74,8 @@
                     "<div class=\"form-group\">" +
                     "<div class=\"col-md-10\">" +
                     "<b>Количество поверхностей</b>" +
-                    " <select data-val=\"true\" data-val-required=\"Выберете значение\" id=\"AddButton" + i + "\" onchange=AddSurface(" + i + ") name=\"CountSurfuce" + i + "\" >" +
+                    " <select class=\"text-box single-line\" id=\"AddButton" + i + "\" onchange=AddSurface(" + i + ") name=\"CountSurfuce\" type=\"text\" data-val=\"true\" data-val-required=\"Укажите кол-во сторон\">" +
+                   
                     "<option>1</option>" +
                     "<option>2</option>" +
                     "<option>3</option>" +
@@ -82,8 +84,7 @@
                     "<option>6</option>" +
                     "<option>7</option>" +
                     "<option>8</option>" +
-                    "</select> &nbsp;&nbsp;&nbsp; <span class=\"field-validation-valid\" data-valmsg-for=\"CountSurfuce" + i + "\" data-valmsg-replace=\"true\"> </span><b>Направление стороны</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("DirectionSide", new SelectList(DirectionSide, "id", "NameOfDirectionSide")).ToHtmlString().Replace("\"", " "))' +
-                   
+                    "</select> &nbsp;&nbsp;&nbsp;<b>Направление стороны</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("DirectionSide", new SelectList(DirectionSide, "id", "NameOfDirectionSide")).ToHtmlString().Replace("\"", " "))' +
                     "</div>" +
                     "</div> <div style=\"margin-left: -15px;display: none\" id=\"" + i + "HiddenIdentification\"> &nbsp;&nbsp;&nbsp;<b>Идентификация поверхностей</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("IdentificationSurface", new SelectList(IdentificationSide, "id", "IdentificationName")).ToHtmlString().Replace("\"", " ")) </div>' +
                     "<div  id=\"InsertPartial" + i + "\"></div>" +
@@ -101,6 +102,7 @@
                         );
 
                 $("#SizeOfCount").val(CountSizes);
+                AddSurface(i);
             }
             $("[name='DirectionSide']").each(function (indx, element) {
                 $(element).attr("data-val", "true");
@@ -110,6 +112,7 @@
                 $(element).attr("data-val", "true");
                 $(element).attr("data-val-required", "Выберете значение");
             });
+          
         }
     }
     //Добавить поверхность+           
@@ -178,7 +181,7 @@
 
         <div class="form-group" >
             <label for="Status" >Статус</label>
-            @Html.DropDownListFor(a => a.Status_Id, new SelectList(Status, "id", "Value"), "")
+            @Html.DropDownListFor(a => a.Status_Id, new SelectList(Status, "id", "Value",Status.ElementAt(3).id))
             @Html.ValidationMessageFor(model => model.Status_Id)
         </div>
 

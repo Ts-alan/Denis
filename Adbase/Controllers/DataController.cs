@@ -1459,15 +1459,17 @@ namespace Sciencecom.Controllers
 
             context.Sides.AddRange(Sides);
             context.AdvertisingStructures.Add(Structures);
+            List<Surface> ListSurface = new List<Surface>();
             if (surfaces != null)
                 foreach (var i in surfaces)
                 {
                     i.Side_Id = Sides.Single(a => a.Name == i.SideOfSurface).Id;
-                    context.Surfaces.Add(i);
-
+                    ListSurface.Add(i);
+                
                 }
+            context.Surfaces.AddRange(ListSurface);
 
-                context.SaveChanges();
+            context.SaveChanges();
          
 
             if (ScanPassport_1Sides != null)

@@ -99,7 +99,7 @@
                     });
                </script>*@
         string mapLink = "/Map/?type=m&id=" + item.Id;
-        <a href="@mapLink" target="_blank">Показать на карте</a><br />
+        <a href="@mapLink" >Показать на карте</a><br />
         var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
                ApplicationUser user = um.FindByName(User.Identity.GetUserName());
              string role = user.Roles.Select(m => m.Role.Name).First().ToString();

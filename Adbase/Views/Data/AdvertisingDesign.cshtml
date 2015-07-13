@@ -25,26 +25,32 @@
 
         //создание таблицы
         tableToGrid("#table", {
-            height: 700 ,
+            height: 700,
+            colNames: ["Собственник", "Вид", "Уникальный номер", "Статус",
+                       "Нас. пункт", "Улица 1", "Дом", "Улица 2", "Со стороны улицы",
+                       "Элемент улично-дорожной сети", "Количество сторон",
+                       "Количестов поверхностей", "№ договора с финансовым управлением",
+                       "№ паспорта рекламы", "Паспорт выдан с", "Паспорт выдан по"],
             colModel: [
-            {  index: 'invid', width: 100 },
-            {index: 'invdate', width: 90 },
-            {index: 'amount', width: 80, align: 'right' },
-            {index: 'tax', width: 80, align: 'right' },
-            {index: 'total', width: 80, align: 'right' },
-            {index: 'note', width: 150 },
-            {index: 'invid', width: 55 },
-            {index: 'invdate', width: 90 },
-            {index: 'amount', width: 80, align: 'right' },
-            {index: 'tax', width: 80, align: 'right' },
-            {index: 'total', width: 80, align: 'right' },
-            {index: 'note', width: 150 },
-            {index: 'amount', width: 80, align: 'right' },
-            {index: 'tax', width: 80, align: 'right' },
-            {index: 'total', width: 80, align: 'right' },
-            {index: 'note', width: 150 }
+            { name: "Собственник", width: 120 },
+            { name: "Вид", width: 90 },
+            { name: "Уникальный_номер", width: 120 },
+            { name: "Статус", width: 80 },
+            { name: "Нас._пункт", width: 80 },
+            { name: "Улица1", width: 150 },
+            { name: "Дом", width: 55 },
+            { name: "Улица2", width: 90 },
+            { name: "Со_стороны_улицы", width: 80 },
+            { name: "Элемент_улично-дорожной_сети", width: 80 },
+            { name: "Количество_сторон", width: 80 },
+            { name: "Количестов_поверхностей", width: 150 },
+            { name: "№_договора_с_финансовым_управлением", width: 80 },
+            { name: "№_паспорта_рекламы", width: 80 },
+            { name: "Паспорт_выдан_с", width: 80 },
+            { name: "Паспорт_выдан_по", width: 150 }
             ]
         });
+        $('.ui-jqgrid-labels').height("100px");
         var $Tablebacklight;
 
         //подсветка
@@ -93,96 +99,80 @@
     if (role != "ReadOnly")
     {
         <p>
-            <b><a href="#" style="margin-right: 110px" id="AddNewAD">+ Новая рекламная конструкция</a></b>
+            <b>@Html.ActionLink("+ Добавить новую рекламную конструкцию", "CreateAdvertisingDesign", new { type = "Billboard" })</b>
+
+            @*<b><a href="#" style="margin-right: 110px" id="AddNewAD">+ Новая рекламная конструкция</a></b>
             <b><a href="#" style="margin-right: 110px" id="EditStatusAD">+ Изменить статус рекламной конструкции</a></b>
-            <b><a href="#" id="EditBillbord">+ Изменить существующую рекламную конструкцию</a></b>
+            <b><a href="#" id="EditBillbord">+ Изменить существующую рекламную конструкцию</a></b>*@
         </p>
     }
 }
-<div id="divForAddNewAD" style="margin-left: 30px; margin-right: 40px; margin-bottom: 10px; float: left;visibility: hidden">
-    <b>@Html.ActionLink("+ Карточка рекламной конструкции", "CreateAdvertisingDesign", new { type = "Billboard" })</b>
-    <b>@Html.ActionLink("+ Подать заявку на согласование паспорта рекламы", "CreateAdvertisingDesign", new {type = "Billboard"}, new {style = "display: block"})</b>
-    
-</div>
 
-<div id="divEditStatusAD" style="visibility: hidden">
-    <b>@Html.ActionLink("+ Ввести данные паспорта рекламы", "CreateBilboard", new {type = "Billboard"}, new {style = "margin-right:140px"})</b>
-    <b>@Html.ActionLink("+ Ввести данные об установке рекламной конструкции", "CreateAdvertisingDesign", new {type = "Billboard"}, new {style = "margin-right:140px;display: block"})</b>
-    <b>@Html.ActionLink("+ Ввести данные об демонтаже рекламной контсрукции", "CreateAdvertisingDesign", new {type = "Billboard"}, new {style = "margin-right:140px;display: block"})</b>
-</div>
+    @*<div id="divForAddNewAD" style="margin-left: 30px; margin-right: 40px; margin-bottom: 10px; float: left; visibility: hidden">
+        <b>@Html.ActionLink("+ Карточка рекламной конструкции", "CreateAdvertisingDesign", new {type = "Billboard"})</b>
+        <b>@Html.ActionLink("+ Подать заявку на согласование паспорта рекламы", "CreateAdvertisingDesign", new {type = "Billboard"}, new {style = "display: block"})</b>
+
+    </div>
+
+    <div id="divEditStatusAD" style="visibility: hidden">
+        <b>@Html.ActionLink("+ Ввести данные паспорта рекламы", "CreateBilboard", new {type = "Billboard"}, new {style = "margin-right:140px"})</b>
+        <b>@Html.ActionLink("+ Ввести данные об установке рекламной конструкции", "CreateAdvertisingDesign", new {type = "Billboard"}, new {style = "margin-right:140px;display: block"})</b>
+        <b>@Html.ActionLink("+ Ввести данные об демонтаже рекламной контсрукции", "CreateAdvertisingDesign", new {type = "Billboard"}, new {style = "margin-right:140px;display: block"})</b>
+    </div>*@
 
 
-<table id="table" class="table-bordered"  cellpadding="5">
-    <tr>
-        <th>Собственник</th>
-        <th>Вид</th>
-        <th>Уникальный <br>номер </th>
-        <th>Статус</th>
-        <th>Нас. пункт </th>
-        <th>Улица 1</th>
-        <th>Дом</th>
-        <th>Улица 2</th>
-        <th>Со стороны <br>улицы </th>
-        <th>Элемент<br> улично-дорожной<br> сети</th>
-        <th> Количество <br>сторон</th>
-        <th> Количестов<br> поверхностей</th>
-        <th>№ договора<br> с финансовым <br> управлением</th>
-        <th>№ паспорта<br> рекламы</th>
-        <th> Паспорт<br> выдан с</th>
-        <th> Паспорт <br>выдан по</th>
-
-        @*<th>Долгота</th>
-        <th>Широта</th>        
-        <th>Планируемая дата установки</th>      
-        <th> Дата фактической установки </th>
-        <th> Дата демонтажа</th>
-        <th> Дата проверки</th>*@
-       
-      
-    </tr>
-    @foreach (var i in Model)
-    {
-       
-                <tr >
-                    <td>i.Owner.Name</td>
-                    <td>@i.TypeOfAdvertisingStructure.Name</td>
-                    <td>@i.UniqueNumber</td>
-                    <td>@i.Status.NameStatus</td>
-                    <td>@i.Locality.NameLocality</td>
-                    <td>@i.Street1</td>
-                    <td>@i.House1</td>
-                    <td>@i.Street2</td>
-                    <td>@i.FromStreet</td>
-                    <td>@i.TheElementOfTheRoadNetwork.TheElementOfTheRoadNetworkName</td>
-                    <td>@i.Sides.Count</td>
-                    <td>
-                        @foreach (var side in i.Sides.OrderBy(a => a.Name))
-                        {
-                            SurfaceCOunt += side.Surfaces.Count;
-                        }
-                        @SurfaceCOunt
-                        @{ SurfaceCOunt = 0;}
-                        <div style="display: none">@i.Id</div>
-                    </td>
-                    <td>@i.C_ContractFinancialManagement</td>
-                    <td>@i.C_PassportAdvertising</td>
-                    <td>@i.StartDate.Value.ToString().Substring(0,10)</td>
-                    <td>@i.EndDate.Value.ToString().Substring(0, 10)</td>
-
-                    @*<td>@i.Height</td>
-                    <td>@i.Breadth</td>              
-                    <td>@i.PlannedInstallationDate</td>                   
-                    <td>@i.DateOfActualInstallation</td>
-                    <td>@i.DateDismantling</td>
-                    <td>@i.RevisionDate</td>*@
-                  
+    <table id="table" class="table-bordered" cellpadding="5">
+        <tr >
+            <th>Собственник</th>
+            <th>Вид</th>
+            <th>Уникальный_номер</th>
+            <th>Статус</th>
+            <th>Нас._пункт </th>
+            <th>Улица1</th>
+            <th>Дом</th>
+            <th>Улица2</th>
+            <th>Со_стороны_улицы </th>
+            <th>Элемент_улично-дорожной_сети</th>
+            <th> Количество_сторон</th>
+            <th> Количестов_поверхностей</th>
+            <th>№_договора_с_финансовым_управлением</th>
+            <th>№_паспорта_рекламы</th>
+            <th> Паспорт_выдан_с</th>
+            <th> Паспорт_выдан_по</th>
+        </tr>
+        @foreach (var i in Model)
+        {
+            foreach (var side in i.Sides)
+            {
+                SurfaceCOunt += side.Surfaces.Count;
+            }
+            <tr >
+                <td>@i.Owner.Name</td>
+                <td>@i.TypeOfAdvertisingStructure.Name</td>
+                <td>@i.UniqueNumber</td>
+                <td>@i.Status.NameStatus</td>
+                <td>@i.Locality.NameLocality</td>
+                <td>@i.Street1</td>
+                <td>@i.House1</td>
+                <td>@i.Street2</td>
+                <td>@i.FromStreet</td>
+                <td>@i.TheElementOfTheRoadNetwork.TheElementOfTheRoadNetworkName</td>
+                <td>@i.Sides.Count</td>
+                <td>@SurfaceCOunt</td>
+                <td>@i.C_ContractFinancialManagement</td>
+                <td>@i.C_PassportAdvertising</td>
+                <td>@i.StartDate.Value.ToString().Substring(0, 10)</td>
+                <td>@i.EndDate.Value.ToString().Substring(0, 10)</td>
             
-                  </tr>
-     }
 
-</table>
+
+
+            </tr>
+        }
+
+    </table>
 </div>
     <hr />
     <footer>
-        <p>&copy; @DateTime.Now.Year – <a href="http://scom.by" target="_blank">"OnCloud"</a> @*| @Html.ActionLink("Лицензионное соглашение", "License", "Home")*@</p>
+        <p>&copy; @DateTime.Now.Year – <a href="#" >OnCloud</a> @*| @Html.ActionLink("Лицензионное соглашение", "License", "Home")*@</p>
     </footer>

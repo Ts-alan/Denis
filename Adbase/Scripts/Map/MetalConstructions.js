@@ -50,7 +50,7 @@
                                         + '</br>Со стороны:&nbsp;' + data[i].FromStreet
                                         + '</br>Опора №:&nbsp;' + data[i].Support
                                         + '</br>Дата согласования:&nbsp' + data[i].StartDate
-                                        + '</br><a href="/Data/Documents/' + data[i].Id + '?type=m" target="_blank">Документы</a></b>'
+                                        + '</br><a href="/Data/Documents/' + data[i].Id + '?type=m" >Документы</a></b>'
                                 + getReferencesMetal(role, userCompany, data[i]),
                                 iconContent: 'M',
                                 hintContent: 'Металлический указатель'
@@ -72,7 +72,7 @@
                                 + '</br>Со стороны:&nbsp;' + data[i].FromStreet
                                 + '</br>Опора №:&nbsp;' + data[i].Support
                                 + '</br>Дата согласования:&nbsp' + data[i].StartDate
-                                + '</br><a href="/Data/Documents/' + data[i].Id + '?type=m" target="_blank">Документы</a></b>'
+                                + '</br><a href="/Data/Documents/' + data[i].Id + '?type=m" >Документы</a></b>'
                                 + getReferencesMetal(role, userCompany, data[i]),
                         iconContent: 'M',
                         hintContent: 'Металлический указатель'
@@ -97,13 +97,13 @@
 function getReferencesMetal(role, userCompany, construction) {
     var result = "";
     if ((role == "Admin") || (role == "ChiefEditAll") || (role == "SupplierEditAll")) {
-        result += '</br><a href="/Data/EditMetal/' + construction.Id + '" target="_blank">Изменить</a>'
-              + '</br><a href="/Data/DeleteMetal/' + construction.Id + '" target="_blank">Удалить</a></b>';
+        result += '</br><a href="/Data/EditMetal/' + construction.Id + '" >Изменить</a>'
+              + '</br><a href="/Data/DeleteMetal/' + construction.Id + '" >Удалить</a></b>';
     }
     if ((role == "ChiefEditOwn") || (role == "SupplierEditOwn")) {
         if (construction.Owner == userCompany) {
-            result += '</br><a href="/Data/EditMetal/' + construction.Id + '" target="_blank">Изменить</a>'
-                   + '</br><a href="/Data/DeleteMetal/' + construction.Id + '" target="_blank">Удалить</a></b>';
+            result += '</br><a href="/Data/EditMetal/' + construction.Id + '" >Изменить</a>'
+                   + '</br><a href="/Data/DeleteMetal/' + construction.Id + '" >Удалить</a></b>';
         }
     }
     if (!construction.HasPhoto) {

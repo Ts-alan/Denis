@@ -79,8 +79,8 @@ function getReferencesIllegal(role, construction) {
         + '<option value="2">Нелегальный</option>'
         + '<option value="3">Легальный</option>'
         + '<option value="4">Демонтирован</option></select>'
-        + '<br><a href="/Illegal/Delete/' + construction.Id + '" target="_blank">Удалить</a>'
-        + '<br><a href="/Illegal/Edit/' + construction.Id + '" target="_blank">Изменить</a>'
+        + '<br><a href="/Illegal/Delete/' + construction.Id + '" >Удалить</a>'
+        + '<br><a href="/Illegal/Edit/' + construction.Id + '" >Изменить</a>'
     }
     if (construction.HasFile1) {
         result += '<br/><a href="/Images/Illegal/' + construction.Id + 'file1.jpg"><img src = "/Images/Illegal/' + construction.Id + 'file1.jpg" height = "180"></a>';
