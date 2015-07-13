@@ -39,13 +39,13 @@
 <script type="text/javascript">
     var i = 0;
 
-    $(document).ready(function () {
-     
+    $(document).ready(function() {
+
 
         //выпадающий список на согласование
         $("[name=OnAgreement]").change(function() {
             var selectIndex = $("[name=OnAgreement] option:selected").val();
-            console.log(selectIndex);
+            
             if (selectIndex == "true") {
                 $("#ContractHide").css("display", "block");
             }
@@ -56,7 +56,8 @@
         });
 
     });
-    //кол-во сторон
+
+//кол-во сторон
     function SetCountSize() {
         var CountSizes = $('#CountSizes').val();
         $("#CountSize").val(CountSizes);
@@ -74,8 +75,8 @@
                     "<div class=\"form-group\">" +
                     "<div class=\"col-md-10\">" +
                     "<b>Количество поверхностей</b>" +
-                    " <select class=\"text-box single-line\" id=\"AddButton" + i + "\" onchange=AddSurface(" + i + ") name=\"CountSurfuce\" type=\"text\" data-val=\"true\" data-val-required=\"Укажите кол-во сторон\">" +
-                   
+                    " <select class=\"text-box single-line\" id=\"AddButton" + i + "\" onchange=AddSurface(" + i + ") name=\"CountSurfuce"+i+"\" type=\"text\" data-val=\"true\" data-val-required=\"Укажите кол-во сторон\">" +
+                    "<option></option>" +
                     "<option>1</option>" +
                     "<option>2</option>" +
                     "<option>3</option>" +
@@ -84,7 +85,7 @@
                     "<option>6</option>" +
                     "<option>7</option>" +
                     "<option>8</option>" +
-                    "</select> &nbsp;&nbsp;&nbsp;<b>Направление стороны</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("DirectionSide", new SelectList(DirectionSide, "id", "NameOfDirectionSide")).ToHtmlString().Replace("\"", " "))' +
+                    "</select> &nbsp;&nbsp;&nbsp; <b>Направление стороны</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("DirectionSide", new SelectList(DirectionSide, "id", "NameOfDirectionSide")).ToHtmlString().Replace("\"", " "))' +
                     "</div>" +
                     "</div> <div style=\"margin-left: -15px;display: none\" id=\"" + i + "HiddenIdentification\"> &nbsp;&nbsp;&nbsp;<b>Идентификация поверхностей</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("IdentificationSurface", new SelectList(IdentificationSide, "id", "IdentificationName")).ToHtmlString().Replace("\"", " ")) </div>' +
                     "<div  id=\"InsertPartial" + i + "\"></div>" +
@@ -102,19 +103,12 @@
                         );
 
                 $("#SizeOfCount").val(CountSizes);
-                AddSurface(i);
+
             }
-            $("[name='DirectionSide']").each(function (indx, element) {
-                $(element).attr("data-val", "true");
-                $(element).attr("data-val-required", "Выберете значение");
-            });
-            $("[name='IdentificationSurface']").each(function (indx, element) {
-                $(element).attr("data-val", "true");
-                $(element).attr("data-val-required", "Выберете значение");
-            });
-          
+
         }
     }
+
     //Добавить поверхность+           
     function AddSurface(i) {
 
