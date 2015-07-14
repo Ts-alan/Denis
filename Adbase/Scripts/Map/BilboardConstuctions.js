@@ -48,7 +48,7 @@
                     {
                         geometry: {
                             type: "Point",
-                            coordinates: [data[i].Height, data[i].Breadth]
+                            coordinates: [data[i].Breadth,data[i].Height ]
                         },
                         properties: {
                             balloonContentBody: '<b>Собственник:&nbsp;' + data[i].OwnerName

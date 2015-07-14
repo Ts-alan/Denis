@@ -39,7 +39,8 @@ namespace Sciencecom
             
             bundles.Add(new StyleBundle("~/Content/Map").Include(
             "~/Scripts/Autocomplete.js",
-            "~/Scripts/AddPlacamerkToMap.js"
+            "~/Scripts/AddPlacamerkToMap.js",
+            "~/Scripts/MapSearch.js"
            ));
             //css для Grid
             bundles.Add(new StyleBundle("~/Content/jqCrid").Include(
