@@ -1,6 +1,6 @@
 ﻿$(document).ready(function() {
     $("#MapSearch").click(function() {
-
+        var text;
         if ($("#Street1").val() != "") {
             if (myPlacemark != undefined) {
 
@@ -10,15 +10,11 @@
          
             myGeocoder.then(
                 function(res) {
-
-                    myPlacemark = new ymaps.Placemark({
-                        coordinates: [res.geoObjects.get(0).geometry._ec[0],
-                        res.geoObjects.get(0).geometry._ec[1]]
-
-                        },
+                    myPlacemark = new ymaps.Placemark([res.geoObjects.get(0).geometry._ec[0], res.geoObjects.get(0).geometry._ec[1]],
                     {},
                     {
                         draggable: true
+                      
                     });
                     console.log(myPlacemark);
                     myMap.geoObjects.add(myPlacemark);
