@@ -1,0 +1,84 @@
+﻿@using System.Data.Entity
+@using Sciencecom.Models
+@model System.Collections.Generic.List<Sciencecom.Models.Surface>
+@{
+    int i = ViewBag.Incerment;
+
+    //Идентификация
+    var Identification = new SciencecomEntities().Identifications.ToList();
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        //выпадающий список
+        @*$('[name="[' + @i + '].TypeOfAdvertising').change(function() {
+            var selectIndex = document.getElementById("[" + @i + "].TypeOfAdvertising").selectedIndex;
+            if (selectIndex == 1) {
+                $("#\\[" + @i + "\\]\\.\\socialSurface").css("display", "block");
+            } else {
+                $("#\\[" + @i + "\\]\\.\\socialSurface").css("display", "none");
+            }
+        });
+
+        $('[name="[' + @i + '].Topic"]').on('change', function() {
+            $.get('@Url.Action("GetSubTopic", "BackEndServices")', { id: $('[name="[' + @i + '].Topic"] option:selected').val() })
+                .success(function(e) {
+                    var SubTopic = document.getElementById("[" + @i + "].SubTopic");
+                    //jочистить список Subtopic
+                    for (var i = SubTopic.options.length - 1; i >= 0; i--) {
+                        SubTopic.remove(i);
+                    }
+                    //заполнить список Subtopic
+                    var Json = $.parseJSON(e);
+                    for (var j = 1; j < Json.length; j++) {
+                        SubTopic.options[j] = new Option(Json[j].Name.toString(), Json[j].id.toString());
+                    };
+
+                }).error(function() {
+                    alert("Ошибка запроса");
+                });
+        });*@
+
+    });
+
+   
+
+    //выщитывание площади для каждой поверхности
+    $('[name="[' + @i + '].Height"]').change( function () {
+
+        CalculationOfTheArea(@i);
+    });
+    $('[name="[' + @i + '].Width"]').change(function () {
+
+        CalculationOfTheArea(@i);
+    });
+</script>
+
+<div side="@ViewBag.Side">
+    <input type="hidden" name="[@i].SideOfSurface" value="@ViewBag.Side">
+    <h3 style="margin-left: 150px">Поверхность @ViewBag.numberSurface &nbsp; Стороны @ViewBag.Side  </h3>
+
+    <div class="form-inline">
+        <hr/>
+            <div class="form-group" >
+                
+                <input name="[@i].NumberSurface" type="hidden" value="@ViewBag.Side">
+
+                <label for="[@i].Height">Высота</label>
+                @Html.EditorFor(model => model[i].Height)
+                @*@Html.ValidationMessageFor(model => model[i].Height)*@
+
+                <label for="[@i].Width">Ширина</label>
+                @Html.EditorFor(model => model[i].Width)
+                @*@Html.ValidationMessageFor(model => model[i].Width)*@
+
+                <label for="[@i].Space">Площадь</label>
+                @Html.EditorFor(model => model[i].Space)
+                @*@Html.ValidationMessageFor(model => model[i].Space)*@
+            </div>
+        </div>
+
+</div>
+
+  
+

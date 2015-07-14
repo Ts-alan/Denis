@@ -1632,12 +1632,12 @@ namespace Sciencecom.Controllers
         //    return result;
         //}
 
-        public ActionResult Surface(string side, int id, int numberSurface)
+        public ActionResult Surface(string side, int count)
         {
-            //ViewBag.Topic = context.TopicForSocialAdvertisings;
-            ViewBag.Incerment = id;
+
+            ViewBag.Incerment = count;
             ViewBag.Side = side;
-            ViewBag.numberSurface = numberSurface;
+           
             return View();
         }
         public ActionResult EditAdvertisingDesign(Guid? id)

@@ -119,16 +119,12 @@
             $("#" + i + "HiddenIdentification").show();
         }
         $("[side=" + i + "]").remove();
-        for (var j = 1; j <= count; j++) {
-            $.ajax('@Url.Action("Surface", "Data")', { async: false, data: { side: i, id: Increment(),numberSurface:j } })
+        
+            $.ajax('@Url.Action("Surface", "Data")', { data: { side: i, count: count } })
             .success(function (e) {
                 $("#InsertPartial"+i+"").before(e);
             });
-        }
-    }
-
-    function Increment() {
-        return i++;
+       
     }
 
 
