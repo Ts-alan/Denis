@@ -15,7 +15,7 @@ namespace Sciencecom.Models
     public class OwnerMetaData
     {
         public int Id { get; set; }
-        [Display(Name = "Собственник")]
+        [Display(Name = "Собственник конструкции")]
         public string Name { get; set; }
         [Display(Name = "Адрес")]
         public string Address { get; set; }

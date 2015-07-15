@@ -8,7 +8,7 @@
 @{
     var i = 0;
     ViewBag.Title = "CreateBilboard";
-    //Собственники
+    //Собственник конструкциии
     var owners = new SciencecomEntities().Owners.ToList();
     
     //Вид
@@ -32,7 +32,7 @@
     var DirectionSide = new SciencecomEntities().DirectionSides.OrderBy(x=>x.OrderBY).ToList();
     //Индификация поверхности
     var IdentificationSide = new SciencecomEntities().Identifications.ToList();
-    //уникальный номер
+    //Идентификационный номер
     
     
 }
@@ -176,12 +176,15 @@
         </div>
 
         <div class="form-group">
-            <label for="UniqueNumber">Уникальный номер</label>
+            <label for="UniqueNumber">Идентификационный номер</label>
             <input class="text-box single-line" name="UniqueNumber" type="text" value="@ViewBag.UniqueNumber">
             @Html.ValidationMessageFor(model => model.UniqueNumber)
         </div>
-
-    </div>
+        <br>
+        <div class="form-group">
+            <label for="Owner">конструкции </label>
+        </div>
+        </div>
 
     <h3> 2.Данные о месте расположения рекламной конструкции</h3>
 

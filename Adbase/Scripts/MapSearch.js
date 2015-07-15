@@ -6,7 +6,9 @@
 
                 myMap.geoObjects.remove(myPlacemark);
             }
-            var myGeocoder = ymaps.geocode($("#Street1").val());
+         
+            var location =$("#Locality_id").text().toString()+" "+ $("#Street1").val().toString() ;
+            var myGeocoder = ymaps.geocode(location);
          
             myGeocoder.then(
                 function(res) {

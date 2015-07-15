@@ -51,7 +51,7 @@
                             coordinates: [data[i].Breadth,data[i].Height ]
                         },
                         properties: {
-                            balloonContentBody: '<b>Собственник:&nbsp;' + data[i].OwnerName
+                            balloonContentBody: '<b>Собственник конструкции:&nbsp;' + data[i].OwnerName
                                     + '</br>Улица 1:&nbsp' + data[i].Street1
                                     + '</br>Улица 2:&nbsp;' + data[i].Street2
                                      + '</br>Со стороны:&nbsp;' + data[i].FromStreet

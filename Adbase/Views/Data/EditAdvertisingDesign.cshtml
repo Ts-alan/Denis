@@ -7,7 +7,7 @@
 @model  Sciencecom.Models.AdvertisingStructure
 @{
     ViewBag.Title = "CreateBilboard";
-    //Собственники
+    //Собственник конструкциии
     var owners =new SciencecomEntities().Owners.ToList();
     owners.Insert(0, null);
     
@@ -158,7 +158,7 @@
         @Html.ValidationMessage("Error")
 
         <div class="form-group">
-            <label for="Owner">Собственник</label>
+            <label for="Owner">Собственник конструкции</label>
             @Html.DropDownList("SelectOwner", new SelectList(owners, "Id", "Name", Model.Owner.Id))
         </div>
 
@@ -175,7 +175,7 @@
         </div>
 
         <div class="form-group">
-            <label for="UniqueNumber">Уникальный номер</label>
+            <label for="UniqueNumber">Идентификационный номер</label>
             @Html.EditorFor(a=>a.UniqueNumber)
             @*@Html.EditorFor(model => model.UniqueNumber)*@
             @Html.ValidationMessageFor(model => model.UniqueNumber)

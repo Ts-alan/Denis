@@ -28,14 +28,14 @@
         tableToGrid("#table", {
             height: 700,
             colNames: [
-                "Собственник", "Вид", "Уникальный <br/> номер", "Статус",
+                "Собственник конструкции", "Вид", "Идентификационный <br/> номер", "Статус",
                 "Нас. пункт", "Улица 1", "Дом", "Улица 2", "Со стороны улицы",
                 "Элемент улично-дорожной сети", "Количество сторон",
                 "Количестов поверхностей", "№ договора с финансовым управлением",
                 "№ паспорта рекламы", "Паспорт выдан с", "Паспорт выдан по"
             ],
             colModel: [
-                { name: "Собственник", width: 25,align:"center" },
+                { name: "Собственник_конструкции", width: 25,align:"center" },
                 { name: "Вид", width: 15, align: "center" },
                 { name: "Уникальный_номер", width: 30, align: "center" },
                 { name: "Статус", width: 30, align: "center" },
@@ -134,7 +134,7 @@
 
     <table id="table" class="table-bordered" cellpadding="5">
         <tr >
-            <th>Собственник</th>
+            <th>Собственник_конструкции</th>
             <th>Вид</th>
             <th>Уникальный_номер</th>
             <th>Статус</th>
@@ -174,11 +174,9 @@
                 <td>@i.C_PassportAdvertising</td>
                 <td>@i.StartDate.Value.ToString().Substring(0, 10)</td>
                 <td>@i.EndDate.Value.ToString().Substring(0, 10)</td>
-            
 
-
-
-            </tr>
+           </tr>
+            SurfaceCOunt = 0;
         }
 
     </table>

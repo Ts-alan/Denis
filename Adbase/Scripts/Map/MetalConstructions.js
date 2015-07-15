@@ -44,7 +44,7 @@
                             },
                             properties: {
                                 clusterCaption: 'Металлический указатель',
-                                balloonContentBody: '<b>Собственник:&nbsp;' + data[i].Owner
+                                balloonContentBody: '<b>Собственник конструкции:&nbsp;' + data[i].Owner
                                         + '</br>Улица 1:&nbsp;' + data[i].Street1
                                         + '</br>Улица 2:&nbsp' + data[i].Street2
                                         + '</br>Со стороны:&nbsp;' + data[i].FromStreet
@@ -66,7 +66,7 @@
                     [data[i].Shirota, data[i].Dolgota],
                     {
                         clusterCaption: 'Металлический указатель',
-                        balloonContentBody: '<b>Собственник:&nbsp;' + data[i].Owner
+                        balloonContentBody: '<b>Собственник конструкции:&nbsp;' + data[i].Owner
                                 + '</br>Улица 1:&nbsp;' + data[i].Street1
                                 + '</br>Улица 2:&nbsp' + data[i].Street2
                                 + '</br>Со стороны:&nbsp;' + data[i].FromStreet
