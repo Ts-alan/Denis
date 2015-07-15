@@ -145,13 +145,16 @@
 
 
 <div class="container body-content" >
-<h3 style="text-align: center"><h2>Карта рекламных конструкций</h2></h3>
+<h3 style="text-align: center">
+    <h2>Карта рекламных конструкций</h2>
+</h3>
+    <b>@Html.ActionLink("+ Добавить новую рекламную конструкцию", "", new { type = "Billboard" }, new { @class = "btn btn-default" ,style="margin-bottom: 10px"})</b>
 <table class="table-bordered" cellpadding="5">
 <tr>
 <td width="100px">
 
 <div id="divForAddNewAD">
-    <b>@Html.ActionLink("+ Добавить новую рекламную конструкцию", "", new { type = "Billboard" },new { @class = "btn btn-default" })</b>
+    
     @*<b>@Html.ActionLink("+ Изменить рекламной конструкции", "", new {type = "Billboard"}, new {style = "display: block"})</b>*@
 
 </div>
