@@ -85,7 +85,7 @@
                     "<option>6</option>" +
                     "<option>7</option>" +
                     "<option>8</option>" +
-                    "</select> &nbsp;&nbsp;&nbsp; <b>Направление стороны</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("DirectionSide", new SelectList(DirectionSide, "id", "NameOfDirectionSide"), "", new { data_val_required = "Выберете значение", data_val = "true" }).ToHtmlString().Replace("\"", " "))' +
+                    "</select> &nbsp;&nbsp;&nbsp; <b>Направление стороны</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("DirectionSide", new SelectList(DirectionSide, "id", "NameOfDirectionSide"), "", new { data_val_required = "Выберете", data_val = "true" }).ToHtmlString().Replace("\"", " "))' +
                     "</div>" + 
                     "</div> <div style=\"margin-left: -15px;display: none\" id=\"" + i + "HiddenIdentification\"> &nbsp;&nbsp;&nbsp;<b>Идентификация поверхностей</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("IdentificationSurface", new SelectList(IdentificationSide, "id", "IdentificationName")).ToHtmlString().Replace("\"", " ")) </div>' +
                     "<div  id=\"InsertPartial" + i + "\"></div>" +
@@ -106,13 +106,10 @@
 
             }
         }
-        //$('select[name="DirectionSide"]').each(function (indx, element) {
-        //        alert("ghjbn");
-        //    $(element).rules('add', {
-        //        required: true
-        //    });
-        //    }
-        //);
+        //$('[action="/Data/CreateAdvertisingDesign"]').validate();
+        //$('#test').rules('add', "required");
+       
+     
     }
 
     //Добавить поверхность+           
