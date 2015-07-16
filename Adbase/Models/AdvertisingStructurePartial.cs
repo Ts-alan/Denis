@@ -18,15 +18,16 @@ namespace Sciencecom.Models
 
     public class SurfaceConstructionMetaData
     {
-        [Required(ErrorMessage = "Введите значение начальной даты")]
+        [Required(ErrorMessage = "Введите значение ")]
         public int Height { get; set; }
-        [Required(ErrorMessage = "Введите значение начальной даты")]
+        [Required(ErrorMessage = "Введите значение ")]
         public int Width { get; set; }
-        [Required(ErrorMessage = "Введите значение начальной даты")]
+        [Required(ErrorMessage = "Введите значение ")]
         public int Space { get; set; }
     }
 
-     [MetadataType(typeof(AdvertisingStructureConstructionMetaData))]
+
+    [MetadataType(typeof(AdvertisingStructureConstructionMetaData))]
     public partial class AdvertisingStructure
     {
         public string OwnerName { get; set; }
@@ -36,7 +37,11 @@ namespace Sciencecom.Models
      public class AdvertisingStructureConstructionMetaData
 
     {
+         [Required(ErrorMessage = "Введите значение ")]
+         public string Backlight { get; set; }
 
+         [Required(ErrorMessage = "Введите значение ")]
+         public System.Guid PropertyLocation_id { get; set; }
 
          [DataType(DataType.Date)]
          public Nullable<System.DateTime> PlannedInstallationDate { get; set; }

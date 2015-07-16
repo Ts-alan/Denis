@@ -44,6 +44,10 @@ namespace Sciencecom.Models
         public string Note_controller { get; set; }
         public Nullable<System.Guid> TheElementOfTheRoadNetwork_id { get; set; }
         public Nullable<System.Guid> Status_Id { get; set; }
+        public string CommentOwner { get; set; }
+        public string Backlight { get; set; }
+        public System.Guid PropertyLocation_id { get; set; }
+        public string OwnerPlacements { get; set; }
     
         public virtual Locality Locality { get; set; }
         public virtual Status Status { get; set; }
@@ -51,5 +55,6 @@ namespace Sciencecom.Models
         public virtual TypeOfAdvertisingStructure TypeOfAdvertisingStructure { get; set; }
         public virtual Owner Owner { get; set; }
         public virtual ICollection<Side> Sides { get; set; }
+        public virtual PropertyLocation PropertyLocation { get; set; }
     }
 }

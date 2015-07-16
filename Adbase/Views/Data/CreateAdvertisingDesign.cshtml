@@ -10,7 +10,7 @@
     ViewBag.Title = "CreateBilboard";
     //Собственник конструкциии
     var owners = new SciencecomEntities().Owners.ToList();
-    
+   
     //Вид
     var ListTypeAdvertising = new SciencecomEntities().TypeOfAdvertisingStructures.ToList();
     var ListTypeAdvertisingSelected = ListTypeAdvertising.Single(a => a.Code == ViewBag.Code).id;
@@ -32,8 +32,9 @@
     var DirectionSide = new SciencecomEntities().DirectionSides.OrderBy(x=>x.OrderBY).ToList();
     //Индификация поверхности
     var IdentificationSide = new SciencecomEntities().Identifications.ToList();
+    IdentificationSide.Insert(0, null);
     //Идентификационный номер
-    
+    var PropertyLocation = new SciencecomEntities().PropertyLocations.ToList();
     
 }
 <script type="text/javascript">
@@ -154,7 +155,7 @@
     <input type="hidden" name="Code" value="@ViewBag.Code">
     <h3> 1. Общие данные о рекламной конструкции</h3>
     @Html.AntiForgeryToken()
-    <div class="form-inline">
+    <div class="form-inline" style="margin-bottom: -10px">
         <hr/>
 
         <input type="hidden" id="CountSize" id="SizeOfCount" name="CountSize" value="">
@@ -170,7 +171,7 @@
         <div class="form-group" >
             <label for="Locality">Вид</label>
             @Html.DropDownList("Code", new SelectList(ListTypeAdvertising, "id", "Name", ListTypeAdvertisingSelected))
-           </div>
+        </div>
 
         <div class="form-group" >
             <label for="Status" >Статус</label>
@@ -184,205 +185,234 @@
             @Html.ValidationMessageFor(model => model.UniqueNumber)
         </div>
         <br>
+
+    </div>
+    <div class="form-horizontal">
         <div class="form-group">
             <label for="Owner">конструкции </label>
         </div>
-        </div>
-
-    <h3> 2.Данные о месте расположения рекламной конструкции</h3>
-
-    <div class="form-inline">
-        <hr />
-        <div class="form-group" style="margin-left: -15px">
-            <label for="Locality">Нас. пункт</label>
-            @Html.DropDownListFor(a => a.Locality_id, new SelectList(Locality, "id", "NameLocality"))
-            @Html.ValidationMessageFor(model => model.Locality)
-        </div>
-
-
-        <div class="form-group" style="margin-left: 200px">
-            <label for="TheElementOfTheRoadNetwork">Элемент улично-дорожной сети</label>
-            @Html.DropDownListFor(a => a.TheElementOfTheRoadNetwork_id, new SelectList(ListTypeElementOfTheRoadNetworkName, "id", "Value"), "")
-            @Html.ValidationMessageFor(a => a.TheElementOfTheRoadNetwork_id)
-        </div>
     </div>
-
     <div class="form-inline">
-        <hr />
         <div class="form-group">
-            <label for="Street1">Улица 1</label>
-            @Html.EditorFor(model => model.Street1)
-            @Html.ValidationMessageFor(model => model.Street1)
+            <label for="PropertyLocation_id">Собственность места расположения </label>
+            @Html.DropDownListFor(a => a.PropertyLocation_id, new SelectList(PropertyLocation, "id", "NamePropertyLocation"), "")
+            @Html.ValidationMessageFor(model => model.PropertyLocation_id)
         </div>
 
         <div class="form-group">
-            <label for="House1">Дом</label>
-            @Html.EditorFor(model => model.House1)
-            @Html.ValidationMessageFor(model => model.House1)
+            <label for="Owner">Собственник места размещения</label>
+            @Html.EditorFor(model => model.OwnerPlacements)
         </div>
 
-        <div class="form-group">
-            <label for="Street2">Улица 2</label>
-            @Html.EditorFor(model => model.Street2)
-            @Html.ValidationMessageFor(model => model.Street2)
-        </div>
-
-        <div class="form-group">
-            <label for="FromStreet">Со стороны улицы 3</label>
-            @Html.EditorFor(model => model.FromStreet)
-            @Html.ValidationMessageFor(model => model.FromStreet)
-        </div>
     </div>
-    <input type="button" id="MapSearch" value="Поиск на карте">
-    <div class="form-inline">
-        <hr />
-        <div class="form-group" style="width: 600px; height: 500px" id="map"></div>
+        <h3> 2.Данные о месте расположения рекламной конструкции</h3>
 
-        <div class="form-group">
-           
-            <div>
-                <label for="Breadth">Широта </label>
-                <input class="text-box single-line ui-autocomplete-input" data-val="true" data-val-required="Введите значение " type="text" name="Breadth" id="Breadth">
-                <span class="field-validation-valid" data-valmsg-for="Breadth" data-valmsg-replace="true"></span>
-             
+        <div class="form-inline">
+            <hr />
+            <div class="form-group" style="margin-left: -15px">
+                <label for="Locality">Нас. пункт</label>
+                @Html.DropDownListFor(a => a.Locality_id, new SelectList(Locality, "id", "NameLocality"))
+                @Html.ValidationMessageFor(model => model.Locality)
             </div>
 
-            <div>
-                <label for="Height">Долгота</label>
-                <input type="text" name="Height" data-val="true" data-val-required="Введите значение " id="Height">
-               
-                @Html.ValidationMessageFor(model => model.Height)
-            
+
+            <div class="form-group" style="margin-left: 200px">
+                <label for="TheElementOfTheRoadNetwork">Элемент улично-дорожной сети</label>
+                @Html.DropDownListFor(a => a.TheElementOfTheRoadNetwork_id, new SelectList(ListTypeElementOfTheRoadNetworkName, "id", "Value"), "")
+                @Html.ValidationMessageFor(a => a.TheElementOfTheRoadNetwork_id)
             </div>
         </div>
-    </div>
 
-    <h3> 3.Разрешительная документация</h3>
+        <div class="form-inline">
+            <hr />
+            <div class="form-group">
+                <label for="Street1">Улица 1</label>
+                @Html.EditorFor(model => model.Street1)
+                @Html.ValidationMessageFor(model => model.Street1)
+            </div>
 
-    <div class="form-horizontal">
-        <hr/>
+            <div class="form-group">
+                <label for="House1">Дом</label>
+                @Html.EditorFor(model => model.House1)
+                @Html.ValidationMessageFor(model => model.House1)
+            </div>
 
-        <div class="form-group">
-            <label for="C_ContractFinancialManagement">№ договора с финансовым управлением</label>
-            @Html.EditorFor(model => model.C_ContractFinancialManagement)
-            @Html.ValidationMessageFor(model => model.C_ContractFinancialManagement)
+            <div class="form-group">
+                <label for="Street2">Улица 2</label>
+                @Html.EditorFor(model => model.Street2)
+                @Html.ValidationMessageFor(model => model.Street2)
+            </div>
+
+            <div class="form-group">
+                <label for="FromStreet">Со стороны улицы 3</label>
+                @Html.EditorFor(model => model.FromStreet)
+                @Html.ValidationMessageFor(model => model.FromStreet)
+            </div>
+        </div>
+        <input type="button" id="MapSearch" value="Поиск на карте">
+        <div class="form-inline">
+            <hr />
+            <div class="form-group" style="width: 600px; height: 500px" id="map"></div>
+
+            <div class="form-group">
+
+                <div>
+                    <label for="Breadth">Широта </label>
+                    <input class="text-box single-line ui-autocomplete-input" data-val="true" data-val-required="Введите значение " type="text" name="Breadth" id="Breadth">
+                    <span class="field-validation-valid" data-valmsg-for="Breadth" data-valmsg-replace="true"></span>
+
+                </div>
+
+                <div>
+                    <label for="Height">Долгота</label>
+                    <input type="text" name="Height" data-val="true" data-val-required="Введите значение " id="Height">
+
+                    @Html.ValidationMessageFor(model => model.Height)
+
+                </div>
+            </div>
         </div>
 
-        <div class="form-group">
-            <label for="C_PassportAdvertising">№ паспорта рекламы</label>
-            @Html.EditorFor(model => model.C_PassportAdvertising)
-            @Html.ValidationMessageFor(model => model.C_PassportAdvertising)
+        <h3> 3.Разрешительная документация</h3>
 
-            <label for="StartDate">разреш с</label>
-            @Html.EditorFor(model => model.StartDate)
-            @Html.ValidationMessageFor(model => model.StartDate)
+        <div class="form-horizontal">
+            <hr />
 
-            <label for="EndDate">разреш по</label>
-            @Html.EditorFor(model => model.EndDate)
-            @Html.ValidationMessageFor(model => model.EndDate)
+            <div class="form-group">
+                <label for="C_ContractFinancialManagement">№ договора с финансовым управлением</label>
+                @Html.EditorFor(model => model.C_ContractFinancialManagement)
+                @Html.ValidationMessageFor(model => model.C_ContractFinancialManagement)
+            </div>
+
+            <div class="form-group">
+                <label for="C_PassportAdvertising">№ паспорта рекламы</label>
+                @Html.EditorFor(model => model.C_PassportAdvertising)
+                @Html.ValidationMessageFor(model => model.C_PassportAdvertising)
+
+                <label for="StartDate">разреш с</label>
+                @Html.EditorFor(model => model.StartDate)
+                @Html.ValidationMessageFor(model => model.StartDate)
+
+                <label for="EndDate">разреш по</label>
+                @Html.EditorFor(model => model.EndDate)
+                @Html.ValidationMessageFor(model => model.EndDate)
+            </div>
+
+            <div class="form-group">
+                <label for="PlannedInstallationDate">Планируемая дата установки</label>
+                @Html.EditorFor(model => model.PlannedInstallationDate)
+                @Html.ValidationMessageFor(model => model.PlannedInstallationDate)
+            </div>
+
         </div>
 
-        <div class="form-group">
-            <label for="PlannedInstallationDate">Планируемая дата установки</label>
-            @Html.EditorFor(model => model.PlannedInstallationDate)
-            @Html.ValidationMessageFor(model => model.PlannedInstallationDate)
+        <div class="form-inline">
+
+            <div class="form-group">
+                <label for="ScanPassport_1Sides">Скан паспорта (стор 1)</label>
+                <input type="file" name="ScanPassport_1Sides" accept="image/jpeg" data-val="true" data-val-required="Выберите файл для загрузки" /><br />
+                <span class="field-validation-valid" data-valmsg-for="ScanPassport_1Sides" data-valmsg-replace="true"></span>
+                @Html.Raw("Не более 1 МБ")
+            </div>
+
+            <div class="form-group">
+                <label for="ScanPassport_2Sides">Скан паспорта (стор 2)</label>
+                <input type="file" name="ScanPassport_2Sides" accept="image/jpeg" data-val="true" data-val-required="Выберите файл для загрузки" /><br />
+                <span class="field-validation-valid" data-valmsg-for="ScanPassport_2Sides" data-valmsg-replace="true"></span>
+                @Html.Raw("Не более 1 МБ")
+            </div>
+
         </div>
 
-    </div>
+        <div class="form-inline">
+
+            <div class="form-group">
+                <label for="DateOfReceiptOfTheApplication">Дата получения заявки</label>
+                @Html.EditorFor(model => model.DateOfReceiptOfTheApplication)
+                @Html.ValidationMessageFor(model => model.DateOfReceiptOfTheApplication)
+            </div>
+
+            <div class="form-group">
+                <label for="DateOfTakenPassport">Дата выдачи паспорта</label>
+                @Html.EditorFor(model => model.DateOfTakenPassport)
+                @Html.ValidationMessageFor(model => model.DateOfTakenPassport)
+            </div>
+
+        </div>
+
+        <h3> 4.Описание рекламной конструкции</h3>
+
+        <div class="form-inline">
+            <hr />
+
+            <div class="form-group">
+                <label for="DateOfActualInstallation">Дата фактической установки</label>
+                @Html.EditorFor(model => model.DateOfActualInstallation)
+                @Html.ValidationMessageFor(model => model.DateOfActualInstallation)
+            </div>
+
+            <div class="form-group">
+                <label for="DateDismantling">Дата демонтажа</label>
+                @Html.EditorFor(model => model.DateDismantling)
+                @Html.ValidationMessageFor(model => model.DateDismantling)
+            </div>
+
+        </div>
 
     <div class="form-inline">
-
+        
         <div class="form-group">
-            <label for="ScanPassport_1Sides">Скан паспорта (стор 1)</label>
-            <input type="file" name="ScanPassport_1Sides" accept="image/jpeg" data-val="true" data-val-required="Выберите файл для загрузки"/><br/>
-            <span class="field-validation-valid" data-valmsg-for="ScanPassport_1Sides" data-valmsg-replace="true"></span>
-            @Html.Raw("Не более 1 МБ")
+            <label for="CommentOwner">Подсветка</label>
+            @Html.DropDownListFor(a => a.Backlight, new SelectList( new []{"","Есть","Нет"}))
+            @Html.ValidationMessageFor(model => model.Backlight)
         </div>
 
         <div class="form-group">
-            <label for="ScanPassport_2Sides">Скан паспорта (стор 2)</label>
-            <input type="file" name="ScanPassport_2Sides" accept="image/jpeg" data-val="true" data-val-required="Выберите файл для загрузки"/><br/>
-            <span class="field-validation-valid" data-valmsg-for="ScanPassport_2Sides" data-valmsg-replace="true"></span>
-            @Html.Raw("Не более 1 МБ")
+            <label for="CommentOwner">Комментарий</label>
+            @Html.EditorFor(model => model.CommentOwner)
         </div>
 
     </div>
+        <div class="form-horizontal" style="margin-top: 18px">
+            <div class="form-group">
+                <label for="CountSizes">Количество сторон</label>
+                <select class="text-box single-line" id="CountSizes" onchange="SetCountSize()" name="CountSizes" type="text" data-val="true" data-val-required="Укажите кол-во сторон">
+                    <option></option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option>
+                    <option>8</option>
+                </select>
+                <span class="field-validation-validr" data-valmsg-for="CountSizes" data-valmsg-replace="true">
+                </span>
+            </div>
+        </div>
+        <div id="InsertSide"></div>
+        <h3>5.Данные контроля</h3>
 
-    <div class="form-inline">
+        <div class="form-inline">
 
-        <div class="form-group">
-            <label for="DateOfReceiptOfTheApplication">Дата получения заявки</label>
-            @Html.EditorFor(model => model.DateOfReceiptOfTheApplication)
-            @Html.ValidationMessageFor(model => model.DateOfReceiptOfTheApplication)
+            <div class="form-group">
+                <label for="RevisionDate">Дата проверки</label>
+                @Html.EditorFor(model => model.RevisionDate)
+                @Html.ValidationMessageFor(model => model.RevisionDate)
+            </div>
+
+            <div class="form-group">
+                <label for="DateDismantling">Комментарий контроллера</label>
+                @Html.EditorFor(model => model.Note_controller)
+                @Html.ValidationMessageFor(model => model.Note_controller)
+            </div>
+
         </div>
 
+        <div id="InsertPhoto"></div>
         <div class="form-group">
-            <label for="DateOfTakenPassport">Дата выдачи паспорта</label>
-            @Html.EditorFor(model => model.DateOfTakenPassport)
-            @Html.ValidationMessageFor(model => model.DateOfTakenPassport)
-        </div>
-
-    </div>
-
-    <h3> 4.Описание рекламной конструкции</h3>
-
-    <div class="form-inline">
-        <hr/>
-
-        <div class="form-group">
-            <label for="DateOfActualInstallation">Дата фактической установки</label>
-            @Html.EditorFor(model => model.DateOfActualInstallation)
-            @Html.ValidationMessageFor(model => model.DateOfActualInstallation)
-        </div>
-
-        <div class="form-group">
-            <label for="DateDismantling">Дата демонтажа</label>
-            @Html.EditorFor(model => model.DateDismantling)
-            @Html.ValidationMessageFor(model => model.DateDismantling)
-        </div>
-
-    </div>
-
-    <div class="form-horizontal" style="margin-top: 18px">
-        <div class="form-group">
-            <label for="CountSizes">Количество сторон</label>
-            <select class="text-box single-line" id="CountSizes" onchange="SetCountSize()" name="CountSizes" type="text" data-val="true" data-val-required="Укажите кол-во сторон">
-                <option></option>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-                <option>6</option>
-                <option>7</option>
-                <option>8</option>
-            </select>
-            <span class="field-validation-validr" data-valmsg-for="CountSizes" data-valmsg-replace="true">
-            </span>
-        </div>
-    </div>
-      <div id="InsertSide"></div>
-    <h3>5.Данные контроля</h3>
-
-    <div class="form-inline">
-
-        <div class="form-group">
-            <label for="RevisionDate">Дата проверки</label>
-            @Html.EditorFor(model => model.RevisionDate)
-            @Html.ValidationMessageFor(model => model.RevisionDate)
-        </div>
-
-        <div class="form-group">
-            <label for="DateDismantling">Комментарий контроллера</label>
-            @Html.EditorFor(model => model.Note_controller)
-            @Html.ValidationMessageFor(model => model.Note_controller)
-        </div>
-
-    </div>
-
-    <div id="InsertPhoto" ></div>
-     <div  class="form-group">
-        <div class="col-md-offset-2 col-md-10">
+            <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Добавить" class="btn btn-default" />
             </div>
         </div>
@@ -390,4 +420,4 @@
 
 
 
-}
+        }

@@ -34,6 +34,10 @@
           <Property Name="Note controller" Type="nvarchar(max)" />
           <Property Name="TheElementOfTheRoadNetwork_id" Type="uniqueidentifier" />
           <Property Name="Status_Id" Type="uniqueidentifier" />
+          <Property Name="CommentOwner" Type="nvarchar(max)" />
+          <Property Name="Backlight" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PropertyLocation_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="OwnerPlacements" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="DirectionSide">
           <Key>
@@ -111,6 +115,14 @@
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Address" Type="varchar(max)" Nullable="false" />
           <Property Name="Telephone" Type="nvarchar" MaxLength="13" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PropertyLocation">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="NamePropertyLocation" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="OrderBY" Type="int" />
         </EntityType>
         <EntityType Name="RelationshipOfAdvertising">
           <Key>
@@ -212,6 +224,18 @@ warning 6002: The table/view 'D:\PROJECT\ADBASE\ADBASE\APP_DATA\SCIENCECOM.MDF.d
             </Principal>
             <Dependent Role="AdvertisingStructures">
               <PropertyRef Name="Locality_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AdvertisingStructures_PropertyLocation">
+          <End Role="PropertyLocation" Type="Self.PropertyLocation" Multiplicity="1" />
+          <End Role="AdvertisingStructures" Type="Self.AdvertisingStructures" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PropertyLocation">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="AdvertisingStructures">
+              <PropertyRef Name="PropertyLocation_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -412,6 +436,7 @@ warning 6002: The table/view 'D:\PROJECT\ADBASE\ADBASE\APP_DATA\SCIENCECOM.MDF.d
           <EntitySet Name="Locality" EntityType="Self.Locality" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Object" EntityType="Self.Object" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Owners" EntityType="Self.Owners" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PropertyLocation" EntityType="Self.PropertyLocation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RelationshipOfAdvertising" EntityType="Self.RelationshipOfAdvertising" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sides" EntityType="Self.Sides" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
@@ -430,6 +455,10 @@ warning 6002: The table/view 'D:\PROJECT\ADBASE\ADBASE\APP_DATA\SCIENCECOM.MDF.d
           </EntitySet>
           <AssociationSet Name="FK_AdvertisingStructures_Locality" Association="Self.FK_AdvertisingStructures_Locality">
             <End Role="Locality" EntitySet="Locality" />
+            <End Role="AdvertisingStructures" EntitySet="AdvertisingStructures" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AdvertisingStructures_PropertyLocation" Association="Self.FK_AdvertisingStructures_PropertyLocation">
+            <End Role="PropertyLocation" EntitySet="PropertyLocation" />
             <End Role="AdvertisingStructures" EntitySet="AdvertisingStructures" />
           </AssociationSet>
           <AssociationSet Name="FK_AdvertisingStructures_Status" Association="Self.FK_AdvertisingStructures_Status">
@@ -595,6 +624,11 @@ warning 6002: The table/view 'D:\PROJECT\ADBASE\ADBASE\APP_DATA\SCIENCECOM.MDF.d
             <End Role="Side" EntitySet="Sides" />
             <End Role="Surface" EntitySet="Surfaces" />
           </AssociationSet>
+          <EntitySet Name="PropertyLocations" EntityType="SciencecomModel.PropertyLocation" />
+          <AssociationSet Name="FK_AdvertisingStructures_PropertyLocation" Association="SciencecomModel.FK_AdvertisingStructures_PropertyLocation">
+            <End Role="PropertyLocation" EntitySet="PropertyLocations" />
+            <End Role="AdvertisingStructure" EntitySet="AdvertisingStructures" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -642,6 +676,11 @@ warning 6002: The table/view 'D:\PROJECT\ADBASE\ADBASE\APP_DATA\SCIENCECOM.MDF.d
           <NavigationProperty Name="TypeOfAdvertisingStructure" Relationship="SciencecomModel.FK_AdvertisingStructures_TypeOfAdvertisingStructures" FromRole="AdvertisingStructure" ToRole="TypeOfAdvertisingStructure" />
           <NavigationProperty Name="Owner" Relationship="SciencecomModel.FK_Billboards1_Owners" FromRole="AdvertisingStructure" ToRole="Owner" />
           <NavigationProperty Name="Sides" Relationship="SciencecomModel.FK_Sides_Billboards1" FromRole="AdvertisingStructure" ToRole="Side" />
+          <Property Name="CommentOwner" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Backlight" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PropertyLocation_id" Type="Guid" Nullable="false" />
+          <Property Name="OwnerPlacements" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PropertyLocation" Relationship="SciencecomModel.FK_AdvertisingStructures_PropertyLocation" FromRole="AdvertisingStructure" ToRole="PropertyLocation" />
         </EntityType>
         <EntityType Name="DirectionSide">
           <Key>
@@ -999,6 +1038,27 @@ warning 6002: The table/view 'D:\PROJECT\ADBASE\ADBASE\APP_DATA\SCIENCECOM.MDF.d
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="PropertyLocation">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="NamePropertyLocation" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OrderBY" Type="Int32" />
+          <NavigationProperty Name="AdvertisingStructures" Relationship="SciencecomModel.FK_AdvertisingStructures_PropertyLocation" FromRole="PropertyLocation" ToRole="AdvertisingStructure" />
+        </EntityType>
+        <Association Name="FK_AdvertisingStructures_PropertyLocation">
+          <End Type="SciencecomModel.PropertyLocation" Role="PropertyLocation" Multiplicity="1" />
+          <End Type="SciencecomModel.AdvertisingStructure" Role="AdvertisingStructure" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PropertyLocation">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="AdvertisingStructure">
+              <PropertyRef Name="PropertyLocation_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1032,6 +1092,10 @@ warning 6002: The table/view 'D:\PROJECT\ADBASE\ADBASE\APP_DATA\SCIENCECOM.MDF.d
           <EntitySetMapping Name="AdvertisingStructures">
             <EntityTypeMapping TypeName="SciencecomModel.AdvertisingStructure">
               <MappingFragment StoreEntitySet="AdvertisingStructures">
+                <ScalarProperty Name="OwnerPlacements" ColumnName="OwnerPlacements" />
+                <ScalarProperty Name="PropertyLocation_id" ColumnName="PropertyLocation_id" />
+                <ScalarProperty Name="Backlight" ColumnName="Backlight" />
+                <ScalarProperty Name="CommentOwner" ColumnName="CommentOwner" />
                 <ScalarProperty Name="Status_Id" ColumnName="Status_Id" />
                 <ScalarProperty Name="TheElementOfTheRoadNetwork_id" ColumnName="TheElementOfTheRoadNetwork_id" />
                 <ScalarProperty Name="Note_controller" ColumnName="Note controller" />
@@ -1239,6 +1303,15 @@ warning 6002: The table/view 'D:\PROJECT\ADBASE\ADBASE\APP_DATA\SCIENCECOM.MDF.d
               <MappingFragment StoreEntitySet="Streets">
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="Street1" ColumnName="Street" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PropertyLocations">
+            <EntityTypeMapping TypeName="SciencecomModel.PropertyLocation">
+              <MappingFragment StoreEntitySet="PropertyLocation">
+                <ScalarProperty Name="OrderBY" ColumnName="OrderBY" />
+                <ScalarProperty Name="NamePropertyLocation" ColumnName="NamePropertyLocation" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

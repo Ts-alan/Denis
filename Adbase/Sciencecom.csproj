@@ -228,6 +228,9 @@
     <Compile Include="Models\AdvertisingStructurePartial.cs" />
     <Compile Include="Models\Patterns\GenericRepository.cs" />
     <Compile Include="Models\Patterns\UnitOfWork.cs" />
+    <Compile Include="Models\PropertyLocation.cs">
+      <DependentUpon>ContructionsModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\RelationshipOfAdvertising.cs">
       <DependentUpon>ContructionsModel.tt</DependentUpon>
     </Compile>
