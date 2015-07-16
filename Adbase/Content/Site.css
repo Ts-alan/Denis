@@ -25,8 +25,10 @@ textarea {
     display: none;
 }
 
-input.input-validation-error {
-    border: 1px solid #b94a48;
+input.input-validation-error ,
+textarea.input-validation-error,
+select.input-validation-error{
+    border: 1px solid #b94a48; background-color: #fee;
 }
 
 input[type="checkbox"].input-validation-error {

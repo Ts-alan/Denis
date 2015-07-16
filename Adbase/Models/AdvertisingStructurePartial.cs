@@ -37,12 +37,6 @@ namespace Sciencecom.Models
      public class AdvertisingStructureConstructionMetaData
 
     {
-         [Required(ErrorMessage = "Введите значение ")]
-         public string Backlight { get; set; }
-
-         [Required(ErrorMessage = "Введите значение ")]
-         public System.Guid PropertyLocation_id { get; set; }
-
          [DataType(DataType.Date)]
          public Nullable<System.DateTime> PlannedInstallationDate { get; set; }
 
@@ -76,6 +70,7 @@ namespace Sciencecom.Models
 
         [Required(ErrorMessage = "Введите значение ")]
         public Nullable<int> Owner_Id { get; set; }
+
         [StringLength(50, ErrorMessage = "не более 50 символов")]
         [Required(ErrorMessage = "Введите значение")]
         [Display(Name = "Улица 1")]
