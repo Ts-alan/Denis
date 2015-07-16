@@ -88,7 +88,7 @@
                     "<option>8</option>" +
                     "</select> &nbsp;&nbsp;&nbsp; <b>Направление стороны</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("DirectionSide", new SelectList(DirectionSide, "id", "NameOfDirectionSide"), "", new { data_val_required = "Выберете", data_val = "true", IdentificationForDirectionSide = "" }).ToHtmlString().Replace("\"", " "))' +
                     "</div>" + 
-                    "</div> <div style=\"margin-left: -15px;display: none\" id=\"" + i + "HiddenIdentification\"> &nbsp;&nbsp;&nbsp;<b>Идентификация поверхностей</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("IdentificationSurface", new SelectList(IdentificationSide, "id", "IdentificationName")).ToHtmlString().Replace("\"", " ")) </div>' +
+                    "</div> <div style=\"margin-left: -15px;display: none\" id=\"" + i + "HiddenIdentification\"> &nbsp;&nbsp;&nbsp;<b>Идентификация поверхностей</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("IdentificationSurface", new SelectList(IdentificationSide, "id", "IdentificationName", new { data_val_required = "Выберете", data_val = "true", IdentificationForIdentificationSurface = "" })).ToHtmlString().Replace("\"", " ")) </div>' +
                     "<div  id=\"InsertPartial" + i + "\"></div>" +
                     "</div>");
                 $("#InsertPhoto").before(
@@ -178,6 +178,37 @@
             $("#" + i + "HiddenIdentification").hide();
         } else {
             $("#" + i + "HiddenIdentification").show();
+            //валидация
+            //$('[name=" "]').each(function (indx, element) {
+            //    $(element).attr("name", "[" + indx + "].IdentificationForIdentificationSurface");
+            //});
+            //$('[action="/Data/CreateAdvertisingDesign"]').validate({
+            //    rules: {
+            //        '[0].IdentificationForIdentificationSurface': "required",
+            //        '[1].IdentificationForIdentificationSurface': "required",
+            //        '[2].IdentificationForIdentificationSurface': "required",
+            //        '[3].IdentificationForIdentificationSurface': "required",
+            //        '[4].IdentificationForIdentificationSurface': "required",
+            //        '[5].IdentificationForIdentificationSurface': "required",
+            //        '[6].IdentificationForIdentificationSurface': "required",
+            //        '[7].IdentificationForIdentificationSurface': "required",
+            //        '[8].IdentificationForIdentificationSurface': "required"
+            //    },
+            //    messages: {
+            //        '[0].IdentificationForDirectionSide': "test",
+            //        '[1].IdentificationForDirectionSide': "brak uzytkownika"
+            //    }
+
+            //}
+            //);
+            //$('[IdentificationForIdentificationSurface]').each(function (indx, element) {
+
+            //    $(element).rules('add', {
+            //        required: true
+            //    });
+            //  }
+            //);
+
         }
         $("[side=" + i + "]").remove();
         
