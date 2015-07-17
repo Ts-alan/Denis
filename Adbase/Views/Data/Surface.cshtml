@@ -8,7 +8,7 @@
     var Identification = new SciencecomEntities().Identifications.ToList();
 }
 
-@for (int i=1;i<=ViewBag.Incerment;i++)
+@for (int i = ViewBag.StartCountForSurface; i <ViewBag.EndCountForSurface; i++)
 {
     <script type="text/javascript">
         //выщитывание площади для каждой поверхности

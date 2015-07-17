@@ -46,7 +46,7 @@ namespace Sciencecom.Models
         public Nullable<System.Guid> Status_Id { get; set; }
         public string CommentOwner { get; set; }
         public string Backlight { get; set; }
-        public System.Guid PropertyLocation_id { get; set; }
+        public Nullable<System.Guid> PropertyLocation_id { get; set; }
         public string OwnerPlacements { get; set; }
     
         public virtual Locality Locality { get; set; }

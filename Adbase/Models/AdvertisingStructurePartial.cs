@@ -35,8 +35,9 @@ namespace Sciencecom.Models
     }
 
      public class AdvertisingStructureConstructionMetaData
-
-    {
+     {
+         [Required(ErrorMessage = "Введите значение ")]
+         public string C_ContractFinancialManagement { get; set; }
          [DataType(DataType.Date)]
          public Nullable<System.DateTime> PlannedInstallationDate { get; set; }
 
@@ -93,7 +94,7 @@ namespace Sciencecom.Models
         [Required(ErrorMessage = "Введите значение")]
         public Nullable<System.DateTime> StartDate { get; set; }
         
-       [Required(ErrorMessage = "Введите значение даты")]
+       [Required(ErrorMessage = "Введите значение")]
        [DataType(DataType.Date)]
        public Nullable<System.DateTime> EndDate { get; set; }
  
@@ -105,5 +106,14 @@ namespace Sciencecom.Models
           
        [Required(ErrorMessage = "Выберете значение")]
        public Nullable<System.Guid> Status_Id { get; set; }
+
+
+    }
+    //класс для биндинга
+    public class DataBindingForPost
+    {
+        public Guid IdentificationForDirectionSide { get; set; }
+
+        public Guid IdentificationForIdentificationSurface { get; set; }
     }
 }

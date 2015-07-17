@@ -35,8 +35,8 @@
           <Property Name="TheElementOfTheRoadNetwork_id" Type="uniqueidentifier" />
           <Property Name="Status_Id" Type="uniqueidentifier" />
           <Property Name="CommentOwner" Type="nvarchar(max)" />
-          <Property Name="Backlight" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="PropertyLocation_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Backlight" Type="nvarchar(max)" />
+          <Property Name="PropertyLocation_id" Type="uniqueidentifier" />
           <Property Name="OwnerPlacements" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="DirectionSide">
@@ -175,9 +175,9 @@ warning 6002: The table/view 'D:\PROJECT\ADBASE\ADBASE\APP_DATA\SCIENCECOM.MDF.d
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Height" Type="int" />
-          <Property Name="Width" Type="int" />
-          <Property Name="Space" Type="int" />
+          <Property Name="Height" Type="int" Nullable="false" />
+          <Property Name="Width" Type="int" Nullable="false" />
+          <Property Name="Space" Type="int" Nullable="false" />
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Side_Id" Type="uniqueidentifier" />
           <Property Name="NumberSurface" Type="int" />
@@ -228,7 +228,7 @@ warning 6002: The table/view 'D:\PROJECT\ADBASE\ADBASE\APP_DATA\SCIENCECOM.MDF.d
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_AdvertisingStructures_PropertyLocation">
-          <End Role="PropertyLocation" Type="Self.PropertyLocation" Multiplicity="1" />
+          <End Role="PropertyLocation" Type="Self.PropertyLocation" Multiplicity="0..1" />
           <End Role="AdvertisingStructures" Type="Self.AdvertisingStructures" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PropertyLocation">
@@ -677,8 +677,8 @@ warning 6002: The table/view 'D:\PROJECT\ADBASE\ADBASE\APP_DATA\SCIENCECOM.MDF.d
           <NavigationProperty Name="Owner" Relationship="SciencecomModel.FK_Billboards1_Owners" FromRole="AdvertisingStructure" ToRole="Owner" />
           <NavigationProperty Name="Sides" Relationship="SciencecomModel.FK_Sides_Billboards1" FromRole="AdvertisingStructure" ToRole="Side" />
           <Property Name="CommentOwner" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Backlight" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PropertyLocation_id" Type="Guid" Nullable="false" />
+          <Property Name="Backlight" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PropertyLocation_id" Type="Guid" />
           <Property Name="OwnerPlacements" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="PropertyLocation" Relationship="SciencecomModel.FK_AdvertisingStructures_PropertyLocation" FromRole="AdvertisingStructure" ToRole="PropertyLocation" />
         </EntityType>
@@ -815,9 +815,9 @@ warning 6002: The table/view 'D:\PROJECT\ADBASE\ADBASE\APP_DATA\SCIENCECOM.MDF.d
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Height" Type="Int32" />
-          <Property Name="Width" Type="Int32" />
-          <Property Name="Space" Type="Int32" />
+          <Property Name="Height" Type="Int32" Nullable="false" />
+          <Property Name="Width" Type="Int32" Nullable="false" />
+          <Property Name="Space" Type="Int32" Nullable="false" />
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Side_Id" Type="Guid" />
           <Property Name="NumberSurface" Type="Int32" />
@@ -1048,7 +1048,7 @@ warning 6002: The table/view 'D:\PROJECT\ADBASE\ADBASE\APP_DATA\SCIENCECOM.MDF.d
           <NavigationProperty Name="AdvertisingStructures" Relationship="SciencecomModel.FK_AdvertisingStructures_PropertyLocation" FromRole="PropertyLocation" ToRole="AdvertisingStructure" />
         </EntityType>
         <Association Name="FK_AdvertisingStructures_PropertyLocation">
-          <End Type="SciencecomModel.PropertyLocation" Role="PropertyLocation" Multiplicity="1" />
+          <End Type="SciencecomModel.PropertyLocation" Role="PropertyLocation" Multiplicity="0..1" />
           <End Type="SciencecomModel.AdvertisingStructure" Role="AdvertisingStructure" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PropertyLocation">

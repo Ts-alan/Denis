@@ -32,14 +32,15 @@
     var DirectionSide = new SciencecomEntities().DirectionSides.OrderBy(x=>x.OrderBY).ToList();
     //Индификация поверхности
     var IdentificationSide = new SciencecomEntities().Identifications.ToList();
-    IdentificationSide.Insert(0, null);
+    //IdentificationSide.Insert(0, null);
     //Идентификационный номер
     var PropertyLocation = new SciencecomEntities().PropertyLocations.ToList();
     
 }
 <script type="text/javascript">
     var i = 0;
-
+    var StartCountForSurface ;
+    var EndCountForSurface = 0;
     $(document).ready(function() {
 
 
@@ -60,6 +61,7 @@
 
 //кол-во сторон
     function SetCountSize() {
+        EndCountForSurface = 0;
         var CountSizes = $('#CountSizes').val();
         $("#CountSize").val(CountSizes);
         if (CountSizes != "") {
@@ -122,11 +124,11 @@
                 '[6].IdentificationForDirectionSide': "required",
                 '[7].IdentificationForDirectionSide': "required",
                 '[8].IdentificationForDirectionSide': "required"
-            },
-                messages: {
-                    '[0].IdentificationForDirectionSide': "test",
-                    '[1].IdentificationForDirectionSide': "brak uzytkownika"
-                    }
+            }
+                //messages: {
+                //    '[0].IdentificationForDirectionSide': "test",
+                //    '[1].IdentificationForDirectionSide': "brak uzytkownika"
+                //    }
    
             }
         );
@@ -149,11 +151,11 @@
                 'CountSurfuce7': "required",
                 'CountSurfuce8': "required"
             
-            },
-            messages: {
-                '[0].DirectionSide': "test",
-                '[1].DirectionSide': "brak uzytkownika"
             }
+            //messages: {
+            //    '[0].DirectionSide': "test",
+            //    '[1].DirectionSide': "brak uzytkownika"
+            //}
 
         }
         );
@@ -174,6 +176,9 @@
     function AddSurface(i) {
 
         var count = $("#AddButton" + i + "").val();
+        StartCountForSurface = EndCountForSurface;
+        EndCountForSurface = parseInt(count) + parseInt(EndCountForSurface);
+     
         if (count == 1) {
             $("#" + i + "HiddenIdentification").hide();
         } else {
@@ -197,25 +202,25 @@
  
                 }
 
-            }
-            );
+            });
             $('[IdentificationForIdentificationSurface]').each(function (indx, element) {
 
                 $(element).rules('add', {
                     required: true
                 });
-              }
-            );
+              });
 
         }
         $("[side=" + i + "]").remove();
+
         
-            $.ajax('@Url.Action("Surface", "Data")', { data: { side: i, count: count } })
+        $.ajax('@Url.Action("Surface", "Data")', { data: { side: i, StartCountForSurface: StartCountForSurface, EndCountForSurface: EndCountForSurface } })
             .success(function (e) {
                 $("#InsertPartial"+i+"").before(e);
             });
        
     }
+
 
 
     //выщитывание площади для каждой поверхности
@@ -462,7 +467,7 @@
         <div class="form-horizontal" style="margin-top: 18px">
             <div class="form-group">
                 <label for="CountSizes">Количество сторон</label>
-                <select class="text-box single-line" id="CountSizes" onchange="SetCountSize()" name="CountSizes" type="text" data-val="true" data-val-required="Укажите кол-во сторон">
+                <select class="text-box single-line" id="CountSizes" onchange="SetCountSize()" name="CountSizes" type="text" data-val="true" data-val-required="Введите значение">
                     <option></option>
                     <option>1</option>
                     <option>2</option>

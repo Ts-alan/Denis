@@ -193,6 +193,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ContructionsModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\CustomModelBinder.cs" />
     <Compile Include="Models\DirectionSide.cs">
       <DependentUpon>ContructionsModel.tt</DependentUpon>
     </Compile>

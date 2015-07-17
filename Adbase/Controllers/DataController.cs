@@ -1432,9 +1432,10 @@ namespace Sciencecom.Controllers
 
         [Authorize]
         [HttpPost]
-        public ActionResult CreateAdvertisingDesign(AdvertisingStructure Structures, List<Guid> DirectionSide, List<Guid> IdentificationSurface, System.Collections.Generic.List<Sciencecom.Models.Surface> surfaces, HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides, List<HttpPostedFileBase> SeveralPhoto, int CountSize = 1)
+        public ActionResult CreateAdvertisingDesign(AdvertisingStructure Structures,List<DataBindingForPost> DataBindingForPost,[ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces, HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides, List<HttpPostedFileBase> SeveralPhoto, int CountSize = 1)
         {
-            
+
+            surfaces.RemoveAll(a => a.Space ==null );
             Guid StructuresId = Guid.NewGuid();
             Structures.Id = StructuresId;
             //удаление временно номера из базы данных
@@ -1447,15 +1448,15 @@ namespace Sciencecom.Controllers
             Guid nullGuid=new Guid("00000000000000000000000000000000");
             List<Side> Sides=new List<Side>();
             Guid? IndentificationTemp=null;
-            for (int j = 1; j <= CountSize; j++)
-            {
-                if (IdentificationSurface[j - 1]!=nullGuid)
-                {
-                    IndentificationTemp = IdentificationSurface[j - 1];
-                }
-                Sides.Add(new Side() { AdvertisingStructures_Id = StructuresId, Name = j.ToString(), Id = Guid.NewGuid(), DirectionSide_id = DirectionSide[j - 1], Identification_id = IndentificationTemp });
-                IndentificationTemp = null;
-            }
+            //for (int j = 1; j <= CountSize; j++)
+            //{
+            //    if (IdentificationSurface[j - 1]!=nullGuid)
+            //    {
+            //        IndentificationTemp = IdentificationSurface[j - 1];
+            //    }
+            //    Sides.Add(new Side() { AdvertisingStructures_Id = StructuresId, Name = j.ToString(), Id = Guid.NewGuid(), DirectionSide_id = DirectionSide[j - 1], Identification_id = IndentificationTemp });
+            //    IndentificationTemp = null;
+            //}
 
             context.Sides.AddRange(Sides);
             context.AdvertisingStructures.Add(Structures);
@@ -1632,10 +1633,10 @@ namespace Sciencecom.Controllers
         //    return result;
         //}
 
-        public ActionResult Surface(string side, int count)
+        public ActionResult Surface(string side, int StartCountForSurface, int EndCountForSurface)
         {
-
-            ViewBag.Incerment = count;
+            ViewBag.EndCountForSurface = EndCountForSurface;
+            ViewBag.StartCountForSurface = StartCountForSurface;
             ViewBag.Side = side;
            
             return View();
