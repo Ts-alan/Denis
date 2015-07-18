@@ -1,12 +1,7 @@
 ﻿@using System.Data.Entity
 @using Sciencecom.Models
 @model System.Collections.Generic.List<Sciencecom.Models.Surface>
-@{
-  
 
-    //Идентификация
-    var Identification = new SciencecomEntities().Identifications.ToList();
-}
 
 @for (int i = ViewBag.StartCountForSurface; i <ViewBag.EndCountForSurface; i++)
 {
@@ -23,7 +18,7 @@
     </script>
   <text>  <div side="@ViewBag.Side"> 
         <input type="hidden" name="[@i].SideOfSurface" value="@ViewBag.Side">
-        <h3 style="margin-left: 150px">Поверхность @ViewBag.numberSurface &nbsp; Стороны @i </h3>
+        <h3 style="margin-left: 150px">Поверхность @ViewBag.numberSurface &nbsp; Стороны @ViewBag.Side </h3>
 
         <div class="form-inline">
             <hr/>

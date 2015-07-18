@@ -17,11 +17,11 @@ namespace Sciencecom.Models
             List<string> AllKeysHeight = request.Form.AllKeys.Where(a=>a.Contains("].Height")).ToList();
             List<string> AllKeysWidth = request.Form.AllKeys.Where(a => a.Contains("].Width")).ToList();
             List<string> AllKeysSpace = request.Form.AllKeys.Where(a => a.Contains("].Space")).ToList();
-
+            List<string> AllKeysSideOfSurface = request.Form.AllKeys.Where(a => a.Contains("].SideOfSurface")).ToList();
             for (int i=0;i<AllKeysHeight.Count();i++)
             {
 
-                ListSurface.Add(new Surface() { Height = Int32.Parse(request.Form.Get(AllKeysHeight[i])), Space = Int32.Parse(request.Form.Get(AllKeysWidth[i])), Width = Int32.Parse(request.Form.Get(AllKeysSpace[i])) });
+                ListSurface.Add(new Surface() { Height = Int32.Parse(request.Form.Get(AllKeysHeight[i])), Space = Int32.Parse(request.Form.Get(AllKeysWidth[i])), Width = Int32.Parse(request.Form.Get(AllKeysSpace[i])), SideOfSurface = request.Form.Get(AllKeysSideOfSurface[i]) });
 
             }
             return ListSurface;
@@ -37,13 +37,14 @@ namespace Sciencecom.Models
             List<string> DirectionSide_id = request.Form.AllKeys.Where(a => a.Contains("].IdentificationForDirectionSide")).ToList();
             List<string> Identification_id = request.Form.AllKeys.Where(a => a.Contains("].IdentificationForIdentificationSurface")).ToList();
 
-            string tempIdentification_id ;
+            string tempIdentification_id="" ;
             for (int i = 0; i < DirectionSide_id.Count; i++)
             {
- 
-                    tempIdentification_id =request.Form.Get(Identification_id.Single(a => a.Contains(i.ToString())));
+                if (Identification_id.Where(a => a.Contains(i.ToString())).Any())
+                {
+                    tempIdentification_id = request.Form.Get(Identification_id.Single(a => a.Contains(i.ToString())));
+                }
 
-                
                 ListSide.Add(new Side()
                 {
                     DirectionSide_id = new Guid(request.Form.Get(DirectionSide_id[i])),

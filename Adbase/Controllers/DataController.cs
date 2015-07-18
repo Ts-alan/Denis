@@ -1432,7 +1432,7 @@ namespace Sciencecom.Controllers
 
         [Authorize]
         [HttpPost]
-        public ActionResult CreateAdvertisingDesign(AdvertisingStructure Structures, [ModelBinder(typeof(CustomModelBinderForSide))]List<Side> Side, [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces, HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides, List<HttpPostedFileBase> SeveralPhoto, int CountSize = 1)
+        public ActionResult CreateAdvertisingDesign(AdvertisingStructure Structures, [ModelBinder(typeof(CustomModelBinderForSide))]List<Side> Sides, [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces, HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides, List<HttpPostedFileBase> SeveralPhoto, int CountSize = 1)
         {
 
 
@@ -1445,23 +1445,18 @@ namespace Sciencecom.Controllers
   
             }
             Guid nullGuid=new Guid("00000000000000000000000000000000");
-            List<Side> Sides=new List<Side>();
-            Guid? IndentificationTemp=null;
-            //for (int j = 1; j <= CountSize; j++)
-            //{
-            //    if (IdentificationSurface[j - 1]!=nullGuid)
-            //    {
-            //        IndentificationTemp = IdentificationSurface[j - 1];
-            //    }
-            //    Sides.Add(new Side() { AdvertisingStructures_Id = StructuresId, Name = j.ToString(), Id = Guid.NewGuid(), DirectionSide_id = DirectionSide[j - 1], Identification_id = IndentificationTemp });
-            //    IndentificationTemp = null;
-            //}
+            for (int j = 0; j < CountSize; j++)
+            {
+
+                Sides[j].AdvertisingStructures_Id = StructuresId;
+                Sides[j].Name = (j+1).ToString();
+                Sides[j].Id = Guid.NewGuid();
+            }
 
             context.Sides.AddRange(Sides);
             context.AdvertisingStructures.Add(Structures);
             List<Surface> ListSurface = new List<Surface>();
-            if (surfaces != null)
-                foreach (var i in surfaces)
+            foreach (var i in surfaces)
                 {
                     i.Side_Id = Sides.Single(a => a.Name == i.SideOfSurface).Id;
                     ListSurface.Add(i);
@@ -1470,8 +1465,7 @@ namespace Sciencecom.Controllers
             context.Surfaces.AddRange(ListSurface);
 
             context.SaveChanges();
-         
-
+ 
             if (ScanPassport_1Sides != null)
             {
                 string src = "~/Images/ScanPassport_1Sides/" + Structures.Id_show + "passport.jpg";
