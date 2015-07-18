@@ -37,12 +37,19 @@ namespace Sciencecom.Models
             List<string> DirectionSide_id = request.Form.AllKeys.Where(a => a.Contains("].IdentificationForDirectionSide")).ToList();
             List<string> Identification_id = request.Form.AllKeys.Where(a => a.Contains("].IdentificationForIdentificationSurface")).ToList();
 
-
+            string tempIdentification_id ;
             for (int i = 0; i < DirectionSide_id.Count; i++)
             {
+ 
+                    tempIdentification_id =request.Form.Get(Identification_id.Single(a => a.Contains(i.ToString())));
 
-               
-                ListSide.Add(new Side() { DirectionSide_id = new Guid(request.Form.Get(DirectionSide_id[i])), Identification_id = new Guid(request.Form.Get(Identification_id[i]))});
+                
+                ListSide.Add(new Side()
+                {
+                    DirectionSide_id = new Guid(request.Form.Get(DirectionSide_id[i])),
+                    Identification_id = tempIdentification_id!=""?(Guid?)new Guid(tempIdentification_id):null 
+
+                });
 
             }
             return ListSide;
