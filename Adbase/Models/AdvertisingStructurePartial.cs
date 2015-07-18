@@ -109,11 +109,5 @@ namespace Sciencecom.Models
 
 
     }
-    //класс для биндинга
-    public class DataBindingForPost
-    {
-        public Guid IdentificationForDirectionSide { get; set; }
 
-        public Guid IdentificationForIdentificationSurface { get; set; }
-    }
 }

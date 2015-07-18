@@ -1432,16 +1432,15 @@ namespace Sciencecom.Controllers
 
         [Authorize]
         [HttpPost]
-        public ActionResult CreateAdvertisingDesign(AdvertisingStructure Structures,List<DataBindingForPost> DataBindingForPost,[ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces, HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides, List<HttpPostedFileBase> SeveralPhoto, int CountSize = 1)
+        public ActionResult CreateAdvertisingDesign(AdvertisingStructure Structures, [ModelBinder(typeof(CustomModelBinderForSide))]List<Side> Side, [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces, HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides, List<HttpPostedFileBase> SeveralPhoto, int CountSize = 1)
         {
 
-            surfaces.RemoveAll(a => a.Space ==null );
+
             Guid StructuresId = Guid.NewGuid();
             Structures.Id = StructuresId;
             //удаление временно номера из базы данных
             if (context.ListUniqueNumbers.Any(a => a.UniqueNumber == Structures.UniqueNumber))
             {
-                var t = context.ListUniqueNumbers.Single(x => x.UniqueNumber == Structures.UniqueNumber);
                 context.ListUniqueNumbers.Remove(context.ListUniqueNumbers.Single(x => x.UniqueNumber == Structures.UniqueNumber));
   
             }
