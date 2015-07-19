@@ -23,7 +23,13 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-
+        function HideRows() {
+            $('[role="gridcell"]').each(
+            function (indx, element) {
+                $(element).css("visibility", "hidden");
+    }
+ );
+        }
         //создание таблицы
         tableToGrid("#table", {
             height: 700,
@@ -35,25 +41,29 @@
                 "№ паспорта рекламы", "Паспорт выдан с", "Паспорт выдан по"
             ],
             colModel: [
-                { name: "Собственник_конструкции", width: 25,align:"center" },
-                { name: "Вид", width: 15, align: "center" },
-                { name: "Уникальный_номер", width: 30, align: "center" },
-                { name: "Статус", width: 30, align: "center" },
-                { name: "Нас._пункт", width: 25, align: "center" },
-                { name: "Улица1", width: 30, align: "center" },
-                { name: "Дом", width: 30, align: "center" },
-                { name: "Улица2", width: 30, align: "center" },
-                { name: "Со_стороны_улицы", width: 20, align: "center" },
+                { name: "Собственник_конструкции", width: 25, align: "center" },
+                { name: "Вид", width: 22, align: "center" },
+                { name: "Уникальный_номер", width: 23, align: "center" },
+                { name: "Статус", width: 23, align: "center" },
+                { name: "Нас._пункт", width: 24, align: "center" },
+                { name: "Улица1", width: 23, align: "center" },
+                { name: "Дом", width: 23, align: "center" },
+                { name: "Улица2", width: 22, align: "center" },
+                { name: "Со_стороны_улицы", width: 24, align: "center" },
                 { name: "Элемент_улично-дорожной_сети", width: 25, align: "center" },
                 { name: "Количество_сторон", width: 20, align: "center" },
                 { name: "Количестов_поверхностей", width: 20, align: "center" },
                 { name: "№_договора_с_финансовым_управлением", width: 25, align: "center" },
                 { name: "№_паспорта_рекламы", width: 20, align: "center" },
-                { name: "Паспорт_выдан_с", width: 30, align: "center" },
+                { name: "Паспорт_выдан_с", width: 30, align: "center"  },
                 { name: "Паспорт_выдан_по", width: 30, align: "center" }
             ]
         });
-
+        HideRows();
+        //Поиск
+          $('#table').jqGrid('filterToolbar', {
+            }
+        );
         var $Tablebacklight;
 
         //подсветка
@@ -92,7 +102,14 @@
             }
         });
 
+        //поиск
+        $("#search").click(function () {
+            HideRows();
 
+            var sgrid = $("#table")[0];
+            sgrid.triggerToolbar();
+            
+        });
     });
 
 </script>
@@ -111,11 +128,11 @@
     {
         <p>
             <b>@Html.ActionLink("+ Добавить новую рекламную конструкцию", "CreateAdvertisingDesign", new { type = "Billboard" }, new { @class = "btn btn-default" })</b>
-
-            @*<b><a href="#" style="margin-right: 110px" id="AddNewAD">+ Новая рекламная конструкция</a></b>
+            <b> <input type="button" value="Искать" id="search" class="btn btn-default"></b>
+                @*<b><a href="#" style="margin-right: 110px" id="AddNewAD">+ Новая рекламная конструкция</a></b>
             <b><a href="#" style="margin-right: 110px" id="EditStatusAD">+ Изменить статус рекламной конструкции</a></b>
             <b><a href="#" id="EditBillbord">+ Изменить существующую рекламную конструкцию</a></b>*@
-        </p>
+      </p>
     }
 }
 
