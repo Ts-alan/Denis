@@ -21,27 +21,33 @@
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
+                <div class="navbar-header">
+                    <img src="/Images/ONCLOUD logo site.png"/>
+                </div>
+
+                <div class="navbar-header">
+                   
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
                     <b><a class="navbar-brand" href="/">Главная страница <br/> AdBase</a></b>
+                </div>
+                <div class="navbar-collapse collapse">
+                    @if (ViewBag.MappingContent ?? true)
+                    {
+                        <ul class="nav navbar-nav">
+                            <li><a href="@Url.Action("AdvertisingDesign", "Data")">Таблица рекламных <br/>конструкций</a></li>
+                            <li><a href="@Url.Action("Index", "Map")">Карта рекламных <br/> конструкций</a></li>
+                            <li><a href="#">Отчёты</a></li>
+                            <li><a href="@Url.Action("AdministrationPage", "Account")">Администрирование</a></li>
+                        </ul>
+                    }
+                    @Html.Partial("_LoginPartial")
+                </div>
             </div>
-            <div class="navbar-collapse collapse">
-                @if (ViewBag.MappingContent??true)
-                {
-                    <ul class="nav navbar-nav">
-                        <li><a href="@Url.Action("AdvertisingDesign","Data")" >Таблица рекламных <br />конструкций</a></li>
-                        <li><a href="@Url.Action("Index","Map")">Карта рекламных <br /> конструкций</a></li>
-                        <li><a href="#">Отчёты</a></li>
-                        <li><a href="@Url.Action("AdministrationPage","Account")">Администрирование</a></li>
-                    </ul>
-                }
-                @Html.Partial("_LoginPartial")
-            </div>
-        </div>
     </div>
     <div class="container body-content">
         @RenderBody()

@@ -366,6 +366,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Images\bx_loader.gif" />
     <Content Include="Images\controls.png" />
+    <Content Include="Images\ONCLOUD logo site.png" />
     <Content Include="Models\ContructionsModel.edmx.sql" />
     <Content Include="Scripts\AddPlacamerkToMap.js" />
     <Content Include="Scripts\AutocomlpleteOnMap.js" />
@@ -1413,9 +1414,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Start\App_Data\" />
-    <Folder Include="Images\Illegal\" />
-    <Folder Include="Images\Light\" />
-    <Folder Include="Images\Metal\" />
     <Folder Include="Images\Patterns\" />
     <Folder Include="Images\PhotoController\" />
     <Folder Include="Images\ScanPassport_1Sides\" />
