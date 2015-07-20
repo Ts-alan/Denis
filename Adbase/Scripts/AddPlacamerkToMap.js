@@ -18,7 +18,8 @@
             //} else {
             //    $("#Shirota").val("");
             //}
-            $("#Height").val(str);
+            $("#Breadth").val(str);
+            
             str = String(coords[1].toPrecision(6));
             str = str.replace('.', ',');
             //if (!isNaN(str)) {
@@ -26,7 +27,7 @@
             //} else {
             //    $("#Dolgota").val("");
             //} 
-            $("#Breadth").val(str);
+            $("#Height").val(str);
         });
     }
 
