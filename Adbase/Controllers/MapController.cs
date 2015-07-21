@@ -18,11 +18,11 @@ namespace Sciencecom.Controllers
         [Authorize]
         public ActionResult Index(string type = null, int? id = null)
         {
-            if (!string.IsNullOrEmpty(type) && id.HasValue)
-            {
+            //if (!string.IsNullOrEmpty(type) && id.HasValue)
+            //{
                 ViewBag.Type = type;
                 ViewBag.Id = id;
-            }
+            //}
             return View();
         }
      

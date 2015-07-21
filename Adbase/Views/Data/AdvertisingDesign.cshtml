@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNet.Identity
 @using Microsoft.AspNet.Identity.EntityFramework
+@using Newtonsoft.Json
 @using Sciencecom.Models
 @model  System.Data.Entity.DbSet<AdvertisingStructure>
 @{
@@ -25,7 +26,8 @@
     var $SaveIdForHideTooltip;
     $(document).ready(function () {
         var $Tablebacklight;
-        
+        var Showonthemap=@Html.Raw(JsonConvert.SerializeObject(Model.Select(a=>a.Id_show), Formatting.Indented, new JsonSerializerSettings
+        {ReferenceLoopHandling = ReferenceLoopHandling.Ignore}));
 
         function HideRows() {
             $('.ui-widget-content.jqgrow.ui-row-ltr').each(
@@ -125,17 +127,17 @@
 
             });
 
-
+            //подсказка
             $('.ui-widget-content.jqgrow.ui-row-ltr').each(function (indx, element) {
-               
+                
                     $(element).tooltipsy({
                         alignTo: 'cursor',
-                        offset: [0, -150],
+                        offset: [0, -120],
                         hideEvent: 'focusout',
-                        content: '<button class="HideClass" hide=' + indx + ' style="padding: 25px">@Html.ActionLink("Показать на карте","Index","Map")</br>' +
-                            '@Html.ActionLink("Показать данные о конструкции","","")</br>' +
-                            '@Html.ActionLink("Изменить данные о конструкции","EditAdvertisingDesign","Data")</br>' +
-                            '@Html.ActionLink("Удалить конструкцию","","")</br>' +
+                        content: '<button class="HideClass" hide=' + indx + ' style="padding: 10px;text-align: left">&#10037;<a href="/Map/Index/'+Showonthemap[indx]+'">Показать на карте</a></br>' +
+                            '&#10037;@Html.ActionLink("Показать данные о конструкции","","")</br>' +
+                            '&#10037;<a href="/Data/EditAdvertisingDesign/'+Showonthemap[indx]+'">Изменить данные о конструкции</a></br>' +
+                            '&#10037;@Html.ActionLink("Удалить конструкцию","","")</br>' +
                             '</button>',
                         show: function (e, $el) {
                             $el.show(100);
@@ -153,8 +155,9 @@
       
     });
 
-    $("html").dblclick(function () {
+    $("html").dblclick(function (e) {
 
+        //$('[href="/Map/Index/"]').attr("href", "/Map/Index/" + $(e.target.closest("tr")).children("td:first").children("div").text()+"");
         if (document.activeElement.getAttribute("class") != "HideClass") {
             $SaveIdForHideTooltip = document.activeElement.getAttribute("id")-1;
         }
@@ -231,7 +234,7 @@
                 SurfaceCOunt += side.Surfaces.Count;
             }
             <tr title="test" >
-                <td>@i.Owner.Name</td>
+                <td>@i.Owner.Name </td>
                 <td>@i.TypeOfAdvertisingStructure.Name</td>
                 <td>@i.UniqueNumber</td>
                 <td>@i.Status.NameStatus</td>
@@ -243,7 +246,7 @@
                 <td>@i.TheElementOfTheRoadNetwork.TheElementOfTheRoadNetworkName</td>
                 <td>@i.Sides.Count</td>
                 <td>@SurfaceCOunt</td>
-                <td>@i.C_ContractFinancialManagement</td>
+                <td>@i.C_ContractFinancialManagement </td>
                 <td>@i.C_PassportAdvertising</td>
                 <td>@i.StartDate.Value.ToString().Substring(0, 10)</td>
                 <td>@i.EndDate.Value.ToString().Substring(0, 10)</td>

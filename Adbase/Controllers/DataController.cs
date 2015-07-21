@@ -1634,14 +1634,14 @@ namespace Sciencecom.Controllers
            
             return View();
         }
-        public ActionResult EditAdvertisingDesign(Guid? id)
+        public ActionResult EditAdvertisingDesign(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            AdvertisingStructure mc = context.AdvertisingStructures.Find(id);
+            AdvertisingStructure mc = context.AdvertisingStructures.Single(a => a.Id_show == id);
             if (mc == null)
             {
                 return HttpNotFound();

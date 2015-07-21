@@ -84,8 +84,8 @@ function getReferencesBillboard(construction) {
        
     for (var i = 0; i < construction.Surfaces.length; i++) {
         result += '</br><a href="/Data/Documents/' + construction.Surfaces[i] + '?type=doc" >Документы</a>' 
-         +"</br><div>Социальная</div>" 
-        +"<div>" + construction.IsSocial[i]+"</div>"
+        // +"</br><div>Социальная</div>" 
+        //+"<div>" + construction.IsSocial[i]+"</div>"
         + '<br/><img src = "/Images/Billboard/surfaces/' + construction.Surfaces[i] + '.jpg" height = "180">';
     };
     return result;
