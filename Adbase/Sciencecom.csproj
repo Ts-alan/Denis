@@ -735,7 +735,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\MapSearch.js" />
-    <Content Include="Scripts\Map\BilboardConstuctions.js" />
+    <Content Include="Scripts\Map\DesignConstuctions.js" />
     <Content Include="Scripts\Map\IllegalConstructions.js" />
     <Content Include="Scripts\Map\LightConstructions.js" />
     <Content Include="Scripts\Map\MetalConstructions.js" />
@@ -1113,6 +1113,7 @@
     <Content Include="Scripts\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Scripts\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Scripts\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="Scripts\tooltip\tooltipsy.source.js" />
     <Content Include="Scripts\ui\i18n\jquery-ui-i18n.js" />
     <Content Include="Scripts\ui\i18n\jquery.ui.datepicker-af.js" />
     <Content Include="Scripts\ui\i18n\jquery.ui.datepicker-ar-DZ.js" />

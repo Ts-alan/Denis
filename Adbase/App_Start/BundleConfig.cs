@@ -57,6 +57,10 @@ namespace Sciencecom
           
             ));
 
+            //tooltip
+            bundles.Add(new StyleBundle("~/bundles/tooltip").Include(
+            "~/Scripts/tooltip/tooltipsy.source.js"
+            ));
         }
     }
 }

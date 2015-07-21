@@ -20,15 +20,19 @@
 
 @Styles.Render("~/Content/jqCrid")
 @Scripts.Render("~/bundles/jqCrid")
-
+@Scripts.Render("~/bundles/tooltip")
 <script type="text/javascript">
-    $(document).ready(function() {
+    var $SaveIdForHideTooltip;
+    $(document).ready(function () {
+        var $Tablebacklight;
+        
+
         function HideRows() {
-            $('[role="gridcell"]').each(
-            function (indx, element) {
-                $(element).css("visibility", "hidden");
-    }
- );
+            $('.ui-widget-content.jqgrow.ui-row-ltr').each(
+                function (indx, element) {
+                    $(element).hide();
+                }
+            );
         }
         //создание таблицы
         tableToGrid("#table", {
@@ -55,20 +59,21 @@
                 { name: "Количестов_поверхностей", width: 20, align: "center" },
                 { name: "№_договора_с_финансовым_управлением", width: 25, align: "center" },
                 { name: "№_паспорта_рекламы", width: 20, align: "center" },
-                { name: "Паспорт_выдан_с", width: 30, align: "center"  },
+                { name: "Паспорт_выдан_с", width: 30, align: "center" },
                 { name: "Паспорт_выдан_по", width: 30, align: "center" }
             ]
         });
 
         HideRows();
         //Поиск
-          $('#table').jqGrid('filterToolbar', {
+        $('#table').jqGrid('filterToolbar', {
             }
         );
-        var $Tablebacklight;
+    
 
         //подсветка
-        $('table tr').on("click", function() {
+        $('table tr').on("click", function () {
+
             if (typeof $Tablebacklight != 'undefined') {
                 $Tablebacklight.css("background-color", "");
             }
@@ -77,14 +82,14 @@
 
         });
         //спрятать убрать всплывающие окна
-        $("#AddNewAD").click(function() {
+        $("#AddNewAD").click(function () {
             if ($('#divForAddNewAD').css("visibility") == "hidden") {
                 $('#divForAddNewAD').css("visibility", "visible");
             } else {
                 $('#divForAddNewAD').css("visibility", "hidden");
             }
         });
-        $("#EditStatusAD").click(function() {
+        $("#EditStatusAD").click(function () {
             if ($('#divEditStatusAD').css("visibility") == "hidden") {
                 $('#divEditStatusAD').css("visibility", "visible");
             } else {
@@ -92,12 +97,12 @@
             }
         });
         //переход через ajax на edit billbord
-        $('#EditBillbord').click(function() {
+        $('#EditBillbord').click(function () {
             if ($Tablebacklight != "undefined") {
                 var IdGuid = $Tablebacklight.children("td:last").children().text();
-                $.get('@Url.Action("EditAdvertisingDesign", "Data")', { id: IdGuid }).success(function(result) {
+                $.get('@Url.Action("EditAdvertisingDesign", "Data")', { id: IdGuid }).success(function (result) {
                     $("#Page").html(result);
-                }).error(function() {
+                }).error(function () {
                     alert("что то пошло не так");
                 });
             }
@@ -109,11 +114,60 @@
 
             var sgrid = $("#table")[0];
             sgrid.triggerToolbar();
-            
+
+            $('.ui-widget-content.jqgrow.ui-row-ltr').on("click", function () {
+
+                if (typeof $Tablebacklight != 'undefined') {
+                    $Tablebacklight.css("background-color", "");
+                }
+                $Tablebacklight = $(this);
+                $Tablebacklight.css("background", "#ADDEFF");
+
+            });
+
+
+            $('.ui-widget-content.jqgrow.ui-row-ltr').each(function (indx, element) {
+               
+                    $(element).tooltipsy({
+                        alignTo: 'cursor',
+                        offset: [0, -150],
+                        hideEvent: 'focusout',
+                        content: '<button class="HideClass" hide=' + indx + ' style="padding: 25px">@Html.ActionLink("Показать на карте","Index","Map")</br>' +
+                            '@Html.ActionLink("Показать данные о конструкции","","")</br>' +
+                            '@Html.ActionLink("Изменить данные о конструкции","EditAdvertisingDesign","Data")</br>' +
+                            '@Html.ActionLink("Удалить конструкцию","","")</br>' +
+                            '</button>',
+                        show: function (e, $el) {
+                            $el.show(100);
+                        },
+                        hide: function (e, $el) {
+       
+                        },
+                        delay: 200,
+                        className: 'tooltipsy',
+                        css: {}
+                    });
+                }
+            );
         });
       
     });
 
+    $("html").dblclick(function () {
+
+        if (document.activeElement.getAttribute("class") != "HideClass") {
+            $SaveIdForHideTooltip = document.activeElement.getAttribute("id")-1;
+        }
+    });
+
+    $("html").click(function () {
+        var info = document.activeElement;
+        console.log(info.getAttribute("class"));
+        if (info.getAttribute("class") != "HideClass") {
+            $('[hide=' + $SaveIdForHideTooltip + ']').parent().parent().hide();
+
+        };
+    });
 </script>
 @*чтобы jqgtid разбивал на несколько строк*@
 <style type="text/css" media="screen">
