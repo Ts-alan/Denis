@@ -38,21 +38,24 @@ namespace Sciencecom.Models
      {
          [Required(ErrorMessage = "Введите значение ")]
          public string C_ContractFinancialManagement { get; set; }
+
          [DataType(DataType.Date)]
+         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
          public Nullable<System.DateTime> PlannedInstallationDate { get; set; }
 
          [DataType(DataType.Date)]
+         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
          public Nullable<System.DateTime> RevisionDate { get; set; }
 
          [Required(ErrorMessage = "Введите значение ")]
          public string C_PassportAdvertising { get; set; }
 
          [DataType(DataType.Date)]
-
+         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
          public Nullable<System.DateTime> DateOfActualInstallation { get; set; }
 
          [DataType(DataType.Date)]
-   
+         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
          public Nullable<System.DateTime> DateDismantling { get; set; }
         
         public string Status { get; set; }
@@ -61,10 +64,11 @@ namespace Sciencecom.Models
         public Nullable<float> Height { get; set; }
 
         [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
          public Nullable<System.DateTime> DateOfReceiptOfTheApplication { get; set; }
 
         [DataType(DataType.Date)]
-
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public Nullable<System.DateTime> DateOfTakenPassport { get; set; }
      
         public Nullable<float> Breadth { get; set; }
@@ -92,10 +96,12 @@ namespace Sciencecom.Models
 
         [DataType(DataType.Date)]
         [Required(ErrorMessage = "Введите значение")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public Nullable<System.DateTime> StartDate { get; set; }
         
        [Required(ErrorMessage = "Введите значение")]
        [DataType(DataType.Date)]
+       [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
        public Nullable<System.DateTime> EndDate { get; set; }
  
        [Required(ErrorMessage = "Введите значение ")]

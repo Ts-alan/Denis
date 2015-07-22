@@ -6,32 +6,43 @@
 @using ModelBinderDictionary = System.Web.ModelBinding.ModelBinderDictionary
 @model  Sciencecom.Models.AdvertisingStructure
 @{
-    ViewBag.Title = "CreateBilboard";
+    var i = 0;
+    ViewBag.Title = "EditAdvertisingStructure";
     //Собственник конструкциии
-    var owners =new SciencecomEntities().Owners.ToList();
-    owners.Insert(0, null);
-    
-   //Вид
-    var ListTypeAdvertising = new SciencecomEntities().TypeOfAdvertisingStructures.ToList();
-    var ListTypeAdvertisingSelected = Model.TypeOfAdvertisingStructure.id;
-    ListTypeAdvertising.Insert(0,null);
-  
+    var owners = new SciencecomEntities().Owners.ToList();
 
+    //Вид
+    var ListTypeAdvertising = new SciencecomEntities().TypeOfAdvertisingStructures.ToList();
+
+    //ListTypeAdvertising.Insert(0,null);
+    
+    //Сторона
+    //var Sides = new SciencecomEntities().Sides.Where(a).ToList();
 
     //Элемент улично-дорожной сети
     var ListTypeElementOfTheRoadNetworkName = new SciencecomEntities().TheElementOfTheRoadNetworks.Select(a => new { id = a.id, Value = a.TheElementOfTheRoadNetworkName }).ToList();
-    ListTypeElementOfTheRoadNetworkName.Insert(0, null);
 
     //Статус
-    var Status = new SciencecomEntities().Status.Select(a => new { id = a.id, Value = a.NameStatus }).ToList();
+    var Status = new SciencecomEntities().Status.OrderBy(x => x.OrderByStatus).Select(a => new { id = a.id, Value = a.NameStatus }).ToList();
     Status.Insert(0, null);
+
+    //Населенный пункт выпадающий список
+    var Locality = new SciencecomEntities().Localities.ToList();
+
+    //Направление стороны
+    var DirectionSide = new SciencecomEntities().DirectionSides.OrderBy(x => x.OrderBY).ToList();
+    //Индификация поверхности
+    var IdentificationSide = new SciencecomEntities().Identifications.ToList();
+    //IdentificationSide.Insert(0, null);
+    //Идентификационный номер
+    var PropertyLocation = new SciencecomEntities().PropertyLocations.ToList();
 
 }
 <script type="text/javascript">
     var i = 0;
 
     $(document).ready(function () {
-        // добавление на карту обьектаиз инпутов при загрузке
+
         myPlacemark = new ymaps.Placemark([$("#Height").val(), $("#Breadth").val()],
        {},
        {
@@ -141,55 +152,73 @@
     function Increment() {
         return i++;
     }
+
 </script>
 <h3> ДОБАВИТЬ РЕКЛАМНУЮ КОНСТРУКЦИЮ</h3>
 
 @Scripts.Render("~/Content/Map")
-@using (Html.BeginForm("CreateAdvertisingDesign", "Data", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("CreateAdvertisingDesign", "Data", FormMethod.Post, new { enctype = "multipart/form-data", id = "test1" }))
 {
     <input type="hidden" name="Code" value="@ViewBag.Code">
     <h3> 1. Общие данные о рекламной конструкции</h3>
     @Html.AntiForgeryToken()
-    <div class="form-inline">
+    <div class="form-inline" style="margin-bottom: -10px">
         <hr />
 
-        <input type="hidden" id="CountSize" name="CountSize" value="">
+        <input type="hidden" id="CountSize" id="SizeOfCount" name="CountSize" value="">
         @Html.ValidationSummary(true)
         @Html.ValidationMessage("Error")
 
         <div class="form-group">
-            <label for="Owner">Собственник конструкции</label>
-            @Html.DropDownList("SelectOwner", new SelectList(owners, "Id", "Name", Model.Owner.Id))
+            <label for="Owner">Собственник </label>
+            @Html.DropDownListFor(a => a.Owner.Name, new SelectList(owners, "id", "Name"))
+            @Html.ValidationMessageFor(model => model.Owner_Id)
         </div>
 
         <div class="form-group">
             <label for="Locality">Вид</label>
-            @Html.DropDownList("TypeAdvertising", new SelectList(ListTypeAdvertising, "id", "Name", ListTypeAdvertisingSelected))
-            @*@Html.ValidationMessageFor(model => model.Sides.Single(a => a.Id == ViewBag.Code).Name)*@
+            @Html.DropDownListFor(a=>a.TypeOfAdvertisingStructure.Name, new SelectList(ListTypeAdvertising, "id", "Name"))
         </div>
 
         <div class="form-group">
             <label for="Status">Статус</label>
-            @Html.DropDownListFor(a => a.Status_Id, new SelectList(Status, "id", "Value"), Model.Status.id)
+            @Html.DropDownListFor(a => a.Status_Id, new SelectList(Status, "id", "Value", Status.ElementAt(4).id))
             @Html.ValidationMessageFor(model => model.Status_Id)
         </div>
 
         <div class="form-group">
             <label for="UniqueNumber">Идентификационный номер</label>
-            @Html.EditorFor(a=>a.UniqueNumber)
-            @*@Html.EditorFor(model => model.UniqueNumber)*@
+            <input class="text-box single-line" name="UniqueNumber" type="text" value="@ViewBag.UniqueNumber">
             @Html.ValidationMessageFor(model => model.UniqueNumber)
+        </div>
+        <br>
+
+    </div>
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label for="Owner">конструкции </label>
+        </div>
+    </div>
+    <div class="form-inline">
+        <div class="form-group">
+            <label for="PropertyLocation_id">Собственность места расположения </label>
+            @Html.DropDownListFor(a => a.PropertyLocation.NamePropertyLocation, new SelectList(PropertyLocation, "id", "NamePropertyLocation"))
+            @Html.ValidationMessageFor(model => model.PropertyLocation_id)
+        </div>
+
+        <div class="form-group">
+            <label for="Owner">Собственник места размещения</label>
+            @Html.EditorFor(model => model.OwnerPlacements)
         </div>
 
     </div>
-
     <h3> 2.Данные о месте расположения рекламной конструкции</h3>
 
     <div class="form-inline">
         <hr />
-        <div class="form-group">
+        <div class="form-group" style="margin-left: -15px">
             <label for="Locality">Нас. пункт</label>
-            @Html.EditorFor(model => model.Locality)
+            @Html.DropDownListFor(a => a.Locality_id, new SelectList(Locality, "id", "NameLocality"))
             @Html.ValidationMessageFor(model => model.Locality)
         </div>
 
@@ -227,7 +256,7 @@
             @Html.ValidationMessageFor(model => model.FromStreet)
         </div>
     </div>
-
+    <input type="button" id="MapSearch" value="Поиск на карте">
     <div class="form-inline">
         <hr />
         <div class="form-group" style="width: 600px; height: 500px" id="map"></div>
@@ -236,16 +265,15 @@
 
             <div>
                 <label for="Breadth">Широта </label>
-
-                @Html.EditorFor(a=>a.Breadth)
+                <input class="text-box single-line ui-autocomplete-input" data-val="true" data-val-required="Введите значение " type="text" name="Breadth" id="Breadth">
                 <span class="field-validation-valid" data-valmsg-for="Breadth" data-valmsg-replace="true"></span>
-                @Html.ValidationMessageFor(model => model.Breadth)
+
             </div>
 
             <div>
                 <label for="Height">Долгота</label>
-                @Html.EditorFor(a => a.Height)
-                <span class="field-validation-valid" data-valmsg-for="Height" data-valmsg-replace="true"></span>
+                <input type="text" name="Height" data-val="true" data-val-required="Введите значение " id="Height">
+
                 @Html.ValidationMessageFor(model => model.Height)
 
             </div>
@@ -289,13 +317,15 @@
 
         <div class="form-group">
             <label for="ScanPassport_1Sides">Скан паспорта (стор 1)</label>
-            <input type="file" name="ScanPassport_1Sides" accept="image/jpeg" data-val-required="Выберите файл для загрузки" /><br />
+            <input type="file" name="ScanPassport_1Sides" accept="image/jpeg" data-val="true" data-val-required="Выберите файл для загрузки" /><br />
+            <span class="field-validation-valid" data-valmsg-for="ScanPassport_1Sides" data-valmsg-replace="true"></span>
             @Html.Raw("Не более 1 МБ")
         </div>
 
         <div class="form-group">
             <label for="ScanPassport_2Sides">Скан паспорта (стор 2)</label>
-            <input type="file" name="ScanPassport_2Sides" accept="image/jpeg" data-val-required="Выберите файл для загрузки" /><br />
+            <input type="file" name="ScanPassport_2Sides" accept="image/jpeg" data-val="true" data-val-required="Выберите файл для загрузки" /><br />
+            <span class="field-validation-valid" data-valmsg-for="ScanPassport_2Sides" data-valmsg-replace="true"></span>
             @Html.Raw("Не более 1 МБ")
         </div>
 
@@ -336,11 +366,24 @@
 
     </div>
 
-    <div class="form-horizontal">
+    <div class="form-inline">
+
+        <div class="form-group">
+            <label for="CommentOwner">Подсветка</label>
+            @Html.DropDownListFor(a => a.Backlight, new SelectList(new[] { "", "Есть", "Нет" }))
+            @Html.ValidationMessageFor(model => model.Backlight)
+        </div>
+
+        <div class="form-group">
+            <label for="CommentOwner">Комментарий</label>
+            @Html.EditorFor(model => model.CommentOwner)
+        </div>
+
+    </div>
+    <div class="form-horizontal" style="margin-top: 18px">
         <div class="form-group">
             <label for="CountSizes">Количество сторон</label>
-            @*<input class="text-box single-line" id="CountSizes" name="CountSizes" type="text" data-val="true" data-val-required="Укажите кол-во сторон"/>*@
-            <select class="text-box single-line" id="CountSizes" onchange="SetCountSize()" name="CountSizes" type="text" data-val="true" data-val-required="Укажите кол-во сторон">
+            @*<select class="text-box single-line" id="CountSizes" onchange="SetCountSize()" name="CountSizes" type="text" data-val="true" data-val-required="Введите значение">
                 <option></option>
                 <option>1</option>
                 <option>2</option>
@@ -350,10 +393,10 @@
                 <option>6</option>
                 <option>7</option>
                 <option>8</option>
-            </select>
+            </select>*@
+            @Html.DropDownListFor(a => a.Sides, new SelectList(new[] { "", "1", "2", "3", "4", "5", "6", "7", "8" }),Model.Sides.Count.ToString())
             <span class="field-validation-validr" data-valmsg-for="CountSizes" data-valmsg-replace="true">
             </span>
-            @*<input type="button" value="Задать количество сторон" onclick="SetCountSize()" />*@
         </div>
     </div>
     <div id="InsertSide"></div>
@@ -375,32 +418,10 @@
 
     </div>
 
-    <div class="form-horizontal">
-        <div class="form-group">
-            <label for="PhotoController">Фотография</label>
-            <input type="file" name="PhotoController" accept="image/jpeg" data-val-required="Выберите файл для загрузки" /><br />
-            @Html.Raw("Не более 1 МБ")
-        </div>
-    </div>
-
-    @*<div class="form-group">
-            <div class="form-group">
-                @Html.Label("Сторона А", new { @class = "control-label col-md-2", style = "margin-left: 55px" })
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-10">
-                    <a href="#" id="AddButton1" style="color: #428bca; font-weight: bold;">+Добавить площадь</a>
-                </div>
-            </div>
-            <div id="InsertPartial1"></div>
-        </div>
-
-
-        <input type="button" value="Задать координаты" onclick="SetCoordinates()" />*@
+    <div id="InsertPhoto"></div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Добавить" class="btn btn-default" />
+            <input type="submit" value="Изменить" class="btn btn-default" />
         </div>
     </div>
 
@@ -408,3 +429,4 @@
 
 
 }
+
