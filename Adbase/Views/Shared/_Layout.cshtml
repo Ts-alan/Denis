@@ -19,40 +19,61 @@
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top" >
-        <div class="container">
-                <div class="navbar-header" style="margin-right: 10px">
-                    <img src="/Images/ONCLOUD logo site.png"/>
-                </div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        switch ('@HttpContext.Current.Request.Url.AbsolutePath') {
+            case '/Data/AdvertisingDesign':
+                $('[href="/Data/AdvertisingDesign"]').css('font-size', '18px');
+                $('.navbar-brand').css('font-size', '14px');
+                break;
+            case '/Map':
+                $('[href="/Map"]').css('font-size', '18px');
+                $('.navbar-brand').css('font-size', '14px');
+                break;
+            case '/Account/AdministrationPage':
+                $('[href="/Account/AdministrationPage"]').css('font-size', '18px');
+                $('.navbar-brand').css('font-size', '14px');
+                break;
+            default:
 
-                <div class="navbar-header" >
-                   
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
 
-                    <b><a class="navbar-brand" href="/">Главная страница <br/> AdBase</a></b>
-                </div>
-                <div class="navbar-collapse collapse">
-                    @if (ViewBag.MappingContent ?? true)
-                    {
-                        <ul class="nav navbar-nav">
-                            <li><a href="@Url.Action("AdvertisingDesign", "Data")">Таблица рекламных <br/>конструкций</a></li>
-                            <li><a href="@Url.Action("Index", "Map")">Карта рекламных <br/> конструкций</a></li>
-                            <li><a href="#">Отчёты</a></li>
-                            <li><a href="@Url.Action("AdministrationPage", "Account")">Администрирование</a></li>
-                        </ul>
-                    }
-                    @Html.Partial("_LoginPartial")
-                </div>
-            </div>
+        }
+    })
+</script>
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header" style="margin-right: 10px">
+            <img src="/Images/ONCLOUD logo site.png"/>
+        </div>
+
+        <div class="navbar-header">
+
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <b><a class="navbar-brand" href="/">Главная страница <br/> AdBase</a></b>
+        </div>
+        <div class="navbar-collapse collapse">
+            @if (ViewBag.MappingContent ?? true)
+            {
+                <ul class="nav navbar-nav">
+                    <li><a href="@Url.Action("AdvertisingDesign", "Data")">Таблица рекламных <br/>конструкций</a></li>
+                    <li><a href="@Url.Action("Index", "Map")">Карта рекламных <br/> конструкций</a></li>
+                    <li><a href="#">Отчёты</a></li>
+                    <li><a href="@Url.Action("AdministrationPage", "Account")">Администрирование</a></li>
+                </ul>
+            }
+            @Html.Partial("_LoginPartial")
+        </div>
     </div>
-    <div class="container body-content" style="margin-top: 12px">
-        @RenderBody()
-    </div>
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+</div>
+<div class="container body-content" style="margin-top: 12px">
+    @RenderBody()
+</div>
+@Scripts.Render("~/bundles/bootstrap")
+@RenderSection("scripts", required: false)
 </body>
 </html>
