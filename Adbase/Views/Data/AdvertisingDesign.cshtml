@@ -46,8 +46,10 @@
                 "Количество поверхностей", "№ договора с финансовым управлением",
                 "№ паспорта рекламы", "Паспорт выдан с", "Паспорт выдан по"
             ],
+            forceFit:false,
+            cmTemplate:{"resizable": false},
             colModel: [
-                { name: "Собственник_конструкции", width: 25, align: "center" },
+                { name: "Собственник_конструкции", width: 25, align: "center"},
                 { name: "Вид", width: 22, align: "center" },
                 { name: "Уникальный_номер", width: 23, align: "center" },
                 { name: "Статус", width: 23, align: "center" },
@@ -132,12 +134,13 @@
                 
                     $(element).tooltipsy({
                         alignTo: 'cursor',
-                        offset: [0, -120],
+                        offset: [0, -85],
                         hideEvent: 'focusout',
-                        content: '<button class="HideClass" hide=' + indx + ' style="padding: 10px;text-align: left">&#10037;<a href="/Map/Index/'+Showonthemap[indx]+'">Показать на карте</a></br>' +
-                            '&#10037;@Html.ActionLink("Показать данные о конструкции","","")</br>' +
-                            '&#10037;<a href="/Data/EditAdvertisingDesign/'+Showonthemap[indx]+'">Изменить данные о конструкции</a></br>' +
-                            '&#10037;@Html.ActionLink("Удалить конструкцию","","")</br>' +
+                        content: '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
+                            '+<a href="/Map/Index/'+Showonthemap[indx]+'">Показать на карте</a></br>' +
+                            '+@Html.ActionLink("Показать данные о конструкции","","")</br>' +
+                            '+<a href="/Data/EditAdvertisingDesign/'+Showonthemap[indx]+'">Изменить данные о конструкции</a></br>' +
+                            '+@Html.ActionLink("Удалить конструкцию","","")</br>' +
                             '</button>',
                         show: function (e, $el) {
                             $el.show(100);
@@ -165,7 +168,7 @@
 
     $("html").click(function () {
         var info = document.activeElement;
-        console.log(info.getAttribute("class"));
+     
         if (info.getAttribute("class") != "HideClass") {
             $('[hide=' + $SaveIdForHideTooltip + ']').parent().parent().hide();
 
@@ -208,7 +211,7 @@
     </div>*@
 
 
-    <table id="table" class="table-bordered" cellpadding="5">
+    <table id="table" class="table-bordered" cellpadding="5"  >
         <tr >
             <th>Собственник_конструкции</th>
             <th>Вид</th>
