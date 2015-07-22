@@ -60,7 +60,7 @@ namespace Sciencecom.Models
         
         public string Status { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Введите значение ")]
         public Nullable<float> Height { get; set; }
 
         [DataType(DataType.Date)]
@@ -70,6 +70,8 @@ namespace Sciencecom.Models
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public Nullable<System.DateTime> DateOfTakenPassport { get; set; }
+              
+         [Required(ErrorMessage = "Введите значение ")]
      
         public Nullable<float> Breadth { get; set; }
 

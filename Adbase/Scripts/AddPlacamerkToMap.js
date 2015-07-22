@@ -45,6 +45,13 @@
         myMap.controls.add('typeSelector');
 
 
+        // нанесение обьекта на карту при загрузке
+        myPlacemark = new ymaps.Placemark([$("#Height").val(), $("#Breadth").val()],
+       {},
+       {
+           draggable: true
+       });
+        myMap.geoObjects.add(myPlacemark);
 
         //присвоение  коодинат при клике  
         myMap.events.add('click', function(e) {
@@ -59,6 +66,7 @@
                 havePlacemark = true;
             }
 
+         
 
             var str = String(coords[0].toPrecision(6).replace('.', ','));
             $("#Breadth").val(str);
@@ -68,7 +76,7 @@
             dragend();
         });
 
-        //присвоение координат при задание координат в инпутах
+
 
     }
 
