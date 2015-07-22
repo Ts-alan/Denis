@@ -1432,7 +1432,7 @@ namespace Sciencecom.Controllers
 
         [Authorize]
         [HttpPost]
-        public ActionResult CreateAdvertisingDesign(AdvertisingStructure Structures, [ModelBinder(typeof(CustomModelBinderForSide))]List<Side> Sides, [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces, HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides, List<HttpPostedFileBase> SeveralPhoto, int CountSize = 1)
+        public ActionResult CreateAdvertisingDesign( AdvertisingStructure Structures, [ModelBinder(typeof(CustomModelBinderForSide))]List<Side> Sides, [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces, HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides, List<HttpPostedFileBase> SeveralPhoto, int CountSize = 1)
         {
 
 

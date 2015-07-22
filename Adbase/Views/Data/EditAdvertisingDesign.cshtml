@@ -43,8 +43,14 @@
     var i = 0;
 
     $(document).ready(function () {
-        //нормально работает ширина высота,убираем валидацию
-        $('[data-val-number="Значением поля Breadth должно быть число."]').removeAttr("data-val-number");
+        //нормально работает ширина высота,убираем ненавязчивую валидацию 
+        $('[data-val-number="Значением поля Breadth должно быть число."]').rules('add', {
+            number: false
+        });
+        $('[data-val-number="Значением поля Height должно быть число."]').rules('add', {
+            number: false
+        });
+
         //выпадающий список на согласование
         $("[name=OnAgreement]").change(function () {
             var selectIndex = $("[name=OnAgreement] option:selected").val();
@@ -262,7 +268,6 @@
             <div>
                 <label for="Breadth">Широта </label>
                 @Html.EditorFor(a => a.Breadth)
-                @*<span class="field-validation-valid" data-valmsg-for="Breadth" data-valmsg-replace="true"></span>*@
                 @Html.ValidationMessageFor(model => model.Breadth)
 
             </div>
@@ -270,7 +275,6 @@
             <div>
                 <label for="Height">Долгота</label>
                 @Html.EditorFor(a => a.Height)
-                @*<span class="field-validation-valid" data-valmsg-for="Height" data-valmsg-replace="true"></span>*@
                 @Html.ValidationMessageFor(model => model.Height)
 
             </div>

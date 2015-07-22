@@ -52,6 +52,7 @@
            draggable: true
        });
         myMap.geoObjects.add(myPlacemark);
+        //dragend();
 
         //присвоение  коодинат при клике  
         myMap.events.add('click', function(e) {

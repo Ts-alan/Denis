@@ -56,4 +56,21 @@ namespace Sciencecom.Models
             return ListSide;
         }
     }
+
+    //public class CustomModelBinderForNormalcoordinates : DefaultModelBinder
+    //{
+    //    public override object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
+    //    {
+    //        var request = controllerContext.HttpContext.Request;
+
+
+    //        string Height = request.Form.Get("Height");
+    //        string Breadth = request.Form.Get("Breadth");
+    //        request.Form.Remove("Breadth");
+    //        request.Form.Remove("Height");
+    //        request.Form.Set("Breadth", Breadth);
+    //        request.Form.Set("Height", Height);
+    //        return base.BindModel(controllerContext,bindingContext);
+    //    }
+    //}
 }
