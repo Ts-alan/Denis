@@ -3,8 +3,9 @@
     var myMap;
     var myPlacemark;
     var havePlacemark = false;
+    var isGreateAdvertisingDesign = true;
     ymaps.ready(init);
-
+   
     //присвоение коодинат при перетаскивание метки 
     function dragend() {
 
@@ -44,40 +45,39 @@
         myMap.controls.add('searchControl');
         myMap.controls.add('typeSelector');
 
-
         // нанесение обьекта на карту при загрузке
-        myPlacemark = new ymaps.Placemark([$("#Height").val(), $("#Breadth").val()],
+        myPlacemark = new ymaps.Placemark([$("#Breadth").val().replace(',', '.'), $("#Height").val().replace(',', '.')],
        {},
        {
            draggable: true
        });
         myMap.geoObjects.add(myPlacemark);
-        //dragend();
+        dragend();
 
-        //присвоение  коодинат при клике  
-        myMap.events.add('click', function(e) {
-            if (!havePlacemark) {
-                var coords = e.get('coordPosition');
-                myPlacemark = new ymaps.Placemark([coords[0].toPrecision(6), coords[1].toPrecision(6)],
-                {},
-                {
-                    draggable: true
-                });
-                myMap.geoObjects.add(myPlacemark);
-                havePlacemark = true;
-            }
-
-         
-
-            var str = String(coords[0].toPrecision(6).replace('.', ','));
-            $("#Breadth").val(str);
-            str = String(coords[1].toPrecision(6).replace('.', ','));
-            $("#Height").val(str);
-            
-            dragend();
-        });
+        if (isGreateAdvertisingDesign) {
+            //присвоение  коодинат при клике  
+            myMap.events.add('click', function(e) {
+                if (!havePlacemark) {
+                    var coords = e.get('coordPosition');
+                    myPlacemark = new ymaps.Placemark([coords[0].toPrecision(6), coords[1].toPrecision(6)],
+                    {},
+                    {
+                        draggable: true
+                    });
+                    myMap.geoObjects.add(myPlacemark);
+                    havePlacemark = true;
+                }
 
 
+                var str = String(coords[0].toPrecision(6).replace('.', ','));
+                $("#Breadth").val(str);
+                str = String(coords[1].toPrecision(6).replace('.', ','));
+                $("#Height").val(str);
+
+                dragend();
+            });
+
+        }
 
     }
 

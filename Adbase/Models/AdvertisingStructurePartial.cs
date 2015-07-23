@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Security.Cryptography.Pkcs;
 using System.Web;
 using System.Web.Mvc;
 
@@ -117,5 +118,14 @@ namespace Sciencecom.Models
 
 
     }
+    //для редактирования
+    public class CompositeModelForEdit
+    {
+        public AdvertisingStructure Structure;
 
+        public IEnumerable<Side> Sides;
+
+        public IEnumerable<Surface> Surfaces;
+
+    } 
 }
