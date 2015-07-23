@@ -21,7 +21,10 @@ namespace Sciencecom.Models
             for (int i=0;i<AllKeysHeight.Count();i++)
             {
 
-                ListSurface.Add(new Surface() { Height = Int32.Parse(request.Form.Get(AllKeysHeight[i])), Space = Int32.Parse(request.Form.Get(AllKeysWidth[i])), Width = Int32.Parse(request.Form.Get(AllKeysSpace[i])), SideOfSurface = request.Form.Get(AllKeysSideOfSurface[i]) });
+                ListSurface.Add(new Surface() { Height = Int32.Parse(request.Form.Get(AllKeysHeight[i])), 
+                    Space = Int32.Parse(request.Form.Get(AllKeysSpace[i])), 
+                    Width = Int32.Parse(request.Form.Get(AllKeysWidth[i])), 
+                    SideOfSurface = request.Form.Get(AllKeysSideOfSurface[i]) });
 
             }
             return ListSurface;

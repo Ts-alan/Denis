@@ -38,6 +38,8 @@
           <Property Name="Backlight" Type="nvarchar(max)" />
           <Property Name="PropertyLocation_id" Type="uniqueidentifier" />
           <Property Name="OwnerPlacements" Type="nvarchar(max)" />
+          <Property Name="TheDateOfTheContract" Type="datetime" />
+          <Property Name="ViewBad_Id" Type="uniqueidentifier" />
         </EntityType>
         <EntityType Name="DirectionSide">
           <Key>
@@ -215,6 +217,14 @@ warning 6002: The table/view 'D:\PROJECT\ADBASE\ADBASE\APP_DATA\SCIENCECOM.MDF.d
           <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="ViewBid">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="OrderBy" Type="int" Nullable="false" />
+        </EntityType>
         <Association Name="FK_AdvertisingStructures_Locality">
           <End Role="Locality" Type="Self.Locality" Multiplicity="0..1" />
           <End Role="AdvertisingStructures" Type="Self.AdvertisingStructures" Multiplicity="*" />
@@ -272,6 +282,18 @@ warning 6002: The table/view 'D:\PROJECT\ADBASE\ADBASE\APP_DATA\SCIENCECOM.MDF.d
             </Principal>
             <Dependent Role="AdvertisingStructures">
               <PropertyRef Name="Code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AdvertisingStructures_ViewBid">
+          <End Role="ViewBid" Type="Self.ViewBid" Multiplicity="0..1" />
+          <End Role="AdvertisingStructures" Type="Self.AdvertisingStructures" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ViewBid">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="AdvertisingStructures">
+              <PropertyRef Name="ViewBad_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -446,6 +468,7 @@ warning 6002: The table/view 'D:\PROJECT\ADBASE\ADBASE\APP_DATA\SCIENCECOM.MDF.d
           <EntitySet Name="TheElementOfTheRoadNetwork" EntityType="Self.TheElementOfTheRoadNetwork" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TopicForSocialAdvertising" EntityType="Self.TopicForSocialAdvertising" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TypeOfAdvertisingStructures" EntityType="Self.TypeOfAdvertisingStructures" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ViewBid" EntityType="Self.ViewBid" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Streets" EntityType="Self.Streets" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [Streets].[id] AS [id], 
@@ -471,6 +494,10 @@ warning 6002: The table/view 'D:\PROJECT\ADBASE\ADBASE\APP_DATA\SCIENCECOM.MDF.d
           </AssociationSet>
           <AssociationSet Name="FK_AdvertisingStructures_TypeOfAdvertisingStructures" Association="Self.FK_AdvertisingStructures_TypeOfAdvertisingStructures">
             <End Role="TypeOfAdvertisingStructures" EntitySet="TypeOfAdvertisingStructures" />
+            <End Role="AdvertisingStructures" EntitySet="AdvertisingStructures" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AdvertisingStructures_ViewBid" Association="Self.FK_AdvertisingStructures_ViewBid">
+            <End Role="ViewBid" EntitySet="ViewBid" />
             <End Role="AdvertisingStructures" EntitySet="AdvertisingStructures" />
           </AssociationSet>
           <AssociationSet Name="FK_Billboards1_Owners" Association="Self.FK_Billboards1_Owners">
@@ -629,6 +656,11 @@ warning 6002: The table/view 'D:\PROJECT\ADBASE\ADBASE\APP_DATA\SCIENCECOM.MDF.d
             <End Role="PropertyLocation" EntitySet="PropertyLocations" />
             <End Role="AdvertisingStructure" EntitySet="AdvertisingStructures" />
           </AssociationSet>
+          <EntitySet Name="ViewBids" EntityType="SciencecomModel.ViewBid" />
+          <AssociationSet Name="FK_AdvertisingStructures_ViewBid" Association="SciencecomModel.FK_AdvertisingStructures_ViewBid">
+            <End Role="ViewBid" EntitySet="ViewBids" />
+            <End Role="AdvertisingStructure" EntitySet="AdvertisingStructures" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -681,6 +713,9 @@ warning 6002: The table/view 'D:\PROJECT\ADBASE\ADBASE\APP_DATA\SCIENCECOM.MDF.d
           <Property Name="PropertyLocation_id" Type="Guid" />
           <Property Name="OwnerPlacements" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="PropertyLocation" Relationship="SciencecomModel.FK_AdvertisingStructures_PropertyLocation" FromRole="AdvertisingStructure" ToRole="PropertyLocation" />
+          <Property Name="TheDateOfTheContract" Type="DateTime" Precision="3" />
+          <Property Name="ViewBad_Id" Type="Guid" />
+          <NavigationProperty Name="ViewBid" Relationship="SciencecomModel.FK_AdvertisingStructures_ViewBid" FromRole="AdvertisingStructure" ToRole="ViewBid" />
         </EntityType>
         <EntityType Name="DirectionSide">
           <Key>
@@ -1059,6 +1094,27 @@ warning 6002: The table/view 'D:\PROJECT\ADBASE\ADBASE\APP_DATA\SCIENCECOM.MDF.d
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ViewBid">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OrderBy" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AdvertisingStructures" Relationship="SciencecomModel.FK_AdvertisingStructures_ViewBid" FromRole="ViewBid" ToRole="AdvertisingStructure" />
+        </EntityType>
+        <Association Name="FK_AdvertisingStructures_ViewBid">
+          <End Type="SciencecomModel.ViewBid" Role="ViewBid" Multiplicity="0..1" />
+          <End Type="SciencecomModel.AdvertisingStructure" Role="AdvertisingStructure" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ViewBid">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="AdvertisingStructure">
+              <PropertyRef Name="ViewBad_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1092,6 +1148,8 @@ warning 6002: The table/view 'D:\PROJECT\ADBASE\ADBASE\APP_DATA\SCIENCECOM.MDF.d
           <EntitySetMapping Name="AdvertisingStructures">
             <EntityTypeMapping TypeName="SciencecomModel.AdvertisingStructure">
               <MappingFragment StoreEntitySet="AdvertisingStructures">
+                <ScalarProperty Name="ViewBad_Id" ColumnName="ViewBad_Id" />
+                <ScalarProperty Name="TheDateOfTheContract" ColumnName="TheDateOfTheContract" />
                 <ScalarProperty Name="OwnerPlacements" ColumnName="OwnerPlacements" />
                 <ScalarProperty Name="PropertyLocation_id" ColumnName="PropertyLocation_id" />
                 <ScalarProperty Name="Backlight" ColumnName="Backlight" />
@@ -1312,6 +1370,15 @@ warning 6002: The table/view 'D:\PROJECT\ADBASE\ADBASE\APP_DATA\SCIENCECOM.MDF.d
               <MappingFragment StoreEntitySet="PropertyLocation">
                 <ScalarProperty Name="OrderBY" ColumnName="OrderBY" />
                 <ScalarProperty Name="NamePropertyLocation" ColumnName="NamePropertyLocation" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ViewBids">
+            <EntityTypeMapping TypeName="SciencecomModel.ViewBid">
+              <MappingFragment StoreEntitySet="ViewBid">
+                <ScalarProperty Name="OrderBy" ColumnName="OrderBy" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

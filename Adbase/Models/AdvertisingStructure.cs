@@ -48,6 +48,8 @@ namespace Sciencecom.Models
         public string Backlight { get; set; }
         public Nullable<System.Guid> PropertyLocation_id { get; set; }
         public string OwnerPlacements { get; set; }
+        public Nullable<System.DateTime> TheDateOfTheContract { get; set; }
+        public Nullable<System.Guid> ViewBad_Id { get; set; }
     
         public virtual Locality Locality { get; set; }
         public virtual Status Status { get; set; }
@@ -56,5 +58,6 @@ namespace Sciencecom.Models
         public virtual Owner Owner { get; set; }
         public virtual ICollection<Side> Sides { get; set; }
         public virtual PropertyLocation PropertyLocation { get; set; }
+        public virtual ViewBid ViewBid { get; set; }
     }
 }

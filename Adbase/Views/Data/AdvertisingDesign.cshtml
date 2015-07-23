@@ -15,6 +15,7 @@
     ApplicationUser user = um.FindByName(User.Identity.GetUserName());
     string role = user.Roles.Select(m => m.Role.Name).First();
     int SurfaceCOunt = 0;
+    int SurfaceSumm = 0;
     int id = 1;
 }
 
@@ -44,7 +45,7 @@
                 "Нас. пункт", "Улица 1", "Дом", "Улица 2", "Со стороны улицы",
                 "Элемент улично-дорожной сети", "Количество сторон",
                 "Количество поверхностей", "№ договора с финансовым управлением",
-                "№ паспорта рекламы", "Паспорт выдан с", "Паспорт выдан по"
+                "№ паспорта рекламы", "Паспорт выдан с", "Паспорт выдан по","Площадьконструкции"
             ],
             forceFit:false,
             cmTemplate:{"resizable": false,sortable:false},
@@ -64,7 +65,8 @@
                 { name: "№_договора_с_финансовым_управлением", width: 25, align: "center" },
                 { name: "№_паспорта_рекламы", width: 20, align: "center" },
                 { name: "Паспорт_выдан_с", width: 30, align: "center" },
-                { name: "Паспорт_выдан_по", width: 30, align: "center" }
+                { name: "Паспорт_выдан_по", width: 30, align: "center" },
+               { name: "Площадь_конструкции", width: 30, align: "center" }
             ]
         });
 
@@ -229,12 +231,18 @@
             <th>№_паспорта_рекламы</th>
             <th> Паспорт_выдан_с</th>
             <th> Паспорт_выдан_по</th>
+            <th> Площадь_конструкции</th>
         </tr>
         @foreach (var i in Model)
         {
             foreach (var side in i.Sides)
             {
                 SurfaceCOunt += side.Surfaces.Count;
+                foreach (var Surface in side.Surfaces)
+                {
+                    SurfaceSumm +=  Surface.Space;
+                }
+                
             }
             <tr title="test" >
                 <td>@i.Owner.Name </td>
@@ -253,9 +261,10 @@
                 <td>@i.C_PassportAdvertising</td>
                 <td>@i.StartDate.Value.ToString().Substring(0, 10)</td>
                 <td>@i.EndDate.Value.ToString().Substring(0, 10)</td>
-
+                <td>@SurfaceSumm</td>
            </tr>
             SurfaceCOunt = 0;
+            SurfaceSumm = 0;
         }
 
     </table>

@@ -1432,7 +1432,7 @@ namespace Sciencecom.Controllers
 
         [Authorize]
         [HttpPost]
-        public ActionResult CreateAdvertisingDesign( AdvertisingStructure Structures, [ModelBinder(typeof(CustomModelBinderForSide))]List<Side> Sides, [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces, HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides, List<HttpPostedFileBase> SeveralPhoto, int CountSize = 1)
+        public ActionResult CreateAdvertisingDesign(AdvertisingStructure Structures, [ModelBinder(typeof(CustomModelBinderForSide))]List<Side> Sides, [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces, HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides, HttpPostedFileBase Scan1SidesWithFinancialManagement, List<HttpPostedFileBase> SeveralPhoto, int CountSize = 1)
         {
 
 
@@ -1465,7 +1465,13 @@ namespace Sciencecom.Controllers
             context.Surfaces.AddRange(ListSurface);
 
             context.SaveChanges();
- 
+            if (Scan1SidesWithFinancialManagement != null)
+            {
+                string src = "~/Images/Scan1SidesWithFinancialManagement/" + Structures.Id_show + "FinancialManagement.jpg";
+                string path = Server.MapPath(src);
+                ScanPassport_1Sides.SaveAs(path);
+            }
+
             if (ScanPassport_1Sides != null)
             {
                 string src = "~/Images/ScanPassport_1Sides/" + Structures.Id_show + "passport.jpg";

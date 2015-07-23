@@ -177,18 +177,23 @@
     <Compile Include="Models\AdvertisingStructure.cs">
       <DependentUpon>ContructionsModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AdvertisingStructurePartial.cs" />
     <Compile Include="Models\Constructions.cs" />
-    <Compile Include="Models\ContructionsModel.Context.cs">
+    <Compile Include="Models\ContructionsModel.Context1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ContructionsModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ContructionsModel.cs">
+    <Compile Include="Models\ContructionsModel.cs" />
+    <Compile Include="Models\ContructionsModel.Designer.cs">
+      <DependentUpon>ContructionsModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ContructionsModel1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ContructionsModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ContructionsModel.Designer.cs">
+    <Compile Include="Models\ContructionsModel1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ContructionsModel.edmx</DependentUpon>
@@ -215,6 +220,7 @@
       <DependentUpon>ContructionsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MapJsonModels\BilboardConstructionJsonModel.cs" />
+    <Compile Include="Models\MapJsonModels\BillBoardJsonModel.cs" />
     <Compile Include="Models\MapJsonModels\IllegalConstructionJsonModel.cs" />
     <Compile Include="Models\MapJsonModels\LightConstructionJsonModel.cs" />
     <Compile Include="Models\MapJsonModels\MetalConstructionJsonModel.cs" />
@@ -226,7 +232,6 @@
       <DependentUpon>ContructionsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\OwnerPartial.cs" />
-    <Compile Include="Models\AdvertisingStructurePartial.cs" />
     <Compile Include="Models\Patterns\GenericRepository.cs" />
     <Compile Include="Models\Patterns\UnitOfWork.cs" />
     <Compile Include="Models\PropertyLocation.cs">
@@ -287,20 +292,23 @@
     <Compile Include="Models\Users\DatesOfRole.cs">
       <DependentUpon>UsersModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Users\UsersModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>UsersModel.Context.tt</DependentUpon>
+    <Compile Include="Models\Users\UsersModel.Context.cs" />
+    <Compile Include="Models\Users\UsersModel.cs" />
+    <Compile Include="Models\Users\UsersModel.Designer.cs">
+      <DependentUpon>UsersModel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Users\UsersModel.cs">
+    <Compile Include="Models\Users\UsersModel1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>UsersModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Users\UsersModel.Designer.cs">
+    <Compile Include="Models\Users\UsersModel1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>UsersModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ViewBid.cs">
+      <DependentUpon>ContructionsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -367,13 +375,51 @@
     <Content Include="Images\bx_loader.gif" />
     <Content Include="Images\controls.png" />
     <Content Include="Images\ONCLOUD logo site.png" />
+    <Content Include="ClassDiagram1.cd" />
+    <Content Include="ClassDiagram2.cd" />
+    <Fakes Include="Fakes\Antlr3.Runtime.fakes" />
     <Content Include="Models\ContructionsModel.edmx.sql" />
+    <Content Include="Models\Users\UsersModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>UsersModel.Context1.cs</LastGenOutput>
+    </Content>
+    <EntityDeploy Include="Models\Users\UsersModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>UsersModel1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Users\UsersModel.edmx.diagram">
+      <DependentUpon>UsersModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\Users\UsersModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>UsersModel1.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\ContructionsModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ContructionsModel.Context1.cs</LastGenOutput>
+    </Content>
+    <EntityDeploy Include="Models\ContructionsModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ContructionsModel1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\ContructionsModel.edmx.diagram">
+      <DependentUpon>ContructionsModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\ContructionsModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ContructionsModel1.cs</LastGenOutput>
+    </Content>
+    <None Include="Properties\PublishProfiles\adbase.by.pubxml" />
+    <None Include="Properties\PublishProfiles\ScincecomPublish.pubxml" />
+    <None Include="Properties\PublishProfiles\ScomBeta.pubxml" />
+    <Content Include="Content\messi.css" />
     <Content Include="Scripts\AddPlacamerkToMap.js" />
     <Content Include="Scripts\AutocomlpleteOnMap.js" />
     <Content Include="Scripts\Autocomplete.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\ChangeDropDown.js" />
+    <Content Include="Scripts\datetimepicker\jquery.datetimepicker.js" />
     <Content Include="Scripts\demos\accordion\collapsible.html" />
     <Content Include="Scripts\demos\accordion\custom-icons.html" />
     <Content Include="Scripts\demos\accordion\default.html" />
@@ -723,6 +769,8 @@
     <Content Include="Scripts\jqGrid\plugins\jquery.contextmenu.js" />
     <Content Include="Scripts\jqGrid\plugins\jquery.searchFilter.js" />
     <Content Include="Scripts\jqGrid\plugins\jquery.tablednd.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.11.3.js" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
@@ -1303,52 +1351,6 @@
     <Content Include="Scripts\ui\minified\jquery.ui.tabs.min.js" />
     <Content Include="Scripts\ui\minified\jquery.ui.widget.min.js" />
     <None Include="Scripts\_references.js" />
-    <EntityDeploy Include="Models\ContructionsModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ContructionsModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\ContructionsModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ContructionsModel.edmx</DependentUpon>
-      <LastGenOutput>ContructionsModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\ContructionsModel.edmx.diagram">
-      <DependentUpon>ContructionsModel.edmx</DependentUpon>
-    </Content>
-    <Content Include="Models\ContructionsModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ContructionsModel.edmx</DependentUpon>
-      <LastGenOutput>ContructionsModel.cs</LastGenOutput>
-    </Content>
-    <EntityDeploy Include="Models\Users\UsersModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>UsersModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Users\UsersModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>UsersModel.edmx</DependentUpon>
-      <LastGenOutput>UsersModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\Users\UsersModel.edmx.diagram">
-      <DependentUpon>UsersModel.edmx</DependentUpon>
-    </Content>
-    <Content Include="Models\Users\UsersModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>UsersModel.edmx</DependentUpon>
-      <LastGenOutput>UsersModel.cs</LastGenOutput>
-    </Content>
-    <Content Include="ClassDiagram1.cd" />
-    <Content Include="ClassDiagram2.cd" />
-    <Fakes Include="Fakes\Antlr3.Runtime.fakes" />
-    <None Include="Properties\PublishProfiles\adbase.by.pubxml" />
-    <None Include="Properties\PublishProfiles\ScincecomPublish.pubxml" />
-    <None Include="Properties\PublishProfiles\ScomBeta.pubxml" />
-    <Content Include="Scripts\demos\autocomplete\search.php" />
-    <Content Include="Scripts\demos\tabs\ajax\content3-slow.php" />
-    <Content Include="Scripts\demos\tabs\ajax\content4-broken.php" />
-    <Content Include="Scripts\jqGrid\minified\jquery.jqGrid.min.js.map" />
-    <Content Include="Scripts\jquery-2.1.1.min.map" />
-    <Content Include="Content\messi.css" />
     <Content Include="template.xml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -1412,11 +1414,17 @@
     <Content Include="Views\Data\DeleteBilboard.cshtml" />
     <Content Include="Views\Data\EditAdvertisingDesign.cshtml" />
     <Content Include="Views\Account\AdministrationPage.cshtml" />
+    <Content Include="Scripts\demos\autocomplete\search.php" />
+    <Content Include="Scripts\demos\tabs\ajax\content3-slow.php" />
+    <Content Include="Scripts\demos\tabs\ajax\content4-broken.php" />
+    <Content Include="Scripts\jqGrid\minified\jquery.jqGrid.min.js.map" />
+    <Content Include="Scripts\jquery-2.1.1.min.map" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Start\App_Data\" />
     <Folder Include="Images\Patterns\" />
     <Folder Include="Images\PhotoController\" />
+    <Folder Include="Images\Scan1SidesWithFinancialManagement\" />
     <Folder Include="Images\ScanPassport_1Sides\" />
     <Folder Include="Images\ScanPassport_2Sides\" />
     <Folder Include="Images\Sides\" />
