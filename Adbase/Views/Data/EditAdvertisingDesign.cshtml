@@ -4,7 +4,7 @@
 @using Newtonsoft.Json
 @using Sciencecom.Models
 @using ModelBinderDictionary = System.Web.ModelBinding.ModelBinderDictionary
-@model  Sciencecom.Models.AdvertisingStructure
+@model  CompositeModelForEdit
 @{
     var i = 0;
     ViewBag.Title = "EditAdvertisingStructure";
@@ -242,25 +242,25 @@
 
         <div class="form-group">
             <label for="Owner">Собственник </label>
-            @Html.DropDownListFor(a => a.Owner.Id, new SelectList(owners, "id", "Name"))
-            @Html.ValidationMessageFor(model => model.Owner_Id)
+            @Html.DropDownListFor(a => a.Structure.Owner.Id, new SelectList(owners, "id", "Name"))
+            @Html.ValidationMessageFor(model => model.Structure.Owner_Id)
         </div>
 
         <div class="form-group">
             <label for="Locality">Вид</label>
-            @Html.DropDownListFor(a=>a.TypeOfAdvertisingStructure.Name, new SelectList(ListTypeAdvertising, "id", "Name"))
+            @Html.DropDownListFor(a => a.Structure.TypeOfAdvertisingStructure.Name, new SelectList(ListTypeAdvertising, "id", "Name"))
         </div>
 
         <div class="form-group">
             <label for="Status">Статус</label>
-            @Html.DropDownListFor(a => a.Status_Id, new SelectList(Status, "id", "Value"))
-            @Html.ValidationMessageFor(model => model.Status_Id)
+            @Html.DropDownListFor(a => a.Structure.Status_Id, new SelectList(Status, "id", "Value"))
+            @Html.ValidationMessageFor(model => model.Structure.Status_Id)
         </div>
 
         <div class="form-group">
             <label for="UniqueNumber">Идентификационный номер</label>
             <input class="text-box single-line" name="UniqueNumber" type="text" value="@ViewBag.UniqueNumber">
-            @Html.ValidationMessageFor(model => model.UniqueNumber)
+            @Html.ValidationMessageFor(model => model.Structure.UniqueNumber)
         </div>
         <br>
 
@@ -273,13 +273,13 @@
     <div class="form-inline">
         <div class="form-group">
             <label for="PropertyLocation_id">Собственность места расположения </label>
-            @Html.DropDownListFor(a => a.PropertyLocation.NamePropertyLocation, new SelectList(PropertyLocation, "id", "NamePropertyLocation"))
-            @Html.ValidationMessageFor(model => model.PropertyLocation_id)
+            @Html.DropDownListFor(a => a.Structure.PropertyLocation.NamePropertyLocation, new SelectList(PropertyLocation, "id", "NamePropertyLocation"))
+            @Html.ValidationMessageFor(model => model.Structure.PropertyLocation_id)
         </div>
 
         <div class="form-group">
             <label for="Owner">Собственник места размещения</label>
-            @Html.EditorFor(model => model.OwnerPlacements)
+            @Html.EditorFor(model => model.Structure.OwnerPlacements)
         </div>
 
     </div>
@@ -289,15 +289,15 @@
         <hr />
         <div class="form-group" style="margin-left: -15px">
             <label for="Locality">Нас. пункт</label>
-            @Html.DropDownListFor(a => a.Locality_id, new SelectList(Locality, "id", "NameLocality"))
-            @Html.ValidationMessageFor(model => model.Locality)
+            @Html.DropDownListFor(a => a.Structure.Locality_id, new SelectList(Locality, "id", "NameLocality"))
+            @Html.ValidationMessageFor(model => model.Structure.Locality)
         </div>
 
 
         <div class="form-group" style="margin-left: 200px">
             <label for="TheElementOfTheRoadNetwork">Элемент улично-дорожной сети</label>
-            @Html.DropDownListFor(a => a.TheElementOfTheRoadNetwork_id, new SelectList(ListTypeElementOfTheRoadNetworkName, "id", "Value"), "")
-            @Html.ValidationMessageFor(a => a.TheElementOfTheRoadNetwork_id)
+            @Html.DropDownListFor(a => a.Structure.TheElementOfTheRoadNetwork_id, new SelectList(ListTypeElementOfTheRoadNetworkName, "id", "Value"), "")
+            @Html.ValidationMessageFor(a => a.Structure.TheElementOfTheRoadNetwork_id)
         </div>
     </div>
 
@@ -305,26 +305,26 @@
         <hr />
         <div class="form-group">
             <label for="Street1">Улица 1</label>
-            @Html.EditorFor(model => model.Street1)
-            @Html.ValidationMessageFor(model => model.Street1)
+            @Html.EditorFor(model => model.Structure.Street1)
+            @Html.ValidationMessageFor(model => model.Structure.Street1)
         </div>
 
         <div class="form-group">
             <label for="House1">Дом</label>
-            @Html.EditorFor(model => model.House1)
-            @Html.ValidationMessageFor(model => model.House1)
+            @Html.EditorFor(model => model.Structure.House1)
+            @Html.ValidationMessageFor(model => model.Structure.House1)
         </div>
 
         <div class="form-group">
             <label for="Street2">Улица 2</label>
-            @Html.EditorFor(model => model.Street2)
-            @Html.ValidationMessageFor(model => model.Street2)
+            @Html.EditorFor(model => model.Structure.Street2)
+            @Html.ValidationMessageFor(model => model.Structure.Street2)
         </div>
 
         <div class="form-group">
             <label for="FromStreet">Со стороны улицы 3</label>
-            @Html.EditorFor(model => model.FromStreet)
-            @Html.ValidationMessageFor(model => model.FromStreet)
+            @Html.EditorFor(model => model.Structure.FromStreet)
+            @Html.ValidationMessageFor(model => model.Structure.FromStreet)
         </div>
     </div>
     <input type="button" id="MapSearch" value="Поиск на карте">
@@ -336,15 +336,15 @@
 
             <div>
                 <label for="Breadth">Широта </label>
-                @Html.EditorFor(a => a.Breadth)
-                @Html.ValidationMessageFor(model => model.Breadth)
+                @Html.EditorFor(a => a.Structure.Breadth)
+                @Html.ValidationMessageFor(model => model.Structure.Breadth)
 
             </div>
 
             <div>
                 <label for="Height">Долгота</label>
-                @Html.EditorFor(a => a.Height)
-                @Html.ValidationMessageFor(model => model.Height)
+                @Html.EditorFor(a => a.Structure.Height)
+                @Html.ValidationMessageFor(model => model.Structure.Height)
 
             </div>
         </div>
@@ -357,28 +357,28 @@
 
         <div class="form-group">
             <label for="C_ContractFinancialManagement">№ договора с финансовым управлением</label>
-            @Html.EditorFor(model => model.C_ContractFinancialManagement)
-            @Html.ValidationMessageFor(model => model.C_ContractFinancialManagement)
+            @Html.EditorFor(model => model.Structure.C_ContractFinancialManagement)
+            @Html.ValidationMessageFor(model => model.Structure.C_ContractFinancialManagement)
         </div>
 
         <div class="form-group">
             <label for="C_PassportAdvertising">№ паспорта рекламы</label>
-            @Html.EditorFor(model => model.C_PassportAdvertising)
-            @Html.ValidationMessageFor(model => model.C_PassportAdvertising)
+            @Html.EditorFor(model => model.Structure.C_PassportAdvertising)
+            @Html.ValidationMessageFor(model => model.Structure.C_PassportAdvertising)
 
             <label for="StartDate">разреш с</label>
-            @Html.EditorFor(model => model.StartDate)
-            @Html.ValidationMessageFor(model => model.StartDate)
+            @Html.EditorFor(model => model.Structure.StartDate)
+            @Html.ValidationMessageFor(model => model.Structure.StartDate)
 
             <label for="EndDate">разреш по</label>
-            @Html.EditorFor(model => model.EndDate)
-            @Html.ValidationMessageFor(model => model.EndDate)
+            @Html.EditorFor(model => model.Structure.EndDate)
+            @Html.ValidationMessageFor(model => model.Structure.EndDate)
         </div>
 
         <div class="form-group">
             <label for="PlannedInstallationDate">Планируемая дата установки</label>
-            @Html.EditorFor(model => model.PlannedInstallationDate)
-            @Html.ValidationMessageFor(model => model.PlannedInstallationDate)
+            @Html.EditorFor(model => model.Structure.PlannedInstallationDate)
+            @Html.ValidationMessageFor(model => model.Structure.PlannedInstallationDate)
         </div>
 
     </div>
@@ -405,14 +405,14 @@
 
         <div class="form-group">
             <label for="DateOfReceiptOfTheApplication">Дата получения заявки</label>
-            @Html.EditorFor(model => model.DateOfReceiptOfTheApplication)
-            @Html.ValidationMessageFor(model => model.DateOfReceiptOfTheApplication)
+            @Html.EditorFor(model => model.Structure.DateOfReceiptOfTheApplication)
+            @Html.ValidationMessageFor(model => model.Structure.DateOfReceiptOfTheApplication)
         </div>
 
         <div class="form-group">
             <label for="DateOfTakenPassport">Дата выдачи паспорта</label>
-            @Html.EditorFor(model => model.DateOfTakenPassport)
-            @Html.ValidationMessageFor(model => model.DateOfTakenPassport)
+            @Html.EditorFor(model => model.Structure.DateOfTakenPassport)
+            @Html.ValidationMessageFor(model => model.Structure.DateOfTakenPassport)
         </div>
 
     </div>
@@ -424,14 +424,14 @@
 
         <div class="form-group">
             <label for="DateOfActualInstallation">Дата фактической установки</label>
-            @Html.EditorFor(model => model.DateOfActualInstallation)
-            @Html.ValidationMessageFor(model => model.DateOfActualInstallation)
+            @Html.EditorFor(model => model.Structure.DateOfActualInstallation)
+            @Html.ValidationMessageFor(model => model.Structure.DateOfActualInstallation)
         </div>
 
         <div class="form-group">
             <label for="DateDismantling">Дата демонтажа</label>
-            @Html.EditorFor(model => model.DateDismantling)
-            @Html.ValidationMessageFor(model => model.DateDismantling)
+            @Html.EditorFor(model => model.Structure.DateDismantling)
+            @Html.ValidationMessageFor(model => model.Structure.DateDismantling)
         </div>
 
     </div>
@@ -440,13 +440,13 @@
 
         <div class="form-group">
             <label for="CommentOwner">Подсветка</label>
-            @Html.DropDownListFor(a => a.Backlight, new SelectList(new[] { "", "Есть", "Нет" }))
-            @Html.ValidationMessageFor(model => model.Backlight)
+            @Html.DropDownListFor(a => a.Structure.Backlight, new SelectList(new[] { "", "Есть", "Нет" }))
+            @Html.ValidationMessageFor(model => model.Structure.Backlight)
         </div>
 
         <div class="form-group">
             <label for="CommentOwner">Комментарий</label>
-            @Html.EditorFor(model => model.CommentOwner)
+            @Html.EditorFor(model => model.Structure.CommentOwner)
         </div>
 
     </div>
@@ -454,7 +454,7 @@
         <div class="form-group">
             <label for="CountSizes">Количество сторон</label>
  
-            @Html.DropDownListFor(a => a.Sides.Count, new SelectList(new[] { "", "1", "2", "3", "4", "5", "6", "7", "8" }),null,new {id="CountSizes"})
+            @Html.DropDownListFor(a => a.Structure.Sides.Count, new SelectList(new[] { "", "1", "2", "3", "4", "5", "6", "7", "8" }), null, new { id = "CountSizes" })
             <span class="field-validation-validr" data-valmsg-for="CountSizes" data-valmsg-replace="true">
             </span>
         </div>
@@ -466,14 +466,14 @@
 
         <div class="form-group">
             <label for="RevisionDate">Дата проверки</label>
-            @Html.EditorFor(model => model.RevisionDate)
-            @Html.ValidationMessageFor(model => model.RevisionDate)
+            @Html.EditorFor(model => model.Structure.RevisionDate)
+            @Html.ValidationMessageFor(model => model.Structure.RevisionDate)
         </div>
 
         <div class="form-group">
             <label for="DateDismantling">Комментарий контроллера</label>
-            @Html.EditorFor(model => model.Note_controller)
-            @Html.ValidationMessageFor(model => model.Note_controller)
+            @Html.EditorFor(model => model.Structure.Note_controller)
+            @Html.ValidationMessageFor(model => model.Structure.Note_controller)
         </div>
 
     </div>
