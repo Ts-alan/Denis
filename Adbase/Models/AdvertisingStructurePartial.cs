@@ -41,6 +41,8 @@ namespace Sciencecom.Models
 
      public class AdvertisingStructureConstructionMetaData
      {
+         [DataType(DataType.Date)]
+         public Nullable<System.DateTime> TheDateOfTheContract { get; set; }
          [Required(ErrorMessage = "Введите значение ")]
          public Nullable<System.Guid> Locality_id { get; set; }
          [Required(ErrorMessage = "Введите значение ")]
