@@ -46,7 +46,7 @@
         myMap.controls.add('typeSelector');
 
         // нанесение обьекта на карту при загрузке
-        myPlacemark = new ymaps.Placemark([$("#Breadth").val().replace(',', '.'), $("#Height").val().replace(',', '.')],
+        myPlacemark = new ymaps.Placemark([$("#Structure_Breadth").val().replace(',', '.'), $("#Structure_Height").val().replace(',', '.')],
        {},
        {
            draggable: true

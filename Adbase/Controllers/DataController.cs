@@ -1652,8 +1652,15 @@ namespace Sciencecom.Controllers
             {
                 return HttpNotFound();
             }
-
-            return View(mc);
+            List<Surface> surfaces=new List<Surface>();
+            foreach (var sides in mc.Sides)
+            {
+                foreach (var surface in sides.Surfaces)
+                {
+                    surfaces.Add(surface);
+                }
+            }
+            return View(new CompositeModelForEdit() { Sides = mc.Sides, Structure = mc,Surfaces = surfaces});
         }
         //    [HttpPost]
         //    public ActionResult EditBillboard(Billboards1 BillboardConstruction, string Owner, HttpPostedFileBase passport1, HttpPostedFileBase passport2, HttpPostedFileBase photo)
