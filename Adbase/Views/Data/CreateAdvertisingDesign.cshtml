@@ -334,19 +334,22 @@
                 @Html.ValidationMessageFor(model => model.House1)
             </div>
 
-            <div class="form-group">
-                <label for="Street2">Ближайшая улица по ходу движения</label>
-                @Html.EditorFor(model => model.Street2)
-                @Html.ValidationMessageFor(model => model.Street2)
-            </div>
-
-            <div class="form-group">
-                <label for="FromStreet">Со стороны улицы</label>
-                @Html.EditorFor(model => model.FromStreet)
-                @Html.ValidationMessageFor(model => model.FromStreet)
-            </div>
+           
         </div>
-        <input type="button" id="MapSearch" value="Поиск на карте">
+    <input type="button" id="MapSearch" value="Поиск на карте">
+    <div class="form-inline">
+        <div class="form-group">
+            <label for="Street2">Ближайшая улица по ходу движения</label>
+            @Html.EditorFor(model => model.Street2)
+            @Html.ValidationMessageFor(model => model.Street2)
+        </div>
+
+        <div class="form-group">
+            <label for="FromStreet">Со стороны улицы</label>
+            @Html.EditorFor(model => model.FromStreet)
+            @Html.ValidationMessageFor(model => model.FromStreet)
+        </div>
+    </div>
         <div class="form-inline">
             <hr />
             <div class="form-group" style="width: 600px; height: 500px" id="map"></div>
@@ -371,111 +374,112 @@
         </div>
 
         <h3> 3.Разрешительная документация</h3>
-    <div class="form-horizontal">
-        <hr/>
-        <div class="form-group">
+        <div class="form-horizontal">
+            <hr />
+            <div class="form-group">
 
-            <label for="ViewBad_Id">Вид заявки</label>
-            @Html.DropDownListFor(model => model.ViewBad_Id, new SelectList(ViewBids, "id", "Name"), "")
-            @Html.ValidationMessageFor(model => model.ViewBad_Id)
-
-
-            <label for="DateOfReceiptOfTheApplication">Дата подачи заявки</label>
-            @Html.EditorFor(model => model.DateOfReceiptOfTheApplication)
-            @Html.ValidationMessageFor(model => model.DateOfReceiptOfTheApplication)
-
-        </div>
-        <div class="form-group" style="margin-bottom: 5px">
-
-            <label for="C_PassportAdvertising">№ паспорта рекламы</label>
-            @Html.EditorFor(model => model.C_PassportAdvertising)
-            @Html.ValidationMessageFor(model => model.C_PassportAdvertising)
+                <label for="ViewBad_Id">Вид заявки</label>
+                @Html.DropDownListFor(model => model.ViewBad_Id, new SelectList(ViewBids, "id", "Name"), "")
+                @Html.ValidationMessageFor(model => model.ViewBad_Id)
 
 
-            <label for="DateOfTakenPassport">Дата выдачи паспорта</label>
-            @Html.EditorFor(model => model.DateOfTakenPassport)
-            @Html.ValidationMessageFor(model => model.DateOfTakenPassport)
+                <label for="DateOfReceiptOfTheApplication">Дата подачи заявки</label>
+                @Html.EditorFor(model => model.DateOfReceiptOfTheApplication)
+                @Html.ValidationMessageFor(model => model.DateOfReceiptOfTheApplication)
 
-        </div>
+            </div>
+            <div class="form-group" style="margin-bottom: 5px">
 
-        <div class="form-group" style="margin-bottom: 5px">
-            <label for="StartDate">разреш с</label>
-            @Html.EditorFor(model => model.StartDate)
-            @Html.ValidationMessageFor(model => model.StartDate)
+                <label for="C_PassportAdvertising">№ паспорта рекламы</label>
+                @Html.EditorFor(model => model.C_PassportAdvertising)
+                @Html.ValidationMessageFor(model => model.C_PassportAdvertising)
 
-            <label for="EndDate">разреш по</label>
-            @Html.EditorFor(model => model.EndDate)
-            @Html.ValidationMessageFor(model => model.EndDate)
-        </div>
 
-    </div>
-    
-    <div class="form-inline">
+                <label for="DateOfTakenPassport">Дата выдачи паспорта</label>
+                @Html.EditorFor(model => model.DateOfTakenPassport)
+                @Html.ValidationMessageFor(model => model.DateOfTakenPassport)
 
-        <div class="form-group">
-            <label for="ScanPassport_1Sides">Скан паспорта (стор 1)</label>
-            <input type="file" name="ScanPassport_1Sides" data-val="true" data-val-required="Введите значение " accept="image/jpeg" /><br />
-            <span class="field-validation-valid" data-valmsg-for="ScanPassport_1Sides" data-valmsg-replace="true"></span>
-            @Html.Raw("Не более 1 МБ")
-        </div>
+            </div>
 
-        <div class="form-group">
-            <label for="ScanPassport_2Sides">Скан паспорта (стор 2)</label>
-            <input type="file" name="ScanPassport_2Sides" data-val="true" data-val-required="Введите значение " accept="image/jpeg" /><br />
-            <span class="field-validation-valid" data-valmsg-for="ScanPassport_2Sides" data-valmsg-replace="true"></span>
-            @Html.Raw("Не более 1 МБ")
-        </div>
+            <div class="form-group" style="margin-bottom: 5px">
+                <label for="StartDate">разреш с</label>
+                @Html.EditorFor(model => model.StartDate)
+                @Html.ValidationMessageFor(model => model.StartDate)
 
-    </div>
-        
-    <div class="form-horizontal">
-           
-        <div class="form-group" style="margin-bottom: 5px">
-            <label for="C_ContractFinancialManagement">№ договора с финансовым управлением</label>
-            @Html.EditorFor(model => model.C_ContractFinancialManagement)
-            @Html.ValidationMessageFor(model => model.C_ContractFinancialManagement)
-
-            <label for="TheDateOfTheContract">Дата договора</label>
-            @Html.EditorFor(model => model.TheDateOfTheContract)
-            @Html.ValidationMessageFor(model => model.TheDateOfTheContract)
+                <label for="EndDate">разреш по</label>
+                @Html.EditorFor(model => model.EndDate)
+                @Html.ValidationMessageFor(model => model.EndDate)
+            </div>
 
         </div>
 
-        <div class="form-group">
-            
-            <label for="Scan1SidesWithFinancialManagement">Скан 1 страницы договора с финанаосвым управлением</label>
-            <input type="file" name="Scan1SidesWithFinancialManagement" accept="image/jpeg" data-val="true" data-val-required="Выберите файл для загрузки" /><br />
-            <span class="field-validation-valid" data-valmsg-for="Scan1SidesWithFinancialManagement" data-valmsg-replace="true"></span>
-            @Html.Raw("Не более 1 МБ")
+        <div class="form-inline">
+
+            <div class="form-group">
+                <label for="ScanPassport_1Sides">Скан паспорта (стор 1)</label>
+                <input type="file" name="ScanPassport_1Sides" data-val="true" data-val-required="Введите значение " accept="image/jpeg" /><br />
+                <span class="field-validation-valid" data-valmsg-for="ScanPassport_1Sides" data-valmsg-replace="true"></span>
+                @Html.Raw("Не более 1 МБ")
+            </div>
+
+            <div class="form-group">
+                <label for="ScanPassport_2Sides">Скан паспорта (стор 2)</label>
+                <input type="file" name="ScanPassport_2Sides" data-val="true" data-val-required="Введите значение " accept="image/jpeg" /><br />
+                <span class="field-validation-valid" data-valmsg-for="ScanPassport_2Sides" data-valmsg-replace="true"></span>
+                @Html.Raw("Не более 1 МБ")
+            </div>
 
         </div>
-    </div>
+
+        <div class="form-horizontal">
+
+            <div class="form-group" style="margin-bottom: 5px">
+                <label for="C_ContractFinancialManagement">№ договора с финансовым управлением</label>
+                @Html.EditorFor(model => model.C_ContractFinancialManagement)
+                @Html.ValidationMessageFor(model => model.C_ContractFinancialManagement)
+
+                <label for="TheDateOfTheContract">Дата договора</label>
+                @Html.EditorFor(model => model.TheDateOfTheContract)
+                @Html.ValidationMessageFor(model => model.TheDateOfTheContract)
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="Scan1SidesWithFinancialManagement">Скан 1 страницы договора с финанаосвым управлением</label>
+                <input type="file" name="Scan1SidesWithFinancialManagement" accept="image/jpeg" data-val="true" data-val-required="Выберите файл для загрузки" /><br />
+                <span class="field-validation-valid" data-valmsg-for="Scan1SidesWithFinancialManagement" data-valmsg-replace="true"></span>
+                @Html.Raw("Не более 1 МБ")
+
+            </div>
+        </div>
 
         <h3> 4.Описание рекламной конструкции</h3>
 
-    <div class="form-inline">
-        <hr/>
+        <div class="form-inline">
+            <hr />
+            <div class="form-group">
+                <label for="PlannedInstallationDate">Планируемая дата установки</label>
+                @Html.EditorFor(model => model.PlannedInstallationDate)
+                @Html.ValidationMessageFor(model => model.PlannedInstallationDate)
+            </div>
 
-        <div class="form-group">
-            <label for="DateOfActualInstallation">Дата фактической установки</label>
-            @Html.EditorFor(model => model.DateOfActualInstallation)
-            @Html.ValidationMessageFor(model => model.DateOfActualInstallation)
-        </div>
+            <div class="form-group">
+                <label for="DateOfActualInstallation">Дата фактической установки</label>
+                @Html.EditorFor(model => model.DateOfActualInstallation)
+                @Html.ValidationMessageFor(model => model.DateOfActualInstallation)
+            </div>
 
-        <div class="form-group">
-            <label for="PlannedInstallationDate">Планируемая дата установки</label>
-            @Html.EditorFor(model => model.PlannedInstallationDate)
-            @Html.ValidationMessageFor(model => model.PlannedInstallationDate)
-        </div>
 
-    </div>
-    <div class="form-horizontal">
-        <div class="form-group">
-            <label for="DateDismantling">Дата демонтажа</label>
-            @Html.EditorFor(model => model.DateDismantling)
-            @Html.ValidationMessageFor(model => model.DateDismantling)
+
         </div>
-    </div>
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label for="DateDismantling">Дата демонтажа</label>
+                @Html.EditorFor(model => model.DateDismantling)
+                @Html.ValidationMessageFor(model => model.DateDismantling)
+            </div>
+        </div>
         <div class="form-inline">
 
             <div class="form-group">
