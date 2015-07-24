@@ -16,7 +16,7 @@
     var ListTypeAdvertisingSelected = ListTypeAdvertising.Single(a => a.Code == ViewBag.Code).id;
     //ListTypeAdvertising.Insert(0,null);
 
-    var ViewBids = new SciencecomEntities().ViewBids.ToList();
+    var ViewBids = new SciencecomEntities().ViewBids.OrderBy(a=>a.OrderBy).ToList();
    
    
     //Элемент улично-дорожной сети
@@ -497,7 +497,7 @@
         <div class="form-horizontal" style="margin-top: 18px">
             <div class="form-group">
                 <label for="ConstructionSquare">Площадь конструкции</label>
-                <input id="ConstructionSquare" readonly name="ConstructionSquare" data-val="true" data-val-required="Введите значение " type="text" value="">
+                <input id="ConstructionSquare" readonly name="ConstructionSquare" data-val="true" data-val-required="Введите значение" style="background-color: lightgray" type="text" value="">
                 <span class="field-validation-valid" data-valmsg-for="ConstructionSquare" data-valmsg-replace="true"></span>
             </div>
             <div class="form-group">

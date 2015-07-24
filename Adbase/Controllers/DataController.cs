@@ -1435,7 +1435,6 @@ namespace Sciencecom.Controllers
         public ActionResult CreateAdvertisingDesign(AdvertisingStructure Structures, [ModelBinder(typeof(CustomModelBinderForSide))]List<Side> Sides, [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces, HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides, HttpPostedFileBase Scan1SidesWithFinancialManagement, List<HttpPostedFileBase> SeveralPhoto, int CountSize = 1)
         {
 
-
             Guid StructuresId = Guid.NewGuid();
             Structures.Id = StructuresId;
             //удаление временно номера из базы данных

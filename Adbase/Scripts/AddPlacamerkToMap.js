@@ -45,14 +45,7 @@
         myMap.controls.add('searchControl');
         myMap.controls.add('typeSelector');
 
-        // нанесение обьекта на карту при загрузке
-        myPlacemark = new ymaps.Placemark([$("#Structure_Breadth").val().replace(',', '.'), $("#Structure_Height").val().replace(',', '.')],
-       {},
-       {
-           draggable: true
-       });
-        myMap.geoObjects.add(myPlacemark);
-        dragend();
+   
 
         if (isGreateAdvertisingDesign) {
             //присвоение  коодинат при клике  
@@ -76,7 +69,15 @@
 
                 dragend();
             });
-
+        } else {
+            // нанесение обьекта на карту при загрузке
+            myPlacemark = new ymaps.Placemark([$("#Structure_Breadth").val().replace(',', '.'), $("#Structure_Height").val().replace(',', '.')],
+           {},
+           {
+               draggable: true
+           });
+            myMap.geoObjects.add(myPlacemark);
+            dragend();
         }
 
     }
