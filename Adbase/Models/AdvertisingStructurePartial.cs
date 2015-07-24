@@ -22,10 +22,12 @@ namespace Sciencecom.Models
         [Required(ErrorMessage = "Введите значение ")]
         public int Height { get; set; }
         [Required(ErrorMessage = "Введите значение ")]
-        public int Width { get; set; }
+        public int Width { get; set; } 
         [Required(ErrorMessage = "Введите значение ")]
         public int Space { get; set; }
     }
+  
+
 
 
     [MetadataType(typeof(AdvertisingStructureConstructionMetaData))]
@@ -35,8 +37,17 @@ namespace Sciencecom.Models
 
     }
 
+
+
      public class AdvertisingStructureConstructionMetaData
      {
+         [Required(ErrorMessage = "Введите значение ")]
+         public Nullable<System.Guid> Locality_id { get; set; }
+         [Required(ErrorMessage = "Введите значение ")]
+         public string OwnerPlacements { get; set; }
+         [Required(ErrorMessage = "Введите значение ")]
+         public Nullable<System.Guid> PropertyLocation_id { get; set; }
+    
          [Required(ErrorMessage = "Введите значение ")]
          public string C_ContractFinancialManagement { get; set; }
 
@@ -87,13 +98,10 @@ namespace Sciencecom.Models
         [Required(ErrorMessage = "Введите значение")]
         public string House1 { get; set; }
 
-        [StringLength(50, ErrorMessage = "не более 50 символов")]
-        [Required(ErrorMessage = "Введите значение")]
+   
         [Display(Name = "Улица 2")]
         public string Street2 { get; set; }
 
-        [StringLength(50, ErrorMessage = "Не более 50 символов")]
-        [Required(ErrorMessage = "Введите значение")]
         [Display(Name = "Со стороны")]
         public string FromStreet { get; set; }
 
@@ -110,11 +118,14 @@ namespace Sciencecom.Models
        [Required(ErrorMessage = "Введите значение ")]
        public string UniqueNumber { get; set; }
 
-       [Required(ErrorMessage = "Выберете значение")]
+    
        public Nullable<System.Guid> TheElementOfTheRoadNetwork_id { get; set; }
           
        [Required(ErrorMessage = "Выберете значение")]
        public Nullable<System.Guid> Status_Id { get; set; }
+
+       [Required(ErrorMessage = "Выберете значение")]
+       public string Code { get; set; }
 
 
     }
