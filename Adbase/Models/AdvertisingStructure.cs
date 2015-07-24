@@ -40,8 +40,6 @@ namespace Sciencecom.Models
         public Nullable<System.DateTime> DateOfTakenPassport { get; set; }
         public Nullable<System.DateTime> DateOfActualInstallation { get; set; }
         public Nullable<System.DateTime> DateDismantling { get; set; }
-        public Nullable<System.DateTime> RevisionDate { get; set; }
-        public string Note_controller { get; set; }
         public Nullable<System.Guid> TheElementOfTheRoadNetwork_id { get; set; }
         public Nullable<System.Guid> Status_Id { get; set; }
         public string CommentOwner { get; set; }
@@ -52,12 +50,12 @@ namespace Sciencecom.Models
         public Nullable<System.Guid> ViewBad_Id { get; set; }
     
         public virtual Locality Locality { get; set; }
+        public virtual PropertyLocation PropertyLocation { get; set; }
         public virtual Status Status { get; set; }
         public virtual TheElementOfTheRoadNetwork TheElementOfTheRoadNetwork { get; set; }
         public virtual TypeOfAdvertisingStructure TypeOfAdvertisingStructure { get; set; }
+        public virtual ViewBid ViewBid { get; set; }
         public virtual Owner Owner { get; set; }
         public virtual ICollection<Side> Sides { get; set; }
-        public virtual PropertyLocation PropertyLocation { get; set; }
-        public virtual ViewBid ViewBid { get; set; }
     }
 }

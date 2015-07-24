@@ -58,10 +58,6 @@ namespace Sciencecom.Models
          [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
          public Nullable<System.DateTime> PlannedInstallationDate { get; set; }
 
-         [DataType(DataType.Date)]
-         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
-         public Nullable<System.DateTime> RevisionDate { get; set; }
-
          [Required(ErrorMessage = "Введите значение ")]
          public string C_PassportAdvertising { get; set; }
 

@@ -106,18 +106,7 @@
                     "</div> <div style=\"margin-left: -15px;display: none\" id=\"" + i + "HiddenIdentification\"> &nbsp;&nbsp;&nbsp;<b>Идентификация поверхностей</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("IdentificationSurface", new SelectList(IdentificationSide, "id", "IdentificationName"),"",new { data_val_required = "Выберете", data_val = "true", IdentificationForIdentificationSurface = "" }).ToHtmlString().Replace("\"", " ")) </div>' +
                     "<div  id=\"InsertPartial" + i + "\"></div>" +
                     "</div>");
-                $("#InsertPhoto").before(
-                        "<div code class=\"form-horizontal\">" +
-                             "<div class=\"form-group\">" +
-                                 "<label class=\"control-label col-md-2\" style=\"padding-right: 0\" >Фотография стороны " + i + "</label>" +
-                                  "<div class=\"col-md-10\">" +
-                                     "<input type=\"file\" name=\"SeveralPhoto\" accept=\"image/jpeg\" data-val-required=\"Выберите файл для загрузки\"><br>" +
-                                       "Не более 1 МБ" +
-                                  "</div>" +
-                             "</div>" +
-                        "</div>"
-                        );
-
+                
                 $("#SizeOfCount").val(CountSizes);
 
             }
@@ -525,25 +514,7 @@
             </div>
         </div>
         <div id="InsertSide"></div>
-        <h3>5.Данные контроля</h3>
 
-        <div class="form-inline">
-
-            <div class="form-group">
-                <label for="RevisionDate">Дата проверки</label>
-                @Html.EditorFor(model => model.RevisionDate)
-                @Html.ValidationMessageFor(model => model.RevisionDate)
-            </div>
-
-            <div class="form-group">
-                <label for="DateDismantling">Комментарий контроллера</label>
-                @Html.EditorFor(model => model.Note_controller)
-                @Html.ValidationMessageFor(model => model.Note_controller)
-            </div>
-
-        </div>
-
-        <div id="InsertPhoto"></div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Добавить" class="btn btn-default" />

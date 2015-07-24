@@ -40,33 +40,31 @@
         //создание таблицы
         tableToGrid("#table", {
             height: 700,
-            colNames: [
-                "Собственник конструкции", "Вид", "Идентификационный <br/> номер", "Статус конструкции",
-                "Нас. пункт", "Улица 1", "Дом", "Улица 2", "Со стороны улицы",
-                "Элемент улично-дорожной сети", "Количество сторон",
-                "Количество поверхностей", "№ договора с финансовым управлением",
-                "№ паспорта рекламы", "Паспорт выдан с", "Паспорт выдан по","Площадьконструкции"
-            ],
+            //colNames: [
+            //    "Собственник конструкции", "Вид", "Идентификационный <br/> номер", "Статус конструкции",
+            //    "Нас. пункт", "Улица 1", "Дом", "Улица 2", "Со стороны улицы",
+            //    "Элемент улично-дорожной сети", "Количество сторон",
+            //    "Количество поверхностей", "№ договора с финансовым управлением",
+            //    "№ паспорта рекламы", "Паспорт выдан с", "Паспорт выдан по","Площадьконструкции"
+            //],
             forceFit:false,
+
             cmTemplate:{"resizable": false,sortable:false},
             colModel: [
-                { name: "Собственник_конструкции", width: 25, align: "center"},
-                { name: "Вид", width: 22, align: "center" },
-                { name: "Уникальный_номер", width: 23, align: "center" },
-                { name: "Статус", width: 23, align: "center" },
-                { name: "Нас._пункт", width: 24, align: "center" },
-                { name: "Улица1", width: 23, align: "center" },
+                { name: "Идентификационный_номер", width: 25, align: "center"},
+                { name: "Собственник_рекламной_конструкции", width: 22, align: "center" },
+                { name: "Вид_рекламной_конструкции", width: 23, align: "center" },
+                { name: "Населенный_пункт", width: 23, align: "center" },
+                { name: "Улица", width: 24, align: "center" },
                 { name: "Дом", width: 23, align: "center" },
-                { name: "Улица2", width: 22, align: "center" },
-                { name: "Со_стороны_улицы", width: 24, align: "center" },
-                { name: "Элемент_улично-дорожной_сети", width: 25, align: "center" },
-                { name: "Количество_сторон", width: 20, align: "center" },
-                { name: "Количестов_поверхностей", width: 20, align: "center" },
-                { name: "№_договора_с_финансовым_управлением", width: 25, align: "center" },
-                { name: "№_паспорта_рекламы", width: 20, align: "center" },
-                { name: "Паспорт_выдан_с", width: 30, align: "center" },
-                { name: "Паспорт_выдан_по", width: 30, align: "center" },
-               { name: "Площадь_конструкции", width: 30, align: "center" }
+                { name: "Количество_сторон", width: 23, align: "center" },
+                { name: "Количестов_поверхностей", width: 22, align: "center" },
+                { name: "Площадь_рекламной_конструкции", width: 24, align: "center" },
+                { name: "Подстветка", width: 25, align: "center" },
+                { name: "№_договора_с_фин_упр", width: 20, align: "center" },
+                { name: "№_паспорта_рекл", width: 20, align: "center" },
+                { name: "Разреш_по", width: 20, align: "center" }
+                
             ]
         });
 
@@ -215,24 +213,22 @@
 
     <table id="table" class="table-bordered" cellpadding="5"  >
         <tr >
-            <th>Собственник_конструкции</th>
-            <th>Вид</th>
-            <th>Уникальный_номер</th>
-            <th>Статус</th>
-            <th>Нас._пункт </th>
-            <th>Улица1</th>
+            
+            <th>Идентификационный_номер</th>
+            <th>Собственник_рекламной_конструкции</th>
+            <th>Вид_рекламной_конструкции</th>
+            <th>Населенный_пункт</th>
+            <th>Улица</th>
             <th>Дом</th>
-            <th>Улица2</th>
-            <th>Со_стороны_улицы </th>
-            <th>Элемент_улично-дорожной_сети</th>
             <th> Количество_сторон</th>
             <th> Количестов_поверхностей</th>
-            <th>№_договора_с_финансовым_управлением</th>
-            <th>№_паспорта_рекламы</th>
-            <th> Паспорт_выдан_с</th>
-            <th> Паспорт_выдан_по</th>
-            <th> Площадь_конструкции</th>
-        </tr>
+            <th>Площадь_рекламной_конструкции</th>
+            <th>Подстветка</th>
+            <th> №_договора_с_фин_упр</th>
+            <th>№_паспорта_рекл</th>
+            <th>Разреш_по</th>
+  
+         </tr>
         @foreach (var i in Model)
         {
             foreach (var side in i.Sides)
@@ -244,25 +240,23 @@
                 }
                 
             }
-            <tr title="test" >
+            <tr title="test">
+                
+                <td>@i.UniqueNumber</td>
                 <td>@i.Owner.Name </td>
                 <td>@i.TypeOfAdvertisingStructure.Name</td>
-                <td>@i.UniqueNumber</td>
-                <td>@i.Status.NameStatus</td>
                 <td>@i.Locality.NameLocality</td>
                 <td>@i.Street1</td>
                 <td>@i.House1</td>
-                <td>@i.Street2</td>
-                <td>@i.FromStreet</td>
-                <td>@i.TheElementOfTheRoadNetwork.TheElementOfTheRoadNetworkName</td>
                 <td>@i.Sides.Count</td>
                 <td>@SurfaceCOunt</td>
+                <td>@SurfaceSumm</td>
+                <td>@i.Backlight</td>
                 <td>@i.C_ContractFinancialManagement </td>
                 <td>@i.C_PassportAdvertising</td>
-                <td>@i.StartDate.Value.ToString().Substring(0, 10)</td>
-                <td>@i.EndDate.Value.ToString().Substring(0, 10)</td>
-                <td>@SurfaceSumm</td>
-           </tr>
+                <td>@i.EndDate.ToString().Substring(0, 10)</td>        
+                
+            </tr>
             SurfaceCOunt = 0;
             SurfaceSumm = 0;
         }
