@@ -22,7 +22,8 @@ namespace Sciencecom.Models
         [Required(ErrorMessage = "Введите значение ")]
         public int Height { get; set; }
         [Required(ErrorMessage = "Введите значение ")]
-        public int Width { get; set; } 
+        public int Width { get; set; }
+       
         [Required(ErrorMessage = "Введите значение ")]
         public int Space { get; set; }
     }

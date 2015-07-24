@@ -60,6 +60,18 @@
 
     });
 
+    // подсчет суммы площадей
+    function CalculationAS() {
+     
+        var Summ=0;
+        $("[selectforspace]").each(function(indx, element) {
+            if ($(element).val() != "") {
+                Summ += parseInt($(element).val());
+            }
+        });
+        $("#ConstructionSquare").val(Summ);
+    }
+
 //кол-во сторон
     function SetCountSize() {
         EndCountForSurface = 0;
@@ -235,6 +247,7 @@
             var Sum = Height * Width;
 
             $('[name="[' + j + '].Space"]').val(Sum);
+            CalculationAS();
         }
        
     }

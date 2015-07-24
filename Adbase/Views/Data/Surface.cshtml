@@ -12,9 +12,10 @@
             CalculationOfTheArea(@i);
         });
         $('[name="[' + @i + '].Width"]').change(function () {
-
+       
             CalculationOfTheArea(@i);
         });
+
     </script>
   <text>  <div side="@ViewBag.Side"> 
         <input type="hidden" name="[@i].SideOfSurface" value="@ViewBag.Side">
@@ -35,7 +36,7 @@
                 @Html.ValidationMessageFor(model => model[i].Width)
 
                 <label for="[@i].Space">Площадь</label>
-                @Html.EditorFor(model => model[i].Space)
+                @Html.TextBoxFor(model => model[i].Space, new { type = "number", SelectForSpace = "",onchange = "CalculationAS()" })
                 @Html.ValidationMessageFor(model => model[i].Space)
             </div>
         </div>
