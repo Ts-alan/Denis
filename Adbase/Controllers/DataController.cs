@@ -1659,7 +1659,8 @@ namespace Sciencecom.Controllers
                     surfaces.Add(surface);
                 }
             }
-            return View(new CompositeModelForEdit() { Sides = mc.Sides, Structure = mc,Surfaces = surfaces});
+            ViewBag.surfaces = surfaces;
+            return View(mc);
         }
         //    [HttpPost]
         //    public ActionResult EditBillboard(Billboards1 BillboardConstruction, string Owner, HttpPostedFileBase passport1, HttpPostedFileBase passport2, HttpPostedFileBase photo)
