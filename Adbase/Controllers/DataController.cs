@@ -1684,42 +1684,48 @@ namespace Sciencecom.Controllers
         }
 
             [HttpPost]
-        public ActionResult EditAdvertisingDesign(AdvertisingStructure Structures,
+        public ActionResult EditAdvertisingDesign(int id,AdvertisingStructure Structures,
             [ModelBinder(typeof (CustomModelBinderForSide))] List<Side> Sides,
             [ModelBinder(typeof (CustomModelBinderForSurface))] List<Surface> surfaces,
             HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides,
             HttpPostedFileBase Scan1SidesWithFinancialManagement, List<HttpPostedFileBase> SeveralPhoto,
             int CountSize = 1)
-        {
+            {
+               
+                AdvertisingStructure mc = context.AdvertisingStructures.Single(a => a.Id_show == id);
 
-            //var mc = context.Billboards1.Find(BillboardConstruction.Id);
-            //var idOwner = context.Owners.Where(m => m.Name == Owner).Single().Id;
-            //mc.Owner_Id = idOwner;
-            //mc.Street1 = BillboardConstruction.Street1;
-            //mc.Street2 = BillboardConstruction.Street2;
-            //mc.FromStreet = BillboardConstruction.FromStreet;
-            //mc.Breadth = BillboardConstruction.Breadth;
-            //mc.StartDate = BillboardConstruction.StartDate;
-            //mc.EndDate = BillboardConstruction.EndDate;
-            //mc.Height = BillboardConstruction.Height;
-            //mc.Comment = BillboardConstruction.Comment;
-            //mc.ContractNumber = BillboardConstruction.ContractNumber;
-            //mc.Locality = BillboardConstruction.Locality;
-            //mc.House1 = BillboardConstruction.House1;
-            //mc.OnAgreement = BillboardConstruction.OnAgreement;
-            //mc.PassportNumber = BillboardConstruction.PassportNumber;
-
+                mc.Backlight = Structures.Backlight;
+                mc.Breadth = Structures.Breadth;
+                mc.C_ContractFinancialManagement = Structures.C_ContractFinancialManagement;
+                mc.C_PassportAdvertising = Structures.C_PassportAdvertising;
+                mc.Code = Structures.Code;
+                mc.CommentOwner = Structures.CommentOwner;
+                mc.DateDismantling = Structures.DateDismantling;
+                mc.DateOfActualInstallation = Structures.DateOfActualInstallation;
+                mc.DateOfReceiptOfTheApplication = Structures.DateOfReceiptOfTheApplication;
+                mc.DateOfTakenPassport = Structures.DateOfTakenPassport;
+                mc.EndDate = Structures.EndDate;
+                mc.StartDate = Structures.StartDate;
+                mc.FromStreet = Structures.FromStreet;
+                mc.Height = Structures.Height;
+                mc.House1 = Structures.House1;
+                mc.CommentOwner= Structures.CommentOwner;
+                mc.Locality_id = Structures.Locality_id;
+                mc.OwnerName = Structures.OwnerName;
+                mc.OwnerPlacements = Structures.OwnerPlacements;
+                mc.Owner_Id = Structures.Owner_Id;
+                mc.PlannedInstallationDate = Structures.PlannedInstallationDate;
             //ModelState["Owner"].Errors.Clear();
             ////if (ModelState.IsValid)
             ////{
-            //context.SaveChanges();
+                context.SaveChanges();
             //return RedirectToAction("Bilboard", context.MetalConstructions);
             //}
             //else
             //{
-            return View();
+                return RedirectToAction("AdvertisingDesign");
 
-        }
+            }
     }
 }
 
