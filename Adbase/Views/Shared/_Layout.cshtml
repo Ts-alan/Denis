@@ -12,7 +12,7 @@
     @Scripts.Render("~/bundles/jquery-ui")
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/messi")
-
+    @Scripts.Render("~/bundles/bootstrap")
  
     <script src="http://api-maps.yandex.ru/2.0-stable/?load=package.standard&lang=ru-RU" type="text/javascript"></script>
 
@@ -73,7 +73,7 @@
 <div class="body-content" style="margin-top: 40px">
     @RenderBody()
 </div>
-@Scripts.Render("~/bundles/bootstrap")
+
 @RenderSection("scripts", required: false)
 </body>
 </html>

@@ -45,20 +45,39 @@
     var StartCountForSurface ;
     var EndCountForSurface = 0;
     var isGreateAdvertisingDesign = false;
-    var ArrayOfSides = @Html.Raw(JsonConvert.SerializeObject(Model.Sides.Select(a=>a.DirectionSide_id), Formatting.Indented, new JsonSerializerSettings
+    var ArrayOfSides = @Html.Raw(JsonConvert.SerializeObject(Model.Sides.Select(a=>new {a.DirectionSide_id,length= a.Surfaces.Count,a.Identification_id}), Formatting.Indented, new JsonSerializerSettings
     {
        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
     }));
 
 
-    $(document).ready(function() {
 
+
+    $(document).ready(function() {
+        //нормально работает ширина высота,убираем ненавязчивую валидацию 
+        $('[data-val-number="Значением поля Breadth должно быть число."]').rules('add', {
+            number: false
+        });
+        $('[data-val-number="Значением поля Height должно быть число."]').rules('add', {
+            number: false
+        });
+        ////отключение валидации
+        //$.validator.methods.number = function (value, element) {
+        //    return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
+        //}
+
+        //$('[name="ScanPassport_1Sides"]').rules( "remove","required");
+
+        //накручивание данных в поля
         window.onload = SetCountSize();
         $("[identificationfordirectionside]").each(function(ind, element) {
-            $(element)[0].value =ArrayOfSides[ind];
+           $(element)[0].value =ArrayOfSides[ind].DirectionSide_id;
 
         });
-        $("[identificationforcountside]").each();
+        $("[identificationforcountside]").each(function(ind, element) {
+            $(element)[0].value = ArrayOfSides[ind].length;
+            AddSurface(ind+1);
+        });
 
         //выпадающий список на согласование
         $("[name=OnAgreement]").change(function() {
@@ -202,7 +221,7 @@
             $("#" + i + "HiddenIdentification").show();
             //валидация
             $('[name="IdentificationSurface"]').each(function (indx, element) {
-
+                $(element)[0].value =ArrayOfSides[indx].Identification_id;
                 $(element).attr("name", "[" + indx + "].IdentificationForIdentificationSurface");
             });
             $('[action="/Data/CreateAdvertisingDesign"]').validate({
@@ -231,11 +250,12 @@
         $("[side=" + i + "]").remove();
 
         
-        $.ajax('@Url.Action("Surface", "Data")', { data: { side: i, StartCountForSurface: StartCountForSurface, EndCountForSurface: EndCountForSurface } })
+        $.ajax('@Url.Action("Surface", "Data")', { data: { side: i, StartCountForSurface: StartCountForSurface, EndCountForSurface: EndCountForSurface,IsEdit:"true" } })
             .success(function (e) {
                 $("#InsertPartial"+i+"").before(e);
+                CalculationAS();
             });
-       
+
     }
 
 
@@ -261,7 +281,7 @@
 <h3> ИЗМЕНИТЬ РЕКЛАМНУЮ КОНСТРУКЦИЮ</h3>
 
 
-@using (Html.BeginForm("CreateAdvertisingDesign", "Data", FormMethod.Post, new { enctype = "multipart/form-data", id = "test1" }))
+@using (Html.BeginForm("EditAdvertisingDesign", "Data", FormMethod.Post, new { enctype = "multipart/form-data", id = "test1" }))
 {
     <input type="hidden" name="Code" value="@ViewBag.Code">
     <h3> 1. Общие данные о рекламной конструкции</h3>
@@ -324,14 +344,14 @@
         <hr />
         <div class="form-group" style="margin-left: -15px">
             <label for="Locality">Нас. пункт</label>
-            @Html.DropDownListFor(a => a.Locality_id, new SelectList(Locality, "id", "NameLocality",Model.Locality.id))
+            @Html.DropDownListFor(a => a.Locality_id, new SelectList(Locality, "id", "NameLocality"))
             @Html.ValidationMessageFor(model => model.Locality_id)
         </div>
 
 
         <div class="form-group" style="margin-left: 200px">
             <label for="TheElementOfTheRoadNetwork">Элемент улично-дорожной сети</label>
-            @Html.DropDownListFor(a => a.TheElementOfTheRoadNetwork_id, new SelectList(ListTypeElementOfTheRoadNetworkName, "id", "Value",Model.TheElementOfTheRoadNetwork.id),"")
+            @Html.DropDownListFor(a => a.TheElementOfTheRoadNetwork_id, new SelectList(ListTypeElementOfTheRoadNetworkName, "id", "Value"),"")
             @Html.ValidationMessageFor(a => a.TheElementOfTheRoadNetwork_id)
         </div>
     </div>
@@ -376,13 +396,13 @@
                 <label for="Breadth">Широта </label>
 
                 @Html.EditorFor(model=>model.Breadth)
-                @Html.ValidationMessageFor(model => model.Height)
+                @Html.ValidationMessageFor(model => model.Breadth)
             </div>
 
             <div>
                 <label for="Height">Долгота</label>
                 @Html.EditorFor(model => model.Height)
-                @Html.ValidationMessageFor(model => model.Height)
+
 
             </div>
         </div>
@@ -394,7 +414,7 @@
         <div class="form-group">
 
             <label for="ViewBad_Id">Вид заявки</label>
-            @Html.DropDownListFor(model => model.ViewBad_Id, new SelectList(ViewBids, "id", "Name",Model.ViewBid.id))
+            @Html.DropDownListFor(model => model.ViewBad_Id, new SelectList(ViewBids, "id", "Name"))
             @Html.ValidationMessageFor(model => model.ViewBad_Id)
 
 
@@ -432,15 +452,15 @@
 
         <div class="form-group">
             <label for="ScanPassport_1Sides">Скан паспорта (стор 1)</label>
-            <input type="file" name="ScanPassport_1Sides" data-val="true" data-val-required="Введите значение " accept="image/jpeg" /><br />
-            <span class="field-validation-valid" data-valmsg-for="ScanPassport_1Sides" data-valmsg-replace="true"></span>
+            <input type="file" name="ScanPassport_1Sides"  accept="image/jpeg" /><br />
+
             @Html.Raw("Не более 1 МБ")
         </div>
 
         <div class="form-group">
             <label for="ScanPassport_2Sides">Скан паспорта (стор 2)</label>
-            <input type="file" name="ScanPassport_2Sides" data-val="true" data-val-required="Введите значение " accept="image/jpeg" /><br />
-            <span class="field-validation-valid" data-valmsg-for="ScanPassport_2Sides" data-valmsg-replace="true"></span>
+            <input type="file" name="ScanPassport_2Sides"  accept="image/jpeg" /><br />
+
             @Html.Raw("Не более 1 МБ")
         </div>
 
@@ -462,8 +482,8 @@
         <div class="form-group">
 
             <label for="Scan1SidesWithFinancialManagement">Скан 1 страницы договора с финанаосвым управлением</label>
-            <input type="file" name="Scan1SidesWithFinancialManagement" accept="image/jpeg" data-val="true" data-val-required="Выберите файл для загрузки" /><br />
-            <span class="field-validation-valid" data-valmsg-for="Scan1SidesWithFinancialManagement" data-valmsg-replace="true"></span>
+            <input type="file" name="Scan1SidesWithFinancialManagement" accept="image/jpeg"  /><br />
+  
             @Html.Raw("Не более 1 МБ")
 
         </div>
@@ -499,7 +519,7 @@
 
         <div class="form-group">
             <label for="CommentOwner">Подсветка</label>
-            @Html.DropDownListFor(a => a.Backlight, new SelectList(new[] { "", "Есть", "Нет" },Model.Backlight))
+            @Html.DropDownListFor(a => a.Backlight, new SelectList(new[] { "", "Есть", "Нет" }))
             @Html.ValidationMessageFor(model => model.Backlight)
         </div>
 
