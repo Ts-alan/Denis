@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -1687,7 +1688,7 @@ namespace Sciencecom.Controllers
         }
 
             [HttpPost]
-        public void EditAdvertisingDesign(int id, AdvertisingStructure Structures,
+        public ActionResult EditAdvertisingDesign(int id, AdvertisingStructure Structures,
             [ModelBinder(typeof (CustomModelBinderForSide))] List<Side> Sides,
             [ModelBinder(typeof (CustomModelBinderForSurface))] List<Surface> surfaces,
             HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides,
@@ -1697,29 +1698,7 @@ namespace Sciencecom.Controllers
                
                 AdvertisingStructure mc = context.AdvertisingStructures.Single(a => a.Id_show == id);
                 var TempId = mc.Id;
-                //mc.Backlight = Structures.Backlight;
-                //mc.Breadth = Structures.Breadth;
-                //mc.C_ContractFinancialManagement = Structures.C_ContractFinancialManagement;
-                //mc.C_PassportAdvertising = Structures.C_PassportAdvertising;
-                //mc.Code = Structures.Code;
-                //mc.CommentOwner = Structures.CommentOwner;
-                //mc.DateDismantling = Structures.DateDismantling;
-                //mc.DateOfActualInstallation = Structures.DateOfActualInstallation;
-                //mc.DateOfReceiptOfTheApplication = Structures.DateOfReceiptOfTheApplication;
-                //mc.DateOfTakenPassport = Structures.DateOfTakenPassport;
-                //mc.EndDate = Structures.EndDate;
-                //mc.StartDate = Structures.StartDate;
-                //mc.FromStreet = Structures.FromStreet;
-                //mc.Height = Structures.Height;
-                //mc.House1 = Structures.House1;
-                //mc.CommentOwner = Structures.CommentOwner;
-                //mc.Locality_id = Structures.Locality_id;
-                //mc.OwnerName = Structures.OwnerName;
-                //mc.OwnerPlacements = Structures.OwnerPlacements;
-                //mc.Owner_Id = Structures.Owner_Id;
-                //mc.PlannedInstallationDate = Structures.PlannedInstallationDate;
-                
-                
+                        
                 foreach (var side in mc.Sides)
                 {
                     context.Surfaces.RemoveRange(side.Surfaces);
@@ -1751,38 +1730,64 @@ namespace Sciencecom.Controllers
                 context.Surfaces.AddRange(ListSurface);
 
                 context.SaveChanges();
-
-                try
+                //картики
+                if (Scan1SidesWithFinancialManagement != null)
                 {
-                    context.SaveChanges();
-                }
-                catch (DbEntityValidationException ex)
-                {
-                    foreach (DbEntityValidationResult validationError in ex.EntityValidationErrors)
+                    string src = "~/Images/Scan1SidesWithFinancialManagement/" + Structures.Id_show +
+                                 "FinancialManagement.jpg";
+                    FileInfo info1 = new FileInfo(src);
+                    if (info1.Exists)
                     {
-                        Response.Write("Object: " + validationError.Entry.Entity.ToString());
-                        Response.Write("");
-                        foreach (DbValidationError err in validationError.ValidationErrors)
+                        info1.Delete();
+                    }
+                    string path = Server.MapPath(src);
+                    ScanPassport_1Sides.SaveAs(path);
+                }
+
+                if (ScanPassport_1Sides != null)
+                {
+
+                    string src = "~/Images/ScanPassport_1Sides/" + Structures.Id_show + "passport.jpg";
+                    FileInfo info1 = new FileInfo(src);
+                    if (info1.Exists)
+                    {
+                        info1.Delete();
+                    }
+                    string path = Server.MapPath(src);
+                    ScanPassport_1Sides.SaveAs(path);
+                }
+                if (ScanPassport_2Sides != null)
+                {
+                    string src = "~/Images/ScanPassport_2Sides/" + Structures.Id_show + "ScanPassport_2Sides.jpg";
+                    FileInfo info1 = new FileInfo(src);
+                    if (info1.Exists)
+                    {
+                        info1.Delete();
+                    }
+                    string path = Server.MapPath(src);
+                    ScanPassport_2Sides.SaveAs(path);
+                }
+
+                if (SeveralPhoto != null)
+                {
+                    for (int i = 0; i < Sides.Count; i++)
+                    {
+                        if (SeveralPhoto[i] != null)
                         {
-                            Response.Write(err.ErrorMessage + "");
+                            string src = "~/Images/Sides/" + Sides[i].Id + ".jpg";
+                            FileInfo info1 = new FileInfo(src);
+                            if (info1.Exists)
+                            {
+                                info1.Delete();
+                            }
+                            string path = Server.MapPath(src);
+                            SeveralPhoto[i].SaveAs(path);
                         }
                     }
+
                 }
-
-                //ModelState["Owner"].Errors.Clear();
-            ////if (ModelState.IsValid)
-            ////{
-              
-
-                   
-      
-              
-
-                //return RedirectToAction("Bilboard", context.MetalConstructions);
-            //}
-            //else
-            //{
-                    //return RedirectToAction("AdvertisingDesign");
+                 
+               return RedirectToAction("AdvertisingDesign");
 
             }
     }
