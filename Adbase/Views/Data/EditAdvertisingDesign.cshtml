@@ -65,9 +65,10 @@
            $(element)[0].value =ArrayOfSides[ind].DirectionSide_id;
 
         });
-        $("[identificationforcountside]").each(function(ind, element) {
-            $(element)[0].value = ArrayOfSides[ind].length;
-            AddSurface(ind+1);
+        $("[identificationforcountside]").each(function(indx, element) {
+            $(element)[0].value = ArrayOfSides[indx].length;
+            
+            AddSurface(indx+1);
         });
 
         //выпадающий список на согласование
@@ -194,14 +195,14 @@
         }
         );
         //другое решение не тестил
-        //$('[name="DirectionSide"]').data('validator', null);
-        //$.validator.unobtrusive.parse('[name="DirectionSide"]');
+        $('[name="DirectionSide"]').data('validator', null);
+        $.validator.unobtrusive.parse('[name="DirectionSide"]');
      
     }
 
     //Добавить поверхность+           
     function AddSurface(i) {
-
+       
         var count = $("#AddButton" + i + "").val();
         StartCountForSurface = EndCountForSurface;
         EndCountForSurface = parseInt(count) + parseInt(EndCountForSurface);
@@ -239,23 +240,22 @@
 
         }
         $("[side=" + i + "]").remove();
-        console.log(StartCountForSurface);
-        console.log(EndCountForSurface);
-        
-        $.ajax('@Url.Action("Surface", "Data")', {async:false, data: { side: i, StartCountForSurface: StartCountForSurface, EndCountForSurface: EndCountForSurface,IsEdit:"true" } })
-            .success(function (e) {
-                $("#InsertPartial"+i+"").before(e);
+
+       
+        $.ajax('@Url.Action("Surface", "Data")', { async: true, data: { side: i, StartCountForSurface: StartCountForSurface, EndCountForSurface: EndCountForSurface, IsEdit: "true" } })
+            .success(function(e) {
+                console.log(e);
+                $("#InsertPartial" + i + "").before(e);
                 CalculationAS();
                 ////отключение валидации
                 $.validator.methods.number = function (value, element) {
                     return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
                 }
-                });
+            }).error(function(e) {
+                alert(e);
+            });
 
-  
-
-           
-
+          
     }
 
 
@@ -283,7 +283,7 @@
 
 @using (Html.BeginForm("EditAdvertisingDesign", "Data", FormMethod.Post, new { enctype = "multipart/form-data", id = "test1" }))
 {
-    <input type="hidden" name="Code" value="@ViewBag.Code">
+
     <h3> 1. Общие данные о рекламной конструкции</h3>
     @Html.AntiForgeryToken()
     <div class="form-inline" style="margin-bottom: -10px">
@@ -301,7 +301,7 @@
 
         <div class="form-group">
             <label for="Locality">Вид</label>
-            @Html.DropDownListFor(a => a.Code, new SelectList(ListTypeAdvertising, "id", "Name"))
+            @Html.DropDownListFor(a => a.Code, new SelectList(ListTypeAdvertising, "Code", "Name"))
             @Html.ValidationMessageFor(model => model.Code)
         </div>
 
@@ -313,7 +313,7 @@
 
         <div class="form-group">
             <label for="UniqueNumber">Идентификационный номер</label>
-            @Html.EditorFor(model=>model.UniqueNumber)
+            @Html.EditorFor(model=>model.UniqueNumber,new { @readonly = "readonly" })
             @Html.ValidationMessageFor(model => model.UniqueNumber)
         </div>
         <br>

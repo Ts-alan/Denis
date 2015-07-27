@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Cryptography.Pkcs;
@@ -42,6 +43,7 @@ namespace Sciencecom.Models
 
      public class AdvertisingStructureConstructionMetaData
      {
+         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
          [DataType(DataType.Date)]
          public Nullable<System.DateTime> TheDateOfTheContract { get; set; }
          [Required(ErrorMessage = "Введите значение ")]
@@ -112,11 +114,10 @@ namespace Sciencecom.Models
        [DataType(DataType.Date)]
        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
        public Nullable<System.DateTime> EndDate { get; set; }
- 
-       [Required(ErrorMessage = "Введите значение ")]
-       public string UniqueNumber { get; set; }
 
-    
+       [Required(ErrorMessage = "Введите значение")]
+       public  string UniqueNumber { get; set; }
+
        public Nullable<System.Guid> TheElementOfTheRoadNetwork_id { get; set; }
           
        [Required(ErrorMessage = "Выберете значение")]

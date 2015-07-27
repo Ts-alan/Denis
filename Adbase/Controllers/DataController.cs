@@ -1672,7 +1672,7 @@ namespace Sciencecom.Controllers
                 return HttpNotFound();
             }
             List<Surface> surfaces = new List<Surface>();
-            foreach (var sides in mc.Sides)
+            foreach (var sides in mc.Sides.OrderBy(a=>a.Name))
             {
                 foreach (var surface in sides.Surfaces)
                 {
@@ -1684,7 +1684,7 @@ namespace Sciencecom.Controllers
         }
 
             [HttpPost]
-        public ActionResult EditAdvertisingDesign(int id,AdvertisingStructure Structures,
+        public ActionResult EditAdvertisingDesign(int id, AdvertisingStructure Structures,
             [ModelBinder(typeof (CustomModelBinderForSide))] List<Side> Sides,
             [ModelBinder(typeof (CustomModelBinderForSurface))] List<Surface> surfaces,
             HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides,
@@ -1709,21 +1709,40 @@ namespace Sciencecom.Controllers
                 mc.FromStreet = Structures.FromStreet;
                 mc.Height = Structures.Height;
                 mc.House1 = Structures.House1;
-                mc.CommentOwner= Structures.CommentOwner;
+                mc.CommentOwner = Structures.CommentOwner;
                 mc.Locality_id = Structures.Locality_id;
                 mc.OwnerName = Structures.OwnerName;
                 mc.OwnerPlacements = Structures.OwnerPlacements;
                 mc.Owner_Id = Structures.Owner_Id;
                 mc.PlannedInstallationDate = Structures.PlannedInstallationDate;
+
+
+
+                foreach (var side in mc.Sides)
+                {
+                    context.Surfaces.RemoveRange(side.Surfaces);
+
+                }
+                context.Sides.RemoveRange(mc.Sides);
+
+                context.Sides.AddRange(Sides);
+                context.Surfaces.AddRange(surfaces);
+                context.SaveChanges();
+                
             //ModelState["Owner"].Errors.Clear();
             ////if (ModelState.IsValid)
             ////{
-                context.SaveChanges();
-            //return RedirectToAction("Bilboard", context.MetalConstructions);
+              
+
+                   
+      
+              
+
+                //return RedirectToAction("Bilboard", context.MetalConstructions);
             //}
             //else
             //{
-                return RedirectToAction("AdvertisingDesign");
+                    return RedirectToAction("AdvertisingDesign");
 
             }
     }
