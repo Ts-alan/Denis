@@ -216,7 +216,7 @@
         $("[side=" + i + "]").remove();
 
         
-        $.ajax('@Url.Action("Surface", "Data")', { data: { side: i, StartCountForSurface: StartCountForSurface, EndCountForSurface: EndCountForSurface } })
+        $.ajax('@Url.Action("AddSurface", "Data")', { data: { side: i, StartCountForSurface: StartCountForSurface, EndCountForSurface: EndCountForSurface } })
             .success(function (e) {
                 $("#InsertPartial"+i+"").before(e);
             });
