@@ -68,11 +68,12 @@
         });
 
         HideRows();
+
         //Поиск
         $('#table').jqGrid('filterToolbar', {
             }
         );
-    
+        $(".ui-jqgrid-bdiv").append("<h1 style=\"margin-left: 700px;margin-top: 300px\">Выберите параметры поиска</h1>");
 
         //подсветка
         $('table tr').on("click", function () {
@@ -114,7 +115,7 @@
         //поиск
         $("#search").click(function () {
             HideRows();
-
+            $(".ui-jqgrid-bdiv>h1").remove();
             var sgrid = $("#table")[0];
             sgrid.triggerToolbar();
 
@@ -130,14 +131,15 @@
 
             //подсказка
             $('.ui-widget-content.jqgrow.ui-row-ltr').each(function (indx, element) {
-                
+                    
                     $(element).tooltipsy({
                         alignTo: 'cursor',
                         offset: [0, -85],
                         hideEvent: 'focusout',
                         content: '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
                             '+<a href="/Map/Index/'+Showonthemap[indx]+'">Показать на карте</a></br>' +
-                            '+@Html.ActionLink("Показать данные о конструкции","","")</br>' +
+                            
+                             '+<a href="/Data/Documents/'+Showonthemap[indx]+'">Показать данные о конструкции</a></br>' +
                             '+<a href="/Data/EditAdvertisingDesign/'+Showonthemap[indx]+'">Изменить данные о конструкции</a></br>' +
                             '+@Html.ActionLink("Удалить конструкцию","","")</br>' +
                             '</button>',
@@ -182,20 +184,21 @@
         padding: 2px;
     }
 </style>
-<div id ="Page">
-<h2>Таблица рекламных конструкций</h2>
-@{
-    if (role != "ReadOnly")
-    {
-        <p>
-            <b>@Html.ActionLink("+ Добавить новую рекламную конструкцию", "CreateAdvertisingDesign", new { type = "Billboard" }, new { @class = "btn btn-default" })</b>
-            <b> <input type="button" value="Искать" id="search" class="btn btn-default"></b>
+<div id="Page">
+ 
+    <h2>Таблица рекламных конструкций</h2>
+    @{
+        if (role != "ReadOnly")
+        {
+            <p>
+                <b>@Html.ActionLink("+ Добавить новую рекламную конструкцию", "CreateAdvertisingDesign", new {type = "Billboard"}, new {@class = "btn btn-default"})</b>
+                <b> <input type="button" value="Искать" id="search" class="btn btn-default"></b>
                 @*<b><a href="#" style="margin-right: 110px" id="AddNewAD">+ Новая рекламная конструкция</a></b>
             <b><a href="#" style="margin-right: 110px" id="EditStatusAD">+ Изменить статус рекламной конструкции</a></b>
             <b><a href="#" id="EditBillbord">+ Изменить существующую рекламную конструкцию</a></b>*@
-      </p>
+            </p>
+        }
     }
-}
 
     @*<div id="divForAddNewAD" style="margin-left: 30px; margin-right: 40px; margin-bottom: 10px; float: left; visibility: hidden">
         <b>@Html.ActionLink("+ Карточка рекламной конструкции", "CreateAdvertisingDesign", new {type = "Billboard"})</b>
@@ -210,9 +213,9 @@
     </div>*@
 
 
-    <table id="table" class="table-bordered" cellpadding="5"  >
+    <table id="table" class="table-bordered" cellpadding="5">
         <tr >
-            
+
             <th>Идентификационный_номер</th>
             <th>Собственник_рекламной_конструкции</th>
             <th>Вид_рекламной_конструкции</th>
@@ -226,8 +229,8 @@
             <th> №_договора_с_фин_упр</th>
             <th>№_паспорта_рекл</th>
             <th>Разреш_по</th>
-  
-         </tr>
+
+        </tr>
         @foreach (var i in Model)
         {
             foreach (var side in i.Sides)
@@ -235,12 +238,12 @@
                 SurfaceCOunt += side.Surfaces.Count;
                 foreach (var Surface in side.Surfaces)
                 {
-                    SurfaceSumm +=  Surface.Space;
+                    SurfaceSumm += Surface.Space;
                 }
-                
+
             }
             <tr title="test">
-                
+
                 <td>@i.UniqueNumber</td>
                 <td>@i.Owner.Name </td>
                 <td>@i.TypeOfAdvertisingStructure.Name</td>
@@ -253,8 +256,8 @@
                 <td>@i.Backlight</td>
                 <td>@i.C_ContractFinancialManagement </td>
                 <td>@i.C_PassportAdvertising</td>
-                <td>@i.EndDate.ToString().Substring(0, 10)</td>        
-                
+                <td>@i.EndDate.ToString().Substring(0, 10)</td>
+
             </tr>
             SurfaceCOunt = 0;
             SurfaceSumm = 0;

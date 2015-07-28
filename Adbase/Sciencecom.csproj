@@ -206,9 +206,6 @@
       <DependentUpon>ContructionsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\IllegalConstruction.cs">
-      <DependentUpon>ContructionsModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\IllegalConstructionPartial.cs" />
     <Compile Include="Models\Increment.cs">
       <DependentUpon>ContructionsModel.tt</DependentUpon>

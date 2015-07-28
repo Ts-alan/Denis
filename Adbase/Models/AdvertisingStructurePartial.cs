@@ -43,6 +43,7 @@ namespace Sciencecom.Models
 
      public class AdvertisingStructureConstructionMetaData
      {
+     
          [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
          [DataType(DataType.Date)]
          public Nullable<System.DateTime> TheDateOfTheContract { get; set; }

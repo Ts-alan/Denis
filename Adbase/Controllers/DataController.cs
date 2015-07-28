@@ -1211,192 +1211,59 @@ namespace Sciencecom.Controllers
 
         //[Authorize]
         //[HttpGet]
-        //public ActionResult Documents(int? id, string type)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    switch (type)
-        //    {
-        //        case "m":
-        //            {
-        //                ViewBag.Type = "Metal";
-        //                ViewBag.Id = id;
-        //                string src = "~/Images/Metal/" +id + "1.jpg";
-        //                string path = Server.MapPath(src);
-        //                if (System.IO.File.Exists(path))
-        //                {
-        //                    ViewBag.TSMO1 = true;
-        //                }
-        //                else
-        //                {
-        //                    ViewBag.TSMO1 = false;
-        //                }
-        //                src = "~/Images/Metal/" + id + "2.jpg";
-        //                path = Server.MapPath(src);
-        //                if (System.IO.File.Exists(path))
-        //                {
-        //                    ViewBag.TSMO2 = true;
-        //                }
-        //                else
-        //                {
-        //                    ViewBag.TSMO2 = false;
-        //                }
-        //                src = "~/Images/Metal/p" + id + ".jpg";
-        //                path = Server.MapPath(src);
-        //                if (System.IO.File.Exists(path))
-        //                {
-        //                    ViewBag.Photo = true;
-        //                }
-        //                else
-        //                {
-        //                    ViewBag.Photo = false;
-        //                }
-        //            }
-        //            break;
-        //        case "l":
-        //            {
-        //                ViewBag.Type = "Light";
-        //                ViewBag.Id = id;
-        //                string src = "~/Images/Light/passport" + id + "1.jpg";
-        //                string path = Server.MapPath(src);
-        //                if (System.IO.File.Exists(path))
-        //                {
-        //                    ViewBag.TSMO1 = true;
-        //                }
-        //                else
-        //                {
-        //                    ViewBag.TSMO1 = false;
-        //                }
-        //                src = "~/Images/Light/passport" + id + "2.jpg";
-        //                path = Server.MapPath(src);
-        //                if (System.IO.File.Exists(path))
-        //                {
-        //                    ViewBag.TSMO2 = true;
-        //                }
-        //                else
-        //                {
-        //                    ViewBag.TSMO2 = false;
-        //                }
-        //                src = "~/Images/Light/ispolkom" + id + "1.jpg";
-        //                path = Server.MapPath(src);
-        //                if (System.IO.File.Exists(path))
-        //                {
-        //                    ViewBag.NR1 = true;
-        //                }
-        //                else
-        //                {
-        //                    ViewBag.NR1 = false;
-        //                }
-        //                src = "~/Images/Light/ispolkom" + id + "2.jpg";
-        //                path = Server.MapPath(src);
-        //                if (System.IO.File.Exists(path))
-        //                {
-        //                    ViewBag.NR2 = true;
-        //                }
-        //                else
-        //                {
-        //                    ViewBag.NR2 = false;
-        //                }
-        //                src = "~/Images/Light/photo" + id + ".jpg";
-        //                path = Server.MapPath(src);
-        //                if (System.IO.File.Exists(path))
-        //                {
-        //                    ViewBag.Photo = true;
-        //                }
-        //                else
-        //                {
-        //                    ViewBag.Photo = false;
-        //                }
-        //            }
-        //            break;
-        //        case "ls":
-        //            {
-        //                ViewBag.Type = "LightOnStatement";
-        //                ViewBag.Id = id;
-        //                string src = "~/Images/Light/passport" + id + ".jpg";
-        //                string path = Server.MapPath(src);
-        //                if (System.IO.File.Exists(path))
-        //                {
-        //                    ViewBag.TSMO1 = true;
-        //                }
-        //                else
-        //                {
-        //                    ViewBag.TSMO1 = false;
-        //                }
-        //                src = "~/Images/Light/photo" + id + ".jpg";
-        //                path = Server.MapPath(src);
-        //                if (System.IO.File.Exists(path))
-        //                {
-        //                    ViewBag.TSMO2 = true;
-        //                }
-        //                else
-        //                {
-        //                    ViewBag.TSMO2 = false;
-        //                }
-        //                src = "~/Images/Light/z" + id + ".jpg";
-        //                path = Server.MapPath(src);
-        //                if (System.IO.File.Exists(path))
-        //                {
-        //                    ViewBag.Zajavlenie = true;
-        //                }
-        //                else
-        //                {
-        //                    ViewBag.Zajavlenie = false;
-        //                }
-        //            }
-        //            break;
-        //        case "b":
-        //            {
-        //                ViewBag.Type = "Billboard";
-        //                ViewBag.Id = id;
-        //                string src = "~/Images/Billboard/" + id + "passport.jpg";
-        //                string path = Server.MapPath(src);
-        //                if (System.IO.File.Exists(path))
-        //                {
-        //                    ViewBag.passport = true;
-        //                }
-        //                else
-        //                {
-        //                    ViewBag.passport = false;
-        //                }
-        //                src = "~/Images/Billboard/" + id + "photo.jpg";
-        //                path = Server.MapPath(src);
-        //                if (System.IO.File.Exists(path))
-        //                {
-        //                    ViewBag.photo = true;
-        //                }
-        //                else
-        //                {
-        //                    ViewBag.photo = false;
-        //                }
+        public ActionResult Documents(int? id, string type="BB")
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            switch (type)
+            {
+                case "BB":
+                    {
+                        //ViewBag.Type = "BB";
+                        //ViewBag.Id = id;
+                        //string src = "~/Images/Metal/" + id + "1.jpg";
+                        //string path = Server.MapPath(src);
+                        //if (System.IO.File.Exists(path))
+                        //{
+                        //    ViewBag.TSMO1 = true;
+                        //}
+                        //else
+                        //{
+                        //    ViewBag.TSMO1 = false;
+                        //}
+                        //src = "~/Images/Metal/" + id + "2.jpg";
+                        //path = Server.MapPath(src);
+                        //if (System.IO.File.Exists(path))
+                        //{
+                        //    ViewBag.TSMO2 = true;
+                        //}
+                        //else
+                        //{
+                        //    ViewBag.TSMO2 = false;
+                        //}
+                        //src = "~/Images/Metal/p" + id + ".jpg";
+                        //path = Server.MapPath(src);
+                        //if (System.IO.File.Exists(path))
+                        //{
+                        //    ViewBag.Photo = true;
+                        //}
+                        //else
+                        //{
+                        //    ViewBag.Photo = false;
+                        //}
+                    }
+                    break;
+       
+                default:
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-        //                List<Lookup> numberSurfaces = new List<Lookup>();
-        //                Billboards1 mc=context.Billboards1.Single(a=>a.Id_show==id);
-        //                foreach (var Side in mc.Sides)
-        //                {
-        //                     foreach (var surface in Side.Surfaces)
-        //                    {
-        //                        numberSurfaces.Add(new Lookup(){Key  = Side.Name,Value = "/Images/Billboard/surfaces/" + surface.Id + ".jpg"});   
-        //                    }
-        //                }
-        //                Lookup<string, string> LookUp =
-        //                    (Lookup<string, string>)numberSurfaces.ToLookup(p => p.Key, p => p.Value);
-        //                ViewBag.Surfaces = LookUp;
-        //            }
-        //        break;
-        //        case "doc":
-        //        {
-        //            ViewBag.Type = "Balyn";
-        //            ViewBag.Id = id;
-        //        }
-        //        break;
-        //        default:
-        //            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    return View();
-        //}
+            }
+
+            AdvertisingStructure mc = context.AdvertisingStructures.Single(a => a.Id_show == id);
+            return View(mc);
+        }
         //Щит
         [Authorize]
         [HttpGet]
@@ -1692,7 +1559,7 @@ namespace Sciencecom.Controllers
             [ModelBinder(typeof (CustomModelBinderForSide))] List<Side> Sides,
             [ModelBinder(typeof (CustomModelBinderForSurface))] List<Surface> surfaces,
             HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides,
-            HttpPostedFileBase Scan1SidesWithFinancialManagement, List<HttpPostedFileBase> SeveralPhoto,
+            HttpPostedFileBase Scan1SidesWithFinancialManagement, 
             int CountSize = 1)
             {
                
