@@ -1768,24 +1768,7 @@ namespace Sciencecom.Controllers
                     ScanPassport_2Sides.SaveAs(path);
                 }
 
-                if (SeveralPhoto != null)
-                {
-                    for (int i = 0; i < Sides.Count; i++)
-                    {
-                        if (SeveralPhoto[i] != null)
-                        {
-                            string src = "~/Images/Sides/" + Sides[i].Id + ".jpg";
-                            FileInfo info1 = new FileInfo(src);
-                            if (info1.Exists)
-                            {
-                                info1.Delete();
-                            }
-                            string path = Server.MapPath(src);
-                            SeveralPhoto[i].SaveAs(path);
-                        }
-                    }
 
-                }
                  
                return RedirectToAction("AdvertisingDesign");
 
