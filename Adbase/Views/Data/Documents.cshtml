@@ -53,10 +53,7 @@
 
     $(document).ready(function() {
 
-        ////отключение валидации
-        $.validator.methods.number = function (value, element) {
-            return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
-        }
+      
         //накручивание данных в поля
         window.onload = SetCountSize();
         $("[identificationfordirectionside]").each(function(indx, element) {
@@ -135,29 +132,7 @@
 
             }
         }
-        //Навешивание валидации
-        $('[name="DirectionSide"]').each(function(indx, element) {
-            $(element).attr("name", "[" + indx + "].IdentificationForDirectionSide");
-        });
-        $('[action="/Data/CreateAdvertisingDesign"]').validate({
-            rules: {
-                '[0].IdentificationForDirectionSide': "required",
-                '[1].IdentificationForDirectionSide': "required",
-                '[2].IdentificationForDirectionSide': "required",
-                '[3].IdentificationForDirectionSide': "required",
-                '[4].IdentificationForDirectionSide': "required",
-                '[5].IdentificationForDirectionSide': "required",
-                '[6].IdentificationForDirectionSide': "required",
-                '[7].IdentificationForDirectionSide': "required",
-                '[8].IdentificationForDirectionSide': "required"
-            }
-            //messages: {
-            //    '[0].IdentificationForDirectionSide': "test",
-            //    '[1].IdentificationForDirectionSide': "brak uzytkownika"
-            //    }
-
-        }
-        );
+ 
         $('[IdentificationForDirectionSide]').each(function (indx, element) {
 
             $(element).rules('add', {
@@ -166,25 +141,7 @@
         }
         );
 
-        $('[action="/Data/CreateAdvertisingDesign"]').validate({
-            rules: {
-                'CountSurfuce1': "required",
-                'CountSurfuce2': "required",
-                'CountSurfuce3': "required",
-                'CountSurfuce4': "required",
-                'CountSurfuce5': "required",
-                'CountSurfuce6': "required",
-                'CountSurfuce7': "required",
-                'CountSurfuce8': "required"
-
-            }
-            //messages: {
-            //    '[0].DirectionSide': "test",
-            //    '[1].DirectionSide': "brak uzytkownika"
-            //}
-
-        }
-        );
+       
         $('[IdentificationForCountSide]').each(function (indx, element) {
 
             $(element).rules('add', {
@@ -192,9 +149,7 @@
             });
         }
         );
-        //другое решение не тестил
-        $('[name="DirectionSide"]').data('validator', null);
-        $.validator.unobtrusive.parse('[name="DirectionSide"]');
+
 
     }
 
@@ -213,21 +168,7 @@
                 $(element)[0].value =ArrayOfSides[indx].Identification_id;
                 $(element).attr("name", "[" + indx + "].IdentificationForIdentificationSurface");
             });
-            $('[action="/Data/CreateAdvertisingDesign"]').validate({
-                rules: {
-                    '[0].IdentificationForIdentificationSurface': "required",
-                    '[1].IdentificationForIdentificationSurface': "required",
-                    '[2].IdentificationForIdentificationSurface': "required",
-                    '[3].IdentificationForIdentificationSurface': "required",
-                    '[4].IdentificationForIdentificationSurface': "required",
-                    '[5].IdentificationForIdentificationSurface': "required",
-                    '[6].IdentificationForIdentificationSurface': "required",
-                    '[7].IdentificationForIdentificationSurface': "required",
-                    '[8].IdentificationForIdentificationSurface': "required"
-
-                }
-
-            });
+            
             $('[IdentificationForIdentificationSurface]').each(function (indx, element) {
 
                 $(element).rules('add', {
@@ -245,34 +186,19 @@
 
         $.ajax('@Url.Action("EditSurface", "Data")', { async: true, data: { side: i, StartCountForSurface: StartCountForSurface, EndCountForSurface: EndCountForSurface } })
             .success(function(e) {
-                console.log(e);
+                
                 $("#InsertPartial" + i + "").before(e);
                 CalculationAS();
-                ////отключение валидации
-                $.validator.methods.number = function (value, element) {
-                    return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
-                }
+                $('[data-val-number]').each(function(indx, element) {
+                    $(element).attr('readonly',"");
+                });
             }).error(function(e) {
                 alert("ошибка кукареку");
             });
     }
-    //Редактировать поверхность+
-    function EditSurface(i) {
-        SetValidate(i);
+   
 
-        $.ajax('@Url.Action("AddSurface", "Data")', { async: true, data: { side: i, StartCountForSurface: StartCountForSurface, EndCountForSurface: EndCountForSurface } })
-            .success(function(e) {
-                console.log(e);
-                $("#InsertPartial" + i + "").before(e);
-                CalculationAS();
-                ////отключение валидации
-                $.validator.methods.number = function (value, element) {
-                    return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
-                }
-            }).error(function(e) {
-                alert("ошибка кукареку");
-            });
-    }
+
     //выщитывание площади для каждой поверхности
     function CalculationOfTheArea(j) {
 
@@ -324,7 +250,7 @@
 
         <div class="form-group">
             <label for="UniqueNumber">Идентификационный номер</label>
-            @Html.EditorFor(model => model.UniqueNumber)
+            @Html.EditorFor(model => model.UniqueNumber, new { htmlAttributes = new { @readonly = "" } })
   
         </div>
         <br>
@@ -344,7 +270,7 @@
 
         <div class="form-group">
             <label for="Owner">Собственник места размещения</label>
-            @Html.EditorFor(model => model.OwnerPlacements)
+            @Html.EditorFor(model => model.OwnerPlacements, new { htmlAttributes = new { @readonly = "" } })
    
         </div>
 
@@ -356,19 +282,19 @@
         <div class="form-group" style="margin-left: -15px">
             <label for="Locality">Нас. пункт</label>
             @Html.DropDownListFor(a => a.Locality_id, new SelectList(Locality, "id", "NameLocality"), null, new { disabled ="" })
-            @Html.ValidationMessageFor(model => model.Locality_id)
+           
         </div>
 
         <div class="form-group">
             <label for="Street1">Улица</label>
-            @Html.EditorFor(model => model.Street1)
-            @Html.ValidationMessageFor(model => model.Street1)
+            @Html.EditorFor(model => model.Street1, new { htmlAttributes = new { @readonly = "" } })
+
         </div>
 
         <div class="form-group">
             <label for="House1">Дом</label>
-            @Html.EditorFor(model => model.House1)
-            @Html.ValidationMessageFor(model => model.House1)
+            @Html.EditorFor(model => model.House1, new { htmlAttributes = new { @readonly = "" } })
+           
         </div>
 
 
@@ -378,14 +304,14 @@
     <div class="form-inline">
         <div class="form-group">
             <label for="Street2">Ближайшая улица по ходу движения</label>
-            @Html.EditorFor(model => model.Street2)
-            @Html.ValidationMessageFor(model => model.Street2)
+            @Html.EditorFor(model => model.Street2, new { htmlAttributes = new { @readonly = "" } })
+           
         </div>
 
         <div class="form-group">
             <label for="FromStreet">Со стороны улицы</label>
-            @Html.EditorFor(model => model.FromStreet)
-            @Html.ValidationMessageFor(model => model.FromStreet)
+            @Html.EditorFor(model => model.FromStreet, new { htmlAttributes = new { @readonly = "" } })
+        
         </div>
     </div>
 
@@ -394,7 +320,7 @@
         <div class="form-group">
             <label for="TheElementOfTheRoadNetwork">Элемент улично-дорожной сети</label>
             @Html.DropDownListFor(a => a.TheElementOfTheRoadNetwork_id, new SelectList(ListTypeElementOfTheRoadNetworkName, "id", "Value"), null, new { disabled = "" })
-            @Html.ValidationMessageFor(a => a.TheElementOfTheRoadNetwork_id)
+           
         </div>
 
     </div>
@@ -406,79 +332,56 @@
         <div class="form-group">
 
             <label for="ViewBad_Id">Вид заявки</label>
-            @Html.DropDownListFor(model => model.ViewBad_Id, new SelectList(ViewBids, "id", "Name"))
-            @Html.ValidationMessageFor(model => model.ViewBad_Id)
+            @Html.DropDownListFor(model => model.ViewBad_Id, new SelectList(ViewBids, "id", "Name"), null, new { disabled = "" })
+          
 
 
             <label for="DateOfReceiptOfTheApplication">Дата подачи заявки</label>
-            @Html.EditorFor(model => model.DateOfReceiptOfTheApplication)
-            @Html.ValidationMessageFor(model => model.DateOfReceiptOfTheApplication)
+            @Html.EditorFor(model => model.DateOfReceiptOfTheApplication, new { htmlAttributes = new { @readonly = "" } })
+           
 
         </div>
         <div class="form-group" style="margin-bottom: 5px">
 
             <label for="C_PassportAdvertising">№ паспорта рекламы</label>
-            @Html.EditorFor(model => model.C_PassportAdvertising)
-            @Html.ValidationMessageFor(model => model.C_PassportAdvertising)
+            @Html.EditorFor(model => model.C_PassportAdvertising, new { htmlAttributes = new { @readonly = "" } })
+         
 
 
             <label for="DateOfTakenPassport">Дата выдачи паспорта</label>
-            @Html.EditorFor(model => model.DateOfTakenPassport)
-            @Html.ValidationMessageFor(model => model.DateOfTakenPassport)
+            @Html.EditorFor(model => model.DateOfTakenPassport, new { htmlAttributes = new { @readonly = "" } })
+            
 
         </div>
 
         <div class="form-group" style="margin-bottom: 5px">
             <label for="StartDate">разреш с</label>
-            @Html.EditorFor(model => model.StartDate)
-            @Html.ValidationMessageFor(model => model.StartDate)
+            @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @readonly = "" } })
+            
 
             <label for="EndDate">разреш по</label>
-            @Html.EditorFor(model => model.EndDate)
-            @Html.ValidationMessageFor(model => model.EndDate)
+            @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @readonly = "" } })
+            
         </div>
 
     </div>
 
-    <div class="form-inline">
 
-        <div class="form-group">
-            <label for="ScanPassport_1Sides">Скан паспорта (стор 1)</label>
-            <input type="file" name="ScanPassport_1Sides" accept="image/jpeg" /><br />
-
-            @Html.Raw("Не более 1 МБ")
-        </div>
-
-        <div class="form-group">
-            <label for="ScanPassport_2Sides">Скан паспорта (стор 2)</label>
-            <input type="file" name="ScanPassport_2Sides" accept="image/jpeg" /><br />
-
-            @Html.Raw("Не более 1 МБ")
-        </div>
-
-    </div>
 
     <div class="form-horizontal">
 
         <div class="form-group" style="margin-bottom: 5px">
             <label for="C_ContractFinancialManagement">№ договора с финансовым управлением</label>
-            @Html.EditorFor(model => model.C_ContractFinancialManagement)
-            @Html.ValidationMessageFor(model => model.C_ContractFinancialManagement)
+            @Html.EditorFor(model => model.C_ContractFinancialManagement, new { htmlAttributes = new { @readonly = "" } })
+          
 
             <label for="TheDateOfTheContract">Дата договора</label>
-            @Html.EditorFor(model => model.TheDateOfTheContract)
-            @Html.ValidationMessageFor(model => model.TheDateOfTheContract)
+            @Html.EditorFor(model => model.TheDateOfTheContract, new { htmlAttributes = new { @readonly = "" } })
+            
 
         </div>
 
-        <div class="form-group">
 
-            <label for="Scan1SidesWithFinancialManagement">Скан 1 страницы договора с финанаосвым управлением</label>
-            <input type="file" name="Scan1SidesWithFinancialManagement" accept="image/jpeg" /><br />
-
-            @Html.Raw("Не более 1 МБ")
-
-        </div>
     </div>
 
     <h3> 4.Описание рекламной конструкции</h3>
@@ -487,14 +390,14 @@
         <hr />
         <div class="form-group">
             <label for="PlannedInstallationDate">Планируемая дата установки</label>
-            @Html.EditorFor(model => model.PlannedInstallationDate)
-            @Html.ValidationMessageFor(model => model.PlannedInstallationDate)
+            @Html.EditorFor(model => model.PlannedInstallationDate, new { htmlAttributes = new { @readonly = "" } })
+        
         </div>
 
         <div class="form-group">
             <label for="DateOfActualInstallation">Дата фактической установки</label>
-            @Html.EditorFor(model => model.DateOfActualInstallation)
-            @Html.ValidationMessageFor(model => model.DateOfActualInstallation)
+            @Html.EditorFor(model => model.DateOfActualInstallation, new { htmlAttributes = new { @readonly = "" } })
+           
         </div>
 
 
@@ -503,21 +406,21 @@
     <div class="form-horizontal">
         <div class="form-group">
             <label for="DateDismantling">Дата демонтажа</label>
-            @Html.EditorFor(model => model.DateDismantling)
-            @Html.ValidationMessageFor(model => model.DateDismantling)
+            @Html.EditorFor(model => model.DateDismantling, new { htmlAttributes = new { @readonly = "" } })
+        
         </div>
     </div>
     <div class="form-inline">
 
         <div class="form-group">
             <label for="CommentOwner">Подсветка</label>
-            @Html.DropDownListFor(a => a.Backlight, new SelectList(new[] { "", "Есть", "Нет" }))
-            @Html.ValidationMessageFor(model => model.Backlight)
+            @Html.DropDownListFor(a => a.Backlight, new SelectList(new[] { "", "Есть", "Нет" }), null, new { disabled = "" })
+            
         </div>
 
         <div class="form-group">
             <label for="CommentOwner">Комментарий</label>
-            @Html.EditorFor(model => model.CommentOwner)
+            @Html.EditorFor(model => model.CommentOwner, new { htmlAttributes = new { @readonly = "" } })
         </div>
 
     </div>
@@ -536,57 +439,57 @@
     </div>
     <div id="InsertSide"></div>
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Изменить" class="btn btn-default" style="margin: 30px" />
-        </div>
-    </div>
+
 
 }
 
 
-@if (ViewBag.Type == "Metal")
+@if (ViewBag.Type == "BB")
 { 
     <div id="image">
-    @if (ViewBag.TSMO1)
+    @if (ViewBag.Scan1Sides)
     {
         <p>
-            <h3>@Html.Raw("Паспорт ТСМО:")</h3><br />
+            <h3>@Html.Raw("Скан 1 страницы договора с финанаосвым управлением ")</h3><br />
         </p>
-        string image = "/Images/Metal/" + ViewBag.Id + "1.jpg";
+        string image = "/Images/Scan1SidesWithFinancialManagement/" + ViewBag.Id +
+                             "FinancialManagement.jpg";
         <p>
           <a href=@image ><img src=@image height="500"></a><br />
         </p>
     }
     else
     {
-        @Html.Raw("Страница 1 паспорта ТСМО отсутствует.")<br />
+        @Html.Raw("Скан 1 страницы договора с финанаосвым управлением отсутствует.")<br />
     }
-    @if (ViewBag.TSMO2)
+    @if (ViewBag.ScanPassport_1)
     {
-        string image = "/Images/Metal/" + ViewBag.Id + "2.jpg";;
+        <p>
+            <h3>@Html.Raw("Скан паспорта (стор 1) ")</h3><br />
+        </p>
+        string image = "/Images/ScanPassport_1Sides/" + ViewBag.Id + "passport.jpg";
         <p>
            <a href=@image ><img src=@image height = "500"></a><br />
         </p>
     }
     else
     {
-        @Html.Raw("Страница 2 паспорта ТСМО отсутствует")<br />
+        @Html.Raw("Скан паспорта (стор 1) отсутствует")<br />
     }
-        <p>
-            <h3>@Html.Raw("Фотография:")</h3><br />
-        </p>
-    @if (ViewBag.Photo)
+
+    @if (ViewBag.ScanPassport_2)
     {
-         
-        string image = "/Images/Metal/p" + ViewBag.Id + ".jpg"; ;
+        <p>
+            <h3>@Html.Raw("Скан паспорта (стор 2) ")</h3><br />
+        </p>
+        string image = "/Images/ScanPassport_2Sides/" + ViewBag.Id + "ScanPassport_2Sides.jpg"; ;
         <p>
            <a href=@image ><img src=@image height="500"></a><br />
         </p>
     }
     else
     {
-        @Html.Raw("Фото объекта отсутствует.")<br />
+        @Html.Raw("Скан паспорта (стор 2) отсутствует.")<br />
     }
     </div>
 }
