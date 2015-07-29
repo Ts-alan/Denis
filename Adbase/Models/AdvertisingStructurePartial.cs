@@ -126,8 +126,6 @@ namespace Sciencecom.Models
 
        [Required(ErrorMessage = "Выберете значение")]
        public string Code { get; set; }
-
-
     }
 
 

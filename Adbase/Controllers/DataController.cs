@@ -1213,7 +1213,16 @@ namespace Sciencecom.Controllers
         //[HttpGet]
         public ActionResult Documents(int? id, string type="BB")
         {
-            var GetId = context.AdvertisingStructures.Single(a => a.Id_show == id).Id;
+            var data = context.AdvertisingStructures.Single(a => a.Id_show == id);
+            List<Surface> surfaces = new List<Surface>();
+            foreach (var sides in data.Sides.OrderBy(a => a.Name))
+            {
+                foreach (var surface in sides.Surfaces)
+                {
+                    surfaces.Add(surface);
+                }
+            }
+            TempData["surface"] = surfaces;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -1223,8 +1232,8 @@ namespace Sciencecom.Controllers
                 case "BB":
                     {
                         ViewBag.Type = "BB";
-                        ViewBag.Id = GetId;
-                        string src = "~/Images/Scan1SidesWithFinancialManagement/" + GetId +
+                        ViewBag.Id = data.Id;
+                        string src = "~/Images/Scan1SidesWithFinancialManagement/" + data.Id +
                              "FinancialManagement.jpg";
                         string path = Server.MapPath(src);
                         if (System.IO.File.Exists(path))
@@ -1235,7 +1244,7 @@ namespace Sciencecom.Controllers
                         {
                             ViewBag.Scan1Sides = false;
                         }
-                        src = "~/Images/ScanPassport_1Sides/" + GetId + "passport.jpg";
+                        src = "~/Images/ScanPassport_1Sides/" + data.Id + "passport.jpg";
                         path = Server.MapPath(src);
                         if (System.IO.File.Exists(path))
                         {
@@ -1245,7 +1254,7 @@ namespace Sciencecom.Controllers
                         {
                             ViewBag.ScanPassport_1 = false;
                         }
-                        src = "~/Images/ScanPassport_2Sides/" + GetId + "ScanPassport_2Sides.jpg";
+                        src = "~/Images/ScanPassport_2Sides/" + data.Id + "ScanPassport_2Sides.jpg";
                         path = Server.MapPath(src);
                         if (System.IO.File.Exists(path))
                         {
@@ -1529,15 +1538,8 @@ namespace Sciencecom.Controllers
             {
                 return HttpNotFound();
             }
-            List<Surface> surfaces = new List<Surface>();
-            foreach (var sides in mc.Sides.OrderBy(a=>a.Name))
-            {
-                foreach (var surface in sides.Surfaces)
-                {
-                    surfaces.Add(surface);
-                }
-            }
-            TempData["surface"] = surfaces;
+
+           
             return View(mc);
         }
 
