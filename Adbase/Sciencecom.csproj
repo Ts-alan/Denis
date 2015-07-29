@@ -1425,7 +1425,7 @@
     <Folder Include="Images\ScanPassport_1Sides\" />
     <Folder Include="Images\ScanPassport_2Sides\" />
     <Folder Include="Images\Sides\" />
-    <Folder Include="Views\BackEndServices\" />
+    <Folder Include="Views\BackEndService\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

@@ -17,6 +17,7 @@
     int SurfaceCOunt = 0;
     int SurfaceSumm = 0;
     int id = 1;
+    
 }
 
 
@@ -30,6 +31,8 @@
         var Showonthemap=@Html.Raw(JsonConvert.SerializeObject(Model.Select(a=>a.Id_show), Formatting.Indented, new JsonSerializerSettings
         {ReferenceLoopHandling = ReferenceLoopHandling.Ignore}));
 
+
+
         function HideRows() {
             $('.ui-widget-content.jqgrow.ui-row-ltr').each(
                 function (indx, element) {
@@ -42,10 +45,10 @@
             height: 700,
             colNames: [
                 "Идентификационный номер", "Собственник рекламной конструкции", "Вид рекламной конструкции",
-                "Населенный пункт","Улица", "Дом", "Количество сторон", "Количестов поверхностей", 
+                "Населенный пункт","Улица", "Дом", "Количество сторон", "Количестов поверхностей",
                 "Площадь рекламной конструкции","Подстветка", "№ договора с фин упр","№ паспорта рекл",
                 "Разреш по"
-               ],
+            ],
             forceFit:false,
 
             cmTemplate:{"resizable": false,sortable:false},
@@ -63,7 +66,7 @@
                 { name: "№_договора_с_фин_упр", width: 20, align: "center" },
                 { name: "№_паспорта_рекл", width: 20, align: "center" },
                 { name: "Разреш_по", width: 20, align: "center" }
-                
+
             ]
         });
 
@@ -71,7 +74,7 @@
 
         //Поиск
         $('#table').jqGrid('filterToolbar', {
-            }
+        }
         );
         $(".ui-jqgrid-bdiv").append("<h1 style=\"margin-left: 700px;margin-top: 300px\">Выберите параметры поиска</h1>");
 
@@ -104,17 +107,51 @@
         $('#EditBillbord').click(function () {
             if ($Tablebacklight != "undefined") {
                 var IdGuid = $Tablebacklight.children("td:last").children().text();
-                $.get('@Url.Action("EditAdvertisingDesign", "Data")', { id: IdGuid }).success(function (result) {
+                $.get('@Url.Action("EditAdvertisingDesign", "Data")', { id: IdGuid }).success(function(result) {
                     $("#Page").html(result);
-                }).error(function () {
+                }).error(function() {
                     alert("что то пошло не так");
                 });
             }
         });
 
-        //поиск
+        //собираем данные из поиска
+        function PullData() {
+            var collectionMap =[];
+            $(".ui-state-default .ui-th-ltr input").each(function(indx, element) {
+                collectionMap.push({ id: $(element).attr("id"), value:  $(element).val().toString() });
+            });
+            
+            var test = JSON.stringify(collectionMap);
+       
+
+
+            $.ajax({
+                url: '@Url.Action("SaveSearch", "BackEndServices")',
+                data: { collectionMap: test },
+                type: 'POST',
+                success: function(e) {
+                    //alert(e);
+                }
+            });
+        }
+
+        function SetDate() {
+            var collectionMap =
+                if(Html.Raw(Session["TT"])==""),;
+
+            $(".ui-state-default .ui-th-ltr input").each(function(indx, element) {
+                $(element).val(collectionMap[indx].value);
+               
+            });
+
+        }
+
         $("#search").click(function () {
             HideRows();
+            PullData();
+
+
             $(".ui-jqgrid-bdiv>h1").remove();
             var sgrid = $("#table")[0];
             sgrid.triggerToolbar();
@@ -131,37 +168,37 @@
 
             //подсказка
             $('.ui-widget-content.jqgrow.ui-row-ltr').each(function (indx, element) {
-                    
-                    $(element).tooltipsy({
-                        alignTo: 'cursor',
-                        offset: [0, -85],
-                        hideEvent: 'focusout',
-                        content: '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
-                            '+<a href="/Map/Index/'+Showonthemap[indx]+'">Показать на карте</a></br>' +
-                            
-                             '+<a href="/Data/Documents/'+Showonthemap[indx]+'">Показать данные о конструкции</a></br>' +
-                            '+<a href="/Data/EditAdvertisingDesign/'+Showonthemap[indx]+'">Изменить данные о конструкции</a></br>' +
-                            '+@Html.ActionLink("Удалить конструкцию","","")</br>' +
-                            '</button>',
-                        show: function (e, $el) {
-                            $el.show(100);
-                        },
-                        hide: function (e, $el) {
-       
-                        },
-                        delay: 200,
-                        className: 'tooltipsy',
-                        css: {}
-                    });
-                }
+
+                $(element).tooltipsy({
+                    alignTo: 'cursor',
+                    offset: [0, -85],
+                    hideEvent: 'focusout',
+                    content: '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
+                        '+<a href="/Map/Index/'+Showonthemap[indx]+'">Показать на карте</a></br>' +
+
+                         '+<a href="/Data/Documents/'+Showonthemap[indx]+'">Показать данные о конструкции</a></br>' +
+                        '+<a href="/Data/EditAdvertisingDesign/'+Showonthemap[indx]+'">Изменить данные о конструкции</a></br>' +
+                        '+@Html.ActionLink("Удалить конструкцию","","")</br>' +
+                        '</button>',
+                    show: function (e, $el) {
+                        $el.show(100);
+                    },
+                    hide: function (e, $el) {
+
+                    },
+                    delay: 200,
+                    className: 'tooltipsy',
+                    css: {}
+                });
+            }
             );
         });
-      
+        window.onload = SetDate();
     });
 
     $("html").dblclick(function (e) {
 
-   
+
         if (document.activeElement.getAttribute("class") != "HideClass") {
             $SaveIdForHideTooltip = document.activeElement.getAttribute("id")-1;
         }
@@ -169,7 +206,7 @@
 
     $("html").click(function () {
         var info = document.activeElement;
-     
+
         if (info.getAttribute("class") != "HideClass") {
             $('[hide=' + $SaveIdForHideTooltip + ']').parent().parent().hide();
 
@@ -177,30 +214,30 @@
     });
 </script>
 @*чтобы jqgtid разбивал на несколько строк*@
-<style type="text/css" media="screen">
-    th.ui-th-column div {
-        white-space: normal !important;
-        height: auto !important;
-        padding: 2px;
-    }
-</style>
-<div id="Page">
- 
-    <h2>Таблица рекламных конструкций</h2>
-    @{
+        <style type="text/css" media="screen">
+            th.ui-th-column div {
+                white-space: normal !important;
+                height: auto !important;
+                padding: 2px;
+            }
+        </style>
+        <div id="Page">
+
+            <h2>Таблица рекламных конструкций</h2>
+        @{
         if (role != "ReadOnly")
         {
             <p>
-                <b>@Html.ActionLink("+ Добавить новую рекламную конструкцию", "CreateAdvertisingDesign", new {type = "Billboard"}, new {@class = "btn btn-default"})</b>
-                <b> <input type="button" value="Поиск" id="search" class="btn btn-default"></b>
-                @*<b><a href="#" style="margin-right: 110px" id="AddNewAD">+ Новая рекламная конструкция</a></b>
+                        <b>@Html.ActionLink("+ Добавить новую рекламную конструкцию", "CreateAdvertisingDesign", new {type = "Billboard"}, new {@class = "btn btn-default"})</b>
+                        <b> <input type="button" value="Поиск" id="search" class="btn btn-default"></b>
+        @*<b><a href="#" style="margin-right: 110px" id="AddNewAD">+ Новая рекламная конструкция</a></b>
             <b><a href="#" style="margin-right: 110px" id="EditStatusAD">+ Изменить статус рекламной конструкции</a></b>
             <b><a href="#" id="EditBillbord">+ Изменить существующую рекламную конструкцию</a></b>*@
-            </p>
+                    </p>
         }
     }
 
-    @*<div id="divForAddNewAD" style="margin-left: 30px; margin-right: 40px; margin-bottom: 10px; float: left; visibility: hidden">
+        @*<div id="divForAddNewAD" style="margin-left: 30px; margin-right: 40px; margin-bottom: 10px; float: left; visibility: hidden">
         <b>@Html.ActionLink("+ Карточка рекламной конструкции", "CreateAdvertisingDesign", new {type = "Billboard"})</b>
         <b>@Html.ActionLink("+ Подать заявку на согласование паспорта рекламы", "CreateAdvertisingDesign", new {type = "Billboard"}, new {style = "display: block"})</b>
 
@@ -213,25 +250,25 @@
     </div>*@
 
 
-    <table id="table" class="table-bordered" cellpadding="5">
-        <tr >
+            <table id="table" class="table-bordered" cellpadding="5">
+                <tr >
 
-            <th>Идентификационный_номер</th>
-            <th>Собственник_рекламной_конструкции</th>
-            <th>Вид_рекламной_конструкции</th>
-            <th>Населенный_пункт</th>
-            <th>Улица</th>
-            <th>Дом</th>
-            <th> Количество_сторон</th>
-            <th> Количестов_поверхностей</th>
-            <th>Площадь_рекламной_конструкции</th>
-            <th>Подстветка</th>
-            <th> №_договора_с_фин_упр</th>
-            <th>№_паспорта_рекл</th>
-            <th>Разреш_по</th>
+                    <th>Идентификационный_номер</th>
+                    <th>Собственник_рекламной_конструкции</th>
+                    <th>Вид_рекламной_конструкции</th>
+                    <th>Населенный_пункт</th>
+                    <th>Улица</th>
+                    <th>Дом</th>
+                    <th> Количество_сторон</th>
+                    <th> Количестов_поверхностей</th>
+                    <th>Площадь_рекламной_конструкции</th>
+                    <th>Подстветка</th>
+                    <th> №_договора_с_фин_упр</th>
+                    <th>№_паспорта_рекл</th>
+                    <th>Разреш_по</th>
 
-        </tr>
-        @foreach (var i in Model)
+                </tr>
+                @foreach (var i in Model)
         {
             foreach (var side in i.Sides)
             {
@@ -244,28 +281,28 @@
             }
             <tr title="test">
 
-                <td>@i.UniqueNumber</td>
-                <td>@i.Owner.Name </td>
-                <td>@i.TypeOfAdvertisingStructure.Name</td>
-                <td>@i.Locality.NameLocality</td>
-                <td>@i.Street1</td>
-                <td>@i.House1</td>
-                <td>@i.Sides.Count</td>
-                <td>@SurfaceCOunt</td>
-                <td>@SurfaceSumm</td>
-                <td>@i.Backlight</td>
-                <td>@i.C_ContractFinancialManagement </td>
-                <td>@i.C_PassportAdvertising</td>
-                <td>@i.EndDate.ToString().Substring(0, 10)</td>
+                        <td>@i.UniqueNumber</td>
+                        <td>@i.Owner.Name </td>
+                        <td>@i.TypeOfAdvertisingStructure.Name</td>
+                        <td>@i.Locality.NameLocality</td>
+                        <td>@i.Street1</td>
+                        <td>@i.House1</td>
+                        <td>@i.Sides.Count</td>
+                        <td>@SurfaceCOunt</td>
+                        <td>@SurfaceSumm</td>
+                        <td>@i.Backlight</td>
+                        <td>@i.C_ContractFinancialManagement </td>
+                        <td>@i.C_PassportAdvertising</td>
+                        <td>@i.EndDate.ToString().Substring(0, 10)</td>
 
-            </tr>
+                    </tr>
             SurfaceCOunt = 0;
             SurfaceSumm = 0;
         }
 
-    </table>
-</div>
-    <hr />
-    <footer>
-        <p>&copy; @DateTime.Now.Year – <a href="#" >OnCloud</a> @*| @Html.ActionLink("Лицензионное соглашение", "License", "Home")*@</p>
-    </footer>
+            </table>
+        </div>
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year – <a href="#" >OnCloud</a> @*| @Html.ActionLink("Лицензионное соглашение", "License", "Home")*@</p>
+            </footer>
