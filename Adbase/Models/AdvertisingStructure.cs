@@ -43,12 +43,13 @@ namespace Sciencecom.Models
         public Nullable<System.Guid> TheElementOfTheRoadNetwork_id { get; set; }
         public Nullable<System.Guid> Status_Id { get; set; }
         public string CommentOwner { get; set; }
-        public string Backlight { get; set; }
+        public Nullable<System.Guid> Backlight_Id { get; set; }
         public Nullable<System.Guid> PropertyLocation_id { get; set; }
         public string OwnerPlacements { get; set; }
         public Nullable<System.DateTime> TheDateOfTheContract { get; set; }
         public Nullable<System.Guid> ViewBad_Id { get; set; }
     
+        public virtual Backlight Backlight { get; set; }
         public virtual Locality Locality { get; set; }
         public virtual PropertyLocation PropertyLocation { get; set; }
         public virtual Status Status { get; set; }

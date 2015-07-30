@@ -120,9 +120,9 @@
             $(".ui-state-default .ui-th-ltr input").each(function(indx, element) {
                 collectionMap.push({ id: $(element).attr("id"), value:  $(element).val().toString() });
             });
-            
+
             var test = JSON.stringify(collectionMap);
-       
+
 
 
             $.ajax({
@@ -159,10 +159,9 @@
                     hideEvent: 'focusout',
                     content: '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
                         '+<a href="/Map/Index/'+Showonthemap[indx]+'">Показать на карте</a></br>' +
-
-                         '+<a href="/Data/Documents/'+Showonthemap[indx]+'">Показать данные о конструкции</a></br>' +
+                        '+<a href="/Data/Documents/'+Showonthemap[indx]+'">Показать данные о конструкции</a></br>' +
                         '+<a href="/Data/EditAdvertisingDesign/'+Showonthemap[indx]+'">Изменить данные о конструкции</a></br>' +
-                        '+@Html.ActionLink("Удалить конструкцию","","")</br>' +
+                        '+<a  href="#DeleteStructures"  role="button" data-toggle="modal">Удалить конструкцию</a></br>' +
                         '</button>',
                     show: function (e, $el) {
                         $el.show(100);
@@ -175,28 +174,28 @@
                     css: {}
                 });
             }
-            ); 
+            );
         }
         function SetDate() {
             var collectionMap =JSON.parse('@(Html.Raw(Session["collectionMap"]))') ;
-           
+
             if(collectionMap!=""){
-            $(".ui-state-default .ui-th-ltr input").each(function(indx, element) {
-                $(element).val(collectionMap[indx].value);
-                
-            });
+                $(".ui-state-default .ui-th-ltr input").each(function(indx, element) {
+                    $(element).val(collectionMap[indx].value);
+
+                });
                 FunctionaFortable();
             }
 
         }
 
-       
-       
+
+
         $("#search").click(function () {
             HideRows();
             PullData();
             FunctionaFortable();
-         });
+        });
         window.onload = SetDate();
     });
 
@@ -218,61 +217,61 @@
     });
 </script>
 @*чтобы jqgtid разбивал на несколько строк*@
-        <style type="text/css" media="screen">
-            th.ui-th-column div {
-                white-space: normal !important;
-                height: auto !important;
-                padding: 2px;
-            }
-        </style>
-        <div id="Page">
+<style type="text/css" media="screen">
+    th.ui-th-column div {
+        white-space: normal !important;
+        height: auto !important;
+        padding: 2px;
+    }
+</style>
+<div id="Page">
 
-            <h2>Таблица рекламных конструкций</h2>
-        @{
+    <h2>Таблица рекламных конструкций</h2>
+    @{
         if (role != "ReadOnly")
         {
             <p>
-                        <b>@Html.ActionLink("+ Добавить новую рекламную конструкцию", "CreateAdvertisingDesign", new {type = "Billboard"}, new {@class = "btn btn-default"})</b>
-                        <b> <input type="button" value="Поиск" id="search" class="btn btn-default"></b>
-        @*<b><a href="#" style="margin-right: 110px" id="AddNewAD">+ Новая рекламная конструкция</a></b>
-            <b><a href="#" style="margin-right: 110px" id="EditStatusAD">+ Изменить статус рекламной конструкции</a></b>
-            <b><a href="#" id="EditBillbord">+ Изменить существующую рекламную конструкцию</a></b>*@
-                    </p>
+                <b>@Html.ActionLink("+ Добавить новую рекламную конструкцию", "CreateAdvertisingDesign", new { type = "Billboard" }, new { @class = "btn btn-default" })</b>
+                <b> <input type="button" value="Поиск" id="search" class="btn btn-default"></b>
+                @*<b><a href="#" style="margin-right: 110px" id="AddNewAD">+ Новая рекламная конструкция</a></b>
+                    <b><a href="#" style="margin-right: 110px" id="EditStatusAD">+ Изменить статус рекламной конструкции</a></b>
+                    <b><a href="#" id="EditBillbord">+ Изменить существующую рекламную конструкцию</a></b>*@
+            </p>
         }
     }
 
-        @*<div id="divForAddNewAD" style="margin-left: 30px; margin-right: 40px; margin-bottom: 10px; float: left; visibility: hidden">
-        <b>@Html.ActionLink("+ Карточка рекламной конструкции", "CreateAdvertisingDesign", new {type = "Billboard"})</b>
-        <b>@Html.ActionLink("+ Подать заявку на согласование паспорта рекламы", "CreateAdvertisingDesign", new {type = "Billboard"}, new {style = "display: block"})</b>
+    @*<div id="divForAddNewAD" style="margin-left: 30px; margin-right: 40px; margin-bottom: 10px; float: left; visibility: hidden">
+            <b>@Html.ActionLink("+ Карточка рекламной конструкции", "CreateAdvertisingDesign", new {type = "Billboard"})</b>
+            <b>@Html.ActionLink("+ Подать заявку на согласование паспорта рекламы", "CreateAdvertisingDesign", new {type = "Billboard"}, new {style = "display: block"})</b>
 
-    </div>
+        </div>
 
-    <div id="divEditStatusAD" style="visibility: hidden">
-        <b>@Html.ActionLink("+ Ввести данные паспорта рекламы", "CreateBilboard", new {type = "Billboard"}, new {style = "margin-right:140px"})</b>
-        <b>@Html.ActionLink("+ Ввести данные об установке рекламной конструкции", "CreateAdvertisingDesign", new {type = "Billboard"}, new {style = "margin-right:140px;display: block"})</b>
-        <b>@Html.ActionLink("+ Ввести данные об демонтаже рекламной контсрукции", "CreateAdvertisingDesign", new {type = "Billboard"}, new {style = "margin-right:140px;display: block"})</b>
-    </div>*@
+        <div id="divEditStatusAD" style="visibility: hidden">
+            <b>@Html.ActionLink("+ Ввести данные паспорта рекламы", "CreateBilboard", new {type = "Billboard"}, new {style = "margin-right:140px"})</b>
+            <b>@Html.ActionLink("+ Ввести данные об установке рекламной конструкции", "CreateAdvertisingDesign", new {type = "Billboard"}, new {style = "margin-right:140px;display: block"})</b>
+            <b>@Html.ActionLink("+ Ввести данные об демонтаже рекламной контсрукции", "CreateAdvertisingDesign", new {type = "Billboard"}, new {style = "margin-right:140px;display: block"})</b>
+        </div>*@
 
 
-            <table id="table" class="table-bordered" cellpadding="5">
-                <tr >
+    <table id="table" class="table-bordered" cellpadding="5">
+        <tr>
 
-                    <th>Идентификационный_номер</th>
-                    <th>Собственник_рекламной_конструкции</th>
-                    <th>Вид_рекламной_конструкции</th>
-                    <th>Населенный_пункт</th>
-                    <th>Улица</th>
-                    <th>Дом</th>
-                    <th> Количество_сторон</th>
-                    <th> Количестов_поверхностей</th>
-                    <th>Площадь_рекламной_конструкции</th>
-                    <th>Подстветка</th>
-                    <th> №_договора_с_фин_упр</th>
-                    <th>№_паспорта_рекл</th>
-                    <th>Разреш_по</th>
+            <th>Идентификационный_номер</th>
+            <th>Собственник_рекламной_конструкции</th>
+            <th>Вид_рекламной_конструкции</th>
+            <th>Населенный_пункт</th>
+            <th>Улица</th>
+            <th>Дом</th>
+            <th> Количество_сторон</th>
+            <th> Количестов_поверхностей</th>
+            <th>Площадь_рекламной_конструкции</th>
+            <th>Подстветка</th>
+            <th> №_договора_с_фин_упр</th>
+            <th>№_паспорта_рекл</th>
+            <th>Разреш_по</th>
 
-                </tr>
-                @foreach (var i in Model)
+        </tr>
+        @foreach (var i in Model)
         {
             foreach (var side in i.Sides)
             {
@@ -285,28 +284,50 @@
             }
             <tr title="test">
 
-                        <td>@i.UniqueNumber</td>
-                        <td>@i.Owner.Name </td>
-                        <td>@i.TypeOfAdvertisingStructure.Name</td>
-                        <td>@i.Locality.NameLocality</td>
-                        <td>@i.Street1</td>
-                        <td>@i.House1</td>
-                        <td>@i.Sides.Count</td>
-                        <td>@SurfaceCOunt</td>
-                        <td>@SurfaceSumm</td>
-                        <td>@i.Backlight</td>
-                        <td>@i.C_ContractFinancialManagement </td>
-                        <td>@i.C_PassportAdvertising</td>
-                        <td>@i.EndDate.ToString().Substring(0, 10)</td>
+                <td>@i.UniqueNumber</td>
+                <td>@i.Owner.Name </td>
+                <td>@i.TypeOfAdvertisingStructure.Name</td>
+                <td>@i.Locality.NameLocality</td>
+                <td>@i.Street1</td>
+                <td>@i.House1</td>
+                <td>@i.Sides.Count</td>
+                <td>@SurfaceCOunt</td>
+                <td>@SurfaceSumm</td>
+                <td>@i.Backlight</td>
+                <td>@i.C_ContractFinancialManagement </td>
+                <td>@i.C_PassportAdvertising</td>
+                <td>@i.EndDate.ToString().Substring(0, 10)</td>
 
-                    </tr>
+            </tr>
             SurfaceCOunt = 0;
             SurfaceSumm = 0;
         }
 
-            </table>
-        </div>
-            <hr />
-            <footer>
-                <p>&copy; @DateTime.Now.Year – <a href="#" >OnCloud</a> @*| @Html.ActionLink("Лицензионное соглашение", "License", "Home")*@</p>
-            </footer>
+    </table>
+</div>
+<hr />
+<footer>
+    <p>&copy; @DateTime.Now.Year – <a href="#">OnCloud</a> @*| @Html.ActionLink("Лицензионное соглашение", "License", "Home")*@</p>
+</footer>
+
+
+
+@*модальное окно*@
+<div id="DeleteStructures" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Удаление конструкции</h4>
+            </div>
+            <div class="modal-body">
+                <p>Вы уверены, что хотите удалить эту конструкцию?&hellip;</p>
+            </div>
+            <div class="modal-footer">
+                <a  href="@Url.Action("DeleteAdvertisingDesign","Data")" class="btn btn-primary">Да, удалить</a>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Отмена</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+

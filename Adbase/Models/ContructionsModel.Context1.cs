@@ -28,6 +28,7 @@ namespace Sciencecom.Models
         }
     
         public virtual DbSet<AdvertisingStructure> AdvertisingStructures { get; set; }
+        public virtual DbSet<Backlight> Backlights { get; set; }
         public virtual DbSet<DirectionSide> DirectionSides { get; set; }
         public virtual DbSet<Identification> Identifications { get; set; }
         public virtual DbSet<Increment> Increments { get; set; }

@@ -1388,63 +1388,63 @@ namespace Sciencecom.Controllers
             return View();
         }
 
-        //[Authorize(Roles = "Admin, ChiefEditAll,ChiefEditOwn, SupplierEditAll, SupplierEditOwn")]
-        //[HttpGet]
-        //public ActionResult DeleteBilboard(Guid? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Billboards1 mc = context.Billboards1.Find(id);
-        //    if (mc == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    ViewBag.Owners = context.Owners.Select(m => m.Name);
-        //    return View(mc);
-        //}
-        //[HttpPost]
-        //[Authorize(Roles = "Admin, ChiefEditAll,ChiefEditOwn, SupplierEditAll, SupplierEditOwn")]
-        //public ActionResult DeleteBilboard(Guid id)
-        //{
-        //    Billboards1 mc = context.Billboards1.Find(id);
+        [Authorize(Roles = "Admin, ChiefEditAll,ChiefEditOwn, SupplierEditAll, SupplierEditOwn")]
+        [HttpGet]
+        public ActionResult DeleteBilboard(Guid? id)
+        {
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
+            //Billboards1 mc = context.Billboards1.Find(id);
+            //if (mc == null)
+            //{
+            //    return HttpNotFound();
+            //}
+            //ViewBag.Owners = context.Owners.Select(m => m.Name);
+            return View();
+        }
+        [HttpPost]
+        [Authorize(Roles = "Admin, ChiefEditAll,ChiefEditOwn, SupplierEditAll, SupplierEditOwn")]
+        public ActionResult DeleteAdvertisingDesign(Guid id)
+        {
+            //Billboards1 mc = context.Billboards1.Find(id);
 
 
-        //    string src = "~/Images/Billboard/" + mc.Id_show + "passport.jpg";
-        //    string path = Server.MapPath(src);
-        //    if (System.IO.File.Exists(path)) System.IO.File.Delete(path);
+            //string src = "~/Images/Billboard/" + mc.Id_show + "passport.jpg";
+            //string path = Server.MapPath(src);
+            //if (System.IO.File.Exists(path)) System.IO.File.Delete(path);
 
-        //    src = "~/Images/Billboard/" + mc.Id_show + "photo.jpg";
-        //    path = Server.MapPath(src);
-        //    if (System.IO.File.Exists(path)) System.IO.File.Delete(path);
-        //    var t = mc.Sides.First();
-        //    foreach (var side in mc.Sides)
-        //    {
-        //        foreach (var surface in side.Surfaces)
-        //        {
-        //            src = "~/Images/Billboard/surfaces/" + surface.Id + ".jpg";
-        //            path = Server.MapPath(src);
-        //            if (System.IO.File.Exists(path))
-        //                System.IO.File.Delete(path);
-        //        }
-        //    }
-        //    context.Billboards1.Remove(mc);
-        //    IQueryable<Side> sideDelete = context.Sides.Where(a => a.Billboard_Id == id);
-        //    context.Sides.RemoveRange(sideDelete);
-        //    IQueryable<Surface> surfaceDelete = context.Surfaces;
+            //src = "~/Images/Billboard/" + mc.Id_show + "photo.jpg";
+            //path = Server.MapPath(src);
+            //if (System.IO.File.Exists(path)) System.IO.File.Delete(path);
+            //var t = mc.Sides.First();
+            //foreach (var side in mc.Sides)
+            //{
+            //    foreach (var surface in side.Surfaces)
+            //    {
+            //        src = "~/Images/Billboard/surfaces/" + surface.Id + ".jpg";
+            //        path = Server.MapPath(src);
+            //        if (System.IO.File.Exists(path))
+            //            System.IO.File.Delete(path);
+            //    }
+            //}
+            //context.Billboards1.Remove(mc);
+            //IQueryable<Side> sideDelete = context.Sides.Where(a => a.Billboard_Id == id);
+            //context.Sides.RemoveRange(sideDelete);
+            //IQueryable<Surface> surfaceDelete = context.Surfaces;
 
-        //    for (int i = 0; i < sideDelete.Count(); i++)
-        //    {
-        //        surfaceDelete.Where(a => a.Side_Id == sideDelete.ElementAt(i).Id);
-        //    }
-        //    context.Surfaces.RemoveRange(surfaceDelete);
+            //for (int i = 0; i < sideDelete.Count(); i++)
+            //{
+            //    surfaceDelete.Where(a => a.Side_Id == sideDelete.ElementAt(i).Id);
+            //}
+            //context.Surfaces.RemoveRange(surfaceDelete);
 
-        //    context.SaveChanges();
+            //context.SaveChanges();
 
 
-        //    return RedirectToAction("Bilboard", context.MetalConstructions); 
-        //    }
+            return null;
+        }
 
 
 

@@ -36,6 +36,9 @@
     //IdentificationSide.Insert(0, null);
     //Идентификационный номер
     var PropertyLocation = new SciencecomEntities().PropertyLocations.ToList();
+   
+    //Подсветка
+    var Backlight = new SciencecomEntities().Backlights.ToList();
     
 }
 <script type="text/javascript">
@@ -485,8 +488,8 @@
 
             <div class="form-group">
                 <label for="CommentOwner">Подсветка</label>
-                @Html.DropDownListFor(a => a.Backlight, new SelectList( new []{"","Есть","Нет"}))
-                @Html.ValidationMessageFor(model => model.Backlight)
+                @Html.DropDownListFor(a => a.Backlight_Id, new SelectList(Backlight, "id", "Name"),"")
+                @Html.ValidationMessageFor(model => model.Backlight_Id)
             </div>
 
             <div class="form-group">

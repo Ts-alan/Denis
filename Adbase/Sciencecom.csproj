@@ -178,6 +178,9 @@
       <DependentUpon>ContructionsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AdvertisingStructurePartial.cs" />
+    <Compile Include="Models\Backlight.cs">
+      <DependentUpon>ContructionsModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Constructions.cs" />
     <Compile Include="Models\ContructionsModel.Context1.cs">
       <AutoGen>True</AutoGen>
