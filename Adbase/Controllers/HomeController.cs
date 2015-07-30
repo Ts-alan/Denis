@@ -13,6 +13,7 @@ namespace Sciencecom.Controllers
         [Authorize]
         public ActionResult Index()
         {
+            Session["collectionMap"] = null;
             if (RolesList.IsInRole(RolesEnum.OnlyBillboards, User))
             {
                 return RedirectToAction("BillboardsIndex");

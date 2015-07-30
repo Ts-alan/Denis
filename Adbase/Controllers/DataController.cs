@@ -1281,7 +1281,7 @@ namespace Sciencecom.Controllers
         public ActionResult AdvertisingDesign()
         {
             var data = context.AdvertisingStructures;
-            var t = Session["TT"];
+            
             return View(data);
 
         }
