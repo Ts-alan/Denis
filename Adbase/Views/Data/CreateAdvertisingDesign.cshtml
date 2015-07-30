@@ -104,9 +104,9 @@
                     "<option>6</option>" +
                     "<option>7</option>" +
                     "<option>8</option>" +
-                    "</select> &nbsp;&nbsp;&nbsp; <b>Направление стороны</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("DirectionSide", new SelectList(DirectionSide, "id", "NameOfDirectionSide"), "", new { data_val_required = "Выберете", data_val = "true", IdentificationForDirectionSide = "" }).ToHtmlString().Replace("\"", " "))' +
-                    "</div>" + 
-                    "</div> <div style=\"margin-left: -15px;display: none\" id=\"" + i + "HiddenIdentification\"> &nbsp;&nbsp;&nbsp;<b>Идентификация поверхностей</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("IdentificationSurface", new SelectList(IdentificationSide, "id", "IdentificationName"),"",new { data_val_required = "Выберете", data_val = "true", IdentificationForIdentificationSurface = "" }).ToHtmlString().Replace("\"", " ")) </div>' +
+                    "</select> &nbsp;&nbsp;&nbsp; <b>Направление стороны</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("DirectionSide", new SelectList(DirectionSide, "id", "NameOfDirectionSide"), "", new { IdentificationForDirectionSide = "IdentificationForDirectionSide" }).ToHtmlString().Replace("\"", " "))' +
+                    "</div>" + '@Ajax.JavaScriptStringEncode(Html.ValidationMessage("[0].IdentificationForDirectionSide").ToHtmlString().Replace("\"", " "))' +
+                    "</div> <div style=\"margin-left: -15px;display: none\" id=\"" + i + "HiddenIdentification\"> &nbsp;&nbsp;&nbsp;<b>Идентификация поверхностей</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("IdentificationSurface", new SelectList(IdentificationSide, "id", "IdentificationName"), "", new { IdentificationForIdentificationSurface = "IdentificationForIdentificationSurface" }).ToHtmlString().Replace("\"", " ")) </div>' +
                     "<div  id=\"InsertPartial" + i + "\"></div>" +
                     "</div>");
                 
@@ -129,11 +129,11 @@
                 '[6].IdentificationForDirectionSide': "required",
                 '[7].IdentificationForDirectionSide': "required",
                 '[8].IdentificationForDirectionSide': "required"
-            }
-                //messages: {
-                //    '[0].IdentificationForDirectionSide': "test",
-                //    '[1].IdentificationForDirectionSide': "brak uzytkownika"
-                //    }
+            },
+                messages: {
+                    '[0].IdentificationForDirectionSide':"ававававававав",
+                    '[1].IdentificationForDirectionSide': "brak uzytkownika"
+                    }
    
             }
         );
@@ -156,11 +156,11 @@
                 'CountSurfuce7': "required",
                 'CountSurfuce8': "required"
             
+            },
+            messages: {
+                '[0].DirectionSide': "test",
+                '[1].DirectionSide': "brak uzytkownika"
             }
-            //messages: {
-            //    '[0].DirectionSide': "test",
-            //    '[1].DirectionSide': "brak uzytkownika"
-            //}
 
         }
         );
