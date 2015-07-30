@@ -4,6 +4,7 @@
     var myPlacemark;
     var havePlacemark = false;
     var isGreateAdvertisingDesign = true;
+    var isdragend = true;
     ymaps.ready(init);
    
     //присвоение коодинат при перетаскивание метки 
@@ -74,10 +75,12 @@
             myPlacemark = new ymaps.Placemark([$("#Breadth").val().replace(",","."), $("#Height").val().replace(',', '.')],
            {},
            {
-               draggable: true
+               draggable: IsDragend
            });
             myMap.geoObjects.add(myPlacemark);
-            dragend();
+           
+                dragend();
+           
         }
 
     }

@@ -1286,11 +1286,11 @@ namespace Sciencecom.Controllers
 
         }
 
-        [Authorize]
-        [HttpPost]
-        public ActionResult AdvertisingDesign(string owner, string locality, string street1, string street2,
-            string fromStreet, string day, string month, string year)
-        {
+        //[Authorize]
+        //[HttpPost]
+        //public ActionResult AdvertisingDesign(string owner, string locality, string street1, string street2,
+        //    string fromStreet, string day, string month, string year)
+        //{
             //    Owner proprietor = new Owner();
             //    if (!string.IsNullOrEmpty(owner))
             //    {
@@ -1308,9 +1308,9 @@ namespace Sciencecom.Controllers
             //    ViewBag.Day = day;
             //    ViewBag.Month = month;
             //    ViewBag.Year = year;
-            return View();
+        //    return View();
 
-        }
+        //}
 
 
         [Authorize]
