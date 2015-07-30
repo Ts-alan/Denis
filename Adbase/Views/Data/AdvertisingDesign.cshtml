@@ -25,12 +25,11 @@
 @Scripts.Render("~/bundles/tooltip")
 <script type="text/javascript">
     var $SaveIdForHideTooltip;
+    var $Tablebacklight;
+    var Showonthemap=@Html.Raw(JsonConvert.SerializeObject(Model.Select(a=>a.Id_show), Formatting.Indented, new JsonSerializerSettings
+    {ReferenceLoopHandling = ReferenceLoopHandling.Ignore}));
+
     $(document).ready(function () {
-        var $Tablebacklight;
-        var Showonthemap=@Html.Raw(JsonConvert.SerializeObject(Model.Select(a=>a.Id_show), Formatting.Indented, new JsonSerializerSettings
-        {ReferenceLoopHandling = ReferenceLoopHandling.Ignore}));
-
-
 
         function HideRows() {
             $('.ui-widget-content.jqgrow.ui-row-ltr').each(
@@ -136,6 +135,7 @@
         }
         //подсказка ,подсветка
         function FunctionaFortable() {
+
             $(".ui-jqgrid-bdiv>h1").remove();
             var sgrid = $("#table")[0];
             sgrid.triggerToolbar();
@@ -152,6 +152,7 @@
 
             //подсказка
             $('.ui-widget-content.jqgrow.ui-row-ltr').each(function (indx, element) {
+
 
                 $(element).tooltipsy({
                     alignTo: 'cursor',
@@ -200,7 +201,9 @@
     });
 
     $("html").dblclick(function (e) {
-
+        //накручивание индекса к пути удалить
+        $('[href="/Data/DeleteAdvertisingDesign"]').
+         attr("href","/Data/DeleteAdvertisingDesign/"+(Showonthemap[($(e.target).closest("tr").attr("id")-1)])+"") ;
 
         if (document.activeElement.getAttribute("class") != "HideClass") {
             $SaveIdForHideTooltip = document.activeElement.getAttribute("id")-1;
@@ -324,10 +327,10 @@
                 <p>Вы уверены, что хотите удалить эту конструкцию?&hellip;</p>
             </div>
             <div class="modal-footer">
-                <a  href="@Url.Action("DeleteAdvertisingDesign","Data")" class="btn btn-primary">Да, удалить</a>
+                <a href="/Data/DeleteAdvertisingDesign" class="btn btn-primary">Да, удалить</a>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Отмена</button>
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+        </div>
+    </div>
+</div>
 

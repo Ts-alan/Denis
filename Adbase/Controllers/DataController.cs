@@ -1388,62 +1388,49 @@ namespace Sciencecom.Controllers
             return View();
         }
 
+
         [Authorize(Roles = "Admin, ChiefEditAll,ChiefEditOwn, SupplierEditAll, SupplierEditOwn")]
-        [HttpGet]
-        public ActionResult DeleteBilboard(Guid? id)
+        public ActionResult DeleteAdvertisingDesign(int? id)
         {
-            //if (id == null)
-            //{
-            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            //}
-            //Billboards1 mc = context.Billboards1.Find(id);
-            //if (mc == null)
-            //{
-            //    return HttpNotFound();
-            //}
-            //ViewBag.Owners = context.Owners.Select(m => m.Name);
-            return View();
-        }
-        [HttpPost]
-        [Authorize(Roles = "Admin, ChiefEditAll,ChiefEditOwn, SupplierEditAll, SupplierEditOwn")]
-        public ActionResult DeleteAdvertisingDesign(Guid id)
-        {
-            //Billboards1 mc = context.Billboards1.Find(id);
+            AdvertisingStructure mc = context.AdvertisingStructures.Single(a => a.Id_show == id);
+            context.ListUniqueNumbers.Add(new ListUniqueNumber(){UniqueNumber = mc.UniqueNumber,Code_id = mc.Code,TimeOpen = DateTime.Now});
+            foreach (var side in mc.Sides)
+            {
+                context.Surfaces.RemoveRange(side.Surfaces);
+            }
 
+            context.Sides.RemoveRange(mc.Sides);
+            context.AdvertisingStructures.Remove(mc);
+            context.SaveChanges();
 
-            //string src = "~/Images/Billboard/" + mc.Id_show + "passport.jpg";
-            //string path = Server.MapPath(src);
-            //if (System.IO.File.Exists(path)) System.IO.File.Delete(path);
+            //удаление картинок
+                string src = "/Images/Scan1SidesWithFinancialManagement/" + mc.Id +
+                             "FinancialManagement.jpg";
+                string path = Server.MapPath(src);
+                FileInfo info1 = new FileInfo(path);
+                if (info1.Exists)
+                {
+                    info1.Delete();
+                }
 
-            //src = "~/Images/Billboard/" + mc.Id_show + "photo.jpg";
-            //path = Server.MapPath(src);
-            //if (System.IO.File.Exists(path)) System.IO.File.Delete(path);
-            //var t = mc.Sides.First();
-            //foreach (var side in mc.Sides)
-            //{
-            //    foreach (var surface in side.Surfaces)
-            //    {
-            //        src = "~/Images/Billboard/surfaces/" + surface.Id + ".jpg";
-            //        path = Server.MapPath(src);
-            //        if (System.IO.File.Exists(path))
-            //            System.IO.File.Delete(path);
-            //    }
-            //}
-            //context.Billboards1.Remove(mc);
-            //IQueryable<Side> sideDelete = context.Sides.Where(a => a.Billboard_Id == id);
-            //context.Sides.RemoveRange(sideDelete);
-            //IQueryable<Surface> surfaceDelete = context.Surfaces;
+                src = "/Images/ScanPassport_1Sides/" + mc.Id + "passport.jpg";
+                path = Server.MapPath(src);
+                info1 = new FileInfo(path);
+                if (info1.Exists)
+                {
+                    info1.Delete();
+                }
 
-            //for (int i = 0; i < sideDelete.Count(); i++)
-            //{
-            //    surfaceDelete.Where(a => a.Side_Id == sideDelete.ElementAt(i).Id);
-            //}
-            //context.Surfaces.RemoveRange(surfaceDelete);
+                src = "/Images/ScanPassport_2Sides/" + mc.Id + "ScanPassport_2Sides.jpg";
+                path = Server.MapPath(src);
+                info1 = new FileInfo(path);
+                if (info1.Exists)
+                {
+                    info1.Delete();
+                }
 
-            //context.SaveChanges();
-
-
-            return null;
+            
+            return RedirectToAction("AdvertisingDesign");
         }
 
 
@@ -1538,8 +1525,15 @@ namespace Sciencecom.Controllers
             {
                 return HttpNotFound();
             }
-
-           
+            List<Surface> surfaces = new List<Surface>();
+            foreach (var sides in mc.Sides.OrderBy(a => a.Name))
+            {
+                foreach (var surface in sides.Surfaces)
+                {
+                    surfaces.Add(surface);
+                }
+            }
+            TempData["surface"] = surfaces;
             return View(mc);
         }
 
@@ -1592,12 +1586,13 @@ namespace Sciencecom.Controllers
                 {
                     string src = "~/Images/Scan1SidesWithFinancialManagement/" + Structures.Id +
                                  "FinancialManagement.jpg";
-                    FileInfo info1 = new FileInfo(src);
+                    string path = Server.MapPath(src);
+                    FileInfo info1 = new FileInfo(path);
                     if (info1.Exists)
                     {
                         info1.Delete();
                     }
-                    string path = Server.MapPath(src);
+                    
                     Scan1SidesWithFinancialManagement.SaveAs(path);
                 }
 
@@ -1605,28 +1600,28 @@ namespace Sciencecom.Controllers
                 {
 
                     string src = "~/Images/ScanPassport_1Sides/" + Structures.Id + "passport.jpg";
-                    FileInfo info1 = new FileInfo(src);
+                    string path = Server.MapPath(src);
+                    FileInfo info1 = new FileInfo(path);
                     if (info1.Exists)
                     {
                         info1.Delete();
                     }
-                    string path = Server.MapPath(src);
+                    
                     ScanPassport_1Sides.SaveAs(path);
                 }
                 if (ScanPassport_2Sides != null)
                 {
                     string src = "~/Images/ScanPassport_2Sides/" + Structures.Id + "ScanPassport_2Sides.jpg";
-                    FileInfo info1 = new FileInfo(src);
+                    string path = Server.MapPath(src);
+                    FileInfo info1 = new FileInfo(path);
                     if (info1.Exists)
                     {
                         info1.Delete();
                     }
-                    string path = Server.MapPath(src);
+                    
                     ScanPassport_2Sides.SaveAs(path);
                 }
-
-
-                 
+                
                return RedirectToAction("AdvertisingDesign");
 
             }
