@@ -69,9 +69,9 @@ namespace Sciencecom.Controllers
         //}
         //[HttpPost]
         //[Authorize]
-        public JsonResult GetDesign(string owner, string locality, string street1, string street2,
-            string fromStreet, string startDay, string startMonth, string startYear,
-            string lBillboardFinishDay, string lBillboardFinishMonth, string lBillboardFinishYear, string[] Story, bool OnAgreement, string IsBillboardSocial, int? id = null)
+        public JsonResult GetDesign(string owner, string UniqueNumber, string TypeOfAdvertisingStructure, string Locality,
+            string Street1, string House1, string CountSize, string AreaConstruction,
+            string CountSurface, string Backlight, string ContractFinancialManagement, string PassportAdvertising,  string EndDate, int? id = null)
         {
             SciencecomEntities context = new SciencecomEntities();
             List<BilboardConstructionJsonModel> objectsForJson = new List<BilboardConstructionJsonModel>();

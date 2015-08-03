@@ -1,34 +1,23 @@
 ﻿function GetBilboardPoints(role, userCompany ,objectId) {
     var geoObjects = new ymaps.GeoObjectCollection();
-    var story = {};
-    $('.storyList').each(function (i) {
-        story[i]=($(this).text());
-    });
-
-    var onAgreement;
-    if ($("#OnAgreement option:selected").val() == "Да") {
-        onAgreement = true;
-    } else {
-        onAgreement = false;
-    };
+  
     $.ajax({
         type: "POST",
         url: "/Map/GetDesign",
         data: {
-            owner: $("#owner option:selected").val(),
-            locality: $("#locality").val(),
-            street1: $("#street1").val(),
-            street2: $("#street2").val(),
-            fromStreet: $("#fromStreet").val(),
-            startDay: $("#startDay option:selected").val(),
-            startMonth: $("#startMonth option:selected").val(),
-            startYear: $("#startYear").val(),
-            lBillboardFinishDay: $("#lBillboardFinishDay option:selected").val(),
-            lBillboardFinishMonth: $("#lBillboardFinishMonth option:selected").val(),
-            lBillboardFinishYear: $("#lBillboardFinishYear").val(),
-            Story: story,
-            OnAgreement: onAgreement,
-            IsBillboardSocial: $("#IsBillboardSocial option:selected").val(),
+            owner: $("#gs_Собственник_рекламной_конструкции").val(),
+            UniqueNumber: $("#gs_Идентификационный_номер").val(),
+            TypeOfAdvertisingStructure: $("#gs_Вид_рекламной_конструкции").val(),
+            Locality: $("#gs_Населенный_пункт").val(),
+            Street1: $("#gs_Улица").val(),
+            House1: $("#gs_Дом").val(),
+            CountSize: $("#gs_Количество_сторон").val(),
+            AreaConstruction: $("#gs_Площадь_рекламной_конструкции").val(),
+            CountSurface: $("#gs_Количестов_поверхностей").val(),
+            Backlight: $("#gs_Подстветка").val(),
+            ContractFinancialManagement: $("#gs_№_договора_с_фин_упр").val(),
+            PassportAdvertising: $("#gs_№_паспорта_рекл").val(),
+            EndDate: $("#gs_Разреш_по").val(),
             id: parseInt(objectId)
         }
     }).success(function (data) {
