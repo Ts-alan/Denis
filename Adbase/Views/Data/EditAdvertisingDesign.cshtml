@@ -434,7 +434,7 @@
         <div class="form-group">
 
             <label for="ViewBad_Id">Вид заявки</label>
-            @Html.DropDownListFor(model => model.ViewBad_Id, new SelectList(ViewBids, "id", "Name"))
+            @Html.DropDownListFor(model => model.ViewBad_Id, new SelectList(ViewBids, "id", "Name"),"")
             @Html.ValidationMessageFor(model => model.ViewBad_Id)
 
 

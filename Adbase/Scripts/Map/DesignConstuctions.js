@@ -1,6 +1,6 @@
 ﻿function GetBilboardPoints(role, userCompany ,objectId) {
     var geoObjects = new ymaps.GeoObjectCollection();
-  
+    console.log($("#gs_Разреш_по").val());
     $.ajax({
         type: "POST",
         url: "/Map/GetDesign",

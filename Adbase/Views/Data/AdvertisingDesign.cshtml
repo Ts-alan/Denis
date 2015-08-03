@@ -296,7 +296,14 @@
                 <td>@i.Sides.Count</td>
                 <td>@SurfaceCOunt</td>
                 <td>@SurfaceSumm</td>
-                <td>@i.Backlight</td>
+                @if (i.Backlight != null)
+                {
+                    <td>@i.Backlight.Name</td>
+                }
+                else
+                {
+                 <td></td>  
+                }
                 <td>@i.C_ContractFinancialManagement </td>
                 <td>@i.C_PassportAdvertising</td>
                 <td>@i.EndDate.ToString().Substring(0, 10)</td>

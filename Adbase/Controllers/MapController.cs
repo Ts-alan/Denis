@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
 using Newtonsoft.Json;
@@ -70,11 +72,12 @@ namespace Sciencecom.Controllers
         //[HttpPost]
         //[Authorize]
         public JsonResult GetDesign(string owner, string UniqueNumber, string TypeOfAdvertisingStructure, string Locality,
-            string Street1, string House1, string CountSize, string AreaConstruction,
+            string Street1, string House1, int? CountSize, string AreaConstruction,
             string CountSurface, string Backlight, string ContractFinancialManagement, string PassportAdvertising,  string EndDate, int? id = null)
         {
+
             SciencecomEntities context = new SciencecomEntities();
-            List<BilboardConstructionJsonModel> objectsForJson = new List<BilboardConstructionJsonModel>();
+            List<AdvertisingConstructionJsonModel> objectsForJson = new List<AdvertisingConstructionJsonModel>();
             List<Surface> Surfaces = new List<Surface>();
             if (id.HasValue)
             {
@@ -99,43 +102,57 @@ namespace Sciencecom.Controllers
                 }
                 if (construction != null)
                 {
-                    objectsForJson.Add(new BilboardConstructionJsonModel(construction, Surfaces));
+                    objectsForJson.Add(new AdvertisingConstructionJsonModel(construction, Surfaces));
                 }
 
                 return Json(objectsForJson, JsonRequestBehavior.AllowGet);
             }
             DataController dataController = new DataController();
+            DateTime? ValueEndDate;
+            try
+            {
+                 ValueEndDate = DateTime.ParseExact(EndDate, "dd.MM.yyyy", CultureInfo.InvariantCulture);
+            }
+            catch
+            {
+                ValueEndDate = null;
+            }
 
             AdvertisingStructure mc = new AdvertisingStructure()
             {
-                //Locality = locality,
-                Street1 = street1,
-                Street2 = street2,
-                FromStreet = fromStreet,
-            
+                Street1 = Street1,
+                UniqueNumber = UniqueNumber,
+                House1 =House1,
+                C_ContractFinancialManagement = ContractFinancialManagement,
+                C_PassportAdvertising = PassportAdvertising,
+                EndDate = ValueEndDate
+              
             };
             IEnumerable<AdvertisingStructure> result =
-            dataController.SearchBillbord(mc, startDay, startMonth, startYear, lBillboardFinishDay,
-                lBillboardFinishMonth, lBillboardFinishYear, Story, IsBillboardSocial, owner).ToList();
-
-            foreach (var biboard in result.AsEnumerable())
+            dataController.SearchAdversing(mc, owner, TypeOfAdvertisingStructure, Locality, CountSize,
+                Backlight).ToList();
+            for (int i = 0; i < result.Count(); i++)
             {
-
-
-                foreach (var side in biboard.Sides)
-                {
-                    foreach (var Surface in side.Surfaces)
-                    {
-                        Surfaces.Add(Surface);
-                    }
-
-                }
-                objectsForJson.Add(new BilboardConstructionJsonModel(biboard, Surfaces));
-                Surfaces.Clear();
+                objectsForJson.Add(new AdvertisingConstructionJsonModel(result.ElementAt(i), null));
             }
+            //foreach (var biboard in result.AsEnumerable())
+            //{
 
 
-            return Json(objectsForJson, JsonRequestBehavior.AllowGet);
+            //    foreach (var side in biboard.Sides)
+            //    {
+            //        foreach (var Surface in side.Surfaces)
+            //        {
+            //            Surfaces.Add(Surface);
+            //        }
+
+            //    }
+            //    objectsForJson.Add(new BilboardConstructionJsonModel(biboard, Surfaces));
+            //    Surfaces.Clear();
+            //}
+
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
  
 

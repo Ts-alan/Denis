@@ -219,7 +219,7 @@
     <Compile Include="Models\Locality.cs">
       <DependentUpon>ContructionsModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\MapJsonModels\BilboardConstructionJsonModel.cs" />
+    <Compile Include="Models\MapJsonModels\AdvertisingConstructionJsonModel.cs" />
     <Compile Include="Models\MapJsonModels\BillBoardJsonModel.cs" />
     <Compile Include="Models\MapJsonModels\IllegalConstructionJsonModel.cs" />
     <Compile Include="Models\MapJsonModels\LightConstructionJsonModel.cs" />

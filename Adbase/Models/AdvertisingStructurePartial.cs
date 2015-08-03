@@ -36,7 +36,7 @@ namespace Sciencecom.Models
     public partial class AdvertisingStructure
     {
         public string OwnerName { get; set; }
-
+        public string CountSize{ get; set; }
     }
 
 

@@ -1072,108 +1072,71 @@ namespace Sciencecom.Controllers
 
 
         //#endregion
-        public IEnumerable<AdvertisingStructure> SearchBillbord(AdvertisingStructure billboard, string startDay,
-            string startMonth, string startYear, string finishDay, string finishMonth, string finishYear, string[] Story,
-            string IsBillboardSocial, string owner)
+        public IEnumerable<AdvertisingStructure> SearchAdversing(AdvertisingStructure Advertisin, string owner,
+            string TypeOfAdvertisingStructure, string Locality, int? CountSize, string Backlight)
         {
-            bool isSocial;
-            if (IsBillboardSocial == "Да")
+
+            context = new SciencecomEntities();
+            var owner_id = context.Owners.SingleOrDefault(a => a.Name == owner);
+            var typeOfAdvertisingStructure_id =
+                context.TypeOfAdvertisingStructures.SingleOrDefault(a => a.Name == TypeOfAdvertisingStructure);
+            var locality_id = context.TypeOfAdvertisingStructures.SingleOrDefault(a => a.Name == Locality);
+            var backlight = context.Backlights.SingleOrDefault(a => a.Name == Backlight);
+            IEnumerable<AdvertisingStructure> result;
+            if (CountSize!=null)
             {
-                isSocial = true;
+                 result =
+                    context.AdvertisingStructures.Where(a => a.Sides.Count ==CountSize).ToList();
             }
             else
             {
-                isSocial = false;
+                result =
+                    context.AdvertisingStructures.ToList();
             }
-            context = new SciencecomEntities();
-            IEnumerable<AdvertisingStructure> result = context.AdvertisingStructures.ToList();
-            //if (owner != "" && owner != null)
-            //{
-            //    var id_Owner = context.Owners.Single(a => a.Name.ToLower() == owner.ToLower()).Id;
-            //    result = result.Where(m => m.Owner.Id == id_Owner);
-            //}
-            //if (billboard.Street1 != "")
-            //{
-            //    result = result.Where(m => m.Street1.ToLower().Contains(billboard.Street1.ToLower()));
-            //}
-            //if (billboard.Street2 != "")
-            //{
-            //    result = result.Where(m => m.Street2.ToLower().Contains(billboard.Street2.ToLower()));
-            //}
-            //if (billboard.FromStreet != "")
-            //{
-            //    result = result.Where(m => m.FromStreet.ToLower().Contains(billboard.FromStreet.ToLower()));
-            //}
-            //if (billboard.Locality != "")
-            //{
-            //    result = result.Where(m => m.Locality.ToLower().Contains(billboard.Locality.ToLower()));
-            //}
+            
+            if (owner_id != null)
+            {
+                result = result.Where(m => m.Owner.Id == owner_id.Id);
+            }
+            if (typeOfAdvertisingStructure_id != null)
+            {
+                result = result.Where(m => m.Code == typeOfAdvertisingStructure_id.Code);
+            }
+            if (locality_id != null)
+            {
+                result = result.Where(m => m.Locality_id == locality_id.id);
+            }
+            if (backlight != null)
+            {
+                result = result.Where(m => m.Backlight_Id == backlight.id);
+            }
+            if (Advertisin.Street1 != null)
+            {
+                result = result.Where(m => m.Street1.ToLower().Contains(Advertisin.Street1.ToLower()));
+            }
+            if (Advertisin.UniqueNumber != null)
+            {
+                result = result.Where(m => m.UniqueNumber.ToLower().Contains(Advertisin.UniqueNumber.ToLower()));
+            }
+            if (Advertisin.House1 != null)
+            {
+                result = result.Where(m => m.House1.ToLower().Contains(Advertisin.House1.ToLower()));
+            }
+            if (Advertisin.C_ContractFinancialManagement != null)
+            {
+                result = result.Where(m => m.C_ContractFinancialManagement.ToLower().Contains(Advertisin.C_ContractFinancialManagement.ToLower()));
+            }
+            if (Advertisin.C_PassportAdvertising != null)
+            {
+                result = result.Where(m => m.C_PassportAdvertising.ToLower().Contains(Advertisin.C_PassportAdvertising.ToLower()));
+            }
+            if (Advertisin.EndDate != null)
+            {
+                result = result.Where(m => m.EndDate.ToString().Contains(Advertisin.EndDate.ToString()));
+            }
 
-            //result = result.Where(m => m.OnAgreement == billboard.OnAgreement).ToList();
-            //int d = 0;
+            //result = result.Where(m => m.OnAgreement == Advertisin.OnAgreement).ToList();
 
-            //if (startDay != "" && startMonth != "" && startYear != "")
-            //{
-            //    DateTime startDate = new DateTime(Int32.Parse(startYear), Int32.Parse(startMonth), Int32.Parse(startDay));
-            //    result = result.Where(a => a.StartDate.Date >= startDate.Date).ToList();
-            //   }
-            //if (finishDay != "" && finishMonth != "" && finishYear != "")
-            //{
-            //    DateTime endDate = new DateTime(Int32.Parse(finishYear), Int32.Parse(finishMonth), Int32.Parse(finishDay));
-            //    result= result.Where(m => m.EndDate.Value.Date <= endDate.Date).ToList();
-
-            //}
-            //     result = result.Where(a =>
-            //    {
-            //        foreach (var side in a.Sides)
-            //        {
-            //            foreach (var surface in side.Surfaces)
-            //            {
-            //                if (isSocial == true)
-            //                {
-            //                    if (surface.TypeOfAdvertising == "social")
-            //                    {
-            //                        return true;
-            //                    }
-            //                }
-            //                else
-            //                {
-            //                    if (surface.TypeOfAdvertising == "social")
-            //                    {
-            //                        return false;
-            //                    }
-            //                }
-            //            }
-            //        }
-            //        if (isSocial == true)
-            //        {
-            //            return false;
-            //        }
-            //        else
-            //        {
-            //            return true;
-            //        }
-            //    }).ToList();
-            //     if (Story != null)
-            //     {
-            //         result = result.Where(a =>
-            //          {
-            //              foreach (var j in Story)
-            //              {
-            //                  foreach (var side in a.Sides)
-            //                  {
-            //                      foreach (var surface in side.Surfaces)
-            //                      {
-            //                          if (surface.Story == j)
-            //                          {
-            //                              return true;
-            //                          }
-            //                      }
-            //                  }
-            //              }
-            //              return false;
-            //          });
-            //     }
             return result;
         }
 
@@ -1181,12 +1144,12 @@ namespace Sciencecom.Controllers
         {
             var streets = from m in context.Streets where m.Street1.Contains(term) select m;
             var projection = from street in streets
-                select new
-                {
-                    id = street.id,
-                    label = street.Street1 + " " + street.Type,
-                    value = street.Street1 + " " + street.Type
-                };
+                             select new
+                             {
+                                 id = street.id,
+                                 label = street.Street1 + " " + street.Type,
+                                 value = street.Street1 + " " + street.Type
+                             };
             return Json(projection.ToList(), JsonRequestBehavior.AllowGet);
         }
 
@@ -1211,7 +1174,7 @@ namespace Sciencecom.Controllers
 
         //[Authorize]
         //[HttpGet]
-        public ActionResult Documents(int? id, string type="BB")
+        public ActionResult Documents(int? id, string type = "BB")
         {
             var data = context.AdvertisingStructures.Single(a => a.Id_show == id);
             List<Surface> surfaces = new List<Surface>();
@@ -1258,7 +1221,7 @@ namespace Sciencecom.Controllers
                         path = Server.MapPath(src);
                         if (System.IO.File.Exists(path))
                         {
-                            ViewBag.ScanPassport_2= true;
+                            ViewBag.ScanPassport_2 = true;
                         }
                         else
                         {
@@ -1266,7 +1229,7 @@ namespace Sciencecom.Controllers
                         }
                     }
                     break;
-       
+
                 default:
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
@@ -1281,7 +1244,7 @@ namespace Sciencecom.Controllers
         public ActionResult AdvertisingDesign()
         {
             var data = context.AdvertisingStructures;
-            
+
             return View(data);
 
         }
@@ -1291,23 +1254,23 @@ namespace Sciencecom.Controllers
         //public ActionResult AdvertisingDesign(string owner, string locality, string street1, string street2,
         //    string fromStreet, string day, string month, string year)
         //{
-            //    Owner proprietor = new Owner();
-            //    if (!string.IsNullOrEmpty(owner))
-            //    {
-            //        proprietor = context.Owners.Where(m => m.Name == owner).Single();
-            //    }
-            //    Billboards1 mc = new Billboards1()
-            //    {
-            //        Street1 = street1,
-            //        Street2 = street2,
-            //        FromStreet = fromStreet,
-            //        Owner_Id = proprietor.Id,
-            //        Locality = locality
-            //    };
-            //    ViewBag.Data = mc;
-            //    ViewBag.Day = day;
-            //    ViewBag.Month = month;
-            //    ViewBag.Year = year;
+        //    Owner proprietor = new Owner();
+        //    if (!string.IsNullOrEmpty(owner))
+        //    {
+        //        proprietor = context.Owners.Where(m => m.Name == owner).Single();
+        //    }
+        //    Advertisins1 mc = new Advertisins1()
+        //    {
+        //        Street1 = street1,
+        //        Street2 = street2,
+        //        FromStreet = fromStreet,
+        //        Owner_Id = proprietor.Id,
+        //        Locality = locality
+        //    };
+        //    ViewBag.Data = mc;
+        //    ViewBag.Day = day;
+        //    ViewBag.Month = month;
+        //    ViewBag.Year = year;
         //    return View();
 
         //}
@@ -1316,8 +1279,8 @@ namespace Sciencecom.Controllers
         [Authorize]
         [HttpPost]
         public ActionResult CreateAdvertisingDesign(AdvertisingStructure Structures,
-            [ModelBinder(typeof (CustomModelBinderForSide))] List<Side> Sides,
-            [ModelBinder(typeof (CustomModelBinderForSurface))] List<Surface> surfaces,
+            [ModelBinder(typeof(CustomModelBinderForSide))] List<Side> Sides,
+            [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces,
             HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides,
             HttpPostedFileBase Scan1SidesWithFinancialManagement, List<HttpPostedFileBase> SeveralPhoto,
             int CountSize = 1)
@@ -1332,7 +1295,7 @@ namespace Sciencecom.Controllers
                     context.ListUniqueNumbers.Single(x => x.UniqueNumber == Structures.UniqueNumber));
 
             }
-            
+
             for (int j = 0; j < CountSize; j++)
             {
 
@@ -1393,7 +1356,7 @@ namespace Sciencecom.Controllers
         public ActionResult DeleteAdvertisingDesign(int? id)
         {
             AdvertisingStructure mc = context.AdvertisingStructures.Single(a => a.Id_show == id);
-            context.ListUniqueNumbers.Add(new ListUniqueNumber(){UniqueNumber = mc.UniqueNumber,Code_id = mc.Code,TimeOpen = DateTime.Now});
+            context.ListUniqueNumbers.Add(new ListUniqueNumber() { UniqueNumber = mc.UniqueNumber, Code_id = mc.Code, TimeOpen = DateTime.Now });
             foreach (var side in mc.Sides)
             {
                 context.Surfaces.RemoveRange(side.Surfaces);
@@ -1404,32 +1367,32 @@ namespace Sciencecom.Controllers
             context.SaveChanges();
 
             //удаление картинок
-                string src = "/Images/Scan1SidesWithFinancialManagement/" + mc.Id +
-                             "FinancialManagement.jpg";
-                string path = Server.MapPath(src);
-                FileInfo info1 = new FileInfo(path);
-                if (info1.Exists)
-                {
-                    info1.Delete();
-                }
+            string src = "/Images/Scan1SidesWithFinancialManagement/" + mc.Id +
+                         "FinancialManagement.jpg";
+            string path = Server.MapPath(src);
+            FileInfo info1 = new FileInfo(path);
+            if (info1.Exists)
+            {
+                info1.Delete();
+            }
 
-                src = "/Images/ScanPassport_1Sides/" + mc.Id + "passport.jpg";
-                path = Server.MapPath(src);
-                info1 = new FileInfo(path);
-                if (info1.Exists)
-                {
-                    info1.Delete();
-                }
+            src = "/Images/ScanPassport_1Sides/" + mc.Id + "passport.jpg";
+            path = Server.MapPath(src);
+            info1 = new FileInfo(path);
+            if (info1.Exists)
+            {
+                info1.Delete();
+            }
 
-                src = "/Images/ScanPassport_2Sides/" + mc.Id + "ScanPassport_2Sides.jpg";
-                path = Server.MapPath(src);
-                info1 = new FileInfo(path);
-                if (info1.Exists)
-                {
-                    info1.Delete();
-                }
+            src = "/Images/ScanPassport_2Sides/" + mc.Id + "ScanPassport_2Sides.jpg";
+            path = Server.MapPath(src);
+            info1 = new FileInfo(path);
+            if (info1.Exists)
+            {
+                info1.Delete();
+            }
 
-            
+
             return RedirectToAction("AdvertisingDesign");
         }
 
@@ -1437,46 +1400,46 @@ namespace Sciencecom.Controllers
 
 
         //[Authorize]
-        //public ActionResult ShowBillboardTablePartial(Billboards1 billboard, string day, string month, string year, string owner)
+        //public ActionResult ShowAdvertisinTablePartial(Advertisins1 Advertisin, string day, string month, string year, string owner)
         //{
-        //    if (billboard == null)
+        //    if (Advertisin == null)
         //    {
         //        ViewBag.Results = null;
-        //        return View(context.Billboards1.OrderByDescending(m => m.StartDate));
+        //        return View(context.Advertisins1.OrderByDescending(m => m.StartDate));
         //    }
         //    else
         //    {
-        //        IEnumerable<Billboards1> result = SearchBillboard(billboard, day, month, year, owner);
+        //        IEnumerable<Advertisins1> result = SearchAdvertisin(Advertisin, day, month, year, owner);
         //        ViewBag.Results = result.Count();
         //        return View(result.OrderByDescending(m => m.StartDate));
         //    }
         //}
 
-        //public IEnumerable<Billboards1> SearchBillboard(Sciencecom.Models.Billboards1 billboard, string day, string month, string year,string owner)
+        //public IEnumerable<Advertisins1> SearchAdvertisin(Sciencecom.Models.Advertisins1 Advertisin, string day, string month, string year,string owner)
         //{
 
         //    context = new SciencecomEntities();
-        //    IEnumerable<Billboards1> result = context.Billboards1;
+        //    IEnumerable<Advertisins1> result = context.Advertisins1;
         //    if (owner != "" && owner != null)
         //    {
         //        var id_Owner = context.Owners.Single(a => a.Name.ToLower() == owner.ToLower()).Id;
         //         result = result.Where(m => m.Owner.Id == id_Owner);
         //    }
-        //    if (billboard.Street1 != "" && billboard.Street1 != null)
+        //    if (Advertisin.Street1 != "" && Advertisin.Street1 != null)
         //    {
-        //        result = result.Where(m => m.Street1.ToLower().Contains(billboard.Street1.ToLower()));
+        //        result = result.Where(m => m.Street1.ToLower().Contains(Advertisin.Street1.ToLower()));
         //    }
-        //    if (billboard.Street2 != "" && billboard.Street2!=null)
+        //    if (Advertisin.Street2 != "" && Advertisin.Street2!=null)
         //    {
-        //        result = result.Where(m => m.Street2.ToLower().Contains(billboard.Street2.ToLower()));
+        //        result = result.Where(m => m.Street2.ToLower().Contains(Advertisin.Street2.ToLower()));
         //    }
-        //    if (billboard.FromStreet != "" && billboard.FromStreet != null)
+        //    if (Advertisin.FromStreet != "" && Advertisin.FromStreet != null)
         //    {
-        //        result = result.Where(m => m.FromStreet.ToLower().Contains(billboard.FromStreet.ToLower()));
+        //        result = result.Where(m => m.FromStreet.ToLower().Contains(Advertisin.FromStreet.ToLower()));
         //    }
-        //    if (billboard.Locality != "" && billboard.Locality != null)
+        //    if (Advertisin.Locality != "" && Advertisin.Locality != null)
         //    {
-        //        result = result.Where(m => m.Locality.ToLower().Contains(billboard.Locality.ToLower()));
+        //        result = result.Where(m => m.Locality.ToLower().Contains(Advertisin.Locality.ToLower()));
         //    }
         //    if (day != "")
         //    {
@@ -1499,7 +1462,7 @@ namespace Sciencecom.Controllers
             ViewBag.EndCountForSurface = EndCountForSurface;
             ViewBag.StartCountForSurface = StartCountForSurface;
             ViewBag.Side = side;
-            
+
             return View("Surface");
         }
 
@@ -1537,94 +1500,94 @@ namespace Sciencecom.Controllers
             return View(mc);
         }
 
-            [HttpPost]
+        [HttpPost]
         public ActionResult EditAdvertisingDesign(int id, AdvertisingStructure Structures,
-            [ModelBinder(typeof (CustomModelBinderForSide))] List<Side> Sides,
-            [ModelBinder(typeof (CustomModelBinderForSurface))] List<Surface> surfaces,
+            [ModelBinder(typeof(CustomModelBinderForSide))] List<Side> Sides,
+            [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces,
             HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides,
-            HttpPostedFileBase Scan1SidesWithFinancialManagement, 
+            HttpPostedFileBase Scan1SidesWithFinancialManagement,
             int CountSize = 1)
+        {
+
+            AdvertisingStructure mc = context.AdvertisingStructures.Single(a => a.Id_show == id);
+            var TempId = mc.Id;
+
+            foreach (var side in mc.Sides)
             {
-               
-                AdvertisingStructure mc = context.AdvertisingStructures.Single(a => a.Id_show == id);
-                var TempId = mc.Id;
-                     
-                foreach (var side in mc.Sides)
-                {
-                    context.Surfaces.RemoveRange(side.Surfaces);
-
-                }
-               
-                context.Sides.RemoveRange(mc.Sides);
-                context.AdvertisingStructures.Remove(mc);
-                context.SaveChanges();
-
-                for (int j = 0; j < CountSize; j++)
-                {
-
-                    Sides[j].AdvertisingStructures_Id = mc.Id;
-                    Sides[j].Name = (j + 1).ToString();
-                    Sides[j].Id = Guid.NewGuid();
-                }
-                Structures.Id = TempId;
-                
-                context.AdvertisingStructures.Add(Structures);
-                context.Sides.AddRange(Sides);
-                context.AdvertisingStructures.Add(Structures);
-                List<Surface> ListSurface = new List<Surface>();
-                foreach (var i in surfaces)
-                {
-                    i.Side_Id = Sides.Single(a => a.Name == i.SideOfSurface).Id;
-                    ListSurface.Add(i);
-
-                }
-                context.Surfaces.AddRange(ListSurface);
-
-                context.SaveChanges();
-                //картики
-                if (Scan1SidesWithFinancialManagement != null)
-                {
-                    string src = "~/Images/Scan1SidesWithFinancialManagement/" + Structures.Id +
-                                 "FinancialManagement.jpg";
-                    string path = Server.MapPath(src);
-                    FileInfo info1 = new FileInfo(path);
-                    if (info1.Exists)
-                    {
-                        info1.Delete();
-                    }
-                    
-                    Scan1SidesWithFinancialManagement.SaveAs(path);
-                }
-
-                if (ScanPassport_1Sides != null)
-                {
-
-                    string src = "~/Images/ScanPassport_1Sides/" + Structures.Id + "passport.jpg";
-                    string path = Server.MapPath(src);
-                    FileInfo info1 = new FileInfo(path);
-                    if (info1.Exists)
-                    {
-                        info1.Delete();
-                    }
-                    
-                    ScanPassport_1Sides.SaveAs(path);
-                }
-                if (ScanPassport_2Sides != null)
-                {
-                    string src = "~/Images/ScanPassport_2Sides/" + Structures.Id + "ScanPassport_2Sides.jpg";
-                    string path = Server.MapPath(src);
-                    FileInfo info1 = new FileInfo(path);
-                    if (info1.Exists)
-                    {
-                        info1.Delete();
-                    }
-                    
-                    ScanPassport_2Sides.SaveAs(path);
-                }
-                
-               return RedirectToAction("AdvertisingDesign");
+                context.Surfaces.RemoveRange(side.Surfaces);
 
             }
+
+            context.Sides.RemoveRange(mc.Sides);
+            context.AdvertisingStructures.Remove(mc);
+            context.SaveChanges();
+
+            for (int j = 0; j < CountSize; j++)
+            {
+
+                Sides[j].AdvertisingStructures_Id = mc.Id;
+                Sides[j].Name = (j + 1).ToString();
+                Sides[j].Id = Guid.NewGuid();
+            }
+            Structures.Id = TempId;
+
+            context.AdvertisingStructures.Add(Structures);
+            context.Sides.AddRange(Sides);
+            context.AdvertisingStructures.Add(Structures);
+            List<Surface> ListSurface = new List<Surface>();
+            foreach (var i in surfaces)
+            {
+                i.Side_Id = Sides.Single(a => a.Name == i.SideOfSurface).Id;
+                ListSurface.Add(i);
+
+            }
+            context.Surfaces.AddRange(ListSurface);
+
+            context.SaveChanges();
+            //картики
+            if (Scan1SidesWithFinancialManagement != null)
+            {
+                string src = "~/Images/Scan1SidesWithFinancialManagement/" + Structures.Id +
+                             "FinancialManagement.jpg";
+                string path = Server.MapPath(src);
+                FileInfo info1 = new FileInfo(path);
+                if (info1.Exists)
+                {
+                    info1.Delete();
+                }
+
+                Scan1SidesWithFinancialManagement.SaveAs(path);
+            }
+
+            if (ScanPassport_1Sides != null)
+            {
+
+                string src = "~/Images/ScanPassport_1Sides/" + Structures.Id + "passport.jpg";
+                string path = Server.MapPath(src);
+                FileInfo info1 = new FileInfo(path);
+                if (info1.Exists)
+                {
+                    info1.Delete();
+                }
+
+                ScanPassport_1Sides.SaveAs(path);
+            }
+            if (ScanPassport_2Sides != null)
+            {
+                string src = "~/Images/ScanPassport_2Sides/" + Structures.Id + "ScanPassport_2Sides.jpg";
+                string path = Server.MapPath(src);
+                FileInfo info1 = new FileInfo(path);
+                if (info1.Exists)
+                {
+                    info1.Delete();
+                }
+
+                ScanPassport_2Sides.SaveAs(path);
+            }
+
+            return RedirectToAction("AdvertisingDesign");
+
+        }
     }
 }
 
