@@ -21,6 +21,7 @@
             id: parseInt(objectId)
         }
     }).success(function (data) {
+        console.log(data);
        if (data.length > 0) {
             //var myBilboardClusterer = new ymaps.Clusterer(
             //{
@@ -31,7 +32,8 @@
             //{
             //    preset: 'islands#blueClusterIcons',
             //    clusterDisableClickZoom: false
-            //});
+           //});
+           
             for (var i = 0; i < data.length; i++) {
                     var placemark = new ymaps.GeoObject(
                     {
@@ -43,8 +45,8 @@
                             balloonContentBody: '<b>Собственник конструкции:&nbsp;' + data[i].OwnerName
                                     + '</br>Улица 1:&nbsp' + data[i].Street1
                                     + '</br>Улица 2:&nbsp;' + data[i].Street2
-                                     + '</br>Со стороны:&nbsp;' + data[i].FromStreet
-                            + getReferencesBillboard(data[i]),
+                                     + '</br>Со стороны:&nbsp;' + data[i].FromStreet,
+                            //+ getReferencesBillboard(data[i]),
                             iconContent: 'Б',
                             hintContent: 'Щит'
                         }

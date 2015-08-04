@@ -1077,11 +1077,11 @@ namespace Sciencecom.Controllers
         {
 
             context = new SciencecomEntities();
-            var owner_id = context.Owners.SingleOrDefault(a => a.Name == owner);
+            var owner_id = context.Owners.SingleOrDefault(a => a.Name.ToLower().Contains(owner.ToLower()));
             var typeOfAdvertisingStructure_id =
-                context.TypeOfAdvertisingStructures.SingleOrDefault(a => a.Name == TypeOfAdvertisingStructure);
-            var locality_id = context.TypeOfAdvertisingStructures.SingleOrDefault(a => a.Name == Locality);
-            var backlight = context.Backlights.SingleOrDefault(a => a.Name == Backlight);
+                context.TypeOfAdvertisingStructures.SingleOrDefault(a => a.Name.ToLower().Contains(TypeOfAdvertisingStructure.ToLower()));
+            var locality_id = context.TypeOfAdvertisingStructures.SingleOrDefault(a => a.Name.ToLower().Contains(Locality.ToLower()));
+            var backlight = context.Backlights.SingleOrDefault(a => a.Name.ToLower().Contains(Backlight.ToLower()));
             IEnumerable<AdvertisingStructure> result;
             if (CountSize!=null)
             {
@@ -1132,10 +1132,11 @@ namespace Sciencecom.Controllers
             }
             if (Advertisin.EndDate != null)
             {
-                result = result.Where(m => m.EndDate.ToString().Contains(Advertisin.EndDate.ToString()));
+                result = result.Where(m => m.EndDate.ToString().ToLower().Trim().Contains(Advertisin.EndDate.ToString().ToLower().Trim()));
+               
             }
 
-            //result = result.Where(m => m.OnAgreement == Advertisin.OnAgreement).ToList();
+
 
             return result;
         }

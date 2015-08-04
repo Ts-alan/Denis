@@ -152,7 +152,7 @@ namespace Sciencecom.Controllers
             //}
 
 
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(objectsForJson, JsonRequestBehavior.AllowGet);
         }
  
 
