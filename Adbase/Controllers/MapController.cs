@@ -108,15 +108,7 @@ namespace Sciencecom.Controllers
                 return Json(objectsForJson, JsonRequestBehavior.AllowGet);
             }
             DataController dataController = new DataController();
-            DateTime? ValueEndDate;
-            try
-            {
-                 ValueEndDate = DateTime.ParseExact(EndDate, "dd.MM.yyyy", CultureInfo.InvariantCulture);
-            }
-            catch
-            {
-                ValueEndDate = null;
-            }
+          
 
             AdvertisingStructure mc = new AdvertisingStructure()
             {
@@ -125,12 +117,12 @@ namespace Sciencecom.Controllers
                 House1 =House1,
                 C_ContractFinancialManagement = ContractFinancialManagement,
                 C_PassportAdvertising = PassportAdvertising,
-                EndDate = ValueEndDate
+                
               
             };
             IEnumerable<AdvertisingStructure> result =
             dataController.SearchAdversing(mc, owner, TypeOfAdvertisingStructure, Locality, CountSize,
-                Backlight).ToList();
+                Backlight, EndDate).ToList();
             for (int i = 0; i < result.Count(); i++)
             {
                 objectsForJson.Add(new AdvertisingConstructionJsonModel(result.ElementAt(i), null));

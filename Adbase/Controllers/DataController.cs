@@ -1073,7 +1073,7 @@ namespace Sciencecom.Controllers
 
         //#endregion
         public IEnumerable<AdvertisingStructure> SearchAdversing(AdvertisingStructure Advertisin, string owner,
-            string TypeOfAdvertisingStructure, string Locality, int? CountSize, string Backlight)
+            string TypeOfAdvertisingStructure, string Locality, int? CountSize, string Backlight, string EndDate)
         {
 
             context = new SciencecomEntities();
@@ -1081,7 +1081,9 @@ namespace Sciencecom.Controllers
             var typeOfAdvertisingStructure_id =
                 context.TypeOfAdvertisingStructures.SingleOrDefault(a => a.Name.ToLower().Contains(TypeOfAdvertisingStructure.ToLower()));
             var locality_id = context.TypeOfAdvertisingStructures.SingleOrDefault(a => a.Name.ToLower().Contains(Locality.ToLower()));
-            var backlight = context.Backlights.SingleOrDefault(a => a.Name.ToLower().Contains(Backlight.ToLower()));
+            List<Sciencecom.Models.Backlight> backlights=null;
+            if (Backlight != "") 
+            backlights = context.Backlights.Where(a => a.Name.Contains(Backlight)).ToList();
             IEnumerable<AdvertisingStructure> result;
             if (CountSize!=null)
             {
@@ -1106,9 +1108,24 @@ namespace Sciencecom.Controllers
             {
                 result = result.Where(m => m.Locality_id == locality_id.id);
             }
-            if (backlight != null)
+            if (backlights != null)
             {
-                result = result.Where(m => m.Backlight_Id == backlight.id);
+
+
+
+                    result = result.Where(m =>
+                    {
+                        if (m.Backlight_Id.HasValue==true )
+                        {
+                            if (backlights.Select(a=>a.id.ToString()).Contains(m.Backlight_Id.ToString()))
+                            return true;
+                        }
+
+                            return false;  
+                      
+                    }).ToList();
+         
+                int i = 0;
             }
             if (Advertisin.Street1 != null)
             {
@@ -1130,10 +1147,9 @@ namespace Sciencecom.Controllers
             {
                 result = result.Where(m => m.C_PassportAdvertising.ToLower().Contains(Advertisin.C_PassportAdvertising.ToLower()));
             }
-            if (Advertisin.EndDate != null)
+            if (EndDate != null)
             {
-                result = result.Where(m => m.EndDate.ToString().ToLower().Trim().Contains(Advertisin.EndDate.ToString().ToLower().Trim()));
-               
+                result = result.Where(m => m.EndDate.ToString().ToLower().Trim().Contains(EndDate));
             }
 
 
