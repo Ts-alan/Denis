@@ -72,7 +72,7 @@ namespace Sciencecom.Controllers
         //[HttpPost]
         //[Authorize]
         public JsonResult GetDesign(string owner, string UniqueNumber, string TypeOfAdvertisingStructure, string Locality,
-            string Street1, string House1, int? CountSize, string AreaConstruction,
+            string Street1, string House1, int? CountSize, int? AreaConstruction,
             string CountSurface, string Backlight, string ContractFinancialManagement, string PassportAdvertising,  string EndDate, int? id = null)
         {
 
@@ -122,7 +122,7 @@ namespace Sciencecom.Controllers
             };
             IEnumerable<AdvertisingStructure> result =
             dataController.SearchAdversing(mc, owner, TypeOfAdvertisingStructure, Locality, CountSize,
-                Backlight, EndDate).ToList();
+                Backlight, EndDate, AreaConstruction).ToList();
             for (int i = 0; i < result.Count(); i++)
             {
                 objectsForJson.Add(new AdvertisingConstructionJsonModel(result.ElementAt(i), null));
