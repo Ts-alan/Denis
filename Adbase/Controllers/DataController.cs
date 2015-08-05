@@ -1384,7 +1384,7 @@ namespace Sciencecom.Controllers
 
 
         [Authorize(Roles = "Admin, ChiefEditAll,ChiefEditOwn, SupplierEditAll, SupplierEditOwn")]
-        public ActionResult DeleteAdvertisingDesign(int? id)
+        public ActionResult DeleteAdvertisingDesign(int? id,string switchtoMap)
         {
             AdvertisingStructure mc = context.AdvertisingStructures.Single(a => a.Id_show == id);
             context.ListUniqueNumbers.Add(new ListUniqueNumber() { UniqueNumber = mc.UniqueNumber, Code_id = mc.Code, TimeOpen = DateTime.Now });
@@ -1423,7 +1423,10 @@ namespace Sciencecom.Controllers
                 info1.Delete();
             }
 
-
+            if (switchtoMap == "true")
+            {
+                return RedirectToAction("Index","Map"); 
+            }
             return RedirectToAction("AdvertisingDesign");
         }
 

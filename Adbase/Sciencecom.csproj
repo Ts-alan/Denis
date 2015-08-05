@@ -410,6 +410,7 @@
       <LastGenOutput>ContructionsModel1.cs</LastGenOutput>
     </Content>
     <None Include="Properties\PublishProfiles\adbase.by.pubxml" />
+    <None Include="Properties\PublishProfiles\local_folder.pubxml" />
     <None Include="Properties\PublishProfiles\ScincecomPublish.pubxml" />
     <None Include="Properties\PublishProfiles\ScomBeta.pubxml" />
     <Content Include="Content\messi.css" />
@@ -1419,6 +1420,7 @@
     <Content Include="Scripts\demos\tabs\ajax\content3-slow.php" />
     <Content Include="Scripts\demos\tabs\ajax\content4-broken.php" />
     <Content Include="Scripts\jqGrid\minified\jquery.jqGrid.min.js.map" />
+    <Content Include="Views\Shared\PatialView\Modals.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Start\App_Data\" />

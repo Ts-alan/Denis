@@ -36,7 +36,7 @@ namespace Sciencecom.Controllers
         public void SaveSearch(string collectionMap)
         {
             Session["collectionMap"] = collectionMap;
-            int i = 0;
+          
         }
     }
 }

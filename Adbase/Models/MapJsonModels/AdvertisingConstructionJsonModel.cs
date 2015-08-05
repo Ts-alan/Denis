@@ -22,7 +22,7 @@ namespace Sciencecom.Models.MapJsonModels
             this.Owner_Id = mc.Owner_Id.Value;
             this.Id = mc.Id;
             this.Id_show = mc.Id_show;
-            this.OwnerName = mc.OwnerName;
+            this.OwnerName = mc.TypeOfAdvertisingStructure.Name;
             //this.Surfaces = surfaces.Select(a => a.Id);
         }
 
