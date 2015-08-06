@@ -60,7 +60,7 @@
 function getReferencesBillboard(construction) {
     var result = "";
 
-    result += '</br><a href="/Data/Documents/' + construction.Id_show + '" >Данные конструкции</a>'
+    result += '</br><a href="/Data/Documents/' + construction.Id_show + '" >Показать данные о конструкции</a>'
         + '</br><a href="/Data/EditAdvertisingDesign/' + construction.Id_show + '" >Изменить данные конструкции</a>'
         + '</br><a href="#DeleteStructures"  role="button" data-toggle="modal" onclick="setRemove(' + construction.Id_show + ')"  >Удалить конструкцию</a></b>'
 
