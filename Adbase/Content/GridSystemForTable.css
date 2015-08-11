@@ -44,10 +44,15 @@ table {
 {
   float: left  ;
 }*/
-#gbox_table, #gview_table, [class='ui-state-default ui-jqgrid-hdiv ui-corner-top'] {
+#gbox_table, #gview_table, [class='ui-state-default ui-jqgrid-hdiv ui-corner-top'],#table,[class="ui-jqgrid-bdiv"] {
     width: 100% !important;
 }
-
+[aria-describedby="table_Идентификационный_номер"],[aria-describedby="table_Собственник_рекламной_конструкции"],[aria-describedby="table_Вид_рекламной_конструкции"],
+[aria-describedby="table_Населенный_пункт"],[aria-describedby="table_Улица"],[aria-describedby="table_Дом"],[aria-describedby="table_Количество_сторон"],
+[aria-describedby="table_Количестов_поверхностей"],[aria-describedby="table_Площадь_рекламной_конструкции"],[aria-describedby="table_Подстветка"],
+[aria-describedby="table_№_договора_с_фин_упр"],[aria-describedby="table_№_паспорта_рекл"] {
+     width: 7.69230769% !important;
+}
 #table_Разреш_по
 {
  width: 7.69230769% !important;
