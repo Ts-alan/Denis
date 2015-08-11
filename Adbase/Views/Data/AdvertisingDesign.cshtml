@@ -195,6 +195,7 @@
             FunctionaFortable();
         });
         window.onload = SetDate();
+
     });
 
     $("html").dblclick(function (e) {
@@ -217,13 +218,13 @@
     });
 </script>
 @*чтобы jqgtid разбивал на несколько строк*@
-@*<style type="text/css" media="screen">
+<style type="text/css" media="screen">
     th.ui-th-column div {
         white-space: normal !important;
         height: auto !important;
         padding: 2px;
     }
-</style>*@
+</style>
 <div id="Page">
 
     <h2>Таблица рекламных конструкций</h2>
@@ -253,10 +254,10 @@
         </div>*@
 
 
-    <table id="table" class="table-bordered" cellpadding="5">
+    <table id="table" class="table-bordered" cellpadding="5" style="width: 100%" >
         <tr>
 
-            <th>Идентификационный_номер</th>
+            <th >Идентификационный_номер</th>
             <th>Собственник_рекламной_конструкции</th>
             <th>Вид_рекламной_конструкции</th>
             <th>Населенный_пункт</th>
