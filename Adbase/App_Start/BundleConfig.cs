@@ -47,7 +47,8 @@ namespace Sciencecom
             "~/Content/jqGrid/ui.jqgrid.css",
             "~/Content/jqGrid/searchFilter.css",
             "~/Content/jqGrid/ui.jqgrid-bootstarp.css",
-            "~/Content/jqGrid/ui.multiselect.css"
+            "~/Content/jqGrid/ui.multiselect.css",
+            "~/Content/GridSystemForTable.css"
            ));
             //javascript для Grid
             bundles.Add(new StyleBundle("~/bundles/jqCrid").Include(

@@ -20,7 +20,6 @@
 }
 
 
-@Styles.Render("~/Content/jqCrid")
 @Scripts.Render("~/bundles/jqCrid")
 @Scripts.Render("~/bundles/tooltip")
 <script type="text/javascript">
@@ -51,19 +50,19 @@
 
             cmTemplate:{"resizable": false,sortable:false},
             colModel: [
-                { name: "Идентификационный_номер", width: 25, align: "center"},
-                { name: "Собственник_рекламной_конструкции", width: 22, align: "center" },
-                { name: "Вид_рекламной_конструкции", width: 23, align: "center" },
-                { name: "Населенный_пункт", width: 23, align: "center" },
-                { name: "Улица", width: 24, align: "center" },
-                { name: "Дом", width: 23, align: "center" },
-                { name: "Количество_сторон", width: 23, align: "center" },
-                { name: "Количестов_поверхностей", width: 22, align: "center" },
-                { name: "Площадь_рекламной_конструкции", width: 24, align: "center" },
-                { name: "Подстветка", width: 25, align: "center" },
-                { name: "№_договора_с_фин_упр", width: 20, align: "center" },
-                { name: "№_паспорта_рекл", width: 20, align: "center" },
-                { name: "Разреш_по", width: 20, align: "center" }
+                { name: "Идентификационный_номер", align: "center"},
+                { name: "Собственник_рекламной_конструкции", align: "center" },
+                { name: "Вид_рекламной_конструкции", align: "center" },
+                { name: "Населенный_пункт", align: "center" },
+                { name: "Улица", align: "center" },
+                { name: "Дом", align: "center" },
+                { name: "Количество_сторон", align: "center" },
+                { name: "Количестов_поверхностей", align: "center" },
+                { name: "Площадь_рекламной_конструкции", align: "center" },
+                { name: "Подстветка", align: "center" },
+                { name: "№_договора_с_фин_упр", align: "center" },
+                { name: "№_паспорта_рекл", align: "center" },
+                { name: "Разреш_по", align: "center" }
 
             ]
         });
@@ -218,13 +217,13 @@
     });
 </script>
 @*чтобы jqgtid разбивал на несколько строк*@
-<style type="text/css" media="screen">
+@*<style type="text/css" media="screen">
     th.ui-th-column div {
         white-space: normal !important;
         height: auto !important;
         padding: 2px;
     }
-</style>
+</style>*@
 <div id="Page">
 
     <h2>Таблица рекламных конструкций</h2>
