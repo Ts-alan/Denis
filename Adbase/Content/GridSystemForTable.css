@@ -44,8 +44,14 @@ table {
 {
   float: left  ;
 }*/
-#gbox_table, #gview_table, [class='ui-state-default ui-jqgrid-hdiv ui-corner-top'],#table,[class="ui-jqgrid-bdiv"] {
+#gbox_table, #gview_table, [class='ui-state-default ui-jqgrid-hdiv ui-corner-top'],[class="ui-jqgrid-bdiv"]
+
+ {
     width: 100% !important;
+}
+[class="table-bordered ui-jqgrid-btable"] {
+   width: 100% !important;
+    table-layout: inherit !important;
 }
 [aria-describedby="table_Идентификационный_номер"],[aria-describedby="table_Собственник_рекламной_конструкции"],[aria-describedby="table_Вид_рекламной_конструкции"],
 [aria-describedby="table_Населенный_пункт"],[aria-describedby="table_Улица"],[aria-describedby="table_Дом"],[aria-describedby="table_Количество_сторон"],
