@@ -51,53 +51,70 @@ table {
 }
 [class="table-bordered ui-jqgrid-btable"] {
    width: 100% !important;
-    table-layout: inherit !important;
+   table-layout: inherit !important;
 }
-[aria-describedby="table_Идентификационный_номер"],[aria-describedby="table_Собственник_рекламной_конструкции"],[aria-describedby="table_Вид_рекламной_конструкции"],
-[aria-describedby="table_Населенный_пункт"],[aria-describedby="table_Улица"],[aria-describedby="table_Дом"],[aria-describedby="table_Количество_сторон"],
-[aria-describedby="table_Количестов_поверхностей"],[aria-describedby="table_Площадь_рекламной_конструкции"],[aria-describedby="table_Подстветка"],
-[aria-describedby="table_№_договора_с_фин_упр"],[aria-describedby="table_№_паспорта_рекл"] {
-     width: 7.69230769% !important;
+
+
+
+
+
+/*убираем пробел справа в таблице*/
+.ui-jqgrid .ui-jqgrid-hbox {
+    padding-right: 0 !important;
 }
-#table_Разреш_по
+
+/*выравнивание столбцов*/
+#table_Разреш_по,[aria-describedby="table_Разреш_по"]
 {
  width: 7.69230769% !important;
 }
- #table_№_паспорта_рекл {
+ #table_№_паспорта_рекл ,[aria-describedby="table_№_паспорта_рекл"] 
+{
 width: 7.69230769% !important;
 }
- #table_№_договора_с_фин_упр{
-width: 7.69230769% !important;
+ #table_№_договора_с_фин_упр,[aria-describedby="table_№_договора_с_фин_упр"]
+{
+width: 11.538461535% !important;
 }
-#table_Подстветка {
+#table_Подстветка,[aria-describedby="table_Подстветка"]
+{
+ width:  5.7692307675% !important;
+}
+#table_Площадь_рекламной_конструкции,[aria-describedby="table_Площадь_рекламной_конструкции"]
+{
+width:  5.7692307675% !important;
+}
+#table_Количестов_поверхностей,[aria-describedby="table_Количестов_поверхностей"]
+{
+width:  5.7692307675%  !important;
+}
+#table_Количество_сторон,[aria-describedby="table_Количество_сторон"]
+{
+width: 5.7692307675% !important;
+}
+#table_Дом,[aria-describedby="table_Дом"]
+ {
+ width: 3.846153845% !important;
+}
+#table_Улица,[aria-describedby="table_Улица"]
+{
  width: 7.69230769% !important;
 }
-#table_Площадь_рекламной_конструкции {
-width: 7.69230769% !important;
-}
-#table_Количестов_поверхностей {
-width: 7.69230769% !important;
-}
-#table_Количество_сторон {
-width: 7.69230769% !important;
-}
-#table_Дом {
+#table_Населенный_пункт,[aria-describedby="table_Населенный_пункт"]
+{
  width: 7.69230769% !important;
 }
-#table_Улица {
+#table_Вид_рекламной_конструкции,[aria-describedby="table_Вид_рекламной_конструкции"]
+{
  width: 7.69230769% !important;
 }
-#table_Населенный_пункт{
- width: 7.69230769% !important;
+#table_Собственник_рекламной_конструкции, [aria-describedby="table_Собственник_рекламной_конструкции"]
+{
+  width: 11.538461535% !important;
 }
-#table_Вид_рекламной_конструкции{
- width: 7.69230769% !important;
-}
-#table_Собственник_рекламной_конструкции{
-  width: 7.69230769% !important;
-}
-#table_Идентификационный_номер {
-  width: 7.69230769% !important;
+#table_Идентификационный_номер ,[aria-describedby="table_Идентификационный_номер"]
+{
+  width: 11.538461535% !important;
 }
 /*.col-xs-13
  {
