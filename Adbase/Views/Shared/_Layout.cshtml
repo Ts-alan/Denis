@@ -42,7 +42,7 @@
     })
 </script>
 <div class="navbar navbar-inverse navbar-fixed-top">
-    <div class="">
+    <div class="container-fluid">
         <div class="navbar-header" style="margin-right: 10px">
             <img src="/Images/ONCLOUD logo site.png"/>
         </div>
@@ -67,7 +67,7 @@
                     <li><a href="@Url.Action("AdministrationPage", "Account")">Администрирование</a></li>
                 </ul>
             }
-            @Html.Partial("_LoginPartial")
+            @{ Html.RenderPartial("_LoginPartial"); }
         </div>
     </div>
 </div>

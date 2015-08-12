@@ -7,10 +7,10 @@ using Enums.Selectors;
 
 namespace Sciencecom.Controllers
 {
-    [Authorize]
+
     public class HomeController : Controller
     {
-        [Authorize]
+  
         public ActionResult Index()
         {
             Session["collectionMap"] = null;
@@ -21,7 +21,6 @@ namespace Sciencecom.Controllers
             return View();
         }
 
-        [Authorize]
         public ActionResult BillboardsIndex()
         {
             if (!RolesList.IsInRole(RolesEnum.OnlyBillboards, User))
