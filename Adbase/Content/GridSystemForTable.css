@@ -1,4 +1,4 @@
-﻿/*@media (min-width: 768px) {
+﻿@media (min-width: 768px) {
   table {
     width: 750px;
   }
@@ -12,7 +12,7 @@
   table {
     width: 1170px;
   }
-}*/
+}
 .container-fluid {
   margin-right: auto;
   margin-left: auto;
@@ -74,7 +74,7 @@ width: 7.69230769% !important;
 }
  #table_№_договора_с_фин_упр,[aria-describedby="table_№_договора_с_фин_упр"]
 {
-width: 11.538461535% !important;
+width: 9.6153846125% !important;
 }
 #table_Подстветка,[aria-describedby="table_Подстветка"]
 {
@@ -86,7 +86,7 @@ width:  5.7692307675% !important;
 }
 #table_Количестов_поверхностей,[aria-describedby="table_Количестов_поверхностей"]
 {
-width:  5.7692307675%  !important;
+width:  7.69230769%  !important;
 }
 #table_Количество_сторон,[aria-describedby="table_Количество_сторон"]
 {
