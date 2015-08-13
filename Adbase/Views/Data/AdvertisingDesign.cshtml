@@ -120,7 +120,7 @@
             });
 
             var test = JSON.stringify(collectionMap);
-            
+
             $.ajax({
                 url: '@Url.Action("SaveSearch", "BackEndServices")',
                 data: { collectionMap: test },
@@ -228,90 +228,92 @@
 <div id="Page">
 
     <h2>Таблица рекламных конструкций</h2>
-    @{
-        if (role != "ReadOnly")
-        {
-            <p>
-                <b>@Html.ActionLink("+ Добавить новую рекламную конструкцию", "CreateAdvertisingDesign", new { type = "Billboard" }, new { @class = "btn btn-default" })</b>
-                <b> <input type="button" value="Поиск" id="search" class="btn btn-default"></b>
-                @*<b><a href="#" style="margin-right: 110px" id="AddNewAD">+ Новая рекламная конструкция</a></b>
-                    <b><a href="#" style="margin-right: 110px" id="EditStatusAD">+ Изменить статус рекламной конструкции</a></b>
-                    <b><a href="#" id="EditBillbord">+ Изменить существующую рекламную конструкцию</a></b>*@
-            </p>
-        }
-    }
-
-    @*<div id="divForAddNewAD" style="margin-left: 30px; margin-right: 40px; margin-bottom: 10px; float: left; visibility: hidden">
-            <b>@Html.ActionLink("+ Карточка рекламной конструкции", "CreateAdvertisingDesign", new {type = "Billboard"})</b>
-            <b>@Html.ActionLink("+ Подать заявку на согласование паспорта рекламы", "CreateAdvertisingDesign", new {type = "Billboard"}, new {style = "display: block"})</b>
-
-        </div>
-
-        <div id="divEditStatusAD" style="visibility: hidden">
-            <b>@Html.ActionLink("+ Ввести данные паспорта рекламы", "CreateBilboard", new {type = "Billboard"}, new {style = "margin-right:140px"})</b>
-            <b>@Html.ActionLink("+ Ввести данные об установке рекламной конструкции", "CreateAdvertisingDesign", new {type = "Billboard"}, new {style = "margin-right:140px;display: block"})</b>
-            <b>@Html.ActionLink("+ Ввести данные об демонтаже рекламной контсрукции", "CreateAdvertisingDesign", new {type = "Billboard"}, new {style = "margin-right:140px;display: block"})</b>
-        </div>*@
-
-
-    <table id="table" class="table-bordered" cellpadding="5" style="width: 100%" >
-        <tr>
-
-            <th >Идентификационный_номер</th>
-            <th>Собственник_рекламной_конструкции</th>
-            <th>Вид_рекламной_конструкции</th>
-            <th>Населенный_пункт</th>
-            <th>Улица</th>
-            <th>Дом</th>
-            <th> Количество_сторон</th>
-            <th> Количестов_поверхностей</th>
-            <th>Площадь_рекламной_конструкции</th>
-            <th>Подстветка</th>
-            <th> №_договора_с_фин_упр</th>
-            <th>№_паспорта_рекл</th>
-            <th>Разреш_по</th>
-
-        </tr>
-        @foreach (var i in Model)
-        {
-            foreach (var side in i.Sides)
+    <div class="zoom">
+        @{
+            if (role != "ReadOnly")
             {
-                SurfaceCOunt += side.Surfaces.Count;
-                foreach (var Surface in side.Surfaces)
-                {
-                    SurfaceSumm += Surface.Space;
-                }
-
+                <p>
+                    <b>@Html.ActionLink("+ Добавить новую рекламную конструкцию", "CreateAdvertisingDesign", new { type = "Billboard" }, new { @class = "btn btn-default" })</b>
+                    <b> <input type="button" value="Поиск" id="search" class="btn btn-default"></b>
+                    @*<b><a href="#" style="margin-right: 110px" id="AddNewAD">+ Новая рекламная конструкция</a></b>
+                        <b><a href="#" style="margin-right: 110px" id="EditStatusAD">+ Изменить статус рекламной конструкции</a></b>
+                        <b><a href="#" id="EditBillbord">+ Изменить существующую рекламную конструкцию</a></b>*@
+                </p>
             }
-            <tr title="test">
+        }
 
-                <td>@i.UniqueNumber</td>
-                <td>@i.Owner.Name </td>
-                <td>@i.TypeOfAdvertisingStructure.Name</td>
-                <td>@i.Locality.NameLocality</td>
-                <td>@i.Street1</td>
-                <td>@i.House1</td>
-                <td>@i.Sides.Count</td>
-                <td>@SurfaceCOunt</td>
-                <td>@SurfaceSumm</td>
-                @if (i.Backlight != null)
-                {
-                    <td>@i.Backlight.Name</td>
-                }
-                else
-                {
-                 <td></td>  
-                }
-                <td>@i.C_ContractFinancialManagement </td>
-                <td>@i.C_PassportAdvertising</td>
-                <td>@i.EndDate.ToString().Substring(0, 10)</td>
+        @*<div id="divForAddNewAD" style="margin-left: 30px; margin-right: 40px; margin-bottom: 10px; float: left; visibility: hidden">
+                <b>@Html.ActionLink("+ Карточка рекламной конструкции", "CreateAdvertisingDesign", new {type = "Billboard"})</b>
+                <b>@Html.ActionLink("+ Подать заявку на согласование паспорта рекламы", "CreateAdvertisingDesign", new {type = "Billboard"}, new {style = "display: block"})</b>
+
+            </div>
+
+            <div id="divEditStatusAD" style="visibility: hidden">
+                <b>@Html.ActionLink("+ Ввести данные паспорта рекламы", "CreateBilboard", new {type = "Billboard"}, new {style = "margin-right:140px"})</b>
+                <b>@Html.ActionLink("+ Ввести данные об установке рекламной конструкции", "CreateAdvertisingDesign", new {type = "Billboard"}, new {style = "margin-right:140px;display: block"})</b>
+                <b>@Html.ActionLink("+ Ввести данные об демонтаже рекламной контсрукции", "CreateAdvertisingDesign", new {type = "Billboard"}, new {style = "margin-right:140px;display: block"})</b>
+            </div>*@
+
+
+        <table id="table" class="table-bordered" cellpadding="5" style="width: 100%">
+            <tr>
+
+                <th>Идентификационный_номер</th>
+                <th>Собственник_рекламной_конструкции</th>
+                <th>Вид_рекламной_конструкции</th>
+                <th>Населенный_пункт</th>
+                <th>Улица</th>
+                <th>Дом</th>
+                <th> Количество_сторон</th>
+                <th> Количестов_поверхностей</th>
+                <th>Площадь_рекламной_конструкции</th>
+                <th>Подстветка</th>
+                <th> №_договора_с_фин_упр</th>
+                <th>№_паспорта_рекл</th>
+                <th>Разреш_по</th>
 
             </tr>
-            SurfaceCOunt = 0;
-            SurfaceSumm = 0;
-        }
+            @foreach (var i in Model)
+            {
+                foreach (var side in i.Sides)
+                {
+                    SurfaceCOunt += side.Surfaces.Count;
+                    foreach (var Surface in side.Surfaces)
+                    {
+                        SurfaceSumm += Surface.Space;
+                    }
 
-    </table>
+                }
+                <tr title="test">
+
+                    <td>@i.UniqueNumber</td>
+                    <td>@i.Owner.Name </td>
+                    <td>@i.TypeOfAdvertisingStructure.Name</td>
+                    <td>@i.Locality.NameLocality</td>
+                    <td>@i.Street1</td>
+                    <td>@i.House1</td>
+                    <td>@i.Sides.Count</td>
+                    <td>@SurfaceCOunt</td>
+                    <td>@SurfaceSumm</td>
+                    @if (i.Backlight != null)
+                    {
+                        <td>@i.Backlight.Name</td>
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
+                    <td>@i.C_ContractFinancialManagement </td>
+                    <td>@i.C_PassportAdvertising</td>
+                    <td>@i.EndDate.ToString().Substring(0, 10)</td>
+
+                </tr>
+                    SurfaceCOunt = 0;
+                    SurfaceSumm = 0;
+            }
+
+        </table>
+    </div>
 </div>
 <hr />
 <footer>
