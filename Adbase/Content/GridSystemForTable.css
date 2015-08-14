@@ -19,10 +19,10 @@
   padding-left: 15px;
   padding-right: 15px;
 }
-/*td {
-    width: 30px !important;
-}*/
 
+/*#table {
+    min-width: 1800px !important;
+}*/
 table {
     width: 100% !important;
 }
