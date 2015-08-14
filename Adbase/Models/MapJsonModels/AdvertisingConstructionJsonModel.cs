@@ -23,6 +23,7 @@ namespace Sciencecom.Models.MapJsonModels
             this.Id = mc.Id;
             this.Id_show = mc.Id_show;
             this.OwnerName = mc.Owner.Name;
+            this.NameOfAdvertisingStructure = mc.TypeOfAdvertisingStructure.Name;
             //this.Surfaces = surfaces.Select(a => a.Id);
         }
 
@@ -40,6 +41,7 @@ namespace Sciencecom.Models.MapJsonModels
         public System.Guid Id { get; set; }
         public int Id_show { get; set; }
         public string OwnerName { get; set; }
+        public string NameOfAdvertisingStructure { get; set; }
 
         public IEnumerable<int> Surfaces { get; set; }
 

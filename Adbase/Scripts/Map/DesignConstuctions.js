@@ -33,9 +33,10 @@
                     },
                     properties: {
                         balloonContentBody: '<b>Собственник:&nbsp;' + data[i].OwnerName
+                                   + '</br>Вид конструкции:&nbsp;' + data[i].NameOfAdvertisingStructure
                                 + '</br>Улица 1:&nbsp' + data[i].Street1
                                 + '</br>Дом:&nbsp;' + data[i].House1
-                               
+                             
                         + getReferencesBillboard(data[i]),
                         iconContent: 'Б',
                         hintContent: 'Щит'

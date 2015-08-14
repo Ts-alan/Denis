@@ -18,55 +18,56 @@
 }
 
 
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Карта объектов</title>
-    @Styles.Render("~/Content/css")
-    <link href="~/Content/themes/flick/jquery-ui.css" rel="stylesheet" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Карта объектов</title>
+@Styles.Render("~/Content/css")
+<link href="~/Content/themes/flick/jquery-ui.css" rel="stylesheet" />
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/jquery-ui")
-    @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/bundles/messi")
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jquery-ui")
+@Scripts.Render("~/bundles/jqueryval")
+@Scripts.Render("~/bundles/messi")
 
-    <script src="http://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
-    @*<script src="~/Scripts/Map/MetalConstructions.js"></script>
-        <script src="~/Scripts/Map/LightConstructions.js"></script>
-        <script src="~/Scripts/Map/IllegalConstructions.js"></script>*@
-    <script src="~/Scripts/Map/DesignConstuctions.js"></script>
-    @*<script src="/Scripts/Autocomplete.js"></script>*@
-    <script type="text/javascript">
-        var param = true;
+<script src="http://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+@*<script src="~/Scripts/Map/MetalConstructions.js"></script>
+    <script src="~/Scripts/Map/LightConstructions.js"></script>
+    <script src="~/Scripts/Map/IllegalConstructions.js"></script>*@
+<script src="~/Scripts/Map/DesignConstuctions.js"></script>
+@*<script src="/Scripts/Autocomplete.js"></script>*@
+<script type="text/javascript">
+    var param = true;
 
-        function CreateMap(param) {
-            //записать в сесиию пременные
-            var collectionMap = [];
-            $(".content-col input").each(function (indx, element) {
-                collectionMap.push({ id: $(element).attr("id"), value: $(element).val().toString() });
-               
-            });
-             var saveValue = JSON.stringify(collectionMap);
-                
-            $.ajax({
-                url: '@Url.Action("SaveSearch", "BackEndServices")',
-                data: { collectionMap: saveValue },
-                type: 'POST'
-             });
-            //поиск по карте
-            var collectionMap = [];
-            $(".content-col input").each(function(indx, element) {
-                collectionMap.push({ id: $(element).attr("id"), value: $(element).val().toString() });
-            });
-            var SaveData = JSON.stringify(collectionMap);
+    function CreateMap(param) {
+        //записать в сесиию пременные
+        var collectionMap = [];
+        $(".content-col input").each(function (indx, element) {
+            collectionMap.push({ id: $(element).attr("id"), value: $(element).val().toString() });
 
-            $.ajax({
-                url: '@Url.Action("SaveSearch", "BackEndServices")',
-                data: { collectionMap: SaveData },
+        });
+        var saveValue = JSON.stringify(collectionMap);
+
+        $.ajax({
+            url: '@Url.Action("SaveSearch", "BackEndServices")',
+            data: { collectionMap: saveValue },
+            type: 'POST'
+        });
+        //поиск по карте
+        var collectionMap = [];
+        $(".content-col input").each(function (indx, element) {
+            collectionMap.push({ id: $(element).attr("id"), value: $(element).val().toString() });
+        });
+        var SaveData = JSON.stringify(collectionMap);
+
+        $.ajax({
+            url: '@Url.Action("SaveSearch", "BackEndServices")',
+            data: { collectionMap: SaveData },
             type: 'POST',
-            success: function(e) {
+            success: function (e) {
 
-            }});
+            }
+        });
         //поиск по карте
         $("#map").empty();
         ymaps.ready(init);
@@ -98,27 +99,27 @@
         }
     }
 
-        function setRemove(param) {
-           
-            $('[href="/Data/DeleteAdvertisingDesign"]').
-            attr("href", "/Data/DeleteAdvertisingDesign?id=" + param + "&switchtoMap=true");
-        }
+    function setRemove(param) {
+
+        $('[href="/Data/DeleteAdvertisingDesign"]').
+        attr("href", "/Data/DeleteAdvertisingDesign?id=" + param + "&switchtoMap=true");
+    }
 
     CreateMap(param);
     $(document).ready(function () {
-           
-            if ('@(Html.Raw(Session["collectionMap"]))' != " ") {
-                var collectionMap = JSON.parse('@(Html.Raw(Session["collectionMap"]))');
-                $(".content-col input").each(function (indx, element) {
-                   $(element).val(collectionMap[indx].value);
-                });
 
-            }
+        if ('@(Html.Raw(Session["collectionMap"]))' != " ") {
+            var collectionMap = JSON.parse('@(Html.Raw(Session["collectionMap"]))');
+            $(".content-col input").each(function (indx, element) {
+                $(element).val(collectionMap[indx].value);
+            });
+
+        }
     });
 
-    </script>
-    @*оформление столбца*@
-    <style type="text/css">
+</script>
+@*оформление столбца*@
+<style type="text/css">
         .ui-state-default {
             line-height: 1.428571429;
             float: left;
@@ -129,10 +130,10 @@
             height: 29px;
         }
 
-            .name-col > div {
-                font-size: 11px;
-                padding-top: 4px;
-            }
+        .name-col > div {
+            font-size: 11px;
+            padding-top: 4px;
+        }
 
         .content-col > div {
             font-size: 11px;
@@ -140,12 +141,12 @@
             float: left;
         }
 
-            .content-col > div > div {
-                background-color: white;
-                height: 23px;
-                border: 1px solid #dddddd;
-                width: 110px;
-            }
+        .content-col > div > div {
+            background-color: white;
+            height: 23px;
+            border: 1px solid #dddddd;
+            width: 110px;
+        }
 
         .content-col [href="#"] {
             padding-right: 0.3em;
@@ -153,27 +154,31 @@
             font-size: 11px;
             padding: 2px;
         }
-    </style>
+        /*изменить цвет*/
+        input {
+            color: black
+        }
+</style>
 
 
 
-    <div class=" body-content">
-        <h3 style="text-align: center">
-            <h2>Карта рекламных конструкций</h2>
-        </h3>
-        <b>@Html.ActionLink("+ Добавить новую рекламную конструкцию", "CreateAdvertisingDesign", "Data", new { type = "Billboard" }, new { @class = "btn btn-default", style = "margin-bottom: 10px" })</b>
-        <table class="table-bordered" cellpadding="5">
-            <tr>
-                <td width="300px">
+<div class=" body-content">
+    <h3 style="text-align: center">
+        <h2>Карта рекламных конструкций</h2>
+    </h3>
+    <b>@Html.ActionLink("+ Добавить новую рекламную конструкцию", "CreateAdvertisingDesign", "Data", new { type = "Billboard" }, new { @class = "btn btn-default", style = "margin-bottom: 10px" })</b>
+    <table class="table-bordered" cellpadding="5">
+        <tr>
+            <td width="width:18%">
 
-                    <div id="divForAddNewAD">
+                <div id="divForAddNewAD">
 
-                        @*<b>@Html.ActionLink("+ Изменить рекламной конструкции", "", new {type = "Billboard"}, new {style = "display: block"})</b>*@
+                    @*<b>@Html.ActionLink("+ Изменить рекламной конструкции", "", new {type = "Billboard"}, new {style = "display: block"})</b>*@
 
-                    </div>
+                </div>
 
-
-                    <div class="ui-state-default ui-th-column name-col">
+                <div style="min-width: 287px" >
+                    <div class="ui-state-default ui-th-column name-col" style="float: left">
                         <div style="">Идентификационный номер</div>
                     </div>
 
@@ -185,180 +190,181 @@
                         </div>
                         <a href="#" style="">x</a>
                     </div>
+                </div>
 
-                    <div class="ui-state-default ui-th-column name-col">
-                        <div style="padding-top: 0; line-height: 1.2;">Собственник рекламной <br> конструкции</div>
-                    </div>
+                <div class="ui-state-default ui-th-column name-col">
+                    <div style="padding-top: 0; line-height: 1.2;">Собственник рекламной <br> конструкции</div>
+                </div>
 
-                    <div class="ui-state-default ui-th-column content-col">
+                <div class="ui-state-default ui-th-column content-col">
+                    <div>
                         <div>
-                            <div>
-                                <input type="text" name="Собственник_рекламной_конструкции" id="gs_Собственник_рекламной_конструкции" style="width: 100%;">
-                            </div>
+                            <input type="text" name="Собственник_рекламной_конструкции" id="gs_Собственник_рекламной_конструкции" style="width: 100%;">
                         </div>
-                        <a href="#" style="">x</a>
                     </div>
+                    <a href="#" style="">x</a>
+                </div>
 
-                    <div class="ui-state-default ui-th-column name-col">
-                        <div style="padding-top: 0; line-height: 1.2;">Вид рекламной <br> конструкции</div>
-                    </div>
+                <div class="ui-state-default ui-th-column name-col">
+                    <div style="padding-top: 0; line-height: 1.2;">Вид рекламной <br> конструкции</div>
+                </div>
 
-                    <div class="ui-state-default ui-th-column content-col">
+                <div class="ui-state-default ui-th-column content-col">
+                    <div>
                         <div>
-                            <div>
-                                <input type="text" name="Вид_рекламной_конструкции" id="gs_Вид_рекламной_конструкции" style="width: 100%;">
-                            </div>
+                            <input type="text" name="Вид_рекламной_конструкции" id="gs_Вид_рекламной_конструкции" style="width: 100%;">
                         </div>
-                        <a href="#" style="">x</a>
                     </div>
+                    <a href="#" style="">x</a>
+                </div>
 
-                    <div class="ui-state-default ui-th-column name-col">
-                        <div style="">Населенный пункт</div>
-                    </div>
+                <div class="ui-state-default ui-th-column name-col">
+                    <div style="">Населенный пункт</div>
+                </div>
 
-                    <div class="ui-state-default ui-th-column content-col">
+                <div class="ui-state-default ui-th-column content-col">
+                    <div>
                         <div>
-                            <div>
-                                <input type="text" name="Населенный_пункт" id="gs_Населенный_пункт" style="width: 100%;">
-                            </div>
+                            <input type="text" name="Населенный_пункт" id="gs_Населенный_пункт" style="width: 100%;">
                         </div>
-                        <a href="#" style="">x</a>
                     </div>
+                    <a href="#" style="">x</a>
+                </div>
 
-                    <div class="ui-state-default ui-th-column name-col">
-                        <div style="">Улица</div>
-                    </div>
+                <div class="ui-state-default ui-th-column name-col">
+                    <div style="">Улица</div>
+                </div>
 
-                    <div class="ui-state-default ui-th-column content-col">
+                <div class="ui-state-default ui-th-column content-col">
+                    <div>
                         <div>
-                            <div>
-                                <input type="text" name="Улица" id="gs_Улица" style="width: 100%;">
-                            </div>
+                            <input type="text" name="Улица" id="gs_Улица" style="width: 100%;">
                         </div>
-                        <a href="#" style="">x</a>
                     </div>
+                    <a href="#" style="">x</a>
+                </div>
 
-                    <div class="ui-state-default ui-th-column name-col">
-                        <div style="">Дом</div>
-                    </div>
+                <div class="ui-state-default ui-th-column name-col">
+                    <div style="">Дом</div>
+                </div>
 
-                    <div class="ui-state-default ui-th-column content-col">
+                <div class="ui-state-default ui-th-column content-col">
+                    <div>
                         <div>
-                            <div>
-                                <input type="text" name="Дом" id="gs_Дом" style="width: 100%;">
-                            </div>
+                            <input type="text" name="Дом" id="gs_Дом" style="width: 100%;">
                         </div>
-                        <a href="#" style="">x</a>
                     </div>
+                    <a href="#" style="">x</a>
+                </div>
 
-                    <div class="ui-state-default ui-th-column name-col">
-                        <div style="">Количество сторон</div>
-                    </div>
+                <div class="ui-state-default ui-th-column name-col">
+                    <div style="">Количество сторон</div>
+                </div>
 
-                    <div class="ui-state-default ui-th-column content-col">
+                <div class="ui-state-default ui-th-column content-col">
+                    <div>
                         <div>
-                            <div>
-                                <input type="text" name="Количество_сторон" id="gs_Количество_сторон" style="width: 100%;">
-                            </div>
+                            <input type="text" name="Количество_сторон" id="gs_Количество_сторон" style="width: 100%;">
                         </div>
-                        <a href="#" style="">x</a>
                     </div>
+                    <a href="#" style="">x</a>
+                </div>
 
 
-                    <div class="ui-state-default ui-th-column name-col">
-                        <div style="">Количестов поверхностей</div>
-                    </div>
+                <div class="ui-state-default ui-th-column name-col">
+                    <div style="">Количестов поверхностей</div>
+                </div>
 
-                    <div class="ui-state-default ui-th-column content-col">
+                <div class="ui-state-default ui-th-column content-col">
+                    <div>
                         <div>
-                            <div>
-                                <input type="text" name="Количестов_поверхностей" id="gs_Количестов_поверхностей" style="width: 100%;">
-                            </div>
+                            <input type="text" name="Количестов_поверхностей" id="gs_Количестов_поверхностей" style="width: 100%;">
                         </div>
-                        <a href="#" style="">x</a>
                     </div>
+                    <a href="#" style="">x</a>
+                </div>
 
-                    <div class="ui-state-default ui-th-column name-col">
-                        <div style="padding-top: 0; line-height: 1.2;">Площадь рекламной <br> конструкции</div>
-                    </div>
+                <div class="ui-state-default ui-th-column name-col">
+                    <div style="padding-top: 0; line-height: 1.2;">Площадь рекламной <br> конструкции</div>
+                </div>
 
-                    <div class="ui-state-default ui-th-column content-col">
+                <div class="ui-state-default ui-th-column content-col">
+                    <div>
                         <div>
-                            <div>
-                                <input type="text" name="Площадь_рекламной_конструкции" id="gs_Площадь_рекламной_конструкции" style="width: 100%;">
-                            </div>
+                            <input type="text" name="Площадь_рекламной_конструкции" id="gs_Площадь_рекламной_конструкции" style="width: 100%;">
                         </div>
-                        <a href="#" style="">x</a>
                     </div>
+                    <a href="#" style="">x</a>
+                </div>
 
-                    <div class="ui-state-default ui-th-column name-col">
-                        <div>Подстветка</div>
-                    </div>
+                <div class="ui-state-default ui-th-column name-col">
+                    <div>Подстветка</div>
+                </div>
 
-                    <div class="ui-state-default ui-th-column content-col">
+                <div class="ui-state-default ui-th-column content-col">
+                    <div>
                         <div>
-                            <div>
-                                <input type="text" name="Подстветка" id="gs_Подстветка" style="width: 100%;">
-                            </div>
+                            <input type="text" name="Подстветка" id="gs_Подстветка" style="width: 100%;">
                         </div>
-                        <a href="#" style="">x</a>
                     </div>
+                    <a href="#" style="">x</a>
+                </div>
 
-                    <div class="ui-state-default ui-th-column name-col">
-                        <div>№ договора с фин упр</div>
-                    </div>
+                <div class="ui-state-default ui-th-column name-col">
+                    <div>№ договора с фин упр</div>
+                </div>
 
-                    <div class="ui-state-default ui-th-column content-col">
+                <div class="ui-state-default ui-th-column content-col">
+                    <div>
                         <div>
-                            <div>
-                                <input type="text" name="№_договора_с_фин_упр" id="gs_№_договора_с_фин_упр" style="width: 100%;">
-                            </div>
+                            <input type="text" name="№_договора_с_фин_упр" id="gs_№_договора_с_фин_упр" style="width: 100%;">
                         </div>
-                        <a href="#" style="">x</a>
                     </div>
+                    <a href="#" style="">x</a>
+                </div>
 
-                    <div class="ui-state-default ui-th-column name-col">
-                        <div>№ паспорта рекл</div>
-                    </div>
+                <div class="ui-state-default ui-th-column name-col">
+                    <div>№ паспорта рекл</div>
+                </div>
 
-                    <div class="ui-state-default ui-th-column content-col">
+                <div class="ui-state-default ui-th-column content-col">
+                    <div>
                         <div>
-                            <div>
-                                <input type="text" name="№_паспорта_рекл" id="gs_№_паспорта_рекл" style="width: 100%;">
-                            </div>
+                            <input type="text" name="№_паспорта_рекл" id="gs_№_паспорта_рекл" style="width: 100%;">
                         </div>
-                        <a href="#" style="">x</a>
                     </div>
+                    <a href="#" style="">x</a>
+                </div>
 
-                    <div class="ui-state-default ui-th-column name-col">
-                        <div>Разреш по</div>
-                    </div>
+                <div class="ui-state-default ui-th-column name-col">
+                    <div>Разреш по</div>
+                </div>
 
-                    <div class="ui-state-default ui-th-column content-col">
+                <div class="ui-state-default ui-th-column content-col">
+                    <div>
                         <div>
-                            <div>
-                                <input type="text" name="Разреш_по" id="gs_Разреш_по" style="width: 100%;">
-                            </div>
+                            <input type="text" name="Разреш_по" id="gs_Разреш_по" style="width: 100%;">
                         </div>
-                        <a href="#" style="">x</a>
                     </div>
+                    <a href="#" style="">x</a>
+                </div>
 
-                    <div class="ui-state-default">
-                        <a class="btn btn-info" style="color: #ffffff" href="#" id="showMap" onclick="CreateMap(false)">Показать</a>
-                    </div>
-                </td>
-                <td width="80%" valign="top" id="map"></td>
-            </tr>
-        </table>
-    </div>
-    <div class="container body-content">
-        <hr />
-        <footer>
-            <p>
-                &copy; @DateTime.Now.Year – <a href="#">OnCloud</a>
-            </p>
-        </footer>
-    </div>
-    @Scripts.Render("~/bundles/bootstrap")
+                <div class="ui-state-default">
+                    <a class="btn btn-info" style="color: #ffffff" href="#" id="showMap" onclick="CreateMap(false)">Показать</a>
+                </div>
+            </td>
+            <td width="88%" valign="top" id="map"></td>
+        </tr>
+    </table>
+</div>
+<div class="container body-content">
+    <hr />
+    <footer>
+        <p>
+            &copy; @DateTime.Now.Year – <a href="#">OnCloud</a>
+        </p>
+    </footer>
+</div>
+@Scripts.Render("~/bundles/bootstrap")
 
 @{ Html.RenderPartial("~/Views/Shared/PatialView/Modals.cshtml");}
