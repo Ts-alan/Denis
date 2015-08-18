@@ -108,14 +108,17 @@
     CreateMap(param);
     $(document).ready(function () {
 
-        if ('@(Html.Raw(Session["collectionMap"]))' != " ") {
+        if ('@(Html.Raw(Session["collectionMap"]))' != '') {
             var collectionMap = JSON.parse('@(Html.Raw(Session["collectionMap"]))');
             $(".content-col input").each(function (indx, element) {
                 $(element).val(collectionMap[indx].value);
             });
-
         }
+        $('a').click(function () {
+            console.log($(this).prev().children("input"));
+        });
     });
+
 
 </script>
 @*оформление столбца*@
@@ -161,6 +164,7 @@
     input {
         color: black;
     }
+
 </style>
 
 
