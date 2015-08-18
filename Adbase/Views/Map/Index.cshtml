@@ -114,8 +114,9 @@
                 $(element).val(collectionMap[indx].value);
             });
         }
+        //чистит инпуты
         $('a').click(function () {
-            console.log($(this).prev().children("input"));
+            $(this).prev().find("input").val("");
         });
     });
 
