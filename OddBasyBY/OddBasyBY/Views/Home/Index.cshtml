@@ -1,0 +1,53 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<script type="text/javascript">
+    ymaps.ready(init);
+    var myMap;
+
+    function init() {
+
+
+        myMap = new ymaps.Map("map", {
+            center: [53.9172, 27.5601],
+            zoom: 11
+        });
+
+        //console.log(geocoder);
+        ymaps.route([
+      "Минск Веры Хоружей ",
+      "Минск  Притыцкого"
+        ],
+            {
+                mapStateAutoApply: true
+
+            }
+        ).then(
+    function (route) {
+        route.getPaths().options.set({
+
+            // можно выставить настройки графики маршруту
+            strokeColor: '0000ffff',
+            opacity: 0.9
+        });
+        myMap.geoObjects.add(route);
+    },
+    function (error) {
+        alert("Возникла ошибка: " + error.message);
+    });
+
+        var geocoder = ymaps.geocode("Минск Веры Хоружей");
+        console.log(geocoder);
+    //    geocoder.then(
+    //function (res) {
+    //    alert('Координаты объекта :' + res.geoObjects.get(0).geometry.getCoordinates());
+    //},
+    //function (err) {
+    //    alert('Ошибка');
+    //}
+    //);
+    }
+
+</script>
+
+<div id="map" style="width: 1200px; height: 800px"></div>
