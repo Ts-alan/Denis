@@ -4,40 +4,39 @@
 <script type="text/javascript">
     ymaps.ready(init);
     var myMap;
-
+    var myPlacemark;
     function init() {
 
 
         myMap = new ymaps.Map("map", {
             center: [53.9172, 27.5601],
-            zoom: 11
+            zoom: 11,
+            controls:[]
         });
+    //    ymaps.route([
+    //  "Минск Веры Хоружей ",
+    //  "Минск Веры Хоружей "
+    //    ],
+    //        {
+    //            mapStateAutoApply: true
 
+    //        }
+    //    ).then(
+    //function (route) {
+    //    route.getPaths().options.set({
+
+    //         можно выставить настройки графики маршруту
+    //        strokeColor: '0000ffff',
+    //        opacity: 0.9
+    //    });
+    //    myMap.geoObjects.add(route);
+    //},
+    //function (error) {
+    //    alert("Возникла ошибка: " + error.message);
+    //});
+
+        //var geocoder = ymaps.geocode("Минск Веры Хоружей");
         //console.log(geocoder);
-        ymaps.route([
-      "Минск Веры Хоружей ",
-      "Минск  Притыцкого"
-        ],
-            {
-                mapStateAutoApply: true
-
-            }
-        ).then(
-    function (route) {
-        route.getPaths().options.set({
-
-            // можно выставить настройки графики маршруту
-            strokeColor: '0000ffff',
-            opacity: 0.9
-        });
-        myMap.geoObjects.add(route);
-    },
-    function (error) {
-        alert("Возникла ошибка: " + error.message);
-    });
-
-        var geocoder = ymaps.geocode("Минск Веры Хоружей");
-        console.log(geocoder);
     //    geocoder.then(
     //function (res) {
     //    alert('Координаты объекта :' + res.geoObjects.get(0).geometry.getCoordinates());
@@ -48,6 +47,27 @@
     //);
     }
 
+    function search() {
+
+        var location = $("#city").val().toString() + " " + $("#street").val().toString();
+        var myGeocoder = ymaps.geocode(location);
+
+        myGeocoder.then(
+            function (res) {
+                myPlacemark = new myMap.Placemark([res.geoObjects.get(0).geometry._ec[0], res.geoObjects.get(0).geometry._ec[1]],
+                {},
+                {
+                    draggable: true
+
+                });
+
+                myMap.geoObjects.add(myPlacemark);
+            });
+    }
 </script>
 
-<div id="map" style="width: 1200px; height: 800px"></div>
+@Html.Label("Выбирите город",new {@for="city"}) @Html.TextBox(" ",null,new {id="city"})
+
+@Html.Label("Выбирите улицу", new { @for = "street" }) @Html.TextBox(" ", null, new { id = "street" })
+<input type="button" value="Поиск" onclick="search()"/>
+<div id="map" style="width: 60%; height: 600px"></div>
