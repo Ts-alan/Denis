@@ -2,6 +2,7 @@
     ViewBag.Title = "Home Page";
 }
 <script type="text/javascript">
+ 
     ymaps.ready(init);
     var myMap;
     var myPlacemark;
@@ -15,64 +16,64 @@
         });
 
         ymaps.route([
-             [53.931077,27.576256],
-            [53.905318,27.553537 ]
+                [53.931077,27.576256],
+                [53.905318,27.553537 ]
 
-      ],
+            ],
             {
                 mapStateAutoApply: true
 
             }
         ).then(
-    function (route) {
-        route.getPaths().options.set({
+            function (route) {
+                route.getPaths().options.set({
 
-             //можно выставить настройки графики маршруту
-            strokeColor: '0000ffff',
-            opacity: 0.9
-        });
-        myMap.geoObjects.add(route);
-    },
-    function (error) {
-        alert("Возникла ошибка: " + error.message);
-    });
+                    //можно выставить настройки графики маршруту
+                    strokeColor: '0000ffff',
+                    opacity: 0.9
+                });
+                myMap.geoObjects.add(route);
+            },
+            function (error) {
+                alert("Возникла ошибка: " + error.message);
+            });
 
         //var geocoder = ymaps.geocode("Минск Веры Хоружей");
         //console.log(geocoder);
-    //    geocoder.then(
-    //function (res) {
-    //    alert('Координаты объекта :' + res.geoObjects.get(0).geometry.getCoordinates());
-    //},
-    //function (err) {
-    //    alert('Ошибка');
-    //}
-    //);
+        //    geocoder.then(
+        //function (res) {
+        //    alert('Координаты объекта :' + res.geoObjects.get(0).geometry.getCoordinates());
+        //},
+        //function (err) {
+        //    alert('Ошибка');
+        //}
+        //);
     }
 
 
-        function search() {
-            //if (myPlacemark != undefined) {
+    function search() {
+        //if (myPlacemark != undefined) {
 
-            //    myMap.geoObjects.remove(myPlacemark);
-            //}
-            //var location = $("#city").val().toString() + " " + $("#street").val().toString();
-            //var myGeocoder = ymaps.geocode(location);
+        //    myMap.geoObjects.remove(myPlacemark);
+        //}
+        //var location = $("#city").val().toString() + " " + $("#street").val().toString();
+        //var myGeocoder = ymaps.geocode(location);
 
-            //myGeocoder.then(
-            //    function (res) {
-            //        myPlacemark = new ymaps.Placemark([res.geoObjects.get(0).geometry._ec[0], res.geoObjects.get(0).geometry._ec[1]],
-            //        {},
-            //        {
-            //            draggable: true
+        //myGeocoder.then(
+        //    function (res) {
+        //        myPlacemark = new ymaps.Placemark([res.geoObjects.get(0).geometry._ec[0], res.geoObjects.get(0).geometry._ec[1]],
+        //        {},
+        //        {
+        //            draggable: true
 
-            //        });
+        //        });
 
                     
-            //        myMap.geoObjects.add(myPlacemark);
-            //    });
+        //        myMap.geoObjects.add(myPlacemark);
+        //    });
             
-        }
-    
+    }
+
 </script>
 
 @Html.Label("Выбирите город",new {@for="city"}) @Html.TextBox(" ",null,new {id="city"})
