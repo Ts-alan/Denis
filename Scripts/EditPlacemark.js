@@ -7,7 +7,7 @@
     dolgota = parseFloat(dolgota.replace(",", "."));
     function init() {
         myMap = new ymaps.Map("map", {
-            center: [shirota, dolgota],
+            center: [53.9172, 27.5601],
             zoom: 11,
             behaviors: ['default', 'scrollZoom']
         }, {
