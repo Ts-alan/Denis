@@ -67,7 +67,9 @@
 
                     
                     myMap.geoObjects.add(myPlacemark);
+                    myMap.setCenter([res.geoObjects.get(0).geometry._ec[0], res.geoObjects.get(0).geometry._ec[1]],14);
                 });
+
         }
     
 </script>
