@@ -24,7 +24,7 @@
             var coords = e.get('coords');
 
             Arr[counterArr] = [coords[0].toPrecision(6), coords[1].toPrecision(6)];
-            console.log(Arr);
+         
             counterArr++;
             if (Arr.length == 2) {
                 SetRoute(Arr);
@@ -47,7 +47,14 @@
                 ).then(
                 function (route) {
                     route.editor.start({ editWayPoints: true });
-                   
+                    console.log(route.requestPoints[0][0]);
+                    route.editor.events.add("routeupdate", function () {
+                        $("#breadthS").val(route.requestPoints[0][0].toString().substr(0,7));
+                        $("#lengthS").val(route.requestPoints[0][1].toString().substr(0, 7));
+                        $("#breadthE").val(route.requestPoints[1][0].toString().substr(0, 7));
+                        $("#lengthE").val(route.requestPoints[1][1].toString().substr(0, 7));
+                    });
+                    
                     route.getPaths().options.set({
 
                         //можно выставить настройки графики маршруту
@@ -100,7 +107,7 @@
             var Arr = [[]];
             Arr[0] = [parseInt($("#breadthS").val()), parseInt($("#lengthS").val())];
             Arr[1] = [parseInt($("#breadthE").val()), parseInt($("#lengthE").val())];
-            console.log(Arr);
+       
             SetRoute(Arr);
       
         }
