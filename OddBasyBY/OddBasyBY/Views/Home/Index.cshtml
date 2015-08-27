@@ -5,7 +5,7 @@
     ymaps.ready(init);
     var myMap;
     var myPlacemark;
-    var Arr = [[]];
+    var Arr = [];
     var counterArr = 0;
 
     function init() {
@@ -14,77 +14,129 @@
         myMap = new ymaps.Map("map", {
             center: [53.9172, 27.5601],
             zoom: 11,
-            controls:[]
+            controls: []
         });
 
-        myMap.events.add('click', function (e) {
+        myMap.behaviors.disable(["dblClickZoom"]);
+   
+        myMap.events.add('dblclick', function (e) {
 
             var coords = e.get('coords');
-    
-            Arr[counterArr] = [coords[0].toPrecision(6), coords[1].toPrecision(6)];
 
+            Arr[counterArr] = [coords[0].toPrecision(6), coords[1].toPrecision(6)];
+            console.log(Arr);
             counterArr++;
             if (Arr.length == 2) {
-
-                ymaps.route([
-                    Arr[0],
-                    Arr[1]
-                            ],
-                        {
-                            mapStateAutoApply: true
-
-                        }
-                    ).then(
-                    function (route) {
-                        route.getPaths().options.set({
-
-                            //можно выставить настройки графики маршруту
-                            strokeColor: '0000ffff',
-                            opacity: 0.9
-                        });
-                        myMap.geoObjects.add(route);
-                    },
-                    function (error) {
-                        alert("Возникла ошибка: " + error.message);
-                    });
-                Arr = [];
+                SetRoute(Arr);
+                Arr=[];
+                counterArr = 0;
             }
-
         });
 
     }
 
+    function SetRoute(Arr) {
+     var test=   ymaps.route([
+                Arr[0],
+                Arr[1]
+        ],
+                    {
+                        mapStateAutoApply: true
 
-        function search() {
-            if (myPlacemark != undefined) {
+                    }
+                ).then(
+                function (route) {
+                    //route.start([options]);
+                    route.getPaths().options.set({
 
-                myMap.geoObjects.remove(myPlacemark);
-            }
-            var location = $("#city").val().toString() + " " + $("#street").val().toString();
-            var myGeocoder = ymaps.geocode(location);
-           
-            myGeocoder.then(
-                function (res) {
-
-                    myPlacemark = new ymaps.GeoObject({
-                        geometry: {
-                            type: "Point",// тип геометрии - точка
-                            coordinates: [res.geoObjects.get(0).geometry.getCoordinates()[0], res.geoObjects.get(0).geometry.getCoordinates()[1]] // координаты точки
-                        }},
-     
-                     { draggable: true });
-
-                  
-                    myMap.geoObjects.add(myPlacemark);
-                    myMap.setCenter([res.geoObjects.get(0).geometry.getCoordinates()[0], res.geoObjects.get(0).geometry.getCoordinates()[1]], 14);
+                        //можно выставить настройки графики маршруту
+                        strokeColor: '0000ffff',
+                        opacity: 0.9
+                    });
+                    myMap.geoObjects.add(route);
+                    console.log(route);
+                },
+                function (error) {
+                    alert("Возникла ошибка: " + error.message);
                 });
+        test.start([""]);
 
+    }
+
+    function search() {
+        if (myPlacemark != undefined) {
+
+            myMap.geoObjects.remove(myPlacemark);
         }
-    
+        var location = $("#city").val().toString() + " " + $("#street").val().toString();
+        var myGeocoder = ymaps.geocode(location);
+
+        myGeocoder.then(
+            function (res) {
+
+                myPlacemark = new ymaps.GeoObject({
+                    geometry: {
+                        type: "Point",// тип геометрии - точка
+                        coordinates: [res.geoObjects.get(0).geometry.getCoordinates()[0], res.geoObjects.get(0).geometry.getCoordinates()[1]] // координаты точки
+                    }
+                },
+
+                 { draggable: true });
+
+
+                myMap.geoObjects.add(myPlacemark);
+                myMap.setCenter([res.geoObjects.get(0).geometry.getCoordinates()[0], res.geoObjects.get(0).geometry.getCoordinates()[1]], 14);
+            });
+
+    }
+
+    function Set() {
+        if ($("#breadthS").val() != "" && $("#lengthS").val() != "" && $("#breadthE").val() && $("#lengthE").val()) {
+            var Arr = [[]];
+            Arr[0] = [parseInt($("#breadthS").val()), parseInt($("#lengthS").val())];
+            Arr[1] = [parseInt($("#breadthE").val()), parseInt($("#lengthE").val())];
+            console.log(Arr);
+            SetRoute(Arr);
+      
+        }
+    }
+
+    $(document).ready(function() {
+        $("#breadthS").change(function() {
+            Set();
+        });
+
+        $("#lengthS").change(function () {
+            Set();  
+        });
+
+        $("#breadthE").change(function () {
+            Set();
+        });
+
+        $("#lengthE").change(function () {
+            Set();
+         });
+    });
 </script>
+<div>
+    @Html.Label("Выбирите город", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "city" })
+    @Html.Label("Выбирите улицу", new { @for = "street" }) @Html.TextBox(" ", null, new { id = "street" })
+    <input type="button" value="Поиск" onclick="search()" />
+</div>
+<div id="map" style="width: 60%; height: 600px;float: left"></div>
+<div style="margin-left: 60%;width: 100%">
 
-@Html.Label("Выбирите город",new {@for="city"}) @Html.TextBox(" ",null,new {id="city"})
-
-@Html.Label("Выбирите улицу", new { @for = "street" }) @Html.TextBox(" ", null, new { id = "street" })
-<input type="button" value="Поиск" onclick="search()"/>
-<div id="map" style="width: 60%; height: 600px"></div>
+    <div>Начальная точка</div>
+    <div>
+        @Html.Label("Широта", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "breadthS" })
+        @Html.Label("Долгота", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "lengthS" })
+    </div>
+    <div>
+        Конечная точка
+    </div>
+    <div>
+        @Html.Label("Широта", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "breadthE" })
+        @Html.Label("Долгота", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "lengthE" })
+    </div>
+</div>
