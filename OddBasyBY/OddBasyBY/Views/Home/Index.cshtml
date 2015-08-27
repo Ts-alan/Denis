@@ -36,7 +36,7 @@
     }
 
     function SetRoute(Arr) {
-     var test=   ymaps.route([
+      ymaps.route([
                 Arr[0],
                 Arr[1]
         ],
@@ -46,7 +46,8 @@
                     }
                 ).then(
                 function (route) {
-                    //route.start([options]);
+                    route.editor.start({ editWayPoints: true });
+                   
                     route.getPaths().options.set({
 
                         //можно выставить настройки графики маршруту
@@ -54,12 +55,16 @@
                         opacity: 0.9
                     });
                     myMap.geoObjects.add(route);
-                    console.log(route);
+                    //заполнение переменных
+                    $("#breadthS").val(Arr[0][0]);
+                    $("#lengthS").val(Arr[0][1]);
+                    $("#breadthE").val(Arr[1][0]);
+                    $("#lengthE").val(Arr[1][1]);
                 },
                 function (error) {
                     alert("Возникла ошибка: " + error.message);
                 });
-        test.start([""]);
+  
 
     }
 
