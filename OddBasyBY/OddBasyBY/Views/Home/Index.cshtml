@@ -18,17 +18,17 @@
         });
 
         myMap.behaviors.disable(["dblClickZoom"]);
-   
+
         myMap.events.add('dblclick', function (e) {
 
             var coords = e.get('coords');
 
             Arr[counterArr] = [coords[0].toPrecision(6), coords[1].toPrecision(6)];
-         
+
             counterArr++;
             if (Arr.length == 2) {
                 SetRoute(Arr);
-                Arr=[];
+                Arr = [];
                 counterArr = 0;
             }
         });
@@ -36,42 +36,42 @@
     }
 
     function SetRoute(Arr) {
-      ymaps.route([
-                Arr[0],
-                Arr[1]
+        ymaps.route([
+                  Arr[0],
+                  Arr[1]
         ],
-                    {
-                        mapStateAutoApply: true
+                      {
+                          mapStateAutoApply: true
 
-                    }
-                ).then(
-                function (route) {
-                    route.editor.start({ editWayPoints: true });
-                    console.log(route.requestPoints[0][0]);
-                    route.editor.events.add("routeupdate", function () {
-                        $("#breadthS").val(route.requestPoints[0][0].toString().substr(0,7));
-                        $("#lengthS").val(route.requestPoints[0][1].toString().substr(0, 7));
-                        $("#breadthE").val(route.requestPoints[1][0].toString().substr(0, 7));
-                        $("#lengthE").val(route.requestPoints[1][1].toString().substr(0, 7));
-                    });
-                    
-                    route.getPaths().options.set({
+                      }
+                  ).then(
+                  function (route) {
+                      route.editor.start({ editWayPoints: true });
+                      console.log(route.requestPoints[0][0]);
+                      route.editor.events.add("routeupdate", function () {
+                          $("#breadthS").val(route.requestPoints[0][0].toString().substr(0, 7));
+                          $("#lengthS").val(route.requestPoints[0][1].toString().substr(0, 7));
+                          $("#breadthE").val(route.requestPoints[1][0].toString().substr(0, 7));
+                          $("#lengthE").val(route.requestPoints[1][1].toString().substr(0, 7));
+                      });
 
-                        //можно выставить настройки графики маршруту
-                        strokeColor: '0000ffff',
-                        opacity: 0.9
-                    });
-                    myMap.geoObjects.add(route);
-                    //заполнение переменных
-                    $("#breadthS").val(Arr[0][0]);
-                    $("#lengthS").val(Arr[0][1]);
-                    $("#breadthE").val(Arr[1][0]);
-                    $("#lengthE").val(Arr[1][1]);
-                },
-                function (error) {
-                    alert("Возникла ошибка: " + error.message);
-                });
-  
+                      route.getPaths().options.set({
+
+                          //можно выставить настройки графики маршруту
+                          strokeColor: '0000ffff',
+                          opacity: 0.9
+                      });
+                      myMap.geoObjects.add(route);
+                      //заполнение переменных
+                      $("#breadthS").val(Arr[0][0]);
+                      $("#lengthS").val(Arr[0][1]);
+                      $("#breadthE").val(Arr[1][0]);
+                      $("#lengthE").val(Arr[1][1]);
+                  },
+                  function (error) {
+                      alert("Возникла ошибка: " + error.message);
+                  });
+
 
     }
 
@@ -107,19 +107,19 @@
             var Arr = [[]];
             Arr[0] = [parseInt($("#breadthS").val()), parseInt($("#lengthS").val())];
             Arr[1] = [parseInt($("#breadthE").val()), parseInt($("#lengthE").val())];
-       
+
             SetRoute(Arr);
-      
+
         }
     }
-
-    $(document).ready(function() {
-        $("#breadthS").change(function() {
+    //задание координат
+    $(document).ready(function () {
+        $("#breadthS").change(function () {
             Set();
         });
 
         $("#lengthS").change(function () {
-            Set();  
+            Set();
         });
 
         $("#breadthE").change(function () {
@@ -128,27 +128,43 @@
 
         $("#lengthE").change(function () {
             Set();
-         });
+        });
+        //появление координат
+        $(".btn-success").click(function() {
+            $("[style='visibility: hidden']").css("visibility", "visible");
+
+        });
+        //сохранить координаты и заблокировать поля
+        $(".btn-danger").click(function () {
+           
+            $("input").each(function(indx, element) {
+                $(element).attr("readonly","");
+            });
+        });
+
     });
 </script>
-<div>
+<div style="visibility: hidden">
     @Html.Label("Выбирите город", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "city" })
     @Html.Label("Выбирите улицу", new { @for = "street" }) @Html.TextBox(" ", null, new { id = "street" })
     <input type="button" value="Поиск" onclick="search()" />
 </div>
 <div id="map" style="width: 60%; height: 600px;float: left"></div>
-<div style="margin-left: 60%;width: 100%">
-
-    <div>Начальная точка</div>
-    <div>
-        @Html.Label("Широта", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "breadthS" })
-        @Html.Label("Долгота", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "lengthS" })
-    </div>
-    <div>
-        Конечная точка
-    </div>
-    <div>
-        @Html.Label("Широта", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "breadthE" })
-        @Html.Label("Долгота", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "lengthE" })
+<div style="margin-left: 62%; width: 100%;">
+    <button class="btn btn-success" > Задать координаты</button>
+    <div style="visibility: hidden">
+        <div>Начальная точка</div>
+        <div>
+            @Html.Label("Широта", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "breadthS" })
+            @Html.Label("Долгота", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "lengthS" })
+        </div>
+        <div>
+            Конечная точка
+        </div>
+        <div>
+            @Html.Label("Широта", new {@for = "city"}) @Html.TextBox(" ", null, new {id = "breadthE"})
+            @Html.Label("Долгота", new {@for = "city"}) @Html.TextBox(" ", null, new {id = "lengthE"})
+        </div>
+        <button class="btn btn-danger">Сохранить координаты</button>
     </div>
 </div>
