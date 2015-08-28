@@ -9,6 +9,7 @@
     var counterArr = 0;
     var handlerRoute;
     var currentRoute;
+    var firstPointRoute;
 
     function init() {
         
@@ -25,7 +26,24 @@
             var coords = e.get('coords');
 
             Arr[counterArr] = [coords[0].toPrecision(6), coords[1].toPrecision(6)];
+            if (counterArr==0) {
+            firstPointRoute = new ymaps.GeoObject({
+                geometry: {
+                    type: "Point",// тип геометрии - точка
+                    coordinates: [coords[0].toPrecision(6),coords[1].toPrecision(6)] // координаты точки
+                },
+                properties: { iconContent: "Начало улицы" }
+            },
+                 {draggable: true , preset: "islands#darkGreenStretchyIcon" });
+            firstPointRoute.events.add("dragend", function (e) {
 
+                var coords = firstPointRoute.geometry.getCoordinates();
+                Arr[0]=[coords[0].toPrecision(6), coords[1].toPrecision(6)];
+            });
+            myMap.geoObjects.add(firstPointRoute);
+
+           
+            }
             counterArr++;
             if (Arr.length == 2) {
             
@@ -35,9 +53,9 @@
                 //counterArr = 0;
             }
         }
-  
-        myMap.events.add('dblclick', handlerRoute);
         
+        myMap.events.add('dblclick', handlerRoute);
+     
     }
 
     function SetRoute(Arr) {
@@ -54,9 +72,8 @@
                       currentRoute = route;
                       route.editor.start({
                           editWayPoints: true
-                        
                       });
-                      
+                    
                       var points = route.getWayPoints();
                       points.get(0).properties.set("iconContent", "Начало улицы");
                       points.get(0).options.set('preset', 'islands#darkGreenStretchyIcon');
@@ -76,7 +93,9 @@
                           opacity: 0.9
                       });
                       myMap.geoObjects.add(route);
+                      //удаление лишних обьектов
                       myMap.geoObjects.remove(myPlacemark);
+                      myMap.geoObjects.remove(firstPointRoute);
                       //заполнение переменных
                       $("#breadthS").val(Arr[0][0]);
                       $("#lengthS").val(Arr[0][1]);
@@ -109,8 +128,6 @@
                 },
 
                  { draggable: true });
-
-
                 myMap.geoObjects.add(myPlacemark);
                 myMap.setCenter([res.geoObjects.get(0).geometry.getCoordinates()[0], res.geoObjects.get(0).geometry.getCoordinates()[1]], 14);
             });
@@ -161,6 +178,7 @@
             
         });
 
+    
     });
 </script>
 <div>
