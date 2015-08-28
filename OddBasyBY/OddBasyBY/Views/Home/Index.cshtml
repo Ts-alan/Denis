@@ -24,8 +24,10 @@
         handlerRoute=function(e) {
 
             var coords = e.get('coords');
-
+            if (counterArr<2) {
             Arr[counterArr] = [coords[0].toPrecision(6), coords[1].toPrecision(6)];
+            }
+
             if (counterArr==0) {
             firstPointRoute = new ymaps.GeoObject({
                 geometry: {
@@ -65,7 +67,6 @@
         ],
                       {
                           mapStateAutoApply: true
-
                       }
                   ).then(
                   function (route) {
