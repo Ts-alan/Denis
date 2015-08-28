@@ -7,10 +7,11 @@
     var myPlacemark;
     var Arr = [];
     var counterArr = 0;
+    var handlerRoute;
+    var currentRoute;
 
     function init() {
-
-
+        
         myMap = new ymaps.Map("map", {
             center: [53.9172, 27.5601],
             zoom: 11,
@@ -18,8 +19,8 @@
         });
 
         myMap.behaviors.disable(["dblClickZoom"]);
-
-        myMap.events.add('dblclick', function (e) {
+ 
+        handlerRoute=function(e) {
 
             var coords = e.get('coords');
 
@@ -31,8 +32,10 @@
                 Arr = [];
                 counterArr = 0;
             }
-        });
-
+        }
+  
+        myMap.events.add('dblclick', handlerRoute);
+        
     }
 
     function SetRoute(Arr) {
@@ -46,8 +49,14 @@
                       }
                   ).then(
                   function (route) {
+                      currentRoute = route;
                       route.editor.start({ editWayPoints: true });
-                      console.log(route.requestPoints[0][0]);
+                      //console.log(route.waypoints.getMap());
+                      var points = route.getWayPoints();
+                      points.get(0).properties.set("iconContent", "Начало");
+                      points.get(0).options.set('preset', 'islands#darkGreenStretchyIcon');
+                      points.get(1).properties.set("iconContent", "Конец");
+                      points.get(1).options.set("preset", "islands#darkGreenStretchyIcon");
                       route.editor.events.add("routeupdate", function () {
                           $("#breadthS").val(route.requestPoints[0][0].toString().substr(0, 7));
                           $("#lengthS").val(route.requestPoints[0][1].toString().substr(0, 7));
@@ -130,28 +139,32 @@
             Set();
         });
         //появление координат
-        $(".btn-success").click(function() {
+        $(".btn-success").click(function () {
             $("[style='visibility: hidden']").css("visibility", "visible");
 
         });
         //сохранить координаты и заблокировать поля
         $(".btn-danger").click(function () {
-           
-            $("input").each(function(indx, element) {
-                $(element).attr("readonly","");
+         
+            $("#readonly input").each(function (indx, element) {
+                $(element).attr("readonly", "");
             });
+            //блокировка карты
+            myMap.events.remove('dblclick', handlerRoute);
+            currentRoute.editor.start({ editWayPoints: false });
+
         });
 
     });
 </script>
-<div style="visibility: hidden">
+<div>
     @Html.Label("Выбирите город", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "city" })
     @Html.Label("Выбирите улицу", new { @for = "street" }) @Html.TextBox(" ", null, new { id = "street" })
     <input type="button" value="Поиск" onclick="search()" />
 </div>
 <div id="map" style="width: 60%; height: 600px;float: left"></div>
-<div style="margin-left: 62%; width: 100%;">
-    <button class="btn btn-success" > Задать координаты</button>
+<div id="readonly" style="margin-left: 62%; width: 100%;">
+    <button class="btn btn-success"> Задать координаты</button>
     <div style="visibility: hidden">
         <div>Начальная точка</div>
         <div>
@@ -162,8 +175,8 @@
             Конечная точка
         </div>
         <div>
-            @Html.Label("Широта", new {@for = "city"}) @Html.TextBox(" ", null, new {id = "breadthE"})
-            @Html.Label("Долгота", new {@for = "city"}) @Html.TextBox(" ", null, new {id = "lengthE"})
+            @Html.Label("Широта", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "breadthE" })
+            @Html.Label("Долгота", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "lengthE" })
         </div>
         <button class="btn btn-danger">Сохранить координаты</button>
     </div>
