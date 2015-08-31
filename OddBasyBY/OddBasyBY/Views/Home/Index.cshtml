@@ -11,6 +11,7 @@
     var currentRoute;
     var firstPointRoute;
     var endPointRoute;
+    var position;
 
     function init() {
 
@@ -77,7 +78,7 @@
                   Arr[1]
         ],
                       {
-                          mapStateAutoApply: true
+                          mapStateAutoApply: true, removeViaPoints:true
                       }
                   ).then(
                   function (route) {
@@ -128,13 +129,15 @@
     }
 
     function search() {
+        
         if (myPlacemark != undefined) {
 
             myMap.geoObjects.remove(myPlacemark);
         }
-        var location = $("#city").val().toString() + " " + $("#street").val().toString();
-        var myGeocoder = ymaps.geocode(location);
+        position = $("#city").val().toString() + " " + $("#street").val().toString();
 
+        var myGeocoder = ymaps.geocode(position);
+       
         myGeocoder.then(
             function (res) {
 
@@ -149,7 +152,7 @@
                 myMap.geoObjects.add(myPlacemark);
                 myMap.setCenter([res.geoObjects.get(0).geometry.getCoordinates()[0], res.geoObjects.get(0).geometry.getCoordinates()[1]], 14);
             });
-
+        //alert("212121");
     }
 
     function Set() {
@@ -164,13 +167,14 @@
     }
 
     function setHandlerS() {
-        myMap.geoObjects.remove(firstPointRoute);
-        myMap.geoObjects.remove(currentRoute);
-        myMap.geoObjects.add(firstPointRoute);
+        console.log(myMap.geoObjects);
+        //myMap.geoObjects.remove(firstPointRoute);
+        //myMap.geoObjects.remove(currentRoute);
+        //myMap.geoObjects.add(firstPointRoute);
         //myMap.events.add('dblclick', handlerRoute);
     }
 
-    function setHandlerS() {
+    function setHandlerE() {
         myMap.geoObjects.remove(endPointRoute);
         myMap.geoObjects.remove(currentRoute);
         endPointRoute = new ymaps.GeoObject({
@@ -226,6 +230,8 @@
             $("#readonly input").each(function (indx, element) {
                 $(element).attr("readonly", "");
             });
+            $(this).css("visibility", "hidden");
+            $(".btn-success").replaceWith("<b>"+position+"</b>");
             //блокировка карты
             myMap.events.remove('dblclick', handlerRoute);
             currentRoute.editor.start({ editWayPoints: false });
