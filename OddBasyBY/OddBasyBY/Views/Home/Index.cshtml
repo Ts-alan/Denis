@@ -12,7 +12,7 @@
     var firstPointRoute;
     var endPointRoute;
     var position;
-    var identifierForDelete=0;
+    var identifierForDelete = 0;
 
     function init() {
 
@@ -25,39 +25,39 @@
         myMap.behaviors.disable(["dblClickZoom"]);
 
         handlerRoute = function (e) {
-           
+
 
             var coords = e.get('coords');
             if (counterArr < 2) {
                 Arr[counterArr] = [coords[0].toPrecision(6), coords[1].toPrecision(6)];
 
             }
-                if (counterArr == 0) {
-                    firstPointRoute = new ymaps.GeoObject({
-                        geometry: {
-                            type: "Point",// тип геометрии - точка
-                            coordinates: [coords[0].toPrecision(6), coords[1].toPrecision(6)] // координаты точки
-                        },
-                        properties: {
-                            iconContent: "Начало улицы",
-                            balloonContentHeader: "<a href='#' onclick='setHandlerS()'>Удалить Обьект</a>",
-                            balloonContent: "[" + coords[0].toPrecision(6) + "," + coords[1].toPrecision(6) + "]"
-                        }
+            if (counterArr == 0) {
+                firstPointRoute = new ymaps.GeoObject({
+                    geometry: {
+                        type: "Point",// тип геометрии - точка
+                        coordinates: [coords[0].toPrecision(6), coords[1].toPrecision(6)] // координаты точки
                     },
-                         { draggable: true, preset: "islands#darkGreenStretchyIcon" });
-                    firstPointRoute.events.add("dragend", function (e) {
+                    properties: {
+                        iconContent: "Начало улицы",
+                        balloonContentHeader: "<a href='#' onclick='setHandlerS()'>Удалить Обьект</a>",
+                        balloonContent: "[" + coords[0].toPrecision(6) + "," + coords[1].toPrecision(6) + "]"
+                    }
+                },
+                     { draggable: true, preset: "islands#darkGreenStretchyIcon" });
+                firstPointRoute.events.add("dragend", function (e) {
 
-                        var coords = firstPointRoute.geometry.getCoordinates();
-                        Arr[0] = [coords[0].toPrecision(6), coords[1].toPrecision(6)];
-                        //изменение координат при пертягивание метки
-                        var object = e.get('target');
-                        object.properties.set("balloonContent", "[" + coords[0].toPrecision(6) + "," + coords[1].toPrecision(6) + "]");
-                      
-                    });
-                  
-                    myMap.geoObjects.add(firstPointRoute);
-                    identifierForDelete++;
-                }        
+                    var coords = firstPointRoute.geometry.getCoordinates();
+                    Arr[0] = [coords[0].toPrecision(6), coords[1].toPrecision(6)];
+                    //изменение координат при пертягивание метки
+                    var object = e.get('target');
+                    object.properties.set("balloonContent", "[" + coords[0].toPrecision(6) + "," + coords[1].toPrecision(6) + "]");
+
+                });
+
+                myMap.geoObjects.add(firstPointRoute);
+                identifierForDelete++;
+            }
             counterArr++;
             console.log(Arr.length);
             if (Arr.length == 2) {
@@ -80,13 +80,16 @@
                   Arr[1]
         ],
                       {
-                          mapStateAutoApply: true, removeViaPoints:true
+                          mapStateAutoApply: true, removeViaPoints: true
                       }
                   ).then(
                   function (route) {
-                      
+                      route.events.add('dragend', function (e) {
+                          var coords = e.get('domEvent');
+                          console.log(coords.get('target'));
+                      });
                       currentRoute = route;
-                    
+
                       route.editor.start({
                           editWayPoints: true
                       });
@@ -96,7 +99,7 @@
                       points.get(0).properties.set("balloonContentHeader", "<a href='#' onclick='setHandlerS()'>Удалить Обьект</a>");
                       points.get(0).options.set('preset', 'islands#darkGreenStretchyIcon');
 
-                   
+
                       points.get(1).properties.set("iconContent", "Конец улицы");
                       points.get(1).properties.set("balloonContentHeader", "<a href='#' onclick='setHandlerE()'>Удалить Обьект</a>");
                       points.get(1).options.set("preset", "islands#darkGreenStretchyIcon");
@@ -117,7 +120,9 @@
                       //удаление лишних обьектов
                       myMap.geoObjects.remove(myPlacemark);
                       myMap.geoObjects.remove(firstPointRoute);
-                      identifierForDelete=0;
+                      myMap.geoObjects.remove(endPointRoute);
+                      
+                      identifierForDelete = 0;
                       //заполнение переменных
                       $("#breadthS").val(Arr[0][0]);
                       $("#lengthS").val(Arr[0][1]);
@@ -132,7 +137,7 @@
     }
 
     function search() {
-        
+
         if (myPlacemark != undefined) {
 
             myMap.geoObjects.remove(myPlacemark);
@@ -140,7 +145,7 @@
         position = $("#city").val().toString() + " " + $("#street").val().toString();
 
         var myGeocoder = ymaps.geocode(position);
-       
+
         myGeocoder.then(
             function (res) {
 
@@ -156,7 +161,7 @@
                 identifierForDelete++;
                 myMap.setCenter([res.geoObjects.get(0).geometry.getCoordinates()[0], res.geoObjects.get(0).geometry.getCoordinates()[1]], 14);
             });
-        
+
     }
 
     function Set() {
@@ -164,15 +169,14 @@
             var Arr = [[]];
             Arr[0] = [parseInt($("#breadthS").val()), parseInt($("#lengthS").val())];
             Arr[1] = [parseInt($("#breadthE").val()), parseInt($("#lengthE").val())];
-
             SetRoute(Arr);
-
         }
     }
 
     function setHandlerS() {
         if (identifierForDelete == 0) {
             myMap.geoObjects.remove(currentRoute);
+
             endPointRoute = new ymaps.GeoObject({
                 geometry: {
                     type: "Point",// тип геометрии - точка
@@ -185,10 +189,12 @@
                 }
             },
                         { draggable: true, preset: "islands#darkGreenStretchyIcon" });
-            firstPointRoute.events.add("dragend", function (e) {
 
-                var coords = firstPointRoute.geometry.getCoordinates();
-                Arr[0] = [coords[0].toPrecision(6), coords[1].toPrecision(6)];
+
+            endPointRoute.events.add("dragend", function (e) {
+
+                var coords = endPointRoute.geometry.getCoordinates();
+                Arr[1] = [coords[0].toPrecision(6), coords[1].toPrecision(6)];
                 //изменение координат при пертягивание метки
                 var object = e.get('target');
                 object.properties.set("balloonContent", "[" + coords[0].toPrecision(6) + "," + coords[1].toPrecision(6) + "]");
@@ -196,11 +202,13 @@
             });
             myMap.geoObjects.add(endPointRoute);
             myMap.events.add('dblclick', handlerRoute);
-            console.log("1111");
+
         } else {
             myMap.geoObjects.remove(firstPointRoute);
             identifierForDelete = 0;
             counterArr = 0;
+            Arr = [[]];
+
         }
         counterArr = 0;
     }
@@ -212,11 +220,11 @@
         myMap.events.add('dblclick', handlerRoute);
         counterArr = 1;
         identifierForDelete = 1;
-        console.log(identifierForDelete);
+
     }
     //задание координат
     $(document).ready(function () {
-  
+
 
         $("#breadthS").change(function () {
             Set();
@@ -245,7 +253,7 @@
                 $(element).attr("readonly", "");
             });
             $(this).css("visibility", "hidden");
-            $(".btn-success").replaceWith("<b>"+position+"</b>");
+            $(".btn-success").replaceWith("<b>" + position + "</b>");
             //блокировка карты
             myMap.events.remove('dblclick', handlerRoute);
             currentRoute.editor.start({ editWayPoints: false });
