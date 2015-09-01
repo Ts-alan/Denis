@@ -12,6 +12,7 @@
     var firstPointRoute;
     var endPointRoute;
     var position;
+    var identifierForDelete=0;
 
     function init() {
 
@@ -55,9 +56,10 @@
                     });
                   
                     myMap.geoObjects.add(firstPointRoute);
+                    identifierForDelete++;
                 }        
             counterArr++;
-           
+            console.log(Arr.length);
             if (Arr.length == 2) {
 
                 SetRoute(Arr);
@@ -115,6 +117,7 @@
                       //удаление лишних обьектов
                       myMap.geoObjects.remove(myPlacemark);
                       myMap.geoObjects.remove(firstPointRoute);
+                      identifierForDelete=0;
                       //заполнение переменных
                       $("#breadthS").val(Arr[0][0]);
                       $("#lengthS").val(Arr[0][1]);
@@ -150,9 +153,10 @@
 
                  { draggable: true });
                 myMap.geoObjects.add(myPlacemark);
+                identifierForDelete++;
                 myMap.setCenter([res.geoObjects.get(0).geometry.getCoordinates()[0], res.geoObjects.get(0).geometry.getCoordinates()[1]], 14);
             });
-        //alert("212121");
+        
     }
 
     function Set() {
@@ -167,38 +171,48 @@
     }
 
     function setHandlerS() {
-        console.log(myMap.geoObjects);
-        //myMap.geoObjects.remove(firstPointRoute);
-        //myMap.geoObjects.remove(currentRoute);
-        //myMap.geoObjects.add(firstPointRoute);
-        //myMap.events.add('dblclick', handlerRoute);
+        if (identifierForDelete == 0) {
+            myMap.geoObjects.remove(currentRoute);
+            endPointRoute = new ymaps.GeoObject({
+                geometry: {
+                    type: "Point",// тип геометрии - точка
+                    coordinates: [Arr[1][0], Arr[1][1]] // координаты точки
+                },
+                properties: {
+                    iconContent: "Конец улицы",
+                    balloonContentHeader: "<a href='#' onclick='setHandlerE()'>Удалить Обьект</a>",
+                    balloonContent: "[" + Arr[1][0] + "," + Arr[1][1] + "]"
+                }
+            },
+                        { draggable: true, preset: "islands#darkGreenStretchyIcon" });
+            firstPointRoute.events.add("dragend", function (e) {
+
+                var coords = firstPointRoute.geometry.getCoordinates();
+                Arr[0] = [coords[0].toPrecision(6), coords[1].toPrecision(6)];
+                //изменение координат при пертягивание метки
+                var object = e.get('target');
+                object.properties.set("balloonContent", "[" + coords[0].toPrecision(6) + "," + coords[1].toPrecision(6) + "]");
+
+            });
+            myMap.geoObjects.add(endPointRoute);
+            myMap.events.add('dblclick', handlerRoute);
+            console.log("1111");
+        } else {
+            myMap.geoObjects.remove(firstPointRoute);
+            identifierForDelete = 0;
+            counterArr = 0;
+        }
+        counterArr = 0;
     }
 
     function setHandlerE() {
         myMap.geoObjects.remove(endPointRoute);
         myMap.geoObjects.remove(currentRoute);
-        endPointRoute = new ymaps.GeoObject({
-            geometry: {
-                type: "Point",// тип геометрии - точка
-                coordinates: [Arr[1][0], Arr[1][1]] // координаты точки
-            },
-            properties: {
-                iconContent: "Конец улицы",
-                balloonContentHeader: "<a href='#' onclick='setHandlerE()'>Удалить Обьект</a>",
-                balloonContent: "[" + coords[1].toPrecision(6) + "," + coords[1].toPrecision(6) + "]"
-            }
-        },
-                        { draggable: true, preset: "islands#darkGreenStretchyIcon" });
-        firstPointRoute.events.add("dragend", function (e) {
-
-            var coords = firstPointRoute.geometry.getCoordinates();
-            Arr[0] = [coords[0].toPrecision(6), coords[1].toPrecision(6)];
-            //изменение координат при пертягивание метки
-            var object = e.get('target');
-            object.properties.set("balloonContent", "[" + coords[0].toPrecision(6) + "," + coords[1].toPrecision(6) + "]");
-
-        });
-        myMap.geoObjects.add(endPointRoute);
+        myMap.geoObjects.add(firstPointRoute);
+        myMap.events.add('dblclick', handlerRoute);
+        counterArr = 1;
+        identifierForDelete = 1;
+        console.log(identifierForDelete);
     }
     //задание координат
     $(document).ready(function () {
