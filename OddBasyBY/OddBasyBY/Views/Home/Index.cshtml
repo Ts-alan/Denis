@@ -36,7 +36,7 @@
                 firstPointRoute = new ymaps.GeoObject({
                     geometry: {
                         type: "Point",// тип геометрии - точка
-                        coordinates: [coords[0].toPrecision(6), coords[1].toPrecision(6)] // координаты точки
+                        coordinates: [Arr[0][0], Arr[0][1]] // координаты точки
                     },
                     properties: {
                         iconContent: "Начало улицы",
@@ -59,7 +59,7 @@
                 identifierForDelete++;
             }
             counterArr++;
-            console.log(Arr.length);
+           
             if (Arr.length == 2) {
 
                 SetRoute(Arr);
@@ -85,8 +85,9 @@
                   ).then(
                   function (route) {
                       route.events.add('dragend', function (e) {
-                          var coords = e.get('domEvent');
-                          console.log(coords.get('target'));
+                          
+                          Arr[0] = [route.requestPoints[0][0].toString().substr(0, 7), route.requestPoints[0][1].toString().substr(0, 7)];
+                          Arr[1] = [route.requestPoints[1][0].toString().substr(0, 7), route.requestPoints[1][1].toString().substr(0, 7)];
                       });
                       currentRoute = route;
 
@@ -216,11 +217,13 @@
     function setHandlerE() {
         myMap.geoObjects.remove(endPointRoute);
         myMap.geoObjects.remove(currentRoute);
+        //firstPointRoute.change([[Arr[0][0], Arr[0][1]]] );
+
         myMap.geoObjects.add(firstPointRoute);
         myMap.events.add('dblclick', handlerRoute);
         counterArr = 1;
         identifierForDelete = 1;
-
+       
     }
     //задание координат
     $(document).ready(function () {
