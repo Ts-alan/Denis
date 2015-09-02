@@ -59,7 +59,7 @@
                 identifierForDelete++;
             }
             counterArr++;
-           
+            console.log(Arr.length);
             if (Arr.length == 2) {
 
                 SetRoute(Arr);
@@ -203,26 +203,39 @@
             });
             myMap.geoObjects.add(endPointRoute);
             myMap.events.add('dblclick', handlerRoute);
+            identifierForDelete = 1;
 
         } else {
             myMap.geoObjects.remove(firstPointRoute);
             identifierForDelete = 0;
             counterArr = 0;
             Arr = [[]];
+         
 
         }
         counterArr = 0;
     }
 
     function setHandlerE() {
-        myMap.geoObjects.remove(endPointRoute);
-        myMap.geoObjects.remove(currentRoute);
-        //firstPointRoute.change([[Arr[0][0], Arr[0][1]]] );
 
-        myMap.geoObjects.add(firstPointRoute);
-        myMap.events.add('dblclick', handlerRoute);
-        counterArr = 1;
-        identifierForDelete = 1;
+        if (identifierForDelete == 0) {
+            myMap.geoObjects.remove(endPointRoute);
+            myMap.geoObjects.remove(currentRoute);
+            firstPointRoute.geometry.setCoordinates([Arr[0][0], Arr[0][1]]);
+            myMap.geoObjects.add(firstPointRoute);
+            myMap.events.add('dblclick', handlerRoute);
+            counterArr = 1;
+            identifierForDelete = 1;
+            
+        } else {
+            myMap.geoObjects.remove(endPointRoute);
+            //myMap.events.add('dblclick', handlerRoute);
+            identifierForDelete = 0;
+            counterArr = 0;
+            Arr = [[]];
+
+           
+        }
        
     }
     //задание координат
