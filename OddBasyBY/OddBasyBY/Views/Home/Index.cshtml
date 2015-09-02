@@ -71,6 +71,7 @@
         }
 
         myMap.events.add('dblclick', handlerRoute);
+      
 
     }
 
@@ -229,7 +230,6 @@
             
         } else {
             myMap.geoObjects.remove(endPointRoute);
-            //myMap.events.add('dblclick', handlerRoute);
             identifierForDelete = 0;
             counterArr = 0;
             Arr = [[]];
@@ -279,26 +279,28 @@
 
     });
 </script>
-<div>
-    @Html.Label("Выбирите город", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "city" })
-    @Html.Label("Выбирите улицу", new { @for = "street" }) @Html.TextBox(" ", null, new { id = "street" })
-    <input type="button" value="Поиск" onclick="search()" />
-</div>
+
 <div id="map" style="width: 60%; height: 600px;float: left"></div>
 <div id="readonly" style="margin-left: 62%; width: 100%;">
+    
+    <div>
+        @Html.Label("Выбирите город", new {@for = "city"}) @Html.TextBox(" ", null, new {id = "city"})
+        @Html.Label("Выбирите улицу", new {@for = "street"}) @Html.TextBox(" ", null, new {id = "street"})
+        <input type="button" value="Поиск" onclick="search()"/>
+    </div>
     <button class="btn btn-success"> Задать координаты</button>
     <div style="visibility: hidden">
         <div>Начальная точка</div>
         <div>
-            @Html.Label("Широта", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "breadthS" })
-            @Html.Label("Долгота", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "lengthS" })
+            @Html.Label("Широта", new {@for = "city"}) @Html.TextBox(" ", null, new {id = "breadthS"})
+            @Html.Label("Долгота", new {@for = "city"}) @Html.TextBox(" ", null, new {id = "lengthS"})
         </div>
         <div>
             Конечная точка
         </div>
         <div>
-            @Html.Label("Широта", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "breadthE" })
-            @Html.Label("Долгота", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "lengthE" })
+            @Html.Label("Широта", new {@for = "city"}) @Html.TextBox(" ", null, new {id = "breadthE"})
+            @Html.Label("Долгота", new {@for = "city"}) @Html.TextBox(" ", null, new {id = "lengthE"})
         </div>
         <button class="btn btn-danger">Сохранить координаты</button>
     </div>
