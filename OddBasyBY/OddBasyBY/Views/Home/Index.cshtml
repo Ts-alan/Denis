@@ -35,7 +35,7 @@
             if (counterArr == 0) {
                 firstPointRoute = new ymaps.GeoObject({
                     geometry: {
-                        type: "Point",// тип геометрии - точка
+                        type: "Point", // тип геометрии - точка
                         coordinates: [Arr[0][0], Arr[0][1]] // координаты точки
                     },
                     properties: {
@@ -44,7 +44,7 @@
                         balloonContent: "[" + coords[0].toPrecision(6) + "," + coords[1].toPrecision(6) + "]"
                     }
                 },
-                     { draggable: true, preset: "islands#darkGreenStretchyIcon" });
+                { draggable: true, preset: "islands#darkGreenStretchyIcon" });
                 firstPointRoute.events.add("dragend", function (e) {
 
                     var coords = firstPointRoute.geometry.getCoordinates();
@@ -71,69 +71,70 @@
         }
 
         myMap.events.add('dblclick', handlerRoute);
-      
+
 
     }
 
     function SetRoute(Arr) {
         ymaps.route([
-                  Arr[0],
-                  Arr[1]
+                Arr[0],
+                Arr[1]
         ],
-                      {
-                          mapStateAutoApply: true, removeViaPoints: true
-                      }
-                  ).then(
-                  function (route) {
-                      route.events.add('dragend', function (e) {
-                          
-                          Arr[0] = [route.requestPoints[0][0].toString().substr(0, 7), route.requestPoints[0][1].toString().substr(0, 7)];
-                          Arr[1] = [route.requestPoints[1][0].toString().substr(0, 7), route.requestPoints[1][1].toString().substr(0, 7)];
-                      });
-                      currentRoute = route;
+            {
+                mapStateAutoApply: true,
+                removeViaPoints: true
+            }
+        ).then(
+            function (route) {
+                route.events.add('dragend', function (e) {
 
-                      route.editor.start({
-                          editWayPoints: true
-                      });
+                    Arr[0] = [route.requestPoints[0][0].toString().substr(0, 7), route.requestPoints[0][1].toString().substr(0, 7)];
+                    Arr[1] = [route.requestPoints[1][0].toString().substr(0, 7), route.requestPoints[1][1].toString().substr(0, 7)];
+                });
+                currentRoute = route;
 
-                      var points = route.getWayPoints();
-                      points.get(0).properties.set("iconContent", "Начало улицы");
-                      points.get(0).properties.set("balloonContentHeader", "<a href='#' onclick='setHandlerS()'>Удалить Обьект</a>");
-                      points.get(0).options.set('preset', 'islands#darkGreenStretchyIcon');
+                route.editor.start({
+                    editWayPoints: true
+                });
+
+                var points = route.getWayPoints();
+                points.get(0).properties.set("iconContent", "Начало улицы");
+                points.get(0).properties.set("balloonContentHeader", "<a href='#' onclick='setHandlerS()'>Удалить Обьект</a>");
+                points.get(0).options.set('preset', 'islands#darkGreenStretchyIcon');
 
 
-                      points.get(1).properties.set("iconContent", "Конец улицы");
-                      points.get(1).properties.set("balloonContentHeader", "<a href='#' onclick='setHandlerE()'>Удалить Обьект</a>");
-                      points.get(1).options.set("preset", "islands#darkGreenStretchyIcon");
-                      route.editor.events.add("routeupdate", function () {
-                          $("#breadthS").val(route.requestPoints[0][0].toString().substr(0, 7));
-                          $("#lengthS").val(route.requestPoints[0][1].toString().substr(0, 7));
-                          $("#breadthE").val(route.requestPoints[1][0].toString().substr(0, 7));
-                          $("#lengthE").val(route.requestPoints[1][1].toString().substr(0, 7));
-                      });
+                points.get(1).properties.set("iconContent", "Конец улицы");
+                points.get(1).properties.set("balloonContentHeader", "<a href='#' onclick='setHandlerE()'>Удалить Обьект</a>");
+                points.get(1).options.set("preset", "islands#darkGreenStretchyIcon");
+                route.editor.events.add("routeupdate", function () {
+                    $("#breadthS").val(route.requestPoints[0][0].toString().substr(0, 7));
+                    $("#lengthS").val(route.requestPoints[0][1].toString().substr(0, 7));
+                    $("#breadthE").val(route.requestPoints[1][0].toString().substr(0, 7));
+                    $("#lengthE").val(route.requestPoints[1][1].toString().substr(0, 7));
+                });
 
-                      route.getPaths().options.set({
+                route.getPaths().options.set({
 
-                          //можно выставить настройки графики маршруту
-                          strokeColor: '0000ffff',
-                          opacity: 0.9
-                      });
-                      myMap.geoObjects.add(route);
-                      //удаление лишних обьектов
-                      myMap.geoObjects.remove(myPlacemark);
-                      myMap.geoObjects.remove(firstPointRoute);
-                      myMap.geoObjects.remove(endPointRoute);
-                      
-                      identifierForDelete = 0;
-                      //заполнение переменных
-                      $("#breadthS").val(Arr[0][0]);
-                      $("#lengthS").val(Arr[0][1]);
-                      $("#breadthE").val(Arr[1][0]);
-                      $("#lengthE").val(Arr[1][1]);
-                  },
-                  function (error) {
-                      alert("Возникла ошибка: " + error.message);
-                  });
+                    //можно выставить настройки графики маршруту
+                    strokeColor: '0000ffff',
+                    opacity: 0.9
+                });
+                myMap.geoObjects.add(route);
+                //удаление лишних обьектов
+                myMap.geoObjects.remove(myPlacemark);
+                myMap.geoObjects.remove(firstPointRoute);
+                myMap.geoObjects.remove(endPointRoute);
+
+                identifierForDelete = 0;
+                //заполнение переменных
+                $("#breadthS").val(Arr[0][0]);
+                $("#lengthS").val(Arr[0][1]);
+                $("#breadthE").val(Arr[1][0]);
+                $("#lengthE").val(Arr[1][1]);
+            },
+            function (error) {
+                alert("Возникла ошибка: " + error.message);
+            });
 
 
     }
@@ -153,12 +154,11 @@
 
                 myPlacemark = new ymaps.GeoObject({
                     geometry: {
-                        type: "Point",// тип геометрии - точка
+                        type: "Point", // тип геометрии - точка
                         coordinates: [res.geoObjects.get(0).geometry.getCoordinates()[0], res.geoObjects.get(0).geometry.getCoordinates()[1]] // координаты точки
                     }
                 },
-
-                 { draggable: true });
+                { draggable: true });
                 myMap.geoObjects.add(myPlacemark);
                 identifierForDelete++;
                 myMap.setCenter([res.geoObjects.get(0).geometry.getCoordinates()[0], res.geoObjects.get(0).geometry.getCoordinates()[1]], 14);
@@ -181,7 +181,7 @@
 
             endPointRoute = new ymaps.GeoObject({
                 geometry: {
-                    type: "Point",// тип геометрии - точка
+                    type: "Point", // тип геометрии - точка
                     coordinates: [Arr[1][0], Arr[1][1]] // координаты точки
                 },
                 properties: {
@@ -190,7 +190,7 @@
                     balloonContent: "[" + Arr[1][0] + "," + Arr[1][1] + "]"
                 }
             },
-                        { draggable: true, preset: "islands#darkGreenStretchyIcon" });
+            { draggable: true, preset: "islands#darkGreenStretchyIcon" });
 
 
             endPointRoute.events.add("dragend", function (e) {
@@ -211,7 +211,7 @@
             identifierForDelete = 0;
             counterArr = 0;
             Arr = [[]];
-         
+
 
         }
         counterArr = 0;
@@ -227,17 +227,18 @@
             myMap.events.add('dblclick', handlerRoute);
             counterArr = 1;
             identifierForDelete = 1;
-            
+
         } else {
             myMap.geoObjects.remove(endPointRoute);
             identifierForDelete = 0;
             counterArr = 0;
             Arr = [[]];
 
-           
+
         }
-       
+
     }
+
     //задание координат
     $(document).ready(function () {
 
@@ -258,10 +259,10 @@
             Set();
         });
         //появление координат
-        $(".btn-success").click(function () {
-            $("[style='visibility: hidden']").css("visibility", "visible");
+        //$(".btn-success").click(function () {
+        //    $("[style='visibility: hidden']").css("visibility", "visible");
 
-        });
+        //});
         //сохранить координаты и заблокировать поля
         $(".btn-danger").click(function () {
 
@@ -279,29 +280,41 @@
 
     });
 </script>
+<style>
+    /*правит шрифт бутсрапа*/
+     label {
+         font-weight:normal
+     }
+</style>
+@using (Html.BeginForm("SaveSuccess", "Home"))
+{
+    <div class="form-inline">
+        <div class="form-group col-lg-8 col-md-8 col-sm-8 col-xs-8">
+            <div id="map" style="height: 600px;"></div>
+        </div>
 
-<div id="map" style="width: 60%; height: 600px;float: left"></div>
-<div id="readonly" style="margin-left: 62%; width: 100%;">
-    
-    <div>
-        @Html.Label("Выбирите город", new {@for = "city"}) @Html.TextBox(" ", null, new {id = "city"})
-        @Html.Label("Выбирите улицу", new {@for = "street"}) @Html.TextBox(" ", null, new {id = "street"})
-        <input type="button" value="Поиск" onclick="search()"/>
+        <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-8">
+            <b><u>1.Наименование улицы</u></b>
+            <div>
+                @Html.Label("Выбирите город", new { @for = "city" }) @Html.TextBox("", (string)ViewBag.City, new { id = "city"})
+                @Html.Label("Выбирите улицу", new { @for = "street" }) @Html.TextBox(" ", null, new { id = "street" })
+                <input type="button" value="Поиск" onclick="search()" />
+            </div>
+            <div>Начальная точка</div>
+            <div>
+                @Html.Label("Широта", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "breadthS" })
+                @Html.Label("Долгота", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "lengthS" })
+            </div>
+            <div>
+                Конечная точка
+            </div>
+            <div>
+                @Html.Label("Широта", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "breadthE" })
+                @Html.Label("Долгота", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "lengthE" })
+            </div>
+            <button class="btn btn-danger">Сохранить координаты</button>
+        </div>
+
     </div>
-    <button class="btn btn-success"> Задать координаты</button>
-    <div style="visibility: hidden">
-        <div>Начальная точка</div>
-        <div>
-            @Html.Label("Широта", new {@for = "city"}) @Html.TextBox(" ", null, new {id = "breadthS"})
-            @Html.Label("Долгота", new {@for = "city"}) @Html.TextBox(" ", null, new {id = "lengthS"})
-        </div>
-        <div>
-            Конечная точка
-        </div>
-        <div>
-            @Html.Label("Широта", new {@for = "city"}) @Html.TextBox(" ", null, new {id = "breadthE"})
-            @Html.Label("Долгота", new {@for = "city"}) @Html.TextBox(" ", null, new {id = "lengthE"})
-        </div>
-        <button class="btn btn-danger">Сохранить координаты</button>
-    </div>
-</div>
+}
+
