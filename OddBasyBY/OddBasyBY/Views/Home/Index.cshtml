@@ -287,44 +287,84 @@
     }
     /*отступы*/
     .indentForTextBox {
-        margin-right: 60px
+        margin-right: 60px;
     }
+
     .btn {
-       width: 278px
+        width: 285px;
     }
 </style>
 @using (Html.BeginForm("SaveSuccess", "Home"))
 {
     <div class="form-inline">
         <div class="form-group col-lg-7 col-md-7 col-sm-7 col-xs-7">
-            <div id="map" style="height: 600px;"></div>
+            <div id="map" style="height: 380px;"></div>
         </div>
 
         <div class="form-group col-lg-5 col-md-5 col-sm-5 col-xs-5">
             <b><u>1.Наименование улицы</u></b>
             <div>
-              @Html.Label("Выбирите город", new { @for = "city" }) @Html.TextBox(" ", (string)ViewBag.City, new { id = "city" })
-              @Html.Label("Выбирите улицу", new { @for = "street" }) @Html.TextBox(" ", null, new { id = "street" })
-
+                @Html.Label("Выбирите город", new { @for = "city" }) @Html.TextBox(" ", (string)ViewBag.City, new { id = "city" })
+                @Html.Label("Выбирите улицу", new { @for = "street" }) @Html.TextBox(" ", null, new { id = "street" })
             </div>
             <div>
-                <button class="btn btn-success " onclick="search()" >Показать на карте</button>
-                <button class="btn btn-warning">Сохранить</button> 
+                <button class="btn btn-success " onclick="search()">Показать на карте</button>
+                <button class="btn btn-warning">Сохранить</button>
             </div>
             <b><u>2.Координаты улицы</u></b>
             <div>Начальнаты начала</div>
             <div>
-                @Html.Label("Широта", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "breadthS" ,@class= "indent" })
+                @Html.Label("Широта", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "breadthS" })
                 @Html.Label("Долгота", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "lengthS" })
             </div>
             <div>Координаты конца</div>
             <div>
-                @Html.Label("Широта", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "breadthE", @class = "indent" })
+                @Html.Label("Широта", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "breadthE" })
                 @Html.Label("Долгота", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "lengthE" })
             </div>
-            <button class="btn btn-danger">Сохранить координаты</button>
+            <div>
+                <button class="btn btn-success ">Задать/Изменить координаты</button>
+                <button class="btn btn-warning">Сохранить</button>
+            </div>
+            <b><u>3.Количество и координаты участков улицы</u></b>
+            <div>
+                @Html.Label("Выбирите город", new { @for = "CountSides", style = "margin-right: 20px" }) @Html.TextBox(" ", null, new { id = "CountSides", style = "width: 40px" })
+
+            </div>
+            <u>Координаты участка 1</u>
+            <div>Начальнаты начала</div>
+            <div>
+                @Html.Label("Широта", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "breadthS" })
+                @Html.Label("Долгота", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "lengthS" })
+            </div>
+            <div>Координаты конца</div>
+            <div>
+                @Html.Label("Широта", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "breadthE" })
+                @Html.Label("Долгота", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "lengthE" })
+            </div>
         </div>
 
     </div>
-}
 
+}
+<div class="">
+    <b><u>4.Ввод данных</u></b>
+</div>
+<div>
+    <button class="btn btn-default">Ввести спецификацию разметки</button>
+</div>
+<div>
+    <b><u>Участок 1</u></b>
+</div>
+
+<div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-4" style="float: left">
+    <button class="btn btn-default">Загрузить Дислокацию ТСОДД</button>
+</div>
+<div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-4" style="float: left">
+    <button class="btn btn-default">Ввести данные о дорожных знаках</button>
+</div>
+<div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-4">
+    <button class="btn btn-default">
+        Ввести данные о дорожных ограждениях
+    </button>
+</div>
