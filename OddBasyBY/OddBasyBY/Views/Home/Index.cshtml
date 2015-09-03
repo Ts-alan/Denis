@@ -296,7 +296,7 @@
         <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-8">
             <b><u>1.Наименование улицы</u></b>
             <div>
-                @Html.Label("Выбирите город", new { @for = "city" }) @Html.TextBox("", (string)ViewBag.City, new { id = "city"})
+                @Html.Label("Выбирите город", new { @for = "city" }) @Html.TextBox(" ", (string)ViewBag.City, new { id = "city"})
                 @Html.Label("Выбирите улицу", new { @for = "street" }) @Html.TextBox(" ", null, new { id = "street" })
                 <input type="button" value="Поиск" onclick="search()" />
             </div>
