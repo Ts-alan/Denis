@@ -282,34 +282,44 @@
 </script>
 <style>
     /*правит шрифт бутсрапа*/
-     label {
-         font-weight:normal
-     }
+    label {
+        font-weight: normal;
+    }
+    /*отступы*/
+    .indentForTextBox {
+        margin-right: 60px
+    }
+    .btn {
+       width: 278px
+    }
 </style>
 @using (Html.BeginForm("SaveSuccess", "Home"))
 {
     <div class="form-inline">
-        <div class="form-group col-lg-8 col-md-8 col-sm-8 col-xs-8">
+        <div class="form-group col-lg-7 col-md-7 col-sm-7 col-xs-7">
             <div id="map" style="height: 600px;"></div>
         </div>
 
-        <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-8">
+        <div class="form-group col-lg-5 col-md-5 col-sm-5 col-xs-5">
             <b><u>1.Наименование улицы</u></b>
             <div>
-                @Html.Label("Выбирите город", new { @for = "city" }) @Html.TextBox(" ", (string)ViewBag.City, new { id = "city"})
-                @Html.Label("Выбирите улицу", new { @for = "street" }) @Html.TextBox(" ", null, new { id = "street" })
-                <input type="button" value="Поиск" onclick="search()" />
+              @Html.Label("Выбирите город", new { @for = "city" }) @Html.TextBox(" ", (string)ViewBag.City, new { id = "city" })
+              @Html.Label("Выбирите улицу", new { @for = "street" }) @Html.TextBox(" ", null, new { id = "street" })
+
             </div>
-            <div>Начальная точка</div>
             <div>
-                @Html.Label("Широта", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "breadthS" })
+                <button class="btn btn-success " onclick="search()" >Показать на карте</button>
+                <button class="btn btn-warning">Сохранить</button> 
+            </div>
+            <b><u>2.Координаты улицы</u></b>
+            <div>Начальнаты начала</div>
+            <div>
+                @Html.Label("Широта", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "breadthS" ,@class= "indent" })
                 @Html.Label("Долгота", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "lengthS" })
             </div>
+            <div>Координаты конца</div>
             <div>
-                Конечная точка
-            </div>
-            <div>
-                @Html.Label("Широта", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "breadthE" })
+                @Html.Label("Широта", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "breadthE", @class = "indent" })
                 @Html.Label("Долгота", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "lengthE" })
             </div>
             <button class="btn btn-danger">Сохранить координаты</button>
