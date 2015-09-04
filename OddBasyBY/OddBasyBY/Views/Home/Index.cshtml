@@ -29,9 +29,11 @@
     }
 
     function SetRoute(Arr) {
-     
+       
         if (currentRoute != undefined) {
             myMap.geoObjects.remove(currentRoute);
+            myMap.geoObjects.remove(currentRoute.getPaths());
+    
         }
         ymaps.route([
                 Arr[0],
@@ -126,9 +128,10 @@
     }
 
     function Set() {
+   
         if ($("#breadthS").val() != "" && $("#lengthS").val() != "" && $("#breadthE").val() && $("#lengthE").val()) {
             Arr = [[]];
-
+           
             Arr[0] = [parseFloat($("#breadthS").val()), parseFloat($("#lengthS").val())];
             Arr[1] = [parseFloat($("#breadthE").val()), parseFloat($("#lengthE").val())];
 
@@ -264,25 +267,21 @@
 
             myMap.events.add('dblclick', handlerRoute);
         }
-
-        $("#breadthS").change(function () {
-            Set();
-        });
-
-        $("#lengthS").change(function () {
-            Set();
-        });
-
-        $("#breadthE").change(function () {
-            Set();
-        });
-
-        $("#lengthE").change(function () {
-            Set();
-        });
     }
+    function SetCoordsForSegment() {
+        if (currentRoute == undefined) {
+            alert("Задайте улицу или возможно нажмите кнопку сохранить в этом пункте");
+        } else {
+            
+        }
+
+    }
+
     //задание координат
     $(document).ready(function () {
+        $("#breadthS, #lengthS, #breadthE, #lengthE").change(function () {
+           Set();
+        });
 
         //заблокировать наименовае улицы
         $("#blockStreet").click(function () {
@@ -371,7 +370,7 @@
             </div>
             <b><u>3.Количество и координаты участков улицы</u></b>
             <div>
-                @Html.Label("Выбирите город", new { @for = "CountSides", style = "margin-right: 20px" }) @Html.TextBox(" ", null, new { id = "CountSides", style = "width: 40px" })
+                @Html.Label("Количество участков", new { @for = "CountSides", style = "margin-right: 20px" }) @Html.TextBox(" ", null, new { id = "CountSides", style = "width: 40px" })
 
             </div>
             <u>Координаты участка 1</u>
@@ -382,8 +381,12 @@
             </div>
             <div>Координаты конца</div>
             <div>
-                @Html.Label("Широта", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "breadth" })
-                @Html.Label("Долгота", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "length" })
+                @Html.Label("Широта", new {@for = "city"}) @Html.TextBox(" ", null, new {id = "breadth"})
+                @Html.Label("Долгота", new {@for = "city"}) @Html.TextBox(" ", null, new {id = "length"})
+            </div>
+            <div>
+                <button type="button" onclick="SetCoordsForSegment()" class="btn btn-success ">Задать/Изменить координаты</button>
+                <button type="button" id="blockStreetCoord" class="btn btn-warning">Сохранить</button>
             </div>
         </div>
 
