@@ -29,11 +29,11 @@
     }
 
     function SetRoute(Arr) {
-       
+
         if (currentRoute != undefined) {
             myMap.geoObjects.remove(currentRoute);
             myMap.geoObjects.remove(currentRoute.getPaths());
-    
+
         }
         ymaps.route([
                 Arr[0],
@@ -128,10 +128,10 @@
     }
 
     function Set() {
-   
+
         if ($("#breadthS").val() != "" && $("#lengthS").val() != "" && $("#breadthE").val() && $("#lengthE").val()) {
             Arr = [[]];
-           
+
             Arr[0] = [parseFloat($("#breadthS").val()), parseFloat($("#lengthS").val())];
             Arr[1] = [parseFloat($("#breadthE").val()), parseFloat($("#lengthE").val())];
 
@@ -208,15 +208,16 @@
             $("#blockStreetCoord").css("display", "inline");
             myMap.geoObjects.add(currentRoute);
             currentRoute.editor.start({ editWayPoints: true });
-           
+
             $("#blockStreetCoord").parent().prev().children("input").each(function (indx, element) {
                 $(element).removeAttr("readonly");
-              
+
             });
 
             $("#blockStreetCoord").parent().prev().prev().prev().children("input").each(function (indx, element) {
                 $(element).removeAttr("readonly");
             });
+
         }
         else {
             handlerRoute = function (e) {
@@ -272,7 +273,7 @@
         if (currentRoute == undefined) {
             alert("Задайте улицу или возможно нажмите кнопку сохранить в этом пункте");
         } else {
-            
+
         }
 
     }
@@ -280,7 +281,7 @@
     //задание координат
     $(document).ready(function () {
         $("#breadthS, #lengthS, #breadthE, #lengthE").change(function () {
-           Set();
+            Set();
         });
 
         //заблокировать наименовае улицы
@@ -294,28 +295,31 @@
         //заблокировать поля  улицы и убрать координаты
         $("#blockStreetCoord").click(function () {
             //делает readOnly  инпуты
-            $(this).parent().prev().children("input").each(function (indx, element) {
-                $(element).attr("readonly", "");
-            });
-  
-            $(this).parent().prev().prev().prev().children("input").each(function (indx, element) {
-                $(element).attr("readonly", "");
-            });
-
-            $(this).css("display", "none");
-            currentRoute.editor.start({ editWayPoints: false });
             if (currentRoute != undefined) {
-                myMap.geoObjects.remove(currentRoute);
+                $(this).parent().prev().children("input").each(function(indx, element) {
+                    $(element).attr("readonly", "");
+                });
+
+                $(this).parent().prev().prev().prev().children("input").each(function(indx, element) {
+                    $(element).attr("readonly", "");
+                });
+
+                $(this).css("display", "none");
+                currentRoute.editor.start({ editWayPoints: false });
+                if (currentRoute != undefined) {
+                    myMap.geoObjects.remove(currentRoute);
+                }
+                currentRoute.getPaths().options.set({
+
+                    //можно выставить настройки графики маршруту
+                    strokeColor: '0000ffff',
+                    opacity: 0.9,
+                    strokeWidth: 4
+                });
+                myMap.geoObjects.add(currentRoute.getPaths());
+            } else {
+                alert("Задайте сначала маршрут");
             }
-            currentRoute.getPaths().options.set({
-
-                //можно выставить настройки графики маршруту
-                strokeColor: '0000ffff',
-                opacity: 0.9,
-                strokeWidth: 4
-            });
-            myMap.geoObjects.add(currentRoute.getPaths());
-
         });
 
     });
@@ -381,12 +385,12 @@
             </div>
             <div>Координаты конца</div>
             <div>
-                @Html.Label("Широта", new {@for = "city"}) @Html.TextBox(" ", null, new {id = "breadth"})
-                @Html.Label("Долгота", new {@for = "city"}) @Html.TextBox(" ", null, new {id = "length"})
+                @Html.Label("Широта", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "breadth" })
+                @Html.Label("Долгота", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "length" })
             </div>
             <div>
                 <button type="button" onclick="SetCoordsForSegment()" class="btn btn-success ">Задать/Изменить координаты</button>
-                <button type="button" id="blockStreetCoord" class="btn btn-warning">Сохранить</button>
+                <button type="button" id="" class="btn btn-warning">Сохранить</button>
             </div>
         </div>
 
