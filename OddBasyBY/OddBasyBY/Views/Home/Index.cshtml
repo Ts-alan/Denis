@@ -42,6 +42,7 @@
             {
                 mapStateAutoApply: true,
                 removeViaPoints: true
+
             }
         ).then(
             function (route) {
@@ -138,11 +139,11 @@
             SetRoute(Arr);
         }
     }
-
+   //удаление начальной точки
     function setHandlerS() {
         if (identifierForDelete == 0) {
             myMap.geoObjects.remove(currentRoute);
-
+            myMap.geoObjects.remove(currentRoute.getPaths());
             endPointRoute = new ymaps.GeoObject({
                 geometry: {
                     type: "Point", // тип геометрии - точка
@@ -180,12 +181,13 @@
         }
         counterArr = 0;
     }
-
+    //удаление конченой точки
     function setHandlerE() {
 
         if (identifierForDelete == 0) {
             myMap.geoObjects.remove(endPointRoute);
             myMap.geoObjects.remove(currentRoute);
+            myMap.geoObjects.remove(currentRoute.getPaths());
             firstPointRoute.geometry.setCoordinates([Arr[0][0], Arr[0][1]]);
             myMap.geoObjects.add(firstPointRoute);
             myMap.events.add('dblclick', handlerRoute);
@@ -295,7 +297,7 @@
         //заблокировать поля  улицы и убрать координаты
         $("#blockStreetCoord").click(function () {
             //делает readOnly  инпуты
-            if (currentRoute != undefined) {
+            if (currentRoute != undefined && identifierForDelete!=1) {
                 $(this).parent().prev().children("input").each(function(indx, element) {
                     $(element).attr("readonly", "");
                 });
