@@ -13,6 +13,8 @@
     var endPointRoute;
     var position;
     var identifierForDelete = 0;
+    var increment=0;
+    var tempData;
 
     function init() {
 
@@ -80,7 +82,7 @@
                     opacity: 0.9
                 });
                 currentRoute = route;
-              
+
                 myMap.geoObjects.add(route);
                 //удаление лишних обьектов
                 myMap.geoObjects.remove(myPlacemark);
@@ -278,33 +280,51 @@
         if (currentRoute == undefined) {
             alert("Задайте улицу или возможно нажмите кнопку сохранить в этом пункте");
         } else {
+     
             var handlerSegment = function (e) {
-                alert("11111");
 
                 var coords = e.get('coords');
-               
-                    firstPointRoute = new ymaps.GeoObject({
-                        geometry: {
-                            type: "Point", // тип геометрии - точка
-                            coordinates: [coords[0].toPrecision(6), coords[1].toPrecision(6)] // координаты точки
+             
+                ymaps.route([
+                         tempData,
+                       [coords[0].toPrecision(6), coords[1].toPrecision(6)]
+                ],
+                    {
+                        mapStateAutoApply: true,
+                        removeViaPoints: true
+
+                    }
+                ).then(
+                    function(route) {
+                        route.getPaths().options.set({
+
+                            //можно выставить настройки графики маршруту
+                            strokeColor: '#FF0000',
+                            opacity: 0.9,
+                            strokeWidth: 4
+                        });
+                        var segment = new ymaps.GeoObject({
+                            geometry: {
+                                type: "Point", // тип геометрии - точка
+                                coordinates: [coords[0].toPrecision(6), coords[1].toPrecision(6)]// координаты точки
+                               
+                            },
+                            properties: {
+                                iconContent: ++increment,
+                                balloonContentHeader: "<a href='#' onclick='setHandlerS()'>Удалить Обьект</a>",
+                                balloonContent: "[" + coords[0].toPrecision(6) + "," + coords[1].toPrecision(6) + "]"
+                            }
                         },
-                        properties: {
-                            iconContent: "Начало сегмента",
-                            balloonContentHeader: "<a href='#' onclick='setHandlerS()'>Удалить Обьект</a>",
-                            balloonContent: "[" + coords[0].toPrecision(6) + "," + coords[1].toPrecision(6) + "]"
-                        }
-                    },
-                    { draggable: true, preset: "islands#darkGreenStretchyIcon" });
-                  
-                    myMap.geoObjects.add(firstPointRoute);
-               
+                   { preset: "islands#darkGreenStretchyIcon" });
+                        myMap.geoObjects.add(route.getPaths());
+                        myMap.geoObjects.add(segment);
+                        tempData = [coords[0].toPrecision(6), coords[1].toPrecision(6)];
+                    });
             }
             currentRoute.getPaths().events.add('click', handlerSegment);
-          
+
         }
-
     }
-
     //задание координат
     $(document).ready(function () {
         $("#breadthS, #lengthS, #breadthE, #lengthE").change(function () {
@@ -343,8 +363,10 @@
                     opacity: 0.9,
                     strokeWidth: 4
                 });
-
+               
+                tempData = Arr[0];
                 myMap.geoObjects.add(currentRoute.getPaths());
+                console.log(currentRoute.geoObject);
             } else {
                 alert("Задайте сначала маршрут");
             }
@@ -370,7 +392,7 @@
 <h2 style="text-align: center">Карточка улицы</h2>
 @using (Html.BeginForm("SaveSuccess", "Home"))
 {
-    <div class="form-inline">
+    <div  class="form-inline">
         <div class="form-group col-lg-7 col-md-7 col-sm-7 col-xs-7">
             <div id="map" style="height: 380px;"></div>
         </div>
