@@ -80,6 +80,7 @@
                     opacity: 0.9
                 });
                 currentRoute = route;
+              
                 myMap.geoObjects.add(route);
                 //удаление лишних обьектов
                 myMap.geoObjects.remove(myPlacemark);
@@ -139,7 +140,7 @@
             SetRoute(Arr);
         }
     }
-   //удаление начальной точки
+    //удаление начальной точки
     function setHandlerS() {
         if (identifierForDelete == 0) {
             myMap.geoObjects.remove(currentRoute);
@@ -265,17 +266,41 @@
                     //Arr = [];
                     //counterArr = 0;
                     myMap.events.remove('dblclick', handlerRoute);
+
                 }
             }
 
             myMap.events.add('dblclick', handlerRoute);
+
         }
     }
     function SetCoordsForSegment() {
         if (currentRoute == undefined) {
             alert("Задайте улицу или возможно нажмите кнопку сохранить в этом пункте");
         } else {
+            var handlerSegment = function (e) {
+                alert("11111");
 
+                var coords = e.get('coords');
+               
+                    firstPointRoute = new ymaps.GeoObject({
+                        geometry: {
+                            type: "Point", // тип геометрии - точка
+                            coordinates: [coords[0].toPrecision(6), coords[1].toPrecision(6)] // координаты точки
+                        },
+                        properties: {
+                            iconContent: "Начало сегмента",
+                            balloonContentHeader: "<a href='#' onclick='setHandlerS()'>Удалить Обьект</a>",
+                            balloonContent: "[" + coords[0].toPrecision(6) + "," + coords[1].toPrecision(6) + "]"
+                        }
+                    },
+                    { draggable: true, preset: "islands#darkGreenStretchyIcon" });
+                  
+                    myMap.geoObjects.add(firstPointRoute);
+               
+            }
+            currentRoute.getPaths().events.add('click', handlerSegment);
+          
         }
 
     }
@@ -297,12 +322,12 @@
         //заблокировать поля  улицы и убрать координаты
         $("#blockStreetCoord").click(function () {
             //делает readOnly  инпуты
-            if (currentRoute != undefined && identifierForDelete!=1) {
-                $(this).parent().prev().children("input").each(function(indx, element) {
+            if (currentRoute != undefined && identifierForDelete != 1) {
+                $(this).parent().prev().children("input").each(function (indx, element) {
                     $(element).attr("readonly", "");
                 });
 
-                $(this).parent().prev().prev().prev().children("input").each(function(indx, element) {
+                $(this).parent().prev().prev().prev().children("input").each(function (indx, element) {
                     $(element).attr("readonly", "");
                 });
 
@@ -318,6 +343,7 @@
                     opacity: 0.9,
                     strokeWidth: 4
                 });
+
                 myMap.geoObjects.add(currentRoute.getPaths());
             } else {
                 alert("Задайте сначала маршрут");
