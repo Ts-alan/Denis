@@ -280,7 +280,7 @@
         if (currentRoute == undefined) {
             alert("Задайте улицу или возможно нажмите кнопку сохранить в этом пункте");
         } else {
-     
+            
             var handlerSegment = function (e) {
 
                 var coords = e.get('coords');
@@ -319,6 +319,7 @@
                         myMap.geoObjects.add(route.getPaths());
                         myMap.geoObjects.add(segment);
                         tempData = [coords[0].toPrecision(6), coords[1].toPrecision(6)];
+                       
                     });
             }
             currentRoute.getPaths().events.add('click', handlerSegment);
@@ -363,10 +364,11 @@
                     opacity: 0.9,
                     strokeWidth: 4
                 });
-               
+                console.log(currentRoute.getPaths().get(0).state);
                 tempData = Arr[0];
+                currentRoute.getPaths().get(0).balloon.destroy();
                 myMap.geoObjects.add(currentRoute.getPaths());
-                console.log(currentRoute.geoObject);
+               
             } else {
                 alert("Задайте сначала маршрут");
             }
