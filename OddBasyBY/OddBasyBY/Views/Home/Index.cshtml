@@ -15,6 +15,7 @@
     var identifierForDelete = 0;
     var increment = 1;
     var tempData;
+    var tempDataFor3 = 5;
 
     function init() {
 
@@ -305,8 +306,8 @@
                         });
 
 
-                        if (increment >= 2 && increment<=4) {
-                          
+                        if (increment >= 2 && increment <= 4) {
+
                             $("#segment" + (increment - 1)).after('<div id="segment' + increment + '">' +
                                                                     '<u>Координаты участка ' + increment + '</u>' +
                                                                     '<div>Начальнаты начала</div>' +
@@ -320,9 +321,13 @@
                         }
 
                         if (increment > 4) {
-                          
-                            $("#interData").before('<div style="width: 33.333%;float: left" id="segment' + increment + '">' +
-                                                                           '<u>Координаты участка ' + increment + '</u>' +
+                            //$("#segment" + (increment - 1) + "+div").remove();
+
+                            if (tempDataFor3 == increment) {
+                                $("#interData").before('<div style="margin-top: 10px"><div id="segment' + increment + '" style="width: 30.2%;float: left;height: 111.111px"></div><div id="segment' + (increment + 1) + '" style="width:29%;float: left;height: 111.111px"></div><div id="segment' + (increment + 2) + '" style="width: 39.8%;float: left;height: 111.111px"></div></div><div style="clear:both"></div>');
+                                tempDataFor3 = tempDataFor3 + 3;
+                           }
+                            $("#segment" + increment ).html(  '<u>Координаты участка ' + increment + '</u>' +
                                                                            '<div>Начальнаты начала</div>' +
                                                                            '<div><label for="city">Широта</label> <input id="breadthSegS' + increment + '" name=" " readonly="" type="text" value="">' +
                                                                                '<label for="city">Долгота</label> <input id="lengthSegS' + increment + '" name=" " readonly="" type="text" value="">' +
@@ -330,7 +335,11 @@
                                                                                '<label for="city">Широта</label> <input id="breadthSegE' + increment + '" name=" " readonly="" type="text" value="">' +
                                                                                '<label for="city">Долгота</label> <input id="lengthSegE' + increment + '" name=" " readonly="" type="text" value=""></div><div>' +
 
-                                                                      '</div></div> <div style="width: 33.333%; height:116px">nenneenne</div> <div style="width: 33.333%;width:634px;height:116px">dfdfdf</div>');
+                                                                      '</div></div>' 
+                //                ' <div>'+
+                //'<button type="button" onclick="SetCoordsForSegment()" class="btn btn-success ">Задать/Изменить координаты</button>'+
+                //'<button type="button" id="" class="btn btn-warning">Сохранить</button></div>'
+                );
                         }
                         $("#breadthSegS" + increment).val(tempData[0]);
                         $("#lengthSegS" + increment).val(tempData[1]);
@@ -435,7 +444,7 @@
             <div id="map" style="height: 744px;"></div>
         </div>
 
-        <div  class="form-group col-lg-5 col-md-5 col-sm-5 col-xs-5">
+        <div class="form-group col-lg-5 col-md-5 col-sm-5 col-xs-5">
             <b><u>1.Наименование улицы</u></b>
             <div>
                 @Html.Label("Выбирите город", new { @for = "city" }) @Html.TextBox(" ", (string)ViewBag.City, new { id = "city" })
@@ -488,6 +497,7 @@
 
     </div>
 }
+
 <div id="interData" >
     <div class="">
         <b><u>4.Ввод данных</u></b>
