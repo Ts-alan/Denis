@@ -293,7 +293,6 @@
                     {
                         mapStateAutoApply: true,
                         removeViaPoints: true
-
                     }
                 ).then(
                     function (route) {
@@ -311,11 +310,11 @@
                             $("#segment" + (increment - 1)).after('<div id="segment' + increment + '">' +
                                                                     '<b><u>Координаты участка ' + increment + '</u></b>' +
                                                                     '<div>Начальнаты начала</div>' +
-                                                                    '<div><label for="city">Широта</label> <input id="breadthSegS' + increment + '" name=" " readonly="" type="text" value="">' +
-                                                                        '<label for="city">Долгота</label> <input id="lengthSegS' + increment + '" name=" " readonly="" type="text" value="">' +
+                                                                    '<div><label for="city">Широта</label> <input id="breadthSegS' + increment + '" name="Street.BreadthS" readonly="" type="text" value="">' +
+                                                                        '<label for="city">Долгота</label> <input id="lengthSegS' + increment + '" name="Street.LengthS" readonly="" type="text" value="">' +
                                                                     '</div><div>Координаты конца</div><div>' +
-                                                                        '<label for="city">Широта</label> <input id="breadthSegE' + increment + '" name=" " readonly="" type="text" value="">' +
-                                                                        '<label for="city">Долгота</label> <input id="lengthSegE' + increment + '" name=" " readonly="" type="text" value=""></div><div>' +
+                                                                        '<label for="city">Широта</label> <input id="breadthSegE' + increment + '" name="Street.BreadthE" readonly="" type="text" value="">' +
+                                                                        '<label for="city">Долгота</label> <input id="lengthSegE' + increment + '" name="Street.LengthE" readonly="" type="text" value=""></div><div>' +
 
                                                                  '</div>');
                         }
@@ -329,17 +328,17 @@
                                                        '</div>');
                             } 
                             if (tempDataFor3 == increment) {
-                                $("#interData").before('<div style="margin-top: 10px"><div id="segment' + increment + '" style="width: 30.2%;float: left;height: 115px"></div><div id="segment' + (increment + 1) + '" style="width:29%;float: left;height: 115px"></div><div id="segment' + (increment + 2) + '" style="width: 39.8%;float: left;height: 115px"></div></div><div style="clear:both"></div>');
+                                $('[action="/Home/SaveSuccess"]').append('<div style="margin-top: 10px"><div id="segment' + increment + '" style="width: 30.2%;float: left;height: 115px"></div><div id="segment' + (increment + 1) + '" style="width:29%;float: left;height: 115px"></div><div id="segment' + (increment + 2) + '" style="width: 39.8%;float: left;height: 115px"></div></div><div style="clear:both"></div>');
                                 tempDataFor3 = tempDataFor3 + 3;
                             }
                             $("#segment" + increment).html(               '<b><u>Координаты участка ' + increment + '</u></b>' +
                                                                            '<div>Начальнаты начала</div>' +
-                                                                           '<div><label for="city">Широта</label> <input id="breadthSegS' + increment + '" name=" " readonly="" type="text" value="">' +
-                                                                               '<label for="city">Долгота</label> <input id="lengthSegS' + increment + '" name=" " readonly="" type="text" value="">' +
+                                                                           '<div><label for="city">Широта</label> <input id="breadthSegS' + increment + '" name="Street.BreadthS" readonly="" type="text" value="">' +
+                                                                               '<label for="city">Долгота</label> <input id="lengthSegS' + increment + '" name="Street.LengthS" readonly="" type="text" value="">' +
                                                                            '</div><div>Координаты конца</div>' +
                                                                            '<div>' +
-                                                                               '<label for="city">Широта</label> <input id="breadthSegE' + increment + '" name=" " readonly="" type="text" value="">' +
-                                                                               '<label for="city">Долгота</label> <input id="lengthSegE' + increment + '" name=" " readonly="" type="text" value=""></div><div>' +
+                                                                               '<label for="city">Широта</label> <input id="breadthSegE' + increment + '" name="Street.BreadthE" readonly="" type="text" value="">' +
+                                                                               '<label for="city">Долгота</label> <input id="lengthSegE' + increment + '" name="Street.LengthE" readonly="" type="text" value=""></div><div>' +
 
                                                                            '</div></div>'
                                                                                
@@ -363,20 +362,20 @@
                             }
                         },
                         {
-                            preset: "islands#darkGreenStretchyIcon" ,
-                            draggable:true
+                            preset: "islands#blueCircleIcon"
+                            //draggable:true
                         });
                         myMap.geoObjects.add(route.getPaths());
                         myMap.geoObjects.add(segment);
-                        objects = ymaps.geoQuery([segment]);
-   
-                        //segment.events.add('drag', function () {
-                         
-                        var objectsInsideCircle = objects.searchIntersect(currentRoute.getPaths().get(0));
+                        //objects = ymaps.geoQuery([segment]);
                        
-                            objectsInsideCircle.setOptions('preset', 'twirl#blueIcon');
-                            //Оставшиеся объекты - синими.
-                            objects.remove(objectsInsideCircle).setOptions('preset', 'islands#redIcon');
+                        //segment.events.add('drag', function () {
+                        //    console.log(currentRoute.editor.getSegments());
+                        //var objectsInsideCircle = objects.searchInside(currentRoute.getPaths().get(0));
+                       
+                        //    objectsInsideCircle.setOptions('preset', 'twirl#blueIcon');
+                        //    //Оставшиеся объекты - синими.
+                        //    objects.remove(objectsInsideCircle).setOptions('preset', 'islands#redIcon');
                         //});
 
                         tempData = [coords[0].toPrecision(6), coords[1].toPrecision(6)];
@@ -427,7 +426,7 @@
                     //можно выставить настройки графики маршруту
                     strokeColor: '0000ffff',
                     opacity: 0.9,
-                    strokeWidth: 15
+                    strokeWidth: 4
                 });
 
                 //console.log(currentRoute.getPaths().get(0).state.get('hover'));
@@ -469,8 +468,8 @@
         <div class="form-group col-lg-5 col-md-5 col-sm-5 col-xs-5">
             <b><u>1.Наименование улицы</u></b>
             <div>
-                @Html.Label("Выбирите город", new { @for = "city" }) @Html.TextBox(" ", (string)ViewBag.City, new { id = "city" })
-                @Html.Label("Выбирите улицу", new { @for = "street" }) @Html.TextBox(" ", null, new { id = "street" })
+                @Html.Label("Выбирите город", new {@for = "City.Name" }) @Html.TextBox("City.Name", (string) ViewBag.City, new {id = "city"})
+                @Html.Label("Выбирите улицу", new {@for = "Segment.Name" }) @Html.TextBox("Segment.Name", null, new {id = "street"})
             </div>
             <div>
                 <button type="button" class="btn btn-success " onclick="search()">Показать на карте</button>
@@ -479,13 +478,13 @@
             <b><u>2.Координаты улицы</u></b>
             <div>Начальнаты начала</div>
             <div>
-                @Html.Label("Широта", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "breadthS" })
-                @Html.Label("Долгота", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "lengthS" })
+                @Html.Label("Широта", new {@for = "Segment.BreadthS" }) @Html.TextBox("Segment.BreadthS", null, new {id = "breadthS"})
+                @Html.Label("Долгота", new {@for = "Segment.LengthS" }) @Html.TextBox("Segment.LengthS", null, new {id = "lengthS"})
             </div>
             <div>Координаты конца</div>
             <div>
-                @Html.Label("Широта", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "breadthE" })
-                @Html.Label("Долгота", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "lengthE" })
+                @Html.Label("Широта", new {@for = "Segment.BreadthE" }) @Html.TextBox("Segment.BreadthE", null, new {id = "breadthE"})
+                @Html.Label("Долгота", new {@for = "Segment.LengthE" }) @Html.TextBox("Segment.LengthE", null, new {id = "lengthE"})
             </div>
             <div>
                 <button type="button" onclick="SetCoords()" class="btn btn-success ">Задать/Изменить координаты</button>
@@ -493,33 +492,34 @@
             </div>
             <b><u>3.Количество и координаты участков улицы</u></b>
             <div>
-                @Html.Label("Количество участков", new { @for = "CountSides", style = "margin-right: 20px" }) @Html.TextBox(" ", null, new { id = "CountSides", style = "width: 40px", @readonly = "" })
+                @Html.Label("Количество участков", new {@for = "CountSides", style = "margin-right: 20px"}) @Html.TextBox(" ", null, new {id = "CountSides", style = "width: 40px", @readonly = ""})
 
             </div>
             <div id="segment1">
                 <b><u>Координаты участка 1</u></b>
                 <div>Начальнаты начала</div>
                 <div>
-                    @Html.Label("Широта", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "breadthSegS1", @readonly = "" })
-                    @Html.Label("Долгота", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "lengthSegS1", @readonly = "" })
+                    @Html.Label("Широта", new {@for = "Street.BreadthS" }) @Html.TextBox("Street.BreadthS", null, new {id = "breadthSegS1", @readonly = ""})
+                    @Html.Label("Долгота", new {@for = "Street.LengthS" }) @Html.TextBox("Street.LengthS", null, new {id = "lengthSegS1", @readonly = ""})
                 </div>
                 <div>Координаты конца</div>
                 <div>
-                    @Html.Label("Широта", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "breadthSegE1", @readonly = "" })
-                    @Html.Label("Долгота", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "lengthSegE1", @readonly = "" })
+                    @Html.Label("Широта", new {@for = "Street.BreadthE" }) @Html.TextBox("Street.BreadthE", null, new {id = "breadthSegE1", @readonly = ""})
+                    @Html.Label("Долгота", new {@for = "Street.LengthE" }) @Html.TextBox("Street.LengthE", null, new {id = "lengthSegE1", @readonly = ""})
                 </div>
             </div>
 
             <div>
                 <button type="button" onclick="SetCoordsForSegment()" class="btn btn-success ">Задать/Изменить координаты</button>
-                <button type="button" id="" class="btn btn-warning">Сохранить</button>
+                <button id="" class="btn btn-warning">Сохранить</button>
             </div>
 
         </div>
 
     </div>
+
 }
-<div id="interData"></div>
+
 <div>
     <div class="">
         <b><u>4.Ввод данных</u></b>

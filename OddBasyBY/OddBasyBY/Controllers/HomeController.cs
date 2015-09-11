@@ -9,6 +9,7 @@ namespace OddBasyBY.Controllers
 {
     public class HomeController : Controller
     {
+        OddAdbaseEntity db=new OddAdbaseEntity();
         public ActionResult Index()
         {
             using (OddAdbaseEntity db = new OddAdbaseEntity())
@@ -19,9 +20,12 @@ namespace OddBasyBY.Controllers
             return View();
         }
 
-        public ActionResult SaveSuccess()
+        public ActionResult SaveSuccess(City city, Street street , [ModelBinder(typeof(CustomModelBinderForSegment))] List<Segment> segment)
         {
-            return View();
+            db.City.Add(new City() {Name = city.Name});
+            
+            db.Street.Add(new Street() {});
+            return RedirectToAction("Index");
         }
 
     }

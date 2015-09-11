@@ -171,6 +171,7 @@
     <Compile Include="Models\City.cs">
       <DependentUpon>Odd.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CustomModelBinder.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Odd.Context.cs">
