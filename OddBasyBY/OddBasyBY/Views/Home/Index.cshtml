@@ -1,5 +1,6 @@
 ﻿@{
     ViewBag.Title = "Home Page";
+ 
 }
 <script type="text/javascript">
     ymaps.ready(init);
@@ -310,11 +311,11 @@
                             $("#segment" + (increment - 1)).after('<div id="segment' + increment + '">' +
                                                                     '<b><u>Координаты участка ' + increment + '</u></b>' +
                                                                     '<div>Начальнаты начала</div>' +
-                                                                    '<div><label for="city">Широта</label> <input id="breadthSegS' + increment + '" name="Street.BreadthS" readonly="" type="text" value="">' +
-                                                                        '<label for="city">Долгота</label> <input id="lengthSegS' + increment + '" name="Street.LengthS" readonly="" type="text" value="">' +
+                                                                    '<div><label for="Segment.BreadthS">Широта</label> <input id="breadthSegS' + increment + '" name="Segment.BreadthS" readonly="" type="text" value="">' +
+                                                                        '<label for="Segment.LengthS">Долгота</label> <input id="lengthSegS' + increment + '" name="Segment.LengthS" readonly="" type="text" value="">' +
                                                                     '</div><div>Координаты конца</div><div>' +
-                                                                        '<label for="city">Широта</label> <input id="breadthSegE' + increment + '" name="Street.BreadthE" readonly="" type="text" value="">' +
-                                                                        '<label for="city">Долгота</label> <input id="lengthSegE' + increment + '" name="Street.LengthE" readonly="" type="text" value=""></div><div>' +
+                                                                        '<label for="Segment.BreadthE">Широта</label> <input id="breadthSegE' + increment + '" name="Segment.BreadthE" readonly="" type="text" value="">' +
+                                                                        '<label for="Segment.LengthE">Долгота</label> <input id="lengthSegE' + increment + '" name="Segment.LengthE" readonly="" type="text" value=""></div><div>' +
 
                                                                  '</div>');
                         }
@@ -333,12 +334,12 @@
                             }
                             $("#segment" + increment).html(               '<b><u>Координаты участка ' + increment + '</u></b>' +
                                                                            '<div>Начальнаты начала</div>' +
-                                                                           '<div><label for="city">Широта</label> <input id="breadthSegS' + increment + '" name="Street.BreadthS" readonly="" type="text" value="">' +
-                                                                               '<label for="city">Долгота</label> <input id="lengthSegS' + increment + '" name="Street.LengthS" readonly="" type="text" value="">' +
+                                                                           '<div><label for="Segment.BreadthS">Широта</label> <input id="breadthSegS' + increment + '" name="Segment.BreadthS" readonly="" type="text" value="">' +
+                                                                               '<label for="Segment.LengthS">Долгота</label> <input id="lengthSegS' + increment + '" name="Segment.LengthS" readonly="" type="text" value="">' +
                                                                            '</div><div>Координаты конца</div>' +
                                                                            '<div>' +
-                                                                               '<label for="city">Широта</label> <input id="breadthSegE' + increment + '" name="Street.BreadthE" readonly="" type="text" value="">' +
-                                                                               '<label for="city">Долгота</label> <input id="lengthSegE' + increment + '" name="Street.LengthE" readonly="" type="text" value=""></div><div>' +
+                                                                               '<label for="Segment.BreadthE">Широта</label> <input id="breadthSegE' + increment + '" name="Segment.BreadthE" readonly="" type="text" value="">' +
+                                                                               '<label for="Segment.LengthE">Долгота</label> <input id="lengthSegE' + increment + '" name="Segment.LengthE" readonly="" type="text" value=""></div><div>' +
 
                                                                            '</div></div>'
                                                                                
@@ -468,8 +469,9 @@
         <div class="form-group col-lg-5 col-md-5 col-sm-5 col-xs-5">
             <b><u>1.Наименование улицы</u></b>
             <div>
-                @Html.Label("Выбирите город", new {@for = "City.Name" }) @Html.TextBox("City.Name", (string) ViewBag.City, new {id = "city"})
-                @Html.Label("Выбирите улицу", new {@for = "Segment.Name" }) @Html.TextBox("Segment.Name", null, new {id = "street"})
+                @Html.Hidden("City.id",(int) ViewBag.City.id)
+                @Html.Label("Выбирите город", new {@for = "City.Name"}) @Html.TextBox("City.Name", (string) ViewBag.City.Name, new {id = "city"})
+                @Html.Label("Выбирите улицу", new {@for = "Segment.Name"}) @Html.TextBox("Segment.Name", null, new {id = "street"})
             </div>
             <div>
                 <button type="button" class="btn btn-success " onclick="search()">Показать на карте</button>
@@ -478,13 +480,13 @@
             <b><u>2.Координаты улицы</u></b>
             <div>Начальнаты начала</div>
             <div>
-                @Html.Label("Широта", new {@for = "Segment.BreadthS" }) @Html.TextBox("Segment.BreadthS", null, new {id = "breadthS"})
-                @Html.Label("Долгота", new {@for = "Segment.LengthS" }) @Html.TextBox("Segment.LengthS", null, new {id = "lengthS"})
+                @Html.Label("Широта", new {@for = "Street.BreadthS" }) @Html.TextBox("Street.BreadthS", null, new {id = "breadthS"})
+                @Html.Label("Долгота", new {@for = "Street.LengthS" }) @Html.TextBox("Street.LengthS", null, new {id = "lengthS"})
             </div>
             <div>Координаты конца</div>
             <div>
-                @Html.Label("Широта", new {@for = "Segment.BreadthE" }) @Html.TextBox("Segment.BreadthE", null, new {id = "breadthE"})
-                @Html.Label("Долгота", new {@for = "Segment.LengthE" }) @Html.TextBox("Segment.LengthE", null, new {id = "lengthE"})
+                @Html.Label("Широта", new {@for = "Street.BreadthE" }) @Html.TextBox("Street.BreadthE", null, new {id = "breadthE"})
+                @Html.Label("Долгота", new {@for = "Street.LengthE" }) @Html.TextBox("Street.LengthE", null, new {id = "lengthE"})
             </div>
             <div>
                 <button type="button" onclick="SetCoords()" class="btn btn-success ">Задать/Изменить координаты</button>
@@ -499,13 +501,13 @@
                 <b><u>Координаты участка 1</u></b>
                 <div>Начальнаты начала</div>
                 <div>
-                    @Html.Label("Широта", new {@for = "Street.BreadthS" }) @Html.TextBox("Street.BreadthS", null, new {id = "breadthSegS1", @readonly = ""})
-                    @Html.Label("Долгота", new {@for = "Street.LengthS" }) @Html.TextBox("Street.LengthS", null, new {id = "lengthSegS1", @readonly = ""})
+                    @Html.Label("Широта", new {@for = "Segment.BreadthS" }) @Html.TextBox("Segment.BreadthS", null, new {id = "breadthSegS1", @readonly = ""})
+                    @Html.Label("Долгота", new {@for = "Segment.LengthS" }) @Html.TextBox("Segment.LengthS", null, new {id = "lengthSegS1", @readonly = ""})
                 </div>
                 <div>Координаты конца</div>
                 <div>
-                    @Html.Label("Широта", new {@for = "Street.BreadthE" }) @Html.TextBox("Street.BreadthE", null, new {id = "breadthSegE1", @readonly = ""})
-                    @Html.Label("Долгота", new {@for = "Street.LengthE" }) @Html.TextBox("Street.LengthE", null, new {id = "lengthSegE1", @readonly = ""})
+                    @Html.Label("Широта", new {@for = "Segment.BreadthE" }) @Html.TextBox("Segment.BreadthE", null, new {id = "breadthSegE1", @readonly = ""})
+                    @Html.Label("Долгота", new {@for = "Segment.LengthE" }) @Html.TextBox("Segment.LengthE", null, new {id = "lengthSegE1", @readonly = ""})
                 </div>
             </div>
 

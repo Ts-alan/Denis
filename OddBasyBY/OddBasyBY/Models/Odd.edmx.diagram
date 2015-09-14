@@ -5,13 +5,13 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="06f943677d3f4f6c884e54dcf844ca2f" Name="Diagram1">
-        <EntityTypeShape EntityType="Odd.AdbaseModel.City" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Odd.AdbaseModel.Segment" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="Odd.AdbaseModel.Street" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="Odd.AdbaseModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
-        <AssociationConnector Association="Odd.AdbaseModel.FK_Street_City" ManuallyRouted="false" />
-        <AssociationConnector Association="Odd.AdbaseModel.FK_Segment_Street" ManuallyRouted="false" />
-      </Diagram>
+        <EntityTypeShape EntityType="Odd.AdbaseModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="Odd.AdbaseModel.City" Width="1.5" PointX="0.75" PointY="1.5" />
+        <EntityTypeShape EntityType="Odd.AdbaseModel.Segment" Width="1.5" PointX="5.25" PointY="1" />
+        <EntityTypeShape EntityType="Odd.AdbaseModel.Street" Width="1.5" PointX="3" PointY="1" />
+        <AssociationConnector Association="Odd.AdbaseModel.FK_Street_City" />
+        <AssociationConnector Association="Odd.AdbaseModel.FK_Segment_Street" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

@@ -15,7 +15,7 @@ namespace OddBasyBY.Models
     public partial class Segment
     {
         public int id { get; set; }
-        public string Name { get; set; }
+        public int Name { get; set; }
         public string BreadthS { get; set; }
         public string LengthS { get; set; }
         public string BreadthE { get; set; }

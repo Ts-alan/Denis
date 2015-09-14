@@ -14,18 +14,17 @@ namespace OddBasyBY.Models
             var request = controllerContext.HttpContext.Request;
             List<Segment> ListSurface = new List<Segment>();
 
-            string[] BreadthS = request.Form.Get("Street.BreadthS").Split(new Char[] { ',' });
-            string[] BreadthE = request.Form.Get("Street.BreadthE").Split(new Char[] { ',' });
-            string[] LengthS = request.Form.Get("Street.LengthS").Split(new Char[] { ',' });
-            string[] LengthE = request.Form.Get("Street.LengthS").Split(new Char[] { ',' });
-            //List<string> AllKeysWidth = request.Form.AllKeys.Where(a => a.Contains("].Width")).ToList();
-            //List<string> AllKeysSpace = request.Form.AllKeys.Where(a => a.Contains("].Space")).ToList();
-            //List<string> AllKeysSideOfSurface = request.Form.AllKeys.Where(a => a.Contains("].SideOfSurface")).ToList();
+            string[] BreadthS = request.Form.Get("Segment.BreadthS").Split(new Char[] { ',' });
+            string[] BreadthE = request.Form.Get("Segment.BreadthE").Split(new Char[] { ',' });
+            string[] LengthS = request.Form.Get("Segment.LengthS").Split(new Char[] { ',' });
+            string[] LengthE = request.Form.Get("Segment.LengthS").Split(new Char[] { ',' });
+
             for (int i = 0; i < BreadthS.Count(); i++)
             {
 
                 ListSurface.Add(new Segment()
             {
+               
                BreadthS = BreadthS[i],
                LengthS = LengthS[i],
                BreadthE = BreadthE[i],

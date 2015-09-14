@@ -25,9 +25,9 @@ namespace OddBasyBY.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<City> City { get; set; }
         public virtual DbSet<Segment> Segment { get; set; }
         public virtual DbSet<Street> Street { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
     }
 }

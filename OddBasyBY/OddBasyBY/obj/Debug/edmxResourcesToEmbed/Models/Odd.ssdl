@@ -12,7 +12,7 @@
       <PropertyRef Name="id" />
     </Key>
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Name" Type="int" Nullable="false" />
     <Property Name="BreadthS" Type="nvarchar(max)" Nullable="false" />
     <Property Name="LengthS" Type="nvarchar(max)" Nullable="false" />
     <Property Name="BreadthE" Type="nvarchar(max)" Nullable="false" />
@@ -24,7 +24,7 @@
       <PropertyRef Name="id" />
     </Key>
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" />
     <Property Name="BreadthS" Type="nvarchar(max)" Nullable="false" />
     <Property Name="LengthS" Type="nvarchar(max)" Nullable="false" />
     <Property Name="BreadthE" Type="nvarchar(max)" Nullable="false" />
