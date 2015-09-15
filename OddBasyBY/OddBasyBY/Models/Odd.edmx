@@ -12,6 +12,17 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'D:\PROJECT\ODDBASYBY\ODDBASYBY\APP_DATA\ODD.ADBASE.MDF.dbo.IntelliSenseStreet' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="IntelliSenseStreet">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="Street" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="Street" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="Segment">
           <Key>
             <PropertyRef Name="id" />
@@ -75,6 +86,13 @@
           <EntitySet Name="Segment" EntityType="Self.Segment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Street" EntityType="Self.Street" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IntelliSenseStreet" EntityType="Self.IntelliSenseStreet" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [IntelliSenseStreet].[id] AS [id], 
+    [IntelliSenseStreet].[Street] AS [Street], 
+    [IntelliSenseStreet].[Type] AS [Type]
+    FROM [dbo].[IntelliSenseStreet] AS [IntelliSenseStreet]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_Segment_Street" Association="Self.FK_Segment_Street">
             <End Role="Street" EntitySet="Street" />
             <End Role="Segment" EntitySet="Segment" />
@@ -101,6 +119,7 @@
             <End Role="Street" EntitySet="Street" />
             <End Role="Segment" EntitySet="Segment" />
           </AssociationSet>
+          <EntitySet Name="IntelliSenseStreet" EntityType="Odd.AdbaseModel.IntelliSenseStreet" />
           </EntityContainer>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -171,6 +190,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="IntelliSenseStreet">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="Street" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="Street" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -218,6 +246,15 @@
                 <ScalarProperty Name="LengthS" ColumnName="LengthS" />
                 <ScalarProperty Name="BreadthS" ColumnName="BreadthS" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IntelliSenseStreet">
+            <EntityTypeMapping TypeName="Odd.AdbaseModel.IntelliSenseStreet">
+              <MappingFragment StoreEntitySet="IntelliSenseStreet">
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

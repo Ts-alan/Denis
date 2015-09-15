@@ -46,5 +46,14 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="IntelliSenseStreet">
+      <EntityTypeMapping TypeName="Odd.AdbaseModel.IntelliSenseStreet">
+        <MappingFragment StoreEntitySet="IntelliSenseStreet">
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Street" ColumnName="Street" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

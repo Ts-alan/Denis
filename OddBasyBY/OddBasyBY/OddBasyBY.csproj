@@ -173,6 +173,9 @@
     </Compile>
     <Compile Include="Models\CustomModelBinder.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\IntelliSenseStreet.cs">
+      <DependentUpon>Odd.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Odd.Context.cs">
       <AutoGen>True</AutoGen>
@@ -205,6 +208,7 @@
     <Content Include="App_Data\Odd.Adbase.mdf" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\jquery-ui.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -232,6 +236,7 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-ui-1.11.1.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />

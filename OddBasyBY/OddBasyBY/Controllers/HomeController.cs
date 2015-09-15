@@ -40,6 +40,18 @@ namespace OddBasyBY.Controllers
 
             return RedirectToAction("Index");
         }
+        public ActionResult FindStreets(string term)
+        {
+            var streets = from m in db.IntelliSenseStreet where m.Street.Contains(term) select m;
+            var projection = from street in streets
+                             select new
+                             {
+                                 id = street.id,
+                                 label = street.Street + " " + street.Type,
+                                 value = street.Street + " " + street.Type
+                             };
+            return Json(projection.ToList(), JsonRequestBehavior.AllowGet);
+        }
 
     }
 }

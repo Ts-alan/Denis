@@ -11,6 +11,7 @@
         <EntityTypeShape EntityType="Odd.AdbaseModel.Street" Width="1.5" PointX="3" PointY="1" />
         <AssociationConnector Association="Odd.AdbaseModel.FK_Street_City" />
         <AssociationConnector Association="Odd.AdbaseModel.FK_Segment_Street" />
+        <EntityTypeShape EntityType="Odd.AdbaseModel.IntelliSenseStreet" Width="1.5" PointX="3.375" PointY="4.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

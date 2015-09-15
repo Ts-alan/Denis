@@ -13,6 +13,7 @@
       <End Role="Street" EntitySet="Street" />
       <End Role="Segment" EntitySet="Segment" />
     </AssociationSet>
+    <EntitySet Name="IntelliSenseStreet" EntityType="Odd.AdbaseModel.IntelliSenseStreet" />
   </EntityContainer>
   <EntityType Name="sysdiagrams">
     <Key>
@@ -83,4 +84,13 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="IntelliSenseStreet">
+    <Key>
+      <PropertyRef Name="id" />
+      <PropertyRef Name="Street" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="Street" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
 </Schema>
