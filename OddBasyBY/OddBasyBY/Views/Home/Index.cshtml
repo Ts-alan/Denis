@@ -284,10 +284,12 @@
     //задание координат
     $(document).ready(function () {
         $(".setSegment").one('click', function () {
+            
+
             if (currentRoute == undefined) {
                 alert("Задайте улицу или возможно нажмите кнопку сохранить в этом пункте");
             } else {
-
+                currentRoute.getPaths().get(0).balloon.destroy();
                 var handlerSegment = function (e) {
 
                     var coords = e.get('coords');
@@ -405,10 +407,7 @@
         });
         //заблокировать поля  улицы и убрать координаты
         $("#blockStreetCoord").click(function () {
-            //currentRoute.getPaths().get(0).state.events.add('change', function (e) {
-            //    console.log(e.get('target').getAll());
-            //});
-            objects = ymaps.geoQuery([]);
+
             //делает readOnly  инпуты
             if (currentRoute != undefined && identifierForDelete != 1) {
                 $(this).parent().prev().children("input").each(function (indx, element) {
@@ -434,7 +433,7 @@
 
                 //console.log(currentRoute.getPaths().get(0).state.get('hover'));
                 tempData = Arr[0];
-                currentRoute.getPaths().get(0).balloon.destroy();
+               
                 myMap.geoObjects.add(currentRoute.getPaths());
 
             } else {
