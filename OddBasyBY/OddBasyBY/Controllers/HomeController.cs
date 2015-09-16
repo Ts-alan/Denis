@@ -21,7 +21,7 @@ namespace OddBasyBY.Controllers
             return View();
         }
 
-        public ActionResult SaveSuccess(City city, Street street , [ModelBinder(typeof(CustomModelBinderForSegment))] ICollection<Segment> segment)
+        public void SaveSuccess(City city, Street street , [ModelBinder(typeof(CustomModelBinderForSegment))] ICollection<Segment> segment)
         {
             var streetInfo = new Street()
             {
@@ -38,7 +38,7 @@ namespace OddBasyBY.Controllers
             db.Segment.Add(segment.First());
             db.SaveChanges();
 
-            return RedirectToAction("Index");
+            //return RedirectToAction("Index");
         }
         public ActionResult FindStreets(string term)
         {

@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "Home Page";
- 
+
 }
 <script type="text/javascript">
     ymaps.ready(init);
@@ -17,7 +17,7 @@
     var increment = 1;
     var tempData;
     var tempDataFor3 = 5;
-    var objects ;
+    var objects;
     function init() {
 
         myMap = new ymaps.Map("map", {
@@ -280,11 +280,11 @@
     }
 
 
- 
+
     //задание координат
     $(document).ready(function () {
         $(".setSegment").one('click', function () {
-            
+
 
             if (currentRoute == undefined) {
                 alert("Задайте улицу или возможно нажмите кнопку сохранить в этом пункте");
@@ -433,7 +433,7 @@
 
                 //console.log(currentRoute.getPaths().get(0).state.get('hover'));
                 tempData = Arr[0];
-               
+
                 myMap.geoObjects.add(currentRoute.getPaths());
 
             } else {
@@ -468,7 +468,9 @@
 </style>
 <h2 style="text-align: center">Карточка улицы</h2>
 
-@using (Html.BeginForm("SaveSuccess", "Home", null, FormMethod.Post, new { style = "height: 744px" }))
+@using (Html.BeginForm("SaveSuccess", "Home", null, FormMethod.Post, new
+{
+    style = "height: 744px"}))
 {
     <div class="form-inline">
         <div class="form-group col-lg-7 col-md-7 col-sm-7 col-xs-7">
@@ -478,9 +480,9 @@
         <div class="form-group col-lg-5 col-md-5 col-sm-5 col-xs-5">
             <b><u>1.Наименование улицы</u></b>
             <div>
-                @Html.Hidden("City.id",(int) ViewBag.City.id)
-                @Html.Label("Выбирите город", new {@for = "City.Name"}) @Html.TextBox("City.Name", (string) ViewBag.City.Name, new {id = "city"})
-                @Html.Label("Выбирите улицу", new {@for = "Street.Name" }) @Html.TextBox("Street.Name", null, new {id = "street"})
+                @Html.Hidden("City.id", (int)ViewBag.City.id)
+                @Html.Label("Выбирите город", new { @for = "City.Name" }) @Html.TextBox("City.Name", (string)ViewBag.City.Name, new { id = "city" })
+                @Html.Label("Выбирите улицу", new { @for = "Street.Name" }) @Html.TextBox("Street.Name", null, new { id = "street" })
             </div>
             <div>
                 <button type="button" class="btn btn-success " onclick="search()">Показать на карте</button>
@@ -489,13 +491,13 @@
             <b><u>2.Координаты улицы</u></b>
             <div>Начальнаты начала</div>
             <div>
-                @Html.Label("Широта", new {@for = "Street.BreadthS" }) @Html.TextBox("Street.BreadthS", null, new {id = "breadthS"})
-                @Html.Label("Долгота", new {@for = "Street.LengthS" }) @Html.TextBox("Street.LengthS", null, new {id = "lengthS"})
+                @Html.Label("Широта", new { @for = "Street.BreadthS" }) @Html.TextBox("Street.BreadthS", null, new { id = "breadthS" })
+                @Html.Label("Долгота", new { @for = "Street.LengthS" }) @Html.TextBox("Street.LengthS", null, new { id = "lengthS" })
             </div>
             <div>Координаты конца</div>
             <div>
-                @Html.Label("Широта", new {@for = "Street.BreadthE" }) @Html.TextBox("Street.BreadthE", null, new {id = "breadthE"})
-                @Html.Label("Долгота", new {@for = "Street.LengthE" }) @Html.TextBox("Street.LengthE", null, new {id = "lengthE"})
+                @Html.Label("Широта", new { @for = "Street.BreadthE" }) @Html.TextBox("Street.BreadthE", null, new { id = "breadthE" })
+                @Html.Label("Долгота", new { @for = "Street.LengthE" }) @Html.TextBox("Street.LengthE", null, new { id = "lengthE" })
             </div>
             <div>
                 <button type="button" onclick="SetCoords()" class="btn btn-success ">Задать/Изменить координаты</button>
@@ -503,20 +505,20 @@
             </div>
             <b><u>3.Количество и координаты участков улицы</u></b>
             <div>
-                @Html.Label("Количество участков", new {@for = "CountSides", style = "margin-right: 20px"}) @Html.TextBox(" ", null, new {id = "CountSides", style = "width: 40px", @readonly = ""})
+                @Html.Label("Количество участков", new { @for = "CountSides", style = "margin-right: 20px" }) @Html.TextBox(" ", null, new { id = "CountSides", style = "width: 40px", @readonly = "" })
 
             </div>
             <div id="segment1">
                 <b><u>Координаты участка 1</u></b>
                 <div>Начальнаты начала</div>
                 <div>
-                    @Html.Label("Широта", new {@for = "Segment.BreadthS" }) @Html.TextBox("Segment.BreadthS", null, new {id = "breadthSegS1", @readonly = ""})
-                    @Html.Label("Долгота", new {@for = "Segment.LengthS" }) @Html.TextBox("Segment.LengthS", null, new {id = "lengthSegS1", @readonly = ""})
+                    @Html.Label("Широта", new { @for = "Segment.BreadthS" }) @Html.TextBox("Segment.BreadthS", null, new { id = "breadthSegS1", @readonly = "" })
+                    @Html.Label("Долгота", new { @for = "Segment.LengthS" }) @Html.TextBox("Segment.LengthS", null, new { id = "lengthSegS1", @readonly = "" })
                 </div>
                 <div>Координаты конца</div>
                 <div>
-                    @Html.Label("Широта", new {@for = "Segment.BreadthE" }) @Html.TextBox("Segment.BreadthE", null, new {id = "breadthSegE1", @readonly = ""})
-                    @Html.Label("Долгота", new {@for = "Segment.LengthE" }) @Html.TextBox("Segment.LengthE", null, new {id = "lengthSegE1", @readonly = ""})
+                    @Html.Label("Широта", new { @for = "Segment.BreadthE" }) @Html.TextBox("Segment.BreadthE", null, new { id = "breadthSegE1", @readonly = "" })
+                    @Html.Label("Долгота", new { @for = "Segment.LengthE" }) @Html.TextBox("Segment.LengthE", null, new { id = "lengthSegE1", @readonly = "" })
                 </div>
             </div>
 
@@ -562,8 +564,9 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Спецификация горизонтальной дорожной разметки
-                                                       <p>по ул. _________________ в г. Минске
+                <h4 class="modal-title" id="myModalLabel">
+                    Спецификация горизонтальной дорожной разметки
+                    <p>по ул. _________________ в г. Минске
                 </h4>
             </div>
             <div class="modal-body">
@@ -796,138 +799,138 @@
                         <td></td>
                         <td></td>
                     </tr>
-                <tr>
-                    <td>1.19.1</td>
-                    <td>i</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>1.19.2</td>
-                    <td>i</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>1.20</td>
-                    <td>i</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>1.21</td>
-                    <td>i</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>1.22.1</td>
-                    <td>i</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>1.22.2</td>
-                    <td>i</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>1.22.3</td>
-                    <td>i</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>1.23</td>
-                    <td>i</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>1.24.1</td>
-                    <td>i</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>1.24.2</td>
-                    <td>i</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>1.24.3</td>
-                    <td>i</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>1.24.3</td>
-                    <td>i</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>1.25</td>
-                    <td>i</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>1.26</td>
-                    <td>i</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>1.27</td>
-                    <td>i</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>1.28</td>
-                    <td>i</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>1.29</td>
-                    <td>i</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>1.30</td>
-                    <td>i</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>1.31</td>
-                    <td>i</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>1.32</td>
-                    <td>i</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>1.33</td>
-                    <td>i</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>1.34</td>
-                    <td>i</td>
-                    <td></td>
-                    <td></td>
-                </tr>
+                    <tr>
+                        <td>1.19.1</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.19.2</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.20</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.21</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.22.1</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.22.2</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.22.3</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.23</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.24.1</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.24.2</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.24.3</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.24.3</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.25</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.26</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.27</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.28</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.29</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.30</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.31</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.32</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.33</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.34</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
                     <tr>
                         <td>1.35</td>
                         <td>i</td>
