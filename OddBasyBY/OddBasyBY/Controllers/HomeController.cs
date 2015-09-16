@@ -38,7 +38,7 @@ namespace OddBasyBY.Controllers
             db.Segment.Add(segment.First());
             db.SaveChanges();
 
-            //return RedirectToAction("Index");
+           
         }
         public ActionResult FindStreets(string term)
         {
