@@ -331,7 +331,7 @@
                                     $("#segment4+div").remove();
                                     $("#interData").after('<div style="float: left"  >' +
                                         '<button type="button"  class="btn btn-success setSegment">Задать/Изменить координаты</button>' +
-                                        '<button type="button" id="" class="btn btn-warning">Сохранить</button>' +
+                                        '<button id="" class="btn btn-warning">Сохранить</button>' +
                                         '</div>');
 
                                 }
@@ -532,12 +532,12 @@
 }
 
 
-<div style="clear: both" >
-    <div  class="">
+<div style="clear: both">
+    <div class="">
         <b><u>4.Ввод данных</u></b>
     </div>
     <div>
-        <button class="btn btn-default">Ввести спецификацию разметки</button>
+        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">Ввести спецификацию разметки</button>
     </div>
     <div>
         <b><u>Участок 1</u></b>
@@ -553,5 +553,393 @@
         <button type="button" class="btn btn-default">
             Ввести данные о дорожных ограждениях
         </button>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Спецификация горизонтальной дорожной разметки
+                                                       <p>по ул. _________________ в г. Минске
+                </h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>№ разметки</th>
+                        <th></th>
+                        <th>Длина (м.пог) / штуки</th>
+                        <th>Площадь (м.кв)</th>
+                    </tr>
+                    <tr>
+                        <td>1.1.1</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.1.2</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.2</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.3</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.4</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.5</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.6</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.7</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.8</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.9</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.10</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.11</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.12</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.13</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.14.1</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.14.2</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.14.3</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.15.1</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.15.2</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.16.1</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.16.2</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.16.3</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.17.1</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.17.2</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.17.2</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.18.1</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.18.2</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.18.3</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.18.4</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.18.5</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.18.6</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.18.7</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.18.8</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.18.9</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.18.10</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.18.11</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1.18.12</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                <tr>
+                    <td>1.19.1</td>
+                    <td>i</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>1.19.2</td>
+                    <td>i</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>1.20</td>
+                    <td>i</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>1.21</td>
+                    <td>i</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>1.22.1</td>
+                    <td>i</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>1.22.2</td>
+                    <td>i</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>1.22.3</td>
+                    <td>i</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>1.23</td>
+                    <td>i</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>1.24.1</td>
+                    <td>i</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>1.24.2</td>
+                    <td>i</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>1.24.3</td>
+                    <td>i</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>1.24.3</td>
+                    <td>i</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>1.25</td>
+                    <td>i</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>1.26</td>
+                    <td>i</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>1.27</td>
+                    <td>i</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>1.28</td>
+                    <td>i</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>1.29</td>
+                    <td>i</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>1.30</td>
+                    <td>i</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>1.31</td>
+                    <td>i</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>1.32</td>
+                    <td>i</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>1.33</td>
+                    <td>i</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>1.34</td>
+                    <td>i</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                    <tr>
+                        <td>1.35</td>
+                        <td>i</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+            </div>
+        </div>
     </div>
 </div>
