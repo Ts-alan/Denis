@@ -1,5 +1,6 @@
 ﻿@{
     ViewBag.Title = "Home Page";
+ 
 }
 <script type="text/javascript">
     ymaps.ready(init);
@@ -16,7 +17,7 @@
     var increment = 1;
     var tempData;
     var tempDataFor3 = 5;
-
+    var objects ;
     function init() {
 
         myMap = new ymaps.Map("map", {
@@ -277,105 +278,121 @@
 
         }
     }
-    function SetCoordsForSegment() {
-        if (currentRoute == undefined) {
-            alert("Задайте улицу или возможно нажмите кнопку сохранить в этом пункте");
-        } else {
-
-            var handlerSegment = function (e) {
-
-                var coords = e.get('coords');
-
-                ymaps.route([
-                         tempData,
-                       [coords[0].toPrecision(6), coords[1].toPrecision(6)]
-                ],
-                    {
-                        mapStateAutoApply: true,
-                        removeViaPoints: true
-
-                    }
-                ).then(
-                    function (route) {
-                        route.getPaths().options.set({
-
-                            //можно выставить настройки графики маршруту
-                            strokeColor: '#FF0000',
-                            opacity: 0.9,
-                            strokeWidth: 4
-                        });
 
 
-                        if (increment >= 2 && increment <= 4) {
-
-                            $("#segment" + (increment - 1)).after('<div id="segment' + increment + '">' +
-                                                                    '<u>Координаты участка ' + increment + '</u>' +
-                                                                    '<div>Начальнаты начала</div>' +
-                                                                    '<div><label for="city">Широта</label> <input id="breadthSegS' + increment + '" name=" " readonly="" type="text" value="">' +
-                                                                        '<label for="city">Долгота</label> <input id="lengthSegS' + increment + '" name=" " readonly="" type="text" value="">' +
-                                                                    '</div><div>Координаты конца</div><div>' +
-                                                                        '<label for="city">Широта</label> <input id="breadthSegE' + increment + '" name=" " readonly="" type="text" value="">' +
-                                                                        '<label for="city">Долгота</label> <input id="lengthSegE' + increment + '" name=" " readonly="" type="text" value=""></div><div>' +
-
-                                                                 '</div>');
-                        }
-
-                        if (increment > 4) {
-                            if (increment == 5) {
-                                $("#segment4+div").remove();
-                            } else {
-                                $("#segment" + (increment - 1) + " div:last").remove();
-                            }
-                            if (tempDataFor3 == increment) {
-                                $("#interData").before('<div style="margin-top: 10px"><div id="segment' + increment + '" style="width: 30.2%;float: left;height: 150px"></div><div id="segment' + (increment + 1) + '" style="width:29%;float: left;height: 150px"></div><div id="segment' + (increment + 2) + '" style="width: 39.8%;float: left;height: 150px"></div></div><div style="clear:both"></div>');
-                                tempDataFor3 = tempDataFor3 + 3;
-                            }
-                            $("#segment" + increment).html(             '<u>Координаты участка ' + increment + '</u>' +
-                                                                           '<div>Начальнаты начала</div>' +
-                                                                           '<div><label for="city">Широта</label> <input id="breadthSegS' + increment + '" name=" " readonly="" type="text" value="">' +
-                                                                               '<label for="city">Долгота</label> <input id="lengthSegS' + increment + '" name=" " readonly="" type="text" value="">' +
-                                                                           '</div><div>Координаты конца</div>' +
-                                                                           '<div>' +
-                                                                               '<label for="city">Широта</label> <input id="breadthSegE' + increment + '" name=" " readonly="" type="text" value="">' +
-                                                                               '<label for="city">Долгота</label> <input id="lengthSegE' + increment + '" name=" " readonly="" type="text" value=""></div><div>' +
-
-                                                                           '</div></div>'+
-                                                                                '<div >' +
-                                                                                    '<button type="button" onclick="SetCoordsForSegment()" class="btn btn-success ">Задать/Изменить координаты</button>'+
-                                                                                    '<button type="button" id="" class="btn btn-warning">Сохранить</button>' +
-                                                                                '</div>'
-                );
-                        }
-                        $("#breadthSegS" + increment).val(tempData[0]);
-                        $("#lengthSegS" + increment).val(tempData[1]);
-                        $("#breadthSegE" + increment).val(coords[0].toPrecision(6));
-                        $("#lengthSegE" + increment).val(coords[1].toPrecision(6));
-                        $("#CountSides").val(increment);
-                        var segment = new ymaps.GeoObject({
-                            geometry: {
-                                type: "Point", // тип геометрии - точка
-                                coordinates: [coords[0].toPrecision(6), coords[1].toPrecision(6)]// координаты точки
-
-                            },
-                            properties: {
-                                iconContent: increment++,
-                                balloonContentHeader: "<a href='#' onclick='setHandlerS()'>Удалить Обьект</a>",
-                                balloonContent: "[" + coords[0].toPrecision(6) + "," + coords[1].toPrecision(6) + "]"
-                            }
-                        },
-                   { preset: "islands#darkGreenStretchyIcon" });
-                        myMap.geoObjects.add(route.getPaths());
-                        myMap.geoObjects.add(segment);
-                        tempData = [coords[0].toPrecision(6), coords[1].toPrecision(6)];
-
-                    });
-            }
-            currentRoute.getPaths().events.add('click', handlerSegment);
-
-        }
-    }
+ 
     //задание координат
     $(document).ready(function () {
+        $(".setSegment").one('click', function () {
+            
+
+            if (currentRoute == undefined) {
+                alert("Задайте улицу или возможно нажмите кнопку сохранить в этом пункте");
+            } else {
+                currentRoute.getPaths().get(0).balloon.destroy();
+                var handlerSegment = function (e) {
+
+                    var coords = e.get('coords');
+
+                    ymaps.route([
+                            tempData,
+                            [coords[0].toPrecision(6), coords[1].toPrecision(6)]
+                    ],
+                        {
+                            mapStateAutoApply: true,
+                            removeViaPoints: true
+                        }
+                    ).then(
+                        function (route) {
+                            route.getPaths().options.set({
+
+                                //можно выставить настройки графики маршруту
+                                strokeColor: '#FF0000',
+                                opacity: 0.9,
+                                strokeWidth: 4
+                            });
+
+
+                            if (increment >= 2 && increment <= 4) {
+
+                                $("#segment" + (increment - 1)).after('<div id="segment' + increment + '">' +
+                                    '<b><u>Координаты участка ' + increment + '</u></b>' +
+                                    '<div>Начальнаты начала</div>' +
+                                    '<div><label for="Segment.BreadthS">Широта</label> <input id="breadthSegS' + increment + '" name="Segment.BreadthS" readonly="" type="text" value="">' +
+                                    '<label for="Segment.LengthS">Долгота</label> <input id="lengthSegS' + increment + '" name="Segment.LengthS" readonly="" type="text" value="">' +
+                                    '</div><div>Координаты конца</div><div>' +
+                                    '<label for="Segment.BreadthE">Широта</label> <input id="breadthSegE' + increment + '" name="Segment.BreadthE" readonly="" type="text" value="">' +
+                                    '<label for="Segment.LengthE">Долгота</label> <input id="lengthSegE' + increment + '" name="Segment.LengthE" readonly="" type="text" value=""></div><div>' +
+                                    '</div>');
+                            }
+
+                            if (increment > 4) {
+                                if (increment == 5) {
+                                    $("#segment4+div").remove();
+                                    $("#interData").after('<div style="float: left"  >' +
+                                        '<button type="button"  class="btn btn-success setSegment">Задать/Изменить координаты</button>' +
+                                        '<button type="button" id="" class="btn btn-warning">Сохранить</button>' +
+                                        '</div>');
+
+                                }
+                                if (tempDataFor3 == increment) {
+                                    $("#interData").before('<div class="form-group" style="margin-top: 10px"><div id="segment' + increment + '" style="width: 30.2%;float: left;height: 115px"></div><div id="segment' + (increment + 1) + '" style="width:29%;float: left;height: 115px"></div><div id="segment' + (increment + 2) + '" style="width: 39.8%;float: left;height: 115px"></div></div>');
+                                    tempDataFor3 = tempDataFor3 + 3;
+                                }
+                                $("#segment" + increment).html('<b><u>Координаты участка ' + increment + '</u></b>' +
+                                    '<div>Начальнаты начала</div>' +
+                                    '<div><label for="Segment.BreadthS">Широта</label> <input id="breadthSegS' + increment + '" name="Segment.BreadthS" readonly="" type="text" value="">' +
+                                    '<label for="Segment.LengthS">Долгота</label> <input id="lengthSegS' + increment + '" name="Segment.LengthS" readonly="" type="text" value="">' +
+                                    '</div><div>Координаты конца</div>' +
+                                    '<div>' +
+                                    '<label for="Segment.BreadthE">Широта</label> <input id="breadthSegE' + increment + '" name="Segment.BreadthE" readonly="" type="text" value="">' +
+                                    '<label for="Segment.LengthE">Долгота</label> <input id="lengthSegE' + increment + '" name="Segment.LengthE" readonly="" type="text" value=""></div><div>' +
+                                    '</div></div>'
+                                );
+                            }
+                            $("#breadthSegS" + increment).val(tempData[0]);
+                            $("#lengthSegS" + increment).val(tempData[1]);
+                            $("#breadthSegE" + increment).val(coords[0].toPrecision(6));
+                            $("#lengthSegE" + increment).val(coords[1].toPrecision(6));
+                            $("#CountSides").val(increment);
+                            var segment = new ymaps.GeoObject({
+                                geometry: {
+                                    type: "Point", // тип геометрии - точка
+                                    coordinates: [coords[0].toPrecision(6), coords[1].toPrecision(6)] // координаты точки
+
+                                },
+                                properties: {
+                                    iconContent: increment++,
+                                    balloonContentHeader: "<a href='#' onclick='setHandlerS()'>Удалить Обьект</a>",
+                                    balloonContent: "[" + coords[0].toPrecision(6) + "," + coords[1].toPrecision(6) + "]"
+                                }
+                            },
+                            {
+                                preset: "islands#blueCircleIcon"
+                                //draggable:true
+                            });
+                            myMap.geoObjects.add(route.getPaths());
+                            myMap.geoObjects.add(segment);
+                            objects = ymaps.geoQuery([segment]);
+
+                            segment.events.add('drag', function () {
+                                console.log(currentRoute.editor.getSegments());
+                                var objectsInsideCircle = objects.searchInside(currentRoute.getPaths().get(0));
+
+                                objectsInsideCircle.setOptions('preset', 'twirl#blueIcon');
+                                //Оставшиеся объекты - синими.
+                                objects.remove(objectsInsideCircle).setOptions('preset', 'islands#redIcon');
+                            });
+
+                            tempData = [coords[0].toPrecision(6), coords[1].toPrecision(6)];
+
+                        });
+                }
+                currentRoute.getPaths().events.add('click', handlerSegment);
+
+            }
+        });
+
         $("#breadthS, #lengthS, #breadthE, #lengthE").change(function () {
             Set();
         });
@@ -390,6 +407,7 @@
         });
         //заблокировать поля  улицы и убрать координаты
         $("#blockStreetCoord").click(function () {
+
             //делает readOnly  инпуты
             if (currentRoute != undefined && identifierForDelete != 1) {
                 $(this).parent().prev().children("input").each(function (indx, element) {
@@ -413,16 +431,24 @@
                     strokeWidth: 4
                 });
 
-                console.log(currentRoute.getPaths().get(0).state.get('hover'));
+                //console.log(currentRoute.getPaths().get(0).state.get('hover'));
                 tempData = Arr[0];
-                currentRoute.getPaths().get(0).balloon.destroy();
+               
                 myMap.geoObjects.add(currentRoute.getPaths());
 
             } else {
                 alert("Задайте сначала маршрут");
             }
         });
+        //подсказки улиц
+        var autocompleteUrl = '/Home/FindStreets';
+        $('[name="Street.Name"]').autocomplete({
+            source: autocompleteUrl,
+            minLength: 2,
+            select: function (event, ui) {
 
+            }
+        });
     });
 </script>
 
@@ -452,8 +478,9 @@
         <div class="form-group col-lg-5 col-md-5 col-sm-5 col-xs-5">
             <b><u>1.Наименование улицы</u></b>
             <div>
-                @Html.Label("Выбирите город", new { @for = "city" }) @Html.TextBox(" ", (string)ViewBag.City, new { id = "city" })
-                @Html.Label("Выбирите улицу", new { @for = "street" }) @Html.TextBox(" ", null, new { id = "street" })
+                @Html.Hidden("City.id",(int) ViewBag.City.id)
+                @Html.Label("Выбирите город", new {@for = "City.Name"}) @Html.TextBox("City.Name", (string) ViewBag.City.Name, new {id = "city"})
+                @Html.Label("Выбирите улицу", new {@for = "Street.Name" }) @Html.TextBox("Street.Name", null, new {id = "street"})
             </div>
             <div>
                 <button type="button" class="btn btn-success " onclick="search()">Показать на карте</button>
@@ -462,13 +489,13 @@
             <b><u>2.Координаты улицы</u></b>
             <div>Начальнаты начала</div>
             <div>
-                @Html.Label("Широта", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "breadthS" })
-                @Html.Label("Долгота", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "lengthS" })
+                @Html.Label("Широта", new {@for = "Street.BreadthS" }) @Html.TextBox("Street.BreadthS", null, new {id = "breadthS"})
+                @Html.Label("Долгота", new {@for = "Street.LengthS" }) @Html.TextBox("Street.LengthS", null, new {id = "lengthS"})
             </div>
             <div>Координаты конца</div>
             <div>
-                @Html.Label("Широта", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "breadthE" })
-                @Html.Label("Долгота", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "lengthE" })
+                @Html.Label("Широта", new {@for = "Street.BreadthE" }) @Html.TextBox("Street.BreadthE", null, new {id = "breadthE"})
+                @Html.Label("Долгота", new {@for = "Street.LengthE" }) @Html.TextBox("Street.LengthE", null, new {id = "lengthE"})
             </div>
             <div>
                 <button type="button" onclick="SetCoords()" class="btn btn-success ">Задать/Изменить координаты</button>
@@ -476,35 +503,37 @@
             </div>
             <b><u>3.Количество и координаты участков улицы</u></b>
             <div>
-                @Html.Label("Количество участков", new { @for = "CountSides", style = "margin-right: 20px" }) @Html.TextBox(" ", null, new { id = "CountSides", style = "width: 40px", @readonly = "" })
+                @Html.Label("Количество участков", new {@for = "CountSides", style = "margin-right: 20px"}) @Html.TextBox(" ", null, new {id = "CountSides", style = "width: 40px", @readonly = ""})
 
             </div>
             <div id="segment1">
-                <u>Координаты участка 1</u>
+                <b><u>Координаты участка 1</u></b>
                 <div>Начальнаты начала</div>
                 <div>
-                    @Html.Label("Широта", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "breadthSegS1", @readonly = "" })
-                    @Html.Label("Долгота", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "lengthSegS1", @readonly = "" })
+                    @Html.Label("Широта", new {@for = "Segment.BreadthS" }) @Html.TextBox("Segment.BreadthS", null, new {id = "breadthSegS1", @readonly = ""})
+                    @Html.Label("Долгота", new {@for = "Segment.LengthS" }) @Html.TextBox("Segment.LengthS", null, new {id = "lengthSegS1", @readonly = ""})
                 </div>
                 <div>Координаты конца</div>
                 <div>
-                    @Html.Label("Широта", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "breadthSegE1", @readonly = "" })
-                    @Html.Label("Долгота", new { @for = "city" }) @Html.TextBox(" ", null, new { id = "lengthSegE1", @readonly = "" })
+                    @Html.Label("Широта", new {@for = "Segment.BreadthE" }) @Html.TextBox("Segment.BreadthE", null, new {id = "breadthSegE1", @readonly = ""})
+                    @Html.Label("Долгота", new {@for = "Segment.LengthE" }) @Html.TextBox("Segment.LengthE", null, new {id = "lengthSegE1", @readonly = ""})
                 </div>
             </div>
 
             <div>
-                <button type="button" onclick="SetCoordsForSegment()" class="btn btn-success ">Задать/Изменить координаты</button>
-                <button type="button" id="" class="btn btn-warning">Сохранить</button>
+                <button type="button" class="btn btn-success setSegment">Задать/Изменить координаты</button>
+                <button id="" class="btn btn-warning">Сохранить</button>
             </div>
 
         </div>
 
     </div>
+    <div id="interData"></div>
 }
 
-<div id="interData">
-    <div class="">
+
+<div style="clear: both" >
+    <div  class="">
         <b><u>4.Ввод данных</u></b>
     </div>
     <div>
