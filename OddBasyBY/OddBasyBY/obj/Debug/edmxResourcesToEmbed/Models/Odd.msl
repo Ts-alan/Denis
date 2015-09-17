@@ -55,5 +55,24 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Mackup">
+      <EntityTypeMapping TypeName="Odd.AdbaseModel.Mackup">
+        <MappingFragment StoreEntitySet="Mackup">
+          <ScalarProperty Name="C_Mackup" ColumnName="№Mackup" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SpecificationofRM">
+      <EntityTypeMapping TypeName="Odd.AdbaseModel.SpecificationofRM">
+        <MappingFragment StoreEntitySet="SpecificationofRM">
+          <ScalarProperty Name="Mackup_id" ColumnName="Mackup_id" />
+          <ScalarProperty Name="Street_id" ColumnName="Street_id" />
+          <ScalarProperty Name="area" ColumnName="area" />
+          <ScalarProperty Name="length" ColumnName="length" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

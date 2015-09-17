@@ -18,6 +18,13 @@ warning 6002: The table/view 'D:\PROJECT\ODDBASYBY\ODDBASYBY\APP_DATA\ODD.ADBASE
     <Property Name="Street" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="Type" Type="nvarchar" MaxLength="50" />
   </EntityType>
+  <EntityType Name="Mackup">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="№Mackup" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
   <EntityType Name="Segment">
     <Key>
       <PropertyRef Name="id" />
@@ -29,6 +36,16 @@ warning 6002: The table/view 'D:\PROJECT\ODDBASYBY\ODDBASYBY\APP_DATA\ODD.ADBASE
     <Property Name="BreadthE" Type="nvarchar(max)" Nullable="false" />
     <Property Name="LengthE" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Street_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SpecificationofRM">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="length" Type="nvarchar(max)" />
+    <Property Name="area" Type="nvarchar(max)" />
+    <Property Name="Street_id" Type="int" Nullable="false" />
+    <Property Name="Mackup_id" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Street">
     <Key>
@@ -64,6 +81,30 @@ warning 6002: The table/view 'D:\PROJECT\ODDBASYBY\ODDBASYBY\APP_DATA\ODD.ADBASE
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_SpecificationofRM_Mackup">
+    <End Role="Mackup" Type="Self.Mackup" Multiplicity="1" />
+    <End Role="SpecificationofRM" Type="Self.SpecificationofRM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Mackup">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="SpecificationofRM">
+        <PropertyRef Name="Mackup_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SpecificationofRM_Street">
+    <End Role="Street" Type="Self.Street" Multiplicity="1" />
+    <End Role="SpecificationofRM" Type="Self.SpecificationofRM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Street">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="SpecificationofRM">
+        <PropertyRef Name="Street_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Street_City">
     <End Role="City" Type="Self.City" Multiplicity="1" />
     <End Role="Street" Type="Self.Street" Multiplicity="*" />
@@ -78,7 +119,9 @@ warning 6002: The table/view 'D:\PROJECT\ODDBASYBY\ODDBASYBY\APP_DATA\ODD.ADBASE
   </Association>
   <EntityContainer Name="OddAdbaseModelStoreContainer">
     <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Mackup" EntityType="Self.Mackup" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Segment" EntityType="Self.Segment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SpecificationofRM" EntityType="Self.SpecificationofRM" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Street" EntityType="Self.Street" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="IntelliSenseStreet" EntityType="Self.IntelliSenseStreet" store:Type="Tables" store:Schema="dbo">
@@ -91,6 +134,14 @@ warning 6002: The table/view 'D:\PROJECT\ODDBASYBY\ODDBASYBY\APP_DATA\ODD.ADBASE
     <AssociationSet Name="FK_Segment_Street" Association="Self.FK_Segment_Street">
       <End Role="Street" EntitySet="Street" />
       <End Role="Segment" EntitySet="Segment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SpecificationofRM_Mackup" Association="Self.FK_SpecificationofRM_Mackup">
+      <End Role="Mackup" EntitySet="Mackup" />
+      <End Role="SpecificationofRM" EntitySet="SpecificationofRM" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SpecificationofRM_Street" Association="Self.FK_SpecificationofRM_Street">
+      <End Role="Street" EntitySet="Street" />
+      <End Role="SpecificationofRM" EntitySet="SpecificationofRM" />
     </AssociationSet>
     <AssociationSet Name="FK_Street_City" Association="Self.FK_Street_City">
       <End Role="City" EntitySet="City" />
