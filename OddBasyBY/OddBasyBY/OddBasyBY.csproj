@@ -176,6 +176,9 @@
     <Compile Include="Models\IntelliSenseStreet.cs">
       <DependentUpon>Odd.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Mackup.cs">
+      <DependentUpon>Odd.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Odd.Context.cs">
       <AutoGen>True</AutoGen>
@@ -193,6 +196,9 @@
       <DependentUpon>Odd.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Segment.cs">
+      <DependentUpon>Odd.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SpecificationofRM.cs">
       <DependentUpon>Odd.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Street.cs">

@@ -18,6 +18,7 @@ namespace OddBasyBY.Models
         public Street()
         {
             this.Segment = new HashSet<Segment>();
+            this.SpecificationofRM = new HashSet<SpecificationofRM>();
         }
     
         public int id { get; set; }
@@ -31,5 +32,7 @@ namespace OddBasyBY.Models
         public virtual City City { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Segment> Segment { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SpecificationofRM> SpecificationofRM { get; set; }
     }
 }

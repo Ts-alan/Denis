@@ -30,5 +30,7 @@ namespace OddBasyBY.Models
         public virtual DbSet<Segment> Segment { get; set; }
         public virtual DbSet<Street> Street { get; set; }
         public virtual DbSet<IntelliSenseStreet> IntelliSenseStreet { get; set; }
+        public virtual DbSet<Mackup> Mackup { get; set; }
+        public virtual DbSet<SpecificationofRM> SpecificationofRM { get; set; }
     }
 }

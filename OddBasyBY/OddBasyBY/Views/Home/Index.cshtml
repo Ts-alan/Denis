@@ -482,7 +482,11 @@
 
             }
         });
-    
+         //при клике по tr фокус по input
+        $("tr td").has("input").click(function (eventObject) {
+            
+            $(eventObject.target).children().focus();
+        } );
 
     });
 </script>
@@ -494,7 +498,8 @@
     }
     td input {
         border-width: 0;
-        text-align:right !important
+        text-align: right !important;
+
     }
     /*правит шрифт бутсрапа*/
      label {
@@ -632,8 +637,8 @@
                            (кроме линий, распо-
                            ложенных вдоль края
                            проезжей части)</td>
-                        <td><input type="text"/></td>
-                        <td><input type="text" /></td>
+                        <td style="vertical-align: middle"><input type="text"/></td>
+                        <td style="vertical-align: middle"><input type="text" /></td>
                     </tr>
                     <tr>
                         <td  >1.1.2</td>
@@ -641,8 +646,8 @@
                         <td>Сплошная одиночная
                             линия, применяемая
                             вне проезжей части</td>
-                        <td></td>
-                        <td></td>
+                        <td style="vertical-align: middle"><input type="text" /></td>
+                        <td style="vertical-align: middle"><input type="text" /></td>
                     </tr>
                     <tr>
                         <td>1.2</td>
@@ -651,8 +656,8 @@
                             линия, расположенная
                             вдоль края проезжей
                             части</td>
-                        <td></td>
-                        <td></td>
+                        <td style="vertical-align: middle"><input type="text" /></td>
+                        <td style="vertical-align: middle"><input type="text" /></td>
                     </tr>
                     <tr>
                         <td>1.3</td>

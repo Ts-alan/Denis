@@ -12,6 +12,10 @@
         <AssociationConnector Association="Odd.AdbaseModel.FK_Street_City" />
         <AssociationConnector Association="Odd.AdbaseModel.FK_Segment_Street" />
         <EntityTypeShape EntityType="Odd.AdbaseModel.IntelliSenseStreet" Width="1.5" PointX="3.375" PointY="4.75" />
+        <EntityTypeShape EntityType="Odd.AdbaseModel.Mackup" Width="1.5" PointX="4" PointY="7.625" />
+        <EntityTypeShape EntityType="Odd.AdbaseModel.SpecificationofRM" Width="1.5" PointX="6.25" PointY="4.25" />
+        <AssociationConnector Association="Odd.AdbaseModel.FK_SpecificationofRM_Mackup" />
+        <AssociationConnector Association="Odd.AdbaseModel.FK_SpecificationofRM_Street" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
