@@ -23,16 +23,40 @@ namespace OddBasyBY.Models
             {
 
                 ListSurface.Add(new Segment()
-            {
-               
-               BreadthS = BreadthS[i],
-               LengthS = LengthS[i],
-               BreadthE = BreadthE[i],
-               LengthE = LengthE[i]
-            });
+                {
 
-        }
+                    BreadthS = BreadthS[i],
+                    LengthS = LengthS[i],
+                    BreadthE = BreadthE[i],
+                    LengthE = LengthE[i]
+                });
+
+            }
             return ListSurface;
+        }
+    }
+
+    public class CustomModelBinderForModels: DefaultModelBinder
+    {
+        public override object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
+        {
+            var request = controllerContext.HttpContext.Request;
+            Dictionary<string, IEnumerable<string>> ListModels = new Dictionary<string, IEnumerable<string>>();
+            List<string> ModelsL  = request.Form.AllKeys.Where(a => a.Contains("ModalsL")).ToList();
+            List<string> ModalsA = request.Form.AllKeys.Where(a => a.Contains("ModalsA")).ToList();
+            for (int i = 0; i < ModelsL.Count; i++)
+            {
+                string tempValueL = request.Form.Get(ModelsL.ElementAt(i));
+                if (tempValueL!= "")
+                {
+                 
+                    string tempStringA= ModalsA.ElementAt(i);
+                    
+                    ListModels.Add(tempStringA.Substring(7),new [] { tempValueL, request.Form.Get(tempStringA) });
+              
+                }
+            }
+            return ListModels;
         }
     }
 }

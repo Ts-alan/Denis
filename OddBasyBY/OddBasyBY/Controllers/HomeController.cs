@@ -21,7 +21,7 @@ namespace OddBasyBY.Controllers
             return View();
         }
 
-        public void SaveSuccess(City city, Street street , [ModelBinder(typeof(CustomModelBinderForSegment))] ICollection<Segment> segment)
+        public void SaveSuccess(City city, Street street , [ModelBinder(typeof(CustomModelBinderForSegment))] ICollection<Segment> segment,[ModelBinder(typeof(CustomModelBinderForModels))]Dictionary<string, IEnumerable<string>> test)
         {
             var streetInfo = new Street()
             {
