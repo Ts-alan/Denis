@@ -176,9 +176,6 @@
     <Compile Include="Models\IntelliSenseStreet.cs">
       <DependentUpon>Odd.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Mackup.cs">
-      <DependentUpon>Odd.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Odd.Context.cs">
       <AutoGen>True</AutoGen>

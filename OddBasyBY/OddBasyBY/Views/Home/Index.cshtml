@@ -487,7 +487,12 @@
             
             $(eventObject.target).children().focus();
         } );
-
+        //чистка полей в модальном окне при нажатии по close
+        $(".close").click(function(e) {
+            $("td input").each(function(indx, element) {
+                $(element).val("");
+            });
+        });
     });
 </script>
 
@@ -1038,8 +1043,8 @@
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-
+                    <button type="button" class="btn btn-default close" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
                 </div>
             </div>
         </div>

@@ -1,10 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="Odd.AdbaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityContainer Name="OddAdbaseEntity" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="sysdiagrams" EntityType="Odd.AdbaseModel.sysdiagrams" />
     <EntitySet Name="City" EntityType="Odd.AdbaseModel.City" />
     <EntitySet Name="Segment" EntityType="Odd.AdbaseModel.Segment" />
+    <EntitySet Name="SpecificationofRM" EntityType="Odd.AdbaseModel.SpecificationofRM" />
     <EntitySet Name="Street" EntityType="Odd.AdbaseModel.Street" />
+    <EntitySet Name="sysdiagrams" EntityType="Odd.AdbaseModel.sysdiagrams" />
+    <EntitySet Name="IntelliSenseStreet" EntityType="Odd.AdbaseModel.IntelliSenseStreet" />
     <AssociationSet Name="FK_Street_City" Association="Odd.AdbaseModel.FK_Street_City">
       <End Role="City" EntitySet="City" />
       <End Role="Street" EntitySet="Street" />
@@ -13,28 +15,11 @@
       <End Role="Street" EntitySet="Street" />
       <End Role="Segment" EntitySet="Segment" />
     </AssociationSet>
-    <EntitySet Name="IntelliSenseStreet" EntityType="Odd.AdbaseModel.IntelliSenseStreet" />
-    <EntitySet Name="Mackup" EntityType="Odd.AdbaseModel.Mackup" />
-    <EntitySet Name="SpecificationofRM" EntityType="Odd.AdbaseModel.SpecificationofRM" />
-    <AssociationSet Name="FK_SpecificationofRM_Mackup" Association="Odd.AdbaseModel.FK_SpecificationofRM_Mackup">
-      <End Role="Mackup" EntitySet="Mackup" />
-      <End Role="SpecificationofRM" EntitySet="SpecificationofRM" />
-    </AssociationSet>
     <AssociationSet Name="FK_SpecificationofRM_Street" Association="Odd.AdbaseModel.FK_SpecificationofRM_Street">
       <End Role="Street" EntitySet="Street" />
       <End Role="SpecificationofRM" EntitySet="SpecificationofRM" />
     </AssociationSet>
   </EntityContainer>
-  <EntityType Name="sysdiagrams">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-    <Property Name="principal_id" Type="Int32" Nullable="false" />
-    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="version" Type="Int32" />
-    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-  </EntityType>
   <EntityType Name="City">
     <Key>
       <PropertyRef Name="id" />
@@ -56,6 +41,17 @@
     <Property Name="Street_id" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Street" Relationship="Odd.AdbaseModel.FK_Segment_Street" FromRole="Segment" ToRole="Street" />
   </EntityType>
+  <EntityType Name="SpecificationofRM">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="length" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="area" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Street_id" Type="Int32" Nullable="false" />
+    <Property Name="Mackup" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Street" Relationship="Odd.AdbaseModel.FK_SpecificationofRM_Street" FromRole="SpecificationofRM" ToRole="Street" />
+  </EntityType>
   <EntityType Name="Street">
     <Key>
       <PropertyRef Name="id" />
@@ -70,6 +66,25 @@
     <NavigationProperty Name="City" Relationship="Odd.AdbaseModel.FK_Street_City" FromRole="Street" ToRole="City" />
     <NavigationProperty Name="Segment" Relationship="Odd.AdbaseModel.FK_Segment_Street" FromRole="Street" ToRole="Segment" />
     <NavigationProperty Name="SpecificationofRM" Relationship="Odd.AdbaseModel.FK_SpecificationofRM_Street" FromRole="Street" ToRole="SpecificationofRM" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="IntelliSenseStreet">
+    <Key>
+      <PropertyRef Name="id" />
+      <PropertyRef Name="Street" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="Street" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
   </EntityType>
   <Association Name="FK_Street_City">
     <End Type="Odd.AdbaseModel.City" Role="City" Multiplicity="1" />
@@ -92,47 +107,6 @@
       </Principal>
       <Dependent Role="Segment">
         <PropertyRef Name="Street_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <EntityType Name="IntelliSenseStreet">
-    <Key>
-      <PropertyRef Name="id" />
-      <PropertyRef Name="Street" />
-    </Key>
-    <Property Name="id" Type="Int32" Nullable="false" />
-    <Property Name="Street" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-  </EntityType>
-  <EntityType Name="Mackup">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="C_Mackup" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="SpecificationofRM" Relationship="Odd.AdbaseModel.FK_SpecificationofRM_Mackup" FromRole="Mackup" ToRole="SpecificationofRM" />
-  </EntityType>
-  <EntityType Name="SpecificationofRM">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="length" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="area" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="Street_id" Type="Int32" Nullable="false" />
-    <Property Name="Mackup_id" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Mackup" Relationship="Odd.AdbaseModel.FK_SpecificationofRM_Mackup" FromRole="SpecificationofRM" ToRole="Mackup" />
-    <NavigationProperty Name="Street" Relationship="Odd.AdbaseModel.FK_SpecificationofRM_Street" FromRole="SpecificationofRM" ToRole="Street" />
-  </EntityType>
-  <Association Name="FK_SpecificationofRM_Mackup">
-    <End Type="Odd.AdbaseModel.Mackup" Role="Mackup" Multiplicity="1" />
-    <End Type="Odd.AdbaseModel.SpecificationofRM" Role="SpecificationofRM" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Mackup">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="SpecificationofRM">
-        <PropertyRef Name="Mackup_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

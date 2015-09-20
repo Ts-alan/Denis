@@ -41,22 +41,22 @@ namespace OddBasyBY.Models
         public override object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
         {
             var request = controllerContext.HttpContext.Request;
-            Dictionary<string, IEnumerable<string>> ListModels = new Dictionary<string, IEnumerable<string>>();
+            List<SpecificationofRM> ListSpecificationofRM = new List<SpecificationofRM>();
+            
             List<string> ModelsL  = request.Form.AllKeys.Where(a => a.Contains("ModalsL")).ToList();
             List<string> ModalsA = request.Form.AllKeys.Where(a => a.Contains("ModalsA")).ToList();
             for (int i = 0; i < ModelsL.Count; i++)
             {
                 string tempValueL = request.Form.Get(ModelsL.ElementAt(i));
-                if (tempValueL!= "")
+                string tempValueA= request.Form.Get(ModalsA.ElementAt(i));
+
+                if (tempValueL!= ""&& tempValueA!="")
                 {
                  
-                    string tempStringA= ModalsA.ElementAt(i);
-                    
-                    ListModels.Add(tempStringA.Substring(7),new [] { tempValueL, request.Form.Get(tempStringA) });
-              
+                    ListSpecificationofRM.Add(new SpecificationofRM() {length = tempValueL,area = tempValueA,Mackup = ModalsA.ElementAt(i).Substring(7) });
                 }
             }
-            return ListModels;
+            return ListSpecificationofRM;
         }
     }
 }

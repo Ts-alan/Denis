@@ -23,13 +23,6 @@ warning 6002: The table/view 'D:\PROJECT\ODDBASYBY\ODDBASYBY\APP_DATA\ODD.ADBASE
           <Property Name="Street" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Type" Type="nvarchar" MaxLength="50" />
         </EntityType>
-        <EntityType Name="Mackup">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="№Mackup" Type="nvarchar(max)" Nullable="false" />
-        </EntityType>
         <EntityType Name="Segment">
           <Key>
             <PropertyRef Name="id" />
@@ -50,7 +43,7 @@ warning 6002: The table/view 'D:\PROJECT\ODDBASYBY\ODDBASYBY\APP_DATA\ODD.ADBASE
           <Property Name="length" Type="nvarchar(max)" />
           <Property Name="area" Type="nvarchar(max)" />
           <Property Name="Street_id" Type="int" Nullable="false" />
-          <Property Name="Mackup_id" Type="int" Nullable="false" />
+          <Property Name="Mackup" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="Street">
           <Key>
@@ -86,18 +79,6 @@ warning 6002: The table/view 'D:\PROJECT\ODDBASYBY\ODDBASYBY\APP_DATA\ODD.ADBASE
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_SpecificationofRM_Mackup">
-          <End Role="Mackup" Type="Self.Mackup" Multiplicity="1" />
-          <End Role="SpecificationofRM" Type="Self.SpecificationofRM" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Mackup">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="SpecificationofRM">
-              <PropertyRef Name="Mackup_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_SpecificationofRM_Street">
           <End Role="Street" Type="Self.Street" Multiplicity="1" />
           <End Role="SpecificationofRM" Type="Self.SpecificationofRM" Multiplicity="*" />
@@ -124,7 +105,6 @@ warning 6002: The table/view 'D:\PROJECT\ODDBASYBY\ODDBASYBY\APP_DATA\ODD.ADBASE
         </Association>
         <EntityContainer Name="OddAdbaseModelStoreContainer">
           <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Mackup" EntityType="Self.Mackup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Segment" EntityType="Self.Segment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SpecificationofRM" EntityType="Self.SpecificationofRM" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Street" EntityType="Self.Street" Schema="dbo" store:Type="Tables" />
@@ -140,10 +120,6 @@ warning 6002: The table/view 'D:\PROJECT\ODDBASYBY\ODDBASYBY\APP_DATA\ODD.ADBASE
             <End Role="Street" EntitySet="Street" />
             <End Role="Segment" EntitySet="Segment" />
           </AssociationSet>
-          <AssociationSet Name="FK_SpecificationofRM_Mackup" Association="Self.FK_SpecificationofRM_Mackup">
-            <End Role="Mackup" EntitySet="Mackup" />
-            <End Role="SpecificationofRM" EntitySet="SpecificationofRM" />
-          </AssociationSet>
           <AssociationSet Name="FK_SpecificationofRM_Street" Association="Self.FK_SpecificationofRM_Street">
             <End Role="Street" EntitySet="Street" />
             <End Role="SpecificationofRM" EntitySet="SpecificationofRM" />
@@ -158,10 +134,12 @@ warning 6002: The table/view 'D:\PROJECT\ODDBASYBY\ODDBASYBY\APP_DATA\ODD.ADBASE
     <edmx:ConceptualModels>
       <Schema Namespace="Odd.AdbaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="OddAdbaseEntity" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="sysdiagrams" EntityType="Odd.AdbaseModel.sysdiagrams" />
           <EntitySet Name="City" EntityType="Odd.AdbaseModel.City" />
           <EntitySet Name="Segment" EntityType="Odd.AdbaseModel.Segment" />
+          <EntitySet Name="SpecificationofRM" EntityType="Odd.AdbaseModel.SpecificationofRM" />
           <EntitySet Name="Street" EntityType="Odd.AdbaseModel.Street" />
+          <EntitySet Name="sysdiagrams" EntityType="Odd.AdbaseModel.sysdiagrams" />
+          <EntitySet Name="IntelliSenseStreet" EntityType="Odd.AdbaseModel.IntelliSenseStreet" />
           <AssociationSet Name="FK_Street_City" Association="Odd.AdbaseModel.FK_Street_City">
             <End Role="City" EntitySet="City" />
             <End Role="Street" EntitySet="Street" />
@@ -170,28 +148,11 @@ warning 6002: The table/view 'D:\PROJECT\ODDBASYBY\ODDBASYBY\APP_DATA\ODD.ADBASE
             <End Role="Street" EntitySet="Street" />
             <End Role="Segment" EntitySet="Segment" />
           </AssociationSet>
-          <EntitySet Name="IntelliSenseStreet" EntityType="Odd.AdbaseModel.IntelliSenseStreet" />
-          <EntitySet Name="Mackup" EntityType="Odd.AdbaseModel.Mackup" />
-          <EntitySet Name="SpecificationofRM" EntityType="Odd.AdbaseModel.SpecificationofRM" />
-          <AssociationSet Name="FK_SpecificationofRM_Mackup" Association="Odd.AdbaseModel.FK_SpecificationofRM_Mackup">
-            <End Role="Mackup" EntitySet="Mackup" />
-            <End Role="SpecificationofRM" EntitySet="SpecificationofRM" />
-          </AssociationSet>
           <AssociationSet Name="FK_SpecificationofRM_Street" Association="Odd.AdbaseModel.FK_SpecificationofRM_Street">
             <End Role="Street" EntitySet="Street" />
             <End Role="SpecificationofRM" EntitySet="SpecificationofRM" />
           </AssociationSet>
-          </EntityContainer>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
+        </EntityContainer>
         <EntityType Name="City">
           <Key>
             <PropertyRef Name="id" />
@@ -213,6 +174,17 @@ warning 6002: The table/view 'D:\PROJECT\ODDBASYBY\ODDBASYBY\APP_DATA\ODD.ADBASE
           <Property Name="Street_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Street" Relationship="Odd.AdbaseModel.FK_Segment_Street" FromRole="Segment" ToRole="Street" />
         </EntityType>
+        <EntityType Name="SpecificationofRM">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="length" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="area" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Street_id" Type="Int32" Nullable="false" />
+          <Property Name="Mackup" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Street" Relationship="Odd.AdbaseModel.FK_SpecificationofRM_Street" FromRole="SpecificationofRM" ToRole="Street" />
+        </EntityType>
         <EntityType Name="Street">
           <Key>
             <PropertyRef Name="id" />
@@ -227,6 +199,25 @@ warning 6002: The table/view 'D:\PROJECT\ODDBASYBY\ODDBASYBY\APP_DATA\ODD.ADBASE
           <NavigationProperty Name="City" Relationship="Odd.AdbaseModel.FK_Street_City" FromRole="Street" ToRole="City" />
           <NavigationProperty Name="Segment" Relationship="Odd.AdbaseModel.FK_Segment_Street" FromRole="Street" ToRole="Segment" />
           <NavigationProperty Name="SpecificationofRM" Relationship="Odd.AdbaseModel.FK_SpecificationofRM_Street" FromRole="Street" ToRole="SpecificationofRM" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="IntelliSenseStreet">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="Street" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="Street" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Street_City">
           <End Type="Odd.AdbaseModel.City" Role="City" Multiplicity="1" />
@@ -252,47 +243,6 @@ warning 6002: The table/view 'D:\PROJECT\ODDBASYBY\ODDBASYBY\APP_DATA\ODD.ADBASE
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="IntelliSenseStreet">
-          <Key>
-            <PropertyRef Name="id" />
-            <PropertyRef Name="Street" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="Street" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="Mackup">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="C_Mackup" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="SpecificationofRM" Relationship="Odd.AdbaseModel.FK_SpecificationofRM_Mackup" FromRole="Mackup" ToRole="SpecificationofRM" />
-        </EntityType>
-        <EntityType Name="SpecificationofRM">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="length" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="area" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Street_id" Type="Int32" Nullable="false" />
-          <Property Name="Mackup_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Mackup" Relationship="Odd.AdbaseModel.FK_SpecificationofRM_Mackup" FromRole="SpecificationofRM" ToRole="Mackup" />
-          <NavigationProperty Name="Street" Relationship="Odd.AdbaseModel.FK_SpecificationofRM_Street" FromRole="SpecificationofRM" ToRole="Street" />
-        </EntityType>
-        <Association Name="FK_SpecificationofRM_Mackup">
-          <End Type="Odd.AdbaseModel.Mackup" Role="Mackup" Multiplicity="1" />
-          <End Type="Odd.AdbaseModel.SpecificationofRM" Role="SpecificationofRM" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Mackup">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="SpecificationofRM">
-              <PropertyRef Name="Mackup_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_SpecificationofRM_Street">
           <End Type="Odd.AdbaseModel.Street" Role="Street" Multiplicity="1" />
           <End Type="Odd.AdbaseModel.SpecificationofRM" Role="SpecificationofRM" Multiplicity="*" />
@@ -311,17 +261,6 @@ warning 6002: The table/view 'D:\PROJECT\ODDBASYBY\ODDBASYBY\APP_DATA\ODD.ADBASE
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="OddAdbaseModelStoreContainer" CdmEntityContainer="OddAdbaseEntity">
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="Odd.AdbaseModel.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="definition" ColumnName="definition" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="City">
             <EntityTypeMapping TypeName="Odd.AdbaseModel.City">
               <MappingFragment StoreEntitySet="City">
@@ -343,6 +282,17 @@ warning 6002: The table/view 'D:\PROJECT\ODDBASYBY\ODDBASYBY\APP_DATA\ODD.ADBASE
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="SpecificationofRM">
+            <EntityTypeMapping TypeName="Odd.AdbaseModel.SpecificationofRM">
+              <MappingFragment StoreEntitySet="SpecificationofRM">
+                <ScalarProperty Name="Mackup" ColumnName="Mackup" />
+                <ScalarProperty Name="Street_id" ColumnName="Street_id" />
+                <ScalarProperty Name="area" ColumnName="area" />
+                <ScalarProperty Name="length" ColumnName="length" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Street">
             <EntityTypeMapping TypeName="Odd.AdbaseModel.Street">
               <MappingFragment StoreEntitySet="Street">
@@ -356,30 +306,22 @@ warning 6002: The table/view 'D:\PROJECT\ODDBASYBY\ODDBASYBY\APP_DATA\ODD.ADBASE
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="Odd.AdbaseModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="IntelliSenseStreet">
             <EntityTypeMapping TypeName="Odd.AdbaseModel.IntelliSenseStreet">
               <MappingFragment StoreEntitySet="IntelliSenseStreet">
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="Street" ColumnName="Street" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Mackup">
-            <EntityTypeMapping TypeName="Odd.AdbaseModel.Mackup">
-              <MappingFragment StoreEntitySet="Mackup">
-                <ScalarProperty Name="C_Mackup" ColumnName="№Mackup" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SpecificationofRM">
-            <EntityTypeMapping TypeName="Odd.AdbaseModel.SpecificationofRM">
-              <MappingFragment StoreEntitySet="SpecificationofRM">
-                <ScalarProperty Name="Mackup_id" ColumnName="Mackup_id" />
-                <ScalarProperty Name="Street_id" ColumnName="Street_id" />
-                <ScalarProperty Name="area" ColumnName="area" />
-                <ScalarProperty Name="length" ColumnName="length" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

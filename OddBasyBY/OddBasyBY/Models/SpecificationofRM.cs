@@ -18,9 +18,8 @@ namespace OddBasyBY.Models
         public string length { get; set; }
         public string area { get; set; }
         public int Street_id { get; set; }
-        public int Mackup_id { get; set; }
+        public string Mackup { get; set; }
     
-        public virtual Mackup Mackup { get; set; }
         public virtual Street Street { get; set; }
     }
 }
