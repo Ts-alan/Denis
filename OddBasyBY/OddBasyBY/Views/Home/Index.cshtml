@@ -285,16 +285,16 @@
     //задание координат
     $(document).ready(function () {
         $('[data-target="#ModalTable"]').click(function () {
-            
+
             var textStreet = $('[name="Street.Name"]').val();
-            
+
             if (textStreet != "") {
-                   $('#text').text(textStreet);
-                }
-          });
-        
-        
-       
+                $('#text').text(textStreet);
+            }
+        });
+
+
+
         //отправка формы
         $('[action="/Home/SaveSuccess"]').submit(function (event) {
             event.preventDefault();
@@ -311,9 +311,9 @@
                 data: m_data
 
             });
-            
+
             $("#SendForm").css("display", "none");
- 
+
         });
 
 
@@ -401,20 +401,48 @@
                                 }
                             },
                             {
-                                preset: "islands#blueCircleIcon"
-                                //draggable:true
+                                preset: "islands#blueCircleIcon",
+                                draggable: true
                             });
+
+                            var myCircle = new ymaps.Circle([[coords[0].toPrecision(6), coords[1].toPrecision(6)], 150], null, { draggable: true, visible:false });
+                            myMap.geoObjects.add(myCircle);
                             myMap.geoObjects.add(route.getPaths());
                             myMap.geoObjects.add(segment);
-                            objects = ymaps.geoQuery([segment]);
+                            objects = ymaps.geoQuery([myCircle]);
 
-                            segment.events.add('drag', function () {
-                                console.log(currentRoute.editor.getSegments());
-                                var objectsInsideCircle = objects.searchInside(currentRoute.getPaths().get(0));
+                            var pathsObjects = ymaps.geoQuery(currentRoute.getPaths()),
+                            edges = [];
 
-                                objectsInsideCircle.setOptions('preset', 'twirl#blueIcon');
-                                //Оставшиеся объекты - синими.
-                                objects.remove(objectsInsideCircle).setOptions('preset', 'islands#redIcon');
+                            // Переберем все сегменты и разобьем их на отрезки.
+                            pathsObjects.each(function (path) {
+                                var coordinates = path.geometry.getCoordinates();
+                                for (var i = 1, l = coordinates.length; i < l; i++) {
+                                    edges.push({
+                                        type: 'LineString',
+                                        coordinates: [coordinates[i], coordinates[i - 1]]
+                                    });
+                                }
+                            });
+                            segment.events.add('beforedrag', function () {
+                                var routeObjects = ymaps.geoQuery(edges).addToMap(myMap);
+
+                                myCircle.geometry.setCoordinates(
+                                   segment.geometry._xl[0]
+                                );
+
+                                var boundaryObjects = routeObjects.searchIntersect(myCircle);
+                                if (boundaryObjects._xg.length == 0) {
+                                    segment.options.set({
+                                        preset: 'islands#redCircleIcon'
+                                    });
+
+                                }
+                                else {
+                                    segment.options.set({
+                                        preset: 'islands#blueCircleIcon'
+                                    });
+                                }
                             });
 
                             tempData = [coords[0].toPrecision(6), coords[1].toPrecision(6)];
@@ -483,14 +511,14 @@
 
             }
         });
-         //при клике по tr фокус по input
+        //при клике по tr фокус по input
         $("tr td").has("input").click(function (eventObject) {
-            
+
             $(eventObject.target).children().focus();
-        } );
+        });
         //чистка полей в модальном окне при нажатии по close
-        $(".close").click(function(e) {
-            $("td input").each(function(indx, element) {
+        $(".close").click(function (e) {
+            $("td input").each(function (indx, element) {
                 $(element).val("");
             });
         });
@@ -498,19 +526,19 @@
 </script>
 
 <style>
-       /*изменение размера (ширины) модального окна*/
+    /*изменение размера (ширины) модального окна*/
     .modal-dialog {
-            width:1000px 
+        width: 1000px;
     }
+
     td input {
         border-width: 0;
         text-align: right !important;
-
     }
     /*правит шрифт бутсрапа*/
-     label {
-         font-weight: normal;
-     }
+    label {
+        font-weight: normal;
+    }
     /*отступы*/
     .indentForTextBox {
         margin-right: 60px;
@@ -619,7 +647,7 @@
                                 проезжей части)
                             </td>
                             <td style="vertical-align: middle"><input name="ModalsL1.1.1" type="text" /></td>
-                            <td style="vertical-align: middle"><input name="ModalsA1.1.1"  type="text" /></td>
+                            <td style="vertical-align: middle"><input name="ModalsA1.1.1" type="text" /></td>
                         </tr>
                         <tr>
                             <td>1.1.2</td>
@@ -630,7 +658,7 @@
                                 вне проезжей части
                             </td>
                             <td style="vertical-align: middle"><input name="ModalsL1.1.2" type="text" /></td>
-                            <td style="vertical-align: middle"><input name="ModalsA1.1.2"  type="text" /></td>
+                            <td style="vertical-align: middle"><input name="ModalsA1.1.2" type="text" /></td>
                         </tr>
                         <tr>
                             <td>1.2</td>
@@ -641,8 +669,8 @@
                                 вдоль края проезжей
                                 части
                             </td>
-                            <td style="vertical-align: middle"><input name="ModalsL1.2"  type="text" /></td>
-                            <td style="vertical-align: middle"><input name="ModalsA1.2"  type="text" /></td>
+                            <td style="vertical-align: middle"><input name="ModalsL1.2" type="text" /></td>
+                            <td style="vertical-align: middle"><input name="ModalsA1.2" type="text" /></td>
                         </tr>
                         <tr>
                             <td>1.3</td>
