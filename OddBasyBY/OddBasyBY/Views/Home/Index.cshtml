@@ -337,6 +337,7 @@
                         }
                     ).then(
                         function (route) {
+                            console.log(route);
                             route.getPaths().options.set({
 
                                 //можно выставить настройки графики маршруту
@@ -421,28 +422,31 @@
                                     edges.push({
                                         type: 'LineString',
                                         coordinates: [coordinates[i], coordinates[i - 1]]
-                                    });
+                                      
+                                   });
                                 }
                             });
-                            segment.events.add('beforedrag', function () {
-                                var routeObjects = ymaps.geoQuery(edges).addToMap(myMap);
+
+                            var tempCoordinates;
+                            segment.events.add('dragstart', function () {
+                                tempCoordinates = segment.geometry._xl[0];
+                            });
+
+                            segment.events.add('dragend', function () {
+                                var routeObjects = ymaps.geoQuery(edges).setOptions('visible', false).addToMap(myMap);
 
                                 myCircle.geometry.setCoordinates(
                                    segment.geometry._xl[0]
                                 );
 
                                 var boundaryObjects = routeObjects.searchIntersect(myCircle);
+                               
                                 if (boundaryObjects._xg.length == 0) {
-                                    segment.options.set({
-                                        preset: 'islands#redCircleIcon'
-                                    });
+                               
+                                    segment.geometry.setCoordinates(tempCoordinates);
 
                                 }
-                                else {
-                                    segment.options.set({
-                                        preset: 'islands#blueCircleIcon'
-                                    });
-                                }
+                               
                             });
 
                             tempData = [coords[0].toPrecision(6), coords[1].toPrecision(6)];
