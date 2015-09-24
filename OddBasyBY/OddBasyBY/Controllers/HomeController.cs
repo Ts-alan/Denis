@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
@@ -10,7 +11,7 @@ namespace OddBasyBY.Controllers
 {
     public class HomeController : Controller
     {
-        OddAdbaseEntity db=new OddAdbaseEntity();
+        OddAdbaseEntity db = new OddAdbaseEntity();
         public ActionResult Index()
         {
             using (OddAdbaseEntity db = new OddAdbaseEntity())
@@ -21,31 +22,40 @@ namespace OddBasyBY.Controllers
             return View();
         }
 
-        public void SaveSuccess(City city, Street street , [ModelBinder(typeof(CustomModelBinderForSegment))] ICollection<Segment> segment,[ModelBinder(typeof(CustomModelBinderForModels))]ICollection<SpecificationofRM> models)
+        public void SaveSuccess(City city, Street street, [ModelBinder(typeof(CustomModelBinderForSegment))] ICollection<Segment> segment, [ModelBinder(typeof(CustomModelBinderForModels))]ICollection<SpecificationofRM> models)
         {
-            if (db.Street.Any(a=>a.BreadthE==street.BreadthE&&a.BreadthS==street.BreadthS&&a.LengthE==street.LengthE&&a.LengthS==street.LengthS))
-            {
-                
-            }
-            var streetInfo = new Street()
-            {
-                Name = street.Name,
-                BreadthS = street.BreadthS,
-                BreadthE = street.BreadthE,
-                LengthE = street.LengthE,
-                LengthS = street.LengthS,
-                City_id = city.id
-            };
-            db.Street.Add(streetInfo);
-           
-            streetInfo.Segment = segment;
-            streetInfo.SpecificationofRM = models;
+            //if (
+            //    db.Street.Any(
+            //        a =>
+            //            a.BreadthE == street.BreadthE && a.BreadthS == street.BreadthS && a.LengthE == street.LengthE &&
+            //            a.LengthS == street.LengthS))
+            //{
+            //    db.Entry(street).State = EntityState.Modified;
+            //}
+            //else
+            //{
 
-            db.Segment.AddRange(segment);
-            db.SpecificationofRM.AddRange(models);
+
+                var streetInfo = new Street()
+                {
+                    Name = street.Name,
+                    BreadthS = street.BreadthS,
+                    BreadthE = street.BreadthE,
+                    LengthE = street.LengthE,
+                    LengthS = street.LengthS,
+                    City_id = city.id
+                };
+                db.Street.Add(streetInfo);
+
+                streetInfo.Segment = segment;
+                streetInfo.SpecificationofRM = models;
+
+                db.Segment.AddRange(segment);
+                db.SpecificationofRM.AddRange(models);
+            //}
             db.SaveChanges();
 
-           
+
         }
         public ActionResult FindStreets(string term)
         {

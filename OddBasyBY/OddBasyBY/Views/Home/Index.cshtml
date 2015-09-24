@@ -281,6 +281,20 @@
 
         }
     }
+    //удаление сегмента
+    function deleteSegment(index) {
+        myMap.geoObjects.remove(myMap.geoObjects.get(index * 3));
+        myMap.geoObjects.remove(myMap.geoObjects.get((index * 3) - 1));
+        myMap.geoObjects.remove(myMap.geoObjects.get((index * 3) - 2));
+        myMap.geoObjects.each(function (el, i) {
+            if(i%3==0){
+            el.properties.set({
+                iconContent: i / 3,
+                balloonContentHeader: "<a href='#' onclick='deleteSegment(" + (i / 3) + ")'>Удалить Обьект</a>",
+            });
+           }
+        });
+    }
 
 
 
@@ -294,7 +308,6 @@
                 $('#text').text(textStreet);
             }
         });
-
 
         function setSegment(eventObject) {
        
@@ -384,7 +397,7 @@
                                 },
                                 properties: {
                                     iconContent: increment,
-                                    balloonContentHeader: "<a href='#' onclick='setHandlerS()'>Удалить Обьект</a>",
+                                    balloonContentHeader: "<a href='#' onclick='deleteSegment(" + increment + ")'>Удалить Обьект</a>",
                                     balloonContent: "[" + coords[0].toPrecision(6) + "," + coords[1].toPrecision(6) + "]"
                                 }
                             },
@@ -397,7 +410,7 @@
                             myMap.geoObjects.add(myCircle);
                             myMap.geoObjects.add(route.getPaths());
                             myMap.geoObjects.add(segment);
-                            //console.log(myMap.geoObjects.getLength());
+                            
 
                             objects = ymaps.geoQuery([myCircle]);
 
@@ -451,10 +464,11 @@
 
                             tempData = [coords[0].toPrecision(6), coords[1].toPrecision(6)];
                             increment++;
+
                         });
                 }
                 currentRoute.getPaths().events.add('click', handlerSegment);
-
+            
             }
         }
 
