@@ -19,7 +19,10 @@
     var tempData;
     var tempDataFor3 = 5;
     var objects;
-    var identifierForDelBallon=true;
+    var identifierForDelBallon = true;
+    var identifierForCountObject = true;
+    var CountObjectInMap;
+    var massSegment = [];
 
     function init() {
 
@@ -283,16 +286,21 @@
     }
     //удаление сегмента
     function deleteSegment(index) {
-        myMap.geoObjects.remove(myMap.geoObjects.get(index * 3));
-        myMap.geoObjects.remove(myMap.geoObjects.get((index * 3) - 1));
-        myMap.geoObjects.remove(myMap.geoObjects.get((index * 3) - 2));
+        console.log(massSegment);
+        myMap.geoObjects.remove(myMap.geoObjects.get(massSegment[index - 1]));
+        //myMap.geoObjects.remove(myMap.geoObjects.get(massSegment[index]));
+        for (var i = index-1; i < massSegment.length; i++) {
+            massSegment[i] = massSegment[i] - 1;
+        };
+        //myMap.geoObjects.remove(myMap.geoObjects.get((index * 2)  + CountObjectInMap));
         myMap.geoObjects.each(function (el, i) {
-            if(i%3==0){
-            el.properties.set({
-                iconContent: i / 3,
-                balloonContentHeader: "<a href='#' onclick='deleteSegment(" + (i / 3) + ")'>Удалить Обьект</a>",
-            });
-           }
+            
+            //if(i>4&&i%2==0){
+            //el.properties.set({
+            //    iconContent: ((i-1) / 2),
+            //    balloonContentHeader: "<a href='#' onclick='deleteSegment(" + ((i-1) / 2) + ")'>Удалить Обьект</a>",
+            //});
+            //}
         });
     }
 
@@ -310,8 +318,8 @@
         });
 
         function setSegment(eventObject) {
-       
-            if ($(eventObject.target).next("button").css("display")=="none") {
+
+            if ($(eventObject.target).next("button").css("display") == "none") {
                 $("#SendForm").css("display", "inline-block");
             }
             if (currentRoute == undefined) {
@@ -321,7 +329,6 @@
                     currentRoute.getPaths().get(0).balloon.destroy();
                     identifierForDelBallon = false;
                 }
-               
                 var handlerSegment = function (e) {
 
                     var coords = e.get('coords');
@@ -336,7 +343,28 @@
                         }
                     ).then(
                         function (route) {
+                     
+                            if (identifierForCountObject == true) {
+                              
+                                var pathsObjects = ymaps.geoQuery(currentRoute.getPaths()),
+                                edges = [];
+                               
+                                // Переберем все сегменты и разобьем их на отрезки.
+                                pathsObjects.each(function (path) {
+                                    var coordinates = path.geometry.getCoordinates();
+                                    for (var i = 1, l = coordinates.length; i < l; i++) {
+                                        edges.push({
+                                            type: 'LineString',
+                                            coordinates: [coordinates[i], coordinates[i - 1]]
 
+                                        });
+                                    }
+                                });
+                                CountObjectInMap = edges.length;
+                                identifierForCountObject = false;
+                                
+                             }
+                     
                             route.getPaths().options.set({
 
                                 //можно выставить настройки графики маршруту
@@ -407,28 +435,21 @@
                             });
 
                             var myCircle = new ymaps.Circle([[coords[0].toPrecision(6), coords[1].toPrecision(6)], 3], null, { draggable: true, visible: false });
-                            myMap.geoObjects.add(myCircle);
-                            myMap.geoObjects.add(route.getPaths());
-                            myMap.geoObjects.add(segment);
+
                             
-
+                            if (parseInt(myMap.geoObjects.getLength()) > CountObjectInMap+1) {
+                                myMap.geoObjects.splice(CountObjectInMap + 2, 1, route.getPaths());
+                              
+                            } else {
+                                myMap.geoObjects.add(route.getPaths());
+                             
+                            }
+                           
+                            myMap.geoObjects.add(myCircle);
+                            myMap.geoObjects.add(segment);
+                         
                             objects = ymaps.geoQuery([myCircle]);
-
-                            var pathsObjects = ymaps.geoQuery(currentRoute.getPaths()),
-                            edges = [];
-
-                            // Переберем все сегменты и разобьем их на отрезки.
-                            pathsObjects.each(function (path) {
-                                var coordinates = path.geometry.getCoordinates();
-                                for (var i = 1, l = coordinates.length; i < l; i++) {
-                                    edges.push({
-                                        type: 'LineString',
-                                        coordinates: [coordinates[i], coordinates[i - 1]]
-
-                                    });
-                                }
-                            });
-
+                            
                             var tempCoordinates;
                             segment.events.add('dragstart', function () {
                                 tempCoordinates = segment.geometry._xl[0];
@@ -441,16 +462,16 @@
                                 $("#lengthSegE" + (increment - 1).toString()).val(segment.geometry._xl[0][1].toString().substring(0, 7));
                             });
 
+                        
                             segment.events.add('dragend', function (e) {
 
-                                var routeObjects = ymaps.geoQuery(edges).setOptions('visible', false).addToMap(myMap);
-
+                               var  routeObjects = ymaps.geoQuery(edges).setOptions('visible', false).addToMap(myMap);
                                 myCircle.geometry.setCoordinates(
                                    segment.geometry._xl[0]
                                 );
-
+                                
                                 var boundaryObjects = routeObjects.searchIntersect(myCircle);
-
+                               
                                 if (boundaryObjects._xg.length == 0) {
 
                                     segment.geometry.setCoordinates(tempCoordinates);
@@ -461,14 +482,14 @@
                                     $("#lengthSegE" + (increment - 1)).val(segment.geometry._xl[0][1].toString().substring(0, 7));
                                 }
                             });
-
-                            tempData = [coords[0].toPrecision(6), coords[1].toPrecision(6)];
+                           
+                            //tempData = [coords[0].toPrecision(6), coords[1].toPrecision(6)];
+                            massSegment[increment - 1] = myMap.geoObjects.indexOf(segment);
                             increment++;
-
                         });
                 }
                 currentRoute.getPaths().events.add('click', handlerSegment);
-            
+
             }
         }
 
