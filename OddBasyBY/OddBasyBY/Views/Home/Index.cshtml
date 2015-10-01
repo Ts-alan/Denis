@@ -23,7 +23,7 @@
     var identifierForCountObject = true;
     var CountObjectInMap;
     var massSegment = [];
-
+    var handlerSegment;
     function init() {
 
         myMap = new ymaps.Map("map", {
@@ -301,7 +301,7 @@
             
             for (var i = 0; i < massSegment.length; i++) {
                 if (massSegment[i] == index) {
-   
+                     console.log(el.options.get("iconConten"));
                     //console.log(massSegment[i]);
                     el.properties.set({
                         iconContent: j,
@@ -343,7 +343,7 @@
                     currentRoute.getPaths().get(0).balloon.destroy();
                     identifierForDelBallon = false;
                 }
-                var handlerSegment = function (e) {
+                 handlerSegment = function (e) {
 
                     var coords = e.get('coords');
 
@@ -482,7 +482,7 @@
                                 );
                              
                                 var boundaryObjects = routeObjects.searchIntersect(myCircle);
-                                console.log(boundaryObjects);
+                               
                                
                                 if (boundaryObjects._xg.length == 0) {
                                     
@@ -523,9 +523,23 @@
                 data: m_data
 
             });
-
+            currentRoute.getPaths().events.remove('dblclick', handlerSegment);
             $("#SendForm").css("display", "none");
             $(".setSegment").one('click', setSegment);
+            myMap.geoObjects.each(function (el, index) {
+
+                for (var i = 0; i < massSegment.length; i++) {
+                    if (massSegment[i] == index) {
+                        el.balloon.destroy();
+                        el.options.set({
+                            draggable:false
+                        });
+                    };
+                }
+
+            });
+      
+
         });
 
 
