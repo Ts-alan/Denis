@@ -358,7 +358,6 @@
                     ).then(
                         function (route) {
                      
-                            if (identifierForCountObject == true) {
                               
                                 var pathsObjects = ymaps.geoQuery(currentRoute.getPaths()),
                                 edges = [];
@@ -375,9 +374,7 @@
                                     }
                                 });
                                 CountObjectInMap = edges.length;
-                                identifierForCountObject = false;
-                                
-                             }
+    
                      
                             route.getPaths().options.set({
 
@@ -483,11 +480,12 @@
                                 myCircle.geometry.setCoordinates(
                                    segment.geometry._xl[0]
                                 );
-                                
+                             
                                 var boundaryObjects = routeObjects.searchIntersect(myCircle);
+                                console.log(boundaryObjects);
                                
                                 if (boundaryObjects._xg.length == 0) {
-
+                                    
                                     segment.geometry.setCoordinates(tempCoordinates);
 
                                     $("#breadthSegS" + increment).val(segment.geometry._xl[0][0].toString().substring(0, 7));
