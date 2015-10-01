@@ -286,22 +286,36 @@
     }
     //удаление сегмента
     function deleteSegment(index) {
-        console.log(massSegment);
+       
         myMap.geoObjects.remove(myMap.geoObjects.get(massSegment[index - 1]));
-        //myMap.geoObjects.remove(myMap.geoObjects.get(massSegment[index]));
-        for (var i = index-1; i < massSegment.length; i++) {
-            massSegment[i] = massSegment[i] - 1;
+        myMap.geoObjects.remove(myMap.geoObjects.get(massSegment[index - 1] - 1));
+        
+        for (var i = index - 1; i < massSegment.length; i++) {
+            massSegment[i] = massSegment[i] - 2;
         };
-        //myMap.geoObjects.remove(myMap.geoObjects.get((index * 2)  + CountObjectInMap));
-        myMap.geoObjects.each(function (el, i) {
+
+        massSegment.splice(index - 1, 1);
+    
+        var j = 1;
+        myMap.geoObjects.each(function (el, index) {
             
-            //if(i>4&&i%2==0){
-            //el.properties.set({
-            //    iconContent: ((i-1) / 2),
-            //    balloonContentHeader: "<a href='#' onclick='deleteSegment(" + ((i-1) / 2) + ")'>Удалить Обьект</a>",
-            //});
-            //}
+            for (var i = 0; i < massSegment.length; i++) {
+                if (massSegment[i] == index) {
+   
+                    //console.log(massSegment[i]);
+                    el.properties.set({
+                        iconContent: j,
+                        balloonContentHeader: "<a href='#' onclick='deleteSegment(" + j + ")'>Удалить Обьект</a>",
+                    });
+                    j++;
+                };
+            }
+
         });
+
+        increment = massSegment.length+1;
+
+
     }
 
 
@@ -435,15 +449,15 @@
                             });
 
                             var myCircle = new ymaps.Circle([[coords[0].toPrecision(6), coords[1].toPrecision(6)], 3], null, { draggable: true, visible: false });
-
+                           //Добавление пути сегмента на карту
                             
-                            if (parseInt(myMap.geoObjects.getLength()) > CountObjectInMap+1) {
-                                myMap.geoObjects.splice(CountObjectInMap + 2, 1, route.getPaths());
+                            //if (parseInt(myMap.geoObjects.getLength()) > CountObjectInMap+1) {
+                            //    myMap.geoObjects.splice(CountObjectInMap + 2, 1, route.getPaths());
                               
-                            } else {
-                                myMap.geoObjects.add(route.getPaths());
+                            //} else {
+                            //    myMap.geoObjects.add(route.getPaths());
                              
-                            }
+                            //}
                            
                             myMap.geoObjects.add(myCircle);
                             myMap.geoObjects.add(segment);
@@ -482,13 +496,14 @@
                                     $("#lengthSegE" + (increment - 1)).val(segment.geometry._xl[0][1].toString().substring(0, 7));
                                 }
                             });
-                           
-                            //tempData = [coords[0].toPrecision(6), coords[1].toPrecision(6)];
+
+          
+                           //tempData = [coords[0].toPrecision(6), coords[1].toPrecision(6)];
                             massSegment[increment - 1] = myMap.geoObjects.indexOf(segment);
                             increment++;
                         });
                 }
-                currentRoute.getPaths().events.add('click', handlerSegment);
+                currentRoute.getPaths().events.add('dblclick', handlerSegment);
 
             }
         }
