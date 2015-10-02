@@ -286,7 +286,7 @@
     }
     //удаление сегмента
     function deleteSegment(index) {
-       
+        console.log(index);
         myMap.geoObjects.remove(myMap.geoObjects.get(massSegment[index - 1]));
         myMap.geoObjects.remove(myMap.geoObjects.get(massSegment[index - 1] - 1));
         
@@ -301,8 +301,8 @@
             
             for (var i = 0; i < massSegment.length; i++) {
                 if (massSegment[i] == index) {
-                     console.log(el.options.get("iconConten"));
-                    //console.log(massSegment[i]);
+             
+                 
                     el.properties.set({
                         iconContent: j,
                         balloonContentHeader: "<a href='#' onclick='deleteSegment(" + j + ")'>Удалить Обьект</a>",
@@ -465,12 +465,13 @@
                             segment.events.add('dragstart', function () {
                                 tempCoordinates = segment.geometry._xl[0];
                             });
-
+                            var Edit = increment;
                             segment.events.add('drag', function (e) {
-                                $("#breadthSegS" + increment).val(segment.geometry._xl[0][0].toString().substring(0, 7));
-                                $("#lengthSegS" + increment).val(segment.geometry._xl[0][1].toString().substring(0, 7));
-                                $("#breadthSegE" + (increment - 1).toString()).val(segment.geometry._xl[0][0].toString().substring(0, 7));
-                                $("#lengthSegE" + (increment - 1).toString()).val(segment.geometry._xl[0][1].toString().substring(0, 7));
+                            
+                                $("#breadthSegS" + (Edit + 1).toString()).val(segment.geometry._xl[0][0].toString().substring(0, 7));
+                                $("#lengthSegS" + (Edit + 1).toString()).val(segment.geometry._xl[0][1].toString().substring(0, 7));
+                                $("#breadthSegE" + Edit).val(segment.geometry._xl[0][0].toString().substring(0, 7));
+                                $("#lengthSegE" + Edit).val(segment.geometry._xl[0][1].toString().substring(0, 7));
                             });
 
                         
@@ -488,10 +489,10 @@
                                     
                                     segment.geometry.setCoordinates(tempCoordinates);
 
-                                    $("#breadthSegS" + increment).val(segment.geometry._xl[0][0].toString().substring(0, 7));
-                                    $("#lengthSegS" + increment).val(segment.geometry._xl[0][1].toString().substring(0, 7));
-                                    $("#breadthSegE" + (increment - 1)).val(segment.geometry._xl[0][0].toString().substring(0, 7));
-                                    $("#lengthSegE" + (increment - 1)).val(segment.geometry._xl[0][1].toString().substring(0, 7));
+                                    $("#breadthSegS" + (Edit + 1).toString()).val(segment.geometry._xl[0][0].toString().substring(0, 7));
+                                    $("#lengthSegS" + (Edit + 1).toString()).val(segment.geometry._xl[0][1].toString().substring(0, 7));
+                                    $("#breadthSegE" + Edit).val(segment.geometry._xl[0][0].toString().substring(0, 7));
+                                    $("#lengthSegE" + Edit).val(segment.geometry._xl[0][1].toString().substring(0, 7));
                                 }
                             });
 
