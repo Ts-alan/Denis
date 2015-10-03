@@ -312,13 +312,20 @@
             }
 
         });
-        var indexOffset=false;
-        $('[id^=segment]').each(function (ind, domElement) {
-            
-            
-            if ((ind + 1) == parseInt(index)|| indexOffset==true) {
-                console.log("1212121");
+        var indexOffset = false;
+        var previousDom;
+     
+        $('[id^=segment]:has("*")').each(function (ind, domElement) {
+           
+            if (((ind ) == parseInt(index-1) || indexOffset == true) && ($('[id^=segment]:has("*")').size()!= (ind+1))) {
+                previousDom = domElement;
                 indexOffset = true;
+                
+            };
+            
+            if (((ind) == parseInt(index) || indexOffset == true) && ($('[id^=segment]:has("*")').size()!= (ind + 1))) {
+                $(previousDom).html("11111");
+                //console.log("2");
             }
         });
         increment = massSegment.length+1;
@@ -505,7 +512,7 @@
                             });
 
           
-                           //tempData = [coords[0].toPrecision(6), coords[1].toPrecision(6)];
+                           tempData = [coords[0].toPrecision(6), coords[1].toPrecision(6)];
                             massSegment[increment - 1] = myMap.geoObjects.indexOf(segment);
                             increment++;
                         });
