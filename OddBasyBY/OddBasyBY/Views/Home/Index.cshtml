@@ -286,14 +286,14 @@
     }
     //удаление сегмента
     function deleteSegment(index) {
-        console.log(index);
+       
         myMap.geoObjects.remove(myMap.geoObjects.get(massSegment[index - 1]));
         myMap.geoObjects.remove(myMap.geoObjects.get(massSegment[index - 1] - 1));
         
         for (var i = index - 1; i < massSegment.length; i++) {
             massSegment[i] = massSegment[i] - 2;
         };
-
+   
         massSegment.splice(index - 1, 1);
     
         var j = 1;
@@ -312,7 +312,15 @@
             }
 
         });
-
+        var indexOffset=false;
+        $('[id^=segment]').each(function (ind, domElement) {
+            
+            
+            if ((ind + 1) == parseInt(index)|| indexOffset==true) {
+                console.log("1212121");
+                indexOffset = true;
+            }
+        });
         increment = massSegment.length+1;
 
 
@@ -387,15 +395,15 @@
 
                             if (increment >= 2 && increment <= 4) {
 
-                                $("#segment" + (increment - 1)).after('<div id="segment' + increment + '">' +
+                                $("#segment" + increment).html(
                                     '<b><u>Координаты участка ' + increment + '</u></b>' +
                                     '<div>Начальнаты начала</div>' +
                                     '<div><label for="Segment.BreadthS">Широта</label> <input id="breadthSegS' + increment + '" name="Segment.BreadthS" readonly="" type="text" value="">' +
                                     '<label for="Segment.LengthS">Долгота</label> <input id="lengthSegS' + increment + '" name="Segment.LengthS" readonly="" type="text" value="">' +
                                     '</div><div>Координаты конца</div><div>' +
                                     '<label for="Segment.BreadthE">Широта</label> <input id="breadthSegE' + increment + '" name="Segment.BreadthE" readonly="" type="text" value="">' +
-                                    '<label for="Segment.LengthE">Долгота</label> <input id="lengthSegE' + increment + '" name="Segment.LengthE" readonly="" type="text" value=""></div><div>' +
-                                    '</div>');
+                                    '<label for="Segment.LengthE">Долгота</label> <input id="lengthSegE' + increment + '" name="Segment.LengthE" readonly="" type="text" value=""></div></div>' 
+                                    );
                             }
 
                             if (increment > 4) {
@@ -697,13 +705,18 @@
                     @Html.Label("Долгота", new { @for = "Segment.LengthE" }) @Html.TextBox("Segment.LengthE", null, new { id = "lengthSegE1", @readonly = "" })
                 </div>
             </div>
-
-            <div>
-                <button type="button" class="btn btn-success setSegment">Задать/Изменить координаты</button>
-                <button id="SendForm" class="btn btn-warning">Сохранить</button>
+            <div id="segment2">
             </div>
+            <div id="segment3">
+            </div>
+            <div id="segment4">
+            </div>
+                <div>
+                    <button type="button" class="btn btn-success setSegment">Задать/Изменить координаты</button>
+                    <button id="SendForm" class="btn btn-warning">Сохранить</button>
+                </div>
 
-        </div>
+            </div>
 
     </div>
     <div id="interData"></div>
