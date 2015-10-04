@@ -286,23 +286,23 @@
     }
     //удаление сегмента
     function deleteSegment(index) {
-       
+
         myMap.geoObjects.remove(myMap.geoObjects.get(massSegment[index - 1]));
         myMap.geoObjects.remove(myMap.geoObjects.get(massSegment[index - 1] - 1));
-        
+
         for (var i = index - 1; i < massSegment.length; i++) {
             massSegment[i] = massSegment[i] - 2;
         };
-   
+
         massSegment.splice(index - 1, 1);
-    
+
         var j = 1;
         myMap.geoObjects.each(function (el, index) {
-            
+
             for (var i = 0; i < massSegment.length; i++) {
                 if (massSegment[i] == index) {
-             
-                 
+
+
                     el.properties.set({
                         iconContent: j,
                         balloonContentHeader: "<a href='#' onclick='deleteSegment(" + j + ")'>Удалить Обьект</a>",
@@ -319,22 +319,27 @@
         $('[id^=segment]:has("*")').each(function (ind, domElement) {
 
             console.log(ind);
-  
-            
-            if (((ind) == parseInt(index) || indexOffset == true) && (countElement.length) != (ind + 1)) {
-                console.log(previousDom.innerHTML);
-                console.log(domElement.innerHTML);
-                previousDom = domElement;
-                if(indexSkipOfFirst==false){
-                $(previousDom).html(domElement.innerHTML);
 
-                indexOffset = true;
+
+            if (((ind) == parseInt(index) || indexOffset == true) ) {
+                //&& (countElement.length) != (ind + 1)
+
+                console.log('первый if');
+                if (indexSkipOfFirst == true) {
+                    console.log(previousDom.innerHTML);
+                    console.log(domElement.innerHTML);
+
+                    $(previousDom).html(domElement.innerHTML);
+
                 }
-                if(indexSkipOfFirst==false)
-                indexSkipOfFirst = true;
+                previousDom = domElement;
+                if (indexSkipOfFirst == false)
+                 console.log('второй if');
+                 indexSkipOfFirst = true;
+                indexOffset = true;
             }
         });
-        increment = massSegment.length+1;
+        increment = massSegment.length + 1;
 
     }
 
@@ -363,7 +368,7 @@
                     currentRoute.getPaths().get(0).balloon.destroy();
                     identifierForDelBallon = false;
                 }
-                 handlerSegment = function (e) {
+                handlerSegment = function (e) {
 
                     var coords = e.get('coords');
 
@@ -377,25 +382,25 @@
                         }
                     ).then(
                         function (route) {
-                     
-                              
-                                var pathsObjects = ymaps.geoQuery(currentRoute.getPaths()),
-                                edges = [];
-                               
-                                // Переберем все сегменты и разобьем их на отрезки.
-                                pathsObjects.each(function (path) {
-                                    var coordinates = path.geometry.getCoordinates();
-                                    for (var i = 1, l = coordinates.length; i < l; i++) {
-                                        edges.push({
-                                            type: 'LineString',
-                                            coordinates: [coordinates[i], coordinates[i - 1]]
 
-                                        });
-                                    }
-                                });
-                                CountObjectInMap = edges.length;
-    
-                     
+
+                            var pathsObjects = ymaps.geoQuery(currentRoute.getPaths()),
+                            edges = [];
+
+                            // Переберем все сегменты и разобьем их на отрезки.
+                            pathsObjects.each(function (path) {
+                                var coordinates = path.geometry.getCoordinates();
+                                for (var i = 1, l = coordinates.length; i < l; i++) {
+                                    edges.push({
+                                        type: 'LineString',
+                                        coordinates: [coordinates[i], coordinates[i - 1]]
+
+                                    });
+                                }
+                            });
+                            CountObjectInMap = edges.length;
+
+
                             route.getPaths().options.set({
 
                                 //можно выставить настройки графики маршруту
@@ -414,7 +419,7 @@
                                     '<label for="Segment.LengthS">Долгота</label> <input id="lengthSegS' + increment + '" name="Segment.LengthS" readonly="" type="text" value="">' +
                                     '</div><div>Координаты конца</div><div>' +
                                     '<label for="Segment.BreadthE">Широта</label> <input id="breadthSegE' + increment + '" name="Segment.BreadthE" readonly="" type="text" value="">' +
-                                    '<label for="Segment.LengthE">Долгота</label> <input id="lengthSegE' + increment + '" name="Segment.LengthE" readonly="" type="text" value=""></div></div>' 
+                                    '<label for="Segment.LengthE">Долгота</label> <input id="lengthSegE' + increment + '" name="Segment.LengthE" readonly="" type="text" value=""></div></div>'
                                     );
                             }
 
@@ -450,7 +455,7 @@
                             $("#breadthSegS" + increment).attr("value", tempData[0]);
                             $("#lengthSegS" + increment).attr("value", tempData[1]);
                             $("#breadthSegE" + increment).attr("value", coords[0].toPrecision(6));
-                            $("#lengthSegE" + increment).attr("value",coords[1].toPrecision(6));
+                            $("#lengthSegE" + increment).attr("value", coords[1].toPrecision(6));
                             var segment = new ymaps.GeoObject({
                                 geometry: {
                                     type: "Point", // тип геометрии - точка
@@ -469,47 +474,47 @@
                             });
 
                             var myCircle = new ymaps.Circle([[coords[0].toPrecision(6), coords[1].toPrecision(6)], 3], null, { draggable: true, visible: false });
-                           //Добавление пути сегмента на карту
-                            
+                            //Добавление пути сегмента на карту
+
                             //if (parseInt(myMap.geoObjects.getLength()) > CountObjectInMap+1) {
                             //    myMap.geoObjects.splice(CountObjectInMap + 2, 1, route.getPaths());
-                              
+
                             //} else {
                             //    myMap.geoObjects.add(route.getPaths());
-                             
+
                             //}
-                           
+
                             myMap.geoObjects.add(myCircle);
                             myMap.geoObjects.add(segment);
-                         
+
                             objects = ymaps.geoQuery([myCircle]);
-                            
+
                             var tempCoordinates;
                             segment.events.add('dragstart', function () {
                                 tempCoordinates = segment.geometry._xl[0];
                             });
                             var Edit = increment;
                             segment.events.add('drag', function (e) {
-                            
+
                                 $("#breadthSegS" + (Edit + 1).toString()).val(segment.geometry._xl[0][0].toString().substring(0, 7));
                                 $("#lengthSegS" + (Edit + 1).toString()).val(segment.geometry._xl[0][1].toString().substring(0, 7));
                                 $("#breadthSegE" + Edit).val(segment.geometry._xl[0][0].toString().substring(0, 7));
                                 $("#lengthSegE" + Edit).val(segment.geometry._xl[0][1].toString().substring(0, 7));
                             });
 
-                        
+
                             segment.events.add('dragend', function (e) {
 
-                               var  routeObjects = ymaps.geoQuery(edges).setOptions('visible', false).addToMap(myMap);
+                                var routeObjects = ymaps.geoQuery(edges).setOptions('visible', false).addToMap(myMap);
                                 myCircle.geometry.setCoordinates(
                                    segment.geometry._xl[0]
                                 );
-                             
+
                                 var boundaryObjects = routeObjects.searchIntersect(myCircle);
-                               
-                               
+
+
                                 if (boundaryObjects._xg.length == 0) {
-                                    
+
                                     segment.geometry.setCoordinates(tempCoordinates);
 
                                     $("#breadthSegS" + (Edit + 1).toString()).val(segment.geometry._xl[0][0].toString().substring(0, 7));
@@ -519,8 +524,8 @@
                                 }
                             });
 
-          
-                           tempData = [coords[0].toPrecision(6), coords[1].toPrecision(6)];
+
+                            tempData = [coords[0].toPrecision(6), coords[1].toPrecision(6)];
                             massSegment[increment - 1] = myMap.geoObjects.indexOf(segment);
                             increment++;
                         });
@@ -556,13 +561,13 @@
                     if (massSegment[i] == index) {
                         el.balloon.destroy();
                         el.options.set({
-                            draggable:false
+                            draggable: false
                         });
                     };
                 }
 
             });
-      
+
 
         });
 
@@ -726,12 +731,12 @@
             </div>
             <div id="segment4">
             </div>
-                <div>
-                    <button type="button" class="btn btn-success setSegment">Задать/Изменить координаты</button>
-                    <button id="SendForm" class="btn btn-warning">Сохранить</button>
-                </div>
-
+            <div>
+                <button type="button" class="btn btn-success setSegment">Задать/Изменить координаты</button>
+                <button id="SendForm" class="btn btn-warning">Сохранить</button>
             </div>
+
+        </div>
 
     </div>
     <div id="interData"></div>
