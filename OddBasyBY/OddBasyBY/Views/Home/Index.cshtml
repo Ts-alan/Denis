@@ -313,23 +313,28 @@
 
         });
         var indexOffset = false;
-        var previousDom;
-     
+        var previousDom = $('[id^=segment]:has("*")').eq(0);
+        var countElement = $('[id^=segment]:has("*")');
+        var indexSkipOfFirst = false;
         $('[id^=segment]:has("*")').each(function (ind, domElement) {
-           
-            if (((ind ) == parseInt(index-1) || indexOffset == true) && ($('[id^=segment]:has("*")').size()!= (ind+1))) {
-                previousDom = domElement;
-                indexOffset = true;
-                
-            };
+
+            console.log(ind);
+  
             
-            if (((ind) == parseInt(index) || indexOffset == true) && ($('[id^=segment]:has("*")').size()!= (ind + 1))) {
-                $(previousDom).html("11111");
-                //console.log("2");
+            if (((ind) == parseInt(index) || indexOffset == true) && (countElement.length) != (ind + 1)) {
+                console.log(previousDom.innerHTML);
+                console.log(domElement.innerHTML);
+                previousDom = domElement;
+                if(indexSkipOfFirst==false){
+                $(previousDom).html(domElement.innerHTML);
+
+                indexOffset = true;
+                }
+                if(indexSkipOfFirst==false)
+                indexSkipOfFirst = true;
             }
         });
         increment = massSegment.length+1;
-
 
     }
 
@@ -437,12 +442,15 @@
                                     '</div></div>'
                                 );
                             }
-                            $("#breadthSegS" + increment).val(tempData[0]);
-                            $("#lengthSegS" + increment).val(tempData[1]);
-                            $("#breadthSegE" + increment).val(coords[0].toPrecision(6));
-                            $("#lengthSegE" + increment).val(coords[1].toPrecision(6));
+                            //$("#breadthSegS" + increment).val(tempData[0]);
+                            //$("#lengthSegS" + increment).val(tempData[1]);
+                            //$("#breadthSegE" + increment).val(coords[0].toPrecision(6));
+                            //$("#lengthSegE" + increment).val(coords[1].toPrecision(6));
                             $("#CountSides").val(increment);
-
+                            $("#breadthSegS" + increment).attr("value", tempData[0]);
+                            $("#lengthSegS" + increment).attr("value", tempData[1]);
+                            $("#breadthSegE" + increment).attr("value", coords[0].toPrecision(6));
+                            $("#lengthSegE" + increment).attr("value",coords[1].toPrecision(6));
                             var segment = new ymaps.GeoObject({
                                 geometry: {
                                     type: "Point", // тип геометрии - точка
