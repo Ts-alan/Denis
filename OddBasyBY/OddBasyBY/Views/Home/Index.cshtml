@@ -24,6 +24,7 @@
     var CountObjectInMap;
     var massSegment = [];
     var handlerSegment;
+
     function init() {
 
         myMap = new ymaps.Map("map", {
@@ -324,8 +325,14 @@
                     $(previousDom).html(domElement.innerHTML);
                 }
                 //изменения содержимого сегмента
-                $(domElement).attr("id", "segment" + ind + "");
-             
+
+                $(previousDom).attr("id", "segment" + ind + "");
+                $(previousDom).find("u").first().text("Координаты участка " + ind);
+                $(previousDom).find("input").first().attr("id", "breadthSegS" + ind);
+                $(previousDom).find("input").eq(1).attr("id", "lengthSegS" + ind);
+                $(previousDom).find("input").eq(2).attr("id", "breadthSegE" + ind);
+                $(previousDom).find("input").last().attr("id", "lengthSegE" + ind);
+
                 previousDom = domElement;
                 if (indexSkipOfFirst == false)
                     indexSkipOfFirst = true;
@@ -334,8 +341,13 @@
             if ((countElement.length) == (ind + 1)) {
 
                 $(domElement).html("");
+                if ((countElement.length - 5) % 3 == 0) {
+                    $(domElement).closest(".form-group").remove();
+                }
             }
         });
+
+
         increment = massSegment.length + 1;
 
     }
