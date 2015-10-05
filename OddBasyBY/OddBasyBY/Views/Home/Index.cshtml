@@ -318,25 +318,22 @@
         var indexSkipOfFirst = false;
         $('[id^=segment]:has("*")').each(function (ind, domElement) {
 
-            console.log(ind);
+            if (((ind + 1) == parseInt(index) || indexOffset == true)) {
 
-
-            if (((ind) == parseInt(index) || indexOffset == true) ) {
-                //&& (countElement.length) != (ind + 1)
-
-                console.log('первый if');
                 if (indexSkipOfFirst == true) {
-                    console.log(previousDom.innerHTML);
-                    console.log(domElement.innerHTML);
-
                     $(previousDom).html(domElement.innerHTML);
-
                 }
+                //изменения содержимого сегмента
+                $(domElement).attr("id", "segment" + ind + "");
+             
                 previousDom = domElement;
                 if (indexSkipOfFirst == false)
-                 console.log('второй if');
-                 indexSkipOfFirst = true;
+                    indexSkipOfFirst = true;
                 indexOffset = true;
+            }
+            if ((countElement.length) == (ind + 1)) {
+
+                $(domElement).html("");
             }
         });
         increment = massSegment.length + 1;
