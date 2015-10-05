@@ -325,25 +325,32 @@
                     $(previousDom).html(domElement.innerHTML);
                 }
                 //изменения содержимого сегмента
-
-                $(previousDom).attr("id", "segment" + ind + "");
-                $(previousDom).find("u").first().text("Координаты участка " + ind);
-                $(previousDom).find("input").first().attr("id", "breadthSegS" + ind);
-                $(previousDom).find("input").eq(1).attr("id", "lengthSegS" + ind);
-                $(previousDom).find("input").eq(2).attr("id", "breadthSegE" + ind);
-                $(previousDom).find("input").last().attr("id", "lengthSegE" + ind);
-
+                if (index != 1) {
+                    $(previousDom).attr("id", "segment" + ind + "");
+                    $(previousDom).find("u").first().text("Координаты участка " + ind);
+                    $(previousDom).find("input").first().attr("id", "breadthSegS" + ind);
+                    $(previousDom).find("input").eq(1).attr("id", "lengthSegS" + ind);
+                    $(previousDom).find("input").eq(2).attr("id", "breadthSegE" + ind);
+                    $(previousDom).find("input").last().attr("id", "lengthSegE" + ind);
+                }
                 previousDom = domElement;
                 if (indexSkipOfFirst == false)
                     indexSkipOfFirst = true;
                 indexOffset = true;
             }
             if ((countElement.length) == (ind + 1)) {
-
-                $(domElement).html("");
-                if ((countElement.length - 5) % 3 == 0) {
+                if (index != 1) {
+                    $(domElement).html("");
+                } else {
+                    $("#breadthSegS1").attr("value","");
+                    $("#lengthSegS1").attr("value", "");
+                    $("#breadthSegE1").attr("value", "");
+                    $("#lengthSegE1").attr("value", "");
+                }
+                if ((countElement.length - 5) % 3 == 0 && index != 2) {
                     $(domElement).closest(".form-group").remove();
                 }
+                $("#CountSides").val((parseInt($("#CountSides").val()) - 1).toString());
             }
         });
 
