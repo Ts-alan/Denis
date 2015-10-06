@@ -5,26 +5,11 @@
 
 <script type="text/javascript">
     ymaps.ready(init);
-    var myMap;
-    var myPlacemark;
-    var Arr = [[]];
-    var counterArr = 0;
-    var handlerRoute;
-    var currentRoute;
-    var firstPointRoute;
-    var endPointRoute;
-    var position;
-    var identifierForDelete = 0;
-    var increment = 1;
-    var tempData;
-    var tempDataFor3 = 5;
-    var objects;
-    var identifierForDelBallon = true;
-    var identifierForCountObject = true;
-    var CountObjectInMap;
-    var massSegment = [];
-    var handlerSegment;
-
+    var myMap, myPlacemark, Arr = [[]], counterArr = 0, handlerRoute, currentRoute, firstPointRoute,
+        endPointRoute, position, identifierForDelete = 0, increment = 1, tempData, tempDataFor3 = 5,
+        objects, identifierForDelBallon = true, CountObjectInMap,
+        massSegment = [], handlerSegment, countElementSegGlobal = new Object();
+    countElementSegGlobal.length = 0;
     function init() {
 
         myMap = new ymaps.Map("map", {
@@ -218,75 +203,80 @@
     }
     //задать координаты
     function SetCoords() {
-        if (currentRoute != undefined) {
-            $("#blockStreetCoord").css("display", "inline");
-            myMap.geoObjects.add(currentRoute);
-            currentRoute.editor.start({ editWayPoints: true });
+        if (countElementSegGlobal.length == 0) {
+   
+            console.log(countElementSegGlobal.length);
+            if (currentRoute != undefined) {
+                $("#blockStreetCoord").css("display", "inline");
+                myMap.geoObjects.add(currentRoute);
+                currentRoute.editor.start({ editWayPoints: true });
 
-            $("#blockStreetCoord").parent().prev().children("input").each(function (indx, element) {
-                $(element).removeAttr("readonly");
+                $("#blockStreetCoord").parent().prev().children("input").each(function(indx, element) {
+                    $(element).removeAttr("readonly");
 
-            });
+                });
 
-            $("#blockStreetCoord").parent().prev().prev().prev().children("input").each(function (indx, element) {
-                $(element).removeAttr("readonly");
-            });
+                $("#blockStreetCoord").parent().prev().prev().prev().children("input").each(function(indx, element) {
+                    $(element).removeAttr("readonly");
+                });
 
-        }
-        else {
-            handlerRoute = function (e) {
+            } else {
+                handlerRoute = function(e) {
+                   
+                    var coords = e.get('coords');
+                    if (counterArr < 2) {
+                        Arr[counterArr] = [coords[0].toPrecision(6), coords[1].toPrecision(6)];
 
-
-                var coords = e.get('coords');
-                if (counterArr < 2) {
-                    Arr[counterArr] = [coords[0].toPrecision(6), coords[1].toPrecision(6)];
-
-                }
-                if (counterArr == 0) {
-                    firstPointRoute = new ymaps.GeoObject({
-                        geometry: {
-                            type: "Point", // тип геометрии - точка
-                            coordinates: [Arr[0][0], Arr[0][1]] // координаты точки
+                    }
+                    if (counterArr == 0) {
+                        firstPointRoute = new ymaps.GeoObject({
+                            geometry: {
+                                type: "Point", // тип геометрии - точка
+                                coordinates: [Arr[0][0], Arr[0][1]] // координаты точки
+                            },
+                            properties: {
+                                iconContent: "Начало улицы",
+                                balloonContentHeader: "<a href='#' onclick='setHandlerS()'>Удалить Обьект</a>",
+                                balloonContent: "[" + coords[0].toPrecision(6) + "," + coords[1].toPrecision(6) + "]"
+                            }
                         },
-                        properties: {
-                            iconContent: "Начало улицы",
-                            balloonContentHeader: "<a href='#' onclick='setHandlerS()'>Удалить Обьект</a>",
-                            balloonContent: "[" + coords[0].toPrecision(6) + "," + coords[1].toPrecision(6) + "]"
-                        }
-                    },
-                    { draggable: true, preset: "islands#darkGreenStretchyIcon" });
-                    firstPointRoute.events.add("dragend", function (e) {
+                        { draggable: true, preset: "islands#darkGreenStretchyIcon" });
+                        firstPointRoute.events.add("dragend", function(e) {
 
-                        var coords = firstPointRoute.geometry.getCoordinates();
-                        Arr[0] = [coords[0].toPrecision(6), coords[1].toPrecision(6)];
-                        //изменение координат при пертягивание метки
-                        var object = e.get('target');
-                        object.properties.set("balloonContent", "[" + coords[0].toPrecision(6) + "," + coords[1].toPrecision(6) + "]");
+                            var coords = firstPointRoute.geometry.getCoordinates();
+                            Arr[0] = [coords[0].toPrecision(6), coords[1].toPrecision(6)];
+                            //изменение координат при пертягивание метки
+                            var object = e.get('target');
+                            object.properties.set("balloonContent", "[" + coords[0].toPrecision(6) + "," + coords[1].toPrecision(6) + "]");
 
-                    });
+                        });
 
-                    myMap.geoObjects.add(firstPointRoute);
-                    identifierForDelete++;
+                        myMap.geoObjects.add(firstPointRoute);
+                        identifierForDelete++;
+                    }
+                    counterArr++;
+
+                    if (Arr.length == 2) {
+
+                        SetRoute(Arr);
+                        //задать несколько маршрутов
+                        //Arr = [];
+                        //counterArr = 0;
+                        myMap.events.remove('dblclick', handlerRoute);
+
+                    }
                 }
-                counterArr++;
 
-                if (Arr.length == 2) {
+                myMap.events.add('dblclick', handlerRoute);
 
-                    SetRoute(Arr);
-                    //задать несколько маршрутов
-                    //Arr = [];
-                    //counterArr = 0;
-                    myMap.events.remove('dblclick', handlerRoute);
-
-                }
             }
-
-            myMap.events.add('dblclick', handlerRoute);
-
+        } else {
+            alert('Вы не можете редактировать улицу пока на нем находится хотя бы один участок');
         }
     }
     //удаление сегмента
     function deleteSegment(index) {
+        countElementSegGlobal.length--;
 
         myMap.geoObjects.remove(myMap.geoObjects.get(massSegment[index - 1]));
         myMap.geoObjects.remove(myMap.geoObjects.get(massSegment[index - 1] - 1));
@@ -355,14 +345,14 @@
         });
         if (countElement.length == 5) {
             $("#interData+div").remove();
-            $("#segment4").after("<div>"+
-                "<button type='button' class='btn btn-success setSegment'>Задать/Изменить координаты</button>"+
-                 "<button id='SendForm' class='btn btn-warning'>Сохранить</button>"+
+            $("#segment4").after("<div>" +
+                "<button type='button' class='btn btn-success setSegment'>Задать/Изменить координаты</button>" +
+                 "<button id='SendForm' class='btn btn-warning'>Сохранить</button>" +
             "</div>");
             tempDataFor3 = 5;
         }
         increment = massSegment.length + 1;
-
+        console.log(countElementSegGlobal.length);
     }
 
 
@@ -386,12 +376,15 @@
             if (currentRoute == undefined) {
                 alert("Задайте улицу или возможно нажмите кнопку сохранить в этом пункте");
             } else {
+                
                 if (identifierForDelBallon == true) {
                     currentRoute.getPaths().get(0).balloon.destroy();
                     identifierForDelBallon = false;
                 }
+               
                 handlerSegment = function (e) {
-
+                    countElementSegGlobal.length++;
+                    console.log(countElementSegGlobal.length);
                     var coords = e.get('coords');
 
                     ymaps.route([
@@ -404,7 +397,7 @@
                         }
                     ).then(
                         function (route) {
-                            console.log(tempDataFor3);
+                           
 
                             var pathsObjects = ymaps.geoQuery(currentRoute.getPaths()),
                             edges = [];
@@ -1234,8 +1227,12 @@
         <b><u>4.Ввод данных</u></b>
     </div>
     <div>
+        <input type="file" value="" />
+    </div>
+    <div>
         <button type="button" class="btn btn-default" data-toggle="modal" data-target="#ModalTable">Ввести спецификацию разметки</button>
     </div>
+
     <div>
         <b><u>Участок 1</u></b>
     </div>
