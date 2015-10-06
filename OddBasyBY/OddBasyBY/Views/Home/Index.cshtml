@@ -325,7 +325,7 @@
                     $(previousDom).html(domElement.innerHTML);
                 }
                 //изменения содержимого сегмента
-                if (index != 1) {
+                if (countElement.length != 1) {
                     $(previousDom).attr("id", "segment" + ind + "");
                     $(previousDom).find("u").first().text("Координаты участка " + ind);
                     $(previousDom).find("input").first().attr("id", "breadthSegS" + ind);
@@ -342,7 +342,7 @@
                 if (index != 1) {
                     $(domElement).html("");
                 } else {
-                    $("#breadthSegS1").attr("value","");
+                    $("#breadthSegS1").attr("value", "");
                     $("#lengthSegS1").attr("value", "");
                     $("#breadthSegE1").attr("value", "");
                     $("#lengthSegE1").attr("value", "");
@@ -353,8 +353,14 @@
                 $("#CountSides").val((parseInt($("#CountSides").val()) - 1).toString());
             }
         });
-
-
+        if (countElement.length == 5) {
+            $("#interData+div").remove();
+            $("#segment4").after("<div>"+
+                "<button type='button' class='btn btn-success setSegment'>Задать/Изменить координаты</button>"+
+                 "<button id='SendForm' class='btn btn-warning'>Сохранить</button>"+
+            "</div>");
+            tempDataFor3 = 5;
+        }
         increment = massSegment.length + 1;
 
     }
@@ -398,7 +404,7 @@
                         }
                     ).then(
                         function (route) {
-
+                            console.log(tempDataFor3);
 
                             var pathsObjects = ymaps.geoQuery(currentRoute.getPaths()),
                             edges = [];
