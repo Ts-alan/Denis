@@ -22,6 +22,13 @@ namespace OddBasyBY.Controllers
             return View();
         }
 
+        public ActionResult Table()
+        {
+
+
+            return View();
+        }
+
         public void SaveSuccess(City city, Street street, [ModelBinder(typeof(CustomModelBinderForSegment))] ICollection<Segment> segment, [ModelBinder(typeof(CustomModelBinderForModels))]ICollection<SpecificationofRM> models)
         {
             //if (

@@ -7,7 +7,7 @@
     ymaps.ready(init);
     var myMap, myPlacemark, Arr = [[]], counterArr = 0, handlerRoute, currentRoute, firstPointRoute,
         endPointRoute, position, identifierForDelete = 0, increment = 1, tempData, tempDataFor3 = 5,
-        objects, identifierForDelBallon = true, CountObjectInMap,
+        objects, identifierForDelBallon = true, CountObjectInMap, transfercurrentRoute,
         massSegment = [], handlerSegment, countElementSegGlobal = new Object();
     countElementSegGlobal.length = 0;
     function init() {
@@ -204,25 +204,25 @@
     //задать координаты
     function SetCoords() {
         if (countElementSegGlobal.length == 0) {
-   
+
             console.log(countElementSegGlobal.length);
             if (currentRoute != undefined) {
                 $("#blockStreetCoord").css("display", "inline");
                 myMap.geoObjects.add(currentRoute);
                 currentRoute.editor.start({ editWayPoints: true });
-
-                $("#blockStreetCoord").parent().prev().children("input").each(function(indx, element) {
+               
+                $("#blockStreetCoord").parent().prev().children("input").each(function (indx, element) {
                     $(element).removeAttr("readonly");
 
                 });
 
-                $("#blockStreetCoord").parent().prev().prev().prev().children("input").each(function(indx, element) {
+                $("#blockStreetCoord").parent().prev().prev().prev().children("input").each(function (indx, element) {
                     $(element).removeAttr("readonly");
                 });
 
             } else {
-                handlerRoute = function(e) {
-                   
+                handlerRoute = function (e) {
+
                     var coords = e.get('coords');
                     if (counterArr < 2) {
                         Arr[counterArr] = [coords[0].toPrecision(6), coords[1].toPrecision(6)];
@@ -241,7 +241,7 @@
                             }
                         },
                         { draggable: true, preset: "islands#darkGreenStretchyIcon" });
-                        firstPointRoute.events.add("dragend", function(e) {
+                        firstPointRoute.events.add("dragend", function (e) {
 
                             var coords = firstPointRoute.geometry.getCoordinates();
                             Arr[0] = [coords[0].toPrecision(6), coords[1].toPrecision(6)];
@@ -373,15 +373,17 @@
             if ($(eventObject.target).next("button").css("display") == "none") {
                 $("#SendForm").css("display", "inline-block");
             }
-            if (currentRoute == undefined) {
+            if (currentRoute == undefined || $("#blockStreetCoord").css("display") == "inline") {
                 alert("Задайте улицу или возможно нажмите кнопку сохранить в этом пункте");
             } else {
-                
+
                 if (identifierForDelBallon == true) {
+                    console.log(currentRoute.getPaths().getBounds());
                     currentRoute.getPaths().get(0).balloon.destroy();
+                    
                     identifierForDelBallon = false;
                 }
-               
+
                 handlerSegment = function (e) {
                     countElementSegGlobal.length++;
                     console.log(countElementSegGlobal.length);
@@ -397,7 +399,7 @@
                         }
                     ).then(
                         function (route) {
-                           
+
 
                             var pathsObjects = ymaps.geoQuery(currentRoute.getPaths()),
                             edges = [];
@@ -616,7 +618,7 @@
                 });
 
                 $(this).css("display", "none");
-                currentRoute.editor.start({ editWayPoints: false });
+                //currentRoute.editor.start({ editWayPoints: false });
                 if (currentRoute != undefined) {
                     myMap.geoObjects.remove(currentRoute);
                 }
