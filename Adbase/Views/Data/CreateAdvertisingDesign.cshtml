@@ -362,14 +362,14 @@
 
                 <div>
                     <label for="Breadth">Широта </label>
-                    <input class="text-box single-line ui-autocomplete-input" data-val="true" data-val-required="Введите значение " type="text" name="Breadth" id="Breadth">
-                    <span class="field-validation-valid" data-valmsg-for="Breadth" data-valmsg-replace="true"></span>
+                    <input class="text-box single-line ui-autocomplete-input" data-val="true"  type="text" name="Breadth" id="Breadth">
+                    <span  data-valmsg-for="Breadth" data-valmsg-replace="true"></span>
 
                 </div>
 
                 <div>
                     <label for="Height">Долгота</label>
-                    <input type="text" name="Height" data-val="true" data-val-required="Введите значение " id="Height">
+                    <input type="text" name="Height" data-val="true"  id="Height">
 
                     @Html.ValidationMessageFor(model => model.Height)
 
@@ -421,15 +421,15 @@
 
             <div class="form-group">
                 <label for="ScanPassport_1Sides">Скан паспорта (стор 1)</label>
-                <input type="file" name="ScanPassport_1Sides" data-val="true" data-val-required="Введите значение " accept="image/jpeg" /><br />
-                <span class="field-validation-valid" data-valmsg-for="ScanPassport_1Sides" data-valmsg-replace="true"></span>
+                <input type="file" name="ScanPassport_1Sides"  accept="image/jpeg" /><br />
+                <span data-valmsg-for="ScanPassport_1Sides" data-valmsg-replace="true"></span>
                 @Html.Raw("Не более 1 МБ")
             </div>
 
             <div class="form-group">
                 <label for="ScanPassport_2Sides">Скан паспорта (стор 2)</label>
-                <input type="file" name="ScanPassport_2Sides" data-val="true" data-val-required="Введите значение " accept="image/jpeg" /><br />
-                <span class="field-validation-valid" data-valmsg-for="ScanPassport_2Sides" data-valmsg-replace="true"></span>
+                <input type="file" name="ScanPassport_2Sides"  accept="image/jpeg" /><br />
+                <span  data-valmsg-for="ScanPassport_2Sides" data-valmsg-replace="true"></span>
                 @Html.Raw("Не более 1 МБ")
             </div>
 
@@ -451,7 +451,7 @@
             <div class="form-group">
 
                 <label for="Scan1SidesWithFinancialManagement">Скан 1 страницы договора с финанаосвым управлением</label>
-                <input type="file" name="Scan1SidesWithFinancialManagement" accept="image/jpeg" data-val="true" data-val-required="Выберите файл для загрузки" /><br />
+                <input type="file" name="Scan1SidesWithFinancialManagement" accept="image/jpeg" /><br />
                 <span class="field-validation-valid" data-valmsg-for="Scan1SidesWithFinancialManagement" data-valmsg-replace="true"></span>
                 @Html.Raw("Не более 1 МБ")
 

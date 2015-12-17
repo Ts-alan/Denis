@@ -20,12 +20,12 @@ namespace Sciencecom.Models
 
     public class SurfaceConstructionMetaData
     {
-        [Required(ErrorMessage = "Введите значение ")]
+       
         public int Height { get; set; }
-        [Required(ErrorMessage = "Введите значение ")]
+     
         public int Width { get; set; }
        
-        [Required(ErrorMessage = "Введите значение ")]
+     
         public int Space { get; set; }
     }
   
@@ -47,21 +47,21 @@ namespace Sciencecom.Models
          [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
          [DataType(DataType.Date)]
          public Nullable<System.DateTime> TheDateOfTheContract { get; set; }
-         [Required(ErrorMessage = "Введите значение ")]
+      
          public Nullable<System.Guid> Locality_id { get; set; }
-         [Required(ErrorMessage = "Введите значение ")]
+   
          public string OwnerPlacements { get; set; }
-         [Required(ErrorMessage = "Введите значение ")]
+       
          public Nullable<System.Guid> PropertyLocation_id { get; set; }
     
-         [Required(ErrorMessage = "Введите значение ")]
+     
          public string C_ContractFinancialManagement { get; set; }
 
          [DataType(DataType.Date)]
          [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
          public Nullable<System.DateTime> PlannedInstallationDate { get; set; }
 
-         [Required(ErrorMessage = "Введите значение ")]
+         
          public string C_PassportAdvertising { get; set; }
 
          [DataType(DataType.Date)]
@@ -74,7 +74,7 @@ namespace Sciencecom.Models
         
         public string Status { get; set; }
 
-        [Required(ErrorMessage = "Введите значение ")]
+        
         public Nullable<float> Height { get; set; }
 
         [DataType(DataType.Date)]
@@ -85,18 +85,17 @@ namespace Sciencecom.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public Nullable<System.DateTime> DateOfTakenPassport { get; set; }
               
-        [Required(ErrorMessage = "Введите значение ")]
+       
         public Nullable<float> Breadth { get; set; }
 
-        [Required(ErrorMessage = "Введите значение ")]
+      
         public Nullable<int> Owner_Id { get; set; }
 
         [StringLength(50, ErrorMessage = "не более 50 символов")]
-        [Required(ErrorMessage = "Введите значение")]
+       
         [Display(Name = "Улица 1")]
         public string Street1 { get; set; }
 
-        [Required(ErrorMessage = "Введите значение")]
         public string House1 { get; set; }
 
    
@@ -107,24 +106,24 @@ namespace Sciencecom.Models
         public string FromStreet { get; set; }
 
         [DataType(DataType.Date)]
-        [Required(ErrorMessage = "Введите значение")]
+      
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public Nullable<System.DateTime> StartDate { get; set; }
         
-       [Required(ErrorMessage = "Введите значение")]
+      
        [DataType(DataType.Date)]
        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
        public Nullable<System.DateTime> EndDate { get; set; }
 
-       [Required(ErrorMessage = "Введите значение")]
+      
        public  string UniqueNumber { get; set; }
 
        public Nullable<System.Guid> TheElementOfTheRoadNetwork_id { get; set; }
           
-       [Required(ErrorMessage = "Выберете значение")]
+      
        public Nullable<System.Guid> Status_Id { get; set; }
 
-       [Required(ErrorMessage = "Выберете значение")]
+     
        public string Code { get; set; }
     }
 
