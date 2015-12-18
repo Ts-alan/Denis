@@ -274,7 +274,7 @@
 
         <div class="form-group" >
             <label for="Status" >Статус</label>
-            @Html.DropDownListFor(a => a.Status_Id, new SelectList(Status, "id", "Value",Status.ElementAt(6).id))
+            @Html.DropDownListFor(a => a.Status_Id, new SelectList(Status, "id", "Value",Status.ElementAt(1).id))
             @Html.ValidationMessageFor(model => model.Status_Id)
         </div>
 
