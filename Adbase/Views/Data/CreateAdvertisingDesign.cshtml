@@ -438,11 +438,11 @@
         <div class="form-horizontal">
 
             <div class="form-group" style="margin-bottom: 5px">
-                <label for="C_ContractFinancialManagement">№ договора с финансовым управлением</label>
+                <label for="C_ContractFinancialManagement" style="display: none">№ договора с финансовым управлением</label>
                 @Html.EditorFor(model => model.C_ContractFinancialManagement)
                 @Html.ValidationMessageFor(model => model.C_ContractFinancialManagement)
 
-                <label for="TheDateOfTheContract">Дата договора</label>
+                <label for="TheDateOfTheContract" style="display: none">Дата договора</label>
                 @Html.EditorFor(model => model.TheDateOfTheContract)
                 @Html.ValidationMessageFor(model => model.TheDateOfTheContract)
 
@@ -450,10 +450,10 @@
 
             <div class="form-group">
 
-                <label for="Scan1SidesWithFinancialManagement">Скан 1 страницы договора с финанаосвым управлением</label>
+                <label for="Scan1SidesWithFinancialManagement" style="display: none">Скан 1 страницы договора с финанаосвым управлением</label>
                 <input type="file" name="Scan1SidesWithFinancialManagement" accept="image/jpeg" /><br />
                 <span class="field-validation-valid" data-valmsg-for="Scan1SidesWithFinancialManagement" data-valmsg-replace="true"></span>
-                @Html.Raw("Не более 1 МБ")
+                @*@Html.Raw("Не более 1 МБ")*@
 
             </div>
         </div>
