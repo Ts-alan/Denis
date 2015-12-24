@@ -1,0 +1,156 @@
+﻿@model Sciencecom.Models.LightConstruction
+@using Microsoft.AspNet.Identity.EntityFramework
+@using Microsoft.AspNet.Identity
+@using Sciencecom.Models
+@{
+    ViewBag.Title = "Создать световой указатель (на соласовании)";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    SelectList owners = new SelectList(new SciencecomEntities().Owners.Select(m => m.Name).ToList());
+}
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+<script src="~/Scripts/Autocomplete.js"></script>
+<script src="~/Scripts/AddPlacamerkToMap.js"></script>
+
+<h2>Создать световой указатель (на соласовании)</h2>
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.ValidationMessage("Error")
+        <div class="form-group">
+            @Html.Label("Собственник:", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @{
+    var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+    ApplicationUser user = um.FindByName(User.Identity.GetUserName());
+    string role = user.Roles.Select(m => m.Role.Name).First().ToString();
+    if ((role == "ChiefEditOwn") || (role == "SupplierEditOwn"))
+    {
+        @Html.DropDownList("Owner", new SelectList(new[] { user.Company, "Неизвестно" }))
+    }
+    else
+    {
+        @Html.DropDownList("Owner", owners)
+    }
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Locality, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Locality, "Минск")
+                @Html.ValidationMessageFor(model => model.Locality)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Street1, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Street1)
+                @Html.ValidationMessageFor(model => model.Street1)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Street2, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Street2)
+                @Html.ValidationMessageFor(model => model.Street2)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FromStreet, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FromStreet)
+                @Html.ValidationMessageFor(model => model.FromStreet)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Support, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Support)
+                @Html.ValidationMessageFor(model => model.Support)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.StartDate, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*@Html.EditorFor(model => model.StartDate)
+                    @Html.ValidationMessageFor(model => model.StartDate)*@
+                <input type="date" id="davaToday" name="startDate">
+                <script>
+                    document.getElementById('davaToday').valueAsDate = new Date();
+                </script>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsSocial, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.IsSocial)
+                @Html.ValidationMessageFor(model => model.IsSocial)
+            </div>
+        </div>
+        @Html.ValidationMessage("Photo")
+        <div class="form-group">
+            @Html.Label("Паспорт ТСМО(стр 1):", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" name="passport1" accept="image/jpeg" data-val-required="Выберите файл для загрузки" /><br />
+                @Html.Raw("Не более 1 МБ")
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Паспорт ТСМО(стр 2):", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" name="passport2" accept="image/jpeg" data-val-required="Выберите файл для загрузки" /><br />
+                @Html.Raw("Не более 1 МБ")
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Заявление:", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" name="zajavlenie" accept="image/jpeg" data-val-required="Выберите файл для загрузки" /><br />
+                @Html.Raw("Не более 1 МБ")
+            </div>
+        </div>
+        <div class="form-group" style="width:600px; height:500px" id="map">
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2" for="Shirota">Широта</label>
+            <div class="col-md-10">
+                <input type="text" id="Shirota" name="Shirota" readonly required />
+                @Html.ValidationMessageFor(model => model.Shirota)
+                @*@Html.EditorFor(model => model.Shirota)
+                <span class="field-validation-valid" data-valmsg-for="Shirota" data-valmsg-replace="true"></span>*@
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2" for="Dolgota">Долгота</label>
+            <div class="col-md-10">
+                <input type="text" id="Shirota" name="Shirota" readonly required />
+                @Html.ValidationMessageFor(model => model.Shirota)
+                @*@Html.EditorFor(model => model.Dolgota)
+                <span class="field-validation-valid" data-valmsg-for="Dolgota" data-valmsg-replace="true"></span>*@
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Создать" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+
+}
+
+<div>
+    @Html.ActionLink("Вернуться к списку", "Light")
+</div>

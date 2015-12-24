@@ -1,0 +1,112 @@
+﻿@model List<int>
+@using Sciencecom.Models
+@using Microsoft.AspNet.Identity.EntityFramework
+@using Microsoft.AspNet.Identity
+@{
+    var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+    ApplicationUser user = um.FindByName(User.Identity.GetUserName());
+    string role = user.Roles.Select(m => m.Role.Name).First().ToString();
+    int idConstruction = Model[0];
+    int status = Model[1];
+    string idImage = idConstruction.ToString() + "imageStatus";
+}
+
+<div>
+    @if (status == 0)
+    {
+        <img id="@idImage" src="/Content/Icons/0.png" title="Новый объект" />
+        if ((role == "Admin") || (role == "IllegalEdit"))
+        {
+            SelectList statuses = new SelectList(new[] { "Новый", "Рассматривается", "Нелегальный", "Легальный", "Демонтирован" });
+            @Html.DropDownList("Status", statuses, new { id = idConstruction });
+        }
+    }
+    @if (status == 1)
+    {
+        <img id="@idImage" src="/Content/Icons/1.png" title="Рассматривается" />
+        if ((role == "Admin") || (role == "IllegalEdit"))
+        {
+            SelectList statuses = new SelectList(new[] { "Рассматривается", "Нелегальный", "Легальный", "Демонтирован" });
+            @Html.DropDownList("Status", statuses, new { id = idConstruction });
+        }
+    }
+    @if (status == 2)
+    {
+        <img id="@idImage" src="/Content/Icons/2.png" title="Нелегальный объект" />
+        if ((role == "Admin") || (role == "IllegalEdit"))
+        {
+            SelectList statuses = new SelectList(new[] { "Нелегальный", "Легальный", "Рассматривается", "Демонтирован" });
+            @Html.DropDownList("Status", statuses, new { id = idConstruction });
+        }
+    }
+    @if (status == 3)
+    {
+        <img id="@idImage" src="/Content/Icons/3.png" title="Легальный объект" />
+        if ((role == "Admin") || (role == "IllegalEdit"))
+        {
+            SelectList statuses = new SelectList(new[] { "Легальный", "Нелегальный", "Рассматривается", "Демонтирован" });
+            @Html.DropDownList("Status", statuses, new { id = idConstruction });
+        }
+    }
+    @if (status == 4)
+    {
+        <img id="@idImage" src="/Content/Icons/4.png" title="Демонтирован" />
+        if ((role == "Admin") || (role == "IllegalEdit"))
+        {
+            SelectList statuses = new SelectList(new[] { "Демонтирован", "Легальный", "Нелегальный", "Рассматривается" });
+            @Html.DropDownList("Status", statuses, new { id = idConstruction });
+        }
+    }
+</div>
+<script>
+    $("select#@idConstruction").change(function () {
+        var currentText = $("select#@idConstruction option:first").text();
+        var newOption = $("select#@idConstruction option:selected").text();
+        if (currentText != newOption) {
+            $.ajax({
+                type: "POST",
+                url: "/Illegal/ChangeStatus/",
+                data: { id: "@idConstruction", status: newOption }
+            }).success(function () {
+                ChangeDropDown(newOption, "select#@idConstruction");
+                if (currentText == "Новый") {
+                    @{
+                        string idTdTagNoting = "#" + idConstruction.ToString() + "notingDate";
+                    }
+                    $("@idTdTagNoting").html("@DateTime.Now.Date.ToShortDateString()")
+                }
+                if ((newOption != "Рассматривается")) {
+                    @{
+                        string idTdTagSolving = "#" + idConstruction.ToString() + "solvingDate";
+                    }
+                    $("@idTdTagSolving").html("@DateTime.Now.Date.ToShortDateString()")
+                }
+                if (newOption == "Рассматривается") {
+                     @{
+                         string idTdTagSolving_ = "#" + idConstruction.ToString() + "solvingDate";
+                     }
+                    $("@idTdTagSolving_").html("-")
+                }
+                if (newOption == "Рассматривается") {
+                    $("#@idImage").attr("src", "/Content/Icons/1.png");
+                } else if (newOption == "Нелегальный") {
+                    $("#@idImage").attr("src", "/Content/Icons/2.png");
+                } else if (newOption == "Легальный") {
+                    $("#@idImage").attr("src", "/Content/Icons/3.png");
+                } else if (newOption == "Демонтирован") {
+                    $("#@idImage").attr("src", "/Content/Icons/4.png");
+                } else {
+                    new Messi('Ошибка при смене иконки. Обновите страницу.',
+                    { title: 'Ошибка', titleClass: 'anim error', buttons: [{ id: 0, label: 'Закрыть', val: 'X' }] });
+                }
+            }).fail(function () {
+                new Messi('При смене статуса объекта произошла ошибка. Статус не изменен.',
+                    { title: 'Ошибка', titleClass: 'anim error', buttons: [{ id: 0, label: 'Закрыть', val: 'X' }] });
+            })
+        }
+    });
+</script>
+
+
+
+

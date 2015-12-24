@@ -1,0 +1,628 @@
+﻿@using System.Data.Entity.Core.Common.EntitySql
+@using System.Web.Razor.Generator
+@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.EntityFramework
+@using Newtonsoft.Json
+@using Sciencecom.Models
+@model  Sciencecom.Models.Billboards1
+@{
+    ViewBag.Title = "EditBilboard";
+    SelectList owners = new SelectList(new SciencecomEntities().Owners.Select(m => m.Name));
+    int increment = 0;
+    int sideACount;
+    int sideBCount;
+    int sideCCount;
+    int sideDCount=0;
+    int sideECount=0;
+    
+    ICollection<Surface> sideA=null;
+    ICollection<Surface> sideB=null;
+    ICollection<Surface> sideC=null;
+    ICollection<Surface> sideD =null;
+    ICollection<Surface> sideE =null;
+    
+    try
+    {
+        sideACount = Model.Sides.SingleOrDefault(a => a.Name == "А").Surfaces.Count;
+        sideA= Model.Sides.SingleOrDefault(a => a.Name == "А").Surfaces;
+    }
+    catch
+    {
+        sideACount = 0;
+    }
+    try
+    {
+        sideBCount = Model.Sides.SingleOrDefault(a => a.Name == "B").Surfaces.Count;
+        sideB = Model.Sides.SingleOrDefault(a => a.Name == "B").Surfaces;
+    }
+    catch
+    {
+        sideBCount =0;
+    }
+    try
+    {
+      sideCCount = Model.Sides.Single(a => a.Name == "C").Surfaces.Count;
+      sideC = Model.Sides.SingleOrDefault(a => a.Name == "C").Surfaces;
+    }
+    catch
+    {
+        sideCCount = 0;
+    }
+    try
+    {
+        sideDCount = Model.Sides.Single(a => a.Name == "D").Surfaces.Count;
+        sideD = Model.Sides.SingleOrDefault(a => a.Name == "D").Surfaces;
+    }
+    catch
+    {
+        sideDCount = 0;
+    }
+    try
+    {
+        sideECount = Model.Sides.Single(a => a.Name == "E").Surfaces.Count;
+        sideE = Model.Sides.SingleOrDefault(a => a.Name == "E").Surfaces;
+    }
+    catch
+    {
+        sideECount = 0;
+    }
+
+}
+@*@Scripts.Render("~/Content/Map")*@
+<script src="~/Scripts/EditPlacemark.js"></script>
+<script src="~/Scripts/Autocomplete.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var i = 0;
+        var j = 0;
+        var B = 0;
+        var C = 0;
+        var D = 0;
+        var E = 0;
+        //выпадающий список
+        $("#SideIndex").change(function() {
+            var selectIndex = document.getElementById("SideIndex").selectedIndex;
+            if (selectIndex == 0) {
+                $("#SizeB").css("display", "none");
+                $("#SizeC").css("display", "none");
+                $("#SizeD").css("display", "none");
+                $("#SizeE").css("display", "none");
+                $("#CountSize").val("1");
+            }
+            if (selectIndex == 1) {
+                $("#SizeB").css("display", "block");
+                $("#SizeC").css("display", "none");
+                $("#SizeD").css("display", "none");
+                $("#SizeE").css("display", "none");
+                $("#CountSize").val("2");
+            }
+            if (selectIndex == 2) {
+                $("#SizeB").css("display", "block");
+                $("#SizeC").css("display", "block");
+                $("#SizeD").css("display", "none");
+                $("#SizeE").css("display", "none");
+                $("#CountSize").val("3");
+            }
+            if (selectIndex == 3) {
+                $("#SizeB").css("display", "block");
+                $("#SizeC").css("display", "block");
+                $("#SizeD").css("display", "block");
+                $("#SizeE").css("display", "none");
+                $("#CountSize").val("4");
+            }
+            if (selectIndex == 4) {
+                $("#SizeB").css("display", "block");
+                $("#SizeC").css("display", "block");
+                $("#SizeD").css("display", "block");
+                $("#SizeE").css("display", "block");
+                $("#CountSize").val("5");
+            }
+        });
+
+        function InsertOn() {
+            $(".each1 input").eq(0).on('change', function (e) {
+                var temp1 = $(this).val();
+                $(".each1 input").each(function (indx) {
+                    $(this).val(temp1);
+                });
+            });
+            $(".each2 input").eq(0).on('change', function (e) {
+                var temp1 = $(this).val();
+                $(".each2 input").each(function (indx) {
+                    $(this).val(temp1);
+                });
+            });
+            $(".each3 input").eq(0).on('change', function (e) {
+                var temp1 = $(this).val();
+                $(".each3 input").each(function (indx) {
+                    $(this).val(temp1);
+                });
+            });
+            $(".each4 input").eq(0).on('change', function (e) {
+                var temp1 = $(this).attr();
+                $(".each4 input").each(function (indx) {
+                    $(this).val(temp1);
+                });
+            });
+            $(".each5 input").eq(0).on('change', function (e) {
+                var temp1 = $(this).val();
+                $(".each5 input").each(function (indx) {
+                    $(this).val(temp1);
+                });
+            });
+            $(".each6 input").eq(0).on('change', function (e) {
+                var temp1 = $(this).val();
+                $(".each6 input").each(function (indx) {
+                    $(this).val(temp1);
+                });
+            });
+            $(".each7 input").eq(0).on('change', function (e) {
+                var temp1 = $(this).val();
+                $(".each7 input").each(function (indx) {
+                    $(this).val(temp1);
+                });
+            });
+
+        }
+
+        function Increment() {
+            return i++;
+        };
+
+
+        //скрипт для добавить площадь
+        $("#AddButton1").click(function () {
+            $.get('@Url.Action("PartialBilboard","Data")', { param: Increment(), side: "А" }).success(function (e) {
+                $("#InsertPartial1").before(e);
+                InsertOn();
+                
+            });
+        });
+        $("#AddButton2").click(function () {
+            $.get('@Url.Action("PartialBilboard","Data")', { param: Increment(), side: "B" }).success(function (e) {
+                $("#InsertPartial2").before(e);
+                
+            });
+        });
+        $("#AddButton3").click(function () {
+            $.get('@Url.Action("PartialBilboard","Data")', { param: Increment(), side: "C" }).success(function (e) {
+                $("#InsertPartial3").before(e);
+                
+            });
+        });
+        $("#AddButton4").click(function () {
+            var tempIncrement = Increment();
+            $.get('@Url.Action("PartialBilboard","Data")', { param: tempIncrement, side: "D" }).success(function (e) {
+                $("#InsertPartial4").before(e);
+                
+                duplicationSurfaces();
+            });
+        });
+        $("#AddButton5").click(function () {
+            var tempIncrement = Increment();
+            $.get('@Url.Action("PartialBilboard","Data")', { param: tempIncrement, side: "E" }).success(function (e) {
+                $("#InsertPartial5").before(e);
+                duplicationSurfaces();
+            });
+        });
+
+        //выпадающий списко и поверхности
+        switch ("@Model.Sides.Count") {
+            case "1":
+                $("#SideIndex")[0].value = 1;
+                $('#SideIndex').trigger('change');
+                FillingsideACount();
+                break;
+            case "2":
+                $("#SideIndex")[0].value = 2;
+                $('#SideIndex').trigger('change');
+                FillingsideACount();
+                FillingsideBCount();
+                break;
+            case "3":
+                $("#SideIndex")[0].value = 3;
+                $('#SideIndex').trigger('change');
+                FillingsideACount();
+                FillingsideBCount();
+                FillingsideCCount();
+                break;
+            case "4":
+                $("#SideIndex")[0].value = 4;
+                $('#SideIndex').trigger('change');
+                FillingsideACount();
+                FillingsideBCount();
+                FillingsideCCount();
+                FillingsideDCount();
+                break;
+            case "5":
+                $("#SideIndex")[0].value = 5;
+                $('#SideIndex').trigger('change');
+                FillingsideACount();
+                FillingsideBCount();
+                FillingsideCCount();
+                FillingsideDCount();
+                FillingsideECount();
+                break;
+            default:
+                alert('Я таких значений не знаю');
+
+
+        }
+
+
+        function FillingsideACount() {
+            for (var i1 = 0; i1 < "@sideACount"; i1++) {
+                fillsideACount();
+
+            }
+        }
+
+        function FillingsideBCount() {
+            for (var i2 = 0; i2 < "@sideBCount"; i2++) {
+                fillsideBCount();
+            }
+        }
+
+        function FillingsideCCount() {
+            for (var i3 = 0; i3 < "@sideCCount"; i3++) {
+                fillsideCCount();
+            }
+        }
+
+        function FillingsideDCount() {
+            for (var i3 = 0; i3 < "@sideDCount"; i3++) {
+                fillingsideDCount();
+            }
+        }
+
+        function FillingsideECount() {
+            for (var i3 = 0; i3 < "@sideECount"; i3++) {
+                fillingsideECount();
+            }
+        }
+
+              function fillsideACount() {
+                    $.ajax('@Url.Action("PartialBilboard", "Data")',{async:false,data:{ param: Increment(), size: "А" }}).success(function (e) {
+                        var ArrayOfSurfacesA = @Html.Raw(JsonConvert.SerializeObject(sideA, Formatting.Indented, new JsonSerializerSettings
+                        {
+                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                        }));
+                $("#InsertPartial1").before(e);
+                InsertOn();
+                $("[name='[" + j + "].Height']").val(ArrayOfSurfacesA[j].Height);
+                $("[name='[" + j + "].Width']").val(ArrayOfSurfacesA[j].Width);
+                $("[name='[" + j + "].Space']").val(ArrayOfSurfacesA[j].Space);
+                $("[name='[" + j + "].Story']").val(ArrayOfSurfacesA[j].Story);
+                $("[name='[" + j + "].StartDate']").val(ArrayOfSurfacesA[j].StartDate.substring(0, 10));
+                $("[name='[" + j + "].EndDate']").val(ArrayOfSurfacesA[j].EndDate.substring(0, 10));
+                if (ArrayOfSurfacesA[j].IsSocial == true) {
+                    $("[name='[" + j + "].IsSocial']").attr('checked', "");
+                }
+                j++;
+            });
+        }
+
+        function fillsideBCount() {
+            $.ajax('@Url.Action("PartialBilboard", "Data")', { async: false, data: { param: Increment(), size: "B" } }).success(function(e) {
+                var ArrayOfSurfacesB = @Html.Raw(JsonConvert.SerializeObject(sideB, Formatting.Indented, new JsonSerializerSettings
+                                       {
+                                           ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                                       }));
+                $("#InsertPartial2").before(e);
+                $("[name='[" + j + "].Height']").val(ArrayOfSurfacesB[B].Height);
+                $("[name='[" + j + "].Width']").val(ArrayOfSurfacesB[B].Width);
+                $("[name='[" + j + "].Space']").val(ArrayOfSurfacesB[B].Space);
+                $("[name='[" + j + "].Story']").val(ArrayOfSurfacesB[B].Story);
+                $("[name='[" + j + "].StartDate']").val(ArrayOfSurfacesB[B].StartDate.substring(0, 10));
+                $("[name='[" + j + "].EndDate']").val(ArrayOfSurfacesB[B].EndDate.substring(0, 10));
+                if (ArrayOfSurfacesB[B].IsSocial == true) {
+                    $("[name='[" + j + "].IsSocial']").attr('checked', "");
+                }
+                j++;
+                B++;
+            });
+
+        }
+
+        function fillsideCCount() {
+            $.ajax('@Url.Action("PartialBilboard", "Data")', { async: false, data: { param: Increment(), size: "C" } }).success(function(e) {
+                var ArrayOfSurfacesС = @Html.Raw(JsonConvert.SerializeObject(sideC, Formatting.Indented, new JsonSerializerSettings
+                                       {
+                                           ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                                       }));
+
+                $("#InsertPartial3").before(e);
+                $("[name='[" + j + "].Height']").val(ArrayOfSurfacesС[C].Height);
+                $("[name='[" + j + "].Width']").val(ArrayOfSurfacesС[C].Width);
+                $("[name='[" + j + "].Space']").val(ArrayOfSurfacesС[C].Space);
+                $("[name='[" + j + "].Story']").val(ArrayOfSurfacesС[C].Story);
+                $("[name='[" + j + "].StartDate']").val(ArrayOfSurfacesС[C].StartDate.substring(0, 10));
+                $("[name='[" + j + "].EndDate']").val(ArrayOfSurfacesС[C].EndDate.substring(0, 10));
+                if (ArrayOfSurfacesС[C].IsSocial == true) {
+                    $("[name='[" + j + "].IsSocial']").attr('checked', "");
+                }
+                j++;
+                C++;
+
+            });
+        }
+
+        function fillingsideDCount() {
+            $.ajax('@Url.Action("PartialBilboard", "Data")', { async: false, data: { param: Increment(), size: "D" } }).success(function(e) {
+                var ArrayOfSurfacesD = @Html.Raw(JsonConvert.SerializeObject(sideD, Formatting.Indented, new JsonSerializerSettings
+                                       {
+                                           ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                                       }));
+
+                $("#InsertPartial4").before(e);
+                $("[name='[" + j + "].Height']").val(ArrayOfSurfacesD[D].Height);
+                $("[name='[" + j + "].Width']").val(ArrayOfSurfacesD[D].Width);
+                $("[name='[" + j + "].Space']").val(ArrayOfSurfacesD[D].Space);
+                $("[name='[" + j + "].Story']").val(ArrayOfSurfacesD[D].Story);
+                $("[name='[" + j + "].StartDate']").val(ArrayOfSurfacesD[D].StartDate.substring(0,10));
+                $("[name='[" + j + "].EndDate']").val(ArrayOfSurfacesD[D].EndDate.substring(0,10));
+                if (ArrayOfSurfacesD[D].IsSocial == true) {
+                    $("[name='[" + j + "].IsSocial']").attr('checked', "");
+                }
+                j++;D++;
+
+            });
+        }
+
+        function fillingsideECount() {
+            $.ajax('@Url.Action("PartialBilboard", "Data")', { async: false, data: { param: Increment(), size: "E" } }).success(function(e) {
+                var ArrayOfSurfacesE = @Html.Raw(JsonConvert.SerializeObject(sideE, Formatting.Indented, new JsonSerializerSettings
+                {
+                                           ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                }));
+
+            $("#InsertPartial5").before(e);
+            $("[name='[" + j + "].Height']").val(ArrayOfSurfacesE[E].Height);
+            $("[name='[" + j + "].Width']").val(ArrayOfSurfacesE[E].Width);
+            $("[name='[" + j + "].Space']").val(ArrayOfSurfacesE[E].Space);
+            $("[name='[" + j + "].Story']").val(ArrayOfSurfacesE[E].Story);
+            $("[name='[" + j + "].StartDate']").val(ArrayOfSurfacesE[E].StartDate.substring(0,10));
+            $("[name='[" + j + "].EndDate']").val(ArrayOfSurfacesE[E].EndDate.substring(0,10));
+            if (ArrayOfSurfacesE[E].IsSocial == true) {
+                $("[name='[" + j + "].IsSocial']").attr('checked', "");
+            }
+            j++;E++;
+
+        });
+    }
+    });
+    $(function () {
+        EditPlacemark("@Model.Breadth", "@Model.Height");
+    });
+</script>
+<h2> Добавить новый билборд</h2>
+@*<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">*@
+
+@using (Html.BeginForm("EditBillboard", "Data", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.ValidationMessage("Error")
+        @*Собственник*@
+        <div class="form-group">
+            @Html.Label("Собственник:", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Owner", owners)
+
+            </div>
+        </div>
+        @*Населенный Пункт*@
+        <div class="form-group">
+            @Html.Label("Населенный Пункт:", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Locality)
+                @Html.ValidationMessageFor(model => model.Street1)
+            </div>
+        </div>
+        @*улица 1*@
+        <div class="form-group">
+            @Html.Label("Улица 1", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Street1)
+                @Html.ValidationMessageFor(model => model.Street1)
+            </div>
+        </div>
+        @*дом*@
+        <div class="form-group">
+            @Html.Label("Дом", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.House1)
+                @Html.ValidationMessageFor(model => model.House1)
+            </div>
+        </div>
+        @*улица 2*@
+        <div class="form-group">
+            @Html.Label("Улица 2", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Street2)
+                @Html.ValidationMessageFor(model => model.Street2)
+            </div>
+        </div>
+        @*со стороны улицы 3 *@
+        <div class="form-group">
+            @Html.Label("Cо стороны улицы 3 ", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FromStreet)
+                @Html.ValidationMessageFor(model => model.FromStreet)
+            </div>
+        </div>
+        @*комментарий*@
+        <div class="form-group">
+            @Html.Label("комментарий", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Comment)
+                @Html.ValidationMessageFor(model => model.Comment)
+            </div>
+        </div>
+        @*номер договора *@
+        <div class="form-group">
+            @Html.Label("номер договора ", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ContractNumber)
+                @Html.ValidationMessageFor(model => model.ContractNumber)
+            </div>
+        </div>
+        @*номер паспорта  *@
+        <div class="form-group">
+            @Html.Label("номер паспорта ", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PassportNumber)
+                @Html.ValidationMessageFor(model => model.PassportNumber)
+            </div>
+        </div>
+
+        @*вид рекламы   *@
+        <div class="form-group">
+            @Html.Label("Вид рекламы ", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("TypeOfAdvertising", new SelectList(new[] { "Социальная", "Беларуская ", "Иная" }))@*над будет точно разобраться*@
+                @Html.ValidationMessageFor(model => model.PassportNumber)
+            </div>
+        </div>
+        @*На согласование *@
+        <div class="form-group">
+            @Html.Label("На согласование", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.OnAgreement, new SelectList(new[] { "Да ", "Нет" }))
+                @Html.ValidationMessageFor(model => model.PassportNumber)
+            </div>
+        </div>
+
+        @*разрешен с-до*@
+        <div class="form-group">
+            @Html.Label("Разрешен с ", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="text" name="StartDate" value="@Model.StartDate.ToString().Substring(0,10)"  >
+                @*@Html.EditorFor(model => model.StartDate )*@
+                @Html.ValidationMessageFor(model => model.StartDate)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("до", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="text" name="EndDate" value="@Model.EndDate.ToString().Substring(0, 10)">
+                @*@Html.EditorFor(model => model.EndDate.Date)*@
+                @Html.ValidationMessageFor(model => model.EndDate)
+            </div>
+        </div>
+        @*Количество сторон*@
+        <div class="form-group">
+            @Html.Label("Количество сторон", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("TypeOfAdvertising", new SelectList(new[] { "1", "2", "3", "4", "5" }), new { id = "SideIndex" })
+            </div>
+        </div>
+        @*Сторона А*@
+        <div class="form-group">
+            <div class="form-group">
+                @Html.Label("Сторона А", new { @class = "control-label col-md-2", style = "margin-left: 55px" })
+                @*@Html.HiddenFor(model => model.Sides.Single().Name)*@
+            </div>
+         @*Добавить площадь*@
+            <div class="form-group">
+                <div class="col-md-10">
+                    <a href="#" id="AddButton1" style="color: #428bca; font-weight: bold;">+Добавить площадь</a>
+                </div>
+            </div>
+            <div id="InsertPartial1"></div>
+        </div>
+
+        @*Сторона Б*@
+        <div class="form-group" id="SizeB" style="display: none">
+            <div class="form-group">
+                @*@Html.HiddenFor(model => model.Sides.Single().Name)*@
+                @Html.Label("Сторона Б", new { @class = "control-label col-md-2", style = "margin-left:45px" })
+            </div>
+            
+            @*Добавить площадь*@
+            <div class="form-group">
+                <div class="col-md-10">
+                    <a href="#" id="AddButton2" style="color: #428bca; font-weight: bold;">+Добавить площадь</a>
+                </div>
+            </div>
+            <div id="InsertPartial2"></div>
+        </div>
+
+        @*Сторона C*@
+        <div class="form-group" id="SizeC" style="display: none">
+            <div class="form-group">
+                @*@Html.HiddenFor(model => model.Sides.Single().Name)*@
+                @Html.Label("Сторона C", new { @class = "control-label col-md-2", style = "margin-left:45px" })
+            </div>
+            @*Добавить площадь*@
+            <div class="form-group">
+                <div class="col-md-10">
+                    <a href="#" id="AddButton3" style="color: #428bca; font-weight: bold;">+Добавить площадь</a>
+                </div>
+            </div>
+            <div id="InsertPartial3"></div>
+        </div>
+
+        @*Сторона D*@
+        <div class="form-group" id="SizeD" style="display: none">
+            <div class="form-group">
+                 @Html.Label("Сторона D", new { @class = "control-label col-md-2", style = "margin-left:45px" })
+            </div>
+            @*Добавить площадь*@
+            <div class="form-group">
+                <div class="col-md-10">
+                    <a href="#" id="AddButton4" style="color: #428bca; font-weight: bold;">+Добавить площадь</a>
+                </div>
+            </div>
+            <div id="InsertPartial4"></div>
+        </div>
+
+
+        @*Сторона E*@
+        <div class="form-group" id="SizeE" style="display: none">
+            <div class="form-group">
+                @Html.Label("Сторона E", new { @class = "control-label col-md-2", style = "margin-left:45px" })
+            </div>
+            @*Добавить площадь*@
+            <div class="form-group">
+                <div class="col-md-10">
+                    <a href="#" id="AddButton5" style="color: #428bca; font-weight: bold;">+Добавить площадь</a>
+                </div>
+            </div>
+            <div id="InsertPartial5"></div>
+        </div>
+
+        <div class="form-group" style="width: 600px; height: 500px" id="map">
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="Shirota">Широта</label>
+            <div class="col-md-10">
+                <input type="text" id="Shirota" name="Height" readonly required />
+                @Html.ValidationMessageFor(model => model.Height)
+                @*<span class="field-validation-valid" data-valmsg-for="Shirota" data-valmsg-replace="true"></span>*@
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="Dolgota">Долгота</label>
+            <div class="col-md-10">
+                <input type="text" id="Dolgota" name="Breadth"  readonly required />
+                @Html.ValidationMessageFor(model => model.Breadth)
+                @*<span class="field-validation-valid" data-valmsg-for="Dolgota" data-valmsg-replace="true"></span>*@
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Сохранить" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+
+
+
+
+}
+

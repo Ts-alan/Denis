@@ -1,0 +1,395 @@
+﻿@model Sciencecom.Models.LightConstruction
+@using Microsoft.AspNet.Identity.EntityFramework
+@using Microsoft.AspNet.Identity
+@using Sciencecom.Models
+@{
+    ViewBag.Title = "Редактировать световой указатель";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    SelectList owners = new SelectList(new SciencecomEntities().Owners.Select(m => m.Name).ToList());
+}
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+<script src="~/Scripts/Autocomplete.js"></script>
+<script src="~/Scripts/EditPlacemark.js"></script>
+<script>
+    $(function () {
+        EditPlacemark("@Model.Shirota", "@Model.Dolgota");
+    });
+</script>
+<h2>Редактировать световой указатель</h2>
+
+@{
+    var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+    ApplicationUser user = um.FindByName(User.Identity.GetUserName());
+    string role = user.Roles.Select(m => m.Role.Name).First().ToString();
+    if (((role == "Admin") || (role == "ChiefEditAll") || (role == "SupplierEditAll")) ||
+          (((role == "ChiefEditOwn") || (role == "SupplierEditOwn")) && ((user.Company == Model.OwnerWhoAdded.Name)
+          || (Model.OwnerWhoAdded.Name == "Неизвестно"))))
+    { 
+        if (Model.OnStatement)
+        {
+           using (Html.BeginForm("EditLightOnStatement", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+           {
+            @Html.AntiForgeryToken()    
+
+            <div class="form-horizontal">
+                <hr />
+                @Html.ValidationSummary(true)
+                @Html.HiddenFor(model => model.Id)
+                @Html.ValidationMessage("Error")
+                <div class="form-group">
+                    @Html.Label("Собственник:", new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @{
+                            if ((role == "ChiefEditOwn") || (role == "SupplierEditOwn"))
+                            {
+                               @Html.DropDownList("Owner", new SelectList(new[] { user.Company, "Неизвестно" }))
+                            }
+                            else
+                            {
+                               @Html.DropDownList("Owner", owners) 
+                            }
+                        }
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Locality, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Locality)
+                        @Html.ValidationMessageFor(model => model.Locality)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Street1, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Street1)
+                        @Html.ValidationMessageFor(model => model.Street1)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Street2, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Street2)
+                        @Html.ValidationMessageFor(model => model.Street2)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FromStreet, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.FromStreet)
+                        @Html.ValidationMessageFor(model => model.FromStreet)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Support, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Support)
+                        @Html.ValidationMessageFor(model => model.Support)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.StartDate, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @{
+                           string day =  "";
+                           if (Model.StartDate.Date.Day < 10)
+                           {
+                               day = "0" + Model.StartDate.Date.Day.ToString();
+                           }
+                           else
+                           {
+                               day = Model.StartDate.Date.Day.ToString();
+                           }
+                           string month = "";
+                           if (Model.StartDate.Date.Month < 10)
+                           {
+                               month = "0" + Model.StartDate.Date.Month.ToString();
+                           }
+                           else
+                           {
+                               month = Model.StartDate.Date.Month.ToString();
+                           }
+                           <input type="date" value="@Model.StartDate.Date.Year-@month-@day" name="startDate" />
+                        }
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IsSocial, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.IsSocial)
+                        @Html.ValidationMessageFor(model => model.IsSocial)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.OnStatement, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.OnStatement)<br />
+                    </div>
+                </div>
+                @Html.ValidationMessage("Photo")
+                        <div class="form-group">
+                           @Html.Label("Паспорт ТСМО (стр 1):", new { @class = "control-label col-md-2" })
+                           <div class="col-md-10">
+                               <input type="file" name="passport1" accept="image/jpeg" /><br />
+                               @Html.Raw("Не более 1 МБ")
+                           </div>
+                        </div>
+                     <div class="form-group">
+                           @Html.Label("Паспорт ТСМО (стр 2):", new { @class = "control-label col-md-2" })
+                           <div class="col-md-10">
+                               <input type="file" name="passport2" accept="image/jpeg" /><br />
+                               @Html.Raw("Не более 1 МБ")
+                           </div>
+                        </div>
+                     <div class="form-group">
+                           @Html.Label("Заявление:", new { @class = "control-label col-md-2" })
+                           <div class="col-md-10">
+                               <input type="file" name="zajavlenie" accept="image/jpeg" /><br />
+                               @Html.Raw("Не более 1 МБ")
+                           </div>
+                      </div>
+                <div class="form-group" style="width:600px; height:500px" id="map">
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="Shirota">Широта</label>
+                    <div class="col-md-10">
+                        <input type="text" id="Shirota" value="@Model.Shirota" name="Shirota" readonly required />
+                        @Html.ValidationMessageFor(model => model.Shirota)
+                        @*<span class="field-validation-valid" data-valmsg-for="Shirota" data-valmsg-replace="true"></span>*@
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="Dolgota">Долгота</label>
+                    <div class="col-md-10">
+                        <input type="text" id="Dolgota" value="@Model.Dolgota" name="Dolgota" readonly required />
+                        @Html.ValidationMessageFor(model => model.Dolgota)
+                        @*<span class="field-validation-valid" data-valmsg-for="Dolgota" data-valmsg-replace="true"></span>*@
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Сохранить" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        }
+} 
+    else
+    {
+        using (Html.BeginForm("EditLight", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <hr />
+                @Html.ValidationSummary(true)
+                @Html.HiddenFor(model => model.Id)
+                @Html.ValidationMessage("Error")
+                @Html.ValidationMessageFor(model => model.DateOfSocial) 
+                @Html.ValidationMessageFor(model => model.Dolgota) 
+                @Html.ValidationMessageFor(model => model.Shirota) 
+                @Html.ValidationMessageFor(model => model.Id) 
+                @Html.ValidationMessageFor(model => model.IdOwner) 
+                @Html.ValidationMessageFor(model => model.Owner) 
+                @Html.ValidationMessageFor(model => model.OwnerWhoAdded) 
+                <div class="form-group">
+                    @Html.Label("Собственник:", new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                     @{
+                        if ((role == "ChiefEditOwn") || (role == "SupplierEditOwn"))
+                        {
+                            @Html.DropDownList("Owner", new SelectList(new[] { user.Company, "Неизвестно" }))
+                        }
+                        else
+                        {
+                            @Html.DropDownList("Owner", owners)
+                        }
+                      }
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Locality, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Locality)
+                        @Html.ValidationMessageFor(model => model.Locality)
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Street1, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Street1)
+                        @Html.ValidationMessageFor(model => model.Street1)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Street2, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Street2)
+                        @Html.ValidationMessageFor(model => model.Street2)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FromStreet, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.FromStreet)
+                        @Html.ValidationMessageFor(model => model.FromStreet)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Support, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Support)
+                        @Html.ValidationMessageFor(model => model.Support)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.StartDate, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                            @*@Html.EditorFor(model => model.StartDate)
+                           @Html.ValidationMessageFor(model => model.StartDate)*@
+                        @{
+                           string day =  "";
+                           if (Model.StartDate.Date.Day < 10)
+                           {
+                               day = "0" + Model.StartDate.Date.Day.ToString();
+                           }
+                           else
+                           {
+                               day = Model.StartDate.Date.Day.ToString();
+                           }
+                           string month = "";
+                           if (Model.StartDate.Date.Month < 10)
+                           {
+                               month = "0" + Model.StartDate.Date.Month.ToString();
+                           }
+                           else
+                           {
+                               month = Model.StartDate.Date.Month.ToString();
+                           }
+                           <input type="date" value="@Model.StartDate.Date.Year-@month-@day" name="startDate" />
+                        }
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FinishDate, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @{
+                           day =  "";
+                           if (Model.FinishDate.Date.Day < 10)
+                           {
+                               day = "0" + Model.FinishDate.Date.Day.ToString();
+                           }
+                           else
+                           {
+                               day = Model.FinishDate.Date.Day.ToString();
+                           }
+                           month = "";
+                           if (Model.FinishDate.Date.Month < 10)
+                           {
+                               month = "0" + Model.FinishDate.Date.Month.ToString();
+                           }
+                           else
+                           {
+                               month = Model.FinishDate.Date.Month.ToString();
+                           }
+                           <input type="date" value="@Model.FinishDate.Date.Year-@month-@day" name="finishDate" />
+                        }
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IsSocial, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.IsSocial)
+                        @Html.ValidationMessageFor(model => model.IsSocial)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.OnStatement, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.OnStatement)<br />
+                    </div>
+                </div>
+                @Html.ValidationMessage("Photo")
+                   <div class="form-group">
+                       @Html.Label("Пасспорт ТСМО (стр 1):", new { @class = "control-label col-md-2" })
+                       <div class="col-md-10">
+                           <input type="file" name="passport1" accept="image/jpeg" /><br />
+                           @Html.Raw("Не более 1 МБ")
+                        </div>
+                        </div>
+                     <div class="form-group">
+                          @Html.Label("Паспорт ТСМО (стр 2):", new { @class = "control-label col-md-2" })
+                           <div class="col-md-10">
+                               <input type="file" name="passport2" accept="image/jpeg" /><br />
+                               @Html.Raw("Не более 1 МБ")
+                           </div>
+                        </div>
+                     <div class="form-group">
+                           @Html.Label("Паспорт НР(стр 1):", new { @class = "control-label col-md-2" })
+                           <div class="col-md-10">
+                               <input type="file" name="ispolkom1" accept="image/jpeg" /><br />
+                               @Html.Raw("Не более 1 МБ")
+                           </div>
+                      </div>
+                    <div class="form-group">
+                        @Html.Label("Паспорт НР(стр 2):", new { @class = "control-label col-md-2" })
+                           <div class="col-md-10">
+                               <input type="file" name="ispolkom2" accept="image/jpeg" /><br />
+                               @Html.Raw("Не более 1 МБ")
+                           </div>
+                      </div>  
+                    <div class="form-group">
+                           @Html.Label("Фото:", new { @class = "control-label col-md-2" })
+                           <div class="col-md-10">
+                               <input type="file" name="photo" accept="image/jpeg" /><br />
+                               @Html.Raw("Не более 1 МБ") 
+                           </div>
+                      </div>
+                <div class="form-group" style="width:600px; height:500px" id="map">
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="Shirota">Широта</label>
+                    <div class="col-md-10">
+                        <input type="text" id="Shirota" value="@Model.Shirota" name="Shirota" readonly required />
+                        @Html.ValidationMessageFor(model => model.Shirota)
+                        @*<span class="field-validation-valid" data-valmsg-for="Shirota" data-valmsg-replace="true"></span>*@
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="Dolgota">Долгота</label>
+                    <div class="col-md-10">
+                        <input type="text" id="Dolgota" value="@Model.Dolgota" name="Dolgota" readonly required />
+                        @Html.ValidationMessageFor(model => model.Dolgota)
+                        @*<span class="field-validation-valid" data-valmsg-for="Dolgota" data-valmsg-replace="true"></span>*@
+                    </div>
+                </div>                                          
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Сохранить" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        }
+     }  
+  }
+}      
+<div>
+    @Html.ActionLink("Вернуться к списку", "Light")
+</div>
