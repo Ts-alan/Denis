@@ -124,48 +124,52 @@
 </script>
 @*оформление столбца*@
 <style type="text/css">
-        .ui-state-default {
-            line-height: 1.428571429;
-            float: left;
-        }
+    
+    #hidden {
+        display: none;
+    }
 
-        .name-col {
-            width: 55%;
-            height: 29px;
-        }
+     .ui-state-default {
+         line-height: 1.428571429;
+         float: left;
+     }
 
-        .name-col > div {
-            font-size: 11px;
-            padding-top: 4px;
-        }
+    .name-col {
+        width: 55%;
+        height: 29px;
+    }
 
-        .content-col > div {
-            font-size: 11px;
-            padding: 2px;
-            float: left;
-            width:90% 
-        }
-          .content-col {
-               width: 45%;
-          }
-        .content-col > div > div {
-            background-color: white;
-            height: 23px;
-            border: 1px solid #dddddd;
+    .name-col > div {
+        font-size: 11px;
+        padding-top: 4px;
+    }
+
+    .content-col > div {
+        font-size: 11px;
+        padding: 2px;
+        float: left;
+        width:90% 
+    }
+    .content-col {
+        width: 45%;
+    }
+    .content-col > div > div {
+        background-color: white;
+        height: 23px;
+        border: 1px solid #dddddd;
          
-        }
+    }
 
-        .content-col [href="#"] {
-            padding-right: 0.3em;
-            padding-left: 0.3em;
-            font-size: 11px;
-            padding: 2px;
-        }
+    .content-col [href="#"] {
+        padding-right: 0.3em;
+        padding-left: 0.3em;
+        font-size: 11px;
+        padding: 2px;
+    }
     /*изменить цвет*/
     input {
         color: black;
     }
-
 </style>
 
 
@@ -185,12 +189,12 @@
 
         </div>
 
-        <div>
+        <div id ="hidden">
             <div class="ui-state-default ui-th-column name-col" style="float: left">
                 <div style="">Идентификационный номер</div>
             </div>
 
-            <div class="ui-state-default ui-th-column content-col">
+            <div class="ui-state-default ui-th-column content-col" >
                 <div>
                     <div>
                         <input type="text" name="Идентификационный_номер" id="gs_Идентификационный_номер" style="width: 100%;">
@@ -305,24 +309,24 @@
             <a href="#" style="">x</a>
         </div>
 
-        <div class="ui-state-default ui-th-column name-col">
+        <div class="ui-state-default ui-th-column name-col" id ="hidden">
             <div>Подстветка</div>
         </div>
 
-        <div class="ui-state-default ui-th-column content-col">
+        <div class="ui-state-default ui-th-column content-col" id ="hidden">
             <div>
                 <div>
-                    <input type="text" name="Подстветка" id="gs_Подстветка" style="width: 100%;">
+                    <input type="text" name="Подстветка" id="gs_Подстветка" style="width: 100%;" >
                 </div>
             </div>
             <a href="#" style="">x</a>
         </div>
 
-        <div class="ui-state-default ui-th-column name-col">
+        <div class="ui-state-default ui-th-column name-col" id ="hidden">
             <div>№ договора с фин упр</div>
         </div>
 
-        <div class="ui-state-default ui-th-column content-col">
+        <div class="ui-state-default ui-th-column content-col" id ="hidden">
             <div>
                 <div>
                     <input type="text" name="№_договора_с_фин_упр" id="gs_№_договора_с_фин_упр" style="width: 100%;">
@@ -331,11 +335,11 @@
             <a href="#" style="">x</a>
         </div>
 
-        <div class="ui-state-default ui-th-column name-col">
+        <div class="ui-state-default ui-th-column name-col" id ="hidden">
             <div>№ паспорта рекл</div>
         </div>
 
-        <div class="ui-state-default ui-th-column content-col">
+        <div class="ui-state-default ui-th-column content-col" id ="hidden">
             <div>
                 <div>
                     <input type="text" name="№_паспорта_рекл" id="gs_№_паспорта_рекл" style="width: 100%;">

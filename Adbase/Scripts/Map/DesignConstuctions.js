@@ -21,7 +21,7 @@
             id: parseInt(objectId)
         }
     }).success(function (data) {
-       
+
         if (data.length > 0) {
 
             for (var i = 0; i < data.length; i++) {
@@ -36,7 +36,7 @@
                                    + '</br>Вид конструкции:&nbsp;' + data[i].NameOfAdvertisingStructure
                                 + '</br>Улица 1:&nbsp' + data[i].Street1
                                 + '</br>Дом:&nbsp;' + data[i].House1
-                             
+
                         + getReferencesBillboard(data[i]),
                         iconContent: 'Б',
                         hintContent: 'Щит'
@@ -74,6 +74,7 @@ function getReferencesBillboard(construction) {
     ;
     return result;
 }
+
 
 
 
