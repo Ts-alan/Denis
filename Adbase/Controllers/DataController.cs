@@ -1088,12 +1088,11 @@ namespace Sciencecom.Controllers
             //var Foo = context.AdvertisingStructures.ToList();
             if (CountSize!=null)
             {
-                 result =
-                    context.AdvertisingStructures.Where(a => a.Sides.Count == CountSize).ToList();
+                 result = context.AdvertisingStructures.Where(a => a.Sides.Count == CountSize && a.Breadth != null && a.Height != null).ToList();
             }
             else
             {
-                result = context.AdvertisingStructures.ToList();
+                result = context.AdvertisingStructures.Where(a => a.Breadth != null && a.Height != null).ToList();
             }
             if (AreaConstruction != null)
             {
