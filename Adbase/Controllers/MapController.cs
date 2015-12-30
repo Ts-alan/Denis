@@ -76,6 +76,7 @@ namespace Sciencecom.Controllers
             string CountSurface, string Backlight, string ContractFinancialManagement, string PassportAdvertising,  string EndDate, int? id = null)
         {
 
+
             SciencecomEntities context = new SciencecomEntities();
             List<AdvertisingConstructionJsonModel> objectsForJson = new List<AdvertisingConstructionJsonModel>();
             List<Surface> Surfaces = new List<Surface>();
@@ -117,7 +118,6 @@ namespace Sciencecom.Controllers
                 House1 =House1,
                 C_ContractFinancialManagement = ContractFinancialManagement,
                 C_PassportAdvertising = PassportAdvertising,
-                
               
             };
             IEnumerable<AdvertisingStructure> result =

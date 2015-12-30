@@ -25,35 +25,38 @@
         if (data.length > 0) {
 
             for (var i = 0; i < data.length; i++) {
-                var placemark = new ymaps.GeoObject(
-                {
-                    geometry: {
-                        type: "Point",
-                        coordinates: [data[i].Breadth, data[i].Height]
-                    },
-                    properties: {
-                        balloonContentBody: '<b>Собственник:&nbsp;' + data[i].OwnerName
-                                   + '</br>Вид конструкции:&nbsp;' + data[i].NameOfAdvertisingStructure
-                                + '</br>Улица 1:&nbsp' + data[i].Street1
-                                + '</br>Дом:&nbsp;' + data[i].House1
+                
+                    var placemark = new ymaps.GeoObject(
+                 {
+                     geometry: {
+                         type: "Point",
+                         coordinates: [data[i].Breadth, data[i].Height]
+                     },
+                     properties: {
+                         balloonContentBody: '<b>Собственник:&nbsp;' + data[i].OwnerName
+                                    + '</br>Вид конструкции:&nbsp;' + data[i].NameOfAdvertisingStructure
+                                 + '</br>Улица 1:&nbsp' + data[i].Street1
+                                 + '</br>Дом:&nbsp;' + data[i].House1
 
-                        + getReferencesBillboard(data[i]),
-                        iconContent: 'Б',
-                        hintContent: 'Щит'
-                    }
+                         + getReferencesBillboard(data[i]),
+                         iconContent: 'Б',
+                         hintContent: 'Щит'
+                     }
 
-                },
-                {
-                    preset: 'islands#redClusterIcons'
-                });
+                 },
+                 {
+                     preset: 'islands#redClusterIcons'
+                 });
+                
 
                 geoObjects.add(placemark);
+
             }
         }
 
     }).error(function () {
 
-        alert("Ошибка запроса кукарекку");
+        alert("Ошибка запроса ТРАТАТА");
     });
     return geoObjects;
 }

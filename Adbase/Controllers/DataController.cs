@@ -1082,18 +1082,18 @@ namespace Sciencecom.Controllers
                 context.TypeOfAdvertisingStructures.SingleOrDefault(a => a.Name.ToLower().Contains(TypeOfAdvertisingStructure.ToLower()));
             var locality_id = context.TypeOfAdvertisingStructures.SingleOrDefault(a => a.Name.ToLower().Contains(Locality.ToLower()));
             List<Backlight> backlights=null;
-            if (Backlight != "") 
+            if (Backlight != null && Backlight != "")  
             backlights = context.Backlights.Where(a => a.Name.Contains(Backlight)).ToList();
             IEnumerable<AdvertisingStructure> result;
+            //var Foo = context.AdvertisingStructures.ToList();
             if (CountSize!=null)
             {
                  result =
-                    context.AdvertisingStructures.Where(a => a.Sides.Count ==CountSize).ToList();
+                    context.AdvertisingStructures.Where(a => a.Sides.Count == CountSize).ToList();
             }
             else
             {
-                result =
-                    context.AdvertisingStructures.ToList();
+                result = context.AdvertisingStructures.ToList();
             }
             if (AreaConstruction != null)
             {
@@ -1141,27 +1141,27 @@ namespace Sciencecom.Controllers
                       
                     }).ToList();
             }
-            if (Advertisin.Street1 != null)
+            if (!string.IsNullOrEmpty(Advertisin.Street1))
             {
                 result = result.Where(m => m.Street1.ToLower().Contains(Advertisin.Street1.ToLower()));
             }
-            if (Advertisin.UniqueNumber != null)
+            if (!string.IsNullOrEmpty(Advertisin.UniqueNumber))
             {
                 result = result.Where(m => m.UniqueNumber.ToLower().Contains(Advertisin.UniqueNumber.ToLower()));
             }
-            if (Advertisin.House1 != null)
+            if ( !string.IsNullOrEmpty(Advertisin.House1))
             {
                 result = result.Where(m => m.House1.ToLower().Contains(Advertisin.House1.ToLower()));
             }
-            if (Advertisin.C_ContractFinancialManagement != null)
+            if (!string.IsNullOrEmpty(Advertisin.C_ContractFinancialManagement))
             {
                 result = result.Where(m => m.C_ContractFinancialManagement.ToLower().Contains(Advertisin.C_ContractFinancialManagement.ToLower()));
             }
-            if (Advertisin.C_PassportAdvertising != null)
+            if (!string.IsNullOrEmpty(Advertisin.C_PassportAdvertising))
             {
                 result = result.Where(m => m.C_PassportAdvertising.ToLower().Contains(Advertisin.C_PassportAdvertising.ToLower()));
             }
-            if (EndDate != null)
+            if (!string.IsNullOrEmpty(EndDate))
             {
                 result = result.Where(m => m.EndDate.ToString().ToLower().Trim().Contains(EndDate));
             }
