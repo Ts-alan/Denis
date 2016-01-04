@@ -1387,6 +1387,7 @@ namespace Sciencecom.Controllers
         {
             ViewBag.Code = "MP";
             ViewBag.UniqueNumber = TableAdapterExtensions.StringSymvol();
+            ViewBag.
             return View();
         }
 
