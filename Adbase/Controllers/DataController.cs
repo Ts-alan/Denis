@@ -1381,6 +1381,15 @@ namespace Sciencecom.Controllers
             return View();
         }
 
+        [Authorize]
+        [HttpGet]
+        public ActionResult CreateMetalPointerDesign()
+        {
+            ViewBag.Code = "MP";
+            ViewBag.UniqueNumber = TableAdapterExtensions.StringSymvol();
+            return View();
+        }
+
 
         [Authorize(Roles = "Admin, ChiefEditAll,ChiefEditOwn, SupplierEditAll, SupplierEditOwn")]
         public ActionResult DeleteAdvertisingDesign(int? id,string switchtoMap)
@@ -1428,6 +1437,8 @@ namespace Sciencecom.Controllers
             }
             return RedirectToAction("AdvertisingDesign");
         }
+
+
 
 
 

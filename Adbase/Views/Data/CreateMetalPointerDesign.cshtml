@@ -1,4 +1,5 @@
-﻿@using System.Data.Entity
+﻿
+@using System.Data.Entity
 @using Microsoft.AspNet.Identity
 @using Microsoft.AspNet.Identity.EntityFramework
 @using Newtonsoft.Json
@@ -7,39 +8,39 @@
 @model  Sciencecom.Models.AdvertisingStructure
 @{
     var i = 0;
-    ViewBag.Title = "AdvertisingStructure";
+    ViewBag.Title = "MetalPointersStructure";
     //Собственник конструкциии
     var owners = new SciencecomEntities().Owners.ToList();
-   
+
     //Вид
     var ListTypeAdvertising = new SciencecomEntities().TypeOfAdvertisingStructures.ToList();
     var ListTypeAdvertisingSelected = ListTypeAdvertising.Single(a => a.Code == ViewBag.Code).id;
     //ListTypeAdvertising.Insert(0,null);
 
-    var ViewBids = new SciencecomEntities().ViewBids.OrderBy(a=>a.OrderBy).ToList();
-   
-   
+    var ViewBids = new SciencecomEntities().ViewBids.OrderBy(a => a.OrderBy).ToList();
+
+
     //Элемент улично-дорожной сети
     var ListTypeElementOfTheRoadNetworkName = new SciencecomEntities().TheElementOfTheRoadNetworks.Select(a => new { id = a.id, Value = a.TheElementOfTheRoadNetworkName }).ToList();
-    
+
     //Статус
-    var Status = new SciencecomEntities().Status.OrderBy(x=>x.OrderByStatus).Select(a => new { id = a.id, Value = a.NameStatus }).ToList();  
-    Status.Insert(0,null); 
-    
+    var Status = new SciencecomEntities().Status.OrderBy(x => x.OrderByStatus).Select(a => new { id = a.id, Value = a.NameStatus }).ToList();
+    Status.Insert(0, null);
+
     //Населенный пункт выпадающий список
     var Locality = new SciencecomEntities().Localities.ToList();
 
     //Направление стороны
-    var DirectionSide = new SciencecomEntities().DirectionSides.OrderBy(x=>x.OrderBY).ToList();
+    var DirectionSide = new SciencecomEntities().DirectionSides.OrderBy(x => x.OrderBY).ToList();
     //Индификация поверхности
     var IdentificationSide = new SciencecomEntities().Identifications.ToList();
     //IdentificationSide.Insert(0, null);
     //Идентификационный номер
     var PropertyLocation = new SciencecomEntities().PropertyLocations.ToList();
-   
+
     //Подсветка
     var Backlight = new SciencecomEntities().Backlights.ToList();
-    
+
 }
 <script type="text/javascript">
     var i = 0;
@@ -51,7 +52,7 @@
         //выпадающий список на согласование
         $("[name=OnAgreement]").change(function() {
             var selectIndex = $("[name=OnAgreement] option:selected").val();
-            
+
             if (selectIndex == "true") {
                 $("#ContractHide").css("display", "block");
             }
@@ -67,16 +68,16 @@
            var end = $('#Code option:selected').text();
            if (end == "Металлический указатель")
            {
-               window.location.href = '/Data/CreateMetalPointerDesign/';
+
            }
-           
+
        });
 
     });
 
     // подсчет суммы площадей
     function CalculationAS() {
-     
+
         var Summ=0;
         $("[selectforspace]").each(function(indx, element) {
             if ($(element).val() != "") {
@@ -120,7 +121,7 @@
                     "</div> <div style=\"margin-left: -15px;display: none\" id=\"" + i + "HiddenIdentification\"> &nbsp;&nbsp;&nbsp;<b>Идентификация поверхностей</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("IdentificationSurface", new SelectList(IdentificationSide, "id", "IdentificationName"), "", new { IdentificationForIdentificationSurface = "IdentificationForIdentificationSurface" }).ToHtmlString().Replace("\"", " ")) </div>' +
                     "<div  id=\"InsertPartial" + i + "\"></div>" +
                     "</div>");
-                
+
                 $("#SizeOfCount").val(CountSizes);
 
             }
@@ -145,11 +146,11 @@
                     '[0].IdentificationForDirectionSide':"ававававававав",
                     '[1].IdentificationForDirectionSide': "brak uzytkownika"
                     }
-   
+
             }
         );
         $('[IdentificationForDirectionSide]').each(function (indx, element) {
-                
+
             $(element).rules('add', {
                 required: true
             });
@@ -166,7 +167,7 @@
                 'CountSurfuce6': "required",
                 'CountSurfuce7': "required",
                 'CountSurfuce8': "required"
-            
+
             },
             messages: {
                 '[0].DirectionSide': "test",
@@ -176,7 +177,7 @@
         }
         );
         $('[IdentificationForCountSide]').each(function (indx, element) {
-           
+
             $(element).rules('add', {
                 required: true
             });
@@ -185,16 +186,16 @@
         //другое решение не тестил
         //$('[name="DirectionSide"]').data('validator', null);
         //$.validator.unobtrusive.parse('[name="DirectionSide"]');
-     
+
     }
 
-    //Добавить поверхность+           
+    //Добавить поверхность+
     function AddSurface(i) {
 
         var count = $("#AddButton" + i + "").val();
         StartCountForSurface = EndCountForSurface;
         EndCountForSurface = parseInt(count) + parseInt(EndCountForSurface);
-     
+
         if (count == 1) {
             $("#" + i + "HiddenIdentification").hide();
         } else {
@@ -215,7 +216,7 @@
                     '[6].IdentificationForIdentificationSurface': "required",
                     '[7].IdentificationForIdentificationSurface': "required",
                     '[8].IdentificationForIdentificationSurface': "required"
- 
+
                 }
 
             });
@@ -229,19 +230,19 @@
         }
         $("[side=" + i + "]").remove();
 
-        
+
         $.ajax('@Url.Action("AddSurface", "Data")', { data: { side: i, StartCountForSurface: StartCountForSurface, EndCountForSurface: EndCountForSurface } })
             .success(function (e) {
                 $("#InsertPartial"+i+"").before(e);
             });
-       
+
     }
 
 
 
     //выщитывание площади для каждой поверхности
     function CalculationOfTheArea(j) {
-  
+
         var Height = $('[name="[' + j + '].Height"]').val();
         var Width = $('[name="[' + j + '].Width"]').val();
 
@@ -252,42 +253,42 @@
             $('[name="[' + j + '].Space"]').val(Sum);
             CalculationAS();
         }
-       
+
     }
 
-   
+
 
 </script>
-<h3> КАРТОЧКА РЕКЛАМНОЙ КОНСТРУКЦИИ</h3>
+<h3> КАРТОЧКА МЕТАЛЛИЧЕСКОГО УКАЗАТЕЛЯ</h3>
 
 @Scripts.Render("~/Content/Map")
-@using (Html.BeginForm("CreateAdvertisingDesign", "Data", FormMethod.Post, new { enctype = "multipart/form-data",id="test1" }))
+@using (Html.BeginForm("CreateMetalPointerDesign", "Data", FormMethod.Post, new { enctype = "multipart/form-data", id = "test1" }))
 {
     <input type="hidden" name="Code" value="@ViewBag.Code">
-    <h3> 1. Общие данные о рекламной конструкции</h3>
+    <h3> 1. Общие данные о металлическом указателе</h3>
     @Html.AntiForgeryToken()
     <div class="form-inline" style="margin-bottom: -10px">
-        <hr/>
+        <hr />
 
         <input type="hidden" id="CountSize" id="SizeOfCount" name="CountSize" value="">
         @Html.ValidationSummary(true)
         @Html.ValidationMessage("Error")
 
-        <div class="form-group"  >
-            <label for="Owner" >Собственник </label>
+        <div class="form-group">
+            <label for="Owner">Собственник </label>
             @Html.DropDownListFor(a => a.Owner_Id, new SelectList(owners, "id", "Name"), "")
             @Html.ValidationMessageFor(model => model.Owner_Id)
         </div>
 
-        <div class="form-group" >
+        <div class="form-group">
             <label for="Locality">Вид</label>
-            @Html.DropDownListFor(a=>a.Code, new SelectList(ListTypeAdvertising, "id", "Name", ListTypeAdvertisingSelected))
+            @Html.DropDownListFor(a => a.Code, new SelectList(ListTypeAdvertising, "id", "Name", ListTypeAdvertisingSelected))
             @Html.ValidationMessageFor(model => model.Code)
         </div>
 
-        <div class="form-group" >
-            <label for="Status" >Статус</label>
-            @Html.DropDownListFor(a => a.Status_Id, new SelectList(Status, "id", "Value",Status.ElementAt(1).id))
+        <div class="form-group">
+            <label for="Status">Статус</label>
+            @Html.DropDownListFor(a => a.Status_Id, new SelectList(Status, "id", "Value", Status.ElementAt(1).id))
             @Html.ValidationMessageFor(model => model.Status_Id)
         </div>
 
@@ -306,19 +307,19 @@
     </div>
     <div class="form-inline">
         <div class="form-group">
-            <label for="PropertyLocation_id" style = "display:none;">Форма собственности места размещения </label>
-            @Html.DropDownListFor(a => a.PropertyLocation_id, new SelectList(PropertyLocation, "id", "NamePropertyLocation"), "", new {style = "display:none;"})
+            <label for="PropertyLocation_id" style="display:none;">Форма собственности места размещения </label>
+            @Html.DropDownListFor(a => a.PropertyLocation_id, new SelectList(PropertyLocation, "id", "NamePropertyLocation"), "", new { style = "display:none;" })
             @Html.ValidationMessageFor(model => model.PropertyLocation_id)
         </div>
 
         <div class="form-group">
-            <label for="Owner"  style = "display:none;">Собственник места размещения</label>
-            @Html.EditorFor(model => model.OwnerPlacements, new {htmlattributes = new { style = "display:none;" }})
+            <label for="Owner" style="display:none;">Собственник места размещения</label>
+            @Html.EditorFor(model => model.OwnerPlacements, new { htmlattributes = new { style = "display:none;" } })
             @Html.ValidationMessageFor(model => model.OwnerPlacements)
         </div>
 
     </div>
-        <h3> 2.Данные о месте расположения рекламной конструкции</h3>
+    <h3> 2.Данные о месте расположения металлического указателя</h3>
 
         <div class="form-inline">
             <hr />
@@ -335,38 +336,38 @@
             </div>
 
             <div class="form-group">
-                <label for="House1">Дом</label>
-                @Html.EditorFor(model => model.House1)
-                @Html.ValidationMessageFor(model => model.House1)
+                <label for="House1">Номер опоры</label>
+                @Html.EditorFor(model => model.Support_)
+                @Html.ValidationMessageFor(model => model.Support_)
             </div>
 
 
         </div>
-    <input type="button" id="MapSearch" value="Поиск на карте" style="margin-left: 185px">
-    
-    <div class="form-inline">
-        <div class="form-group">
-            <label for="Street2">Ближайшая улица по ходу движения</label>
-            @Html.EditorFor(model => model.Street2)
-            @Html.ValidationMessageFor(model => model.Street2)
+        <input type="button" id="MapSearch" value="Поиск на карте" style="margin-left: 185px">
+
+        <div class="form-inline" style="display: none">
+            <div class="form-group">
+                <label for="Street2">Ближайшая улица по ходу движения</label>
+                @Html.EditorFor(model => model.Street2)
+                @Html.ValidationMessageFor(model => model.Street2)
+            </div>
+
+            <div class="form-group">
+                <label for="FromStreet">Со стороны улицы</label>
+                @Html.EditorFor(model => model.FromStreet)
+                @Html.ValidationMessageFor(model => model.FromStreet)
+            </div>
         </div>
 
-        <div class="form-group">
-            <label for="FromStreet">Со стороны улицы</label>
-            @Html.EditorFor(model => model.FromStreet)
-            @Html.ValidationMessageFor(model => model.FromStreet)
-        </div>
-    </div>
-    
-    <div class="form-inline" style="margin-top: 20px">
+        <div class="form-inline" style="margin-top: 20px; display: none;">
 
-        <div class="form-group" >
-            <label for="TheElementOfTheRoadNetwork">Элемент улично-дорожной сети</label>
-            @Html.DropDownListFor(a => a.TheElementOfTheRoadNetwork_id, new SelectList(ListTypeElementOfTheRoadNetworkName, "id", "Value"), "")
-            @Html.ValidationMessageFor(a => a.TheElementOfTheRoadNetwork_id)
-        </div>
+            <div class="form-group">
+                <label for="TheElementOfTheRoadNetwork">Элемент улично-дорожной сети</label>
+                @Html.DropDownListFor(a => a.TheElementOfTheRoadNetwork_id, new SelectList(ListTypeElementOfTheRoadNetworkName, "id", "Value"), "")
+                @Html.ValidationMessageFor(a => a.TheElementOfTheRoadNetwork_id)
+            </div>
 
-   </div>
+        </div>
         <div class="form-inline">
             <hr />
             <div class="form-group" style="width: 600px; height: 500px" id="map"></div>
@@ -375,14 +376,14 @@
 
                 <div>
                     <label for="Breadth">Широта </label>
-                    <input class="text-box single-line ui-autocomplete-input" data-val="true"  type="text" name="Breadth" id="Breadth">
-                    <span  data-valmsg-for="Breadth" data-valmsg-replace="true"></span>
+                    <input class="text-box single-line ui-autocomplete-input" data-val="true" type="text" name="Breadth" id="Breadth">
+                    <span data-valmsg-for="Breadth" data-valmsg-replace="true"></span>
 
                 </div>
 
                 <div>
                     <label for="Height">Долгота</label>
-                    <input type="text" name="Height" data-val="true"  id="Height">
+                    <input type="text" name="Height" data-val="true" id="Height">
 
                     @Html.ValidationMessageFor(model => model.Height)
 
@@ -395,19 +396,19 @@
             <hr />
             <div class="form-group">
 
-                <label for="ViewBad_Id" style = "display:none;">Вид заявки</label>
+                <label for="ViewBad_Id" style="display:none;">Вид заявки</label>
                 @Html.DropDownListFor(model => model.ViewBad_Id, new SelectList(ViewBids, "id", "Name"), "", new { style = "display:none;" })
                 @Html.ValidationMessageFor(model => model.ViewBad_Id)
 
 
-                <label for="DateOfReceiptOfTheApplication" style = "display:none;">Дата подачи заявки</label>
-                @Html.EditorFor(model => model.DateOfReceiptOfTheApplication, new {htmlattributes = new { style = "display:none;" } })
+                <label for="DateOfReceiptOfTheApplication" style="display:none;">Дата подачи заявки</label>
+                @Html.EditorFor(model => model.DateOfReceiptOfTheApplication, new { htmlattributes = new { style = "display:none;" } })
                 @Html.ValidationMessageFor(model => model.DateOfReceiptOfTheApplication)
 
             </div>
             <div class="form-group" style="margin-bottom: 5px">
 
-                <label for="C_PassportAdvertising" >№ паспорта рекламы</label>
+                <label for="C_PassportAdvertising">№ паспорта рекламы</label>
                 @Html.EditorFor(model => model.C_PassportAdvertising)
                 @Html.ValidationMessageFor(model => model.C_PassportAdvertising)
 
@@ -442,7 +443,7 @@
             <div class="form-group">
                 <label for="ScanPassport_2Sides">Скан паспорта (стор 2)</label>
                 <input type="file" name="ScanPassport_2Sides" accept="image/jpeg" /><br />
-                <span  data-valmsg-for="ScanPassport_2Sides" data-valmsg-replace="true"></span>
+                <span data-valmsg-for="ScanPassport_2Sides" data-valmsg-replace="true"></span>
                 @Html.Raw("Не более 1 МБ")
             </div>
 
@@ -453,11 +454,11 @@
             <div class="form-group" style="margin-bottom: 5px">
                 <label for="C_ContractFinancialManagement" style="display: none">№ договора с финансовым управлением</label>
                 @*@Html.EditorFor(model => model.C_ContractFinancialManagement)
-                @Html.ValidationMessageFor(model => model.C_ContractFinancialManagement)*@
+                    @Html.ValidationMessageFor(model => model.C_ContractFinancialManagement)*@
 
                 <label for="TheDateOfTheContract" style="display: none">Дата договора</label>
                 @*@Html.EditorFor(model => model.TheDateOfTheContract)
-                @Html.ValidationMessageFor(model => model.TheDateOfTheContract)*@
+                    @Html.ValidationMessageFor(model => model.TheDateOfTheContract)*@
 
             </div>
 
@@ -471,18 +472,18 @@
             </div>
         </div>
 
-        <h3> 4.Описание рекламной конструкции</h3>
+        <h3> 4.Описание металлического указателя</h3>
 
         <div class="form-inline">
             <hr />
             <div class="form-group">
-                <label for="PlannedInstallationDate" style ="display: none;">Планируемая дата установки</label>
-                @Html.EditorFor(model => model.PlannedInstallationDate, new { htmlattributes = new { style = "display:none;" }})
+                <label for="PlannedInstallationDate" style="display: none;">Планируемая дата установки</label>
+                @Html.EditorFor(model => model.PlannedInstallationDate, new { htmlattributes = new { style = "display:none;" } })
                 @Html.ValidationMessageFor(model => model.PlannedInstallationDate)
             </div>
 
             <div class="form-group">
-                <label for="DateOfActualInstallation" style ="display: none;">Дата фактической установки</label>
+                <label for="DateOfActualInstallation" style="display: none;">Дата фактической установки</label>
                 @Html.EditorFor(model => model.DateOfActualInstallation, new { htmlattributes = new { style = "display:none;" } })
                 @Html.ValidationMessageFor(model => model.DateOfActualInstallation)
             </div>
@@ -492,7 +493,7 @@
         </div>
         <div class="form-horizontal">
             <div class="form-group">
-                <label for="DateDismantling" style ="display: none;">Дата демонтажа</label>
+                <label for="DateDismantling" style="display: none;">Дата демонтажа</label>
                 @Html.EditorFor(model => model.DateDismantling, new { htmlattributes = new { style = "display:none;" } })
                 @Html.ValidationMessageFor(model => model.DateDismantling)
             </div>
@@ -501,7 +502,7 @@
 
             <div class="form-group">
                 <label for="CommentOwner">Подсветка</label>
-                @Html.DropDownListFor(a => a.Backlight_Id, new SelectList(Backlight, "id", "Name"),"")
+                @Html.DropDownListFor(a => a.Backlight_Id, new SelectList(Backlight, "id", "Name"), "")
                 @Html.ValidationMessageFor(model => model.Backlight_Id)
             </div>
 
@@ -514,8 +515,8 @@
         <div class="form-horizontal" style="margin-top: 18px">
             <div class="form-group">
                 <label for="ConstructionSquare">Площадь конструкции</label>
-                <input id="ConstructionSquare" readonly name="ConstructionSquare"  style="background-color: lightgray" type="text" value="">
-             </div>
+                <input id="ConstructionSquare" readonly name="ConstructionSquare" style="background-color: lightgray" type="text" value="">
+            </div>
             <div class="form-group">
                 <label for="CountSizes">Количество сторон</label>
                 <select class="text-box single-line" id="CountSizes" onchange="SetCountSize()" name="CountSizes" type="text" data-val="true" data-val-required="Введите значение">
@@ -541,3 +542,5 @@
             </div>
         </div>
 }
+
+
