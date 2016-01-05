@@ -479,7 +479,7 @@
             <div class="form-group">
                 <label for="PlannedInstallationDate" style="display: none;">Планируемая дата установки</label>
                 @Html.EditorFor(model => model.PlannedInstallationDate, new { htmlattributes = new { style = "display:none;" } })
-                @Html.EditorFor(model => model. , new { htmlattributes = new { style = "display:none;" } })
+               
                 @Html.ValidationMessageFor(model => model.PlannedInstallationDate)
             </div>
 
@@ -489,17 +489,24 @@
                 @Html.ValidationMessageFor(model => model.DateOfActualInstallation)
             </div>
         </div>
-        
+
         <div class="form-horizontal" style="margin-top: 18px">
             <div class="form-group">
-                <label for="ConstructionSquare">Площадь конструкции</label>
-                <input id="ConstructionSquare" readonly name="ConstructionSquare" style="background-color: lightgray" type="text" value="">
+                @*@{
+                    Model.CountSize = ViewBag.SeizesCount;
+                }
+                @Html.HiddenFor(model => model.CountSize)*@
             </div>
             <div class="form-group">
-                <label for="CountSizes">Количество сторон</label>
+                <label>Площадь конструкции</label>
                 
-                <span class="field-validation-validr" data-valmsg-for="CountSizes" data-valmsg-replace="true">
-                </span>
+                @*@{
+                    Model.Sides = new List<Side>();
+                    Model.Sides.Add(new Side());
+                    Model.Sides.First().Surfaces.Add(new Surface());
+                }
+                @Html.EditorFor(model => model.Sides.First().Surfaces.First().Height)
+                @Html.ValidationMessageFor(model => model.Sides.First().Surfaces.First().Height)*@
             </div>
         </div>
         <div id="InsertSide"></div>

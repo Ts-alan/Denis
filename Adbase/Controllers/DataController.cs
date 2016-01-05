@@ -1387,8 +1387,74 @@ namespace Sciencecom.Controllers
         {
             ViewBag.Code = "MP";
             ViewBag.UniqueNumber = TableAdapterExtensions.StringSymvol();
-            ViewBag.
+            ViewBag.SeizesCount = 1;
             return View();
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult CreateMetalPointerDesign(AdvertisingStructure Structures,
+            [ModelBinder(typeof(CustomModelBinderForSide))] List<Side> Sides,
+            [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces,
+            HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides,
+            HttpPostedFileBase Scan1SidesWithFinancialManagement, List<HttpPostedFileBase> SeveralPhoto,
+            int CountSize = 1)
+        {
+
+            Guid StructuresId = Guid.NewGuid();
+            Structures.Id = StructuresId;
+            //удаление временно номера из базы данных
+            if (context.ListUniqueNumbers.Any(a => a.UniqueNumber == Structures.UniqueNumber))
+            {
+                context.ListUniqueNumbers.Remove(
+                    context.ListUniqueNumbers.Single(x => x.UniqueNumber == Structures.UniqueNumber));
+
+            }
+
+            for (int j = 0; j < CountSize; j++)
+            {
+
+                Sides[j].AdvertisingStructures_Id = StructuresId;
+                Sides[j].Name = (j + 1).ToString();
+                Sides[j].Id = Guid.NewGuid();
+            }
+
+            context.Sides.AddRange(Sides);
+            context.AdvertisingStructures.Add(Structures);
+            List<Surface> ListSurface = new List<Surface>();
+            foreach (var i in surfaces)
+            {
+                i.Side_Id = Sides.Single(a => a.Name == i.SideOfSurface).Id;
+                ListSurface.Add(i);
+
+            }
+            context.Surfaces.AddRange(ListSurface);
+
+            context.SaveChanges();
+            if (Scan1SidesWithFinancialManagement != null)
+            {
+                string src = "~/Images/Scan1SidesWithFinancialManagement/" + Structures.Id +
+                             "FinancialManagement.jpg";
+                string path = Server.MapPath(src);
+                ScanPassport_1Sides.SaveAs(path);
+            }
+
+            if (ScanPassport_1Sides != null)
+            {
+                string src = "~/Images/ScanPassport_1Sides/" + Structures.Id + "passport.jpg";
+                string path = Server.MapPath(src);
+                ScanPassport_1Sides.SaveAs(path);
+            }
+            if (ScanPassport_2Sides != null)
+            {
+                string src = "~/Images/ScanPassport_2Sides/" + Structures.Id + "ScanPassport_2Sides.jpg";
+                string path = Server.MapPath(src);
+                ScanPassport_2Sides.SaveAs(path);
+            }
+
+            return RedirectToAction("AdvertisingDesign");
+
+
         }
 
 
