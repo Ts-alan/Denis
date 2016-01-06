@@ -49,6 +49,7 @@ namespace Sciencecom.Models
         public Nullable<System.DateTime> TheDateOfTheContract { get; set; }
         public Nullable<System.Guid> ViewBad_Id { get; set; }
         public string Support_ { get; set; }
+        public Nullable<System.DateTime> CoordinationDate { get; set; }
     
         public virtual Backlight Backlight { get; set; }
         public virtual Locality Locality { get; set; }

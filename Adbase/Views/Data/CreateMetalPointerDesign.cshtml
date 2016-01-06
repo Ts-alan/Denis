@@ -419,7 +419,7 @@
             </div>
             <div class="form-group" style="margin-bottom: 5px">
 
-                <label for="C_PassportAdvertising">№ паспорта рекламы</label>
+                <label for="C_PassportAdvertising">Паспорт ТСМО</label>
                 @Html.EditorFor(model => model.C_PassportAdvertising)
                 @Html.ValidationMessageFor(model => model.C_PassportAdvertising)
 
@@ -498,6 +498,16 @@
                 <label for="DateOfActualInstallation" style="display: none;">Дата фактической установки</label>
                 @Html.EditorFor(model => model.DateOfActualInstallation, new { htmlattributes = new { style = "display:none;" } })
                 @Html.ValidationMessageFor(model => model.DateOfActualInstallation)
+            </div>
+        </div>
+
+        <div class="form-inline">
+            <hr />
+            <div class="form-group">
+                <label>Дата согласования</label>
+                @Html.EditorFor(model => model.CoordinationDate)
+
+                @Html.ValidationMessageFor(model => model.CoordinationDate)
             </div>
         </div>
 
