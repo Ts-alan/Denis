@@ -62,16 +62,27 @@
 
         });
 
-        $("#Code").change(
-       function ()
-       {
-           var end = $('#Code option:selected').text();
-           if (end == "Металлический указатель")
-           {
+        //выщитывание площади для каждой поверхности
+        $('#SHeight').change(function () {
+            //alert("!!!");
+            CalculationOfTheArea(0);
+        });
+        $('#Width').change(function () {
+            //alert("!!!");
+            CalculationOfTheArea(0);
+        });
 
+        $("#Code option").val("Металлический указатель").prop('selected', true);
+
+        $("#Code").change(
+       function () {
+           var end = $('#Code option:selected').text();
+           if (end == "Щит") {
+               window.location.href = '/Data/CreateAdvertisingDesign/';
            }
 
        });
+
 
     });
 
@@ -492,30 +503,65 @@
 
         <div class="form-horizontal" style="margin-top: 18px">
             <div class="form-group">
-                @*@{
-                    Model.CountSize = ViewBag.SeizesCount;
-                }
-                @Html.HiddenFor(model => model.CountSize)*@
-            </div>
-            <div class="form-group">
-                <label>Площадь конструкции</label>
-                
-                @*@{
-                    Model.Sides = new List<Side>();
-                    Model.Sides.Add(new Side());
-                    Model.Sides.First().Surfaces.Add(new Surface());
-                }
-                @Html.EditorFor(model => model.Sides.First().Surfaces.First().Height)
-                @Html.ValidationMessageFor(model => model.Sides.First().Surfaces.First().Height)*@
-            </div>
-        </div>
-        <div id="InsertSide"></div>
+             
+                <div class="body-content" style="margin-top: 40px">
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Добавить" class="btn btn-default" />
-            </div>
+
+                    <script type="text/javascript">
+
+        
+
+                    </script>
+                    <div side="1">
+                        <input name="[0].SideOfSurface" value="1" type="hidden">
+                        <h3 style="margin-left: 150px">Поверхность</h3>
+
+                        <div class="form-inline">
+                            <hr>
+                            <div class="form-group">
+
+                                <input name="[0].NumberSurface" value="1" type="hidden">
+
+                                <label for="[0].Height">Высота</label>
+                                <input class="text-box single-line" data-val="true" data-val-number="Значением поля Height должно быть число." data-val-required="The Height field is required." id="SHeight" name="[0].Height" value="" type="number">
+                                <span class="field-validation-valid" data-valmsg-for="[0].Height" data-valmsg-replace="true"></span>
+
+                                <label for="[0].Width">Ширина</label>
+                                <input class="text-box single-line" data-val="true" data-val-number="Значением поля Width должно быть число." data-val-required="The Width field is required." name="[0].Width" id="Width" value="" type="number">
+                                <span class="field-validation-valid" data-valmsg-for="[0].Width" data-valmsg-replace="true"></span>
+
+                                <label for="[0].Space">Площадь</label>
+                                <input selectforspace="" data-val="true" data-val-number="Значением поля Space должно быть число." data-val-required="The Space field is required." name="[0].Space"  onchange="CalculationAS()" value="" type="number">
+                                <span class="field-validation-valid" data-valmsg-for="[0].Space" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+</div>
         </div>
-}
+        <div id="InsertSide" style="display: none">
+            <div code="" class="form-horizontal">
+                <div class="form-group">
+                    <select class="text-box single-line" id="AddButton1" onchange="AddSurface(1)" name="CountSurfuce1" identificationforcountside="" type="text" data-val="true" data-val-required="Укажите кол-во сторон">
+                        <option selected="selected">1</option>
+                    </select>
+                    <select class="valid" identificationfordirectionside="IdentificationForDirectionSide" id="DirectionSide" name="[0].IdentificationForDirectionSide">
+                        
+                        <option value="27b8c509-8f09-4a0d-ae22-048c2611b7ea" selected="selected">По ходу движения (сторона А)</option>
+                        </select>
+                </div>
+            </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Добавить" class="btn btn-default" />
+                    </div>
+                </div>
+                }
 
 
