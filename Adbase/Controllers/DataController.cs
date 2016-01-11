@@ -1504,11 +1504,7 @@ namespace Sciencecom.Controllers
             }
             return RedirectToAction("AdvertisingDesign");
         }
-
-
-
-
-
+        
 
         //[Authorize]
         //public ActionResult ShowAdvertisinTablePartial(Advertisins1 Advertisin, string day, string month, string year, string owner)
@@ -1570,8 +1566,9 @@ namespace Sciencecom.Controllers
 
         public ActionResult AddSurface(string side, int? StartCountForSurface, int? EndCountForSurface, bool IsEdit = false)
         {
-            ViewBag.EndCountForSurface = EndCountForSurface;
-            ViewBag.StartCountForSurface = StartCountForSurface;
+            
+            ViewBag.EndCountForSurface = EndCountForSurface ?? 1 ;
+            ViewBag.StartCountForSurface = StartCountForSurface ?? 0;
             ViewBag.Side = side;
 
             return View("Surface");
@@ -1579,8 +1576,8 @@ namespace Sciencecom.Controllers
 
         public ActionResult EditSurface(string side, int? StartCountForSurface, int? EndCountForSurface)
         {
-            ViewBag.EndCountForSurface = EndCountForSurface;
-            ViewBag.StartCountForSurface = StartCountForSurface;
+            ViewBag.EndCountForSurface = EndCountForSurface ?? 1;
+            ViewBag.StartCountForSurface = StartCountForSurface ?? 0;
             ViewBag.Side = side;
             var result = TempData.Peek("surface");
 
@@ -1699,6 +1696,121 @@ namespace Sciencecom.Controllers
             return RedirectToAction("AdvertisingDesign");
 
         }
+
+
+        [HttpGet]
+        public ActionResult EditMetalPointerDesign(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            AdvertisingStructure mc = context.AdvertisingStructures.Single(a => a.Id_show == id);
+            if (mc == null)
+            {
+                return HttpNotFound();
+            }
+            List<Surface> surfaces = new List<Surface>();
+            foreach (var sides in mc.Sides.OrderBy(a => a.Name))
+            {
+                foreach (var surface in sides.Surfaces)
+                {
+                    surfaces.Add(surface);
+                }
+            }
+            TempData["surface"] = surfaces;
+            return View(mc);
+        }
+
+        [HttpPost]
+        public ActionResult EditMetalPointerDesign(int id, AdvertisingStructure Structures,
+            [ModelBinder(typeof(CustomModelBinderForSide))] List<Side> Sides,
+            [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces,
+            HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides,
+            HttpPostedFileBase Scan1SidesWithFinancialManagement,
+            int CountSize = 1)
+        {
+
+            AdvertisingStructure mc = context.AdvertisingStructures.Single(a => a.Id_show == id);
+            var TempId = mc.Id;
+
+            foreach (var side in mc.Sides)
+            {
+                context.Surfaces.RemoveRange(side.Surfaces);
+            }
+
+            context.Sides.RemoveRange(mc.Sides);
+            context.AdvertisingStructures.Remove(mc);
+            context.SaveChanges();
+
+            for (int j = 0; j < CountSize; j++)
+            {
+
+                Sides[j].AdvertisingStructures_Id = mc.Id;
+                Sides[j].Name = (j + 1).ToString();
+                Sides[j].Id = Guid.NewGuid();
+            }
+            Structures.Id = TempId;
+
+            context.AdvertisingStructures.Add(Structures);
+            context.Sides.AddRange(Sides);
+            context.AdvertisingStructures.Add(Structures);
+            List<Surface> ListSurface = new List<Surface>();
+            foreach (var i in surfaces)
+            {
+                i.Side_Id = Sides.Single(a => a.Name == i.SideOfSurface).Id;
+                ListSurface.Add(i);
+
+            }
+            context.Surfaces.AddRange(ListSurface);
+
+            context.SaveChanges();
+            //картики
+            if (Scan1SidesWithFinancialManagement != null)
+            {
+                string src = "~/Images/Scan1SidesWithFinancialManagement/" + Structures.Id +
+                             "FinancialManagement.jpg";
+                string path = Server.MapPath(src);
+                FileInfo info1 = new FileInfo(path);
+                if (info1.Exists)
+                {
+                    info1.Delete();
+                }
+
+                Scan1SidesWithFinancialManagement.SaveAs(path);
+            }
+
+            if (ScanPassport_1Sides != null)
+            {
+
+                string src = "~/Images/ScanPassport_1Sides/" + Structures.Id + "passport.jpg";
+                string path = Server.MapPath(src);
+                FileInfo info1 = new FileInfo(path);
+                if (info1.Exists)
+                {
+                    info1.Delete();
+                }
+
+                ScanPassport_1Sides.SaveAs(path);
+            }
+            if (ScanPassport_2Sides != null)
+            {
+                string src = "~/Images/ScanPassport_2Sides/" + Structures.Id + "ScanPassport_2Sides.jpg";
+                string path = Server.MapPath(src);
+                FileInfo info1 = new FileInfo(path);
+                if (info1.Exists)
+                {
+                    info1.Delete();
+                }
+
+                ScanPassport_2Sides.SaveAs(path);
+            }
+
+            return RedirectToAction("AdvertisingDesign");
+
+        }
+
     }
 }
 
