@@ -59,5 +59,8 @@ namespace Sciencecom.Models
     
         public float Dolgota { get; set; }
 
+        [Display(Name = "№ Опоры")]
+        public string SupportN { get; set; }
+
     }
 }

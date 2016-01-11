@@ -38,6 +38,8 @@
           <Property Name="OwnerPlacements" Type="nvarchar(max)" />
           <Property Name="TheDateOfTheContract" Type="datetime" />
           <Property Name="ViewBad_Id" Type="uniqueidentifier" />
+          <Property Name="Support№" Type="nvarchar(max)" />
+          <Property Name="CoordinationDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Backlight">
           <Key>
@@ -140,7 +142,7 @@
           <Property Name="OrderByStatus" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'D:\PROJECT\ADBASE\ADBASE\APP_DATA\SCIENCECOM.MDF.dbo.Streets' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'G:\PROJECTS\ADDBASE\ADBASEBY\ADBASE\APP_DATA\SCIENCECOM.MDF.dbo.Streets' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Streets">
           <Key>
             <PropertyRef Name="id" />
@@ -720,6 +722,8 @@ warning 6002: The table/view 'D:\PROJECT\ADBASE\ADBASE\APP_DATA\SCIENCECOM.MDF.d
           <NavigationProperty Name="ViewBid" Relationship="SciencecomModel.FK_AdvertisingStructures_ViewBid" FromRole="AdvertisingStructure" ToRole="ViewBid" />
           <NavigationProperty Name="Owner" Relationship="SciencecomModel.FK_Billboards1_Owners" FromRole="AdvertisingStructure" ToRole="Owner" />
           <NavigationProperty Name="Sides" Relationship="SciencecomModel.FK_Sides_Billboards1" FromRole="AdvertisingStructure" ToRole="Side" />
+          <Property Name="Support_" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CoordinationDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Backlight">
           <Key>
@@ -1152,6 +1156,8 @@ warning 6002: The table/view 'D:\PROJECT\ADBASE\ADBASE\APP_DATA\SCIENCECOM.MDF.d
           <EntitySetMapping Name="AdvertisingStructures">
             <EntityTypeMapping TypeName="SciencecomModel.AdvertisingStructure">
               <MappingFragment StoreEntitySet="AdvertisingStructures">
+                <ScalarProperty Name="CoordinationDate" ColumnName="CoordinationDate" />
+                <ScalarProperty Name="Support_" ColumnName="Support№" />
                 <ScalarProperty Name="ViewBad_Id" ColumnName="ViewBad_Id" />
                 <ScalarProperty Name="TheDateOfTheContract" ColumnName="TheDateOfTheContract" />
                 <ScalarProperty Name="OwnerPlacements" ColumnName="OwnerPlacements" />

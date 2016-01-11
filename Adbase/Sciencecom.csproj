@@ -1439,6 +1439,7 @@
     <Content Include="Scripts\demos\tabs\ajax\content4-broken.php" />
     <Content Include="Scripts\jqGrid\minified\jquery.jqGrid.min.js.map" />
     <Content Include="Views\Shared\PatialView\Modals.cshtml" />
+    <Content Include="Views\Data\CreateMetalPointerDesign.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Start\App_Data\" />
