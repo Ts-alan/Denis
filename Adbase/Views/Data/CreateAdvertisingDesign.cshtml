@@ -46,8 +46,7 @@
     var StartCountForSurface ;
     var EndCountForSurface = 0;
     $(document).ready(function() {
-
-
+        
         //выпадающий список на согласование
         $("[name=OnAgreement]").change(function() {
             var selectIndex = $("[name=OnAgreement] option:selected").val();
@@ -244,6 +243,13 @@
        
     }
 
+    $("#typeDropdown").change(function changePage()
+    {
+        var selectedText = $(this).find(':selected').text();
+        console.log(selectedText);
+    });
+    
+
 </script>
 <h3> КАРТОЧКА РЕКЛАМНОЙ КОНСТРУКЦИИ</h3>
 
@@ -268,7 +274,7 @@
 
         <div class="form-group" >
             <label for="Locality">Вид</label>
-            @Html.DropDownListFor(a=>a.Code, new SelectList(ListTypeAdvertising, "id", "Name", ListTypeAdvertisingSelected))
+            @Html.DropDownListFor(a=>a.Code, new SelectList(ListTypeAdvertising, "id", "Name", ListTypeAdvertisingSelected), new {@id = "typeDropdown"})
             @Html.ValidationMessageFor(model => model.Code)
         </div>
 
