@@ -6815,7 +6815,7 @@ $.jgrid.extend({
 					}
 				});
 			}
-			$(".clearsearchclass",tr).click(function() {
+			$(".clearsearchclass", tr).click(function () {
 				var ptr = $(this).parents("tr:first"),
 				coli = parseInt($("td.ui-search-oper", ptr).attr('colindex'),10),
 				sval  = $.extend({},$t.p.colModel[coli].searchoptions || {}),
@@ -6835,6 +6835,9 @@ $.jgrid.extend({
 				}
 
 			});
+			
+			
+
 			this.p.filterToolbar = true;
 			this.triggerToolbar = triggerToolbar;
 			this.clearToolbar = clearToolbar;
@@ -13656,3 +13659,4 @@ window.jqGridUtils = {
 };
 
 }));
+
