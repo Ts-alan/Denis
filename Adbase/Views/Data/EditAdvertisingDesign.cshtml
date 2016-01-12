@@ -43,8 +43,8 @@
 }
 @Scripts.Render("~/Content/Map")
 <script type="text/javascript">
-    var i = 0; 
-    
+    var i = 0;
+
     var StartCountForSurface ;
     var EndCountForSurface = 0;
     var isGreateAdvertisingDesign = false;
@@ -52,9 +52,6 @@
     {
        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
     }));
-
-
-
 
     $(document).ready(function() {
         IsDragend = true;
@@ -70,28 +67,38 @@
         });
         $("[identificationforcountside]").each(function(indx, element) {
             $(element)[0].value = ArrayOfSides[indx].length;
-            
+
             AddSurface(indx+1);
         });
 
         //выпадающий список на согласование
         $("[name=OnAgreement]").change(function() {
             var selectIndex = $("[name=OnAgreement] option:selected").val();
-            
+
             if (selectIndex == "true") {
                 $("#ContractHide").css("display", "block");
             }
             if (selectIndex == "false") {
                 $("#ContractHide").css("display", "none");
             }
-
         });
 
+       $("#Code").change(function ()
+       {
+           var end = $('#Code option:selected').text();
+           if (end == "Металлический указатель")
+           {
+               window.location.href = '/Data/EditMetalPointerDesign/' + @Model.Id_show;
+           }
+       });
+
+        $("#Code").val("BB").attr("selected", "selected");
+       
     });
 
     // подсчет суммы площадей
     function CalculationAS() {
-     
+
         var Summ=0;
         $("[selectforspace]").each(function(indx, element) {
             if ($(element).val() != "") {
@@ -131,11 +138,11 @@
                     "<option>7</option>" +
                     "<option>8</option>" +
                     "</select> &nbsp;&nbsp;&nbsp; <b>Направление стороны</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("DirectionSide", new SelectList(DirectionSide, "id", "NameOfDirectionSide"), "", new { data_val_required = "Выберете", data_val = "true", IdentificationForDirectionSide = "" }).ToHtmlString().Replace("\"", " "))' +
-                    "</div>" + 
+                    "</div>" +
                     "</div> <div style=\"margin-left: -15px;display: none\" id=\"" + i + "HiddenIdentification\"> &nbsp;&nbsp;&nbsp;<b>Идентификация поверхностей</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("IdentificationSurface", new SelectList(IdentificationSide, "id", "IdentificationName"),"",new { data_val_required = "Выберете", data_val = "true", IdentificationForIdentificationSurface = "" }).ToHtmlString().Replace("\"", " ")) </div>' +
                     "<div  id=\"InsertPartial" + i + "\"></div>" +
                     "</div>");
-                
+
                 $("#SizeOfCount").val(CountSizes);
 
             }
@@ -160,11 +167,11 @@
             //    '[0].IdentificationForDirectionSide': "test",
             //    '[1].IdentificationForDirectionSide': "brak uzytkownika"
             //    }
-   
+
         }
         );
         $('[IdentificationForDirectionSide]').each(function (indx, element) {
-                
+
             $(element).rules('add', {
                 required: true
             });
@@ -181,7 +188,7 @@
                 'CountSurfuce6': "required",
                 'CountSurfuce7': "required",
                 'CountSurfuce8': "required"
-            
+
             }
             //messages: {
             //    '[0].DirectionSide': "test",
@@ -191,7 +198,7 @@
         }
         );
         $('[IdentificationForCountSide]').each(function (indx, element) {
-           
+
             $(element).rules('add', {
                 required: true
             });
@@ -200,7 +207,7 @@
         //другое решение не тестил
         $('[name="DirectionSide"]').data('validator', null);
         $.validator.unobtrusive.parse('[name="DirectionSide"]');
-     
+
     }
 
     function SetValidate(i) {
@@ -229,7 +236,7 @@
                     '[6].IdentificationForIdentificationSurface': "required",
                     '[7].IdentificationForIdentificationSurface': "required",
                     '[8].IdentificationForIdentificationSurface': "required"
- 
+
                 }
 
             });
@@ -244,13 +251,13 @@
         $("[side=" + i + "]").remove();
     }
 
-    //Добавить поверхность+           
+    //Добавить поверхность+
     function AddSurface(i) {
         SetValidate(i);
-        
+
         $.ajax('@Url.Action("EditSurface", "Data")', { async: true, data: { side: i, StartCountForSurface: StartCountForSurface, EndCountForSurface: EndCountForSurface } })
             .success(function(e) {
-                
+
                 $("#InsertPartial" + i + "").before(e);
                 CalculationAS();
                 ////отключение валидации
@@ -259,12 +266,12 @@
                 }
             }).error(function(e) {
                 alert("ошибка кукареку");
-            });  
+            });
     }
-    //Редактировать поверхность+           
+    //Редактировать поверхность+
     function EditSurface(i) {
         SetValidate(i);
-        
+
         $.ajax('@Url.Action("AddSurface", "Data")', { async: true, data: { side: i, StartCountForSurface: StartCountForSurface, EndCountForSurface: EndCountForSurface } })
             .success(function(e) {
                 console.log(e);
@@ -276,13 +283,13 @@
                 }
             }).error(function(e) {
                 alert("ошибка кукареку");
-            });  
+            });
     }
 
 
     //выщитывание площади для каждой поверхности
     function CalculationOfTheArea(j) {
-  
+
         var Height = $('[name="[' + j + '].Height"]').val();
         var Width = $('[name="[' + j + '].Width"]').val();
 
@@ -293,12 +300,12 @@
             $('[name="[' + j + '].Space"]').val(Sum);
             CalculationAS();
         }
-       
+
     }
-    
+
 
 </script>
-<h3> КАРТОЧКА РЕКЛАМНОЙ КОНСТРУКЦИИ</h3>
+<h3> КАРТОЧКА РЕКЛАМНОГО ЩИТА</h3>
 
 
 @using (Html.BeginForm("EditAdvertisingDesign", "Data", FormMethod.Post, new { enctype = "multipart/form-data", id = "test1" }))
@@ -526,8 +533,6 @@
             @Html.ValidationMessageFor(model => model.DateOfActualInstallation)
         </div>
 
-
-
     </div>
     <div class="form-horizontal">
         <div class="form-group">
@@ -570,7 +575,6 @@
             <input type="submit" value="Изменить" class="btn btn-default" style="margin: 30px" />
         </div>
     </div>
-
 }
 
 

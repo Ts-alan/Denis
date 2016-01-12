@@ -1694,7 +1694,6 @@ namespace Sciencecom.Controllers
             }
 
             return RedirectToAction("AdvertisingDesign");
-
         }
 
 
@@ -1734,7 +1733,7 @@ namespace Sciencecom.Controllers
 
             AdvertisingStructure mc = context.AdvertisingStructures.Single(a => a.Id_show == id);
             var TempId = mc.Id;
-
+           
             foreach (var side in mc.Sides)
             {
                 context.Surfaces.RemoveRange(side.Surfaces);
@@ -1746,7 +1745,6 @@ namespace Sciencecom.Controllers
 
             for (int j = 0; j < CountSize; j++)
             {
-
                 Sides[j].AdvertisingStructures_Id = mc.Id;
                 Sides[j].Name = (j + 1).ToString();
                 Sides[j].Id = Guid.NewGuid();
@@ -1755,17 +1753,17 @@ namespace Sciencecom.Controllers
 
             context.AdvertisingStructures.Add(Structures);
             context.Sides.AddRange(Sides);
-            context.AdvertisingStructures.Add(Structures);
+            
             List<Surface> ListSurface = new List<Surface>();
             foreach (var i in surfaces)
             {
                 i.Side_Id = Sides.Single(a => a.Name == i.SideOfSurface).Id;
                 ListSurface.Add(i);
-
             }
             context.Surfaces.AddRange(ListSurface);
-
+            
             context.SaveChanges();
+          
             //картики
             if (Scan1SidesWithFinancialManagement != null)
             {
