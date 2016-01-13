@@ -18,13 +18,36 @@ namespace Sciencecom.Models
             List<string> AllKeysWidth = request.Form.AllKeys.Where(a => a.Contains("].Width")).ToList();
             List<string> AllKeysSpace = request.Form.AllKeys.Where(a => a.Contains("].Space")).ToList();
             List<string> AllKeysSideOfSurface = request.Form.AllKeys.Where(a => a.Contains("].SideOfSurface")).ToList();
-            for (int i=0;i<AllKeysHeight.Count();i++)
+
+            var height = 0;
+            var space = 0;
+            var width = 0;
+            var sideOfSurface = "";
+
+            for (int i=0; i<AllKeysHeight.Count(); i++)
             {
 
-                ListSurface.Add(new Surface() { Height = Int32.Parse(request.Form.Get(AllKeysHeight[i])), 
-                    Space = Int32.Parse(request.Form.Get(AllKeysSpace[i])), 
-                    Width = Int32.Parse(request.Form.Get(AllKeysWidth[i])), 
-                    SideOfSurface = request.Form.Get(AllKeysSideOfSurface[i]) });
+                if (!string.IsNullOrWhiteSpace(request.Form.Get(AllKeysHeight[i])))
+                {
+                    height = Int32.Parse(request.Form.Get(AllKeysHeight[i]));
+                }
+                if (!string.IsNullOrWhiteSpace(request.Form.Get(AllKeysSpace[i])))
+                {
+                    space = Int32.Parse(request.Form.Get(AllKeysSpace[i]));
+                }
+                if (!string.IsNullOrWhiteSpace(request.Form.Get(AllKeysWidth[i])))
+                {
+                    width = Int32.Parse(request.Form.Get(AllKeysWidth[i]));
+                }
+                if (!string.IsNullOrWhiteSpace(request.Form.Get(AllKeysSideOfSurface[i])))
+                {
+                    sideOfSurface = request.Form.Get(AllKeysSideOfSurface[i]);
+                }
+                ListSurface.Add(new Surface() { Height = height, 
+                    Space = space, 
+                    Width = width, 
+                    SideOfSurface = sideOfSurface
+                });
 
             }
             return ListSurface;

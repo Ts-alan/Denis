@@ -143,59 +143,122 @@
             });
 
 
-            //выпадающее меню для указателей
-            $('td[title="Металлический указатель"]').closest('tr').each(function (indx, element) {
+            //поиск строк таблицы для навешивания событий
+            var tr = $('tr.ui-widget-content.jqgrow.ui-row-ltr ');
+            
 
-                $(element).tooltipsy({
-                    alignTo: 'cursor',
-                    offset: [0, -85],
-                    hideEvent: 'focusout',
-                    content: '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
-                        '+<a href="/Map/Index/'+Showonthemap[indx]+'">Показать на карте</a></br>' +
-                        '+<a href="/Data/Documents/'+Showonthemap[indx]+'">Показать данные о конструкции</a></br>' +
-                        '+<a href="/Data/EditMetalPointerDesign/'+Showonthemap[indx]+'">Изменить данные о конструкции</a></br>' +
-                        '+<a  href="#DeleteStructures"  role="button" data-toggle="modal">Удалить конструкцию</a></br>' +
-                        '</button>',
-                    show: function (e, $el) {
-                        //console.log($el);
-                        $el.show(100);
-                    },
-                    hide: function (e, $el) {
+            //выпадающее меню для всех типов строк
+            tr.each(function (indx, element) {
+                    //поиск ячейки в строке для считывания вида конструкции
+                    var td = $(this).find('[aria-describedby="table_Вид_рекламной_конструкции"]');
+                    //выпадающее меню для указателей
+                    if (td[0].title == "Металлический указатель") 
+                    {
+                        $(element).tooltipsy({
+                            alignTo: 'cursor',
+                            offset: [0, -85],
+                            hideEvent: 'focusout',
+                            content: '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
+                                '+<a href="/Map/Index/'+Showonthemap[indx]+'">Показать на карте</a></br>' +
+                                '+<a href="/Data/Documents/'+Showonthemap[indx]+'">Показать данные о конструкции</a></br>' +
+                                '+<a href="/Data/EditMetalPointerDesign/'+Showonthemap[indx]+'">Изменить данные о конструкции</a></br>' +
+                                '+<a  href="#DeleteStructures"  role="button" data-toggle="modal">Удалить конструкцию</a></br>' +
+                                '</button>',
+                            show: function (e, $el) {
+                                //console.log($el);
+                                $el.show(100);
+                            },
+                            hide: function (e, $el) {
 
-                    },
-                    delay: 200,
-                    className: 'tooltipsy',
-                    css: {}
-                });
+                            },
+                            delay: 200,
+                            className: 'tooltipsy',
+                            css: {}
+                        });
+                    }
+                    //выпадающее меню для щитов
+                    if (td[0].title == "Щит") 
+                    {
+                        $(element).tooltipsy({
+                                    alignTo: 'cursor',
+                                    offset: [0, -85],
+                                    hideEvent: 'focusout',
+                                    content: '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
+                                        '+<a href="/Map/Index/'+Showonthemap[indx]+'">Показать на карте</a></br>' +
+                                        '+<a href="/Data/Documents/'+Showonthemap[indx]+'">Показать данные о конструкции</a></br>' +
+                                        '+<a href="/Data/EditAdvertisingDesign/'+Showonthemap[indx]+'">Изменить данные о конструкции</a></br>' +
+                                        '+<a  href="#DeleteStructures"  role="button" data-toggle="modal">Удалить конструкцию</a></br>' +
+                                        '</button>',
+                                    show: function (e, $el) {
+                                        console.log($el);
+                                        $el.show(100);
+                                    },
+                                    hide: function (e, $el) {
+
+                                    },
+                                    delay: 200,
+                                    className: 'tooltipsy',
+                                    css: {}
+                                });
+                    }
+                
             }
             );
 
-            //выпадающее меню для щитов
-            $('td[title="Щит"]').closest('tr').each(function (indx, element) {
 
-                $(element).tooltipsy({
-                    alignTo: 'cursor',
-                    offset: [0, -85],
-                    hideEvent: 'focusout',
-                    content: '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
-                        '+<a href="/Map/Index/'+Showonthemap[indx]+'">Показать на карте</a></br>' +
-                        '+<a href="/Data/Documents/'+Showonthemap[indx]+'">Показать данные о конструкции</a></br>' +
-                        '+<a href="/Data/EditAdvertisingDesign/'+Showonthemap[indx]+'">Изменить данные о конструкции</a></br>' +
-                        '+<a  href="#DeleteStructures"  role="button" data-toggle="modal">Удалить конструкцию</a></br>' +
-                        '</button>',
-                    show: function (e, $el) {
-                        console.log($el);
-                        $el.show(100);
-                    },
-                    hide: function (e, $el) {
+            ////выпадающее меню для указателей
+            //$('td[title="Металлический указатель"]').closest('tr').each(function (indx, element) {
 
-                    },
-                    delay: 200,
-                    className: 'tooltipsy',
-                    css: {}
-                });
-            }
-             );
+            //    $(element).tooltipsy({
+            //        alignTo: 'cursor',
+            //        offset: [0, -85],
+            //        hideEvent: 'focusout',
+            //        content: '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
+            //            '+<a href="/Map/Index/'+Showonthemap[indx]+'">Показать на карте</a></br>' +
+            //            '+<a href="/Data/Documents/'+Showonthemap[indx]+'">Показать данные о конструкции</a></br>' +
+            //            '+<a href="/Data/EditMetalPointerDesign/'+Showonthemap[indx]+'">Изменить данные о конструкции</a></br>' +
+            //            '+<a  href="#DeleteStructures"  role="button" data-toggle="modal">Удалить конструкцию</a></br>' +
+            //            '</button>',
+            //        show: function (e, $el) {
+            //            //console.log($el);
+            //            $el.show(100);
+            //        },
+            //        hide: function (e, $el) {
+
+            //        },
+            //        delay: 200,
+            //        className: 'tooltipsy',
+            //        css: {}
+            //    });
+            //}
+            //);
+
+            ////выпадающее меню для щитов
+            //$('td[title="Щит"]').closest('tr').each(function (indx, element) {
+
+            //    $(element).tooltipsy({
+            //        alignTo: 'cursor',
+            //        offset: [0, -85],
+            //        hideEvent: 'focusout',
+            //        content: '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
+            //            '+<a href="/Map/Index/'+Showonthemap[indx]+'">Показать на карте</a></br>' +
+            //            '+<a href="/Data/Documents/'+Showonthemap[indx]+'">Показать данные о конструкции</a></br>' +
+            //            '+<a href="/Data/EditAdvertisingDesign/'+Showonthemap[indx]+'">Изменить данные о конструкции</a></br>' +
+            //            '+<a  href="#DeleteStructures"  role="button" data-toggle="modal">Удалить конструкцию</a></br>' +
+            //            '</button>',
+            //        show: function (e, $el) {
+            //            console.log($el);
+            //            $el.show(100);
+            //        },
+            //        hide: function (e, $el) {
+
+            //        },
+            //        delay: 200,
+            //        className: 'tooltipsy',
+            //        css: {}
+            //    });
+            //}
+            // );
         }
 
 
@@ -225,7 +288,7 @@
             //ClearSearch();
             FunctionaFortable();
         });
-       
+
         //Повторный вызов функции для навештивания событий по нажатию энтер в строке поиска
         $('.ui-widget-content.ui-corner-all').keypress(function(event) {
             if (event.keyCode == 13) {

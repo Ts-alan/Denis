@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Runtime.InteropServices.ComTypes;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.Ajax.Utilities;
 using Newtonsoft.Json;
 using Sciencecom.Models;
 
@@ -85,8 +87,13 @@ namespace Sciencecom.Controllers
                 //используется для отображения едининого объекта при прееходе по ссылке "Показать на карте"
 
                 var construction = context.AdvertisingStructures.Single(a => a.Id_show == id);
-                var Owner = context.Owners.Single(a => a.Id == construction.Owner_Id).Name;
-                construction.OwnerName = Owner;
+                
+                if (context.Owners.FirstOrDefault(a => a.Id == construction.Owner_Id) != null && !string.IsNullOrWhiteSpace(context.Owners.FirstOrDefault(a => a.Id == construction.Owner_Id).Name))
+                {
+                    var Owner = context.Owners.Single(a => a.Id == construction.Owner_Id).Name;
+                    construction.OwnerName = Owner;
+                }
+                
                 var enumeratorSide = context.AdvertisingStructures.Single(a => a.Id_show == id).Sides;
 
                 for (int i = 0; i < enumeratorSide.Count; i++)

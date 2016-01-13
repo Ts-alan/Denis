@@ -21,11 +21,23 @@
             id: parseInt(objectId)
         }
     }).success(function (data) {
-
+        var colour, bct, bht;
         if (data.length > 0) {
 
             for (var i = 0; i < data.length; i++) {
-                
+                if (data[i].NameOfAdvertisingStructure == "Щит")
+                {
+                    bct = "Щ";
+                    bht = "Щит";
+                    colour = '#0095b6';
+                }
+
+                if (data[i].NameOfAdvertisingStructure == "Металлический указатель") {
+                    bct = "У";
+                    bht = "Указатель";
+                    colour = 'yellow';
+                }
+
                     var placemark = new ymaps.GeoObject(
                  {
                      geometry: {
@@ -39,13 +51,14 @@
                                  + '</br>Дом:&nbsp;' + data[i].House1
 
                          + getReferencesBillboard(data[i]),
-                         iconContent: 'Б',
-                         hintContent: 'Щит'
+                         iconContent: bct,
+                         hintContent: bht
                      }
 
                  },
                  {
-                     preset: 'islands#redClusterIcons'
+                     preset: 'islands#redClusterIcons',
+                     iconColor: colour
                  });
                 
 
