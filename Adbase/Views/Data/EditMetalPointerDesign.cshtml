@@ -41,6 +41,10 @@
     //Подсветка
     var Backlight = new SciencecomEntities().Backlights.ToList();
 
+    //Подсветка
+    //var ContentInformationDescription = new SciencecomEntities().Backlights.ToList();
+
+
 }
 @Scripts.Render("~/Content/Map")
 <script type="text/javascript">
@@ -212,20 +216,21 @@
                     <label for="Owner">конструкции </label>
                 </div>
             </div>
-            <div class="form-inline">
-                <div class="form-group">
-                    <label for="PropertyLocation_id" style="display: none;">Форма собственности места размещения </label>
-                    @Html.DropDownListFor(a => a.PropertyLocation_id, new SelectList(PropertyLocation, "id", "NamePropertyLocation"), "", new { style = "display:none;" })
-                    @Html.ValidationMessageFor(model => model.PropertyLocation_id)
-                </div>
+    <div class="form-inline">
+        <div class="form-group">
+            <label for="PropertyLocation_id" style="display: none;">Форма собственности места размещения </label>
+            @Html.DropDownListFor(a => a.PropertyLocation_id, new SelectList(PropertyLocation, "id", "NamePropertyLocation"), "", new {style = "display:none;"})
+            @Html.ValidationMessageFor(model => model.PropertyLocation_id)
+        </div>
 
-                <div class="form-group">
-                    <label for="Owner" style="display: none;">Собственник места размещения</label>
-                    @Html.EditorFor(model => model.OwnerPlacements, new { htmlAttributes = new { style = "display:none" } })
-                    @Html.ValidationMessageFor(model => model.OwnerPlacements)
-                </div>
+        <div class="form-group">
+            <label for="Owner" style="display: none;">Собственник места размещения</label>
+            @Html.EditorFor(model => model.OwnerPlacements, new {htmlAttributes = new {style = "display:none"}})
+            @Html.ValidationMessageFor(model => model.OwnerPlacements)
+        </div>
 
-            </div>
+    </div>
+
             <h3> 2.Данные о месте расположения рекламной конструкции</h3>
 
             <div class="form-inline">
@@ -251,7 +256,7 @@
             </div>
             <input type="button" id="MapSearch" value="Поиск на карте" style="margin-left: 185px">
 
-            <div class="form-inline">
+            <div class="form-inline" style="display: none">
                 <div class="form-group">
                     <label for="Street2">Ближайшая улица по ходу движения</label>
                     @Html.EditorFor(model => model.Street2)
@@ -267,7 +272,7 @@
 
             <div class="form-inline" style="margin-top: 20px">
 
-                <div class="form-group">
+                <div class="form-group" style="display: none">
                     <label for="TheElementOfTheRoadNetwork">Элемент улично-дорожной сети</label>
                     @Html.DropDownListFor(a => a.TheElementOfTheRoadNetwork_id, new SelectList(ListTypeElementOfTheRoadNetworkName, "id", "Value"), "")
                     @Html.ValidationMessageFor(a => a.TheElementOfTheRoadNetwork_id)
@@ -312,7 +317,7 @@
                 </div>
                 <div class="form-group" style="margin-bottom: 5px">
 
-                    <label for="C_PassportAdvertising">№ паспорта рекламы</label>
+                    <label for="C_PassportAdvertising">№ паспорта ТСМО</label>
                     @Html.EditorFor(model => model.C_PassportAdvertising)
                     @Html.ValidationMessageFor(model => model.C_PassportAdvertising)
 
@@ -377,7 +382,15 @@
             </div>
 
             <h3> 4.Описание рекламной конструкции</h3>
+            <div class="form-inline">
+                <hr />
+                <div class="form-group">
+                    <label>Описание рамещаемой информации</label>
+                    @Html.EditorFor(model => model.ContentInformationDescription)
 
+                    @Html.ValidationMessageFor(model => model.ContentInformationDescription)
+                </div>
+            </div>
             <div class="form-inline">
                 <hr />
                 <div class="form-group">
@@ -460,8 +473,7 @@
 
                         <div side="1">
                             <input name="[0].SideOfSurface" value="1" type="hidden">
-                            <h3 style="margin-left: 150px">Поверхность</h3>
-
+                            
                             <div class="form-inline">
                                 <hr>
                                 <div class="form-group">
@@ -469,15 +481,15 @@
                                     <input name="[0].NumberSurface" value="1" type="hidden">
 
                                     <label for="[0].Height">Высота</label>
-                                    <input class="text-box single-line" data-val="true" data-val-number="Значением поля Height должно быть число." data-val-required="The Height field is required." id="SHeight" name="[0].Height" value="" type="number">
+                                    <input class="text-box single-line" data-val="true" data-val-number="Значением поля Height должно быть число."  id="SHeight" name="[0].Height" value="" type="number">
                                     <span class="field-validation-valid" data-valmsg-for="[0].Height" data-valmsg-replace="true"></span>
 
                                     <label for="[0].Width">Ширина</label>
-                                    <input class="text-box single-line" data-val="true" data-val-number="Значением поля Width должно быть число." data-val-required="The Width field is required." name="[0].Width" id="Width" value="" type="number">
+                                    <input class="text-box single-line" data-val="true" data-val-number="Значением поля Width должно быть число."  name="[0].Width" id="Width" value="" type="number">
                                     <span class="field-validation-valid" data-valmsg-for="[0].Width" data-valmsg-replace="true"></span>
 
                                     <label for="[0].Space">Площадь</label>
-                                    <input selectforspace="" data-val="true" data-val-number="Значением поля Space должно быть число." data-val-required="The Space field is required." name="[0].Space" onchange="CalculationAS()" value="" type="number">
+                                    <input selectforspace="" data-val="true" data-val-number="Значением поля Space должно быть число."  name="[0].Space" onchange="CalculationAS()" value="" type="number">
                                     <span class="field-validation-valid" data-valmsg-for="[0].Space" data-valmsg-replace="true"></span>
                                 </div>
                             </div>
