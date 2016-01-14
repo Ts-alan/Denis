@@ -1260,6 +1260,72 @@ namespace Sciencecom.Controllers
             AdvertisingStructure mc = context.AdvertisingStructures.Single(a => a.Id_show == id);
             return View(mc);
         }
+
+        public ActionResult Pointer(int? id, string type = "MP")
+        {
+            var data = context.AdvertisingStructures.Single(a => a.Id_show == id);
+            List<Surface> surfaces = new List<Surface>();
+            foreach (var sides in data.Sides.OrderBy(a => a.Name))
+            {
+                foreach (var surface in sides.Surfaces)
+                {
+                    surfaces.Add(surface);
+                }
+            }
+            TempData["surface"] = surfaces;
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            switch (type)
+            {
+                case "MP":
+                    {
+                        ViewBag.Type = "MP";
+                        ViewBag.Id = data.Id;
+                        string src = "~/Images/Scan1SidesWithFinancialManagement/" + data.Id +
+                             "FinancialManagement.jpg";
+                        string path = Server.MapPath(src);
+                        if (System.IO.File.Exists(path))
+                        {
+                            ViewBag.Scan1Sides = true;
+                        }
+                        else
+                        {
+                            ViewBag.Scan1Sides = false;
+                        }
+                        src = "~/Images/ScanPassport_1Sides/" + data.Id + "passport.jpg";
+                        path = Server.MapPath(src);
+                        if (System.IO.File.Exists(path))
+                        {
+                            ViewBag.ScanPassport_1 = true;
+                        }
+                        else
+                        {
+                            ViewBag.ScanPassport_1 = false;
+                        }
+                        src = "~/Images/ScanPassport_2Sides/" + data.Id + "ScanPassport_2Sides.jpg";
+                        path = Server.MapPath(src);
+                        if (System.IO.File.Exists(path))
+                        {
+                            ViewBag.ScanPassport_2 = true;
+                        }
+                        else
+                        {
+                            ViewBag.ScanPassport_2 = false;
+                        }
+                    }
+                    break;
+
+                default:
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            }
+
+            AdvertisingStructure mc = context.AdvertisingStructures.Single(a => a.Id_show == id);
+            return View(mc);
+        }
+
         //Щит
         [Authorize]
         [HttpGet]

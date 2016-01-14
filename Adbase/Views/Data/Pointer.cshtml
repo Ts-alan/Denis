@@ -1,0 +1,488 @@
+﻿@using Newtonsoft.Json
+@model  Sciencecom.Models.AdvertisingStructure
+
+@{
+    ViewBag.Title = "Просмотр документов";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Scripts.Render("~/Content/Map")
+<script type="text/javascript">
+    var i = 0;
+
+    var StartCountForSurface ;
+    var EndCountForSurface = 0;
+    var isGreateAdvertisingDesign = false;
+    var ArrayOfSides = @Html.Raw(JsonConvert.SerializeObject(Model.Sides.Select(a =>
+                       {
+
+                           if (a.Identification != null)
+                           {
+                               return (new  { NameOfDirectionSide = a.DirectionSide.NameOfDirectionSide, length = a.Surfaces.Count, IdentificationName = a.Identification.IdentificationName });
+                           }
+                           return new { NameOfDirectionSide = a.DirectionSide.NameOfDirectionSide, length = a.Surfaces.Count, IdentificationName = "" };
+                       }),
+                           Formatting.Indented, new JsonSerializerSettings
+    {
+       ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+    }));
+
+
+
+
+    $(document).ready(function() {
+        IsDragend = false;
+        $('[type="date"]').each(function(indx, element) {
+            if ($(element).val() == "") {
+                $(element).attr("type", "text");
+            }
+        });
+
+        //накручивание данных в поля
+        window.onload = SetCountSize();
+        $("[identificationfordirectionside]").each(function(indx, element) {
+            $(element)[0].value =ArrayOfSides[indx].NameOfDirectionSide;
+
+        });
+        $("[identificationforcountside]").each(function(indx, element) {
+            $(element)[0].value = ArrayOfSides[indx].length;
+
+            AddSurface(indx+1);
+        });
+
+        //выпадающий список на согласование
+        $("[name=OnAgreement]").change(function() {
+            var selectIndex = $("[name=OnAgreement] option:selected").val();
+
+            if (selectIndex == "true") {
+                $("#ContractHide").css("display", "block");
+            }
+            if (selectIndex == "false") {
+                $("#ContractHide").css("display", "none");
+            }
+
+        });
+
+    });
+
+    // подсчет суммы площадей
+    function CalculationAS() {
+
+        var Summ=0;
+        $("[selectforspace]").each(function(indx, element) {
+            if ($(element).val() != "") {
+                Summ += parseInt($(element).val());
+            }
+        });
+        $("#ConstructionSquare").val(Summ);
+    }
+
+    //кол-во сторон
+    function SetCountSize() {
+        EndCountForSurface = 0;
+        var CountSizes = $('#CountSizes').val();
+        $("#CountSize").val(CountSizes);
+        if (CountSizes != "") {
+            $("[code]").each(function (indx, element) {
+                element.remove();
+            });
+
+            for (var i = 1; i <= CountSizes; i++) {
+
+                $("#InsertSide").before("<div code class=\"form-horizontal\">" +
+                    "<div class=\"form-group\" style=\"display:none\" >" +
+                    "<h3 class=\"control-label col-md-2\" for=\"\" style=\"margin-left: 55px\">Сторона  " + i + " </h3>" +
+                    "</div>" +
+                    "<div class=\"form-group\">" +
+                    "<div class=\"col-md-10\">" +
+                    "<b>Количество поверхностей</b>" +
+                    " <input class=\"text-box single-line\" id=\"AddButton" + i + "\" onchange=EditSurface(" + i + ") readonly name=\"CountSurfuce" + i + "\"  style=\"width: 20px\" IdentificationForCountSide=\"\" type=\"text\"/>" +
+                    "</select> &nbsp;&nbsp;&nbsp; <b>Направление стороны</b>" + '<input identificationfordirectionside class="text-box single-line" id="DirectionSide" style="width: 250px"  name="DirectionSide" readonly type="text" />' +
+                    "</div>" +
+                    "</div> <div style=\"margin-left: -15px;display: none\" id=\"" + i + "HiddenIdentification\"> &nbsp;&nbsp;&nbsp;<b>Идентификация поверхностей</b>" +
+                    '<input identificationforidentificationsurface class="text-box single-line valid" id="IdentificationSurface" style="width: 120px" name="IdentificationSurface" readonly="" type="text"> </div>' +
+                    "<div  id=\"InsertPartial" + i + "\"></div>" +
+                    "</div>");
+
+                $("#SizeOfCount").val(CountSizes);
+
+            }
+        }
+
+        $('[IdentificationForDirectionSide]').each(function (indx, element) {
+
+            $(element).rules('add', {
+                required: true
+            });
+        }
+        );
+
+
+        $('[IdentificationForCountSide]').each(function (indx, element) {
+
+            $(element).rules('add', {
+                required: true
+            });
+        }
+        );
+
+
+    }
+
+    function SetValidate(i) {
+
+        var count = $("#AddButton" + i + "").val();
+        StartCountForSurface = EndCountForSurface;
+        EndCountForSurface = parseInt(count) + parseInt(EndCountForSurface);
+
+        if (count == 1) {
+            $("#" + i + "HiddenIdentification").hide();
+        } else {
+            $("#" + i + "HiddenIdentification").show();
+            //валидация
+            $('[name="IdentificationSurface"]').each(function (indx, element) {
+                $(element)[0].value =ArrayOfSides[indx].IdentificationName;
+                $(element).attr("name", "[" + indx + "].IdentificationForIdentificationSurface");
+            });
+
+            $('[IdentificationForIdentificationSurface]').each(function (indx, element) {
+
+                $(element).rules('add', {
+                    required: true
+                });
+            });
+
+        }
+        $("[side=" + i + "]").remove();
+    }
+
+    //Добавить поверхность+
+    function AddSurface(i) {
+        SetValidate(i);
+
+        $.ajax('@Url.Action("EditSurface", "Data")', { async: true, data: { side: i, StartCountForSurface: StartCountForSurface, EndCountForSurface: EndCountForSurface } })
+            .success(function(e) {
+
+                $("#InsertPartial" + i + "").before(e);
+                CalculationAS();
+                $('[data-val-number]').each(function(indx, element) {
+                    $(element).attr('readonly',"");
+                });
+                $.validator.methods.number = function (value, element) {
+                    return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
+                }
+            }).error(function(e) {
+                alert("ошибка кукареку");
+            });
+    }
+
+
+
+    //выщитывание площади для каждой поверхности
+    function CalculationOfTheArea(j) {
+
+        var Height = $('[name="[' + j + '].Height"]').val();
+        var Width = $('[name="[' + j + '].Width"]').val();
+
+        if (Height != "" && Width != "") {
+
+            var Sum = Height * Width;
+
+            $('[name="[' + j + '].Space"]').val(Sum);
+            CalculationAS();
+        }
+
+    }
+
+
+</script>
+<h2>Карточка рекламной конструкции</h2>
+@using (Html.BeginForm("EditAdvertisingDesign", "Data", FormMethod.Post, new { enctype = "multipart/form-data", id = "test1" }))
+{
+
+    <h3> 1. Общие данные о рекламной конструкции</h3>
+    @Html.AntiForgeryToken()
+    <div class="form-inline" style="margin-bottom: -10px">
+        <hr />
+
+        <input type="hidden" id="CountSize" id="SizeOfCount" name="CountSize" value="">
+        @Html.ValidationSummary(true)
+        @Html.ValidationMessage("Error")
+
+        <div class="form-group">
+            <label for="Owner">Собственник </label>
+            @Html.EditorFor(model => model.Owner.Name, new { htmlAttributes = new { @readonly = "" } })
+        </div>
+
+        <div class="form-group">
+            <label for="Locality">Вид</label>
+            @Html.EditorFor(model => model.TypeOfAdvertisingStructure.Name, new { htmlAttributes = new { @readonly = "" } })
+        </div>
+
+        <div class="form-group">
+            <label for="Status">Статус</label>
+
+            @Html.EditorFor(model => model.Status.NameStatus, new { htmlAttributes = new { @readonly = "", style = "width: 200px" } })
+        </div>
+
+        <div class="form-group">
+            <label for="UniqueNumber">Идентификационный номер</label>
+            @Html.EditorFor(model => model.UniqueNumber, new { htmlAttributes = new { @readonly = "" } })
+
+        </div>
+        <br>
+
+    </div>
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label for="Owner">конструкции </label>
+        </div>
+    </div>
+    <div class="form-inline" style="display: none">
+        <div class="form-group">
+            <label for="PropertyLocation_id">Форма собственности места размещения </label>
+
+            @Html.EditorFor(model => model.PropertyLocation.NamePropertyLocation, new { htmlAttributes = new { @readonly = "" } })
+        </div>
+
+        <div class="form-group">
+            <label for="Owner">Собственник места размещения</label>
+            @Html.EditorFor(model => model.OwnerPlacements, new { htmlAttributes = new { @readonly = "" } })
+
+        </div>
+
+    </div>
+    <h3> 2.Данные о месте расположения рекламной конструкции</h3>
+
+    <div class="form-inline">
+        <hr />
+        <div class="form-group" style="margin-left: -15px">
+            <label for="Locality">Нас. пункт</label>
+
+            @Html.EditorFor(model => model.Locality.NameLocality, new { htmlAttributes = new { @readonly = "" } })
+        </div>
+
+        <div class="form-group">
+            <label for="Street1">Улица</label>
+            @Html.EditorFor(model => model.Street1, new { htmlAttributes = new { @readonly = "" } })
+
+        </div>
+
+        <div class="form-group">
+            <label for="House1">Дом</label>
+            @Html.EditorFor(model => model.House1, new { htmlAttributes = new { @readonly = "" } })
+
+        </div>
+
+
+    </div>
+
+
+    <div class="form-inline" style="display: none">
+        <div class="form-group">
+            <label for="Street2">Ближайшая улица по ходу движения</label>
+            @Html.EditorFor(model => model.Street2, new { htmlAttributes = new { @readonly = "" } })
+
+        </div>
+
+        <div class="form-group">
+            <label for="FromStreet">Со стороны улицы</label>
+            @Html.EditorFor(model => model.FromStreet, new { htmlAttributes = new { @readonly = "" } })
+
+        </div>
+    </div>
+
+    <div class="form-inline" style="margin-top: 20px; display: none">
+
+        <div class="form-group">
+            <label for="TheElementOfTheRoadNetwork">Элемент улично-дорожной сети</label>
+
+            @Html.EditorFor(model => model.TheElementOfTheRoadNetwork.TheElementOfTheRoadNetworkName, new { htmlAttributes = new { @readonly = "" } })
+        </div>
+
+    </div>
+
+    <div class="form-inline">
+        <hr />
+        <div class="form-group" style="width: 600px; height: 500px" id="map"></div>
+
+        <div class="form-group">
+
+            <div>
+                <label for="Breadth">Широта </label>
+                @Html.EditorFor(model => model.Breadth, new { htmlAttributes = new { @readonly = "" } })
+            </div>
+
+            <div>
+                <label for="Height">Долгота</label>
+                @Html.EditorFor(model => model.Height, new { htmlAttributes = new { @readonly = "" } })
+            </div>
+        </div>
+    </div>
+
+    <h3> 3.Разрешительная документация</h3>
+    <div class="form-horizontal">
+        <hr />
+        <div class="form-group" style="display: none">
+
+            <label for="ViewBad_Id">Вид заявки</label>
+
+            @Html.EditorFor(model => model.ViewBid.Name, new { htmlAttributes = new { @readonly = "" } })
+
+
+            <label for="DateOfReceiptOfTheApplication">Дата подачи заявки</label>
+            @Html.EditorFor(model => model.DateOfReceiptOfTheApplication, new { htmlAttributes = new { @readonly = "" } })
+
+
+        </div>
+        <div class="form-group" style="margin-bottom: 5px">
+
+            <label for="C_PassportAdvertising">№ паспорта ТСМО</label>
+            @Html.EditorFor(model => model.C_PassportAdvertising, new { htmlAttributes = new { @readonly = "" } })
+
+            <label for="DateOfTakenPassport">Дата выдачи паспорта</label>
+            @Html.EditorFor(model => model.DateOfTakenPassport, new { htmlAttributes = new { @readonly = "" } })
+
+
+        </div>
+
+        <div class="form-group" style="margin-bottom: 5px">
+            <label for="StartDate">разреш с</label>
+            @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @readonly = "" } })
+
+
+            <label for="EndDate">разреш по</label>
+            @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @readonly = "" } })
+
+        </div>
+
+    </div>
+    <div class="form-inline">
+        <div class="form-group">
+            @if (ViewBag.ScanPassport_1)
+            {
+                <p>
+                    <h3>@Html.Raw("Скан паспорта (стор 1) ")</h3><br />
+                </p>
+                string image = "/Images/ScanPassport_1Sides/" + ViewBag.Id + "passport.jpg";
+                <p>
+                    <a href=@image><img src=@image height="500"></a><br />
+                </p>
+            }
+            else
+            {
+                @Html.Raw("Скан паспорта (стор 1) отсутствует")<br />
+            }
+
+        </div>
+
+        <div class="form-group">
+            @if (ViewBag.ScanPassport_2)
+            {
+                <p>
+                    <h3>@Html.Raw("Скан паспорта (стор 2) ")</h3><br />
+                </p>
+                string image = "/Images/ScanPassport_2Sides/" + ViewBag.Id + "ScanPassport_2Sides.jpg";
+                ;
+                <p>
+                    <a href=@image><img src=@image height="500"></a><br />
+                </p>
+            }
+            else
+            {
+                @Html.Raw("Скан паспорта (стор 2) отсутствует.")<br />
+            }
+        </div>
+    </div>
+
+    <div class="form-horizontal" style="display: none">
+
+        <div class="form-group" style="margin-bottom: 5px">
+            <label for="C_ContractFinancialManagement">№ договора с финансовым управлением</label>
+            @Html.EditorFor(model => model.C_ContractFinancialManagement, new { htmlAttributes = new { @readonly = "" } })
+
+
+            <label for="TheDateOfTheContract">Дата договора</label>
+            @Html.EditorFor(model => model.TheDateOfTheContract, new { htmlAttributes = new { @readonly = "" } })
+
+
+        </div>
+
+
+    </div>
+    if (ViewBag.Type == "BB")
+    {
+        <div id="image" style="display: none">
+            @if (ViewBag.Scan1Sides)
+            {
+                <p>
+                    <h3>@Html.Raw("Скан 1 страницы договора с финанаосвым управлением ")</h3><br />
+                </p>
+                string image = "/Images/Scan1SidesWithFinancialManagement/" + ViewBag.Id +
+                                     "FinancialManagement.jpg";
+                <p>
+                    <a href=@image><img src=@image height="500"></a><br />
+                </p>
+            }
+            else
+            {
+                @Html.Raw("Скан 1 страницы договора с финанаосвым управлением отсутствует.")<br />
+            }
+
+        </div>
+    }
+    <h3> 4.Описание рекламной конструкции</h3>
+
+        <div class="form-inline">
+            <hr />
+            <div class="form-group">
+                <label for="PlannedInstallationDate">Планируемая дата установки</label>
+                @Html.EditorFor(model => model.PlannedInstallationDate, new { htmlAttributes = new { @readonly = "" } })
+
+            </div>
+
+            <div class="form-group">
+                <label for="DateOfActualInstallation">Дата фактической установки</label>
+                @Html.EditorFor(model => model.DateOfActualInstallation, new { htmlAttributes = new { @readonly = "" } })
+
+            </div>
+        </div>
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label for="DateDismantling">Дата демонтажа</label>
+                @Html.EditorFor(model => model.DateDismantling, new { htmlAttributes = new { @readonly = "" } })
+
+            </div>
+        </div>
+        <div class="form-inline">
+
+            <div class="form-group">
+                <label for="CommentOwner">Подсветка</label>
+
+                @Html.EditorFor(model => model.Backlight.Name, new { htmlAttributes = new { @readonly = "" } })
+            </div>
+
+            <div class="form-group">
+                <label for="CommentOwner">Комментарий</label>
+                @Html.EditorFor(model => model.CommentOwner, new { htmlAttributes = new { @readonly = "" } })
+            </div>
+
+        </div>
+        <div class="form-horizontal" style="margin-top: 18px">
+            <div class="form-group">
+                <label for="ConstructionSquare">Площадь конструкции</label>
+                <input id="ConstructionSquare" readonly name="ConstructionSquare" style="background-color: lightgray" type="text" value="">
+
+            </div>
+            <div class="form-group">
+                <label for="CountSizes">Количество сторон</label>
+                
+                @*@Html.Editor("CountSizes", new { htmlAttributes = new { @readonly = "", value ="434343" } })*@
+                <input class="text-box single-line" id="CountSizes" name="CountSizes" readonly type="text" value="@Model.Sides.Count" style="width: 30px">
+
+            </div>
+        </div>
+        <div id="InsertSide"></div>
+
+
+
+}

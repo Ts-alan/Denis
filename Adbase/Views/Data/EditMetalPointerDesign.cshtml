@@ -65,6 +65,7 @@
           }
            
       });
+        $("#Code option").val("Металлический указатель").prop('selected', true);
         IsDragend = true;
         ////отключение валидации
         $.validator.methods.number = function (value, element) {
@@ -428,12 +429,7 @@
                     <input id="ConstructionSquare" readonly name="ConstructionSquare" style="background-color: lightgray" type="text" value="">
 
                 </div>
-                <div class="form-group">
-                    <label for="CountSizes">Количество сторон:</label>
-                    @Html.EditorFor(m => m.Sides.Count, new { disabled = "disabled", @readonly = "readonly" })
-                    <span class="field-validation-validr" data-valmsg-for="CountSizes" data-valmsg-replace="true">
-                    </span>
-                </div>
+                
             </div>
             <div class="form-inline" style="display: none;">
                 <hr />
