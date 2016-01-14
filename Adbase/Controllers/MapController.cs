@@ -1,21 +1,12 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Runtime.InteropServices.ComTypes;
-using System.Web;
 using System.Web.Mvc;
-using Microsoft.Ajax.Utilities;
-using Newtonsoft.Json;
-using Sciencecom.Models;
 
 namespace Sciencecom.Controllers
 {
     using Models;
     using Models.MapJsonModels;
-    using System.Net;
+
     public class MapController : Controller
     {
         

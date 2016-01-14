@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Queryies.Models.Requests
+﻿namespace Queryies.Models.Requests
 {
     public class ChangeUserRequest
     {

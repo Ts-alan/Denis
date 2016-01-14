@@ -1,23 +1,15 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Data.Entity.Validation;
 using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Mvc.Html;
-using Microsoft.Ajax.Utilities;
 
 
 namespace Sciencecom.Controllers
 {
-    using Microsoft.AspNet.Identity;
-    using Microsoft.AspNet.Identity.EntityFramework;
     using Models;
-    using System.Data.Entity;
     using System.Net;
-    using System.Threading;
 
     public class DataController : Controller
     {
