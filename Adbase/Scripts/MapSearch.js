@@ -18,7 +18,7 @@
                         draggable: true
                       
                     });
-                    console.log(myPlacemark);
+                    //console.log(myPlacemark);
                     myMap.geoObjects.add(myPlacemark);
                 });
            

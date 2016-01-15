@@ -433,6 +433,7 @@
     <None Include="Properties\PublishProfiles\ScomBeta.pubxml" />
     <Content Include="Content\messi.css" />
     <Content Include="Scripts\AddPlacamerkToMap.js" />
+    <Content Include="Scripts\AddPlacemarkEdit.js" />
     <Content Include="Scripts\AutocomlpleteOnMap.js" />
     <Content Include="Scripts\Autocomplete.js" />
     <Content Include="Scripts\bootstrap.js" />

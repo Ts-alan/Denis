@@ -41,9 +41,11 @@
 
 
 }
-@Scripts.Render("~/Content/Map")
+
 <script type="text/javascript">
     var i = 0;
+    
+    var havePlacemark = @Model.Breadth.HasValue.ToString().ToLower();
 
     var StartCountForSurface ;
     var EndCountForSurface = 0;
@@ -63,9 +65,9 @@
           {
               window.location.href = '/Data/EditAdvertisingDesign/' + @Model.Id_show;
           }
-           
+
       });
-        $("#Code option").val("Металлический указатель").prop('selected', true);
+        //$("#Code option").val("Металлический указатель").prop('selected', true);
         IsDragend = true;
         ////отключение валидации
         $.validator.methods.number = function (value, element) {
@@ -137,7 +139,7 @@
 
 </script>
 <h3> КАРТОЧКА МЕТАЛЛИЧЕСКОГО УКАЗАТЕЛЯ</h3>
-
+@Scripts.Render("~/Content/Data")
 
 @using (Html.BeginForm("EditMetalPointerDesign", "Data", FormMethod.Post, new { enctype = "multipart/form-data", id = "test1" }))
 {

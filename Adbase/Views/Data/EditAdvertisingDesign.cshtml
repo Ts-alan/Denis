@@ -37,10 +37,12 @@
     var Backlight = new SciencecomEntities().Backlights.ToList();
 
 }
-@Scripts.Render("~/Content/Map")
+
 <script type="text/javascript">
     var i = 0;
-
+    console.log(@Model.Breadth);
+    var havePlacemark = @Model.Breadth.HasValue.ToString().ToLower();
+    
     var StartCountForSurface ;
     var EndCountForSurface = 0;
     var isGreateAdvertisingDesign = false;
@@ -58,7 +60,7 @@
         //накручивание данных в поля
         window.onload = SetCountSize();
         $("[identificationfordirectionside]").each(function(indx, element) {
-           $(element)[0].value =ArrayOfSides[indx].DirectionSide_id;
+            $(element)[0].value =ArrayOfSides[indx].DirectionSide_id;
 
         });
         $("[identificationforcountside]").each(function(indx, element) {
@@ -79,17 +81,17 @@
             }
         });
 
-       $("#Code").change(function ()
-       {
-           var end = $('#Code option:selected').text();
-           if (end == "Металлический указатель")
-           {
-               window.location.href = '/Data/EditMetalPointerDesign/' + @Model.Id_show;
-           }
-       });
+        $("#Code").change(function ()
+        {
+            var end = $('#Code option:selected').text();
+            if (end == "Металлический указатель")
+            {
+                window.location.href = '/Data/EditMetalPointerDesign/' + @Model.Id_show;
+            }
+        });
 
         $("#Code").val("BB").attr("selected", "selected");
-       
+
     });
 
     // подсчет суммы площадей
@@ -270,7 +272,7 @@
 
         $.ajax('@Url.Action("AddSurface", "Data")', { async: true, data: { side: i, StartCountForSurface: StartCountForSurface, EndCountForSurface: EndCountForSurface } })
             .success(function(e) {
-                console.log(e);
+                //console.log(e);
                 $("#InsertPartial" + i + "").before(e);
                 CalculationAS();
                 ////отключение валидации
@@ -303,7 +305,7 @@
 </script>
 <h3> КАРТОЧКА РЕКЛАМНОГО ЩИТА</h3>
 
-
+@Scripts.Render("~/Content/Data")
 @using (Html.BeginForm("EditAdvertisingDesign", "Data", FormMethod.Post, new { enctype = "multipart/form-data", id = "test1" }))
 {
 

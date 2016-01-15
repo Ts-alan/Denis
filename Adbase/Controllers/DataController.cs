@@ -1699,7 +1699,7 @@ namespace Sciencecom.Controllers
 
             context.AdvertisingStructures.Add(Structures);
             context.Sides.AddRange(Sides);
-            context.AdvertisingStructures.Add(Structures);
+            //context.AdvertisingStructures.Add(Structures);
             List<Surface> ListSurface = new List<Surface>();
             foreach (var i in surfaces)
             {
