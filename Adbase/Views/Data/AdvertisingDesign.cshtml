@@ -41,22 +41,22 @@
         tableToGrid("#table", {
             height: 700,
             colNames: [
-                "Собственник рекламной конструкции", "Вид рекламной конструкции",
+                "Собственник конструкции", "Вид конструкции",
                 "Населенный пункт","Улица", "Дом", "Количество сторон", "Количестов поверхностей",
-                "Площадь рекламной конструкции", "Разреш по"
+                "Площадь конструкции", "Разреш по"
             ],
             forceFit:false,
 
             cmTemplate:{"resizable": false,sortable:false},
             colModel: [
-                { name: "Собственник_рекламной_конструкции", align: "center" },
-                { name: "Вид_рекламной_конструкции", align: "center" },
+                { name: "Собственник_конструкции", align: "center" },
+                { name: "Вид_конструкции", align: "center" },
                 { name: "Населенный_пункт", align: "center" },
                 { name: "Улица", align: "center" },
                 { name: "Дом", align: "center" },
                 { name: "Количество_сторон", align: "center" },
                 { name: "Количестов_поверхностей", align: "center" },
-                { name: "Площадь_рекламной_конструкции", align: "center" },
+                { name: "Площадь_конструкции", align: "center" },
                 { name: "Разреш_по", align: "center" }
 
             ]
@@ -150,7 +150,7 @@
             //выпадающее меню для всех типов строк
             tr.each(function (indx, element) {
                     //поиск ячейки в строке для считывания вида конструкции
-                    var td = $(this).find('[aria-describedby="table_Вид_рекламной_конструкции"]');
+                    var td = $(this).find('[aria-describedby="table_Вид_конструкции"]');
                     //выпадающее меню для указателей
                     if (td[0].title == "Металлический указатель") 
                     {
@@ -272,45 +272,29 @@
 </style>
 <div id="Page">
 
-    <h2>Таблица рекламных конструкций</h2>
+    <h2>Таблица конструкций</h2>
     <div class="zoom">
         @{
             if (role != "ReadOnly")
             {
                 <p>
-                    <b>@Html.ActionLink("+ Добавить новую рекламную конструкцию", "CreateAdvertisingDesign", new { type = "Billboard" }, new { @class = "btn btn-default" })</b>
+                    <b>@Html.ActionLink("+ Добавить новую конструкцию", "CreateAdvertisingDesign", new { type = "Billboard" }, new { @class = "btn btn-default" })</b>
                     <b> <input type="button" value="Поиск" id="search" class="btn btn-default"></b>
-                    @*<b><a href="#" style="margin-right: 110px" id="AddNewAD">+ Новая рекламная конструкция</a></b>
-                        <b><a href="#" style="margin-right: 110px" id="EditStatusAD">+ Изменить статус рекламной конструкции</a></b>
-                        <b><a href="#" id="EditBillbord">+ Изменить существующую рекламную конструкцию</a></b>*@
                 </p>
             }
         }
 
-        @*<div id="divForAddNewAD" style="margin-left: 30px; margin-right: 40px; margin-bottom: 10px; float: left; visibility: hidden">
-                <b>@Html.ActionLink("+ Карточка рекламной конструкции", "CreateAdvertisingDesign", new {type = "Billboard"})</b>
-                <b>@Html.ActionLink("+ Подать заявку на согласование паспорта рекламы", "CreateAdvertisingDesign", new {type = "Billboard"}, new {style = "display: block"})</b>
-
-            </div>
-
-            <div id="divEditStatusAD" style="visibility: hidden">
-                <b>@Html.ActionLink("+ Ввести данные паспорта рекламы", "CreateBilboard", new {type = "Billboard"}, new {style = "margin-right:140px"})</b>
-                <b>@Html.ActionLink("+ Ввести данные об установке рекламной конструкции", "CreateAdvertisingDesign", new {type = "Billboard"}, new {style = "margin-right:140px;display: block"})</b>
-                <b>@Html.ActionLink("+ Ввести данные об демонтаже рекламной контсрукции", "CreateAdvertisingDesign", new {type = "Billboard"}, new {style = "margin-right:140px;display: block"})</b>
-            </div>*@
-
-
         <table id="table" class="table-bordered" cellpadding="5" style="width: 100%">
             <tr>
                 
-                <th>Собственник_рекламной_конструкции</th>
-                <th>Вид_рекламной_конструкции</th>
+                <th>Собственник_конструкции</th>
+                <th>Вид_конструкции</th>
                 <th>Населенный_пункт</th>
                 <th>Улица</th>
                 <th>Дом</th>
                 <th> Количество_сторон</th>
                 <th> Количестов_поверхностей</th>
-                <th>Площадь_рекламной_конструкции</th>
+                <th>Площадь_конструкции</th>
                 <th>Разреш_по</th>
 
             </tr>

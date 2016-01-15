@@ -303,13 +303,13 @@
 
 
 </script>
-<h3> КАРТОЧКА РЕКЛАМНОГО ЩИТА</h3>
+<h3> КАРТОЧКА ЩИТА</h3>
 
 @Scripts.Render("~/Content/Data")
 @using (Html.BeginForm("EditAdvertisingDesign", "Data", FormMethod.Post, new { enctype = "multipart/form-data", id = "test1" }))
 {
 
-    <h3> 1. Общие данные о рекламной конструкции</h3>
+    <h3> 1. Общие данные о конструкции</h3>
     @Html.AntiForgeryToken()
     <div class="form-inline" style="margin-bottom: -10px">
         <hr />
@@ -363,7 +363,7 @@
         </div>
 
     </div>
-    <h3> 2.Данные о месте расположения рекламной конструкции</h3>
+    <h3> 2.Данные о месте расположения конструкции</h3>
 
     <div class="form-inline">
         <hr />
@@ -514,7 +514,7 @@
         </div>
     </div>
 
-    <h3> 4.Описание рекламной конструкции</h3>
+    <h3> 4.Описание конструкции</h3>
    
 
     <div class="form-inline">

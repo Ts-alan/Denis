@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "База данных рекламных объектов - Добро пожаловать";
+    ViewBag.Title = "База данных объектов - Добро пожаловать";
     var date = "Cегодня " + DateTime.Now.ToShortDateString();
     var time = "Время    " + DateTime.Now.TimeOfDay.ToString(@"hh\:mm");
 }
@@ -13,12 +13,12 @@
 
 <div class="row">
     <div class="col-md-3">
-        <h3>Таблица рекламных конструкций</h3>
+        <h3>Таблица конструкций</h3>
         <p></p>
         <p><a class="btn btn-info" href="../Data/AdvertisingDesign">Перейти &raquo;</a></p>
     </div>
     <div class="col-md-3">
-        <h3>Карта рекламных конструкций</h3>
+        <h3>Карта конструкций</h3>
         <p></p>
         <p><a class="btn btn-info" href="@Url.Action("Index","Map")">Перейти &raquo;</a></p>
     </div>

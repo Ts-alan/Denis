@@ -198,11 +198,11 @@
 
     $("#test1 > div:nth-child(22) > div.body-content > div > h3").remove();
 </script>
-<h2>Карточка рекламной конструкции</h2>
+<h2>Карточка конструкции</h2>
 @using (Html.BeginForm("EditAdvertisingDesign", "Data", FormMethod.Post, new { enctype = "multipart/form-data", id = "test1" }))
 {
 
-    <h3> 1. Общие данные о рекламной конструкции</h3>
+    <h3> 1. Общие данные о конструкции</h3>
     @Html.AntiForgeryToken()
     <div class="form-inline" style="margin-bottom: -10px">
         <hr />
@@ -254,7 +254,7 @@
         </div>
 
     </div>
-    <h3> 2.Данные о месте расположения рекламной конструкции</h3>
+    <h3> 2.Данные о месте расположения конструкции</h3>
 
     <div class="form-inline">
         <hr />
@@ -433,11 +433,11 @@
 
         </div>
     }
-    <h3> 4.Описание рекламной конструкции</h3>
+    <h3> 4.Описание конструкции</h3>
     <hr />
     <div class="form-group">
         <label>Описание рамещаемой информации</label>
-        @Html.EditorFor(model => model.ContentInformationDescription)
+        @Html.TextAreaFor(model => model.ContentInformationDescription)
 
         @Html.ValidationMessageFor(model => model.ContentInformationDescription)
     </div>
