@@ -64,7 +64,9 @@ namespace Sciencecom
 
             bundles.Add(new StyleBundle("~/Content/Data").Include(
             "~/Scripts/AddPlacemarkEdit.js",
-            "~/Scripts/MapSearch.js"
+            "~/Scripts/AddPlacemark.js",
+            "~/Scripts/MapSearch.js",
+            "~/Scripts/Autocomplete.js"
            ));
         }
     }

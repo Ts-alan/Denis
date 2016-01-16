@@ -3,6 +3,7 @@
    
     var isGreateAdvertisingDesign = false;
     var isdragend = true;
+    var count = true;
     ymaps.ready(init);
    
     //присвоение коодинат при перетаскивание метки 
@@ -46,7 +47,8 @@
 
    
 
-        if (isGreateAdvertisingDesign) {
+        if (isGreateAdvertisingDesign)
+        {
             //присвоение  коодинат при клике  
             myMap.events.add('click', function(e) {
                 if (!havePlacemark) {
@@ -102,10 +104,7 @@
 
                 dragend();
             }
-
-
         }
-
     }
 
     function SetCoordinates() {

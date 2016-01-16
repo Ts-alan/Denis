@@ -271,7 +271,7 @@
         </div>
 
         <div class="form-group">
-            <label for="House1">Дом</label>
+            <label for="House1">№ опоры</label>
             @Html.EditorFor(model => model.House1, new { htmlAttributes = new { @readonly = "" } })
 
         </div>
@@ -437,7 +437,7 @@
     <hr />
     <div class="form-group">
         <label>Описание рамещаемой информации</label>
-        @Html.TextAreaFor(model => model.ContentInformationDescription)
+        @Html.TextAreaFor(model => model.ContentInformationDescription, new {cols = "30", rows = "4"} )
 
         @Html.ValidationMessageFor(model => model.ContentInformationDescription)
     </div>
