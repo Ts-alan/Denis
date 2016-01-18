@@ -7,31 +7,31 @@
     var count = true;
     ymaps.ready(init);
    
-    //присвоение коодинат при перетаскивание метки 
-    function dragend() {
+    ////присвоение коодинат при перетаскивание метки 
+    //function dragend() {
 
-        myPlacemark.events.add('dragend', function (e) {
+    //    myPlacemark.events.add('dragend', function (e) {
 
-            var coords = myPlacemark.geometry.getCoordinates();
-            var str = String(coords[0].toPrecision(6));
-            str = str.replace('.', ',');
-            //if (!isNaN(str)) {
-            //    $("#Shirota").val(str);
-            //} else {
-            //    $("#Shirota").val("");
-            //}
-            $("#Breadth").val(str);
+    //        var coords = myPlacemark.geometry.getCoordinates();
+    //        var str = String(coords[0].toPrecision(6));
+    //        str = str.replace('.', ',');
+    //        //if (!isNaN(str)) {
+    //        //    $("#Shirota").val(str);
+    //        //} else {
+    //        //    $("#Shirota").val("");
+    //        //}
+    //        $("#Breadth").val(str);
 
-            str = String(coords[1].toPrecision(6));
-            str = str.replace('.', ',');
-            //if (!isNaN(str)) {
-            //    $("#Dolgota").val(str);
-            //} else {
-            //    $("#Dolgota").val("");
-            //} 
-            $("#Height").val(str);
-        });
-    }
+    //        str = String(coords[1].toPrecision(6));
+    //        str = str.replace('.', ',');
+    //        //if (!isNaN(str)) {
+    //        //    $("#Dolgota").val(str);
+    //        //} else {
+    //        //    $("#Dolgota").val("");
+    //        //} 
+    //        $("#Height").val(str);
+    //    });
+    //}
 
 
     function init() {
