@@ -1371,7 +1371,7 @@ namespace Sciencecom.Controllers
             [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces,
             HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides,
             HttpPostedFileBase Scan1SidesWithFinancialManagement, List<HttpPostedFileBase> SeveralPhoto,
-            int CountSize = 1)
+            int CountSize = 0)
         {
 
             Guid StructuresId = Guid.NewGuid();
@@ -1384,26 +1384,37 @@ namespace Sciencecom.Controllers
 
             }
 
-            for (int j = 0; j < CountSize; j++)
+            if (CountSize > 0)
             {
+                for (int j = 0; j < CountSize; j++)
+                {
 
-                Sides[j].AdvertisingStructures_Id = StructuresId;
-                Sides[j].Name = (j + 1).ToString();
-                Sides[j].Id = Guid.NewGuid();
+                    Sides[j].AdvertisingStructures_Id = StructuresId;
+                    Sides[j].Name = (j + 1).ToString();
+                    Sides[j].Id = Guid.NewGuid();
+                }
+
+                context.Sides.AddRange(Sides);
+                context.AdvertisingStructures.Add(Structures);
+                List<Surface> ListSurface = new List<Surface>();
+                foreach (var i in surfaces)
+                {
+                    i.Side_Id = Sides.Single(a => a.Name == i.SideOfSurface).Id;
+                    ListSurface.Add(i);
+
+                }
+                context.Surfaces.AddRange(ListSurface);
+
+                context.SaveChanges();
+            }
+            else
+            {
+                context.AdvertisingStructures.Add(Structures);
+                context.SaveChanges();
             }
 
-            context.Sides.AddRange(Sides);
-            context.AdvertisingStructures.Add(Structures);
-            List<Surface> ListSurface = new List<Surface>();
-            foreach (var i in surfaces)
-            {
-                i.Side_Id = Sides.Single(a => a.Name == i.SideOfSurface).Id;
-                ListSurface.Add(i);
+            
 
-            }
-            context.Surfaces.AddRange(ListSurface);
-
-            context.SaveChanges();
             if (Scan1SidesWithFinancialManagement != null)
             {
                 string src = "~/Images/Scan1SidesWithFinancialManagement/" + Structures.Id +
@@ -1672,7 +1683,7 @@ namespace Sciencecom.Controllers
             [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces,
             HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides,
             HttpPostedFileBase Scan1SidesWithFinancialManagement,
-            int CountSize = 1)
+            int CountSize = 0)
         {
 
             AdvertisingStructure mc = context.AdvertisingStructures.Single(a => a.Id_show == id);
@@ -1687,29 +1698,37 @@ namespace Sciencecom.Controllers
             context.Sides.RemoveRange(mc.Sides);
             context.AdvertisingStructures.Remove(mc);
             context.SaveChanges();
-
-            for (int j = 0; j < CountSize; j++)
+            if (CountSize > 0)
             {
+                for (int j = 0; j < CountSize; j++)
+                {
 
-                Sides[j].AdvertisingStructures_Id = mc.Id;
-                Sides[j].Name = (j + 1).ToString();
-                Sides[j].Id = Guid.NewGuid();
+                    Sides[j].AdvertisingStructures_Id = mc.Id;
+                    Sides[j].Name = (j + 1).ToString();
+                    Sides[j].Id = Guid.NewGuid();
+                }
+                Structures.Id = TempId;
+
+                context.AdvertisingStructures.Add(Structures);
+                context.Sides.AddRange(Sides);
+                //context.AdvertisingStructures.Add(Structures);
+                List<Surface> ListSurface = new List<Surface>();
+                foreach (var i in surfaces)
+                {
+                    i.Side_Id = Sides.Single(a => a.Name == i.SideOfSurface).Id;
+                    ListSurface.Add(i);
+
+                }
+                context.Surfaces.AddRange(ListSurface);
+
+                context.SaveChanges();
             }
-            Structures.Id = TempId;
-
-            context.AdvertisingStructures.Add(Structures);
-            context.Sides.AddRange(Sides);
-            //context.AdvertisingStructures.Add(Structures);
-            List<Surface> ListSurface = new List<Surface>();
-            foreach (var i in surfaces)
+            else
             {
-                i.Side_Id = Sides.Single(a => a.Name == i.SideOfSurface).Id;
-                ListSurface.Add(i);
-
+                context.AdvertisingStructures.Add(Structures);
+                context.SaveChanges();
             }
-            context.Surfaces.AddRange(ListSurface);
-
-            context.SaveChanges();
+            
             //картики
             if (Scan1SidesWithFinancialManagement != null)
             {

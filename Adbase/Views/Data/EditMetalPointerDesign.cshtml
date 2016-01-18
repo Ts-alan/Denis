@@ -67,7 +67,7 @@
           }
 
       });
-        //$("#Code option").val("Металлический указатель").prop('selected', true);
+      
         IsDragend = true;
         ////отключение валидации
         $.validator.methods.number = function (value, element) {
@@ -190,7 +190,7 @@
 
                 <div class="form-group">
                     <label for="Locality">Вид</label>
-                    @Html.DropDownListFor(a => a.Code, new SelectList(ListTypeAdvertising, "Code", "Name"))
+                    @Html.DropDownListFor(a => a.Code, new SelectList(ListTypeAdvertising, "Code", "Name", ListTypeAdvertising.Select(m=> m.Code == "MP")))
                     @*@Html.EditorFor(a => a.Code, new { disabled = "disabled", @readonly = "readonly"})*@
                     @Html.ValidationMessageFor(model => model.Code)
                 </div>
