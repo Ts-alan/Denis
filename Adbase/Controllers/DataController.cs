@@ -1796,6 +1796,7 @@ namespace Sciencecom.Controllers
                 }
             }
             TempData["surface"] = surfaces;
+            mc.Code = "MP";
             return View(mc);
         }
 
