@@ -61,9 +61,13 @@ namespace Sciencecom
             bundles.Add(new StyleBundle("~/bundles/tooltip").Include(
             "~/Scripts/tooltip/tooltipsy.source.js"
             ));
-            bundles.Add(new StyleBundle("~/Content/Data").Include(
-            "~/Scripts/AddPlacemarkEdit.js"
-           ));
+
+           // bundles.Add(new StyleBundle("~/Content/Data").Include(
+           // "~/Scripts/AddPlacemarkEdit.js",
+           // "~/Scripts/AddPlacemark.js",
+           // "~/Scripts/MapSearch.js",
+           // "~/Scripts/Autocomplete.js"
+           //));
         }
     }
 }

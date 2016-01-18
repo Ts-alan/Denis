@@ -67,7 +67,7 @@
           }
 
       });
-        //$("#Code option").val("Металлический указатель").prop('selected', true);
+      
         IsDragend = true;
         ////отключение валидации
         $.validator.methods.number = function (value, element) {
@@ -139,7 +139,7 @@
 
 </script>
 <h3> КАРТОЧКА МЕТАЛЛИЧЕСКОГО УКАЗАТЕЛЯ</h3>
-@Scripts.Render("~/Content/Data")
+@Scripts.Render("~/Content/Map")
 
 @using (Html.BeginForm("EditMetalPointerDesign", "Data", FormMethod.Post, new { enctype = "multipart/form-data", id = "test1" }))
 {
@@ -173,7 +173,7 @@
         </div>
     </div>
 
-            <h3> 1. Общие данные о рекламной конструкции</h3>
+            <h3> 1. Общие данные о конструкции</h3>
             @Html.AntiForgeryToken()
             <div class="form-inline" style="margin-bottom: -10px">
                 <hr />
@@ -190,7 +190,7 @@
 
                 <div class="form-group">
                     <label for="Locality">Вид</label>
-                    @Html.DropDownListFor(a => a.Code, new SelectList(ListTypeAdvertising, "Code", "Name"))
+                    @Html.DropDownListFor(a => a.Code, new SelectList(ListTypeAdvertising, "Code", "Name", ListTypeAdvertising.Select(m=> m.Code == "MP")))
                     @*@Html.EditorFor(a => a.Code, new { disabled = "disabled", @readonly = "readonly"})*@
                     @Html.ValidationMessageFor(model => model.Code)
                 </div>
@@ -229,7 +229,7 @@
 
     </div>
 
-            <h3> 2.Данные о месте расположения рекламной конструкции</h3>
+            <h3> 2.Данные о месте расположения конструкции</h3>
 
             <div class="form-inline">
                 <hr />
@@ -240,8 +240,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="Street1">Улица</label>
-                    @Html.EditorFor(model => model.Street1)
+                    <label for="Street1">Улица</label> 
+                    @Html.EditorFor(model => model.Street1, new { htmlattributes = new { @class = "ui-autocomplete-input" } } )
                     @Html.ValidationMessageFor(model => model.Street1)
                 </div>
 
@@ -252,7 +252,7 @@
                 </div>
 
             </div>
-            <input type="button" id="MapSearch" value="Поиск на карте" style="margin-left: 185px">
+            <input type="button" id="MapSearchStreet" value="Поиск на карте" style="margin-left: 185px">
 
             <div class="form-inline" style="display: none">
                 <div class="form-group">
@@ -379,12 +379,12 @@
                 </div>
             </div>
 
-            <h3> 4.Описание рекламной конструкции</h3>
+            <h3> 4.Описание конструкции</h3>
             <div class="form-inline">
                 <hr />
                 <div class="form-group">
                     <label>Описание рамещаемой информации</label>
-                    @Html.EditorFor(model => model.ContentInformationDescription)
+                    @Html.TextAreaFor(model => model.ContentInformationDescription, new { cols = "30", rows = "4" })
 
                     @Html.ValidationMessageFor(model => model.ContentInformationDescription)
                 </div>

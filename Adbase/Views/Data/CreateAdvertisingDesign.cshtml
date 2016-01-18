@@ -253,13 +253,13 @@
    
 
 </script>
-<h3> КАРТОЧКА РЕКЛАМНОЙ КОНСТРУКЦИИ</h3>
+<h3> КАРТОЧКА КОНСТРУКЦИИ</h3>
 
 @Scripts.Render("~/Content/Map")
 @using (Html.BeginForm("CreateAdvertisingDesign", "Data", FormMethod.Post, new { enctype = "multipart/form-data",id="test1" }))
 {
     <input type="hidden" name="Code" value="@ViewBag.Code">
-    <h3> 1. Общие данные о рекламной конструкции</h3>
+    <h3> 1. Общие данные о конструкции</h3>
     @Html.AntiForgeryToken()
     <div class="form-inline" style="margin-bottom: -10px">
         <hr/>
@@ -313,7 +313,7 @@
         </div>
 
     </div>
-        <h3> 2.Данные о месте расположения рекламной конструкции</h3>
+        <h3> 2.Данные о месте расположения конструкции</h3>
 
         <div class="form-inline">
             <hr />
@@ -337,7 +337,7 @@
 
 
         </div>
-    <input type="button" id="MapSearch" value="Поиск на карте" style="margin-left: 185px">
+    <input type="button" id="MapSearchStreet" value="Поиск на карте" style="margin-left: 185px">
     
     <div class="form-inline">
         <div class="form-group">
@@ -466,7 +466,7 @@
             </div>
         </div>
 
-        <h3> 4.Описание рекламной конструкции</h3>
+        <h3> 4.Описание конструкции</h3>
 
         <div class="form-inline">
             <hr />
@@ -513,7 +513,7 @@
              </div>
             <div class="form-group">
                 <label for="CountSizes">Количество сторон</label>
-                <select class="text-box single-line" id="CountSizes" onchange="SetCountSize()" name="CountSizes" type="text" data-val="true" data-val-required="Введите значение">
+                <select class="text-box single-line" id="CountSizes" onchange="SetCountSize()" name="CountSizes" type="text" data-val="true">
                     <option></option>
                     <option>1</option>
                     <option>2</option>

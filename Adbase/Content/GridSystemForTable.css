@@ -32,7 +32,7 @@ table {
   margin-right: -15px  !important;
 }
 /*.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12, .col-xs-13, .col-sm-13, .col-md-13, .col-lg-13*/ 
-#table_Идентификационный_номер,#table_Собственник_рекламной_конструкции,#table_Вид_рекламной_конструкции,#table_Населенный_пункт,#table_Улица,#table_Дом,#table_Количество_сторон,#table_Количестов_поверхностей,#table_Площадь_рекламной_конструкции,#table_Подстветка, #table_№_договора_с_фин_упр , #table_№_паспорта_рекл ,#table_Разреш_по
+#table_Идентификационный_номер,#table_Собственник_конструкции,#table_Вид_конструкции,#table_Населенный_пункт,#table_Улица,#table_Дом,#table_Количество_сторон,#table_Количестов_поверхностей,#table_Площадь_конструкции,#table_Подстветка, #table_№_договора_с_фин_упр , #table_№_паспорта_рекл ,#table_Разреш_по
 {
   position: relative !important;
   min-height: 1px !important;
@@ -40,7 +40,7 @@ table {
   padding-right: 15px !important;
 }
 /*.col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-13*/
-/*#table_Идентификационный_номер, #table_Собственник_рекламной_конструкции, #table_Вид_рекламной_конструкции, #table_Населенный_пункт, #table_Улица, #table_Дом, #table_Количество_сторон, #table_Количестов_поверхностей, #table_Площадь_рекламной_конструкции, #table_Подстветка, #table_№_договора_с_фин_упр , #table_№_паспорта_рекл ,#table_Разреш_по
+/*#table_Идентификационный_номер, #table_Собственник_конструкции, #table_Вид_конструкции, #table_Населенный_пункт, #table_Улица, #table_Дом, #table_Количество_сторон, #table_Количестов_поверхностей, #table_Площадь_конструкции, #table_Подстветка, #table_№_договора_с_фин_упр , #table_№_паспорта_рекл ,#table_Разреш_по
 {
   float: left  ;
 }*/
@@ -80,7 +80,7 @@ width: 9.6153846125% !important;
 {
  width:  6.4692307675% !important;
 }
-#table_Площадь_рекламной_конструкции,[aria-describedby="table_Площадь_рекламной_конструкции"]
+#table_Площадь_конструкции,[aria-describedby="table_Площадь_конструкции"]
 {
 width:  6.4692307675% !important;
 }
@@ -104,11 +104,11 @@ width: 6.4692307675% !important;
 {
  width: 7.69230769% !important;
 }
-#table_Вид_рекламной_конструкции,[aria-describedby="table_Вид_рекламной_конструкции"]
+#table_Вид_конструкции,[aria-describedby="table_Вид_конструкции"]
 {
  width: 7.69230769% !important;
 }
-#table_Собственник_рекламной_конструкции, [aria-describedby="table_Собственник_рекламной_конструкции"]
+#table_Собственник_конструкции, [aria-describedby="table_Собственник_конструкции"]
 {
   width: 10.269230768% !important;
 }
@@ -124,7 +124,7 @@ width: 6.4692307675% !important;
 {
  width: 10% !important;
 }
-#table_Площадь_рекламной_конструкции,[aria-describedby="table_Площадь_рекламной_конструкции"]
+#table_Площадь_конструкции,[aria-describedby="table_Площадь_конструкции"]
 {
 width:  10% !important;
 }
@@ -148,11 +148,11 @@ width: 10% !important;
 {
  width: 10% !important;
 }
-#table_Вид_рекламной_конструкции,[aria-describedby="table_Вид_рекламной_конструкции"]
+#table_Вид_конструкции,[aria-describedby="table_Вид_конструкции"]
 {
  width: 10% !important;
 }
-#table_Собственник_рекламной_конструкции, [aria-describedby="table_Собственник_рекламной_конструкции"]
+#table_Собственник_конструкции, [aria-describedby="table_Собственник_конструкции"]
 {
   width: 10% !important;
 }
