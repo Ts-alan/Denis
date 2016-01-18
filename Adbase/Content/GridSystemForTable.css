@@ -61,6 +61,11 @@ table {
 /*убираем пробел справа в таблице*/
 .ui-jqgrid .ui-jqgrid-hbox {
     padding-right: 0 !important;
+
+}
+
+.ui-jqgrid-hbox {
+    width: 100%;
 }
 
 /*выравнивание столбцов*/
