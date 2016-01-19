@@ -1,10 +1,10 @@
 ﻿   
     var myMap;
     var myPlacemark;
-    var havePlacemark = false;
-    var isGreateAdvertisingDesign = true;
-    var isdragend = true;
-    var count = true;
+   // var havePlacemark = false;
+    //var isGreateAdvertisingDesign = true;
+    //var isdragend = true;
+    var countE = true;
     ymaps.ready(init);
    
     ////присвоение коодинат при перетаскивание метки 
@@ -63,8 +63,8 @@
         {
             //присвоение  коодинат при клике  
             myMap.events.add('click', function (e) {
-                if (count) {
-
+                if (countE) {
+                    alert("2121");
                     if (myPlacemark != undefined)
                     {
                         myMap.geoObjects.remove(myPlacemark);
@@ -79,8 +79,7 @@
                     });
                     myMap.geoObjects.add(myPlacemark);
                     dragend();
-                    count = false;
-
+                    countE = false;
                 }
 
             });
@@ -115,7 +114,8 @@
 
     function SetCoordinates() {
 
-        if ($("#Height").val() != "" && $("#Breadth").val() != "") {
+        if ($("#Height").val() != "" && $("#Breadth").val() != "")
+        {
             //удалить обьект
             if (myPlacemark != undefined) {
 
@@ -136,7 +136,7 @@
 
 
     $(document).ready(function () {
-        var count = true;
+        var countE = true;
         var streetPlacemark;
         //var myPlacemark;
         $("#MapSearchStreet").click(function () {
@@ -147,9 +147,7 @@
                 {
                     myMap.geoObjects.remove(myPlacemark);
                 }
-                console.log($("#Locality_id").val().toString());
-                console.log($("#Locality_id").text().toString());
-
+               
                 var location = $("#Locality_id").text().toString() + " " + $("#Street1").val().toString();
                 var myGeocoder = ymaps.geocode(location);
 
@@ -166,12 +164,14 @@
                     });
             }
 
-            if (count) {
+            if (countE) {
                 //присвоение  коодинат при клике  
-                myMap.events.add('click', function (e) {
+                myMap.events.add('click', function (e)
+                {
                     var coords = e.get('coordPosition');
-                    
-                    if (myPlacemark != undefined) {
+                   
+                    if (myPlacemark != undefined)
+                    {
                         myMap.geoObjects.remove(myPlacemark);
                     }
 
@@ -189,7 +189,7 @@
 
                     dragend();
                 });
-                count = false;
+                countE = false;
             }
         });
 

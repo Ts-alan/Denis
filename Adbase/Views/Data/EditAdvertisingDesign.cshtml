@@ -40,19 +40,19 @@
 
 <script type="text/javascript">
     var i = 0;
-    console.log(@Model.Breadth);
-    var havePlacemark = @Model.Breadth.HasValue.ToString().ToLower();
+    
+   // var havePlacemark = @Model.Breadth.HasValue.ToString().ToLower();
     
     var StartCountForSurface ;
     var EndCountForSurface = 0;
-    var isGreateAdvertisingDesign = false;
+    //var isGreateAdvertisingDesign = false;
     var ArrayOfSides = @Html.Raw(JsonConvert.SerializeObject(Model.Sides.Select(a=>new {a.DirectionSide_id,length= a.Surfaces.Count,a.Identification_id}), Formatting.Indented, new JsonSerializerSettings
     {
        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
     }));
 
     $(document).ready(function() {
-        IsDragend = true;
+        
         ////отключение валидации
         $.validator.methods.number = function (value, element) {
             return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
@@ -65,7 +65,7 @@
         });
         $("[identificationforcountside]").each(function(indx, element) {
             $(element)[0].value = ArrayOfSides[indx].length;
-
+            
             AddSurface(indx+1);
         });
 
@@ -149,12 +149,7 @@
         $('[name="DirectionSide"]').each(function(indx, element) {
             $(element).attr("name", "[" + indx + "].IdentificationForDirectionSide");
         });
- 
-   
-     
 
-      
-       
         //другое решение не тестил
         $('[name="DirectionSide"]').data('validator', null);
         $.validator.unobtrusive.parse('[name="DirectionSide"]');
@@ -169,15 +164,15 @@
 
         if (count == 1) {
             $("#" + i + "HiddenIdentification").hide();
-        } else {
+        } 
+        else 
+        {
             $("#" + i + "HiddenIdentification").show();
             //валидация
             $('[name="IdentificationSurface"]').each(function (indx, element) {
                 $(element)[0].value =ArrayOfSides[indx].Identification_id;
                 $(element).attr("name", "[" + indx + "].IdentificationForIdentificationSurface");
             });
-       
-
         }
         $("[side=" + i + "]").remove();
     }
@@ -188,10 +183,10 @@
 
         $.ajax('@Url.Action("EditSurface", "Data")', { async: true, data: { side: i, StartCountForSurface: StartCountForSurface, EndCountForSurface: EndCountForSurface } })
             .success(function(e) {
-
+                console.log(e);
                 $("#InsertPartial" + i + "").before(e);
                 CalculationAS();
-                ////отключение валидации
+                //отключение валидации
                 $.validator.methods.number = function (value, element) {
                     return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
                 }
