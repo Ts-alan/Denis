@@ -69,12 +69,16 @@ namespace Sciencecom.Models
                     tempIdentification_id = request.Form.Get(Identification_id.Single(a => a.Contains(i.ToString())));
                 }
 
-                ListSide.Add(new Side()
+                var test = request.Form.Get(DirectionSide_id[i]);
+                if (test != "")
                 {
-                    DirectionSide_id = new Guid(request.Form.Get(DirectionSide_id[i])),
-                    Identification_id = tempIdentification_id!=""?(Guid?)new Guid(tempIdentification_id):null 
+                    ListSide.Add(new Side()
+                    {
+                        DirectionSide_id = new Guid(request.Form.Get(DirectionSide_id[i])),
+                        Identification_id = tempIdentification_id != "" ? (Guid?)new Guid(tempIdentification_id) : null
 
-                });
+                    });
+                }
 
             }
             return ListSide;

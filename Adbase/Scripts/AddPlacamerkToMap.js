@@ -147,21 +147,21 @@
                 {
                     myMap.geoObjects.remove(myPlacemark);
                 }
+                console.log($("#Locality_id").val().toString());
+                console.log($("#Locality_id").text().toString());
 
-                var location = $("#Locality_id").val().toString() + " " + $("#Street1").val().toString();
+                var location = $("#Locality_id").text().toString() + " " + $("#Street1").val().toString();
                 var myGeocoder = ymaps.geocode(location);
 
                 myGeocoder.then(
                     function (res) {
-                        //console.log(res.geoObjects.get(0));
-                        //console.log(res.geoObjects.get(0).geometry);
 
                         myPlacemark = new ymaps.Placemark([res.geoObjects.get(0).geometry._Rb[0], res.geoObjects.get(0).geometry._Rb[1]],
                         {},
                         {
                             draggable: false
                         });
-                        //console.log(myPlacemark);
+                        
                         myMap.geoObjects.add(myPlacemark);
                     });
             }
@@ -170,7 +170,7 @@
                 //присвоение  коодинат при клике  
                 myMap.events.add('click', function (e) {
                     var coords = e.get('coordPosition');
-                    console.log(coords);
+                    
                     if (myPlacemark != undefined) {
                         myMap.geoObjects.remove(myPlacemark);
                     }

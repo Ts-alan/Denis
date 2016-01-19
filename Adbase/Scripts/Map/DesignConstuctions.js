@@ -1,6 +1,7 @@
 ﻿function GetBilboardPoints(role, userCompany, objectId) {
     var geoObjects = new ymaps.GeoObjectCollection();
-    console.log($("#gs_Разреш_по").val());
+
+ 
     $.ajax({
         type: "POST",
         url: "/Map/GetDesign",
@@ -10,7 +11,7 @@
             TypeOfAdvertisingStructure: $("#gs_Вид_конструкции").val(),
             Locality: $("#gs_Населенный_пункт").val(),
             Street1: $("#gs_Улица").val(),
-            House1: $("#gs_Дом_/_Номер_опоры").val(),
+            House1: $("#gs_Дом\\/Номер_опоры").val(),
             CountSize: $("#gs_Количество_сторон").val(),
             AreaConstruction: $("#gs_Площадь_конструкции").val(),
             CountSurface: $("#gs_Количестов_поверхностей").val(),
@@ -81,12 +82,7 @@ function getReferencesBillboard(construction) {
         + '</br><a href="/Data/EditAdvertisingDesign/' + construction.Id_show + '" >Изменить данные конструкции</a>'
         + '</br><a href="#DeleteStructures"  role="button" data-toggle="modal" onclick="setRemove(' + construction.Id_show + ')"  >Удалить конструкцию</a></b>'
 
-    //for (var i = 0; i < construction.Surfaces.length; i++) {
-    //    result += '</br><a href="/Data/Documents/' + construction.Surfaces[i] + '?type=doc" >Документы</a>' 
-    // +"</br><div>Социальная</div>" 
-    //+"<div>" + construction.IsSocial[i]+"</div>"
-    //    + '<br/><img src = "/Images/Billboard/surfaces/' + construction.Surfaces[i] + '.jpg" height = "180">';
-    //};
+ 
     ;
     return result;
 }

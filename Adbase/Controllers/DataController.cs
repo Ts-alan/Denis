@@ -1702,7 +1702,15 @@ namespace Sciencecom.Controllers
             {
                 for (int j = 0; j < CountSize; j++)
                 {
-
+                    try
+                    {
+                        Sides[j].AdvertisingStructures_Id = mc.Id;
+                    }
+                    catch (System.IndexOutOfRangeException e)
+                    {
+                        Sides.Add(new Side());
+                    }
+                    
                     Sides[j].AdvertisingStructures_Id = mc.Id;
                     Sides[j].Name = (j + 1).ToString();
                     Sides[j].Id = Guid.NewGuid();

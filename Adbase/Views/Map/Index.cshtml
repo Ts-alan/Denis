@@ -71,16 +71,10 @@
         $("#map").empty();
         ymaps.ready(init);
         var myMap;
-        var role = "@role";
-        var companyUser = "@user.Company";
+
         var objectId = "@ViewBag.Id";
-        var type = "@ViewBag.Type";
-        var flag = false;
-        if (param == true) {
-            flag = true;
-        } else {
-            flag = false;
-        }
+
+
 
         function init() {
             myMap = new ymaps.Map("map", {
@@ -107,9 +101,10 @@
     CreateMap(param);
     $(document).ready(function () {
 
-        if ('@(Html.Raw(Session["collectionMap"]))' != '') {
+        if ('@(Html.Raw(Session["collectionMap"]))' != '[]') {
             var collectionMap = JSON.parse('@(Html.Raw(Session["collectionMap"]))');
             $(".content-col input").each(function (indx, element) {
+              
                 $(element).val(collectionMap[indx].value);
             });
         }
@@ -265,13 +260,13 @@
         </div>
 
         <div class="ui-state-default ui-th-column name-col">
-            <div style="">Дом / Номер опоры</div>
+            <div style="">Дом/Номер_опоры</div>
         </div>
 
         <div class="ui-state-default ui-th-column content-col">
             <div>
                 <div>
-                    <input type="text" name="Дом" id="gs_Дом" style="width: 100%;">
+                    <input type="text" name="Дом/Номер_опоры" id="gs_Дом/Номер_опоры" style="width: 100%;">
                 </div>
             </div>
             <a href="#" style="">x</a>

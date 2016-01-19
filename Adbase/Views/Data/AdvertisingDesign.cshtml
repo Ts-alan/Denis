@@ -207,15 +207,15 @@
 
 
         function SetDate() {
-            @*var collectionMap =JSON.parse('@(Html.Raw(Session["collectionMap"]))') ;
+            var collectionMap =JSON.parse('@(Html.Raw(Session["collectionMap"]))') ;
 
-            if(collectionMap!=""){
+            if(collectionMap!="[]"){
                 $(".ui-state-default .ui-th-ltr input").each(function(indx, element) {
                     $(element).val(collectionMap[indx].value);
 
                 });
                 FunctionaFortable();
-            }*@
+            }
         }
 
         $("#search").click(function () {
@@ -278,7 +278,8 @@
             if (role != "ReadOnly")
             {
                 <p>
-                    <b>@Html.ActionLink("+ Добавить новую конструкцию", "CreateAdvertisingDesign", new { type = "Billboard" }, new { @class = "btn btn-default" })</b>
+                    <!-- Trigger the modal with a button -->
+                    <b><input type="button" value="+ Добавить новую конструкцию" id="AddConstruction" class="btn btn-default" data-toggle="modal" data-target="#myModal"></b>
                     <b> <input type="button" value="Поиск" id="search" class="btn btn-default"></b>
                 </p>
             }
@@ -286,7 +287,7 @@
 
         <table id="table" class="table-bordered" cellpadding="5" style="width: 100%">
             <tr>
-                
+
                 <th>Собственник</th>
                 <th>Вид_конструкции</th>
                 <th>Населенный_пункт</th>
@@ -311,10 +312,10 @@
                 }
                 <tr title="test">
 
-                    
-                    <td>@if (i.Owner!=null)
-                       {
-                        @i.Owner.Name
+
+                    <td>@if (i.Owner != null)
+                        {
+                            @i.Owner.Name
                         } </td>
                     <td>@i.TypeOfAdvertisingStructure.Name</td>
                     <td>@i.Locality.NameLocality</td>
@@ -323,7 +324,7 @@
                     <td>@i.Sides.Count</td>
                     <td>@SurfaceCOunt</td>
                     <td>@SurfaceSumm</td>
-                    
+
                     <td>@if (i.EndDate != null)
                         {
                             @i.EndDate.ToString().Substring(0, 10)
@@ -331,11 +332,33 @@
                     </td>
 
                 </tr>
-                    SurfaceCOunt = 0;
-                    SurfaceSumm = 0;
+                SurfaceCOunt = 0;
+                SurfaceSumm = 0;
             }
 
         </table>
+    </div>
+</div>
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" align="center">Выберите тип конструкции</h4>
+            </div>
+            <div class="modal-body" style="text-align:center;">
+                @Html.ActionLink("Щит", "CreateAdvertisingDesign", new { type = "Billboard" }, new { @class = "btn btn-default", style = "width : 196px;"})
+                0
+                @Html.ActionLink("Металлический указатель", "CreateMetalPointerDesign", new { }, new { @class = "btn btn-default", style = "width : 196px" })
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+
     </div>
 </div>
 <hr />

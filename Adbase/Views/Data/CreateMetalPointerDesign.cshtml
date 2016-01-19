@@ -413,7 +413,7 @@
             </div>
             <div class="form-group" style="margin-bottom: 5px">
 
-                <label for="C_PassportAdvertising">Паспорт ТСМО</label>
+                <label for="C_PassportAdvertising">№ паспорта ТСМО</label>
                 @Html.EditorFor(model => model.C_PassportAdvertising)
                 @Html.ValidationMessageFor(model => model.C_PassportAdvertising)
 
@@ -509,7 +509,7 @@
           
             <div class="form-group">
                 <label>Описание рамещаемой информации</label>
-                @Html.TextAreaFor(model => model.ContentInformationDescription, new { cols = "30", rows = "4" })
+                @Html.TextAreaFor(model => model.ContentInformationDescription, new { cols = "45", rows = "4" })
 
                 @Html.ValidationMessageFor(model => model.ContentInformationDescription)
             </div>
