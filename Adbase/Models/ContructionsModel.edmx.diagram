@@ -4,29 +4,30 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="3f8f90a549d648598a9f63457593a87b" Name="Diagram1" ZoomLevel="93">
+      <Diagram DiagramId="3f8f90a549d648598a9f63457593a87b" Name="Diagram1" ZoomLevel="58">
         <EntityTypeShape EntityType="SciencecomModel.AdvertisingStructure" Width="1.5" PointX="6" PointY="15.125" />
-        <EntityTypeShape EntityType="SciencecomModel.Backlight" Width="1.5" PointX="0.75" PointY="13" />
-        <EntityTypeShape EntityType="SciencecomModel.DirectionSide" Width="1.5" PointX="3" PointY="1.25" />
-        <EntityTypeShape EntityType="SciencecomModel.Identification" Width="1.5" PointX="3" PointY="20.75" />
-        <EntityTypeShape EntityType="SciencecomModel.Increment" Width="1.5" PointX="3" PointY="17.875" />
+        <EntityTypeShape EntityType="SciencecomModel.Backlight" Width="1.5" PointX="8.375" PointY="15.125" />
+        <EntityTypeShape EntityType="SciencecomModel.DirectionSide" Width="1.5" PointX="3" PointY="8.25" />
+        <EntityTypeShape EntityType="SciencecomModel.Identification" Width="1.5" PointX="3" PointY="10.375" />
+        <EntityTypeShape EntityType="SciencecomModel.Increment" Width="1.5" PointX="0.75" PointY="16.25" />
         <EntityTypeShape EntityType="SciencecomModel.ListUniqueNumber" Width="1.5" PointX="3" PointY="15.125" />
-        <EntityTypeShape EntityType="SciencecomModel.Locality" Width="1.5" PointX="0.75" PointY="23.375" />
-        <EntityTypeShape EntityType="SciencecomModel.Object" Width="1.5" PointX="5.75" PointY="4.25" />
-        <EntityTypeShape EntityType="SciencecomModel.Owner" Width="1.5" PointX="0.75" PointY="15.5" />
-        <EntityTypeShape EntityType="SciencecomModel.PropertyLocation" Width="1.5" PointX="0.75" PointY="18.25" />
-        <EntityTypeShape EntityType="SciencecomModel.RelationshipOfAdvertising" Width="1.5" PointX="8" PointY="1" />
-        <EntityTypeShape EntityType="SciencecomModel.Side" Width="1.5" PointX="5.25" PointY="6.875" />
-        <EntityTypeShape EntityType="SciencecomModel.Status" Width="1.5" PointX="0.75" PointY="20.75" />
-        <EntityTypeShape EntityType="SciencecomModel.SubtopicForSocialAdvertising" Width="1.5" PointX="5.75" PointY="1.375" />
-        <EntityTypeShape EntityType="SciencecomModel.Surface" Width="1.5" PointX="7.5" PointY="7.125" />
-        <EntityTypeShape EntityType="SciencecomModel.sysdiagram" Width="1.5" PointX="9.75" PointY="4.75" />
-        <EntityTypeShape EntityType="SciencecomModel.TheElementOfTheRoadNetwork" Width="1.5" PointX="0.75" PointY="10.625" />
-        <EntityTypeShape EntityType="SciencecomModel.TopicForSocialAdvertising" Width="1.5" PointX="5.75" PointY="11.75" />
-        <EntityTypeShape EntityType="SciencecomModel.TypeOfAdvertisingStructure" Width="1.5" PointX="0.75" PointY="7.25" />
-        <EntityTypeShape EntityType="SciencecomModel.ViewBid" Width="1.5" PointX="0.75" PointY="25.625" />
-        <EntityTypeShape EntityType="SciencecomModel.Street" Width="1.5" PointX="9.75" PointY="7.75" />
-        <AssociationConnector Association="SciencecomModel.FK_AdvertisingStructures_Backlight" />
+        <EntityTypeShape EntityType="SciencecomModel.Locality" Width="1.5" PointX="3" PointY="21.375" />
+        <EntityTypeShape EntityType="SciencecomModel.Object" Width="1.5" PointX="5.625" PointY="6.25" />
+        <EntityTypeShape EntityType="SciencecomModel.Owner" Width="1.5" PointX="8.375" PointY="17.25" />
+        <EntityTypeShape EntityType="SciencecomModel.PropertyLocation" Width="1.5" PointX="8.375" PointY="19.75" />
+        <EntityTypeShape EntityType="SciencecomModel.RelationshipOfAdvertising" Width="1.5" PointX="7.875" PointY="3" />
+        <EntityTypeShape EntityType="SciencecomModel.Side" Width="1.5" PointX="5.375" PointY="8.875" />
+        <EntityTypeShape EntityType="SciencecomModel.Status" Width="1.5" PointX="3" PointY="18.75" />
+        <EntityTypeShape EntityType="SciencecomModel.SubtopicForSocialAdvertising" Width="1.5" PointX="5.625" PointY="3.375" />
+        <EntityTypeShape EntityType="SciencecomModel.Surface" Width="1.5" PointX="7.375" PointY="9.125" />
+        <EntityTypeShape EntityType="SciencecomModel.sysdiagram" Width="1.5" PointX="9.625" PointY="6.75" />
+        <EntityTypeShape EntityType="SciencecomModel.TheElementOfTheRoadNetwork" Width="1.5" PointX="8.375" PointY="21.875" />
+        <EntityTypeShape EntityType="SciencecomModel.TopicForSocialAdvertising" Width="1.5" PointX="11" PointY="4" />
+        <EntityTypeShape EntityType="SciencecomModel.TypeOfAdvertisingStructure" Width="1.5" PointX="0.75" PointY="13.125" />
+        <EntityTypeShape EntityType="SciencecomModel.ViewBid" Width="1.5" PointX="6" PointY="24.875" />
+        <EntityTypeShape EntityType="SciencecomModel.Street" Width="1.5" PointX="9.625" PointY="9.75" />
+        <AssociationConnector Association="SciencecomModel.FK_AdvertisingStructures_Backlight" ManuallyRouted="false" >
+        </AssociationConnector>
         <AssociationConnector Association="SciencecomModel.FK_AdvertisingStructures_Locality" />
         <AssociationConnector Association="SciencecomModel.FK_AdvertisingStructures_PropertyLocation" />
         <AssociationConnector Association="SciencecomModel.FK_AdvertisingStructures_Status" />

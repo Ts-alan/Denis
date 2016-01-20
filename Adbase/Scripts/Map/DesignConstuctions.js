@@ -36,9 +36,13 @@
                 if (data[i].NameOfAdvertisingStructure == "Металлический указатель") {
                     bct = "У";
                     bht = "Указатель";
-                    colour = 'yellow';
+                    colour = '#0095b6';
                 }
-
+                if (data[i].NameOfAdvertisingStructure == "Световой короб") {
+                    bct = "К";
+                    bht = "Короб";
+                    colour = '#0095b6';
+                }
                     var placemark = new ymaps.GeoObject(
                  {
                      geometry: {

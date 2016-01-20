@@ -320,7 +320,18 @@
                     <td>@i.TypeOfAdvertisingStructure.Name</td>
                     <td>@i.Locality.NameLocality</td>
                     <td>@i.Street1</td>
-                    <td>@i.House1</td>
+                    <td>
+                        @{
+                            if (i.TypeOfAdvertisingStructure.ToString() == "Металлический указатель")
+                            {
+                                @i.Support_;
+                            }
+                            else
+                            {
+                                @i.House1;
+                            }
+                        }
+                    </td>
                     <td>@i.Sides.Count</td>
                     <td>@SurfaceCOunt</td>
                     <td>@SurfaceSumm</td>
@@ -350,9 +361,12 @@
                 <h4 class="modal-title" align="center">Выберите тип конструкции</h4>
             </div>
             <div class="modal-body" style="text-align:center;">
-                @Html.ActionLink("Щит", "CreateAdvertisingDesign", new { type = "Billboard" }, new { @class = "btn btn-default", style = "width : 196px;"})
-                
-                @Html.ActionLink("Металлический указатель", "CreateMetalPointerDesign", new { }, new { @class = "btn btn-default", style = "width : 196px" })
+                @Html.ActionLink("Щит", "CreateAdvertisingDesign", new { type = "Billboard" }, new { @class = "btn btn-default", style = "width : 196px; margin-bottom: 8px;"})
+                <br/>
+                @Html.ActionLink("Металлический указатель", "CreateMetalPointerDesign", new { }, new { @class = "btn btn-default", style = "width : 196px; margin-bottom: 8px;" })
+                <br />
+                @Html.ActionLink("Световой короб", "CreateLightDuctDesign", new { }, new { @class = "btn btn-default", style = "width : 196px" })
+                <br />
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>

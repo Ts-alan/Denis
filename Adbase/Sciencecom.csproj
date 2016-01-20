@@ -1438,6 +1438,7 @@
     <Content Include="Views\Shared\PatialView\Modals.cshtml" />
     <Content Include="Views\Data\CreateMetalPointerDesign.cshtml" />
     <Content Include="Views\Data\EditMetalPointerDesign.cshtml" />
+    <Content Include="Views\Data\CreateLightDuctDesign.cshtml" />
     <None Include="Views\Data\Pointer.cshtml" />
   </ItemGroup>
   <ItemGroup>

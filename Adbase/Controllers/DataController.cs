@@ -33,728 +33,7 @@ namespace Sciencecom.Controllers
             return View();
         }
 
-        //[HttpPost]
-        //[Authorize]
-        //public ActionResult Metal(string owner, string locality, string street1, string street2, string fromStreet, string day, string month, string year)
-        //{
-
-        //    Owner o = new Owner();
-        //    if (!string.IsNullOrEmpty(owner))
-        //    {
-        //        o = context.Owners.Where(m => m.Name == owner).Single();
-        //    }
-        //    MetalConstruction mc = new MetalConstruction()
-        //    {
-        //        Street1 = street1,
-        //        Street2 = street2,
-        //        FromStreet = fromStreet,
-        //        IdOwner = o.Id,
-        //        Support = 0,
-        //        Locality = locality
-        //    };
-        //    ViewBag.Data = mc;
-        //    ViewBag.Day = day;
-        //    ViewBag.Month = month;
-        //    ViewBag.Year = year;
-        //    return View();
-        //}
-
-        //[Authorize]
-        //public ActionResult ShowMetalTablePartial(MetalConstruction metalConstruction, string locality, string day, string month, string year)
-        //{
-        //    if (metalConstruction == null)
-        //    {
-        //        ViewBag.Results = null;
-        //        return View(context.MetalConstructions.OrderByDescending(m => m.StartDate));
-        //    }
-        //    else
-        //    {
-        //        metalConstruction.Locality = locality;
-        //        IEnumerable<MetalConstruction> result = SearchMetal(metalConstruction, day, month, year);
-        //        //if (metalConstruction.StartDate.Date != Convert.ToDateTime("01.01.0001"))
-        //        //{
-        //        //    result = result.Where(m => m.StartDate == metalConstruction.StartDate);
-        //        //}
-        //        ViewBag.Results = result.Count();
-        //        return View(result.OrderByDescending(m => m.StartDate));
-        //    }
-        //}
-
-        //#region Создание
-        //[Authorize(Roles = "Admin, ChiefEditAll, ChiefEditOwn, SupplierEditAll, SupplierEditOwn")]
-        //public ActionResult CreateMetal()
-        //{
-        //    return View();
-        //}
-
-        //[HttpPost]
-        //[Authorize(Roles = "Admin, ChiefEditAll, ChiefEditOwn, SupplierEditAll, SupplierEditOwn")]
-        //public ActionResult CreateMetal(MetalConstruction metalicConstruction, string shirota, string dolgota, string owner, string startDate, HttpPostedFileBase passport1, HttpPostedFileBase passport2, HttpPostedFileBase photo)
-        //{
-        //    if ((metalicConstruction.Locality == "") || (dolgota == "") || (shirota == "")
-        //        || (owner == "") || (startDate == ""))
-        //    {
-        //        ModelState.AddModelError("Error", "Имеются неверно заполненные поля. Все поля, за исключением поля \"Фото\", обязательны для заполнения.");
-        //    }
-        //    else
-        //    {
-        //        ModelState.Clear();
-        //        metalicConstruction.Dolgota = float.Parse(dolgota.Replace(".", ","));
-        //        metalicConstruction.Shirota = float.Parse(shirota.Replace(".", ","));
-        //        metalicConstruction.StartDate = Convert.ToDateTime(startDate);
-        //    }
-        //    context.MetalConstructions.Add(metalicConstruction);
-        //    var idOwner = context.Owners.Where(m => m.Name == owner).Single().Id;
-        //    metalicConstruction.IdOwner = idOwner;
-
-        //    var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
-        //    ApplicationUser user = um.FindByName(User.Identity.GetUserName());
-        //    var idWhoAdded = context.Owners.Where(m => m.Name == user.Company).Single().Id;
-        //    metalicConstruction.IdWhoAdded = idWhoAdded;
-        //    if (ModelState.IsValid)
-        //    {
-        //        context.SaveChanges();
-        //        if (((passport1 != null) && (passport1.ContentLength > 0) && (passport1.ContentLength < 1050578)) &&
-        //        ((passport2 != null) && (passport2.ContentLength > 0) && (passport2.ContentLength < 1050578))
-        //        )
-        //        {
-        //            string src = "~/Images/Metal/" + metalicConstruction.Id + "1.jpg";
-        //            string path = Server.MapPath(src);
-        //            passport1.SaveAs(path);
-
-        //            src = "~/Images/Metal/" + metalicConstruction.Id + "2.jpg";
-        //            path = Server.MapPath(src);
-        //            passport2.SaveAs(path);
-
-        //            if (photo != null) 
-        //            {
-        //                if ((photo.ContentLength > 0) && (photo.ContentLength < 1050578))
-        //                {
-        //                    src = "~/Images/Metal/p" + metalicConstruction.Id + ".jpg";
-        //                    path = Server.MapPath(src);
-        //                    photo.SaveAs(path);
-        //                }
-        //                else
-        //                {
-        //                    context.MetalConstructions.Remove(metalicConstruction);
-        //                    context.SaveChanges();
-        //                    ModelState.AddModelError("Photo", "Нельзя загрузить пустой файл или файл, размер которого превышает 1 МБ.");
-        //                }
-        //            }
-        //        }
-        //        else
-        //        {
-        //            context.MetalConstructions.Remove(metalicConstruction);
-        //            context.SaveChanges();
-        //            ModelState.AddModelError("Photo", "Нельзя загрузить пустой файл или файл, размер которого превышает 1 МБ.");
-        //        }
-        //    }
-        //    if (ModelState.IsValid)
-        //    {
-        //        return RedirectToAction("Metal", context.MetalConstructions);
-        //    }
-        //    else
-        //        return View();
-        //}
-        //#endregion
-
-        //#region Редактирование
-
-        //[Authorize]
-        //[Authorize(Roles = "Admin, ChiefEditAll,ChiefEditOwn, SupplierEditAll, SupplierEditOwn")]
-        //public ActionResult EditMetal(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-
-        //    MetalConstruction mc = context.MetalConstructions.Find(id);
-        //    if (mc == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    ViewBag.Owners = context.Owners.Select(m => m.Name);
-        //    return View(mc);
-        //}
-
-        //[HttpPost]
-        //[Authorize(Roles = "Admin, ChiefEditAll,ChiefEditOwn, SupplierEditAll, SupplierEditOwn")]
-        //public ActionResult EditMetal(MetalConstruction metalicConstruction, string owner, HttpPostedFileBase passport1, HttpPostedFileBase passport2, HttpPostedFileBase photo)
-        //{
-        //    if ((metalicConstruction.Locality == "") || (owner == ""))
-        //    {
-        //        ModelState.AddModelError("Error", "Имеются неверно заполненные поля. Все поля, за исключением файлов, обязательны для заполнения");
-        //    }
-        //    else
-        //    {
-
-        //    }
-        //    if (passport1 != null)
-        //    {
-        //        if ((passport1.ContentLength > 0) && (passport1.ContentLength < 1050578))
-        //        {
-        //            string src = "~/Images/Metal/" + metalicConstruction.Id + "1.jpg";
-        //            string path = Server.MapPath(src);
-        //            System.IO.File.Delete(path);
-        //            passport1.SaveAs(path);
-        //        }
-        //        else
-        //        {
-        //            ModelState.AddModelError("Photo", "Нельзя загрузить файл объёмом больше 1 МБ");
-        //        }
-        //    }
-        //    if (passport2 != null)
-        //    {
-        //        if ((passport2.ContentLength > 0) && (passport2.ContentLength < 1050578))
-        //        {
-        //            string src = "~/Images/Metal/" + metalicConstruction.Id + "2.jpg";
-        //            string path = Server.MapPath(src);
-        //            System.IO.File.Delete(path);
-        //            passport2.SaveAs(path);
-        //        }
-        //        else
-        //        {
-        //            ModelState.AddModelError("Photo", "Нельзя загрузить файл объёмом больше 1 МБ");
-        //        }
-        //    }
-        //    if (photo != null)
-        //    {
-        //        if ((photo.ContentLength > 0) && (photo.ContentLength < 1050578))
-        //        {
-        //            string src = "~/Images/Metal/p" + metalicConstruction.Id + ".jpg";
-        //            string path = Server.MapPath(src);
-        //            System.IO.File.Delete(path);
-        //            photo.SaveAs(path);
-        //        }
-        //        else
-        //        {
-        //            ModelState.AddModelError("Photo", "Нельзя загрузить файл объёмом больше 1 МБ");
-        //        }
-        //    }
-        //    var mc = context.MetalConstructions.Find(metalicConstruction.Id);
-        //    var idOwner = context.Owners.Where(m => m.Name == owner).Single().Id;
-        //    mc.Id = metalicConstruction.Id;
-        //    mc.IdOwner = idOwner;
-        //    mc.Street1 = metalicConstruction.Street1;
-        //    mc.Street2 = metalicConstruction.Street2;
-        //    mc.FromStreet = metalicConstruction.FromStreet;
-        //    mc.Support = metalicConstruction.Support;
-        //    mc.StartDate = metalicConstruction.StartDate;
-        //    mc.Dolgota = metalicConstruction.Dolgota;
-        //    mc.Shirota = metalicConstruction.Shirota;
-        //    ModelState["Owner"].Errors.Clear();
-        //    if (ModelState.IsValid)
-        //    {
-        //        context.SaveChanges();
-        //        return RedirectToAction("Metal", context.MetalConstructions);
-        //    }
-        //    else
-        //    {
-        //        return View(mc);
-        //    }
-        //}
-        //#endregion
-
-        //#region Удаление
-        //[Authorize(Roles = "Admin, ChiefEditAll,ChiefEditOwn, SupplierEditAll, SupplierEditOwn")]
-        //public ActionResult DeleteMetal(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    MetalConstruction mc = context.MetalConstructions.Find(id);
-        //    if (mc == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    ViewBag.Owners = context.Owners.Select(m => m.Name);
-        //    return View(mc);
-        //}
-
-        //[HttpPost]
-        //[Authorize(Roles = "Admin, ChiefEditAll,ChiefEditOwn, SupplierEditAll, SupplierEditOwn")]
-        //public ActionResult DeleteMetal(int id)
-        //{
-        //    MetalConstruction mc = context.MetalConstructions.Find(id);
-        //    context.MetalConstructions.Remove(mc);
-        //    context.SaveChanges();
-
-        //    string src = "~/Images/Metal/" + id + "1.jpg";
-        //    string path = Server.MapPath(src);
-        //    if (System.IO.File.Exists(path)) System.IO.File.Delete(path);
-
-        //    src = "~/Images/Metal/" + id + "2.jpg";
-        //    path = Server.MapPath(src);
-        //    if (System.IO.File.Exists(path)) System.IO.File.Delete(path);
-
-        //    src = "~/Images/Metal/p" + id + ".jpg";
-        //    path = Server.MapPath(src);
-        //    if (System.IO.File.Exists(path)) System.IO.File.Delete(path);
-        //    return RedirectToAction("Metal", context.MetalConstructions);
-        //}
-        //#endregion
-        //#endregion
-
-        //#region Световые указатели
-        //[Authorize]
-        //public ActionResult Light()
-        //{
-        //    ViewBag.Data = null;
-        //    return View(context.LightConstructions);
-        //}
-
-        //[Authorize]
-        //[HttpPost]
-        //public ActionResult Light(string owner, string locality, string street1, string street2, string fromStreet, string startDay,
-        //                          string startMonth, string startYear, string finishDay, string finishMonth, string finishYear,
-        //                          string onStatement, string isSocial)
-        //{
-        //    Owner o = new Owner();
-        //    if (!string.IsNullOrEmpty(owner))
-        //    {
-        //        o = context.Owners.Where(m => m.Name == owner).Single();
-        //    }
-        //    LightConstruction lc = new LightConstruction()
-        //    {
-        //        Street1 = street1,
-        //        Street2 = street2,
-        //        IdOwner = o.Id,
-        //        Support = 0,
-        //        FromStreet = fromStreet,
-        //        Locality = locality
-        //    };
-        //    ViewBag.OnStatement = onStatement;
-        //    ViewBag.IsSocial = isSocial;
-        //    ViewBag.Data = lc;
-        //    ViewBag.StartDay = startDay;
-        //    ViewBag.StartMonth = startMonth;
-        //    ViewBag.StartYear = startYear;
-        //    ViewBag.FinishDay = finishDay;
-        //    ViewBag.FinishMonth = finishMonth;
-        //    ViewBag.FinishYear = finishYear;
-        //    return View();
-        //}
-
-        //[Authorize]
-        //public ActionResult ShowLightTablePartial(LightConstruction lightConstruction, string startDay,
-        //                         string startMonth, string startYear, string finishDay, string finishMonth, string finishYear,
-        //                         string onStatement, string isSocial)
-        //{
-        //    if (lightConstruction == null)
-        //    {
-        //        ViewBag.Results = null;
-        //        return View(context.LightConstructions.OrderBy(m => m.FinishDate));
-        //    }
-        //    else
-        //    {
-        //        IEnumerable<LightConstruction> result = SearchLight(lightConstruction, startDay, startMonth, startYear, finishDay, finishMonth, finishYear, onStatement, isSocial);
-        //        ViewBag.Results = result.Count();
-        //        return View(result.OrderBy(m => m.FinishDate));
-        //    }
-        //}
-
-
-
-
-        //[Authorize(Roles = "Admin, ChiefEditAll,ChiefEditOwn, SupplierEditAll, SupplierEditOwn")]
-        //public ActionResult AddPassport(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    LightConstruction lc = context.LightConstructions.Find(id);
-        //    if (lc == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(lc);
-        //}
-
-        //[HttpPost]
-        //[Authorize(Roles = "Admin, ChiefEditAll,ChiefEditOwn, SupplierEditAll, SupplierEditOwn")]
-        //public ActionResult AddPassport(LightConstruction lightConstruction, string startDate, string finishDate,  HttpPostedFileBase ispolkom1, HttpPostedFileBase ispolkom2, HttpPostedFileBase photo)
-        //{
-
-        //    if ((startDate == "") || (finishDate == ""))
-        //    {
-        //        ModelState.AddModelError("Error", "Имеются неверно заполненные поля. Все поля, за исключением поля \"Фото\", обязательны для заполнения");
-        //        return View(context.LightConstructions.Find(lightConstruction.Id));
-        //    }
-        //    else
-        //    {
-        //        lightConstruction.StartDate = Convert.ToDateTime(startDate);
-        //        lightConstruction.FinishDate = Convert.ToDateTime(finishDate);
-        //    }
-        //    var lc = context.LightConstructions.Find(lightConstruction.Id);
-        //    lightConstruction.IdOwner = lc.IdOwner;
-        //    lightConstruction.IdWhoAdded = lc.IdWhoAdded;
-        //    lightConstruction.IsSocial = lc.IsSocial;
-        //    lightConstruction.Locality = lc.Locality;
-        //    lightConstruction.OnStatement = false;
-        //    lightConstruction.Owner = lc.Owner;
-        //    lightConstruction.OwnerWhoAdded = lc.OwnerWhoAdded;
-        //    lightConstruction.Shirota = lc.Shirota;
-        //    lightConstruction.Street1 = lc.Street1;
-        //    lightConstruction.Street2 = lc.Street2;
-        //    lightConstruction.Support = lc.Support;
-        //    lightConstruction.DateOfSocial = lc.DateOfSocial;
-        //    lightConstruction.FromStreet = lc.FromStreet;
-
-        //    //lc.Id = lightConstruction.Id;
-        //    //lc.StartDate = lightConstruction.StartDate;
-        //    //lc.FinishDate = lightConstruction.FinishDate;
-        //    //lc.OnStatement = false;
-        //    context.LightConstructions.Add(lightConstruction);
-        //    if (!ModelState.ContainsKey("Error"))
-        //    {
-        //        context.SaveChanges();
-        //        string src;
-        //        string path;
-        //            if (ispolkom1 != null)
-        //            {
-        //                if ((ispolkom1.ContentLength > 0) && (ispolkom1.ContentLength < 1050578))
-        //                {
-        //                    src = "~/Images/Light/ispolkom" + lightConstruction.Id + "1.jpg";
-        //                    path = Server.MapPath(src);
-        //                    ispolkom1.SaveAs(path);
-        //                }
-        //                else
-        //                {
-        //                    context.LightConstructions.Remove(lightConstruction);
-        //                    ModelState.AddModelError("Photo", "Нельзя загрузить файл, размер которого превышает 1 МБ.");
-        //                }
-        //            }
-        //            if (ispolkom2 != null)
-        //            {
-        //                if ((ispolkom2.ContentLength > 0) && (ispolkom2.ContentLength < 1050578))
-        //                {
-        //                    src = "~/Images/Light/ispolkom" + lightConstruction.Id + "2.jpg";
-        //                    path = Server.MapPath(src);
-        //                    // System.IO.File.Delete(path);
-        //                    ispolkom2.SaveAs(path);
-        //                }
-        //                else
-        //                {
-        //                    context.LightConstructions.Remove(lightConstruction);
-        //                    ModelState.AddModelError("Photo", "Нельзя загрузить файл, размер которого превышает 1 МБ.");
-        //                }
-        //            }
-
-        //            if (photo != null)
-        //            {
-        //                if ((photo.ContentLength > 0) && (photo.ContentLength < 1050578))
-        //                {
-        //                    src = "~/Images/Light/photo" + lightConstruction.Id + ".jpg";
-        //                    path = Server.MapPath(src);
-        //                    photo.SaveAs(path);
-        //                }
-        //                else
-        //                {
-        //                    context.LightConstructions.Remove(lightConstruction);
-        //                    ModelState.AddModelError("Photo", "Нельзя загрузить файл, размер которого превышает 1 МБ.");
-        //                }
-        //            } 
-        //    }
-        //    if ((!ModelState.ContainsKey("Error")) && (!ModelState.ContainsKey("Photo")))
-        //    {
-        //        string oldSrc = "~/Images/Light/passport" + lc.Id + "1.jpg";
-        //        string oldPath = Server.MapPath(oldSrc);
-        //        string newSrc = "~/Images/Light/passport" + lightConstruction.Id + "1.jpg";
-        //        string newPath = Server.MapPath(newSrc);
-        //        System.IO.File.Move(oldPath, newPath);
-
-        //        oldSrc = "~/Images/Light/passport" + lc.Id + "2.jpg";
-        //        oldPath = Server.MapPath(oldSrc);
-        //        newSrc = "~/Images/Light/passport" + lightConstruction.Id + "2.jpg";
-        //        newPath = Server.MapPath(newSrc);
-        //        System.IO.File.Move(oldPath, newPath);
-
-        //        context.LightConstructions.Remove(lc);
-        //        context.SaveChanges();
-        //        return RedirectToAction("Light", context.LightConstructions);
-        //    }
-        //    else
-        //    {
-        //        return View(lightConstruction);
-        //    }       
-        //}
-
-        //#region Редактирование
-        //[Authorize(Roles = "Admin, ChiefEditAll,ChiefEditOwn, SupplierEditAll, SupplierEditOwn")]
-        //public ActionResult EditLight(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    LightConstruction lc = context.LightConstructions.Find(id);
-        //    if (lc == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    ViewBag.Owners = context.Owners.Select(m => m.Name);
-        //    return View(lc);
-        //}
-
-        //[HttpPost]
-        //[Authorize(Roles = "Admin, ChiefEditAll,ChiefEditOwn, SupplierEditAll, SupplierEditOwn")]
-        //public ActionResult EditLightOnStatement(LightConstruction lightConstruction, string owner, string startDate, HttpPostedFileBase passport1, HttpPostedFileBase passport2, HttpPostedFileBase zajavlenie)
-        //{
-        //    if ((lightConstruction.Locality == "") || (owner == "") || (startDate == ""))
-        //    {
-        //        ModelState.AddModelError("Error", "Имеются неверно заполненные поля. Все поля обязательны для заполнения");
-        //    }
-        //    else
-        //    {
-        //        lightConstruction.StartDate = Convert.ToDateTime(startDate);
-        //    }
-        //    if (passport1 != null)
-        //    {
-        //        if ((passport1.ContentLength > 0) && (passport1.ContentLength < 1050578))
-        //        {
-        //            string src = "~/Images/Light/passport" + lightConstruction.Id + "1.jpg";
-        //            string path = Server.MapPath(src);
-        //            System.IO.File.Delete(path);
-        //            passport1.SaveAs(path);
-        //        }
-        //        else
-        //        {
-        //            ModelState.AddModelError("Photo", "Нельзя загрузить файл объёмом больше 1 МБ");
-        //        }
-        //    }
-        //    if (passport2 != null)
-        //    {
-        //        if ((passport2.ContentLength > 0) && (passport2.ContentLength < 1050578))
-        //        {
-        //            string src = "~/Images/Light/passport" + lightConstruction.Id + "2.jpg";
-        //            string path = Server.MapPath(src);
-        //            System.IO.File.Delete(path);
-        //            passport2.SaveAs(path);
-        //        }
-        //        else
-        //        {
-        //            ModelState.AddModelError("Photo", "Нельзя загрузить файл объёмом больше 1 МБ");
-        //        }
-        //    }
-        //    if (zajavlenie != null)
-        //    {
-        //        if ((zajavlenie.ContentLength > 0) && (zajavlenie.ContentLength < 1050578))
-        //        {
-        //            string src = "~/Images/Light/z" + lightConstruction.Id + ".jpg";
-        //            string path = Server.MapPath(src);
-        //            System.IO.File.Delete(path);
-        //            zajavlenie.SaveAs(path);
-        //        }
-        //        else
-        //        {
-        //            ModelState.AddModelError("Photo", "Нельзя загрузить файл объёмом больше 1 МБ");
-        //        }
-        //    }
-        //    var lc = context.LightConstructions.Find(lightConstruction.Id);
-        //    var idOwner = context.Owners.Where(m => m.Name == owner).Single().Id;
-        //    lc.Id = lightConstruction.Id;
-        //    lc.IdOwner = idOwner;
-        //    lc.Street1 = lightConstruction.Street1;
-        //    lc.Street2 = lightConstruction.Street2;
-        //    lc.FromStreet = lightConstruction.FromStreet;
-        //    lc.Support = lightConstruction.Support;
-        //    lc.StartDate = lightConstruction.StartDate;
-        //    lc.IsSocial = lightConstruction.IsSocial;
-        //    lc.OnStatement = true;
-        //    if (lightConstruction.IsSocial)
-        //    {
-        //        lc.DateOfSocial = DateTime.Now.Date.ToShortDateString().ToString();
-        //    }
-        //    lc.Dolgota = lightConstruction.Dolgota;
-        //    lc.Shirota = lightConstruction.Shirota;
-        //    ModelState["Owner"].Errors.Clear();
-        //    if (ModelState.IsValid)
-        //    {
-        //        context.SaveChanges();
-        //        return RedirectToAction("Light", context.LightConstructions);
-        //    }
-        //    else
-        //    {
-        //        return View("EditLight", lc);
-        //    }
-        //}
-
-        //[HttpPost]
-        //[Authorize(Roles = "Admin, ChiefEditAll,ChiefEditOwn, SupplierEditAll, SupplierEditOwn")]
-        //public ActionResult EditLight(LightConstruction lightConstruction, string owner, string startDate, string finishDate, HttpPostedFileBase passport1, HttpPostedFileBase passport2, HttpPostedFileBase ispolkom1, HttpPostedFileBase ispolkom2, HttpPostedFileBase photo)
-        //{
-        //    if ((lightConstruction.Locality == "") || (owner == "") || (startDate == "") || (finishDate == ""))
-        //    {
-        //        ModelState.AddModelError("Error", "Имеются неверно заполненные поля. Все поля обязательны для заполнения");
-        //    }
-        //    else
-        //    {
-        //        lightConstruction.StartDate = Convert.ToDateTime(startDate);
-        //        lightConstruction.FinishDate = Convert.ToDateTime(finishDate);
-        //    }
-        //    if (passport1 != null)
-        //    {
-        //        if ((passport1.ContentLength > 0) && (passport1.ContentLength < 1050578))
-        //        {
-        //            string src = "~/Images/Light/passport" + lightConstruction.Id + "1.jpg";
-        //            string path = Server.MapPath(src);
-        //            System.IO.File.Delete(path);
-        //            passport1.SaveAs(path);
-        //        }
-        //        else
-        //        {
-        //            ModelState.AddModelError("Photo", "Нельзя загрузить файл объёмом больше 1 МБ");
-        //        }
-        //    }
-        //    if (passport2 != null)
-        //    {
-        //        if ((passport2.ContentLength > 0) && (passport2.ContentLength < 1050578))
-        //        {
-        //            string src = "~/Images/Light/passport" + lightConstruction.Id + "2.jpg";
-        //            string path = Server.MapPath(src);
-        //            System.IO.File.Delete(path);
-        //            passport2.SaveAs(path);
-        //        }
-        //        else
-        //        {
-        //            ModelState.AddModelError("Photo", "Нельзя загрузить файл объёмом больше 1 МБ");
-        //        }
-        //    }
-        //    if (ispolkom1 != null)
-        //    {
-        //        if ((ispolkom1.ContentLength > 0) && (ispolkom1.ContentLength < 1050578))
-        //        {
-        //            string src = "~/Images/Light/ispolkom" + lightConstruction.Id + "1.jpg";
-        //            string path = Server.MapPath(src);
-        //            System.IO.File.Delete(path);
-        //            ispolkom1.SaveAs(path);
-        //        }
-        //        else
-        //        {
-        //            ModelState.AddModelError("Photo", "Нельзя загрузить файл объёмом больше 1 МБ");
-        //        }
-        //    }
-        //    if (ispolkom2 != null)
-        //    {
-        //        if ((ispolkom2.ContentLength > 0) && (ispolkom2.ContentLength < 1050578))
-        //        {
-        //            string src = "~/Images/Light/ispolkom" + lightConstruction.Id + "2.jpg";
-        //            string path = Server.MapPath(src);
-        //            System.IO.File.Delete(path);
-        //            ispolkom2.SaveAs(path);
-        //        }
-        //        else
-        //        {
-        //            ModelState.AddModelError("Photo", "Нельзя загрузить файл объёмом больше 1 МБ");
-        //        }
-        //    }
-        //    if (photo != null)
-        //    {
-        //        if ((photo.ContentLength > 0) && (photo.ContentLength < 1050578))
-        //        {
-        //            string src = "~/Images/Light/photo" + lightConstruction.Id + ".jpg";
-        //            string path = Server.MapPath(src);
-        //            System.IO.File.Delete(path);
-        //            photo.SaveAs(path);
-        //        }
-        //        else
-        //        {
-        //            ModelState.AddModelError("Photo", "Нельзя загрузить файл объёмом больше 1 МБ");
-        //        }
-        //    }
-        //    var lc = context.LightConstructions.Find(lightConstruction.Id);
-        //    var idOwner = context.Owners.Where(m => m.Name == owner).Single().Id;
-        //    lc.Id = lightConstruction.Id;
-        //    lc.IdOwner = idOwner;
-        //    lc.Street1 = lightConstruction.Street1;
-        //    lc.Street2 = lightConstruction.Street2;
-        //    lc.FromStreet = lightConstruction.FromStreet;
-        //    lc.Support = lightConstruction.Support;
-        //    lc.StartDate = lightConstruction.StartDate;
-        //    lc.FinishDate = lightConstruction.FinishDate;
-        //    lc.IsSocial = lightConstruction.IsSocial;
-        //    if (lightConstruction.IsSocial)
-        //    {
-        //        lc.DateOfSocial = DateTime.Now.Date.ToShortDateString().ToString();
-        //    }
-        //    lc.OnStatement = false;
-        //    lc.Dolgota = lightConstruction.Dolgota;
-        //    lc.Shirota = lightConstruction.Shirota;
-        //    ModelState["Owner"].Errors.Clear();
-        //    if (ModelState.IsValid)
-        //    {
-        //        context.SaveChanges();
-        //        return RedirectToAction("Light", context.LightConstructions);
-        //    }
-        //    else
-        //    {
-        //        return View(lc);
-        //    }
-        //}
-        //#endregion
-
-        //#region Удаление
-        //[Authorize(Roles = "Admin, ChiefEditAll, ChiefEditOwn, SupplierEditAll, SupplierEditOwn")]
-        //public ActionResult DeleteLight(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    LightConstruction lc = context.LightConstructions.Find(id);
-        //    if (lc == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    ViewBag.Owners = context.Owners.Select(m => m.Name);
-        //    return View(lc);
-        //}
-
-        //[HttpPost]
-        //[Authorize(Roles = "Admin, ChiefEditAll,ChiefEditOwn, SupplierEditAll, SupplierEditOwn")]
-        //public ActionResult DeleteLight(int id)
-        //{
-        //    LightConstruction lc = context.LightConstructions.Find(id);
-        //    if (lc.OnStatement)
-        //    {
-        //        string src = "~/Images/Light/passport" + id + "1.jpg";
-        //        string path = Server.MapPath(src);
-        //        System.IO.File.Delete(path);
-        //        src = "~/Images/Light/passport" + id + "2.jpg";
-        //        path = Server.MapPath(src);
-        //        System.IO.File.Delete(path);
-        //        src = "~/Images/Light/z" + id + ".jpg";
-        //        path = Server.MapPath(src);
-        //        System.IO.File.Delete(path);
-        //    }
-        //    else
-        //    {
-        //        string src = "~/Images/Light/passport" + id + "1.jpg";
-        //        string path = Server.MapPath(src);
-        //        System.IO.File.Delete(path);
-        //        src = "~/Images/Light/passport" + id + "2.jpg";
-        //        path = Server.MapPath(src);
-        //        System.IO.File.Delete(path);
-        //        src = "~/Images/Light/ispolkom" + id + "1.jpg";
-        //        path = Server.MapPath(src);
-        //        System.IO.File.Delete(path);
-        //        src = "~/Images/Light/ispolkom" + id + "2.jpg";
-        //        path = Server.MapPath(src);
-        //        System.IO.File.Delete(path);
-        //        src = "~/Images/Light/photo" + id + ".jpg";
-        //        path = Server.MapPath(src);
-        //        System.IO.File.Delete(path);
-        //    }
-        //    context.LightConstructions.Remove(lc);
-        //    context.SaveChanges();
-        //    return RedirectToAction("Light", context.LightConstructions);
-        //}
-        //#endregion
-
-        //#region Создание
+       
         [Authorize(Roles = "Admin, ChiefEditAll,ChiefEditOwn, SupplierEditAll, SupplierEditOwn")]
         public ActionResult CreateLight()
         {
@@ -1460,6 +739,7 @@ namespace Sciencecom.Controllers
             return View();
         }
 
+        
         [Authorize]
         [HttpPost]
         public ActionResult CreateMetalPointerDesign(AdvertisingStructure Structures,
@@ -1526,6 +806,80 @@ namespace Sciencecom.Controllers
 
         }
 
+        [Authorize]
+        [HttpGet]
+        public ActionResult CreateLightDuctDesign()
+        {
+            ViewBag.Code = "LD";
+            ViewBag.UniqueNumber = TableAdapterExtensions.StringSymvol();
+            ViewBag.SeizesCount = 2;
+            return View();
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult CreateLightDuctDesign(AdvertisingStructure Structures,
+            [ModelBinder(typeof(CustomModelBinderForSide))] List<Side> Sides,
+            [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces,
+            HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides,
+            HttpPostedFileBase Scan1SidesWithFinancialManagement, List<HttpPostedFileBase> SeveralPhoto,
+            int CountSize = 2)
+        {
+
+            Guid StructuresId = Guid.NewGuid();
+            Structures.Id = StructuresId;
+            //удаление временно номера из базы данных
+            if (context.ListUniqueNumbers.Any(a => a.UniqueNumber == Structures.UniqueNumber))
+            {
+                context.ListUniqueNumbers.Remove(
+                    context.ListUniqueNumbers.Single(x => x.UniqueNumber == Structures.UniqueNumber));
+
+            }
+
+            for (int j = 0; j < CountSize; j++)
+            {
+               
+
+                Sides[j].AdvertisingStructures_Id = StructuresId;
+                Sides[j].Name = (j + 1).ToString();
+                Sides[j].Id = Guid.NewGuid();
+            }
+
+            context.Sides.AddRange(Sides);
+            context.AdvertisingStructures.Add(Structures);
+            List<Surface> ListSurface = new List<Surface>();
+            foreach (var i in surfaces)
+            {
+                i.Side_Id = Sides.Single(a => a.Name == i.SideOfSurface).Id;
+                ListSurface.Add(i);
+
+            }
+            context.Surfaces.AddRange(ListSurface);
+
+            context.SaveChanges();
+            if (Scan1SidesWithFinancialManagement != null)
+            {
+                string src = "~/Images/Scan1SidesWithFinancialManagement/" + Structures.Id +
+                             "FinancialManagement.jpg";
+                string path = Server.MapPath(src);
+                ScanPassport_1Sides.SaveAs(path);
+            }
+
+            if (ScanPassport_1Sides != null)
+            {
+                string src = "~/Images/ScanPassport_1Sides/" + Structures.Id + "passport.jpg";
+                string path = Server.MapPath(src);
+                ScanPassport_1Sides.SaveAs(path);
+            }
+            if (ScanPassport_2Sides != null)
+            {
+                string src = "~/Images/ScanPassport_2Sides/" + Structures.Id + "ScanPassport_2Sides.jpg";
+                string path = Server.MapPath(src);
+                ScanPassport_2Sides.SaveAs(path);
+            }
+
+            return RedirectToAction("AdvertisingDesign");
+        }
 
         [Authorize(Roles = "Admin, ChiefEditAll,ChiefEditOwn, SupplierEditAll, SupplierEditOwn")]
         public ActionResult DeleteAdvertisingDesign(int? id,string switchtoMap)
