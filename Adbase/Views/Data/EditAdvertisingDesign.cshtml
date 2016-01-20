@@ -40,9 +40,9 @@
 
 <script type="text/javascript">
     var i = 0;
-    
+
    // var havePlacemark = @Model.Breadth.HasValue.ToString().ToLower();
-    
+
     var StartCountForSurface ;
     var EndCountForSurface = 0;
     //var isGreateAdvertisingDesign = false;
@@ -52,7 +52,7 @@
     }));
 
     $(document).ready(function() {
-        
+
         ////отключение валидации
         $.validator.methods.number = function (value, element) {
             return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
@@ -65,7 +65,7 @@
         });
         $("[identificationforcountside]").each(function(indx, element) {
             $(element)[0].value = ArrayOfSides[indx].length;
-            
+
             AddSurface(indx+1);
         });
 
@@ -87,6 +87,10 @@
             if (end == "Металлический указатель")
             {
                 window.location.href = '/Data/EditMetalPointerDesign/' + @Model.Id_show;
+            }
+            if (end == "Световой короб")
+            {
+                window.location.href = '/Data/EditLightDuctDesign/' + @Model.Id_show;
             }
         });
 
@@ -164,8 +168,8 @@
 
         if (count == 1) {
             $("#" + i + "HiddenIdentification").hide();
-        } 
-        else 
+        }
+        else
         {
             $("#" + i + "HiddenIdentification").show();
             //валидация
@@ -183,7 +187,7 @@
 
         $.ajax('@Url.Action("EditSurface", "Data")', { async: true, data: { side: i, StartCountForSurface: StartCountForSurface, EndCountForSurface: EndCountForSurface } })
             .success(function(e) {
-                console.log(e);
+
                 $("#InsertPartial" + i + "").before(e);
                 CalculationAS();
                 //отключение валидации
@@ -200,7 +204,7 @@
 
         $.ajax('@Url.Action("AddSurface", "Data")', { async: true, data: { side: i, StartCountForSurface: StartCountForSurface, EndCountForSurface: EndCountForSurface } })
             .success(function(e) {
-                //console.log(e);
+
                 $("#InsertPartial" + i + "").before(e);
                 CalculationAS();
                 ////отключение валидации

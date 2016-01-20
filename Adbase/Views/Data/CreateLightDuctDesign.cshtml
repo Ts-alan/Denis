@@ -66,13 +66,16 @@
             CalculationOfTheArea(0);
         });
 
-        $("#Code option").val("Металлический указатель").prop('selected', true);
-
+        $("#Code").val("b5eee22c-d250-498a-9696-de40530b83a9");
+        
         $("#Code").change(
        function () {
            var end = $('#Code option:selected').text();
            if (end == "Щит") {
                window.location.href = '/Data/CreateAdvertisingDesign/';
+           }
+           if (end == "Металлический указатель") {
+               window.location.href = '/Data/CreateMetalPointerDesign/';
            }
 
        });
@@ -287,7 +290,7 @@
 
         <div class="form-group">
             <label for="Locality">Вид</label>
-            @Html.DropDownListFor(a => a.Code, new SelectList(ListTypeAdvertising, "id", "Name", ListTypeAdvertisingSelected))
+            @Html.DropDownListFor(a => a.Code, new SelectList(ListTypeAdvertising, "id", "Name", ListTypeAdvertising))
             @Html.ValidationMessageFor(model => model.Code)
         </div>
 
@@ -451,21 +454,20 @@
                 <span data-valmsg-for="ScanPassport_2Sides" data-valmsg-replace="true"></span>
                 @Html.Raw("Не более 1 МБ")
             </div>
-
              
-            @*<div class="form-group"> 
-                <label for="ScanPassport_1Sides">Скан паспорта (стор 1)</label>
-                <input type="file" name="ScanPassport_1Sides" accept="image/jpeg" /><br />
-                <span data-valmsg-for="ScanPassport_1Sides" data-valmsg-replace="true"></span>
+            <div class="form-group"> 
+                <label for="Scan1Side">Сторона 1</label>
+                <input type="file" name="Scan1Side" accept="image/jpeg" /><br />
+                <span data-valmsg-for="Scan1Side" data-valmsg-replace="true"></span>
                 @Html.Raw("Не более 1 МБ")
             </div>
 
             <div class="form-group">
-                <label for="ScanPassport_2Sides">Скан паспорта (стор 2)</label>
-                <input type="file" name="ScanPassport_2Sides" accept="image/jpeg" /><br />
-                <span data-valmsg-for="ScanPassport_2Sides" data-valmsg-replace="true"></span>
+                <label for="Scan2Side">Сторона 2</label>
+                <input type="file" name="Scan2Side" accept="image/jpeg" /><br />
+                <span data-valmsg-for="Scan2Side" data-valmsg-replace="true"></span>
                 @Html.Raw("Не более 1 МБ")
-            </div>*@
+            </div>
 
         </div>
 

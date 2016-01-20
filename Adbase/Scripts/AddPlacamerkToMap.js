@@ -64,7 +64,7 @@
             //присвоение  коодинат при клике  
             myMap.events.add('click', function (e) {
                 if (countE) {
-                    alert("2121");
+                    
                     if (myPlacemark != undefined)
                     {
                         myMap.geoObjects.remove(myPlacemark);

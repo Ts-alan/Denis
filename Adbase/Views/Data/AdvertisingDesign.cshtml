@@ -201,6 +201,31 @@
                                     css: {}
                                 });
                     }
+                //выпадающее меню для световых коробов
+                    if (td[0].title == "Световой короб") 
+                    {
+                        $(element).tooltipsy({
+                            alignTo: 'cursor',
+                            offset: [0, -85],
+                            hideEvent: 'focusout',
+                            content: '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
+                                '+<a href="/Map/Index/'+Showonthemap[indx]+'">Показать на карте</a></br>' +
+                                '+<a href="/Data/LightDuct/'+Showonthemap[indx]+'">Показать данные о конструкции</a></br>' +
+                                '+<a href="/Data/EditLightDuctDesign/'+Showonthemap[indx]+'">Изменить данные о конструкции</a></br>' +
+                                '+<a  href="#DeleteStructures"  role="button" data-toggle="modal">Удалить конструкцию</a></br>' +
+                                '</button>',
+                            show: function (e, $el) {
+                                console.log($el);
+                                $el.show(100);
+                            },
+                            hide: function (e, $el) {
+
+                            },
+                            delay: 200,
+                            className: 'tooltipsy',
+                            css: {}
+                        });
+                    }
             }
             );
         }

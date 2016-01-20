@@ -1439,6 +1439,8 @@
     <Content Include="Views\Data\CreateMetalPointerDesign.cshtml" />
     <Content Include="Views\Data\EditMetalPointerDesign.cshtml" />
     <Content Include="Views\Data\CreateLightDuctDesign.cshtml" />
+    <Content Include="Views\Data\EditLightDuctDesign.cshtml" />
+    <Content Include="Views\Data\LightDuct.cshtml" />
     <None Include="Views\Data\Pointer.cshtml" />
   </ItemGroup>
   <ItemGroup>
