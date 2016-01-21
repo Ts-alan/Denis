@@ -231,7 +231,11 @@
         
         $.ajax('@Url.Action("AddSurface", "Data")', { data: { side: i, StartCountForSurface: StartCountForSurface, EndCountForSurface: EndCountForSurface } })
             .success(function (e) {
-                $("#InsertPartial"+i+"").before(e);
+                var live_str = $('<div>', { html: e });
+
+                var res = live_str.find('.body-content');
+
+                $("#InsertPartial" + i + "").prepend(res);
             });
        
     }
