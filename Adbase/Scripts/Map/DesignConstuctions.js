@@ -1,7 +1,6 @@
 ﻿function GetBilboardPoints(role, userCompany, objectId) {
-    var geoObjects = new ymaps.GeoObjectCollection();
-
- 
+    var geoArray = [];
+    var clusterer = new ymaps.Clusterer({ clusterDisableClickZoom: true });
     $.ajax({
         type: "POST",
         url: "/Map/GetDesign",
@@ -66,17 +65,20 @@
                      iconColor: colour
                  });
                 
-
-                geoObjects.add(placemark);
-
+                geoArray[i] = placemark;
+                
             }
+
+            clusterer.add(geoArray);
+
         }
 
     }).error(function () {
-
         alert("Ошибка запроса ТРАТАТА");
     });
-    return geoObjects;
+    
+    return clusterer;
+    
 }
 
 function getReferencesBillboard(construction) {

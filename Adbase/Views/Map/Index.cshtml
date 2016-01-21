@@ -85,10 +85,10 @@
             myMap.controls.add('typeSelector');
             myMap.controls.add('zoomControl');
             myMap.controls.add('searchControl');
-            var geoObjects = new ymaps.GeoObjectCollection();
-            geoObjects.add(GetBilboardPoints("@role", "@user.Company", objectId));
+           
+            var clusterer = GetBilboardPoints("@role", "@user.Company", objectId);
 
-            myMap.geoObjects.add(geoObjects);
+            myMap.geoObjects.add(clusterer);
         }
     }
 
@@ -104,7 +104,7 @@
         if ('@(Html.Raw(Session["collectionMap"]))' != '[]') {
             var collectionMap = JSON.parse('@(Html.Raw(Session["collectionMap"]))');
             $(".content-col input").each(function (indx, element) {
-              
+
                 $(element).val(collectionMap[indx].value);
             });
         }
