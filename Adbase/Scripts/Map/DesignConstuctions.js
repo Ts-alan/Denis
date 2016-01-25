@@ -86,6 +86,7 @@ function getReferencesBillboard(construction) {
     var editLink;
     if (construction.NameOfAdvertisingStructure == "Щит") {
 
+
         editLink = "/Data/EditAdvertisingDesign/";
     }
 

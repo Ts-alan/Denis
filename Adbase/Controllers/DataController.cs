@@ -1491,6 +1491,87 @@ namespace Sciencecom.Controllers
 
         }
 
+        
+
+        [HttpPost]
+        public ActionResult EditIllegalDesign(int id, AdvertisingStructure Structures,
+            [ModelBinder(typeof(CustomModelBinderForSide))] List<Side> Sides,
+            [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces,
+            HttpPostedFileBase Scan1Side, HttpPostedFileBase Scan2Side, int CountSize = 1)
+        {
+
+            AdvertisingStructure mc = context.AdvertisingStructures.Single(a => a.Id_show == id);
+            var TempId = mc.Id;
+
+            foreach (var side in mc.Sides)
+            {
+                context.Surfaces.RemoveRange(side.Surfaces);
+            }
+
+            context.Sides.RemoveRange(mc.Sides);
+            context.AdvertisingStructures.Remove(mc);
+            context.SaveChanges();
+
+            for (int j = 0; j < CountSize; j++)
+            {
+                try
+                {
+                    Sides[j].AdvertisingStructures_Id = mc.Id;
+                }
+                catch (System.IndexOutOfRangeException e)
+                {
+                    Sides.Add(new Side());
+                }
+                Sides[j].AdvertisingStructures_Id = mc.Id;
+                Sides[j].Name = (j + 1).ToString();
+                Sides[j].Id = Guid.NewGuid();
+            }
+            Structures.Id = TempId;
+
+            context.AdvertisingStructures.Add(Structures);
+            context.Sides.AddRange(Sides);
+
+            List<Surface> ListSurface = new List<Surface>();
+            foreach (var i in surfaces)
+            {
+                i.Side_Id = Sides.Single(a => a.Name == i.SideOfSurface).Id;
+                ListSurface.Add(i);
+            }
+            context.Surfaces.AddRange(ListSurface);
+
+            context.SaveChanges();
+
+            //картики
+           
+            if (Scan1Side != null)
+            {
+
+                string src = "~/Images/Scan1Side/" + Structures.Id + "Scan1Side.jpg";
+                string path = Server.MapPath(src);
+                FileInfo info1 = new FileInfo(path);
+                if (info1.Exists)
+                {
+                    info1.Delete();
+                }
+
+                Scan1Side.SaveAs(path);
+            }
+            if (Scan2Side != null)
+            {
+                string src = "~/Images/Scan2Side/" + Structures.Id + "Scan2Side.jpg";
+                string path = Server.MapPath(src);
+                FileInfo info1 = new FileInfo(path);
+                if (info1.Exists)
+                {
+                    info1.Delete();
+                }
+
+                Scan2Side.SaveAs(path);
+            }
+            return RedirectToAction("AdvertisingDesign");
+
+        }
+
     }
 }
 
