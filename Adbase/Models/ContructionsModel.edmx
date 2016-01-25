@@ -41,6 +41,7 @@
           <Property Name="Support№" Type="nvarchar(max)" />
           <Property Name="CoordinationDate" Type="datetime" />
           <Property Name="ContentInformationDescription" Type="nvarchar(max)" />
+          <Property Name="DateOfIssue" Type="datetime" />
         </EntityType>
         <EntityType Name="Backlight">
           <Key>
@@ -726,6 +727,7 @@ warning 6002: The table/view 'D:\PROJECTS\ADBASEBY\ADBASEBY\ADBASE\APP_DATA\SCIE
           <Property Name="Support_" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CoordinationDate" Type="DateTime" Precision="3" />
           <Property Name="ContentInformationDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfIssue" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Backlight">
           <Key>
@@ -1158,6 +1160,7 @@ warning 6002: The table/view 'D:\PROJECTS\ADBASEBY\ADBASEBY\ADBASE\APP_DATA\SCIE
           <EntitySetMapping Name="AdvertisingStructures">
             <EntityTypeMapping TypeName="SciencecomModel.AdvertisingStructure">
               <MappingFragment StoreEntitySet="AdvertisingStructures">
+                <ScalarProperty Name="DateOfIssue" ColumnName="DateOfIssue" />
                 <ScalarProperty Name="ContentInformationDescription" ColumnName="ContentInformationDescription" />
                 <ScalarProperty Name="CoordinationDate" ColumnName="CoordinationDate" />
                 <ScalarProperty Name="Support_" ColumnName="Support№" />

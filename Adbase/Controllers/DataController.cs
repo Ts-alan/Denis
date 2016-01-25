@@ -908,7 +908,7 @@ namespace Sciencecom.Controllers
             [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces,
             HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides,
             HttpPostedFileBase Scan1SidesWithFinancialManagement, List<HttpPostedFileBase> SeveralPhoto,
-            HttpPostedFileBase Scan1Side, HttpPostedFileBase Scan2Side, int CountSize = 2)
+            HttpPostedFileBase Scan1Side, HttpPostedFileBase Scan2Side, int CountSize = 1)
         {
 
             Guid StructuresId = Guid.NewGuid();
@@ -1378,7 +1378,7 @@ namespace Sciencecom.Controllers
             [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces,
             HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides,
             HttpPostedFileBase Scan1SidesWithFinancialManagement,
-            HttpPostedFileBase Scan1Side, HttpPostedFileBase Scan2Side, int CountSize = 2)
+            HttpPostedFileBase Scan1Side, HttpPostedFileBase Scan2Side, int CountSize = 1)
         {
 
             AdvertisingStructure mc = context.AdvertisingStructures.Single(a => a.Id_show == id);

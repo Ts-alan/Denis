@@ -273,7 +273,7 @@
 @using (Html.BeginForm("CreateLightDuctDesign", "Data", FormMethod.Post, new { enctype = "multipart/form-data", id = "test1" }))
 {
     <input type="hidden" name="Code" value="@ViewBag.Code">
-    <h3> 1. Общие данные о световом коробе</h3>
+    <h3> 1. Общие данные о конструкции</h3>
     @Html.AntiForgeryToken()
     <div class="form-inline" style="margin-bottom: -10px">
         <hr />
@@ -327,7 +327,7 @@
         </div>
 
     </div>
-    <h3> 2.Данные о месте расположения светового короба</h3>
+    <h3> 2.Данные о месте расположения конструкции</h3>
 
     <div class="form-inline">
         <hr />
@@ -399,21 +399,48 @@
             </div>
         </div>
 
-        <h3> 3.Разрешительная документация</h3>
+        <h3> 3.Проект odd</h3>
         <div class="form-horizontal">
             <hr />
             <div class="form-group">
 
-                <label for="ViewBad_Id" style="display:none;">Вид заявки</label>
-                @Html.DropDownListFor(model => model.ViewBad_Id, new SelectList(ViewBids, "id", "Name"), "", new { style = "display:none;" })
+                <label for="ViewBad_Id" style="display: none;">Вид заявки</label>
+                @Html.DropDownListFor(model => model.ViewBad_Id, new SelectList(ViewBids, "id", "Name"), "", new {style = "display:none;"})
                 @Html.ValidationMessageFor(model => model.ViewBad_Id)
 
 
-                <label for="DateOfReceiptOfTheApplication" style="display:none;">Дата подачи заявки</label>
-                @Html.EditorFor(model => model.DateOfReceiptOfTheApplication, new { htmlattributes = new { style = "display:none;" } })
+                <label for="DateOfReceiptOfTheApplication" style="display: none;">Дата подачи заявки</label>
+                @Html.EditorFor(model => model.DateOfReceiptOfTheApplication, new {htmlattributes = new {style = "display:none;"}})
                 @Html.ValidationMessageFor(model => model.DateOfReceiptOfTheApplication)
 
             </div>
+
+            <div class="form-group">
+                <label for="DateOfIssue">Дата выдачи проекта ODD</label>
+                @Html.EditorFor(model => model.DateOfIssue)
+                @Html.ValidationMessageFor(model => model.DateOfIssue)
+
+            </div>  
+            
+            <div class="form-inline">
+
+                <div class="form-group">
+                    <label for="Scan1Side">Скан проекта ODD (Сторона 1)</label>
+                    <input type="file" name="Scan1Side" accept="image/jpeg"/><br/>
+                    <span data-valmsg-for="Scan1Side" data-valmsg-replace="true"></span>
+                    @Html.Raw("Не более 1 МБ")
+                </div>
+
+                <div class="form-group">
+                    <label for="Scan2Side">Скан проекта ODD (Сторона 2)</label>
+                    <input type="file" name="Scan2Side" accept="image/jpeg"/><br/>
+                    <span data-valmsg-for="Scan2Side" data-valmsg-replace="true"></span>
+                    @Html.Raw("Не более 1 МБ")
+                </div>
+
+            </div>
+
+
             <div class="form-group" style="margin-bottom: 5px">
 
                 <label for="C_PassportAdvertising">№ паспорта рекламы</label>
@@ -454,21 +481,6 @@
                 <span data-valmsg-for="ScanPassport_2Sides" data-valmsg-replace="true"></span>
                 @Html.Raw("Не более 1 МБ")
             </div>
-             
-            <div class="form-group"> 
-                <label for="Scan1Side">Сторона 1</label>
-                <input type="file" name="Scan1Side" accept="image/jpeg" /><br />
-                <span data-valmsg-for="Scan1Side" data-valmsg-replace="true"></span>
-                @Html.Raw("Не более 1 МБ")
-            </div>
-
-            <div class="form-group">
-                <label for="Scan2Side">Сторона 2</label>
-                <input type="file" name="Scan2Side" accept="image/jpeg" /><br />
-                <span data-valmsg-for="Scan2Side" data-valmsg-replace="true"></span>
-                @Html.Raw("Не более 1 МБ")
-            </div>
-
         </div>
 
         <div class="form-horizontal">
@@ -494,7 +506,7 @@
             </div>
         </div>
 
-        <h3> 4.Описание металлического указателя</h3>
+        <h3> 4.Описание конструкции</h3>
         <hr />
 
         <div class="form-inline" style="display: none;">
@@ -535,7 +547,7 @@
             <div class="form-group">
 
                 <div class="body-content" style="margin-top: 40px">
-                    <h3>Сторона 1</h3>
+                    
                     <div side="1">
                         <input name="[0].SideOfSurface" value="1" type="hidden">
 
@@ -560,32 +572,7 @@
                         </div>
 
                     </div>
-
-                    <div side="2">
-                        <h3>Сторона 2</h3>
-                        <input name="[1].SideOfSurface" value="2" type="hidden">
-
-                        <div class="form-inline">
-
-                            <div class="form-group">
-
-                                <input name="[1].NumberSurface" value="2" type="hidden">
-
-                                <label for="[1].Height">Высота</label>
-                                <input class="text-box single-line" data-val="true" data-val-number="Значением поля Height должно быть число." id="SHeight" name="[1].Height" value="" type="number">
-                                <span class="field-validation-valid" data-valmsg-for="[1].Height" data-valmsg-replace="true"></span>
-
-                                <label for="[1].Width">Ширина</label>
-                                <input class="text-box single-line" data-val="true" data-val-number="Значением поля Width должно быть число." name="[1].Width" id="Width" value="" type="number">
-                                <span class="field-validation-valid" data-valmsg-for="[1].Width" data-valmsg-replace="true"></span>
-
-                                <label for="[1].Space">Площадь</label>
-                                <input selectforspace="" data-val="true" data-val-number="Значением поля Space должно быть число." name="[1].Space" onchange="CalculationAS()" value="" type="number">
-                                <span class="field-validation-valid" data-valmsg-for="[1].Space" data-valmsg-replace="true"></span>
-                            </div>
-                        </div>
-
-                    </div>
+                   
 
                 </div>
             </div>
@@ -594,16 +581,13 @@
             <div code="" class="form-horizontal">
                 <div class="form-group">
                     <select class="text-box single-line" id="AddButton1" onchange="AddSurface(1)" name="CountSurfuce1" identificationforcountside="" type="text" data-val="true" data-val-required="Укажите кол-во сторон">
-                        <option selected="selected">2</option>
+                        <option selected="selected">1</option>
                     </select>
                     <select class="valid" identificationfordirectionside="IdentificationForDirectionSide" id="DirectionSide" name="[0].IdentificationForDirectionSide">
 
                         <option value="27b8c509-8f09-4a0d-ae22-048c2611b7ea" selected="selected">По ходу движения (сторона А)</option>
                     </select>
-                    <select class="valid" identificationfordirectionside="IdentificationForDirectionSide" id="DirectionSide" name="[1].IdentificationForDirectionSide">
-
-                        <option value="27b8c509-8f09-4a0d-ae22-048c2611b7ea" selected="selected">По ходу движения (сторона А)</option>
-                    </select>
+                   
                 </div>
             </div>
         </div>

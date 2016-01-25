@@ -322,10 +322,54 @@
         </div>
     </div>
 
-    <h3> 3.Разрешительная документация</h3>
+    <h3> 3.Проект odd</h3>
     <div class="form-horizontal">
-        <hr />
+        <hr/>
+        <div class="form-group">
+            <label for="DateOfIssue">Дата выдачи проекта ODD</label>
+            @Html.EditorFor(model => model.DateOfIssue)
+            @Html.ValidationMessageFor(model => model.DateOfIssue)
+
+        </div>
+            <div class="form-group">
+                @if (ViewBag.Scan1Side)
+                {
+                    <p>
+                        <h3>@Html.Raw("Скан проекта ODD (Сторона 1)")</h3><br />
+                    </p>
+                    string image = "/Images/Scan1Side/" + ViewBag.Id + "Scan1Side.jpg";
+
+                    <p>
+                        <a href=@image><img src=@image height="500"></a><br />
+                    </p>
+                }
+                else
+                {
+                    @Html.Raw("Скан проекта ODD (Сторона 1) отсутствует.")<br />
+                }
+            </div>
+
+            <div class="form-group">
+                @if (ViewBag.Scan2Side)
+                {
+                    <p>
+                        <h3>@Html.Raw("Скан проекта ODD (Сторона 2)")</h3><br />
+                    </p>
+                    string image = "/Images/Scan2Side/" + ViewBag.Id + "Scan2Side.jpg";
+
+                    <p>
+                        <a href=@image><img src=@image height="500"></a><br />
+                    </p>
+                }
+                else
+                {
+                    @Html.Raw("Скан проекта ODD (Сторона 2) отсутствует.")<br />
+                }
+            </div>
+        
         <div class="form-group" style="display: none">
+
+
 
             <label for="ViewBad_Id">Вид заявки</label>
 
@@ -394,41 +438,7 @@
 
         </div>
 
-        <div class="form-group">
-            @if (ViewBag.Scan1Side)
-            {
-                <p>
-                    <h3>@Html.Raw("Сторона 1")</h3><br/>
-                </p>
-                string image = "/Images/Scan1Side/" + ViewBag.Id + "Scan1Side.jpg";
-                
-                <p>
-                    <a href=@image><img src=@image height="500"></a><br/>
-                </p>
-            }
-            else
-            {
-                @Html.Raw("Скан сторны 1 отсутствует.")<br/>
-            }
-        </div>
-
-        <div class="form-group">
-            @if (ViewBag.Scan2Side)
-            {
-                <p>
-                    <h3>@Html.Raw("Сторона 2")</h3><br />
-                </p>
-                string image = "/Images/Scan2Side/" + ViewBag.Id + "Scan2Side.jpg";
-                
-                <p>
-                    <a href=@image><img src=@image height="500"></a><br />
-                </p>
-            }
-            else
-            {
-                @Html.Raw("Скан сторны 2 отсутствует.")<br />
-            }
-        </div>
+      
 
     </div>
 
@@ -525,7 +535,7 @@
             </div>
         </div>
         <div class="form-group">
-            <h3>Сторона 1</h3>
+            
             <input name="[0].NumberSurface" type="hidden" value="@ViewBag.Side">
 
             <label for="[0].Height">Высота</label>
@@ -540,23 +550,6 @@
             @Html.TextBoxFor(model => model.Sides.First().Surfaces.First().Space, new { type = "number", SelectForSpace = "", onchange = "CalculationAS()" })
             @Html.ValidationMessageFor(model => model.Sides.First().Surfaces.First().Space)
         </div>
-    <div class="form-group">
-        <h3>Сторона 2</h3>
-        <input name="[1].NumberSurface" type="hidden" value="@ViewBag.Side">
-
-        <label for="[1].Height">Высота</label>
-        @Html.EditorFor(model => model.Sides.ToList()[1].Surfaces.First().Height)
-        @Html.ValidationMessageFor(model => model.Sides.First().Surfaces.First().Height)
-
-        <label for="[1].Width">Ширина</label>
-        @Html.EditorFor(model => model.Sides.ToList()[1].Surfaces.First().Width)
-        @Html.ValidationMessageFor(model => model.Sides.First().Surfaces.First().Width)
-
-        <label for="[1].Space">Площадь</label>
-        @Html.TextBoxFor(model => model.Sides.ToList()[1].Surfaces.First().Space, new {type = "number", SelectForSpace = "", onchange = "CalculationAS()"})
-        @Html.ValidationMessageFor(model => model.Sides.First().Surfaces.First().Space)
-
-    </div>
 
 
 }

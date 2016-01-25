@@ -83,9 +83,24 @@
 
 function getReferencesBillboard(construction) {
     var result = "";
+    var editLink;
+    if (construction.NameOfAdvertisingStructure == "Щит") {
 
+        editLink = "/Data/EditAdvertisingDesign/";
+    }
+
+    if (construction.NameOfAdvertisingStructure == "Металлический указатель")
+    {
+        editLink = "/Data/EditMetalPointerDesign/";
+    }
+
+    if (construction.NameOfAdvertisingStructure == "Световой короб")
+    {
+        editLink = "/Data/EditLightDuctDesign/";
+    }
+    console.log(construction);
     result += '</br><a href="/Data/Documents/' + construction.Id_show + '" >Показать данные о конструкции</a>'
-        + '</br><a href="/Data/EditAdvertisingDesign/' + construction.Id_show + '" >Изменить данные конструкции</a>'
+        + '</br><a href="'+ editLink + construction.Id_show + '" >Изменить данные конструкции</a>'
         + '</br><a href="#DeleteStructures"  role="button" data-toggle="modal" onclick="setRemove(' + construction.Id_show + ')"  >Удалить конструкцию</a></b>'
 
  
