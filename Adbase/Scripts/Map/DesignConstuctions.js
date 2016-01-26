@@ -42,6 +42,11 @@
                     bht = "Короб";
                     colour = '#0095b6';
                 }
+                if (data[i].NameOfAdvertisingStructure == "Неопознанная конструкция") {
+                    bct = "Н";
+                    bht = "Неопознанная конструкция";
+                    colour = '#0095b6';
+                }
                     var placemark = new ymaps.GeoObject(
                  {
                      geometry: {

@@ -201,7 +201,7 @@
                                     css: {}
                                 });
                     }
-                //выпадающее меню для световых коробов
+                    //выпадающее меню для световых коробов
                     if (td[0].title == "Световой короб") 
                     {
                         $(element).tooltipsy({
@@ -212,6 +212,31 @@
                                 '+<a href="/Map/Index/'+Showonthemap[indx]+'">Показать на карте</a></br>' +
                                 '+<a href="/Data/LightDuct/'+Showonthemap[indx]+'">Показать данные о конструкции</a></br>' +
                                 '+<a href="/Data/EditLightDuctDesign/'+Showonthemap[indx]+'">Изменить данные о конструкции</a></br>' +
+                                '+<a  href="#DeleteStructures"  role="button" data-toggle="modal">Удалить конструкцию</a></br>' +
+                                '</button>',
+                            show: function (e, $el) {
+                                console.log($el);
+                                $el.show(100);
+                            },
+                            hide: function (e, $el) {
+
+                            },
+                            delay: 200,
+                            className: 'tooltipsy',
+                            css: {}
+                        });
+                    }
+                    //выпадающее меню для неопознанных конструкций
+                    if (td[0].title == "Неопознанная конструкция") 
+                    {
+                        $(element).tooltipsy({
+                            alignTo: 'cursor',
+                            offset: [0, -85],
+                            hideEvent: 'focusout',
+                            content: '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
+                                '+<a href="/Map/Index/'+Showonthemap[indx]+'">Показать на карте</a></br>' +
+                                '+<a href="/Data/Illegal/'+Showonthemap[indx]+'">Показать данные о конструкции</a></br>' +
+                                '+<a href="/Data/EditIllegalDesign/'+Showonthemap[indx]+'">Изменить данные о конструкции</a></br>' +
                                 '+<a  href="#DeleteStructures"  role="button" data-toggle="modal">Удалить конструкцию</a></br>' +
                                 '</button>',
                             show: function (e, $el) {
@@ -385,13 +410,15 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title" align="center">Выберите тип конструкции</h4>
             </div>
-            <div class="modal-body" style="text-align:center;">
-                @Html.ActionLink("Щит", "CreateAdvertisingDesign", new { type = "Billboard" }, new { @class = "btn btn-default", style = "width : 196px; margin-bottom: 8px;"})
+            <div class="modal-body" style="text-align: center;">
+                @Html.ActionLink("Щит", "CreateAdvertisingDesign", new {type = "Billboard"}, new {@class = "btn btn-default", style = "width : 196px; margin-bottom: 8px;"})
                 <br/>
-                @Html.ActionLink("Металлический указатель", "CreateMetalPointerDesign", new { }, new { @class = "btn btn-default", style = "width : 196px; margin-bottom: 8px;" })
-                <br />
-                @Html.ActionLink("Световой короб", "CreateLightDuctDesign", new { }, new { @class = "btn btn-default", style = "width : 196px" })
-                <br />
+                @Html.ActionLink("Металлический указатель", "CreateMetalPointerDesign", new {}, new {@class = "btn btn-default", style = "width : 196px; margin-bottom: 8px;"})
+                <br/>
+                @Html.ActionLink("Световой короб", "CreateLightDuctDesign", new {}, new {@class = "btn btn-default", style = "width : 196px; margin-bottom: 8px;" })
+                <br/>
+                @Html.ActionLink("Неопознанная конструкция", "CreateIllegalDesign", new {}, new {@class = "btn btn-default", style = "width : 196px"})
+                <br/>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>

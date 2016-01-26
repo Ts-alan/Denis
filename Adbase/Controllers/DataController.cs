@@ -10,7 +10,6 @@ namespace Sciencecom.Controllers
 {
     using Models;
     using System.Net;
-
     public class DataController : Controller
     {
         private SciencecomEntities context = new SciencecomEntities();
@@ -40,116 +39,7 @@ namespace Sciencecom.Controllers
             ViewBag.Owners = context.Owners.Select(m => m.Name);
             return View();
         }
-
-
-        //[HttpPost]
-        //[Authorize(Roles = "Admin, ChiefEditAll,ChiefEditOwn, SupplierEditAll, SupplierEditOwn")]
-        //public ActionResult CreateLight(LightConstruction lightConstruction, string dolgota, string shirota, string owner, string startDate, string finishDate, HttpPostedFileBase passport1, HttpPostedFileBase passport2, HttpPostedFileBase ispolkom1, HttpPostedFileBase ispolkom2, HttpPostedFileBase photo)
-        //{
-        //    if ((lightConstruction.Locality == "") || (dolgota == "") || (shirota == "") || (owner == "") || (startDate == "") || (finishDate == ""))
-        //    {
-        //        ModelState.AddModelError("Error", "Имеются неверно заполненные поля. Все поля, за исключением поля \"Фото\", обязательны для заполнения");
-        //    }
-        //    else
-        //    {
-        //        ModelState.Clear();
-        //        lightConstruction.Dolgota = float.Parse(dolgota.Replace(".", ","));
-        //        lightConstruction.Shirota = float.Parse(shirota.Replace(".", ","));
-        //        lightConstruction.StartDate = Convert.ToDateTime(startDate);
-        //        lightConstruction.FinishDate = Convert.ToDateTime(finishDate);
-        //    }
-        //    context.LightConstructions.Add(lightConstruction);
-        //    var idOwner = context.Owners.Where(m => m.Name == owner).Single().Id;
-        //    lightConstruction.IdOwner = idOwner;
-
-        //    lightConstruction.OnStatement = false;
-        //    if (lightConstruction.IsSocial)
-        //    {
-        //        lightConstruction.DateOfSocial = DateTime.Now.Date.ToString().Replace(" 0:00:00", "");
-        //    }
-        //    var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
-        //    ApplicationUser user = um.FindByName(User.Identity.GetUserName());
-        //    var idWhoAdded = context.Owners.Where(m => m.Name == user.Company).Single().Id;
-        //    lightConstruction.IdWhoAdded = idWhoAdded;
-        //    if (ModelState.IsValid)
-        //    {
-        //        context.SaveChanges();
-        //        if (((ispolkom1 != null) && (ispolkom1.ContentLength > 0) && (ispolkom1.ContentLength < 1050578))
-        //        && ((ispolkom2 != null) && (ispolkom2.ContentLength > 0) && (ispolkom2.ContentLength < 1050578)))
-        //        {
-        //            string src = "~/Images/Light/ispolkom" + lightConstruction.Id + "1.jpg";
-        //            string path = Server.MapPath(src);
-        //            //  System.IO.File.Delete(path);
-        //            ispolkom1.SaveAs(path);
-
-        //            src = "~/Images/Light/ispolkom" + lightConstruction.Id + "2.jpg";
-        //            path = Server.MapPath(src);
-        //            //   System.IO.File.Delete(path);
-        //            ispolkom2.SaveAs(path);
-
-        //            if (passport1 != null)
-        //            {
-        //                if ((passport1.ContentLength > 0) && (passport1.ContentLength < 1050578))
-        //                {
-        //                    src = "~/Images/Light/passport" + lightConstruction.Id + "1.jpg";
-        //                    path = Server.MapPath(src);
-        //                    passport1.SaveAs(path);
-        //                }
-        //                else
-        //                {
-        //                    context.LightConstructions.Remove(lightConstruction);
-        //                    context.SaveChanges();
-        //                    ModelState.AddModelError("Photo", "Нельзя загрузить файл, размер которого превышает 1 МБ.");
-        //                }
-        //            }
-        //            if (passport2 != null)
-        //            {
-        //                if ((passport2.ContentLength > 0) && (passport2.ContentLength < 1050578))
-        //                {
-        //                    src = "~/Images/Light/passport" + lightConstruction.Id + "2.jpg";
-        //                    path = Server.MapPath(src);
-        //                    // System.IO.File.Delete(path);
-        //                    passport2.SaveAs(path);
-        //                }
-        //                else
-        //                {
-        //                    context.LightConstructions.Remove(lightConstruction);
-        //                    context.SaveChanges();
-        //                    ModelState.AddModelError("Photo", "Нельзя загрузить файл, размер которого превышает 1 МБ.");
-        //                }
-        //            }
-        //            if (photo != null)
-        //            {
-        //                if ((photo.ContentLength > 0) && (photo.ContentLength < 1050578))
-        //                {
-        //                    src = "~/Images/Light/photo" + lightConstruction.Id + ".jpg";
-        //                    path = Server.MapPath(src);
-        //                    photo.SaveAs(path);
-        //                }
-        //                else
-        //                {
-        //                    context.LightConstructions.Remove(lightConstruction);
-        //                    context.SaveChanges();
-        //                    ModelState.AddModelError("Photo", "Нельзя загрузить файл, размер которого превышает 1 МБ.");
-        //                }
-        //            }
-        //        }
-        //        else
-        //        {
-        //            context.LightConstructions.Remove(lightConstruction);
-        //            context.SaveChanges();
-        //            ModelState.AddModelError("Photo", "Нельзя загрузить пустой файл или файл, размер которого превышает 1 МБ");
-        //        }
-        //    }
-        //    if (ModelState.IsValid)
-        //    {
-        //        return RedirectToAction("Light", context.MetalConstructions);
-        //    }
-        //    else
-        //    {
-        //        return View();
-        //    }
-        //}
+        
 
         [Authorize(Roles = "Admin, ChiefEditAll,ChiefEditOwn, SupplierEditAll, SupplierEditOwn")]
         public ActionResult CreateLightOnStatement()
@@ -690,6 +580,63 @@ namespace Sciencecom.Controllers
             return View(mc);
         }
 
+        public ActionResult Illegal(int? id, string type = "UI")
+        {
+            var data = context.AdvertisingStructures.Single(a => a.Id_show == id);
+            List<Surface> surfaces = new List<Surface>();
+            foreach (var sides in data.Sides.OrderBy(a => a.Name))
+            {
+                foreach (var surface in sides.Surfaces)
+                {
+                    surfaces.Add(surface);
+                }
+            }
+            TempData["surface"] = surfaces;
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            switch (type)
+            {
+                case "UI":
+                    {
+                        ViewBag.Type = "UI";
+                        ViewBag.Id = data.Id;
+                        string src = "~/Images/photo1/" + data.Id +
+                             "photo1.jpg";
+                        string path = Server.MapPath(src);
+                        if (System.IO.File.Exists(path))
+                        {
+                            ViewBag.photo1 = true;
+                        }
+                        else
+                        {
+                            ViewBag.photo1 = false;
+                        }
+                        src = "~/Images/photo2/" + data.Id +
+                             "photo2.jpg";
+                        path = Server.MapPath(src);
+                        if (System.IO.File.Exists(path))
+                        {
+                            ViewBag.photo2 = true;
+                        }
+                        else
+                        {
+                            ViewBag.photo2 = false;
+                        }
+
+                    }
+                    break;
+
+                default:
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            }
+
+            AdvertisingStructure mc = context.AdvertisingStructures.Single(a => a.Id_show == id);
+            return View(mc);
+        }
+
         //Щит
         [Authorize]
         [HttpGet]
@@ -977,6 +924,73 @@ namespace Sciencecom.Controllers
 
             return RedirectToAction("AdvertisingDesign");
         }
+
+
+        [Authorize]
+        [HttpGet]
+        public ActionResult CreateIllegalDesign()
+        {
+            ViewBag.Code = "UI";
+            ViewBag.UniqueNumber = TableAdapterExtensions.StringSymvol();
+            ViewBag.SeizesCount = 1;
+            return View();
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult CreateIllegalDesign(AdvertisingStructure Structures,
+            [ModelBinder(typeof(CustomModelBinderForSide))] List<Side> Sides,
+            [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces,
+            HttpPostedFileBase photo1, HttpPostedFileBase photo2,
+            List<HttpPostedFileBase> SeveralPhoto,
+            int CountSize = 1)
+        {
+
+            Guid StructuresId = Guid.NewGuid();
+            Structures.Id = StructuresId;
+            //удаление временно номера из базы данных
+            if (context.ListUniqueNumbers.Any(a => a.UniqueNumber == Structures.UniqueNumber))
+            {
+                context.ListUniqueNumbers.Remove(
+                    context.ListUniqueNumbers.Single(x => x.UniqueNumber == Structures.UniqueNumber));
+
+            }
+
+            for (int j = 0; j < CountSize; j++)
+            {
+                Sides[j].AdvertisingStructures_Id = StructuresId;
+                Sides[j].Name = (j + 1).ToString();
+                Sides[j].Id = Guid.NewGuid();
+            }
+
+            context.Sides.AddRange(Sides);
+            context.AdvertisingStructures.Add(Structures);
+            List<Surface> ListSurface = new List<Surface>();
+            foreach (var i in surfaces)
+            {
+                i.Side_Id = Sides.Single(a => a.Name == i.SideOfSurface).Id;
+                ListSurface.Add(i);
+            }
+            context.Surfaces.AddRange(ListSurface);
+
+            context.SaveChanges();
+           
+            if (photo1 != null)
+            {
+                string src = "~/Images/photo1/" + Structures.Id + "photo1.jpg";
+                string path = Server.MapPath(src);
+                photo1.SaveAs(path);
+            }
+            if (photo2 != null)
+            {
+                string src = "~/Images/photo2/" + Structures.Id + "photo2.jpg";
+                string path = Server.MapPath(src);
+                photo2.SaveAs(path);
+            }
+
+            return RedirectToAction("AdvertisingDesign");
+        }
+
 
         [Authorize(Roles = "Admin, ChiefEditAll,ChiefEditOwn, SupplierEditAll, SupplierEditOwn")]
         public ActionResult DeleteAdvertisingDesign(int? id,string switchtoMap)
@@ -1491,13 +1505,37 @@ namespace Sciencecom.Controllers
 
         }
 
-        
+        [HttpGet]
+        public ActionResult EditIllegalDesign(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            AdvertisingStructure mc = context.AdvertisingStructures.Single(a => a.Id_show == id);
+            if (mc == null)
+            {
+                return HttpNotFound();
+            }
+            List<Surface> surfaces = new List<Surface>();
+            foreach (var sides in mc.Sides.OrderBy(a => a.Name))
+            {
+                foreach (var surface in sides.Surfaces)
+                {
+                    surfaces.Add(surface);
+                }
+            }
+            TempData["surface"] = surfaces;
+            mc.Code = "UI";
+            return View(mc);
+        }
 
         [HttpPost]
         public ActionResult EditIllegalDesign(int id, AdvertisingStructure Structures,
             [ModelBinder(typeof(CustomModelBinderForSide))] List<Side> Sides,
             [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces,
-            HttpPostedFileBase Scan1Side, HttpPostedFileBase Scan2Side, int CountSize = 1)
+            HttpPostedFileBase photo1, HttpPostedFileBase photo2, int CountSize = 1)
         {
 
             AdvertisingStructure mc = context.AdvertisingStructures.Single(a => a.Id_show == id);
@@ -1527,7 +1565,7 @@ namespace Sciencecom.Controllers
                 Sides[j].Id = Guid.NewGuid();
             }
             Structures.Id = TempId;
-
+            Structures.Code = "UI";
             context.AdvertisingStructures.Add(Structures);
             context.Sides.AddRange(Sides);
 
@@ -1543,10 +1581,10 @@ namespace Sciencecom.Controllers
 
             //картики
            
-            if (Scan1Side != null)
+            if (photo1 != null)
             {
 
-                string src = "~/Images/Scan1Side/" + Structures.Id + "Scan1Side.jpg";
+                string src = "~/Images/photo1/" + Structures.Id + "photo1.jpg";
                 string path = Server.MapPath(src);
                 FileInfo info1 = new FileInfo(path);
                 if (info1.Exists)
@@ -1554,11 +1592,11 @@ namespace Sciencecom.Controllers
                     info1.Delete();
                 }
 
-                Scan1Side.SaveAs(path);
+                photo1.SaveAs(path);
             }
-            if (Scan2Side != null)
+            if (photo2 != null)
             {
-                string src = "~/Images/Scan2Side/" + Structures.Id + "Scan2Side.jpg";
+                string src = "~/Images/photo2/" + Structures.Id + "photo2.jpg";
                 string path = Server.MapPath(src);
                 FileInfo info1 = new FileInfo(path);
                 if (info1.Exists)
@@ -1566,7 +1604,7 @@ namespace Sciencecom.Controllers
                     info1.Delete();
                 }
 
-                Scan2Side.SaveAs(path);
+                photo2.SaveAs(path);
             }
             return RedirectToAction("AdvertisingDesign");
 

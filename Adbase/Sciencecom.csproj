@@ -1441,11 +1441,16 @@
     <Content Include="Views\Data\CreateLightDuctDesign.cshtml" />
     <Content Include="Views\Data\EditLightDuctDesign.cshtml" />
     <Content Include="Views\Data\LightDuct.cshtml" />
+    <Content Include="Views\Data\CreateIllegalDesign.cshtml" />
+    <Content Include="Views\Data\EditIllegalDesign.cshtml" />
+    <Content Include="Views\Data\Illegal.cshtml" />
     <None Include="Views\Data\Pointer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Start\App_Data\" />
     <Folder Include="Images\Patterns\" />
+    <Folder Include="Images\photo1\" />
+    <Folder Include="Images\photo2\" />
     <Folder Include="Images\PhotoController\" />
     <Folder Include="Images\Scan1SidesWithFinancialManagement\" />
     <Folder Include="Images\ScanPassport_1Sides\" />

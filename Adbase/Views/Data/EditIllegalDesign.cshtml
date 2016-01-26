@@ -1,0 +1,255 @@
+﻿@using Newtonsoft.Json
+@using Sciencecom.Models
+@model  Sciencecom.Models.AdvertisingStructure
+@{
+    var i = 0;
+    ViewBag.Title = "MetalPointersStructure";
+    //Собственник конструкциии
+    var owners = new SciencecomEntities().Owners.ToList();
+
+    //Вид
+    var ListTypeAdvertising = new SciencecomEntities().TypeOfAdvertisingStructures.ToList();
+    
+    //ListTypeAdvertising.Insert(0,null);
+
+    var ViewBids = new SciencecomEntities().ViewBids.OrderBy(a => a.OrderBy).ToList();
+
+
+    //Элемент улично-дорожной сети
+    var ListTypeElementOfTheRoadNetworkName = new SciencecomEntities().TheElementOfTheRoadNetworks.Select(a => new { id = a.id, Value = a.TheElementOfTheRoadNetworkName }).ToList();
+
+    //Статус
+    var Status = new SciencecomEntities().Status.OrderBy(x => x.OrderByStatus).Select(a => new { id = a.id, Value = a.NameStatus }).ToList();
+    Status.Insert(0, null);
+
+    //Населенный пункт выпадающий список
+    var Locality = new SciencecomEntities().Localities.ToList();
+
+    //Направление стороны
+    var DirectionSide = new SciencecomEntities().DirectionSides.OrderBy(x => x.OrderBY).ToList();
+    //Индификация поверхности
+    var IdentificationSide = new SciencecomEntities().Identifications.ToList();
+    //IdentificationSide.Insert(0, null);
+    //Идентификационный номер
+    var PropertyLocation = new SciencecomEntities().PropertyLocations.ToList();
+
+    //Подсветка
+    var Backlight = new SciencecomEntities().Backlights.ToList();
+
+}
+<script type="text/javascript">
+    var i = 0;
+
+    var havePlacemark = @Model.Breadth.HasValue.ToString().ToLower();
+
+    var StartCountForSurface ;
+    var EndCountForSurface = 0;
+    var isGreateAdvertisingDesign = false;
+    var ArrayOfSides = @Html.Raw(JsonConvert.SerializeObject(Model.Sides.Select(a => new { a.DirectionSide_id, length = a.Surfaces.Count, a.Identification_id }), Formatting.Indented, new JsonSerializerSettings
+                  {
+                      ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                  }));
+
+
+    $(document).ready(function() {
+    $("#Code").change(
+    function ()
+    {
+    var end = $('#Code option:selected').text();
+    if (end == "Щит")
+    {
+    window.location.href = '/Data/EditAdvertisingDesign/' + @Model.Id_show;
+    }
+    if (end == "Световой короб")
+    {
+    window.location.href = '/Data/EditLightDuctDesign/' + @Model.Id_show;
+    }
+
+    });
+
+    ////отключение валидации
+    $.validator.methods.number = function (value, element) {
+    return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
+    }
+    //накручивание данных в поля
+    //window.onload = SetCountSize();
+    $("[identificationfordirectionside]").each(function(indx, element) {
+    $(element)[0].value =ArrayOfSides[indx].DirectionSide_id;
+
+    });
+    $("[identificationforcountside]").each(function(indx, element) {
+    $(element)[0].value = ArrayOfSides[indx].length;
+
+    //AddSurface(indx+1);
+    });
+
+    //выпадающий список на согласование
+    $("[name=OnAgreement]").change(function() {
+    var selectIndex = $("[name=OnAgreement] option:selected").val();
+
+    if (selectIndex == "true") {
+    $("#ContractHide").css("display", "block");
+    }
+    if (selectIndex == "false") {
+    $("#ContractHide").css("display", "none");
+    }
+
+    });
+
+    //выщитывание площади для каждой поверхности
+
+    $('#SHeight').change(function () {
+    //alert("!!!");
+    CalculationOfTheArea(0);
+    });
+    $('#Width').change(function () {
+    //alert("!!!");
+    CalculationOfTheArea(0);
+    });
+
+    function CalculationOfTheArea(j) {
+
+    var Height = $('[name="[' + j + '].Height"]').val();
+    var Width = $('[name="[' + j + '].Width"]').val();
+
+    if (Height != "" && Width != "") {
+
+    var Sum = Height * Width;
+
+    $('[name="[' + j + '].Space"]').val(Sum);
+    CalculationAS();
+    }
+    }
+    });
+
+    // подсчет суммы площадей
+    function CalculationAS() {
+
+    var Summ=0;
+    $("[selectforspace]").each(function(indx, element) {
+    if ($(element).val() != "") {
+    Summ += parseInt($(element).val());
+    }
+    });
+    $("#ConstructionSquare").val(Summ);
+    }
+
+
+    </script>
+<h3> КАРТОЧКА НЕОПОЗНАННОЙ КОНСТРУКЦИИ</h3>
+
+@Scripts.Render("~/Content/Map")
+@using (Html.BeginForm("EditIllegalDesign", "Data", FormMethod.Post, new { enctype = "multipart/form-data", id = "test1" }))
+{
+    <input type="hidden" name="Code" value="@Model.Code">
+    <h3> Общие данные о конструкции</h3>
+    @Html.AntiForgeryToken()
+    <div class="form-inline" style="margin-bottom: -10px">
+        <hr />
+
+        <input type="hidden" id="CountSize" id="SizeOfCount" name="CountSize" value="">
+        @Html.ValidationSummary(true)
+        @Html.ValidationMessage("Error")
+
+        <div class="form-group">
+            <label for="Locality">Вид</label>
+           @Html.DropDownListFor(a => a.Code, new SelectList(ListTypeAdvertising, "Code", "Name"))
+            @Html.ValidationMessageFor(model => model.Code)
+        </div>
+        <br>
+    </div>
+    <h3>Данные о месте расположения конструкции</h3>
+    <div class="form-inline">
+        <hr />
+        <div class="form-group" style="margin-left: -15px">
+            <label for="Locality">Нас. пункт</label>
+            @Html.DropDownListFor(a => a.Locality_id, new SelectList(Locality, "id", "NameLocality"))
+            @Html.ValidationMessageFor(model => model.Locality_id)
+        </div>
+
+        <div class="form-group">
+            <label for="Street1">Улица</label>
+            @Html.EditorFor(model => model.Street1)
+            @Html.ValidationMessageFor(model => model.Street1)
+        </div>
+
+        <div class="form-group">
+            <label for="House1">Номер дома</label>
+            @Html.EditorFor(model => model.House1)
+            @Html.ValidationMessageFor(model => model.House1)
+        </div>
+
+    </div>
+    <input type="button" id="MapSearchStreet" value="Поиск на карте" style="margin-left: 185px">
+    
+        <div class="form-inline">
+            <hr />
+            <div class="form-group" style="width: 600px; height: 500px" id="map"></div>
+
+            <div class="form-group">
+                <div>
+                    <label for="Breadth">Широта </label>
+                    <input class="text-box single-line ui-autocomplete-input" data-val="true" type="text" name="Breadth" id="Breadth">
+                    <span data-valmsg-for="Breadth" data-valmsg-replace="true"></span>
+
+                </div>
+                <div>
+                    <label for="Height">Долгота</label>
+                    <input type="text" name="Height" data-val="true" id="Height">
+
+                    @Html.ValidationMessageFor(model => model.Height)
+
+                </div>
+            </div>
+        </div>
+
+        <h3>Фото</h3>
+        <hr />
+
+        <div class="form-inline">
+
+            <div class="form-group">
+                <label for="photo1">Фотография 1</label>
+                <input type="file" name="photo1" accept="image/jpeg" /><br />
+                <span data-valmsg-for="photo1" data-valmsg-replace="true"></span>
+                @Html.Raw("Не более 1 МБ")
+            </div>
+
+            <div class="form-group">
+                <label for="photo2">Фотография 2</label>
+                <input type="file" name="photo2" accept="image/jpeg" /><br />
+                <span data-valmsg-for="photo2" data-valmsg-replace="true"></span>
+                @Html.Raw("Не более 1 МБ")
+            </div>
+        </div>
+
+        <h3> Описание конструкции</h3>
+        <hr />
+        <div class="form-group">
+            <label>Описание конструкции</label>
+            @Html.TextAreaFor(model => model.ContentInformationDescription, new { cols = "90", rows = "4" })
+
+            @Html.ValidationMessageFor(model => model.ContentInformationDescription)
+        </div>
+
+        <div id="InsertSide" style="display: none">
+            <div code="" class="form-horizontal">
+                <div class="form-group">
+                    <select class="text-box single-line" id="AddButton1" onchange="AddSurface(1)" name="CountSurfuce1" identificationforcountside="" type="text" data-val="true" data-val-required="Укажите кол-во сторон">
+                        <option selected="selected">0</option>
+                    </select>
+                    <select class="valid" identificationfordirectionside="IdentificationForDirectionSide" id="DirectionSide" name="[0].IdentificationForDirectionSide">
+
+                        <option value="27b8c509-8f09-4a0d-ae22-048c2611b7ea" selected="selected">По ходу движения (сторона А)</option>
+                    </select>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Изменить" class="btn btn-default" />
+            </div>
+        </div>
+}
