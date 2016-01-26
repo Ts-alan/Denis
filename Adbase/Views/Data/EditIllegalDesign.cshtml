@@ -160,7 +160,12 @@
     </div>
     <h3>Данные о месте расположения конструкции</h3>
     <div class="form-inline">
-        <hr />
+        <hr/>
+        <div class="form-group" style="display: none">
+            <label for="UniqueNumber">Идентификационный номер</label>
+            @Html.EditorFor(model => model.UniqueNumber)
+            @Html.ValidationMessageFor(model => model.UniqueNumber)
+        </div>
         <div class="form-group" style="margin-left: -15px">
             <label for="Locality">Нас. пункт</label>
             @Html.DropDownListFor(a => a.Locality_id, new SelectList(Locality, "id", "NameLocality"))
@@ -232,7 +237,7 @@
             @Html.ValidationMessageFor(model => model.ContentInformationDescription)
         </div>
 
-        <div id="InsertSide" style="display: none">
+        @*<div id="InsertSide" style="display: none">
             <div code="" class="form-horizontal">
                 <div class="form-group">
                     <select class="text-box single-line" id="AddButton1" onchange="AddSurface(1)" name="CountSurfuce1" identificationforcountside="" type="text" data-val="true" data-val-required="Укажите кол-во сторон">
@@ -245,7 +250,7 @@
 
                 </div>
             </div>
-        </div>
+        </div>*@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

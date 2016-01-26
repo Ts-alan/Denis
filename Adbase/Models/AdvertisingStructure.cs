@@ -7,8 +7,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System.ComponentModel.DataAnnotations;
-
 namespace Sciencecom.Models
 {
     using System;
@@ -53,8 +51,6 @@ namespace Sciencecom.Models
         public string Support_ { get; set; }
         public Nullable<System.DateTime> CoordinationDate { get; set; }
         public string ContentInformationDescription { get; set; }
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> DateOfIssue { get; set; }
     
         public virtual Backlight Backlight { get; set; }

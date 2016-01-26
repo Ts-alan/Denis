@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -932,7 +933,7 @@ namespace Sciencecom.Controllers
         {
             ViewBag.Code = "UI";
             ViewBag.UniqueNumber = TableAdapterExtensions.StringSymvol();
-            ViewBag.SeizesCount = 1;
+            ViewBag.SeizesCount = 0;
             return View();
         }
 
@@ -943,7 +944,7 @@ namespace Sciencecom.Controllers
             [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces,
             HttpPostedFileBase photo1, HttpPostedFileBase photo2,
             List<HttpPostedFileBase> SeveralPhoto,
-            int CountSize = 1)
+            int CountSize = 0)
         {
 
             Guid StructuresId = Guid.NewGuid();
@@ -997,15 +998,38 @@ namespace Sciencecom.Controllers
         {
             AdvertisingStructure mc = context.AdvertisingStructures.Single(a => a.Id_show == id);
             context.ListUniqueNumbers.Add(new ListUniqueNumber() { UniqueNumber = mc.UniqueNumber, Code_id = mc.Code, TimeOpen = DateTime.Now });
+
             foreach (var side in mc.Sides)
             {
-                context.Surfaces.RemoveRange(side.Surfaces);
+                if (side.Surfaces.Count > 0)
+                {
+                    context.Surfaces.RemoveRange(side.Surfaces);
+                }
+            }
+            //context.SaveChanges();
+            if (mc.Sides.Count > 0)
+            {
+                context.Sides.RemoveRange(mc.Sides);
+                context.SaveChanges();
             }
 
-            context.Sides.RemoveRange(mc.Sides);
             context.AdvertisingStructures.Remove(mc);
-            context.SaveChanges();
-
+            try
+            {
+                context.SaveChanges();
+            }
+            catch (DbEntityValidationException e)
+            {
+                foreach (DbEntityValidationResult validationError in e.EntityValidationErrors)
+                {
+                    Response.Write("Object: " + validationError.Entry.Entity.ToString());
+                    Response.Write("");
+                    foreach (DbValidationError err in validationError.ValidationErrors)
+                    {
+                        Response.Write(err.ErrorMessage + "");
+                    }
+                }
+            }
             //удаление картинок
             string src = "/Images/Scan1SidesWithFinancialManagement/" + mc.Id +
                          "FinancialManagement.jpg";
@@ -1034,7 +1058,7 @@ namespace Sciencecom.Controllers
 
             if (switchtoMap == "true")
             {
-                return RedirectToAction("Index","Map"); 
+                return RedirectToAction("Index", "Map");
             }
             return RedirectToAction("AdvertisingDesign");
         }
