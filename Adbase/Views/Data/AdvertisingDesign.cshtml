@@ -29,7 +29,7 @@
     {ReferenceLoopHandling = ReferenceLoopHandling.Ignore}));
 
     $(document).ready(function () {
-
+        
         function HideRows() {
             $('.ui-widget-content.jqgrow.ui-row-ltr').each(
                 function (indx, element) {
@@ -39,6 +39,7 @@
         }
         //создание таблицы
         tableToGrid("#table", {
+            rowNum : -1,
             height: 700,
             colNames: [
                 "Собственник", "Вид конструкции",
@@ -370,11 +371,12 @@
                     <td>@i.TypeOfAdvertisingStructure.Name</td>
                     <td>@i.Locality.NameLocality</td>
                     <td>@i.Street1</td>
-                    <td>
+                    <td> 
                         @{
-                            if (i.TypeOfAdvertisingStructure.ToString() == "Металлический указатель")
+                            if (i.Code == "MP" | i.Code == "LD")
                             {
                                 @i.Support_;
+                                
                             }
                             else
                             {
