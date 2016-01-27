@@ -29,7 +29,7 @@
     {ReferenceLoopHandling = ReferenceLoopHandling.Ignore}));
 
     $(document).ready(function () {
-        
+
         function HideRows() {
             $('.ui-widget-content.jqgrow.ui-row-ltr').each(
                 function (indx, element) {
@@ -146,14 +146,14 @@
 
             //поиск строк таблицы для навешивания событий
             var tr = $('tr.ui-widget-content.jqgrow.ui-row-ltr ');
-            
+
 
             //выпадающее меню для всех типов строк
             tr.each(function (indx, element) {
                     //поиск ячейки в строке для считывания вида конструкции
                     var td = $(this).find('[aria-describedby="table_Вид_конструкции"]');
                     //выпадающее меню для указателей
-                    if (td[0].title == "Металлический указатель") 
+                    if (td[0].title == "Металлический указатель")
                     {
                         $(element).tooltipsy({
                             alignTo: 'cursor',
@@ -178,7 +178,7 @@
                         });
                     }
                     //выпадающее меню для щитов
-                    if (td[0].title == "Щит") 
+                    if (td[0].title == "Щит")
                     {
                         $(element).tooltipsy({
                                     alignTo: 'cursor',
@@ -191,7 +191,7 @@
                                         '+<a  href="#DeleteStructures"  role="button" data-toggle="modal">Удалить конструкцию</a></br>' +
                                         '</button>',
                                     show: function (e, $el) {
-                                        console.log($el);
+
                                         $el.show(100);
                                     },
                                     hide: function (e, $el) {
@@ -203,7 +203,7 @@
                                 });
                     }
                     //выпадающее меню для световых коробов
-                    if (td[0].title == "Световой короб") 
+                    if (td[0].title == "Световой короб")
                     {
                         $(element).tooltipsy({
                             alignTo: 'cursor',
@@ -228,7 +228,7 @@
                         });
                     }
                     //выпадающее меню для неопознанных конструкций
-                    if (td[0].title == "Неопознанная конструкция") 
+                    if (td[0].title == "Неопознанная конструкция")
                     {
                         $(element).tooltipsy({
                             alignTo: 'cursor',
@@ -258,11 +258,20 @@
 
 
         function SetDate() {
-            var collectionMap =JSON.parse('@(Html.Raw(Session["collectionMap"]))') ;
+            if ('@(Html.Raw(Session["collectionMap"]))' != '[]' && '@(Html.Raw(Session["collectionMap"]))' != '')
+            {
+                var collectionMap =JSON.parse('@(Html.Raw(Session["collectionMap"]))') ;
+            }
+
 
             if(collectionMap!="[]"){
                 $(".ui-state-default .ui-th-ltr input").each(function(indx, element) {
-                    $(element).val(collectionMap[indx].value);
+
+                    if (collectionMap != undefined)
+                    {
+                     $(element).val(collectionMap[indx].value);
+                    }
+
 
                 });
                 FunctionaFortable();
@@ -279,7 +288,6 @@
         //Повторный вызов функции для навештивания событий по двойному клику на строки таблицы после очистки поля поиска
         $(".clearsearchclass").switchClass("clearsearchclass", "clrsrchcls");
         $(".clrsrchcls").click(function() {
-            //console.log("!!!1111");
             //ClearSearch();
             FunctionaFortable();
         });

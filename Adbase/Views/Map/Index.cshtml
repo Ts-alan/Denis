@@ -85,7 +85,7 @@
             myMap.controls.add('typeSelector');
             myMap.controls.add('zoomControl');
             myMap.controls.add('searchControl');
-           
+
             var clusterer = GetBilboardPoints("@role", "@user.Company", objectId);
 
             myMap.geoObjects.add(clusterer);
@@ -101,11 +101,13 @@
     CreateMap(param);
     $(document).ready(function () {
 
-        if ('@(Html.Raw(Session["collectionMap"]))' != '[]') {
+        if ('@(Html.Raw(Session["collectionMap"]))' != '[]' && '@(Html.Raw(Session["collectionMap"]))' != '') {
             var collectionMap = JSON.parse('@(Html.Raw(Session["collectionMap"]))');
             $(".content-col input").each(function (indx, element) {
-
-                $(element).val(collectionMap[indx].value);
+                if (collectionMap != undefined)
+                {
+                    $(element).val(collectionMap[indx].value);
+                }
             });
         }
         //чистит инпуты

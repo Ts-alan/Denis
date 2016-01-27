@@ -1,6 +1,6 @@
 ﻿function GetBilboardPoints(role, userCompany, objectId) {
     var geoArray = [];
-    var clusterer = new ymaps.Clusterer({ clusterDisableClickZoom: true });
+    var clusterer = new ymaps.Clusterer({ clusterDisableClickZoom: false });
     $.ajax({
         type: "POST",
         url: "/Map/GetDesign",

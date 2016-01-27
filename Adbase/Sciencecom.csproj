@@ -165,6 +165,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BackEndServicesController.cs" />
+    <Compile Include="Controllers\BaseDataController.cs" />
     <Compile Include="Controllers\DataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MapController.cs" />
@@ -220,10 +221,6 @@
       <DependentUpon>ContructionsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MapJsonModels\AdvertisingConstructionJsonModel.cs" />
-    <Compile Include="Models\MapJsonModels\BillBoardJsonModel.cs" />
-    <Compile Include="Models\MapJsonModels\IllegalConstructionJsonModel.cs" />
-    <Compile Include="Models\MapJsonModels\LightConstructionJsonModel.cs" />
-    <Compile Include="Models\MapJsonModels\MetalConstructionJsonModel.cs" />
     <Compile Include="Models\ModelsSupportForEf.cs" />
     <Compile Include="Models\Object.cs">
       <DependentUpon>ContructionsModel.tt</DependentUpon>
@@ -1400,16 +1397,9 @@
     <Content Include="Views\Data\Metal.cshtml" />
     <Content Include="Views\Data\Light.cshtml" />
     <Content Include="Views\Data\Owner.cshtml" />
-    <Content Include="Views\Data\CreateMetal.cshtml" />
-    <Content Include="Views\Data\ShowMetalTablePartial.cshtml" />
     <Content Include="Views\Data\EditMetal.cshtml" />
-    <Content Include="Views\Data\DeleteMetal.cshtml" />
-    <Content Include="Views\Data\ShowLightTablePartial.cshtml" />
     <Content Include="Views\Data\AddPassport.cshtml" />
     <Content Include="Views\Data\EditLight.cshtml" />
-    <Content Include="Views\Data\DeleteLight.cshtml" />
-    <Content Include="Views\Data\CreateLight.cshtml" />
-    <Content Include="Views\Data\CreateLightOnStatement.cshtml" />
     <Content Include="Views\Owners\Create.cshtml" />
     <Content Include="Views\Owners\Delete.cshtml" />
     <Content Include="Views\Owners\Details.cshtml" />
@@ -1427,8 +1417,6 @@
     <Content Include="Views\Data\AdvertisingDesign.cshtml" />
     <Content Include="Views\Data\CreateAdvertisingDesign.cshtml" />
     <Content Include="Views\Data\Surface.cshtml" />
-    <Content Include="Views\Data\ShowBillboardTablePartial.cshtml" />
-    <Content Include="Views\Data\DeleteBilboard.cshtml" />
     <Content Include="Views\Data\EditAdvertisingDesign.cshtml" />
     <Content Include="Views\Account\AdministrationPage.cshtml" />
     <Content Include="Scripts\demos\autocomplete\search.php" />
@@ -1457,6 +1445,7 @@
     <Folder Include="Images\ScanPassport_2Sides\" />
     <Folder Include="Images\Sides\" />
     <Folder Include="Views\BackEndService\" />
+    <Folder Include="Views\BaseData\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
