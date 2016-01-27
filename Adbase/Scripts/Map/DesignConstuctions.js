@@ -21,7 +21,7 @@
             id: parseInt(objectId)
         }
     }).success(function (data) {
-        var colour, bct, bht;
+        var colour, bct, bht, houseSupport;
         if (data.length > 0) {
 
             for (var i = 0; i < data.length; i++) {
@@ -29,6 +29,7 @@
                 {
                     bct = "Щ";
                     bht = "Щит";
+                    houseSupport = '</br>Дом:&nbsp;' + data[i].House1;
                     colour = '#0095b6';
                 }
 
@@ -36,16 +37,19 @@
                     bct = "У";
                     bht = "Указатель";
                     colour = '#0095b6';
+                    houseSupport = '</br>Номер опоры:&nbsp;' + data[i].Support_;
                 }
                 if (data[i].NameOfAdvertisingStructure == "Световой короб") {
                     bct = "К";
                     bht = "Короб";
                     colour = '#0095b6';
+                    houseSupport = '</br>Номер опоры:&nbsp;' + data[i].Support_;
                 }
                 if (data[i].NameOfAdvertisingStructure == "Неопознанная конструкция") {
                     bct = "Н";
                     bht = "Неопознанная конструкция";
                     colour = '#0095b6';
+                    houseSupport = '</br>Номер опоры:&nbsp;' + data[i].Support_;
                 }
                     var placemark = new ymaps.GeoObject(
                  {
@@ -57,7 +61,7 @@
                          balloonContentBody: '<b>Собственник:&nbsp;' + data[i].OwnerName
                                     + '</br>Вид конструкции:&nbsp;' + data[i].NameOfAdvertisingStructure
                                  + '</br>Улица 1:&nbsp' + data[i].Street1
-                                 + '</br>Дом:&nbsp;' + data[i].House1
+                                 + houseSupport
 
                          + getReferencesBillboard(data[i]),
                          iconContent: bct,
@@ -104,7 +108,7 @@ function getReferencesBillboard(construction) {
     {
         editLink = "/Data/EditLightDuctDesign/";
     }
-    console.log(construction);
+    
     result += '</br><a href="/Data/Documents/' + construction.Id_show + '" >Показать данные о конструкции</a>'
         + '</br><a href="'+ editLink + construction.Id_show + '" >Изменить данные конструкции</a>'
         + '</br><a href="#DeleteStructures"  role="button" data-toggle="modal" onclick="setRemove(' + construction.Id_show + ')"  >Удалить конструкцию</a></b>'

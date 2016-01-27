@@ -68,6 +68,9 @@
            {
                window.location.href = '/Data/CreateLightDuctDesign/';
            }
+           if (end == "Неопознанная конструкция") {
+               window.location.href = '/Data/CreateIllegalDesign/';
+           }
            
        });
 
@@ -284,7 +287,7 @@
 
         <div class="form-group" >
             <label for="Locality">Вид</label>
-            @Html.DropDownListFor(a=>a.Code, new SelectList(ListTypeAdvertising, "id", "Name", ListTypeAdvertisingSelected))
+            @Html.DropDownListFor(a => a.Code, new SelectList(ListTypeAdvertising, "Code", "Name"))
             @Html.ValidationMessageFor(model => model.Code)
         </div>
 

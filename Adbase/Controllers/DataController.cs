@@ -344,28 +344,7 @@ namespace Sciencecom.Controllers
                              };
             return Json(projection.ToList(), JsonRequestBehavior.AllowGet);
         }
-
-        //public ActionResult FindStory(string term)
-        //{
-        //    var streets = from m in context.Surfaces where m.Story.Contains(term) select m;
-        //    var projection = from street in streets
-        //        select new
-        //        {
-        //            label = street.Story,
-        //            value = street.Story
-        //        };
-        //    return Json(projection.ToList(), JsonRequestBehavior.AllowGet);
-        //}
-
-        ////обслуживающий класс для Documents
-        //private class Lookup
-        //{
-        //    public string Key;
-        //    public string Value;
-        //}
-
-        //[Authorize]
-        //[HttpGet]
+      
         public ActionResult Documents(int? id, string type = "BB")
         {
             var data = context.AdvertisingStructures.Single(a => a.Id_show == id);
@@ -1138,7 +1117,7 @@ namespace Sciencecom.Controllers
             ViewBag.StartCountForSurface = StartCountForSurface ?? 0;
             ViewBag.Side = side;
             var result = TempData.Peek("surface");
-
+            
             return View("Surface", result);
         }
         [HttpGet]
@@ -1161,6 +1140,11 @@ namespace Sciencecom.Controllers
                 {
                     surfaces.Add(surface);
                 }
+            }
+            if (surfaces.Count == 0)
+            {
+                surfaces.Add(new Surface() {}
+                    );
             }
             TempData["surface"] = surfaces;
             return View(mc);

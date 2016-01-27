@@ -66,7 +66,7 @@
             CalculationOfTheArea(0);
         });
 
-        $("#Code option").val("Металлический указатель").prop('selected', true);
+        //$("#Code option").val("Металлический указатель").prop('selected', true);
 
         $("#Code").change(
        function () {
@@ -76,6 +76,9 @@
            }
            if (end == "Световой короб") {
                window.location.href = '/Data/CreateLightDuctDesign/';
+           }
+           if (end == "Металлический указатель") {
+               window.location.href = '/Data/CreateMetalPointerDesign/';
            }
        });
 
@@ -289,7 +292,7 @@
 
         <div class="form-group">
             <label for="Locality">Вид</label>
-            @Html.DropDownListFor(a => a.Code, new SelectList(ListTypeAdvertising, "id", "Name", ListTypeAdvertising))
+            @Html.DropDownListFor(a => a.Code, new SelectList(ListTypeAdvertising, "Code", "Name"))
             @Html.ValidationMessageFor(model => model.Code)
         </div>
         <br>

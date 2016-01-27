@@ -15,6 +15,7 @@ namespace Sciencecom.Models.MapJsonModels
             this.StartDate = mc.StartDate;
             this.EndDate = mc.EndDate;
             this.Locality = mc.Locality.NameLocality;
+            this.Support_ = mc.Support_;
          
             this.Owner_Id = mc.Owner_Id;
             this.Id = mc.Id;
@@ -46,6 +47,8 @@ namespace Sciencecom.Models.MapJsonModels
         public int? Id_show { get; set; }
         public string OwnerName { get; set; }
         public string NameOfAdvertisingStructure { get; set; }
+
+        public string Support_ { get; set; }
 
         public IEnumerable<int> Surfaces { get; set; }
 

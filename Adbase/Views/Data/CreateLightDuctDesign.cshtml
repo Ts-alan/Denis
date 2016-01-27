@@ -66,7 +66,7 @@
             CalculationOfTheArea(0);
         });
 
-        $("#Code").val("b5eee22c-d250-498a-9696-de40530b83a9");
+        //$("#Code").val("b5eee22c-d250-498a-9696-de40530b83a9");
         
         $("#Code").change(
        function () {
@@ -76,6 +76,9 @@
            }
            if (end == "Металлический указатель") {
                window.location.href = '/Data/CreateMetalPointerDesign/';
+           }
+           if (end == "Неопознанная конструкция") {
+               window.location.href = '/Data/CreateIllegalDesign/';
            }
 
        });
@@ -290,7 +293,7 @@
 
         <div class="form-group">
             <label for="Locality">Вид</label>
-            @Html.DropDownListFor(a => a.Code, new SelectList(ListTypeAdvertising, "id", "Name", ListTypeAdvertising))
+            @Html.DropDownListFor(a => a.Code, new SelectList(ListTypeAdvertising, "Code", "Name"))
             @Html.ValidationMessageFor(model => model.Code)
         </div>
 

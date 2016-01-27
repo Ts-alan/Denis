@@ -147,8 +147,8 @@
                 {
                     myMap.geoObjects.remove(myPlacemark);
                 }
-               
-                var location = $("#Locality_id").text().toString() + " " + $("#Street1").val().toString();
+                
+                var location = $("#Locality_id option:selected").text().toString() + " " + $("#Street1").val().toString();
                 var myGeocoder = ymaps.geocode(location);
 
                 myGeocoder.then(

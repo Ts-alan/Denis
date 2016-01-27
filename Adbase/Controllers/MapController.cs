@@ -22,48 +22,7 @@ namespace Sciencecom.Controllers
             return View();
         }
      
-        //[HttpPost]
-        //[Authorize]
-        //public JsonResult GetMetal(string owner, string locality, string street1, string street2, string fromStreet, string startDay, string startMonth, string startYear, int? id = null)
-        //{
-        //    SciencecomEntities context = new SciencecomEntities();
-        //    List<MetalConstructionJsonModel> objectsForJson = new List<MetalConstructionJsonModel>();
-        //    if (id.HasValue)
-        //    {
-        //        var construction = context.MetalConstructions.Find(id);            //используется для отображения едининого объекта при прееходе по ссылке "Показать на карте"
-        //        if (construction != null)
-        //        {
-        //            objectsForJson.Add(new MetalConstructionJsonModel(construction));
-        //        }
-        //        return Json(objectsForJson, JsonRequestBehavior.AllowGet);
-        //    }
-        //    DataController dataController = new DataController();
-        //    int idOwner;
-        //    if (owner != "")
-        //    {
-        //        idOwner = context.Owners.Where(m => m.Name == owner).First().Id;
-        //    }
-        //    else
-        //    {
-        //        idOwner = 0;
-        //    }
-        //    MetalConstruction mc = new MetalConstruction()
-        //    {
-        //        IdOwner = idOwner,
-        //        Street1 = street1,
-        //        Street2 = street2,
-        //        FromStreet = fromStreet,
-        //        Locality = locality
-        //    };
-        //    List<MetalConstruction> result = dataController.SearchMetal(mc, startDay, startMonth, startYear).ToList();
-        //    for (int i = 0; i < result.Count; i++)
-        //    {
-        //        objectsForJson.Add(new MetalConstructionJsonModel(result[i]));
-        //    }
-        //    return Json(objectsForJson, JsonRequestBehavior.AllowGet);
-        //}
-        //[HttpPost]
-        //[Authorize]
+        
         public JsonResult GetDesign(string owner, string UniqueNumber, string TypeOfAdvertisingStructure, string Locality,
             string Street1, string House1, int? CountSize, int? AreaConstruction,
             string CountSurface, string Backlight, string ContractFinancialManagement, string PassportAdvertising,  string EndDate, int? id = null)
@@ -116,6 +75,7 @@ namespace Sciencecom.Controllers
                 House1 =House1,
                 C_ContractFinancialManagement = ContractFinancialManagement,
                 C_PassportAdvertising = PassportAdvertising,
+
               
             };
             IEnumerable<AdvertisingStructure> result =
