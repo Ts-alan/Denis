@@ -306,6 +306,7 @@
         <hr />
         <div class="form-group" style="margin-left: -15px">
             <label for="Locality">Нас. пункт</label>
+            
             @Html.DropDownListFor(a => a.Locality_id, new SelectList(Locality, "id", "NameLocality"))
             @Html.ValidationMessageFor(model => model.Locality_id)
         </div>

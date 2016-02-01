@@ -295,7 +295,7 @@
 
         <div class="form-group">
             <label for="Status">Статус</label>
-            @Html.DropDownListFor(a => a.Status_Id, new SelectList(Status, "id", "Value", Status.ElementAt(1).id))
+            @Html.DropDownListFor(a => a.Status_Id, new SelectList(Status, "id", "Value", ""))
             @Html.ValidationMessageFor(model => model.Status_Id)
         </div>
 
@@ -332,7 +332,7 @@
             <hr />
             <div class="form-group" style="margin-left: -15px">
                 <label for="Locality">Нас. пункт</label>
-                @Html.DropDownListFor(a => a.Locality_id, new SelectList(Locality, "id", "NameLocality"))
+                @Html.DropDownListFor(a => a.Locality_id, new SelectList(Locality, "id", "NameLocality", "dbfd4d94-48be-4136-b900-74bc2c5c04aa"))
                 @Html.ValidationMessageFor(model => model.Locality_id)
             </div>
 

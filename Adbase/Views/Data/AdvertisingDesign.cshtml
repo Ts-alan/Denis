@@ -39,7 +39,7 @@
         }
         //создание таблицы
         tableToGrid("#table", {
-            rowNum : -1,
+            rowNum : 10000,
             height: 700,
             colNames: [
                 "Собственник", "Вид конструкции",
@@ -114,7 +114,7 @@
             $(".ui-state-default .ui-th-ltr input").each(function(indx, element) {
                 collectionMap.push({ id: $(element).attr("id"), value:  $(element).val().toString() });
             });
-
+            
             var test = JSON.stringify(collectionMap);
 
             $.ajax({
@@ -146,7 +146,7 @@
 
             //поиск строк таблицы для навешивания событий
             var tr = $('tr.ui-widget-content.jqgrow.ui-row-ltr ');
-
+            
 
             //выпадающее меню для всех типов строк
             tr.each(function (indx, element) {
@@ -166,7 +166,7 @@
                                 '+<a  href="#DeleteStructures"  role="button" data-toggle="modal">Удалить конструкцию</a></br>' +
                                 '</button>',
                             show: function (e, $el) {
-                                //console.log($el);
+                                
                                 $el.show(100);
                             },
                             hide: function (e, $el) {
@@ -216,7 +216,7 @@
                                 '+<a  href="#DeleteStructures"  role="button" data-toggle="modal">Удалить конструкцию</a></br>' +
                                 '</button>',
                             show: function (e, $el) {
-                                console.log($el);
+                                
                                 $el.show(100);
                             },
                             hide: function (e, $el) {
@@ -241,7 +241,7 @@
                                 '+<a  href="#DeleteStructures"  role="button" data-toggle="modal">Удалить конструкцию</a></br>' +
                                 '</button>',
                             show: function (e, $el) {
-                                console.log($el);
+                                
                                 $el.show(100);
                             },
                             hide: function (e, $el) {

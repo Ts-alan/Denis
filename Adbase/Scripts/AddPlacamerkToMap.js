@@ -6,35 +6,29 @@
     //var isdragend = true;
     var countE = true;
     ymaps.ready(init);
-   
-    ////присвоение коодинат при перетаскивание метки 
-    //function dragend() {
+    var geoCoords;
 
-    //    myPlacemark.events.add('dragend', function (e) {
+//    function initCoords() {
+        
+//        var myGeocoder = ymaps.geocode($("#Locality_id option:selected").text());
+//        myGeocoder.then(function (res) {
+//            geoCoords = res.geoObjects.get(0).geometry.getCoordinates();
 
-    //        var coords = myPlacemark.geometry.getCoordinates();
-    //        var str = String(coords[0].toPrecision(6));
-    //        str = str.replace('.', ',');
-    //        //if (!isNaN(str)) {
-    //        //    $("#Shirota").val(str);
-    //        //} else {
-    //        //    $("#Shirota").val("");
-    //        //}
-    //        $("#Breadth").val(str);
-
-    //        str = String(coords[1].toPrecision(6));
-    //        str = str.replace('.', ',');
-    //        //if (!isNaN(str)) {
-    //        //    $("#Dolgota").val(str);
-    //        //} else {
-    //        //    $("#Dolgota").val("");
-    //        //} 
-    //        $("#Height").val(str);
-    //    });
-    //}
-
+//                return geoCoords;
+//            },
+//  function (err) {
+//      alert('Ошибка');
+//  }
+//);
+//        return geoCoords;
+//    }
 
     function init() {
+        //console.log($("#Locality_id option:selected").text());
+        
+
+      
+        
         myMap = new ymaps.Map("map", {
             center: [53.9172, 27.5601],
             zoom: 11,
@@ -44,7 +38,7 @@
         });
 
         myMap.controls.add('zoomControl');
-        myMap.controls.add('searchControl');
+        //myMap.controls.add('searchControl');
         myMap.controls.add('typeSelector');
 
 
