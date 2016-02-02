@@ -57,21 +57,7 @@
 
 
     $(document).ready(function() {
-        $("#Code").change(
-      function ()
-      {
-          var end = $('#Code option:selected').text();
-          if (end == "Щит")
-          {
-              window.location.href = '/Data/EditAdvertisingDesign/' + @Model.Id_show;
-          }
-          if (end == "Световой короб")
-          {
-              window.location.href = '/Data/EditLightDuctDesign/' + @Model.Id_show;
-          }
-
-      });
-        
+      
         ////отключение валидации
         $.validator.methods.number = function (value, element) {
             return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
@@ -193,9 +179,7 @@
 
                 <div class="form-group">
                     <label for="Locality">Вид</label>
-                   
-                    @Html.DropDownListFor(a => a.Code, new SelectList(ListTypeAdvertising, "Code", "Name"))
-                    @*@Html.EditorFor(a => a.Code, new { disabled = "disabled", @readonly = "readonly"})*@
+                    @Html.EditorFor(model => model.TypeOfAdvertisingStructure.Name, new { htmlAttributes = new { @readonly = "" } })
                     @Html.ValidationMessageFor(model => model.Code)
                 </div>
 

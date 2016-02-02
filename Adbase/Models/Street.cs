@@ -17,5 +17,8 @@ namespace Sciencecom.Models
         public int id { get; set; }
         public string Street1 { get; set; }
         public string Type { get; set; }
+        public System.Guid CityId { get; set; }
+    
+        public virtual Locality Locality { get; set; }
     }
 }

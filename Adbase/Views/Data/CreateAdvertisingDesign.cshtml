@@ -55,24 +55,7 @@
             }
 
         });
-
-        $("#Code").change(
-       function ()
-       {
-           var end = $('#Code option:selected').text();
-           if (end == "Металлический указатель")
-           {
-               window.location.href = '/Data/CreateMetalPointerDesign/';
-           }
-           if (end == "Световой короб")
-           {
-               window.location.href = '/Data/CreateLightDuctDesign/';
-           }
-           if (end == "Неопознанная конструкция") {
-               window.location.href = '/Data/CreateIllegalDesign/';
-           }
-           
-       });
+        
 
     });
 
@@ -287,7 +270,9 @@
 
         <div class="form-group" >
             <label for="Locality">Вид</label>
-            @Html.DropDownListFor(a => a.Code, new SelectList(ListTypeAdvertising, "Code", "Name"))
+            
+            @ListTypeAdvertising.Single(a => a.Code == ViewBag.Code).Name
+            @Html.HiddenFor(a => a.Code,  new { @readonly = "", @Value = ViewBag.Code  })
             @Html.ValidationMessageFor(model => model.Code)
         </div>
 

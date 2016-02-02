@@ -66,20 +66,6 @@
             CalculationOfTheArea(0);
         });
 
-        //$("#Code option").val("Металлический указатель").prop('selected', true);
-
-        $("#Code").change(
-       function () {
-           var end = $('#Code option:selected').text();
-           if (end == "Щит") {
-               window.location.href = '/Data/CreateAdvertisingDesign/';
-           }
-           if (end == "Световой короб") {
-               window.location.href = '/Data/CreateLightDuctDesign/';
-           }
-       });
-
-
     });
 
     // подсчет суммы площадей
@@ -289,7 +275,8 @@
 
         <div class="form-group">
             <label for="Locality">Вид</label>
-            @Html.DropDownListFor(a => a.Code, new SelectList(ListTypeAdvertising, "Code", "Name"))
+            @ListTypeAdvertising.Single(a => a.Code == ViewBag.Code).Name
+            @Html.HiddenFor(a => a.Code, new { @readonly = "", @Value = ViewBag.Code })
             @Html.ValidationMessageFor(model => model.Code)
         </div>
 

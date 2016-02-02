@@ -1,33 +1,28 @@
 ﻿   
     var myMap;
     var myPlacemark;
-   // var havePlacemark = false;
-    //var isGreateAdvertisingDesign = true;
-    //var isdragend = true;
     var countE = true;
     ymaps.ready(init);
     var geoCoords;
+    var changable = false;
 
-//    function initCoords() {
+    function onCityChange() {
         
-//        var myGeocoder = ymaps.geocode($("#Locality_id option:selected").text());
-//        myGeocoder.then(function (res) {
-//            geoCoords = res.geoObjects.get(0).geometry.getCoordinates();
-
-//                return geoCoords;
-//            },
-//  function (err) {
-//      alert('Ошибка');
-//  }
-//);
-//        return geoCoords;
-//    }
+        var myGeocoder = ymaps.geocode($("#Locality_id option:selected").text());
+        myGeocoder.then(
+            function (res)
+            {
+                geoCoords = res.geoObjects.get(0).geometry.getCoordinates();
+                myMap.panTo([geoCoords[0], geoCoords[1]]);
+            },
+            function (err)
+            {
+                alert('Ошибка');
+            }
+        );
+    }
 
     function init() {
-        //console.log($("#Locality_id option:selected").text());
-        
-
-      
         
         myMap = new ymaps.Map("map", {
             center: [53.9172, 27.5601],
@@ -38,9 +33,9 @@
         });
 
         myMap.controls.add('zoomControl');
-        //myMap.controls.add('searchControl');
         myMap.controls.add('typeSelector');
-
+        
+        onCityChange();
 
         if ($("#Breadth").val() != "" && $("#Height").val() != "") {
             // нанесение обьекта на карту при загрузке
@@ -86,25 +81,18 @@
                 var coords = myPlacemark.geometry.getCoordinates();
                 var str = String(coords[0].toPrecision(6));
                 str = str.replace('.', ',');
-                //if (!isNaN(str)) {
-                //    $("#Shirota").val(str);
-                //} else {
-                //    $("#Shirota").val("");
-                //}
                 $("#Breadth").val(str);
 
                 str = String(coords[1].toPrecision(6));
                 str = str.replace('.', ',');
-                //if (!isNaN(str)) {
-                //    $("#Dolgota").val(str);
-                //} else {
-                //    $("#Dolgota").val("");
-                //} 
+                
                 $("#Height").val(str);
             });
         }
 
     }
+
+   
 
     function SetCoordinates() {
 
@@ -132,17 +120,24 @@
     $(document).ready(function () {
         var countE = true;
         var streetPlacemark;
-        //var myPlacemark;
+        
         $("#MapSearchStreet").click(function () {
-            var text;
-
+            
             if ($("#Street1").val() != "") {
                 if (myPlacemark != undefined)
                 {
                     myMap.geoObjects.remove(myPlacemark);
                 }
                 
-                var location = $("#Locality_id option:selected").text().toString() + " " + $("#Street1").val().toString();
+                var location = $("#Locality_id option:selected").text().toString();
+                if ($("#Street1").val().toString() != "" && $("#House1").val().toString() == "");
+                {
+                    location += " " + $("#Street1").val().toString();
+                }
+                if ($("#House1").val().toString() != '' && $("#Street1").val().toString() != "");
+                {
+                    location += " " + $("#Street1").val().toString() + " " + $("House1").val();
+                }
                 var myGeocoder = ymaps.geocode(location);
 
                 myGeocoder.then(
@@ -194,24 +189,21 @@
                 var coords = myPlacemark.geometry.getCoordinates();
                 var str = String(coords[0].toPrecision(6));
                 str = str.replace('.', ',');
-                //if (!isNaN(str)) {
-                //    $("#Shirota").val(str);
-                //} else {
-                //    $("#Shirota").val("");
-                //}
+                
                 $("#Breadth").val(str);
 
                 str = String(coords[1].toPrecision(6));
                 str = str.replace('.', ',');
-                //if (!isNaN(str)) {
-                //    $("#Dolgota").val(str);
-                //} else {
-                //    $("#Dolgota").val("");
-                //} 
+                
                 $("#Height").val(str);
             });
         }
 
     });
 
-    
+    $(document).ready(function () {
+        $("#Locality_id").change(function () {
+            onCityChange();
+        });
+    });
+ 

@@ -121,15 +121,18 @@ namespace Sciencecom.Controllers
             return result;
         }
 
-        public ActionResult FindStreets(string term)
+        public ActionResult FindStreets(string term, string cityname)
         {
+            cityname.Normalize();
             var streets = from m in context.Streets where m.Street1.Contains(term) select m;
             var projection = from street in streets
+                             where street.Locality.NameLocality == cityname
                              select new
                              {
                                  id = street.id,
                                  label = street.Street1 + " " + street.Type,
                                  value = street.Street1 + " " + street.Type
+
                              };
             return Json(projection.ToList(), JsonRequestBehavior.AllowGet);
         }

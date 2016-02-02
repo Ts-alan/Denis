@@ -1,5 +1,8 @@
 ﻿//автозаполнение инпутов
+
+
 $(function () {
+
     var autocompleteUrl = '/Data/FindStreets';
     $("#Street1").autocomplete({
         source: autocompleteUrl,
@@ -60,3 +63,9 @@ $(function () {
         }
     });
 });
+
+function formUrl() {
+    var cityName = $("#Locality_id option:selected").text().toString();
+    var autocompleteUrl = '/Data/FindStreets?' + "cityname=" + cityName;
+    return autocompleteUrl;
+}

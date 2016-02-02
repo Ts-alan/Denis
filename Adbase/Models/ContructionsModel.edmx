@@ -88,7 +88,7 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="NameLocality" Type="nvarchar(max)" />
+          <Property Name="NameLocality" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="Object">
           <Key>
@@ -143,16 +143,14 @@
           <Property Name="NameStatus" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="OrderByStatus" Type="int" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'D:\PROJECTS\ADBASEBY\ADBASEBY\ADBASE\APP_DATA\SCIENCECOM.MDF.dbo.Streets' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Streets">
           <Key>
             <PropertyRef Name="id" />
-            <PropertyRef Name="Street" />
           </Key>
           <Property Name="id" Type="int" Nullable="false" />
           <Property Name="Street" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Type" Type="nvarchar" MaxLength="50" />
+          <Property Name="CityId" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="SubtopicForSocialAdvertising">
           <Key>
@@ -406,6 +404,18 @@ warning 6002: The table/view 'D:\PROJECTS\ADBASEBY\ADBASEBY\ADBASE\APP_DATA\SCIE
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Streets_Locality">
+          <End Role="Locality" Type="Self.Locality" Multiplicity="1" />
+          <End Role="Streets" Type="Self.Streets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Locality">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Streets">
+              <PropertyRef Name="CityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Surfaces_Sides">
           <End Role="Sides" Type="Self.Sides" Multiplicity="0..1" />
           <End Role="Surfaces" Type="Self.Surfaces" Multiplicity="*" />
@@ -463,6 +473,7 @@ warning 6002: The table/view 'D:\PROJECTS\ADBASEBY\ADBASEBY\ADBASE\APP_DATA\SCIE
           <EntitySet Name="RelationshipOfAdvertising" EntityType="Self.RelationshipOfAdvertising" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sides" EntityType="Self.Sides" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Streets" EntityType="Self.Streets" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SubtopicForSocialAdvertising" EntityType="Self.SubtopicForSocialAdvertising" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Surfaces" EntityType="Self.Surfaces" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
@@ -470,13 +481,6 @@ warning 6002: The table/view 'D:\PROJECTS\ADBASEBY\ADBASEBY\ADBASE\APP_DATA\SCIE
           <EntitySet Name="TopicForSocialAdvertising" EntityType="Self.TopicForSocialAdvertising" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TypeOfAdvertisingStructures" EntityType="Self.TypeOfAdvertisingStructures" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ViewBid" EntityType="Self.ViewBid" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Streets" EntityType="Self.Streets" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Streets].[id] AS [id], 
-    [Streets].[Street] AS [Street], 
-    [Streets].[Type] AS [Type]
-    FROM [dbo].[Streets] AS [Streets]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK_AdvertisingStructures_Backlight" Association="Self.FK_AdvertisingStructures_Backlight">
             <End Role="Backlight" EntitySet="Backlight" />
             <End Role="AdvertisingStructures" EntitySet="AdvertisingStructures" />
@@ -541,6 +545,10 @@ warning 6002: The table/view 'D:\PROJECTS\ADBASEBY\ADBASEBY\ADBASE\APP_DATA\SCIE
             <End Role="Identification" EntitySet="Identification" />
             <End Role="Sides" EntitySet="Sides" />
           </AssociationSet>
+          <AssociationSet Name="FK_Streets_Locality" Association="Self.FK_Streets_Locality">
+            <End Role="Locality" EntitySet="Locality" />
+            <End Role="Streets" EntitySet="Streets" />
+          </AssociationSet>
           <AssociationSet Name="FK_Surfaces_Sides" Association="Self.FK_Surfaces_Sides">
             <End Role="Sides" EntitySet="Sides" />
             <End Role="Surfaces" EntitySet="Surfaces" />
@@ -594,6 +602,7 @@ warning 6002: The table/view 'D:\PROJECTS\ADBASEBY\ADBASEBY\ADBASE\APP_DATA\SCIE
           <EntitySet Name="RelationshipOfAdvertisings" EntityType="SciencecomModel.RelationshipOfAdvertising" />
           <EntitySet Name="Sides" EntityType="SciencecomModel.Side" />
           <EntitySet Name="Status" EntityType="SciencecomModel.Status" />
+          <EntitySet Name="Streets" EntityType="SciencecomModel.Street" />
           <EntitySet Name="SubtopicForSocialAdvertisings" EntityType="SciencecomModel.SubtopicForSocialAdvertising" />
           <EntitySet Name="Surfaces" EntityType="SciencecomModel.Surface" />
           <EntitySet Name="sysdiagrams" EntityType="SciencecomModel.sysdiagram" />
@@ -601,7 +610,6 @@ warning 6002: The table/view 'D:\PROJECTS\ADBASEBY\ADBASEBY\ADBASE\APP_DATA\SCIE
           <EntitySet Name="TopicForSocialAdvertisings" EntityType="SciencecomModel.TopicForSocialAdvertising" />
           <EntitySet Name="TypeOfAdvertisingStructures" EntityType="SciencecomModel.TypeOfAdvertisingStructure" />
           <EntitySet Name="ViewBids" EntityType="SciencecomModel.ViewBid" />
-          <EntitySet Name="Streets" EntityType="SciencecomModel.Street" />
           <AssociationSet Name="FK_AdvertisingStructures_Backlight" Association="SciencecomModel.FK_AdvertisingStructures_Backlight">
             <End Role="Backlight" EntitySet="Backlights" />
             <End Role="AdvertisingStructure" EntitySet="AdvertisingStructures" />
@@ -653,6 +661,10 @@ warning 6002: The table/view 'D:\PROJECTS\ADBASEBY\ADBASEBY\ADBASE\APP_DATA\SCIE
           <AssociationSet Name="FK_ListUniqueNumber_TypeOfAdvertisingStructures" Association="SciencecomModel.FK_ListUniqueNumber_TypeOfAdvertisingStructures">
             <End Role="TypeOfAdvertisingStructure" EntitySet="TypeOfAdvertisingStructures" />
             <End Role="ListUniqueNumber" EntitySet="ListUniqueNumbers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Streets_Locality" Association="SciencecomModel.FK_Streets_Locality">
+            <End Role="Locality" EntitySet="Localities" />
+            <End Role="Street" EntitySet="Streets" />
           </AssociationSet>
           <AssociationSet Name="FK_RelationshipOfAdvertising_Object1" Association="SciencecomModel.FK_RelationshipOfAdvertising_Object1">
             <End Role="Object" EntitySet="Objects" />
@@ -715,6 +727,10 @@ warning 6002: The table/view 'D:\PROJECTS\ADBASEBY\ADBASEBY\ADBASE\APP_DATA\SCIE
           <Property Name="OwnerPlacements" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="TheDateOfTheContract" Type="DateTime" Precision="3" />
           <Property Name="ViewBad_Id" Type="Guid" />
+          <Property Name="Support_" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CoordinationDate" Type="DateTime" Precision="3" />
+          <Property Name="ContentInformationDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfIssue" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Backlight" Relationship="SciencecomModel.FK_AdvertisingStructures_Backlight" FromRole="AdvertisingStructure" ToRole="Backlight" />
           <NavigationProperty Name="Locality" Relationship="SciencecomModel.FK_AdvertisingStructures_Locality" FromRole="AdvertisingStructure" ToRole="Locality" />
           <NavigationProperty Name="PropertyLocation" Relationship="SciencecomModel.FK_AdvertisingStructures_PropertyLocation" FromRole="AdvertisingStructure" ToRole="PropertyLocation" />
@@ -724,10 +740,6 @@ warning 6002: The table/view 'D:\PROJECTS\ADBASEBY\ADBASEBY\ADBASE\APP_DATA\SCIE
           <NavigationProperty Name="ViewBid" Relationship="SciencecomModel.FK_AdvertisingStructures_ViewBid" FromRole="AdvertisingStructure" ToRole="ViewBid" />
           <NavigationProperty Name="Owner" Relationship="SciencecomModel.FK_Billboards1_Owners" FromRole="AdvertisingStructure" ToRole="Owner" />
           <NavigationProperty Name="Sides" Relationship="SciencecomModel.FK_Sides_Billboards1" FromRole="AdvertisingStructure" ToRole="Side" />
-          <Property Name="Support_" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CoordinationDate" Type="DateTime" Precision="3" />
-          <Property Name="ContentInformationDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="DateOfIssue" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Backlight">
           <Key>
@@ -779,8 +791,9 @@ warning 6002: The table/view 'D:\PROJECTS\ADBASEBY\ADBASEBY\ADBASE\APP_DATA\SCIE
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Guid" Nullable="false" />
-          <Property Name="NameLocality" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NameLocality" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AdvertisingStructures" Relationship="SciencecomModel.FK_AdvertisingStructures_Locality" FromRole="Locality" ToRole="AdvertisingStructure" />
+          <NavigationProperty Name="Streets" Relationship="SciencecomModel.FK_Streets_Locality" FromRole="Locality" ToRole="Street" />
         </EntityType>
         <EntityType Name="Object">
           <Key>
@@ -845,6 +858,16 @@ warning 6002: The table/view 'D:\PROJECTS\ADBASEBY\ADBASEBY\ADBASE\APP_DATA\SCIE
           <Property Name="NameStatus" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="OrderByStatus" Type="Int32" />
           <NavigationProperty Name="AdvertisingStructures" Relationship="SciencecomModel.FK_AdvertisingStructures_Status" FromRole="Status" ToRole="AdvertisingStructure" />
+        </EntityType>
+        <EntityType Name="Street">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="Street1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CityId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Locality" Relationship="SciencecomModel.FK_Streets_Locality" FromRole="Street" ToRole="Locality" />
         </EntityType>
         <EntityType Name="SubtopicForSocialAdvertising">
           <Key>
@@ -913,15 +936,6 @@ warning 6002: The table/view 'D:\PROJECTS\ADBASEBY\ADBASEBY\ADBASE\APP_DATA\SCIE
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="OrderBy" Type="Int32" Nullable="false" />
           <NavigationProperty Name="AdvertisingStructures" Relationship="SciencecomModel.FK_AdvertisingStructures_ViewBid" FromRole="ViewBid" ToRole="AdvertisingStructure" />
-        </EntityType>
-        <EntityType Name="Street">
-          <Key>
-            <PropertyRef Name="id" />
-            <PropertyRef Name="Street1" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="Street1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_AdvertisingStructures_Backlight">
           <End Type="SciencecomModel.Backlight" Role="Backlight" Multiplicity="0..1" />
@@ -1076,6 +1090,18 @@ warning 6002: The table/view 'D:\PROJECTS\ADBASEBY\ADBASEBY\ADBASE\APP_DATA\SCIE
             </Principal>
             <Dependent Role="ListUniqueNumber">
               <PropertyRef Name="Code_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Streets_Locality">
+          <End Type="SciencecomModel.Locality" Role="Locality" Multiplicity="1" />
+          <End Type="SciencecomModel.Street" Role="Street" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Locality">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Street">
+              <PropertyRef Name="CityId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1308,6 +1334,16 @@ warning 6002: The table/view 'D:\PROJECTS\ADBASEBY\ADBASEBY\ADBASE\APP_DATA\SCIE
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Streets">
+            <EntityTypeMapping TypeName="SciencecomModel.Street">
+              <MappingFragment StoreEntitySet="Streets">
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Street1" ColumnName="Street" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="SubtopicForSocialAdvertisings">
             <EntityTypeMapping TypeName="SciencecomModel.SubtopicForSocialAdvertising">
               <MappingFragment StoreEntitySet="SubtopicForSocialAdvertising">
@@ -1371,15 +1407,6 @@ warning 6002: The table/view 'D:\PROJECTS\ADBASEBY\ADBASEBY\ADBASE\APP_DATA\SCIE
               <MappingFragment StoreEntitySet="ViewBid">
                 <ScalarProperty Name="OrderBy" ColumnName="OrderBy" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Streets">
-            <EntityTypeMapping TypeName="SciencecomModel.Street">
-              <MappingFragment StoreEntitySet="Streets">
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="Street1" ColumnName="Street" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
