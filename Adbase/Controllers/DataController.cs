@@ -153,6 +153,11 @@ namespace Sciencecom.Controllers
         public ActionResult DeleteAdvertisingDesign(int? id,string switchtoMap)
         {
             AdvertisingStructure mc = context.AdvertisingStructures.Single(a => a.Id_show == id);
+            if (mc.UniqueNumber == null)
+            {
+                mc.UniqueNumber = TableAdapterExtensions.StringSymvol();
+            }
+
             context.ListUniqueNumbers.Add(new ListUniqueNumber() { UniqueNumber = mc.UniqueNumber, Code_id = mc.Code, TimeOpen = DateTime.Now });
 
             foreach (var side in mc.Sides)
@@ -297,16 +302,19 @@ namespace Sciencecom.Controllers
             //удаление временно номера из базы данных
             if (context.ListUniqueNumbers.Any(a => a.UniqueNumber == Structures.UniqueNumber))
             {
-                context.ListUniqueNumbers.Remove(
-                    context.ListUniqueNumbers.Single(x => x.UniqueNumber == Structures.UniqueNumber));
-
+               context.ListUniqueNumbers.RemoveRange(context.ListUniqueNumbers.Where(x => x.UniqueNumber == Structures.UniqueNumber));
             }
 
             if (CountSize > 0)
             {
+                if (Sides.Count == 0)
+                {
+                    Sides.Add(
+                        new Side(){ DirectionSide_id = new Guid("27b8c509-8f09-4a0d-ae22-048c2611b7ea") }
+                        );
+                }
                 for (int j = 0; j < CountSize; j++)
                 {
-
                     Sides[j].AdvertisingStructures_Id = StructuresId;
                     Sides[j].Name = (j + 1).ToString();
                     Sides[j].Id = Guid.NewGuid();
@@ -324,7 +332,22 @@ namespace Sciencecom.Controllers
 
                 context.Surfaces.AddRange(ListSurface);
 
-                context.SaveChanges();
+                try
+                {
+                    context.SaveChanges();
+                }
+                catch (DbEntityValidationException e)
+                {
+                    foreach (DbEntityValidationResult validationError in e.EntityValidationErrors)
+                    {
+                        Response.Write("Object: " + validationError.Entry.Entity.ToString());
+                        Response.Write("");
+                        foreach (DbValidationError err in validationError.ValidationErrors)
+                        {
+                            Response.Write(err.ErrorMessage + "");
+                        }
+                    }
+                }
             }
             else
             {

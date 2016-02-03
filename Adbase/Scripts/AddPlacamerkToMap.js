@@ -7,8 +7,17 @@
     var changable = false;
 
     function onCityChange() {
+        var loc;
+        if ($("#Locality_id option:selected").text() == "Константиново")
+        {
+            loc = $("#Locality_id option:selected").text() + " Беларусь Минская область";
+        }
+        else
+        {
+            loc = $("#Locality_id option:selected").text();
+        }
         
-        var myGeocoder = ymaps.geocode($("#Locality_id option:selected").text());
+        var myGeocoder = ymaps.geocode(loc);
         myGeocoder.then(
             function (res)
             {
@@ -130,14 +139,19 @@
                 }
                 
                 var location = $("#Locality_id option:selected").text().toString();
-                if ($("#Street1").val().toString() != "" && $("#House1").val().toString() == "");
+               
+                var strLen = $("#Street1").val().length;
+                var h1Len = $("#House1").val().length;
+                
+                if (strLen != 0 && h1Len == 0)
                 {
                     location += " " + $("#Street1").val().toString();
                 }
-                if ($("#House1").val().toString() != '' && $("#Street1").val().toString() != "");
+                if (strLen != 0 && h1Len != 0)
                 {
-                    location += " " + $("#Street1").val().toString() + " " + $("House1").val();
+                    location += $("#Street1").val() + "  " + $("House1").val();
                 }
+
                 var myGeocoder = ymaps.geocode(location);
 
                 myGeocoder.then(

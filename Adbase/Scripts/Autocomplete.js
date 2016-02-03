@@ -1,9 +1,9 @@
 ﻿//автозаполнение инпутов
-
+var autocompleteUrl;
 
 $(function () {
 
-    var autocompleteUrl = '/Data/FindStreets';
+    formUrl();
     $("#Street1").autocomplete({
         source: autocompleteUrl,
         minLength: 2,
@@ -66,6 +66,28 @@ $(function () {
 
 function formUrl() {
     var cityName = $("#Locality_id option:selected").text().toString();
-    var autocompleteUrl = '/Data/FindStreets?' + "cityname=" + cityName;
-    return autocompleteUrl;
+    autocompleteUrl = '/Data/FindStreets?' + "cityname=" + cityName;
 }
+
+$(document).ready(function () {
+    $("#Locality_id").change(function () {
+
+            formUrl();
+            $("#Street1").autocomplete({
+                source: autocompleteUrl,
+                minLength: 2,
+                select: function (event, ui) {
+
+                }
+            });
+            $("#street1").autocomplete({
+                source: autocompleteUrl,
+                minLength: 2,
+                select: function (event, ui) {
+
+                }
+            });
+        
+    });
+    
+})
