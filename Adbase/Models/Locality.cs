@@ -16,14 +16,14 @@ namespace Sciencecom.Models
     {
         public Locality()
         {
-            this.AdvertisingStructures = new HashSet<AdvertisingStructure>();
             this.Streets = new HashSet<Street>();
+            this.AdvertisingStructures = new HashSet<AdvertisingStructure>();
         }
     
         public System.Guid id { get; set; }
         public string NameLocality { get; set; }
     
-        public virtual ICollection<AdvertisingStructure> AdvertisingStructures { get; set; }
         public virtual ICollection<Street> Streets { get; set; }
+        public virtual ICollection<AdvertisingStructure> AdvertisingStructures { get; set; }
     }
 }

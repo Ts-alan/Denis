@@ -52,6 +52,8 @@ namespace Sciencecom.Models
         public Nullable<System.DateTime> CoordinationDate { get; set; }
         public string ContentInformationDescription { get; set; }
         public Nullable<System.DateTime> DateOfIssue { get; set; }
+        public string RoadName { get; set; }
+        public Nullable<int> RoadKM { get; set; }
     
         public virtual Backlight Backlight { get; set; }
         public virtual Locality Locality { get; set; }

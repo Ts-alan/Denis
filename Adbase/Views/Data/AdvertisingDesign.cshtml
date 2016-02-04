@@ -31,11 +31,14 @@
     $(document).ready(function () {
 
         function HideRows() {
-            $('.ui-widget-content.jqgrow.ui-row-ltr').each(
-                function (indx, element) {
-                    $(element).hide();
-                }
-            );
+            //console.log($("tbody > tr"));
+            //$('tbody > tr').each(
+            //    function (indx, element) {
+            //        $(element).hide();
+            //    }
+            //);
+            $('tbody > tr').hide();
+
         }
         //создание таблицы
         tableToGrid("#table", {
@@ -67,7 +70,7 @@
 
         //Поиск
         $('#table').jqGrid('filterToolbar', {
-        }
+            }
         );
         $(".ui-jqgrid-bdiv").append("<h1 style=\"margin-left: 700px;margin-top: 300px\">Выберите параметры поиска</h1>");
 
@@ -180,29 +183,29 @@
                     //выпадающее меню для щитов
                     if (td[0].title == "Щит")
                     {
-                        console.log(tr[indx].id-1);
+                        //console.log(tr[indx].id-1);
                         
                         $(element).tooltipsy({
-                                    alignTo: 'cursor',
-                                    offset: [0, -85],
-                                    hideEvent: 'focusout',
-                                    content: '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
-                                        '+<a href="/Map/Index/'+Showonthemap[tr[indx].id-1]+'">Показать на карте</a></br>' +
-                                        '+<a href="/Data/Documents/'+Showonthemap[tr[indx].id-1]+'">Показать данные о конструкции</a></br>' +
-                                        '+<a href="/Data/EditAdvertisingDesign/'+Showonthemap[tr[indx].id-1]+'">Изменить данные о конструкции</a></br>' +
-                                        '+<a  href="#DeleteStructures"  role="button" data-toggle="modal">Удалить конструкцию</a></br>' +
-                                        '</button>',
-                                    show: function (e, $el) {
+                            alignTo: 'cursor',
+                            offset: [0, -85],
+                            hideEvent: 'focusout',
+                            content: '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
+                                '+<a href="/Map/Index/'+Showonthemap[tr[indx].id-1]+'">Показать на карте</a></br>' +
+                                '+<a href="/Data/Documents/'+Showonthemap[tr[indx].id-1]+'">Показать данные о конструкции</a></br>' +
+                                '+<a href="/Data/EditAdvertisingDesign/'+Showonthemap[tr[indx].id-1]+'">Изменить данные о конструкции</a></br>' +
+                                '+<a  href="#DeleteStructures"  role="button" data-toggle="modal">Удалить конструкцию</a></br>' +
+                                '</button>',
+                            show: function (e, $el) {
 
-                                        $el.show(100);
-                                    },
-                                    hide: function (e, $el) {
+                                $el.show(100);
+                            },
+                            hide: function (e, $el) {
 
-                                    },
-                                    delay: 200,
-                                    className: 'tooltipsy',
-                                    css: {}
-                                });
+                            },
+                            delay: 200,
+                            className: 'tooltipsy',
+                            css: {}
+                        });
                     }
                     //выпадающее меню для световых коробов
                     if (td[0].title == "Световой короб") {
@@ -254,7 +257,7 @@
                             css: {}
                         });
                     }
-            }
+                }
             );
         }
 
@@ -266,22 +269,22 @@
             }
 
 
-            if(collectionMap!="[]"){
-                $(".ui-state-default .ui-th-ltr input").each(function(indx, element) {
+            //if(collectionMap!="[]"){
+            //    $(".ui-state-default .ui-th-ltr input").each(function(indx, element) {
 
-                    if (collectionMap != undefined)
-                    {
-                     $(element).val(collectionMap[indx].value);
-                    }
+            //        if (collectionMap != undefined)
+            //        {
+            //         $(element).val(collectionMap[indx].value);
+            //        }
 
 
-                });
-                FunctionaFortable();
-            }
+            //    });
+            //    FunctionaFortable();
+            //}
         }
 
         $("#search").click(function () {
-            HideRows();
+            $('tbody > tr:gt(8)').hide();
             PullData();
             FunctionaFortable();
         });
@@ -307,7 +310,7 @@
     $("html").dblclick(function (e) {
         //накручивание индекса к пути удалить
         $('[href="/Data/DeleteAdvertisingDesign"]').
-         attr("href","/Data/DeleteAdvertisingDesign/"+(Showonthemap[($(e.target).closest("tr").attr("id")-1)])+"") ;
+            attr("href","/Data/DeleteAdvertisingDesign/"+(Showonthemap[($(e.target).closest("tr").attr("id")-1)])+"") ;
 
         if (document.activeElement.getAttribute("class") != "HideClass") {
             $SaveIdForHideTooltip = document.activeElement.getAttribute("id")-1;
@@ -371,7 +374,7 @@
                     }
 
                 }
-                <tr title="test">
+                <tr style="display:none;">
 
 
                     <td>@if (i.Owner != null)
@@ -441,7 +444,8 @@
 </div>
 <hr />
 <footer>
-    <p>&copy; @DateTime.Now.Year – <a href="#">OnCloud</a> @*| @Html.ActionLink("Лицензионное соглашение", "License", "Home")*@</p>
+    <p>&copy; @DateTime.Now.Year – <a href="#">OnCloud</a> @*| @Html.ActionLink("Лицензионное соглашение", "License", "Home")*@
+    </p>
 </footer>
 
 @{ Html.RenderPartial("~/Views/Shared/PatialView/Modals.cshtml");}
