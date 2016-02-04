@@ -292,8 +292,7 @@
 
         <div class="form-group">
             <label for="Locality">Вид</label>
-            @ListTypeAdvertising.Single(a => a.Code == ViewBag.Code).Name
-            @Html.HiddenFor(a => a.Code, new { @readonly = "", @Value = ViewBag.Code })
+            @Html.DropDownListFor(a => a.Code, new SelectList(ListTypeAdvertising, "Code", "Name"), new { @disabled = "disabled" })
             @Html.ValidationMessageFor(model => model.Code)
         </div>
         <br>

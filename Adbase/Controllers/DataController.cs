@@ -382,7 +382,7 @@ namespace Sciencecom.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
+            
             AdvertisingStructure mc = context.AdvertisingStructures.Single(a => a.Id_show == id);
             if (mc == null)
             {
@@ -416,7 +416,15 @@ namespace Sciencecom.Controllers
 
             AdvertisingStructure mc = context.AdvertisingStructures.Single(a => a.Id_show == id);
             var TempId = mc.Id;
-
+            if (Structures.UniqueNumber == null)
+            {
+                Structures.UniqueNumber = TableAdapterExtensions.StringSymvol();
+            }
+            if (Structures.Code == null)
+            {
+                Structures.Code = "BB";
+            }
+            
             foreach (var side in mc.Sides)
             {
                 context.Surfaces.RemoveRange(side.Surfaces);
@@ -434,9 +442,9 @@ namespace Sciencecom.Controllers
                     {
                         Sides[j].AdvertisingStructures_Id = mc.Id;
                     }
-                    catch (System.IndexOutOfRangeException e)
+                    catch (Exception e)
                     {
-                        Sides.Add(new Side());
+                        Sides.Add(new Side() { DirectionSide_id = new Guid("27b8c509-8f09-4a0d-ae22-048c2611b7ea") });
                     }
                     
                     Sides[j].AdvertisingStructures_Id = mc.Id;
@@ -446,8 +454,11 @@ namespace Sciencecom.Controllers
                 Structures.Id = TempId;
 
                 context.AdvertisingStructures.Add(Structures);
+                
                 context.Sides.AddRange(Sides);
-                //context.AdvertisingStructures.Add(Structures);
+                
+                context.SaveChanges();
+                
                 List<Surface> ListSurface = new List<Surface>();
                 foreach (var i in surfaces)
                 {
@@ -456,13 +467,16 @@ namespace Sciencecom.Controllers
 
                 }
                 context.Surfaces.AddRange(ListSurface);
-
+                
                 context.SaveChanges();
+
             }
             else
             {
                 context.AdvertisingStructures.Add(Structures);
+                
                 context.SaveChanges();
+               
             }
             
             //картики
@@ -582,6 +596,14 @@ namespace Sciencecom.Controllers
                     context.ListUniqueNumbers.Single(x => x.UniqueNumber == Structures.UniqueNumber));
 
             }
+            if (Structures.Code == null)
+            {
+                Structures.Code = "MP";
+            }
+            if (Sides.Count == 0)
+            {
+                Sides.Add(new Side() { DirectionSide_id = new Guid("27b8c509-8f09-4a0d-ae22-048c2611b7ea") });
+            }
 
             for (int j = 0; j < CountSize; j++)
             {
@@ -660,9 +682,18 @@ namespace Sciencecom.Controllers
             context.Sides.RemoveRange(mc.Sides);
             context.AdvertisingStructures.Remove(mc);
             context.SaveChanges();
+            if (Structures.Code == null)
+            {
+                Structures.Code = "MP";
+            }
+            if (Sides.Count == 0)
+            {
+                Sides.Add(new Side() {DirectionSide_id = new Guid("27b8c509-8f09-4a0d-ae22-048c2611b7ea") });
+            }
 
             for (int j = 0; j < CountSize; j++)
             {
+               
                 Sides[j].AdvertisingStructures_Id = mc.Id;
                 Sides[j].Name = (j + 1).ToString();
                 Sides[j].Id = Guid.NewGuid();
@@ -679,9 +710,25 @@ namespace Sciencecom.Controllers
                 ListSurface.Add(i);
             }
             context.Surfaces.AddRange(ListSurface);
-            
-            context.SaveChanges();
-          
+
+            context.Sides.RemoveRange(mc.Sides);
+            try
+            {
+                context.SaveChanges();
+            }
+            catch (DbEntityValidationException e)
+            {
+                foreach (DbEntityValidationResult validationError in e.EntityValidationErrors)
+                {
+                    Response.Write("Object: " + validationError.Entry.Entity.ToString());
+                    Response.Write("");
+                    foreach (DbValidationError err in validationError.ValidationErrors)
+                    {
+                        Response.Write(err.ErrorMessage + "");
+                    }
+                }
+            }
+
             //картики
             if (Scan1SidesWithFinancialManagement != null)
             {
@@ -892,7 +939,7 @@ namespace Sciencecom.Controllers
                 }
                 catch (System.IndexOutOfRangeException e)
                 {
-                    Sides.Add(new Side());
+                    Sides.Add(new Side() { DirectionSide_id = new Guid("27b8c509-8f09-4a0d-ae22-048c2611b7ea") });
                 }
                 Sides[j].AdvertisingStructures_Id = mc.Id;
                 Sides[j].Name = (j + 1).ToString();
@@ -1078,7 +1125,7 @@ namespace Sciencecom.Controllers
                 }
                 catch (System.IndexOutOfRangeException e)
                 {
-                    Sides.Add(new Side());
+                    Sides.Add(new Side() { DirectionSide_id = new Guid("27b8c509-8f09-4a0d-ae22-048c2611b7ea") });
                 }
                 Sides[j].AdvertisingStructures_Id = mc.Id;
                 Sides[j].Name = (j + 1).ToString();
@@ -1149,7 +1196,7 @@ namespace Sciencecom.Controllers
             List<HttpPostedFileBase> SeveralPhoto,
             int CountSize = 0)
         {
-
+            
             Guid StructuresId = Guid.NewGuid();
             Structures.Id = StructuresId;
             //удаление временно номера из базы данных
@@ -1160,8 +1207,21 @@ namespace Sciencecom.Controllers
 
             }
 
+            if (Structures.Code == null)
+            {
+                Structures.Code = "UI";
+            }
+
             for (int j = 0; j < CountSize; j++)
             {
+                try
+                {
+                    Sides[j].AdvertisingStructures_Id = mc.Id;
+                }
+                catch (System.IndexOutOfRangeException e)
+                {
+                    Sides.Add(new Side() { DirectionSide_id = new Guid("27b8c509-8f09-4a0d-ae22-048c2611b7ea") });
+                }
                 Sides[j].AdvertisingStructures_Id = StructuresId;
                 Sides[j].Name = (j + 1).ToString();
                 Sides[j].Id = Guid.NewGuid();

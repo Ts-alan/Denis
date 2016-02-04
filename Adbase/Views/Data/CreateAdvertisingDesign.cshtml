@@ -127,31 +127,6 @@
         } else {
             $("#" + i + "HiddenIdentification").show();
             //валидация
-            $('[name="IdentificationSurface"]').each(function (indx, element) {
-
-                $(element).attr("name", "[" + indx + "].IdentificationForIdentificationSurface");
-            });
-            $('[action="/Data/CreateAdvertisingDesign"]').validate({
-                rules: {
-                    '[0].IdentificationForIdentificationSurface': "required",
-                    '[1].IdentificationForIdentificationSurface': "required",
-                    '[2].IdentificationForIdentificationSurface': "required",
-                    '[3].IdentificationForIdentificationSurface': "required",
-                    '[4].IdentificationForIdentificationSurface': "required",
-                    '[5].IdentificationForIdentificationSurface': "required",
-                    '[6].IdentificationForIdentificationSurface': "required",
-                    '[7].IdentificationForIdentificationSurface': "required",
-                    '[8].IdentificationForIdentificationSurface': "required"
- 
-                }
-
-            });
-            $('[IdentificationForIdentificationSurface]').each(function (indx, element) {
-
-                $(element).rules('add', {
-                    required: true
-                });
-              });
 
         }
         $("[side=" + i + "]").remove();
@@ -213,8 +188,7 @@
         <div class="form-group" >
             <label for="Locality">Вид</label>
             
-            @ListTypeAdvertising.Single(a => a.Code == ViewBag.Code).Name
-            @Html.HiddenFor(a => a.Code,  new { @readonly = "", @Value = ViewBag.Code  })
+            @Html.DropDownListFor(a => a.Code, new SelectList(ListTypeAdvertising, "Code", "Name"), new { @disabled = "disabled" })
             @Html.ValidationMessageFor(model => model.Code)
         </div>
 

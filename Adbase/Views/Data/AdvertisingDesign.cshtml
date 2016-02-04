@@ -160,9 +160,9 @@
                             offset: [0, -85],
                             hideEvent: 'focusout',
                             content: '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
-                                '+<a href="/Map/Index/'+Showonthemap[indx]+'">Показать на карте</a></br>' +
-                                '+<a href="/Data/Pointer/'+Showonthemap[indx]+'">Показать данные о конструкции</a></br>' +
-                                '+<a href="/Data/EditMetalPointerDesign/'+Showonthemap[indx]+'">Изменить данные о конструкции</a></br>' +
+                                '+<a href="/Map/Index/'+Showonthemap[tr[indx].id-1]+'">Показать на карте</a></br>' +
+                                '+<a href="/Data/Pointer/'+Showonthemap[tr[indx].id-1]+'">Показать данные о конструкции</a></br>' +
+                                '+<a href="/Data/EditMetalPointerDesign/'+Showonthemap[tr[indx].id-1]+'">Изменить данные о конструкции</a></br>' +
                                 '+<a  href="#DeleteStructures"  role="button" data-toggle="modal">Удалить конструкцию</a></br>' +
                                 '</button>',
                             show: function (e, $el) {
@@ -180,14 +180,16 @@
                     //выпадающее меню для щитов
                     if (td[0].title == "Щит")
                     {
+                        console.log(tr[indx].id-1);
+                        
                         $(element).tooltipsy({
                                     alignTo: 'cursor',
                                     offset: [0, -85],
                                     hideEvent: 'focusout',
                                     content: '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
-                                        '+<a href="/Map/Index/'+Showonthemap[indx]+'">Показать на карте</a></br>' +
-                                        '+<a href="/Data/Documents/'+Showonthemap[indx]+'">Показать данные о конструкции</a></br>' +
-                                        '+<a href="/Data/EditAdvertisingDesign/'+Showonthemap[indx]+'">Изменить данные о конструкции</a></br>' +
+                                        '+<a href="/Map/Index/'+Showonthemap[tr[indx].id-1]+'">Показать на карте</a></br>' +
+                                        '+<a href="/Data/Documents/'+Showonthemap[tr[indx].id-1]+'">Показать данные о конструкции</a></br>' +
+                                        '+<a href="/Data/EditAdvertisingDesign/'+Showonthemap[tr[indx].id-1]+'">Изменить данные о конструкции</a></br>' +
                                         '+<a  href="#DeleteStructures"  role="button" data-toggle="modal">Удалить конструкцию</a></br>' +
                                         '</button>',
                                     show: function (e, $el) {
@@ -203,16 +205,16 @@
                                 });
                     }
                     //выпадающее меню для световых коробов
-                    if (td[0].title == "Световой короб")
-                    {
+                    if (td[0].title == "Световой короб") {
+                        
                         $(element).tooltipsy({
                             alignTo: 'cursor',
                             offset: [0, -85],
                             hideEvent: 'focusout',
                             content: '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
-                                '+<a href="/Map/Index/'+Showonthemap[indx]+'">Показать на карте</a></br>' +
-                                '+<a href="/Data/LightDuct/'+Showonthemap[indx]+'">Показать данные о конструкции</a></br>' +
-                                '+<a href="/Data/EditLightDuctDesign/'+Showonthemap[indx]+'">Изменить данные о конструкции</a></br>' +
+                                '+<a href="/Map/Index/'+Showonthemap[tr[indx].id-1]+'">Показать на карте</a></br>' +
+                                '+<a href="/Data/LightDuct/'+Showonthemap[tr[indx].id-1]+'">Показать данные о конструкции</a></br>' +
+                                '+<a href="/Data/EditLightDuctDesign/'+Showonthemap[tr[indx].id-1]+'">Изменить данные о конструкции</a></br>' +
                                 '+<a  href="#DeleteStructures"  role="button" data-toggle="modal">Удалить конструкцию</a></br>' +
                                 '</button>',
                             show: function (e, $el) {
@@ -235,9 +237,9 @@
                             offset: [0, -85],
                             hideEvent: 'focusout',
                             content: '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
-                                '+<a href="/Map/Index/'+Showonthemap[indx]+'">Показать на карте</a></br>' +
-                                '+<a href="/Data/Illegal/'+Showonthemap[indx]+'">Показать данные о конструкции</a></br>' +
-                                '+<a href="/Data/EditIllegalDesign/'+Showonthemap[indx]+'">Изменить данные о конструкции</a></br>' +
+                                '+<a href="/Map/Index/'+Showonthemap[tr[indx].id-1]+'">Показать на карте</a></br>' +
+                                '+<a href="/Data/Illegal/'+Showonthemap[tr[indx].id-1]+'">Показать данные о конструкции</a></br>' +
+                                '+<a href="/Data/EditIllegalDesign/'+Showonthemap[tr[indx].id-1]+'">Изменить данные о конструкции</a></br>' +
                                 '+<a  href="#DeleteStructures"  role="button" data-toggle="modal">Удалить конструкцию</a></br>' +
                                 '</button>',
                             show: function (e, $el) {
