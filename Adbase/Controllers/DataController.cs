@@ -1216,7 +1216,7 @@ namespace Sciencecom.Controllers
             {
                 try
                 {
-                    Sides[j].AdvertisingStructures_Id = mc.Id;
+                    Sides[j].AdvertisingStructures_Id = StructuresId;
                 }
                 catch (System.IndexOutOfRangeException e)
                 {
