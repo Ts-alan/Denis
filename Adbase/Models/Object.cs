@@ -9,9 +9,8 @@
 
 namespace Sciencecom.Models
 {
-    using System;
     using System.Collections.Generic;
-    
+
     public partial class Object
     {
         public Object()

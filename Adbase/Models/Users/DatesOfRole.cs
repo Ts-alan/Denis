@@ -9,9 +9,7 @@
 
 namespace Sciencecom.Models.Users
 {
-    using System;
-    using System.Collections.Generic;
-    
+
     public partial class DatesOfRole
     {
         public string IdUser { get; set; }

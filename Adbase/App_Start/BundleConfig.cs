@@ -36,10 +36,12 @@ namespace Sciencecom
                       "~/Content/themes/flick/jquery-ui.css",
                       "~/Content/jquery.bxslider.css"));
             
-            bundles.Add(new StyleBundle("~/Content/Map").Include(
+            bundles.Add(new ScriptBundle("~/Content/Map").Include(
             "~/Scripts/Autocomplete.js",
             "~/Scripts/AddPlacamerkToMap.js",
-            "~/Scripts/MapSearch.js"
+            "~/Scripts/MapSearch.js",
+            "~/Scripts/HouseRoadSwapper.js",
+            "~/Scripts/SurfaceAdder.js"
            ));
             //css для Grid
             bundles.Add(new StyleBundle("~/Content/jqCrid").Include(

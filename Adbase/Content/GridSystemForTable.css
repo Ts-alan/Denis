@@ -68,61 +68,6 @@ table {
     width: 100%;
 }
 
-/*выравнивание столбцов*/
-/*#table_Разреш_по,[aria-describedby="table_Разреш_по"]
-{
- width: 7.69230769% !important;
-}
- #table_№_паспорта_рекл ,[aria-describedby="table_№_паспорта_рекл"] 
-{
-width: 7.69230769% !important;
-}
- #table_№_договора_с_фин_упр,[aria-describedby="table_№_договора_с_фин_упр"]
-{
-width: 9.6153846125% !important;
-}
-#table_Подстветка,[aria-describedby="table_Подстветка"]
-{
- width:  6.4692307675% !important;
-}
-#table_Площадь_конструкции,[aria-describedby="table_Площадь_конструкции"]
-{
-width:  6.4692307675% !important;
-}
-#table_Количестов_поверхностей,[aria-describedby="table_Количестов_поверхностей"]
-{
-width:  7.69230769%  !important;
-}
-#table_Количество_сторон,[aria-describedby="table_Количество_сторон"]
-{
-width: 6.4692307675% !important;
-}
-#table_Дом,[aria-describedby="table_Дом"]
- {
- width: 3.846153845% !important;
-}
-#table_Улица,[aria-describedby="table_Улица"]
-{
- width: 7.69230769% !important;
-}
-#table_Населенный_пункт,[aria-describedby="table_Населенный_пункт"]
-{
- width: 7.69230769% !important;
-}
-#table_Вид_конструкции,[aria-describedby="table_Вид_конструкции"]
-{
- width: 7.69230769% !important;
-}
-#table_Собственник_конструкции, [aria-describedby="table_Собственник_конструкции"]
-{
-  width: 10.269230768% !important;
-}
-#table_Идентификационный_номер ,[aria-describedby="table_Идентификационный_номер"]
-{
-  width: 10.269230768% !important;
-}
-     */
-
 
 
 #table_Разреш_по,[aria-describedby="table_Разреш_по"]
@@ -180,7 +125,7 @@ th {
     width: 10% !important;
     border: 1px solid #dddddd !important;  
 }
-tr.ui-widget-content.jqgrow.ui-row-ltr > td {
+tr.ui-widget-content.jqgrow.ui-row-ltr > td  {
     width: 10% !important;
     max-width: 0;
     overflow: hidden;
@@ -189,6 +134,7 @@ tr.ui-widget-content.jqgrow.ui-row-ltr > td {
     -moz-text-overflow: ellipsis;
     text-overflow: ellipsis;
     white-space: nowrap;
+    
 }
 
 .ui-jqgrid .ui-jqgrid-htable {

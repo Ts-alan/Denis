@@ -9,9 +9,7 @@
 
 namespace Sciencecom.Models.Users
 {
-    using System;
-    using System.Collections.Generic;
-    
+
     public partial class AspNetUserLogin
     {
         public string UserId { get; set; }

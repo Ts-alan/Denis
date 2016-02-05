@@ -81,7 +81,7 @@
             clusterer.add(geoArray);
 
         }
-
+        $("#hidden").remove();
     }).error(function () {
         alert("Ошибка запроса ТРАТАТА");
     });
@@ -108,7 +108,9 @@ function getReferencesBillboard(construction) {
     {
         editLink = "/Data/EditLightDuctDesign/";
     }
-    
+    if (construction.NameOfAdvertisingStructure == "Неопознанная конструкция") {
+        editLink = "/Data/EditIllegalDesign/";
+    }
     result += '</br><a href="/Data/Documents/' + construction.Id_show + '" >Показать данные о конструкции</a>'
         + '</br><a href="'+ editLink + construction.Id_show + '" >Изменить данные конструкции</a>'
         + '</br><a href="#DeleteStructures"  role="button" data-toggle="modal" onclick="setRemove(' + construction.Id_show + ')"  >Удалить конструкцию</a></b>'

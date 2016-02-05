@@ -9,9 +9,8 @@
 
 namespace Sciencecom.Models.Users
 {
-    using System;
     using System.Collections.Generic;
-    
+
     public partial class AspNetRole
     {
         public AspNetRole()

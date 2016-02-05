@@ -1,11 +1,5 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using Enums.Selectors;
-using HtmlAgilityPack;
-using Microsoft.Ajax.Utilities;
-using Sciencecom.Models;
 
 namespace Sciencecom.Controllers
 {

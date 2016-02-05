@@ -9,9 +9,7 @@
 
 namespace Sciencecom.Models.Users
 {
-    using System;
-    using System.Collections.Generic;
-    
+
     public partial class AspNetUserClaim
     {
         public int Id { get; set; }
