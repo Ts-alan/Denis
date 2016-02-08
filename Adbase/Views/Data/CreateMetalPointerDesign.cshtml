@@ -123,25 +123,7 @@
         $('[name="DirectionSide"]').each(function(indx, element) {
             $(element).attr("name", "[" + indx + "].IdentificationForDirectionSide");
         });
-        $('[action="/Data/CreateAdvertisingDesign"]').validate({
-            rules: {
-                '[0].IdentificationForDirectionSide': "required",
-                '[1].IdentificationForDirectionSide': "required",
-                '[2].IdentificationForDirectionSide': "required",
-                '[3].IdentificationForDirectionSide': "required",
-                '[4].IdentificationForDirectionSide': "required",
-                '[5].IdentificationForDirectionSide': "required",
-                '[6].IdentificationForDirectionSide': "required",
-                '[7].IdentificationForDirectionSide': "required",
-                '[8].IdentificationForDirectionSide': "required"
-            },
-                messages: {
-                    '[0].IdentificationForDirectionSide':"ававававававав",
-                    '[1].IdentificationForDirectionSide': "brak uzytkownika"
-                    }
 
-            }
-        );
         $('[IdentificationForDirectionSide]').each(function (indx, element) {
 
             $(element).rules('add', {
@@ -149,26 +131,7 @@
             });
             }
         );
-
-        $('[action="/Data/CreateAdvertisingDesign"]').validate({
-            rules: {
-                'CountSurfuce1': "required",
-                'CountSurfuce2': "required",
-                'CountSurfuce3': "required",
-                'CountSurfuce4': "required",
-                'CountSurfuce5': "required",
-                'CountSurfuce6': "required",
-                'CountSurfuce7': "required",
-                'CountSurfuce8': "required"
-
-            },
-            messages: {
-                '[0].DirectionSide': "test",
-                '[1].DirectionSide': "brak uzytkownika"
-            }
-
-        }
-        );
+        
         $('[IdentificationForCountSide]').each(function (indx, element) {
 
             $(element).rules('add', {
@@ -198,27 +161,8 @@
 
                 $(element).attr("name", "[" + indx + "].IdentificationForIdentificationSurface");
             });
-            $('[action="/Data/CreateAdvertisingDesign"]').validate({
-                rules: {
-                    '[0].IdentificationForIdentificationSurface': "required",
-                    '[1].IdentificationForIdentificationSurface': "required",
-                    '[2].IdentificationForIdentificationSurface': "required",
-                    '[3].IdentificationForIdentificationSurface': "required",
-                    '[4].IdentificationForIdentificationSurface': "required",
-                    '[5].IdentificationForIdentificationSurface': "required",
-                    '[6].IdentificationForIdentificationSurface': "required",
-                    '[7].IdentificationForIdentificationSurface': "required",
-                    '[8].IdentificationForIdentificationSurface': "required"
 
-                }
-
-            });
-            $('[IdentificationForIdentificationSurface]').each(function (indx, element) {
-
-                $(element).rules('add', {
-                    required: true
-                });
-              });
+           
 
         }
         $("[side=" + i + "]").remove();
@@ -252,13 +196,13 @@
 
 
 </script>
-<h3> КАРТОЧКА МЕТАЛЛИЧЕСКОГО УКАЗАТЕЛЯ</h3>
+<h3> КАРТОЧКА МЕТАЛЛИЧЕСКОЙ КОНСТРУКЦИИ</h3>
 
 @Scripts.Render("~/Content/Map")
 @using (Html.BeginForm("CreateMetalPointerDesign", "Data", FormMethod.Post, new { enctype = "multipart/form-data", id = "test1" }))
 {
     <input type="hidden" name="Code" value="@ViewBag.Code">
-    <h3> 1. Общие данные о металлическом указателе</h3>
+    <h3> 1. Общие данные о металлической конструкции</h3>
     @Html.AntiForgeryToken()
     <div class="form-inline" style="margin-bottom: -10px">
         <hr />

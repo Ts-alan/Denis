@@ -1,4 +1,5 @@
-﻿function GetBilboardPoints(role, userCompany, objectId) {
+﻿function GetBilboardPoints(role, userCompany, objectId, myMap)
+{
     var geoArray = [];
     var clusterer = new ymaps.Clusterer({ clusterDisableClickZoom: false });
     $.ajax({
@@ -22,7 +23,8 @@
         }
     }).success(function (data) {
         var colour, bct, bht, houseSupport;
-        if (data.length > 0) {
+        if (data.length > 0)
+        {
 
             for (var i = 0; i < data.length; i++) {
                 if (data[i].NameOfAdvertisingStructure == "Щит")
@@ -79,7 +81,12 @@
             }
 
             clusterer.add(geoArray);
-
+            if (geoArray.length == 1)
+            {
+                    
+                myMap.panTo([[data[0].Breadth, data[0].Height]]);
+                       
+            }
         }
         $("#hidden").remove();
     }).error(function () {

@@ -41,8 +41,9 @@
 <script type="text/javascript">
     var i = 0;
 
-   // var havePlacemark = @Model.Breadth.HasValue.ToString().ToLower();
-
+   @*/ var havePlacemark = @Model.Breadth.HasValue.ToString().ToLower();*@
+    var DirectionSide = '@Ajax.JavaScriptStringEncode(Html.DropDownList("DirectionSide", new SelectList(DirectionSide, "id", "NameOfDirectionSide"), "", new { IdentificationForDirectionSide = "IdentificationForDirectionSide" }).ToHtmlString().Replace("\"", " "))';
+    var IdentificationSurface = '@Ajax.JavaScriptStringEncode(Html.DropDownList("IdentificationSurface", new SelectList(IdentificationSide, "id", "IdentificationName"), "", new { IdentificationForIdentificationSurface = "IdentificationForIdentificationSurface" }).ToHtmlString().Replace("\"", " "))';
     var StartCountForSurface ;
     var EndCountForSurface = 0;
     //var isGreateAdvertisingDesign = false;
@@ -80,7 +81,7 @@
                 $("#ContractHide").css("display", "none");
             }
         });
-        
+
 
     });
 
@@ -96,7 +97,7 @@
         $("#ConstructionSquare").val(Summ);
     }
 
-    //кол-во сторон
+    @*//кол-во сторон
     function SetCountSize() {
         EndCountForSurface = 0;
         var CountSizes = $('#CountSizes').val();
@@ -144,7 +145,7 @@
         $('[name="DirectionSide"]').data('validator', null);
         $.validator.unobtrusive.parse('[name="DirectionSide"]');
 
-    }
+    }*@
 
     function SetValidate(i) {
 
@@ -175,7 +176,7 @@
             .success(function(e) {
 
                 var live_str = $('<div>',{html:e});
-                
+
                 var res = live_str.find('.body-content');
 
                 $("#InsertPartial" + i + "").prepend(res);
@@ -250,6 +251,7 @@
         <div class="form-group">
             <label for="Locality">Вид</label>
             @Html.DropDownListFor(a => a.Code, new SelectList(ListTypeAdvertising, "Code", "Name"), new { @disabled = "disabled" })
+            @Html.HiddenFor(a => a.Code)
             @Html.ValidationMessageFor(model => model.Code)
         </div>
 
@@ -495,7 +497,7 @@
         </div>
         <div class="form-group">
             <label for="CountSizes">Количество сторон</label>
-            @Html.DropDownList("CountSizes", new SelectList(new[] { "", "1", "2", "3", "4", "5", "6", "7", "8"},Model.Sides.Count.ToString()),new {onchange="SetCountSize()"})
+            @Html.DropDownList("CountSizes", new SelectList(new[] { "", "1", "2", "3", "4", "5", "6", "7", "8"},Model.Sides.Count.ToString()),new {onchange= "SetCountSize(DirectionSide, IdentificationSurface)" })
             <span class="field-validation-validr" data-valmsg-for="CountSizes" data-valmsg-replace="true">
             </span>
         </div>

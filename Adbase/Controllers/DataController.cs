@@ -389,6 +389,10 @@ namespace Sciencecom.Controllers
                 return HttpNotFound();
             }
             List<Surface> surfaces = new List<Surface>();
+            if (mc.Sides.Count == 0)
+            {
+                mc.Sides.Add(new Side() { DirectionSide_id = new Guid("27b8c509-8f09-4a0d-ae22-048c2611b7ea") });
+            }
             foreach (var sides in mc.Sides.OrderBy(a => a.Name))
             {
                 foreach (var surface in sides.Surfaces)
@@ -396,6 +400,7 @@ namespace Sciencecom.Controllers
                     surfaces.Add(surface);
                 }
             }
+            
             if (surfaces.Count == 0)
             {
                 surfaces.Add(new Surface() {}
@@ -921,7 +926,10 @@ namespace Sciencecom.Controllers
 
             AdvertisingStructure mc = context.AdvertisingStructures.Single(a => a.Id_show == id);
             var TempId = mc.Id;
-
+            if (Structures.Code == null)
+            {
+                Structures.Code = "LD";
+            }
             foreach (var side in mc.Sides)
             {
                 context.Surfaces.RemoveRange(side.Surfaces);
@@ -1112,7 +1120,10 @@ namespace Sciencecom.Controllers
             {
                 context.Surfaces.RemoveRange(side.Surfaces);
             }
-
+            if (Structures.Code == null)
+            {
+                Structures.Code = "UI";
+            }
             context.Sides.RemoveRange(mc.Sides);
             context.AdvertisingStructures.Remove(mc);
             context.SaveChanges();

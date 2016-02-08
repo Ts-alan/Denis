@@ -140,6 +140,7 @@
         <div class="form-group">
             <label for="Locality">Вид</label>
             @Html.DropDownListFor(a => a.Code, new SelectList(ListTypeAdvertising, "Code", "Name"), new { @disabled = "disabled" })
+            @Html.HiddenFor(a=> a.Code)
             @Html.ValidationMessageFor(model => model.Code)
         </div>
         <br>

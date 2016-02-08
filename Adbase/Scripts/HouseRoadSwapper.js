@@ -25,7 +25,7 @@ function Swap()
     {
         $("#RoadName").val('');
         $("#RoadKM").val('');
-        console.log($(".HSclear"));
+        
         $(".HSclear").each(function(index, element) {
             $(element).show();
         });

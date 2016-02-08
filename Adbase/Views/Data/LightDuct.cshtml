@@ -5,7 +5,7 @@
     ViewBag.Title = "Просмотр документов";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@Scripts.Render("~/Content/Map")
+@Scripts.Render("~/Content/Docs")
 <script type="text/javascript">
     var i = 0;
 
@@ -127,7 +127,7 @@
             });
         }
         );
-
+        
 
     }
 
@@ -539,16 +539,16 @@
             <input name="[0].NumberSurface" type="hidden" value="@ViewBag.Side">
 
             <label for="[0].Height">Высота</label>
-            @Html.EditorFor(model => model.Sides.First().Surfaces.First().Height)
-            @Html.ValidationMessageFor(model => model.Sides.First().Surfaces.First().Height)
+            @Html.EditorFor(model => model.Sides.FirstOrDefault().Surfaces.FirstOrDefault().Height)
+            @Html.ValidationMessageFor(model => model.Sides.FirstOrDefault().Surfaces.FirstOrDefault().Height)
 
             <label for="[0].Width">Ширина</label>
-            @Html.EditorFor(model => model.Sides.First().Surfaces.First().Width)
-            @Html.ValidationMessageFor(model => model.Sides.First().Surfaces.First().Width)
+            @Html.EditorFor(model => model.Sides.FirstOrDefault().Surfaces.FirstOrDefault().Width)
+            @Html.ValidationMessageFor(model => model.Sides.FirstOrDefault().Surfaces.FirstOrDefault().Width)
 
             <label for="[0].Space">Площадь</label>
-            @Html.TextBoxFor(model => model.Sides.First().Surfaces.First().Space, new { type = "number", SelectForSpace = "", onchange = "CalculationAS()" })
-            @Html.ValidationMessageFor(model => model.Sides.First().Surfaces.First().Space)
+            @Html.TextBoxFor(model => model.Sides.FirstOrDefault().Surfaces.FirstOrDefault().Space, new { type = "number", SelectForSpace = "", onchange = "CalculationAS()" })
+            @Html.ValidationMessageFor(model => model.Sides.FirstOrDefault().Surfaces.FirstOrDefault().Space)
         </div>
 
 

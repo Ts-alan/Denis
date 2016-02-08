@@ -63,7 +63,11 @@ namespace Sciencecom
             bundles.Add(new StyleBundle("~/bundles/tooltip").Include(
             "~/Scripts/tooltip/tooltipsy.source.js"
             ));
-           
+
+            bundles.Add(new ScriptBundle("~/Content/Docs").Include(
+            "~/Scripts/DocsPlacemark.js"
+           ));
+
         }
     }
 }

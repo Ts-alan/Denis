@@ -139,9 +139,17 @@
                 }
                 
                 var location = $("#Locality_id option:selected").text().toString();
-               
-                var strLen = $("#Street1").val().length;
-                var h1Len = $("#House1").val().length;
+                var strLen;
+                var h1Len;
+                if ($("#Street1").val() != undefined)
+                {
+                    var strLen = $("#Street1").val().length;
+                }
+                if ($("#House1").val())
+                {
+                    var h1Len = $("#House1").val().length;
+                }
+                
                 
                 if (strLen != 0 && h1Len == 0)
                 {

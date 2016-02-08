@@ -83,7 +83,7 @@
             myMap.controls.add('zoomControl');
             myMap.controls.add('searchControl');
 
-            var clusterer = GetBilboardPoints("@role", "@user.Company", objectId);
+            var clusterer = GetBilboardPoints("@role", "@user.Company", objectId, myMap);
 
             myMap.geoObjects.add(clusterer);
         }

@@ -607,6 +607,7 @@
     <Content Include="Scripts\external\qunit.css" />
     <Content Include="Scripts\external\qunit.js" />
     <Content Include="Scripts\HouseRoadSwapper.js" />
+    <Content Include="Scripts\DocsPlacemark.js" />
     <Content Include="Scripts\jqGrid\addons\ui.multiselect.js" />
     <Content Include="Scripts\jqGrid\grid.base.js" />
     <Content Include="Scripts\jqGrid\grid.celledit.js" />
