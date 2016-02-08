@@ -196,13 +196,13 @@
 
 
 </script>
-<h3> КАРТОЧКА МЕТАЛЛИЧЕСКОЙ КОНСТРУКЦИИ</h3>
+<h3> КАРТОЧКА МЕТАЛЛИЧЕСКОГО УКАЗАТЕЛЯ</h3>
 
 @Scripts.Render("~/Content/Map")
 @using (Html.BeginForm("CreateMetalPointerDesign", "Data", FormMethod.Post, new { enctype = "multipart/form-data", id = "test1" }))
 {
     <input type="hidden" name="Code" value="@ViewBag.Code">
-    <h3> 1. Общие данные о металлической конструкции</h3>
+    <h3> 1. Общие данные о конструкции</h3>
     @Html.AntiForgeryToken()
     <div class="form-inline" style="margin-bottom: -10px">
         <hr />
