@@ -24,7 +24,6 @@
                 myMap.setZoom(11);
                 geoCoords = res.geoObjects.get(0).geometry.getCoordinates();
                 myMap.panTo([geoCoords[0], geoCoords[1]]);
-                
             },
             function (err)
             {
@@ -100,7 +99,6 @@
                 $("#Height").val(str);
             });
         }
-
     }
 
    
@@ -130,29 +128,34 @@
 
     $(document).ready(function () {
         var countE = true;
-        var streetPlacemark;
         
         $("#MapSearchStreet").click(function () {
             
-            if ($("#Street1").val() != "") {
+            if (!$("#Street1").val().trim())
+            {
+                alert("Введите название улицы!");
+                return;
+            }
+            else
+            {
                 if (myPlacemark != undefined)
                 {
                     myMap.geoObjects.remove(myPlacemark);
                 }
-                
+
                 var location = $("#Locality_id option:selected").text().toString();
                 var strLen;
                 var h1Len;
                 if ($("#Street1").val() != undefined)
                 {
-                    var strLen = $("#Street1").val().length;
+                    strLen = $("#Street1").val().length;
                 }
                 if ($("#House1").val())
                 {
-                    var h1Len = $("#House1").val().length;
+                    h1Len = $("#House1").val().length;
                 }
-                
-                
+
+
                 if (strLen != 0 && h1Len == 0)
                 {
                     location += " " + $("#Street1").val().toString();
@@ -165,20 +168,24 @@
                 var myGeocoder = ymaps.geocode(location);
 
                 myGeocoder.then(
-                    function (res) {
+                    function (res)
+                    {
 
                         myPlacemark = new ymaps.Placemark([res.geoObjects.get(0).geometry._Rb[0], res.geoObjects.get(0).geometry._Rb[1]],
                         {},
                         {
                             draggable: false
                         });
-                        
-                        myMap.geoObjects.add(myPlacemark);
                         myMap.setZoom(14);
+                        myMap.geoObjects.add(myPlacemark);
+                        myMap.panTo([res.geoObjects.get(0).geometry._Rb[0], res.geoObjects.get(0).geometry._Rb[1]]);
+                        
                     });
+                    
             }
 
-            if (countE) {
+            if (countE)
+            {
                 //присвоение  коодинат при клике  
                 myMap.events.add('click', function (e)
                 {
@@ -207,7 +214,8 @@
             }
         });
 
-        function dragend() {
+        function dragend()
+        {
 
             myPlacemark.events.add('dragend', function (e) {
 
@@ -226,7 +234,8 @@
 
     });
 
-    $(document).ready(function () {
+    $(document).ready(function ()
+    {
         $("#Locality_id").change(function () {
             onCityChange();
         });
