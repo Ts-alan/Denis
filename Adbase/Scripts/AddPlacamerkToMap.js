@@ -21,8 +21,10 @@
         myGeocoder.then(
             function (res)
             {
+                myMap.setZoom(11);
                 geoCoords = res.geoObjects.get(0).geometry.getCoordinates();
                 myMap.panTo([geoCoords[0], geoCoords[1]]);
+                
             },
             function (err)
             {
@@ -172,6 +174,7 @@
                         });
                         
                         myMap.geoObjects.add(myPlacemark);
+                        myMap.setZoom(14);
                     });
             }
 

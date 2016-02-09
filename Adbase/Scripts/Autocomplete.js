@@ -21,7 +21,7 @@ $(function () {
             }
         });
     }
-    if ($("#Locality_id option:selected").text().toString() != "Минск")
+    if ($("#Locality_id option:selected").text().toString() != "Минск" && $("#Street1").hasClass("ui-autocomplete-input"))
     {
         $("#Street1").autocomplete("destroy");
         $("#street1").autocomplete("destroy");
@@ -103,7 +103,8 @@ $(document).ready(function () {
                 }
             });
         }
-        if ($("#Locality_id option:selected").text().toString() != "Минск") {
+        if ($("#Locality_id option:selected").text().toString() != "Минск" && $("#Street1").hasClass("ui-autocomplete-input"))
+        {
             $("#Street1").autocomplete("destroy");
             $("#street1").autocomplete("destroy");
         }
