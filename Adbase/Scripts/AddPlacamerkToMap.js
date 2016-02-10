@@ -26,7 +26,16 @@
         myGeocoder.then(
             function (res)
             {
-                myMap.setZoom(11);
+                if (loc == "Минск")
+                {
+                    myMap.setZoom(11);
+                }
+                else
+                {
+                    myMap.setZoom(12);
+                }
+                
+                
                 geoCoords = res.geoObjects.get(0).geometry.getCoordinates();
                 myMap.panTo([geoCoords[0], geoCoords[1]]);
             },
