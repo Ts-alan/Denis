@@ -16,7 +16,12 @@
         {
             loc = $("#Locality_id option:selected").text();
         }
-        
+        if ($("#Locality_id option:selected").text() == "Минский район")
+        {
+            myMap.setZoom(10);
+            myMap.panTo([53.9172, 27.5601]);
+            return;
+        }
         var myGeocoder = ymaps.geocode(loc);
         myGeocoder.then(
             function (res)
@@ -150,19 +155,19 @@
                 {
                     strLen = $("#Street1").val().length;
                 }
-                if ($("#House1").val())
+                if ($("input#House1").val())
                 {
-                    h1Len = $("#House1").val().length;
+                    h1Len = $("input#House1").val().length;
                 }
 
-
+                console.log($("input#House1"));
                 if (strLen != 0 && h1Len == 0)
                 {
-                    location += " " + $("#Street1").val().toString();
+                    location += " " + $("#Street1").val().toString() + "  ";
                 }
                 if (strLen != 0 && h1Len != 0)
                 {
-                    location += $("#Street1").val() + "  " + $("House1").val();
+                    location += $("#Street1").val() + "  " + " дом " + $("input#House1").val();
                 }
 
                 var myGeocoder = ymaps.geocode(location);
