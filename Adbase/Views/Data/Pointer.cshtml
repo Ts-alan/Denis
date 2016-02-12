@@ -284,13 +284,11 @@
         <div class="form-group">
             <label for="Street2">Ближайшая улица по ходу движения</label>
             @Html.EditorFor(model => model.Street2, new { htmlAttributes = new { @readonly = "" } })
-
         </div>
 
         <div class="form-group">
             <label for="FromStreet">Со стороны улицы</label>
             @Html.EditorFor(model => model.FromStreet, new { htmlAttributes = new { @readonly = "" } })
-
         </div>
     </div>
 
@@ -342,13 +340,13 @@
             <label for="C_PassportAdvertising">№ проекта ОДД</label>
             @Html.EditorFor(model => model.C_PassportAdvertising, new { htmlAttributes = new { @readonly = "" } })
 
-            <label for="DateOfTakenPassport">Дата выдачи паспорта</label>
+            <label for="DateOfTakenPassport">Дата выдачи проекта ОДД</label>
             @Html.EditorFor(model => model.DateOfTakenPassport, new { htmlAttributes = new { @readonly = "" } })
 
 
         </div>
 
-        <div class="form-group" style="margin-bottom: 5px">
+        <div class="form-group" style="margin-bottom: 5px; display: none;">
             <label for="StartDate">разреш с</label>
             @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @readonly = "" } })
 
@@ -364,7 +362,7 @@
             @if (ViewBag.ScanPassport_1)
             {
                 <p>
-                    <h3>@Html.Raw("Скан паспорта (стор 1) ")</h3><br />
+                    <h3>@Html.Raw("Скан проекта ОДД (стор 1) ")</h3><br />
                 </p>
                 string image = "/Images/ScanPassport_1Sides/" + ViewBag.Id + "passport.jpg";
                 <p>
@@ -373,7 +371,7 @@
             }
             else
             {
-                @Html.Raw("Скан паспорта (стор 1) отсутствует")<br />
+                @Html.Raw("Скан проекта ОДД (стор 1) отсутствует")<br />
             }
 
         </div>
@@ -382,7 +380,7 @@
             @if (ViewBag.ScanPassport_2)
             {
                 <p>
-                    <h3>@Html.Raw("Скан паспорта (стор 2) ")</h3><br />
+                    <h3>@Html.Raw("Скан проекта ОДД (стор 2) ")</h3><br />
                 </p>
                 string image = "/Images/ScanPassport_2Sides/" + ViewBag.Id + "ScanPassport_2Sides.jpg";
                 ;
@@ -392,7 +390,7 @@
             }
             else
             {
-                @Html.Raw("Скан паспорта (стор 2) отсутствует.")<br />
+                @Html.Raw("Скан проекта ОДД (стор 2) отсутствует.")<br />
             }
         </div>
     </div>
@@ -435,12 +433,7 @@
     }
     <h3> 4.Описание конструкции</h3>
     <hr />
-    <div class="form-group">
-        <label>Описание рамещаемой информации</label>
-        @Html.TextAreaFor(model => model.ContentInformationDescription, new {cols = "90", rows = "4"} )
-
-        @Html.ValidationMessageFor(model => model.ContentInformationDescription)
-    </div>
+    
         <div class="form-inline" style="display: none">
             
             <div class="form-group">
@@ -509,7 +502,12 @@
             @Html.TextBoxFor(model => model.Sides.FirstOrDefault().Surfaces.FirstOrDefault().Space, new { type = "number", SelectForSpace = "", onchange = "CalculationAS()" })
             @Html.ValidationMessageFor(model => model.Sides.FirstOrDefault().Surfaces.FirstOrDefault().Space)
         </div>
-        
+        <div class="form-group">
+            <label>Комментарии</label>
+            @Html.TextAreaFor(model => model.ContentInformationDescription, new { cols = "90", rows = "4" })
+
+            @Html.ValidationMessageFor(model => model.ContentInformationDescription)
+        </div>
 
 }
 @Html.ActionLink("Перейти к таблице конструкций", "AdvertisingDesign", null, new { @class = "btn btn-default" })
