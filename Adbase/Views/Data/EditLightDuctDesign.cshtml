@@ -65,9 +65,9 @@
 
 
         //отключение валидации
-        $.validator.methods.number = function (value, element) {
-            return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
-        }
+        //$.validator.methods.number = function (value, element) {
+        //    return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
+        //}
         //накручивание данных в поля
         //window.onload = SetCountSize();
         $("[identificationfordirectionside]").each(function(indx, element) {
@@ -131,7 +131,14 @@
         $("#ConstructionSquare").val(Summ);
     }
 
-
+    //$(document).ready(function(){
+    //    $("#test1").removeAttr("novalidate");
+    //    $("#test1").validate();
+    //    $("#Width").rules("add", {
+    //        min: 1
+    //    });
+    //});
+    
 </script>
 <h3> КАРТОЧКА СВЕТОВОГО КОРОБА</h3>
 @Scripts.Render("~/Content/Map")
@@ -173,7 +180,7 @@
     <div class="form-inline" style="margin-bottom: -10px">
         <hr />
 
-        <input type="hidden" id="CountSize" id="SizeOfCount" name="CountSize" value="">
+        <input type="hidden" id="CountSize" name="CountSize" value="">
         @Html.ValidationSummary(true)
         @Html.ValidationMessage("Error")
 

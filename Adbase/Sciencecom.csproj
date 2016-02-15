@@ -818,6 +818,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\SurfaceAdder.js" />
+    <Content Include="Scripts\SurfaceGeometryValidation.js" />
     <Content Include="Scripts\tests\index.html" />
     <Content Include="Scripts\tests\jquery-1.3.2.js" />
     <Content Include="Scripts\tests\jquery-1.4.1.js" />
