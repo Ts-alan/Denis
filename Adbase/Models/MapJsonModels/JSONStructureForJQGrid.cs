@@ -16,7 +16,9 @@ namespace Sciencecom.Models.MapJsonModels
         public String Количестов_поверхностей { get; set; }
         public String Площадь_конструкции { get; set; }
         public String Разреш_по { get; set; }
-        
+        public String id { get; set; }
+
+
         public JSONStructureForJQGrid(AdvertisingStructure adv)
         {
             int SurfaceCOunt = 0;
@@ -30,16 +32,21 @@ namespace Sciencecom.Models.MapJsonModels
                 }
 
             }
-            var dns = adv.Code == "BB" ? adv.House1 : adv.Support_;
-            Дом_Номер_опоры = dns;
+            
+            Дом_Номер_опоры = adv.Code == "BB" ? adv.House1 : adv.Support_; ;
             Площадь_конструкции = SurfaceSumm.ToString();
             Количество_сторон = adv.Sides.Count.ToString();
             Количестов_поверхностей = SurfaceCOunt.ToString();
-            Собственник = adv.OwnerName;
+            if (adv.Owner != null)
+            {
+                Собственник = adv.Owner.Name;
+            }
+            
             Вид_конструкции = adv.TypeOfAdvertisingStructure.Name;
             Населенный_пункт = adv.Locality.NameLocality;
             Улица = adv.Street1;
             Разреш_по = adv.EndDate.ToString();
+            id = adv.Id_show.ToString();
 
         }
     }

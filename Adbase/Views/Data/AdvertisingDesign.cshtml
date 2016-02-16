@@ -14,9 +14,6 @@
     var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
     ApplicationUser user = um.FindByName(User.Identity.GetUserName());
     string role = user.Roles.Select(m => m.Role.Name).First();
-    int SurfaceCOunt = 0;
-    int SurfaceSumm = 0;
-
 }
 
 
@@ -29,6 +26,33 @@
     {ReferenceLoopHandling = ReferenceLoopHandling.Ignore}));
 
     $(document).ready(function () {
+
+        $("#table").bind('DOMNodeInserted DOMNodeRemoved', function ()
+        {
+            var tr = $('#table  tr.ui-widget-content.jqgrow.ui-row-ltr:last ');
+            if (tr.length > 0)
+            {
+                
+                var sel = '#table  tr.ui-widget-content.jqgrow.ui-row-ltr[id="' + tr[0].id + '"] > td';
+                var tds = $(sel);
+                //console.log(tds[0].title);
+                //console.log(tr[0].id);
+                FunctionalFortable(tr, tds[0]);
+            }
+            
+        });
+
+        //$("#table").bind("jqGridBeforeSelectRow", function (e, rowid, orgClickEvent)
+        //{
+        //    alert("CLICKED");
+        //});jqGridDblClickRow
+
+        //$("#table").bind("jqGridDblClickRow", function (e, rowid, orgClickEvent)
+        //{
+        //    //alert("2CLICKED");
+        //    //console.log(rowid);
+        //    FunctionalFortable(rowid);
+        //});
 
         function HideRows() {
             //console.log($("tbody > tr"));
@@ -44,54 +68,54 @@
         tableToGrid("#table", {
             url: '@Url.Action("SearchAdvertisingDesign", "Data")',
             datatype: "json",
-            rowList: 20,
+            rowList: [10, 20, 30],
             //loadonce: true,
-            gridview: true, 
+            gridview: true,
             autoencode: true,
             pager: '#jpager',
-            jsonReader : {
+            jsonReader: {
                 root: "Data",
                 page: "page",
                 total: "Total",
                 records: "Records",
-                repeatitems: true
+                repeatitems: true,
                 //cell: "cell",
-                //id: "id",
+                id: "id"
                 //userdata: "userdata",
                 //subgrid: {root:"rows", 
                 //    repeatitems: true, 
                 //    cell:"cell"
                 //}
             },
-            rowNum : 10000,
-            height: 700,
+            //rowNum : 10000,
+            height: "100%",
             colNames: [
-                "Собственник", 
+                "Собственник",
                 "Вид конструкции",
                 "Населенный пункт",
-                "Улица", 
-                "Дом/Номер_опоры", 
-                "Количество сторон", 
+                "Улица",
+                "Дом/Номер_опоры",
+                "Количество сторон",
                 "Количестов поверхностей",
-                "Площадь конструкции", 
+                "Площадь конструкции",
                 "Разреш по"
             ],
-            forceFit:false,
+            forceFit: false,
 
-            cmTemplate:{"resizable": false,sortable:false},
+            cmTemplate: { "resizable": false, sortable: false },
             colModel: [
                 { name: "Собственник", align: "center" },
                 { name: "Вид_конструкции", align: "center" },
                 { name: "Населенный_пункт", align: "center" },
                 { name: "Улица", align: "center" },
-                { name: "ДомНомер_опоры", align: "center" },
+                { name: "Дом_Номер_опоры", align: "center" },
                 { name: "Количество_сторон", align: "center" },
                 { name: "Количестов_поверхностей", align: "center" },
                 { name: "Площадь_конструкции", align: "center" },
                 { name: "Разреш_по", align: "center" }
-
             ]
-        });
+            //jqGridDblClickRow: alert("OZOZA")
+    });
 
         //HideRows();
 
@@ -99,7 +123,7 @@
         $('#table').jqGrid('filterToolbar', {
             }
         );
-        $(".ui-jqgrid-bdiv").append("<h1 style=\"margin-left: 700px;margin-top: 300px\">Выберите параметры поиска</h1>");
+        //$(".ui-jqgrid-bdiv").append("<h1 style=\"margin-left: 700px;margin-top: 300px\">Выберите параметры поиска</h1>");
 
         //подсветка
         $('table tr').on("click", function () {
@@ -157,11 +181,11 @@
             });
         }
         //подсказка ,подсветка
-        function FunctionaFortable() {
+        function FunctionalFortable(tr, td1) {
 
             $(".ui-jqgrid-bdiv>h1").remove();
-            var sgrid = $("#table")[0];
-            sgrid.triggerToolbar();
+            //var sgrid = $("#table")[0];
+            //sgrid.triggerToolbar();
 
             $('.ui-widget-content.jqgrow.ui-row-ltr').on("click", function () {
 
@@ -173,11 +197,7 @@
 
             });
 
-
-            //поиск строк таблицы для навешивания событий
-            var tr = $('tr.ui-widget-content.jqgrow.ui-row-ltr ');
-
-
+            //console.log(tr[0].id);
             //выпадающее меню для всех типов строк
             tr.each(function (indx, element) {
                     //поиск ячейки в строке для считывания вида конструкции
@@ -190,9 +210,9 @@
                             offset: [0, -85],
                             hideEvent: 'focusout',
                             content: '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
-                                '+<a href="/Map/Index/'+Showonthemap[tr[indx].id-1]+'">Показать на карте</a></br>' +
-                                '+<a href="/Data/Pointer/'+Showonthemap[tr[indx].id-1]+'">Показать данные о конструкции</a></br>' +
-                                '+<a href="/Data/EditMetalPointerDesign/'+Showonthemap[tr[indx].id-1]+'">Изменить данные о конструкции</a></br>' +
+                                '+<a href="/Map/Index/'+$(element)[0].id+'">Показать на карте</a></br>' +
+                                '+<a href="/Data/Pointer/'+$(element)[0].id+'">Показать данные о конструкции</a></br>' +
+                                '+<a href="/Data/EditMetalPointerDesign/'+$(element)[0].id+'">Изменить данные о конструкции</a></br>' +
                                 '+<a  href="#DeleteStructures"  role="button" data-toggle="modal">Удалить конструкцию</a></br>' +
                                 '</button>',
                             show: function (e, $el) {
@@ -217,9 +237,9 @@
                             offset: [0, -85],
                             hideEvent: 'focusout',
                             content: '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
-                                '+<a href="/Map/Index/'+Showonthemap[tr[indx].id-1]+'">Показать на карте</a></br>' +
-                                '+<a href="/Data/Documents/'+Showonthemap[tr[indx].id-1]+'">Показать данные о конструкции</a></br>' +
-                                '+<a href="/Data/EditAdvertisingDesign/'+Showonthemap[tr[indx].id-1]+'">Изменить данные о конструкции</a></br>' +
+                                '+<a href="/Map/Index/'+$(element)[0].id+'">Показать на карте</a></br>' +
+                                '+<a href="/Data/Documents/'+$(element)[0].id+'">Показать данные о конструкции</a></br>' +
+                                '+<a href="/Data/EditAdvertisingDesign/'+$(element)[0].id+'">Изменить данные о конструкции</a></br>' +
                                 '+<a  href="#DeleteStructures"  role="button" data-toggle="modal">Удалить конструкцию</a></br>' +
                                 '</button>',
                             show: function (e, $el) {
@@ -238,13 +258,14 @@
                     if (td[0].title == "Световой короб") {
 
                         $(element).tooltipsy({
+
                             alignTo: 'cursor',
                             offset: [0, -85],
                             hideEvent: 'focusout',
                             content: '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
-                                '+<a href="/Map/Index/'+Showonthemap[tr[indx].id-1]+'">Показать на карте</a></br>' +
-                                '+<a href="/Data/LightDuct/'+Showonthemap[tr[indx].id-1]+'">Показать данные о конструкции</a></br>' +
-                                '+<a href="/Data/EditLightDuctDesign/'+Showonthemap[tr[indx].id-1]+'">Изменить данные о конструкции</a></br>' +
+                                '+<a href="/Map/Index/'+$(element)[0].id+'">Показать на карте</a></br>' +
+                                '+<a href="/Data/LightDuct/'+$(element)[0].id+'">Показать данные о конструкции</a></br>' +
+                                '+<a href="/Data/EditLightDuctDesign/'+$(element)[0].id+'">Изменить данные о конструкции</a></br>' +
                                 '+<a  href="#DeleteStructures"  role="button" data-toggle="modal">Удалить конструкцию</a></br>' +
                                 '</button>',
                             show: function (e, $el) {
@@ -305,7 +326,7 @@
                     }
 
                 });
-                FunctionaFortable();
+                FunctionalFortable();
             }
         }
 
@@ -314,7 +335,7 @@
            
             //$('table[id="table"] > tbody > tr:gt(8)').hide();
             PullData();
-            FunctionaFortable();
+            FunctionalFortable();
         });
         window.onload = SetDate();
 
@@ -322,14 +343,14 @@
         $(".clearsearchclass").switchClass("clearsearchclass", "clrsrchcls");
         $(".clrsrchcls").click(function() {
             //ClearSearch();
-            FunctionaFortable();
+            FunctionalFortable();
         });
 
         //Повторный вызов функции для навештивания событий по нажатию энтер в строке поиска
         $('.ui-widget-content.ui-corner-all').keypress(function(event) {
             if (event.keyCode == 13) {
                 // alert('Entered');
-                FunctionaFortable();
+                FunctionalFortable();
             }
         });
 

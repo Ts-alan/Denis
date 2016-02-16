@@ -150,10 +150,10 @@ namespace Sciencecom.Controllers
 
         }
 
-        public JsonResult SearchAdvertisingDesign(int page, string sidx, string sord)
+        public JsonResult SearchAdvertisingDesign(int page, string sidx, string sord, int rows)
         {
             int adsCount = context.AdvertisingStructures.Count();
-            double del = adsCount/20;
+            double del = adsCount/rows;
             JSONStructureForJQGrid js;
             JSONTableData jd = new JSONTableData();
             jd.Page = page.ToString();
@@ -163,7 +163,7 @@ namespace Sciencecom.Controllers
             jd.Total = (int)Math.Ceiling(del) + 1;
             //jd.Records = 20;
             jd.Data = new List<JSONStructureForJQGrid>();
-            var adbvertisingList = context.AdvertisingStructures.OrderBy(o => o.Id).Skip((page - 1)*20).Take(20).ToList();
+            var adbvertisingList = context.AdvertisingStructures.OrderBy(o => o.Id).Skip((page - 1)*rows).Take(rows).ToList();
            // var adbvertisingList = context.AdvertisingStructures.OrderBy(o => o.Id).ToList();
             foreach (AdvertisingStructure structure in adbvertisingList)
             {
