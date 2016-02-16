@@ -12,6 +12,7 @@ namespace Sciencecom
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            AutoMapperConfig.RegisterMappings();
         }
 
 //        protected void Application_Error(object sender, EventArgs e)

@@ -37,17 +37,44 @@
             //        $(element).hide();
             //    }
             //);
-            $('tbody > tr').hide();
+            $('table[id="table"] > tbody > tr').hide();
 
         }
         //создание таблицы
         tableToGrid("#table", {
+            url: '@Url.Action("SearchAdvertisingDesign", "Data")',
+            datatype: "json",
+            rowList: 20,
+            //loadonce: true,
+            gridview: true, 
+            autoencode: true,
+            pager: '#jpager',
+            jsonReader : {
+                root: "Data",
+                page: "page",
+                total: "Total",
+                records: "Records",
+                repeatitems: true
+                //cell: "cell",
+                //id: "id",
+                //userdata: "userdata",
+                //subgrid: {root:"rows", 
+                //    repeatitems: true, 
+                //    cell:"cell"
+                //}
+            },
             rowNum : 10000,
             height: 700,
             colNames: [
-                "Собственник", "Вид конструкции",
-                "Населенный пункт","Улица", "Дом/Номер_опоры", "Количество сторон", "Количестов поверхностей",
-                "Площадь конструкции", "Разреш по"
+                "Собственник", 
+                "Вид конструкции",
+                "Населенный пункт",
+                "Улица", 
+                "Дом/Номер_опоры", 
+                "Количество сторон", 
+                "Количестов поверхностей",
+                "Площадь конструкции", 
+                "Разреш по"
             ],
             forceFit:false,
 
@@ -57,7 +84,7 @@
                 { name: "Вид_конструкции", align: "center" },
                 { name: "Населенный_пункт", align: "center" },
                 { name: "Улица", align: "center" },
-                { name: "Дом/Номер_опоры", align: "center" },
+                { name: "ДомНомер_опоры", align: "center" },
                 { name: "Количество_сторон", align: "center" },
                 { name: "Количестов_поверхностей", align: "center" },
                 { name: "Площадь_конструкции", align: "center" },
@@ -66,7 +93,7 @@
             ]
         });
 
-        HideRows();
+        //HideRows();
 
         //Поиск
         $('#table').jqGrid('filterToolbar', {
@@ -282,8 +309,10 @@
             }
         }
 
-        $("#search").click(function () {
-            $('tbody > tr:gt(8)').hide();
+        $("#search").click(function ()
+        {
+           
+            //$('table[id="table"] > tbody > tr:gt(8)').hide();
             PullData();
             FunctionaFortable();
         });
@@ -362,56 +391,59 @@
                 <th>Разреш_по</th>
 
             </tr>
-            @foreach (var i in Model)
+           @* @foreach (var i in Model)
+    {
+        foreach (var side in i.Sides)
+        {
+            SurfaceCOunt += side.Surfaces.Count;
+            foreach (var Surface in side.Surfaces)
             {
-                foreach (var side in i.Sides)
-                {
-                    SurfaceCOunt += side.Surfaces.Count;
-                    foreach (var Surface in side.Surfaces)
-                    {
-                        SurfaceSumm += Surface.Space;
-                    }
-
-                }
-                <tr style="display:none;">
-
-
-                    <td>@if (i.Owner != null)
-                        {
-                            @i.Owner.Name
-                        } </td>
-                    <td>@i.TypeOfAdvertisingStructure.Name</td>
-                    <td>@i.Locality.NameLocality</td>
-                    <td>@i.Street1</td>
-                    <td> 
-                        @{
-                            if (i.Code == "MP" | i.Code == "LD")
-                            {
-                                @i.Support_;
-                                
-                            }
-                            else
-                            {
-                                @i.House1;
-                            }
-                        }
-                    </td>
-                    <td>@i.Sides.Count</td>
-                    <td>@SurfaceCOunt</td>
-                    <td>@SurfaceSumm</td>
-
-                    <td>@if (i.EndDate != null)
-                        {
-                            @i.EndDate.ToString().Substring(0, 10)
-                        }
-                    </td>
-
-                </tr>
-                SurfaceCOunt = 0;
-                SurfaceSumm = 0;
+                SurfaceSumm += Surface.Space;
             }
 
+        }
+        <tr style="display: none;">
+
+
+            <td>@if (i.Owner != null)
+                {
+                    @i.Owner.Name
+                } </td>
+            <td>@i.TypeOfAdvertisingStructure.Name</td>
+            <td>@i.Locality.NameLocality</td>
+            <td>@i.Street1</td>
+            <td>
+                @{
+                    if (i.Code == "MP" | i.Code == "LD")
+                    {
+                        @i.Support_
+                        ;
+
+                    }
+                    else
+                    {
+                        @i.House1
+                        ;
+                    }
+                }
+            </td>
+            <td>@i.Sides.Count</td>
+            <td>@SurfaceCOunt</td>
+            <td>@SurfaceSumm</td>
+
+            <td>@if (i.EndDate != null)
+                {
+                    @i.EndDate.ToString().Substring(0, 10)
+                }
+            </td>
+
+        </tr>
+        SurfaceCOunt = 0;
+        SurfaceSumm = 0;
+    }*@
+
         </table>
+        <div id="jpager"></div>
     </div>
 </div>
 <!-- Modal -->

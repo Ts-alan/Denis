@@ -5,7 +5,9 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
+using Newtonsoft.Json;
+using Sciencecom.Models.MapJsonModels;
+using WebGrease.Css.Extensions;
 
 namespace Sciencecom.Controllers
 {
@@ -147,7 +149,31 @@ namespace Sciencecom.Controllers
             return View(data);
 
         }
-        
+
+        public JsonResult SearchAdvertisingDesign(int page, string sidx, string sord)
+        {
+            int adsCount = context.AdvertisingStructures.Count();
+            double del = adsCount/20;
+            JSONStructureForJQGrid js;
+            JSONTableData jd = new JSONTableData();
+            jd.Page = page.ToString();
+            //jd.PageSize = 20;
+            jd.SortColumn = sidx;
+            jd.SortOrder = sord;
+            jd.Total = (int)Math.Ceiling(del) + 1;
+            //jd.Records = 20;
+            jd.Data = new List<JSONStructureForJQGrid>();
+            var adbvertisingList = context.AdvertisingStructures.OrderBy(o => o.Id).Skip((page - 1)*20).Take(20).ToList();
+           // var adbvertisingList = context.AdvertisingStructures.OrderBy(o => o.Id).ToList();
+            foreach (AdvertisingStructure structure in adbvertisingList)
+            {
+                js = new JSONStructureForJQGrid(structure);
+                jd.Data.Add(js);
+            }
+            
+            //var json = Controller.Json(ADStoJSONList);
+            return Json(jd, JsonRequestBehavior.AllowGet);
+        }
 
         [Authorize(Roles = "Admin, ChiefEditAll,ChiefEditOwn, SupplierEditAll, SupplierEditOwn")]
         public ActionResult DeleteAdvertisingDesign(int? id,string switchtoMap)
