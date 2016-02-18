@@ -150,29 +150,88 @@ namespace Sciencecom.Controllers
 
         }
 
-        public JsonResult SearchAdvertisingDesign(int page, string sidx, string sord, int rows)
+        public JsonResult SearchAdvertisingDesign(int page, string sidx, string sord, 
+            int rows, string Собственник, string Вид_конструкции, string Населенный_пункт, 
+            string Улица, string Дом_Номер_опоры, string Количество_сторон, string Количестов_поверхностей, 
+            string Площадь_конструкции, string Разреш_по)
+
         {
-            int adsCount = context.AdvertisingStructures.Count();
-            double del = adsCount/rows;
+            List<String> filters = new List<string>()
+            {
+                Собственник, Вид_конструкции, Населенный_пункт,
+                Улица, Дом_Номер_опоры, Количество_сторон, Количестов_поверхностей,
+                Площадь_конструкции, Разреш_по
+            };
+            
             JSONStructureForJQGrid js;
             JSONTableData jd = new JSONTableData();
             jd.Page = page.ToString();
-            //jd.PageSize = 20;
             jd.SortColumn = sidx;
             jd.SortOrder = sord;
-            jd.Total = (int)Math.Ceiling(del) + 1;
-            //jd.Records = 20;
+            
             jd.Data = new List<JSONStructureForJQGrid>();
-            var adbvertisingList = context.AdvertisingStructures.OrderBy(o => o.Id).Skip((page - 1)*rows).Take(rows).ToList();
-           // var adbvertisingList = context.AdvertisingStructures.OrderBy(o => o.Id).ToList();
-            foreach (AdvertisingStructure structure in adbvertisingList)
+            //var adbvertisingList = context.AdvertisingStructures.OrderBy(o => o.Id).Skip((page - 1)*rows).Take(rows).ToList();
+            var adbvertisingList = context.AdvertisingStructures.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(Собственник))
+            {
+                adbvertisingList = adbvertisingList.Where(x => x.Owner.Name.Contains(Собственник));
+            }
+            if (!string.IsNullOrWhiteSpace(Вид_конструкции))
+            {
+                adbvertisingList = adbvertisingList.Where(x => x.TypeOfAdvertisingStructure.Name.Contains(Вид_конструкции));
+            }
+            if (!string.IsNullOrWhiteSpace(Населенный_пункт))
+            {
+                adbvertisingList = adbvertisingList.Where(x => x.Locality.NameLocality.Contains(Населенный_пункт));
+            }
+            if (!string.IsNullOrWhiteSpace(Улица))
+            {
+                adbvertisingList = adbvertisingList.Where(x => x.Street1.Contains(Улица));
+            }
+            if (!string.IsNullOrWhiteSpace(Дом_Номер_опоры))
+            {
+                adbvertisingList = adbvertisingList.Where(x => x.Support_.Contains(Дом_Номер_опоры) | x.House1.Contains(Дом_Номер_опоры));
+            }
+            if (!string.IsNullOrWhiteSpace(Количество_сторон))
+            {
+                adbvertisingList = adbvertisingList.Where(x => x.Sides.Count().ToString() == Количество_сторон);
+            }
+            if (!string.IsNullOrWhiteSpace(Количестов_поверхностей))
+            {
+                adbvertisingList = adbvertisingList.Where(x => CountSurfaces(x).ToString() == Количестов_поверхностей);
+            }
+            if (!string.IsNullOrWhiteSpace(Площадь_конструкции))
+            {
+                adbvertisingList = adbvertisingList.Where(x => CountSquare(x).ToString() == Площадь_конструкции);
+            }
+            if (!string.IsNullOrWhiteSpace(Разреш_по))
+            {
+                adbvertisingList = adbvertisingList.Where(x => x.EndDate.ToString().Contains(Разреш_по));
+            }
+
+            int adsCount = adbvertisingList.ToList().Count;
+            double del = adsCount / rows;
+            jd.Total = (int)Math.Ceiling(del) + 1;
+            var filteredLifst = adbvertisingList.OrderBy(o => o.Id).Skip((page - 1) * rows).Take(rows).ToList();
+
+            foreach (AdvertisingStructure structure in filteredLifst)
             {
                 js = new JSONStructureForJQGrid(structure);
                 jd.Data.Add(js);
             }
-            
-            //var json = Controller.Json(ADStoJSONList);
+           
             return Json(jd, JsonRequestBehavior.AllowGet);
+        }
+
+        private int CountSquare(AdvertisingStructure adv)
+        {
+            return adv.Sides.SelectMany(side => side.Surfaces).Sum(Surface => Surface.Space);
+        }
+
+        private int CountSurfaces(AdvertisingStructure adv)
+        {
+            return adv.Sides.Sum(side => side.Surfaces.Count);
         }
 
         [Authorize(Roles = "Admin, ChiefEditAll,ChiefEditOwn, SupplierEditAll, SupplierEditOwn")]

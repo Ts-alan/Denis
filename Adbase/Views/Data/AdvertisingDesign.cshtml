@@ -27,42 +27,54 @@
 
     $(document).ready(function () {
 
+        //$(document).on("click", function() {
+        //    $(".HideClass")
+        //});
+
+        $(document).dblclick(function (e) {
+            //накручивание индекса к пути удалить
+            //$('[href="/Data/DeleteAdvertisingDesign"]').
+            //    attr("href","/Data/DeleteAdvertisingDesign/"+(Showonthemap[($(e.target).closest("tr").attr("id")-1)])+"") ;
+            //alert(document.activeElement.getAttribute("class"));
+            if (document.activeElement.getAttribute("class") != "HideClass")
+            {
+                var ssd = $(".HideClass");
+                if (ssd.length > 0)
+                {
+                    // $('.tr.ui-widget-content.jqgrow.ui-row-ltr').data('tooltipsy').hide();
+                    $('div[id^="tooltipsy"]').hide();
+                }
+               
+            }
+            //    $SaveIdForHideTooltip = document.activeElement.getAttribute("id")-1;
+            //}
+        });
+
+        //$(document).click(function () {
+            //var info = document.activeElement;
+           // alert(document.activeElement.getAttribute("class"));
+            //if (info.getAttribute("class") != "HideClass") 
+            //{
+            //    $('[hide=' + $SaveIdForHideTooltip + ']').parent().parent().hide();
+            //};
+        //});
+
         $("#table").bind('DOMNodeInserted DOMNodeRemoved', function ()
         {
             var tr = $('#table  tr.ui-widget-content.jqgrow.ui-row-ltr:last ');
             if (tr.length > 0)
             {
-                
                 var sel = '#table  tr.ui-widget-content.jqgrow.ui-row-ltr[id="' + tr[0].id + '"] > td';
                 var tds = $(sel);
                 //console.log(tds[0].title);
                 //console.log(tr[0].id);
                 FunctionalFortable(tr, tds[0]);
             }
-            
         });
 
-        //$("#table").bind("jqGridBeforeSelectRow", function (e, rowid, orgClickEvent)
-        //{
-        //    alert("CLICKED");
-        //});jqGridDblClickRow
-
-        //$("#table").bind("jqGridDblClickRow", function (e, rowid, orgClickEvent)
-        //{
-        //    //alert("2CLICKED");
-        //    //console.log(rowid);
-        //    FunctionalFortable(rowid);
-        //});
-
-        function HideRows() {
-            //console.log($("tbody > tr"));
-            //$('tbody > tr').each(
-            //    function (indx, element) {
-            //        $(element).hide();
-            //    }
-            //);
+        function HideRows() 
+        {
             $('table[id="table"] > tbody > tr').hide();
-
         }
         //создание таблицы
         tableToGrid("#table", {
@@ -113,16 +125,45 @@
                 { name: "Количестов_поверхностей", align: "center" },
                 { name: "Площадь_конструкции", align: "center" },
                 { name: "Разреш_по", align: "center" }
-            ]
-            //jqGridDblClickRow: alert("OZOZA")
+            ],
+            onSearch:function(){$(this).setGridParam({datatype: 'json'});
+                return true;
+            },
+            onReset:function(){$(this).setGridParam({datatype: 'json'});
+                return true;
+            }
+            //onPaging:function(){
+
+            //    /*this code  is to fix the issue when we click on next page with some data in filter tool bar
+            //     * along with this in grid definition( in filterToolbar ) we have to return true in "beforeClear "event 
+            //     * */
+            //    var data = $(this).jqGrid("getGridParam", "postData");
+            //    data._search = false;
+            //    data.filters=null;
+            //    data.page=$(this).jqGrid("getGridParam","page");
+            //    $(this)[0].clearToolbar();
+            //    //Here making _search alone false will not solve problem, we have to make search also false. like in below.
+            //    $(this).jqGrid('setGridParam', { search: false, postData:data });
+            //    var data = $(this).jqGrid("getGridParam", "postData");
+
+
+            //    /*this is to fix the issue when we go to last page(say there are only 3 records and page size is 5) and click 
+            //     * on sorting the grid fetches previously loaded data (may be from its buffer) and displays 5 records  
+            //     * where in i am expecting only 3 records to be sorted out.along with this in source code comment the line $t.p.records = 0;$t.p.page=1;$t.p.lastpage=0;
+            //     */ 
+
+            //    $(this).jqGrid("clearGridData");
+
+            //    /* this is to make the grid to fetch data from server on page click*/
+
+            //    $(this).setGridParam({datatype: 'json'}).triggerHandler("reloadGrid");
+            //}
     });
 
         //HideRows();
 
         //Поиск
-        $('#table').jqGrid('filterToolbar', {
-            }
-        );
+        $('#table').jqGrid('filterToolbar', {searchOnEnter:false,beforeClear:function(){return true;}});
         //$(".ui-jqgrid-bdiv").append("<h1 style=\"margin-left: 700px;margin-top: 300px\">Выберите параметры поиска</h1>");
 
         //подсветка
@@ -356,24 +397,24 @@
 
     });
 
-    $("html").dblclick(function (e) {
-        //накручивание индекса к пути удалить
-        $('[href="/Data/DeleteAdvertisingDesign"]').
-            attr("href","/Data/DeleteAdvertisingDesign/"+(Showonthemap[($(e.target).closest("tr").attr("id")-1)])+"") ;
+    //$(document).dblclick(function (e) {
+    //    //накручивание индекса к пути удалить
+    //    $('[href="/Data/DeleteAdvertisingDesign"]').
+    //        attr("href","/Data/DeleteAdvertisingDesign/"+(Showonthemap[($(e.target).closest("tr").attr("id")-1)])+"") ;
 
-        if (document.activeElement.getAttribute("class") != "HideClass") {
-            $SaveIdForHideTooltip = document.activeElement.getAttribute("id")-1;
-        }
-    });
+    //    if (document.activeElement.getAttribute("class") != "HideClass") {
+    //        $SaveIdForHideTooltip = document.activeElement.getAttribute("id")-1;
+    //    }
+    //});
 
-    $("html").click(function () {
-        var info = document.activeElement;
+    //$(document).click(function () {
+    //    var info = document.activeElement;
 
-        if (info.getAttribute("class") != "HideClass") {
-            $('[hide=' + $SaveIdForHideTooltip + ']').parent().parent().hide();
-
-        };
-    });
+    //    if (info.getAttribute("class") != "HideClass") 
+    //    {
+    //        $('[hide=' + $SaveIdForHideTooltip + ']').parent().parent().hide();
+    //    };
+    //});
 </script>
 @*чтобы jqgtid разбивал на несколько строк*@
 <style type="text/css" media="screen">
@@ -410,58 +451,7 @@
                 <th> Количестов_поверхностей</th>
                 <th>Площадь_конструкции</th>
                 <th>Разреш_по</th>
-
             </tr>
-           @* @foreach (var i in Model)
-    {
-        foreach (var side in i.Sides)
-        {
-            SurfaceCOunt += side.Surfaces.Count;
-            foreach (var Surface in side.Surfaces)
-            {
-                SurfaceSumm += Surface.Space;
-            }
-
-        }
-        <tr style="display: none;">
-
-
-            <td>@if (i.Owner != null)
-                {
-                    @i.Owner.Name
-                } </td>
-            <td>@i.TypeOfAdvertisingStructure.Name</td>
-            <td>@i.Locality.NameLocality</td>
-            <td>@i.Street1</td>
-            <td>
-                @{
-                    if (i.Code == "MP" | i.Code == "LD")
-                    {
-                        @i.Support_
-                        ;
-
-                    }
-                    else
-                    {
-                        @i.House1
-                        ;
-                    }
-                }
-            </td>
-            <td>@i.Sides.Count</td>
-            <td>@SurfaceCOunt</td>
-            <td>@SurfaceSumm</td>
-
-            <td>@if (i.EndDate != null)
-                {
-                    @i.EndDate.ToString().Substring(0, 10)
-                }
-            </td>
-
-        </tr>
-        SurfaceCOunt = 0;
-        SurfaceSumm = 0;
-    }*@
 
         </table>
         <div id="jpager"></div>
