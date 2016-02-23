@@ -9,7 +9,6 @@
     AjaxOptions ajax = new AjaxOptions
     {
         UpdateTargetId = "billboardsTable"
-
     };
     var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
     ApplicationUser user = um.FindByName(User.Identity.GetUserName());
@@ -22,16 +21,17 @@
 <script type="text/javascript">
     var $SaveIdForHideTooltip;
     var $Tablebacklight;
-    var Showonthemap=@Html.Raw(JsonConvert.SerializeObject(Model.Select(a=>a.Id_show), Formatting.Indented, new JsonSerializerSettings
-    {ReferenceLoopHandling = ReferenceLoopHandling.Ignore}));
+    var Showonthemap = @Html.Raw(JsonConvert.SerializeObject(Model.Select(a => a.Id_show), Formatting.Indented, new JsonSerializerSettings
+                       {ReferenceLoopHandling = ReferenceLoopHandling.Ignore}));
 
-    $(document).ready(function () {
-
+    $(document).ready(function()
+    {
         //$(document).on("click", function() {
         //    $(".HideClass")
         //});
 
-        $(document).dblclick(function (e) {
+        $(document).dblclick(function(e)
+        {
             //накручивание индекса к пути удалить
             //$('[href="/Data/DeleteAdvertisingDesign"]').
             //    attr("href","/Data/DeleteAdvertisingDesign/"+(Showonthemap[($(e.target).closest("tr").attr("id")-1)])+"") ;
@@ -44,22 +44,21 @@
                     // $('.tr.ui-widget-content.jqgrow.ui-row-ltr').data('tooltipsy').hide();
                     $('div[id^="tooltipsy"]').hide();
                 }
-               
             }
             //    $SaveIdForHideTooltip = document.activeElement.getAttribute("id")-1;
             //}
         });
 
         //$(document).click(function () {
-            //var info = document.activeElement;
-           // alert(document.activeElement.getAttribute("class"));
-            //if (info.getAttribute("class") != "HideClass") 
-            //{
-            //    $('[hide=' + $SaveIdForHideTooltip + ']').parent().parent().hide();
-            //};
+        //var info = document.activeElement;
+        // alert(document.activeElement.getAttribute("class"));
+        //if (info.getAttribute("class") != "HideClass") 
+        //{
+        //    $('[hide=' + $SaveIdForHideTooltip + ']').parent().parent().hide();
+        //};
         //});
 
-        $("#table").bind('DOMNodeInserted DOMNodeRemoved', function ()
+        $("#table").bind('DOMNodeInserted DOMNodeRemoved', function()
         {
             var tr = $('#table  tr.ui-widget-content.jqgrow.ui-row-ltr:last ');
             if (tr.length > 0)
@@ -72,10 +71,11 @@
             }
         });
 
-        function HideRows() 
+        function HideRows()
         {
             $('table[id="table"] > tbody > tr').hide();
         }
+
         //создание таблицы
         tableToGrid("#table", {
             url: '@Url.Action("SearchAdvertisingDesign", "Data")',
@@ -126,10 +126,14 @@
                 { name: "Площадь_конструкции", align: "center" },
                 { name: "Разреш_по", align: "center" }
             ],
-            onSearch:function(){$(this).setGridParam({datatype: 'json'});
+            onSearch: function()
+            {
+                $(this).setGridParam({ datatype: 'json' });
                 return true;
             },
-            onReset:function(){$(this).setGridParam({datatype: 'json'});
+            onReset: function()
+            {
+                $(this).setGridParam({ datatype: 'json' });
                 return true;
             }
             //onPaging:function(){
@@ -158,56 +162,68 @@
 
             //    $(this).setGridParam({datatype: 'json'}).triggerHandler("reloadGrid");
             //}
-    });
+        });
 
         //HideRows();
 
         //Поиск
-        $('#table').jqGrid('filterToolbar', {searchOnEnter:false,beforeClear:function(){return true;}});
+        $('#table').jqGrid('filterToolbar', { searchOnEnter: false, beforeClear: function() { return true; } });
         //$(".ui-jqgrid-bdiv").append("<h1 style=\"margin-left: 700px;margin-top: 300px\">Выберите параметры поиска</h1>");
 
         //подсветка
-        $('table tr').on("click", function () {
-
-            if (typeof $Tablebacklight != 'undefined') {
+        $('table tr').on("click", function()
+        {
+            if (typeof $Tablebacklight != 'undefined')
+            {
                 $Tablebacklight.css("background-color", "");
             }
             $Tablebacklight = $(this);
             $Tablebacklight.css("background", "#ADDEFF");
-
         });
         //спрятать убрать всплывающие окна
-        $("#AddNewAD").click(function () {
-            if ($('#divForAddNewAD').css("visibility") == "hidden") {
+        $("#AddNewAD").click(function()
+        {
+            if ($('#divForAddNewAD').css("visibility") == "hidden")
+            {
                 $('#divForAddNewAD').css("visibility", "visible");
-            } else {
+            } else
+            {
                 $('#divForAddNewAD').css("visibility", "hidden");
             }
         });
-        $("#EditStatusAD").click(function () {
-            if ($('#divEditStatusAD').css("visibility") == "hidden") {
+        $("#EditStatusAD").click(function()
+        {
+            if ($('#divEditStatusAD').css("visibility") == "hidden")
+            {
                 $('#divEditStatusAD').css("visibility", "visible");
-            } else {
+            } else
+            {
                 $('#divEditStatusAD').css("visibility", "hidden");
             }
         });
         //переход через ajax на edit billbord
-        $('#EditBillbord').click(function () {
-            if ($Tablebacklight != "undefined") {
+        $('#EditBillbord').click(function()
+        {
+            if ($Tablebacklight != "undefined")
+            {
                 var IdGuid = $Tablebacklight.children("td:last").children().text();
-                $.get('@Url.Action("EditAdvertisingDesign", "Data")', { id: IdGuid }).success(function(result) {
+                $.get('@Url.Action("EditAdvertisingDesign", "Data")', { id: IdGuid }).success(function(result)
+                {
                     $("#Page").html(result);
-                }).error(function() {
+                }).error(function()
+                {
                     alert("что то пошло не так");
                 });
             }
         });
 
         //собираем данные из поиска
-        function PullData() {
-            var collectionMap =[];
-            $(".ui-state-default .ui-th-ltr input").each(function(indx, element) {
-                collectionMap.push({ id: $(element).attr("id"), value:  $(element).val().toString() });
+        function PullData()
+        {
+            var collectionMap = [];
+            $(".ui-state-default .ui-th-ltr input").each(function(indx, element)
+            {
+                collectionMap.push({ id: $(element).attr("id"), value: $(element).val().toString() });
             });
 
             var test = JSON.stringify(collectionMap);
@@ -216,31 +232,34 @@
                 url: '@Url.Action("SaveSearch", "BackEndServices")',
                 data: { collectionMap: test },
                 type: 'POST',
-                success: function(e) {
+                success: function(e)
+                {
                     //alert(e);
                 }
             });
         }
-        //подсказка ,подсветка
-        function FunctionalFortable(tr, td1) {
 
+        //подсказка ,подсветка
+        function FunctionalFortable(tr, td1)
+        {
             $(".ui-jqgrid-bdiv>h1").remove();
             //var sgrid = $("#table")[0];
             //sgrid.triggerToolbar();
 
-            $('.ui-widget-content.jqgrow.ui-row-ltr').on("click", function () {
-
-                if (typeof $Tablebacklight != 'undefined') {
+            $('.ui-widget-content.jqgrow.ui-row-ltr').on("click", function()
+            {
+                if (typeof $Tablebacklight != 'undefined')
+                {
                     $Tablebacklight.css("background-color", "");
                 }
                 $Tablebacklight = $(this);
                 $Tablebacklight.css("background", "#ADDEFF");
-
             });
 
             //console.log(tr[0].id);
             //выпадающее меню для всех типов строк
-            tr.each(function (indx, element) {
+            tr.each(function(indx, element)
+                {
                     //поиск ячейки в строке для считывания вида конструкции
                     var td = $(this).find('[aria-describedby="table_Вид_конструкции"]');
                     //выпадающее меню для указателей
@@ -251,17 +270,17 @@
                             offset: [0, -85],
                             hideEvent: 'focusout',
                             content: '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
-                                '+<a href="/Map/Index/'+$(element)[0].id+'">Показать на карте</a></br>' +
-                                '+<a href="/Data/Pointer/'+$(element)[0].id+'">Показать данные о конструкции</a></br>' +
-                                '+<a href="/Data/EditMetalPointerDesign/'+$(element)[0].id+'">Изменить данные о конструкции</a></br>' +
-                                '+<a  href="#DeleteStructures"  role="button" data-toggle="modal">Удалить конструкцию</a></br>' +
+                                '+<a href="/Map/Index/' + $(element)[0].id + '">Показать на карте</a></br>' +
+                                '+<a href="/Data/Pointer/' + $(element)[0].id + '">Показать данные о конструкции</a></br>' +
+                                '+<a href="/Data/EditMetalPointerDesign/' + $(element)[0].id + '">Изменить данные о конструкции</a></br>' +
+                                '+<a  href="/Data/DeleteAdvertisingDesign/'+ $(element)[0].id +'">Удалить конструкцию</a></br>' +
                                 '</button>',
-                            show: function (e, $el) {
-
+                            show: function(e, $el)
+                            {
                                 $el.show(100);
                             },
-                            hide: function (e, $el) {
-
+                            hide: function(e, $el)
+                            {
                             },
                             delay: 200,
                             className: 'tooltipsy',
@@ -278,17 +297,17 @@
                             offset: [0, -85],
                             hideEvent: 'focusout',
                             content: '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
-                                '+<a href="/Map/Index/'+$(element)[0].id+'">Показать на карте</a></br>' +
-                                '+<a href="/Data/Documents/'+$(element)[0].id+'">Показать данные о конструкции</a></br>' +
-                                '+<a href="/Data/EditAdvertisingDesign/'+$(element)[0].id+'">Изменить данные о конструкции</a></br>' +
-                                '+<a  href="#DeleteStructures"  role="button" data-toggle="modal">Удалить конструкцию</a></br>' +
+                                '+<a href="/Map/Index/' + $(element)[0].id + '">Показать на карте</a></br>' +
+                                '+<a href="/Data/Documents/' + $(element)[0].id + '">Показать данные о конструкции</a></br>' +
+                                '+<a href="/Data/EditAdvertisingDesign/' + $(element)[0].id + '">Изменить данные о конструкции</a></br>' +
+                                '+<a href="/Data/DeleteAdvertisingDesign/'+ $(element)[0].id +'">Удалить конструкцию</a></br>' +
                                 '</button>',
-                            show: function (e, $el) {
-
+                            show: function(e, $el)
+                            {
                                 $el.show(100);
                             },
-                            hide: function (e, $el) {
-
+                            hide: function(e, $el)
+                            {
                             },
                             delay: 200,
                             className: 'tooltipsy',
@@ -296,25 +315,24 @@
                         });
                     }
                     //выпадающее меню для световых коробов
-                    if (td[0].title == "Световой короб") {
-
+                    if (td[0].title == "Световой короб")
+                    {
                         $(element).tooltipsy({
-
                             alignTo: 'cursor',
                             offset: [0, -85],
                             hideEvent: 'focusout',
                             content: '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
-                                '+<a href="/Map/Index/'+$(element)[0].id+'">Показать на карте</a></br>' +
-                                '+<a href="/Data/LightDuct/'+$(element)[0].id+'">Показать данные о конструкции</a></br>' +
-                                '+<a href="/Data/EditLightDuctDesign/'+$(element)[0].id+'">Изменить данные о конструкции</a></br>' +
-                                '+<a  href="#DeleteStructures"  role="button" data-toggle="modal">Удалить конструкцию</a></br>' +
+                                '+<a href="/Map/Index/' + $(element)[0].id + '">Показать на карте</a></br>' +
+                                '+<a href="/Data/LightDuct/' + $(element)[0].id + '">Показать данные о конструкции</a></br>' +
+                                '+<a href="/Data/EditLightDuctDesign/' + $(element)[0].id + '">Изменить данные о конструкции</a></br>' +
+                                '+<a  href="/Data/DeleteAdvertisingDesign/'+ $(element)[0].id +'">Удалить конструкцию</a></br>' +
                                 '</button>',
-                            show: function (e, $el) {
-
+                            show: function(e, $el)
+                            {
                                 $el.show(100);
                             },
-                            hide: function (e, $el) {
-
+                            hide: function(e, $el)
+                            {
                             },
                             delay: 200,
                             className: 'tooltipsy',
@@ -329,17 +347,17 @@
                             offset: [0, -85],
                             hideEvent: 'focusout',
                             content: '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
-                                '+<a href="/Map/Index/'+Showonthemap[tr[indx].id-1]+'">Показать на карте</a></br>' +
-                                '+<a href="/Data/Illegal/'+Showonthemap[tr[indx].id-1]+'">Показать данные о конструкции</a></br>' +
-                                '+<a href="/Data/EditIllegalDesign/'+Showonthemap[tr[indx].id-1]+'">Изменить данные о конструкции</a></br>' +
-                                '+<a  href="#DeleteStructures"  role="button" data-toggle="modal">Удалить конструкцию</a></br>' +
+                                '+<a href="/Map/Index/' + Showonthemap[tr[indx].id - 1] + '">Показать на карте</a></br>' +
+                                '+<a href="/Data/Illegal/' + Showonthemap[tr[indx].id - 1] + '">Показать данные о конструкции</a></br>' +
+                                '+<a href="/Data/EditIllegalDesign/' + Showonthemap[tr[indx].id - 1] + '">Изменить данные о конструкции</a></br>' +
+                                '+<a  href="/Data/DeleteAdvertisingDesign/'+ $(element)[0].id +'">Удалить конструкцию</a></br>' +
                                 '</button>',
-                            show: function (e, $el) {
-
+                            show: function(e, $el)
+                            {
                                 $el.show(100);
                             },
-                            hide: function (e, $el) {
-
+                            hide: function(e, $el)
+                            {
                             },
                             delay: 200,
                             className: 'tooltipsy',
@@ -351,29 +369,29 @@
         }
 
 
-        function SetDate() {
+        function SetDate()
+        {
             var collectionMap;
             if ('@(Html.Raw(Session["collectionMap"]))' != '[]' && '@(Html.Raw(Session["collectionMap"]))' != '')
             {
-                collectionMap = JSON.parse('@(Html.Raw(Session["collectionMap"]))') ;
+                collectionMap = JSON.parse('@(Html.Raw(Session["collectionMap"]))');
             }
-            
-            if(collectionMap != "[]" &&  collectionMap != '' &&  collectionMap != undefined){
-                $(".ui-state-default .ui-th-ltr input").each(function(indx, element) {
-                   
+
+            if (collectionMap != "[]" && collectionMap != '' && collectionMap != undefined)
+            {
+                $(".ui-state-default .ui-th-ltr input").each(function(indx, element)
+                {
                     if (collectionMap != undefined)
                     {
-                     $(element).val(collectionMap[indx].value);
+                        $(element).val(collectionMap[indx].value);
                     }
-
                 });
                 FunctionalFortable();
             }
         }
 
-        $("#search").click(function ()
+        $("#search").click(function()
         {
-           
             //$('table[id="table"] > tbody > tr:gt(8)').hide();
             PullData();
             FunctionalFortable();
@@ -382,19 +400,21 @@
 
         //Повторный вызов функции для навештивания событий по двойному клику на строки таблицы после очистки поля поиска
         $(".clearsearchclass").switchClass("clearsearchclass", "clrsrchcls");
-        $(".clrsrchcls").click(function() {
+        $(".clrsrchcls").click(function()
+        {
             //ClearSearch();
             FunctionalFortable();
         });
 
         //Повторный вызов функции для навештивания событий по нажатию энтер в строке поиска
-        $('.ui-widget-content.ui-corner-all').keypress(function(event) {
-            if (event.keyCode == 13) {
+        $('.ui-widget-content.ui-corner-all').keypress(function(event)
+        {
+            if (event.keyCode == 13)
+            {
                 // alert('Entered');
                 FunctionalFortable();
             }
         });
-
     });
 
     //$(document).dblclick(function (e) {
