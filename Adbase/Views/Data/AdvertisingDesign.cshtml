@@ -21,8 +21,8 @@
 <script type="text/javascript">
     var $SaveIdForHideTooltip;
     var $Tablebacklight;
-    var Showonthemap = @Html.Raw(JsonConvert.SerializeObject(Model.Select(a => a.Id_show), Formatting.Indented, new JsonSerializerSettings
-                       {ReferenceLoopHandling = ReferenceLoopHandling.Ignore}));
+    @*var Showonthemap = @Html.Raw(JsonConvert.SerializeObject(Model.Select(a => a.Id_show), Formatting.Indented, new JsonSerializerSettings
+                       {ReferenceLoopHandling = ReferenceLoopHandling.Ignore}));*@
 
     $(document).ready(function()
     {
@@ -467,8 +467,8 @@
                 <th>Населенный_пункт</th>
                 <th>Улица</th>
                 <th>Дом/Номер_опоры</th>
-                <th> Количество_сторон</th>
-                <th> Количестов_поверхностей</th>
+                <th>Количество_сторон</th>
+                <th>Количестов_поверхностей</th>
                 <th>Площадь_конструкции</th>
                 <th>Разреш_по</th>
             </tr>
