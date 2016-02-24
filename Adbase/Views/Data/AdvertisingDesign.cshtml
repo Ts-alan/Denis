@@ -347,9 +347,9 @@
                             offset: [0, -85],
                             hideEvent: 'focusout',
                             content: '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
-                                '+<a href="/Map/Index/' + Showonthemap[tr[indx].id - 1] + '">Показать на карте</a></br>' +
-                                '+<a href="/Data/Illegal/' + Showonthemap[tr[indx].id - 1] + '">Показать данные о конструкции</a></br>' +
-                                '+<a href="/Data/EditIllegalDesign/' + Showonthemap[tr[indx].id - 1] + '">Изменить данные о конструкции</a></br>' +
+                                '+<a href="/Map/Index/' + $(element)[0].id + '">Показать на карте</a></br>' +
+                                '+<a href="/Data/Illegal/' + $(element)[0].id + '">Показать данные о конструкции</a></br>' +
+                                '+<a href="/Data/EditIllegalDesign/' + $(element)[0].id + '">Изменить данные о конструкции</a></br>' +
                                 '+<a  href="/Data/DeleteAdvertisingDesign/'+ $(element)[0].id +'">Удалить конструкцию</a></br>' +
                                 '</button>',
                             show: function(e, $el)
