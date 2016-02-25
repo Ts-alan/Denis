@@ -2,6 +2,7 @@
 {
     $("#test1").removeAttr("novalidate");
     $("#test1").validate();
+
     AddRules();
     
     $("#CountSizes").change(function ()
@@ -12,16 +13,54 @@
         });
         AddRules();
     });
-    $(window).keydown(function(event){
-    if(event.keyCode == 13) {
-      event.preventDefault();
-      return false;
-    }
-  });
+
+    var widthInpts = $("input[name$='.Width']");
+    widthInpts.each(function (indx, element) {
+        
+        $(element).change(function (event) {
+                if ($(this).val() > 0) {
+                    
+                    $(this).parent().removeClass("has-error").addClass("has-success");
+                    $(this).parent().find("span.glyphicon").addClass("glyphicon-ok").removeClass("glyphicon-remove");
+                    
+                } else {
+                    $(this).removeClass("has-success").addClass("has-error");
+                     $(this).parent().find("span.glyphicon").removeClass("glyphicon-ok").addClass("glyphicon-remove");
+                    
+                }
+            });
+
+    });
+     var hightInpts = $("input[name$='.Height']");
+    hightInpts.each(function (indx, element) {
+        
+        $(element).change(function (event) {
+                if ($(this).val() > 0) {
+                    
+                    $(this).parent().removeClass("has-error").addClass("has-success");
+                    $(this).parent().find("span.glyphicon").addClass("glyphicon-ok").removeClass("glyphicon-remove");
+                    
+                } else {
+                    $(this).removeClass("has-success").addClass("has-error");
+                     $(this).parent().find("span.glyphicon").removeClass("glyphicon-ok").addClass("glyphicon-remove");
+                    
+                }
+            });
+
+    });
+    //Блокирование кнопки Enter чтобы форма не отправлялась
+    $(window).keydown(function(event) {
+        if (event.keyCode == 13) {
+            event.preventDefault();
+            return false;
+        }
+    });
+
 });
 
+  
 
-
+//Добавление правил валидации для полей
 function AddRules()
 {
     var width = $("input[name$='.Width']");
@@ -34,7 +73,11 @@ function AddRules()
         for (var i = 0; i < width.length; i++)
         {
             wId = "input[name ='" + "[" + i + "].Width']";
-            $(wId).rules("add", {min: 1});
+            $(wId).rules("add", {
+                min: 1,
+                messages :{min: "Введите положительное значение" } 
+            });
+            
         }
     }
 
@@ -46,6 +89,7 @@ function AddRules()
             sId = "input[name ='" + "[" + i + "].Space']";
             $(sId).rules("add", {
                 min: 1
+
             });
         }
         
@@ -58,7 +102,8 @@ function AddRules()
         {
             hId = "input[name ='" + "[" + i + "].Height']";
             $(hId).rules("add", {
-                min: 1
+                min: 1,
+                messages :{min: "Введите положительное значение" } 
             });
         }
     }
