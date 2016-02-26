@@ -19,7 +19,7 @@ namespace Sciencecom.Models.MapJsonModels
         public JSONStructureForJQGrid(AdvertisingStructure adv)
         {
             int SurfaceCOunt = 0;
-            float SurfaceSumm = 0;
+            double SurfaceSumm = 0;
             foreach (var side in adv.Sides)
             {
                 SurfaceCOunt += side.Surfaces.Count;

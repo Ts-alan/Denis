@@ -10,6 +10,7 @@ using Sciencecom.Models.MapJsonModels;
 namespace Sciencecom.Controllers
 {
     using Models;
+    using System.Globalization;
     using System.Net;
     public class DataController : BaseDataController
     {
@@ -47,7 +48,7 @@ namespace Sciencecom.Controllers
             }
             if (AreaConstruction != null)
             {
-              float sum;
+              double sum;
               result= result.Where(a =>
                  {
                     sum = 0;
@@ -154,13 +155,7 @@ namespace Sciencecom.Controllers
             string Площадь_конструкции, string Разреш_по)
 
         {
-            List<String> filters = new List<string>()
-            {
-                Собственник, Вид_конструкции, Населенный_пункт,
-                Улица, Дом_Номер_опоры, Количество_сторон, Количестов_поверхностей,
-                Площадь_конструкции, Разреш_по
-            };
-            
+           
             JSONStructureForJQGrid js;
             JSONTableData jd = new JSONTableData();
             jd.Page = page.ToString();
@@ -170,6 +165,8 @@ namespace Sciencecom.Controllers
             jd.Data = new List<JSONStructureForJQGrid>();
             //var adbvertisingList = context.AdvertisingStructures.OrderBy(o => o.Id).Skip((page - 1)*rows).Take(rows).ToList();
             var adbvertisingList = context.AdvertisingStructures.AsQueryable();
+
+            List<AdvertisingStructure> finalList = new List<AdvertisingStructure>();
 
             if (!string.IsNullOrWhiteSpace(Собственник))
             {
@@ -199,19 +196,31 @@ namespace Sciencecom.Controllers
             {
                 adbvertisingList = adbvertisingList.Where(x => CountSurfaces(x).ToString() == Количестов_поверхностей);
             }
-            if (!string.IsNullOrWhiteSpace(Площадь_конструкции))
-            {
-                adbvertisingList = adbvertisingList.Where(x => CountSquare(x).ToString() == Площадь_конструкции);
-            }
             if (!string.IsNullOrWhiteSpace(Разреш_по))
             {
                 adbvertisingList = adbvertisingList.Where(x => x.EndDate.ToString().Contains(Разреш_по));
             }
+            finalList = adbvertisingList.ToList();
+            if (!string.IsNullOrWhiteSpace(Площадь_конструкции))
+            {
+                double sq = double.Parse(Площадь_конструкции, CultureInfo.InvariantCulture);
+                List< AdvertisingStructure > templist = new List<AdvertisingStructure>();
+                foreach (AdvertisingStructure advertisingStructure in adbvertisingList)
+                {
+                    if (sq == CountSquare(advertisingStructure))
+                    {
+                        templist.Add(advertisingStructure);
+                    }
+                }
+                finalList = finalList.Intersect(templist).ToList();
 
-            int adsCount = adbvertisingList.ToList().Count;
+            }
+
+
+            int adsCount = finalList.Count;
             double del = adsCount / rows;
             jd.Total = (int)Math.Ceiling(del) + 1;
-            var filteredLifst = adbvertisingList.OrderBy(o => o.Id).Skip((page - 1) * rows).Take(rows).ToList();
+            var filteredLifst = finalList.OrderBy(o => o.Id).Skip((page - 1) * rows).Take(rows).ToList();
 
             foreach (AdvertisingStructure structure in filteredLifst)
             {
@@ -222,7 +231,7 @@ namespace Sciencecom.Controllers
             return Json(jd, JsonRequestBehavior.AllowGet);
         }
 
-        private float CountSquare(AdvertisingStructure adv)
+        private double CountSquare(AdvertisingStructure adv)
         {
             return adv.Sides.SelectMany(side => side.Surfaces).Sum(Surface => Surface.Space);
         }

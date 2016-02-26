@@ -27,27 +27,27 @@ namespace Sciencecom.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<AdvertisingStructure> AdvertisingStructures { get; set; }
         public virtual DbSet<Backlight> Backlights { get; set; }
         public virtual DbSet<DirectionSide> DirectionSides { get; set; }
         public virtual DbSet<Identification> Identifications { get; set; }
+        public virtual DbSet<Increment> Increments { get; set; }
         public virtual DbSet<ListUniqueNumber> ListUniqueNumbers { get; set; }
         public virtual DbSet<Locality> Localities { get; set; }
+        public virtual DbSet<Object> Objects { get; set; }
         public virtual DbSet<Owner> Owners { get; set; }
         public virtual DbSet<PropertyLocation> PropertyLocations { get; set; }
         public virtual DbSet<RelationshipOfAdvertising> RelationshipOfAdvertisings { get; set; }
-        public virtual DbSet<Street> Streets { get; set; }
-        public virtual DbSet<SubtopicForSocialAdvertising> SubtopicForSocialAdvertisings { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
-        public virtual DbSet<TheElementOfTheRoadNetwork> TheElementOfTheRoadNetworks { get; set; }
-        public virtual DbSet<ViewBid> ViewBids { get; set; }
-        public virtual DbSet<Increment> Increments { get; set; }
-        public virtual DbSet<Object> Objects { get; set; }
         public virtual DbSet<Side> Sides { get; set; }
         public virtual DbSet<Status> Status { get; set; }
+        public virtual DbSet<Street> Streets { get; set; }
+        public virtual DbSet<SubtopicForSocialAdvertising> SubtopicForSocialAdvertisings { get; set; }
         public virtual DbSet<Surface> Surfaces { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<TheElementOfTheRoadNetwork> TheElementOfTheRoadNetworks { get; set; }
         public virtual DbSet<TopicForSocialAdvertising> TopicForSocialAdvertisings { get; set; }
         public virtual DbSet<TypeOfAdvertisingStructure> TypeOfAdvertisingStructures { get; set; }
-        public virtual DbSet<AdvertisingStructure> AdvertisingStructures { get; set; }
+        public virtual DbSet<ViewBid> ViewBids { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

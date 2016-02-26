@@ -139,59 +139,72 @@
 
         <div class="form-group">
             <label for="Locality">Вид</label>
-            @Html.DropDownListFor(a => a.Code, new SelectList(ListTypeAdvertising, "Code", "Name"), new { @disabled = "disabled" })
+            @Html.DropDownListFor(a => a.Code, new SelectList(ListTypeAdvertising, "Code", "Name"), new { @disabled = "disabled", @class = "form-control input-sm"})
             @Html.HiddenFor(a=> a.Code)
             @Html.ValidationMessageFor(model => model.Code)
         </div>
         <br>
     </div>
     <h3>Данные о месте расположения конструкции</h3>
+     <hr/>
+    <div class="row" style="margin-left: 0px">
     <div class="form-inline">
-        <hr/>
+       
         <div class="form-group" style="display: none">
             <label for="UniqueNumber">Идентификационный номер</label>
-            @Html.EditorFor(model => model.UniqueNumber)
+            @Html.EditorFor(model => model.UniqueNumber, new {@class = "form-control"})
             @Html.ValidationMessageFor(model => model.UniqueNumber)
         </div>
-        <div class="form-group" style="margin-left: -15px">
+        <div class="form-group">
             <label for="Locality">Нас. пункт</label>
-            @Html.DropDownListFor(a => a.Locality_id, new SelectList(Locality, "id", "NameLocality"))
+            @Html.DropDownListFor(a => a.Locality_id, new SelectList(Locality, "id", "NameLocality"), new {@class = "form-control input-sm"})
             @Html.ValidationMessageFor(model => model.Locality_id)
         </div>
 
         <div class="form-group">
             <label for="Street1">Улица</label>
-            @Html.EditorFor(model => model.Street1)
+            @Html.TextBoxFor(model => model.Street1, new {@class = "form-control"})
             @Html.ValidationMessageFor(model => model.Street1)
         </div>
 
         <div class="form-group">
             <label for="House1">Номер дома</label>
-            @Html.EditorFor(model => model.House1)
+            @Html.TextBoxFor(model => model.House1, new {@class = "form-control"})
             @Html.ValidationMessageFor(model => model.House1)
         </div>
 
     </div>
-    <input type="button" id="MapSearchStreet" value="Поиск на карте" style="margin-left: 185px">
+        </div>
+    <input type="button" id="MapSearchStreet" class="btn" value="Поиск на карте" style="margin-left: 185px; margin-top: 15px">
     
         <div class="form-inline">
             <hr />
             <div class="form-group" style="width: 600px; height: 500px" id="map"></div>
 
             <div class="form-group">
-                <div>
-                    <label for="Breadth">Широта </label>
-                    <input class="text-box single-line ui-autocomplete-input" data-val="true" type="text" name="Breadth" id="Breadth">
-                    <span data-valmsg-for="Breadth" data-valmsg-replace="true"></span>
+                <table>
+                    <tr>
+                        <td>
+                            <label for="Breadth">Широта </label>
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(m => m.Breadth, new {@class = "form-control"})
+                            @*<input class="text-box single-line ui-autocomplete-input" data-val="true" type="text" name="Breadth" id="Breadth">*@
+                            <span data-valmsg-for="Breadth" data-valmsg-replace="true"></span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="Height">Долгота</label>
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(m => m.Height, new {@class = "form-control"})
+                            @*<input type="text" name="Height" data-val="true" id="Height">*@
 
-                </div>
-                <div>
-                    <label for="Height">Долгота</label>
-                    <input type="text" name="Height" data-val="true" id="Height">
-
-                    @Html.ValidationMessageFor(model => model.Height)
-
-                </div>
+                            @Html.ValidationMessageFor(model => model.Height)
+                        </td>
+                    </tr>
+                </table>
+                
             </div>
         </div>
 
@@ -215,12 +228,10 @@
             </div>
         </div>
 
-        <h3> Описание конструкции</h3>
+        <h3> Комментарий</h3>
         <hr />
         <div class="form-group">
-            <label>Описание конструкции</label>
-            @Html.TextAreaFor(model => model.ContentInformationDescription, new { cols = "90", rows = "4" })
-
+            @Html.TextAreaFor(model => model.ContentInformationDescription, new { cols = "90", rows = "4", @class = "form-control"})
             @Html.ValidationMessageFor(model => model.ContentInformationDescription)
         </div>
 

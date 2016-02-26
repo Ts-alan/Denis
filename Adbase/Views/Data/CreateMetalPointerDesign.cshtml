@@ -500,7 +500,6 @@
             <div class="form-group">
                 <label>Коментарии</label>
                 @Html.TextAreaFor(model => model.ContentInformationDescription, new { cols = "90", rows = "4", @class = "form-control" })
-
                 @Html.ValidationMessageFor(model => model.ContentInformationDescription)
             </div>
         </div>
@@ -520,7 +519,7 @@
 
                                 <label for="[0].Height">Высота</label>
                                 <span class="field-validation-valid" data-valmsg-for="[0].Height" data-valmsg-replace="true"></span>
-                                <input class="text-box single-line form-control" data-val="true" data-val-number="Значением поля Height должно быть число." id="SHeight" name="[0].Height" value="" type="number">
+                                <input class="text-box single-line form-control" data-val="true" data-val-number="Значением поля Height должно быть число." id="SHeight" name="[0].Height" value="" type="number" step="any">
                                 <span class="glyphicon form-control-feedback"></span>
                                 
 
@@ -528,7 +527,7 @@
                             <div class="form-group has-feedback" style="margin-right: 25px">
                                 <label for="[0].Width">Ширина</label>
                                 <span class="field-validation-valid" data-valmsg-for="[0].Width" data-valmsg-replace="true"></span>
-                                <input class="text-box single-line form-control" data-val="true" data-val-number="Значением поля Width должно быть число." name="[0].Width" id="Width" value="" type="number">
+                                <input class="text-box single-line form-control" data-val="true" data-val-number="Значением поля Width должно быть число." name="[0].Width" id="Width" value="" type="number" step="any">
                                 <span class="glyphicon form-control-feedback" ></span>
 
                             </div>

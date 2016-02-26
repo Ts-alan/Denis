@@ -14,9 +14,9 @@ namespace Sciencecom.Models
     
     public partial class Surface
     {
-        public int Height { get; set; }
-        public int Width { get; set; }
-        public int Space { get; set; }
+        public double Height { get; set; }
+        public double Width { get; set; }
+        public double Space { get; set; }
         public int Id { get; set; }
         public Nullable<System.Guid> Side_Id { get; set; }
         public Nullable<int> NumberSurface { get; set; }

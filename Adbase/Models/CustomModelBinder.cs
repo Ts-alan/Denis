@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -17,9 +18,9 @@ namespace Sciencecom.Models
             List<string> AllKeysSpace = request.Form.AllKeys.Where(a => a.Contains("].Space")).ToList();
             List<string> AllKeysSideOfSurface = request.Form.AllKeys.Where(a => a.Contains("].SideOfSurface")).ToList();
 
-            var height = 0;
-            var space = 0;
-            var width = 0;
+            double height = 0;
+            double space = 0;
+            double width = 0;
             var sideOfSurface = "";
 
             for (int i=0; i<AllKeysHeight.Count(); i++)
@@ -27,15 +28,15 @@ namespace Sciencecom.Models
 
                 if (!string.IsNullOrWhiteSpace(request.Form.Get(AllKeysHeight[i])))
                 {
-                    height = Int32.Parse(request.Form.Get(AllKeysHeight[i]));
+                    height = double.Parse(request.Form.Get(AllKeysHeight[i]), CultureInfo.InvariantCulture);
                 }
                 if (!string.IsNullOrWhiteSpace(request.Form.Get(AllKeysSpace[i])))
                 {
-                    space = Int32.Parse(request.Form.Get(AllKeysSpace[i]));
+                    space = double.Parse(request.Form.Get(AllKeysSpace[i]), CultureInfo.InvariantCulture);
                 }
                 if (!string.IsNullOrWhiteSpace(request.Form.Get(AllKeysWidth[i])))
                 {
-                    width = Int32.Parse(request.Form.Get(AllKeysWidth[i]));
+                    width = double.Parse(request.Form.Get(AllKeysWidth[i]), CultureInfo.InvariantCulture);
                 }
                 if (!string.IsNullOrWhiteSpace(request.Form.Get(AllKeysSideOfSurface[i])))
                 {
