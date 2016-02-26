@@ -9,23 +9,24 @@
 
 namespace Sciencecom.Models
 {
+    using System;
     using System.Collections.Generic;
-
+    
     public partial class TypeOfAdvertisingStructure
     {
         public TypeOfAdvertisingStructure()
         {
-            this.AdvertisingStructures = new HashSet<AdvertisingStructure>();
             this.Increments = new HashSet<Increment>();
             this.ListUniqueNumbers = new HashSet<ListUniqueNumber>();
+            this.AdvertisingStructures = new HashSet<AdvertisingStructure>();
         }
     
         public System.Guid id { get; set; }
         public string Name { get; set; }
         public string Code { get; set; }
     
-        public virtual ICollection<AdvertisingStructure> AdvertisingStructures { get; set; }
         public virtual ICollection<Increment> Increments { get; set; }
         public virtual ICollection<ListUniqueNumber> ListUniqueNumbers { get; set; }
+        public virtual ICollection<AdvertisingStructure> AdvertisingStructures { get; set; }
     }
 }

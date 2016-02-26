@@ -19,7 +19,7 @@ namespace Sciencecom.Models.MapJsonModels
         public JSONStructureForJQGrid(AdvertisingStructure adv)
         {
             int SurfaceCOunt = 0;
-            int SurfaceSumm = 0;
+            float SurfaceSumm = 0;
             foreach (var side in adv.Sides)
             {
                 SurfaceCOunt += side.Surfaces.Count;
@@ -29,8 +29,8 @@ namespace Sciencecom.Models.MapJsonModels
                 }
 
             }
-            
-            Дом_Номер_опоры = adv.Code == "BB" ? adv.House1 : adv.Support_; ;
+
+            Дом_Номер_опоры = adv.Code == "BB" | adv.Code == "UI"  ? adv.House1 : adv.Support_; ;
             Площадь_конструкции = SurfaceSumm.ToString();
             Количество_сторон = adv.Sides.Count.ToString();
             Количестов_поверхностей = SurfaceCOunt.ToString();

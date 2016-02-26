@@ -9,7 +9,9 @@
 
 namespace Sciencecom.Models
 {
-
+    using System;
+    using System.Collections.Generic;
+    
     public partial class RelationshipOfAdvertising
     {
         public System.Guid id { get; set; }

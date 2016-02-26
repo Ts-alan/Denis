@@ -47,7 +47,7 @@ namespace Sciencecom.Controllers
             }
             if (AreaConstruction != null)
             {
-              int sum;
+              float sum;
               result= result.Where(a =>
                  {
                     sum = 0;
@@ -222,7 +222,7 @@ namespace Sciencecom.Controllers
             return Json(jd, JsonRequestBehavior.AllowGet);
         }
 
-        private int CountSquare(AdvertisingStructure adv)
+        private float CountSquare(AdvertisingStructure adv)
         {
             return adv.Sides.SelectMany(side => side.Surfaces).Sum(Surface => Surface.Space);
         }

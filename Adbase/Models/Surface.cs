@@ -10,7 +10,8 @@
 namespace Sciencecom.Models
 {
     using System;
-
+    using System.Collections.Generic;
+    
     public partial class Surface
     {
         public int Height { get; set; }

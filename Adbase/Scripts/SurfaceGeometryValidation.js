@@ -1,7 +1,7 @@
 ﻿$(document).ready(function ()
 {
     $("#test1").removeAttr("novalidate");
-    $("#test1").validate();
+    var $validator = $("#test1").validate({fraction: true});
 
     AddRules();
     
@@ -74,7 +74,7 @@ function AddRules()
         {
             wId = "input[name ='" + "[" + i + "].Width']";
             $(wId).rules("add", {
-                min: 1,
+                min: "0,0001",
                 messages :{min: "Введите положительное значение" } 
             });
             
@@ -88,7 +88,7 @@ function AddRules()
         {
             sId = "input[name ='" + "[" + i + "].Space']";
             $(sId).rules("add", {
-                min: 1
+                min: "0,00000001"
 
             });
         }
@@ -102,7 +102,7 @@ function AddRules()
         {
             hId = "input[name ='" + "[" + i + "].Height']";
             $(hId).rules("add", {
-                min: 1,
+                min: 0.0001,
                 messages :{min: "Введите положительное значение" } 
             });
         }

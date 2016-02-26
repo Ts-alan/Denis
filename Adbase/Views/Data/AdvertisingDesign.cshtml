@@ -21,9 +21,10 @@
 <script type="text/javascript">
     var $SaveIdForHideTooltip;
     var $Tablebacklight;
-
+    var firstReauquest = true;
     $(document).ready(function()
     {
+        //функция для скрывания открытых всплывающих окон
         $(document).dblclick(function(e)
         {
             if (document.activeElement.getAttribute("class") != "HideClass")
@@ -36,7 +37,7 @@
             }
         });
 
-   
+        //
         $("#table").bind('DOMNodeInserted DOMNodeRemoved', function()
         {
             fillDataForFunctionFT();
@@ -101,26 +102,24 @@
             },
             beforeRequest: function()
             {
+                if (firstReauquest)
+                {
+                    SetDate();
+                    firstReauquest = false;
 
-                SetDate();
-                console.log("DateSet!");
-                console.log($("#table").getGridParam("postData"));
+                }
+                PullData();
             }
             
         });
-
-        //HideRows();
+       
 
         //Добавление строки с полями для поиска в таблице конструкций
         $('#table').jqGrid('filterToolbar',
             {
                 searchOnEnter: false,
                 beforeClear: function () { return true; },
-                beforeSearch:  function()
-                {
-                PullData();
-                }
-                ,
+                beforeSearch:  function(){PullData();},
                 afterSearch: function()
                 {
                     //jQuery("#table").jqGrid('filterToolbar',options);
@@ -187,14 +186,9 @@
             }
         });
 
-        //собираем данные из поиска
+        //сбор данные из поиска для передачи на сервер записи в сессию
         function PullData()
         {
-            //var collectionMap = [];
-            //$(".ui-state-default .ui-th-ltr input").each(function(indx, element)
-            //{
-            //    collectionMap.push({ id: $(element).attr("id"), value: $(element).val().toString() });
-            //});
             var collectionMap = {};
             collectionMap.markup = [];
             collectionMap.postdata = $("#table").getGridParam("postData");
@@ -215,7 +209,7 @@
             });
         }
 
-        //подсказка ,подсветка
+        //навешивание на строки окошек, подсветки
         function FunctionalFortable(tr, td1)
         {
             $(".ui-jqgrid-bdiv>h1").remove();
@@ -232,7 +226,7 @@
                 $Tablebacklight.css("background", "#ADDEFF");
             });
 
-            //console.log(tr[0].id);
+            
             //выпадающее меню для всех типов строк
             tr.each(function(indx, element)
                 {
@@ -344,7 +338,7 @@
             );
         }
 
-
+        //извлечение данных из сессии для записи в отправляемые таблицей запросы и заполнения шапки таблицы
         function SetDate()
         {
             var collectionMap;
@@ -376,6 +370,7 @@
             jQuery("#table")[0].triggerToolbar(); 
             fillDataForFunctionFT();
         });
+
         window.onload = SetDate();
 
         //Повторный вызов функции для навештивания событий по двойному клику на строки таблицы после очистки поля поиска
@@ -406,27 +401,7 @@
             } 
     }
     });
-
     
-
-    //$(document).dblclick(function (e) {
-    //    //накручивание индекса к пути удалить
-    //    $('[href="/Data/DeleteAdvertisingDesign"]').
-    //        attr("href","/Data/DeleteAdvertisingDesign/"+(Showonthemap[($(e.target).closest("tr").attr("id")-1)])+"") ;
-
-    //    if (document.activeElement.getAttribute("class") != "HideClass") {
-    //        $SaveIdForHideTooltip = document.activeElement.getAttribute("id")-1;
-    //    }
-    //});
-
-    //$(document).click(function () {
-    //    var info = document.activeElement;
-
-    //    if (info.getAttribute("class") != "HideClass") 
-    //    {
-    //        $('[hide=' + $SaveIdForHideTooltip + ']').parent().parent().hide();
-    //    };
-    //});
 </script>
 @*чтобы jqgtid разбивал на несколько строк*@
 <style type="text/css" media="screen">

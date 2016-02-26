@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="3f8f90a549d648598a9f63457593a87b" Name="Diagram1" ZoomLevel="85">
+      <Diagram DiagramId="3f8f90a549d648598a9f63457593a87b" Name="Diagram1" ZoomLevel="25">
         <EntityTypeShape EntityType="SciencecomModel.Backlight" Width="1.5" PointX="3.75" PointY="25" />
         <EntityTypeShape EntityType="SciencecomModel.DirectionSide" Width="1.5" PointX="8.75" PointY="9.5" />
         <EntityTypeShape EntityType="SciencecomModel.Identification" Width="1.5" PointX="6" PointY="14.25" />
@@ -20,7 +20,6 @@
         <EntityTypeShape EntityType="SciencecomModel.ViewBid" Width="1.5" PointX="3.75" PointY="13.875" />
         <AssociationConnector Association="SciencecomModel.FK_Streets_Locality" />
         <AssociationConnector Association="SciencecomModel.FK_RelationshipOfAdvertising_SubtopicForSocialAdvertising" />
-        <EntityTypeShape EntityType="SciencecomModel.AdvertisingStructure" Width="1.5" PointX="6.375" PointY="19.375" />
         <EntityTypeShape EntityType="SciencecomModel.Increment" Width="1.5" PointX="3.375" PointY="35.375" />
         <EntityTypeShape EntityType="SciencecomModel.Object" Width="1.5" PointX="19.875" PointY="16.25" />
         <EntityTypeShape EntityType="SciencecomModel.Side" Width="1.5" PointX="8.625" PointY="13.375" />
@@ -28,6 +27,14 @@
         <EntityTypeShape EntityType="SciencecomModel.Surface" Width="1.5" PointX="10.875" PointY="13.625" />
         <EntityTypeShape EntityType="SciencecomModel.TopicForSocialAdvertising" Width="1.5" PointX="15.25" PointY="16.375" />
         <EntityTypeShape EntityType="SciencecomModel.TypeOfAdvertisingStructure" Width="1.5" PointX="1.125" PointY="18.875" />
+        <AssociationConnector Association="SciencecomModel.FK_Sides_DirectionSide" />
+        <AssociationConnector Association="SciencecomModel.FK_Sides_Identification" />
+        <AssociationConnector Association="SciencecomModel.FK_Increment_TypeOfAdvertisingStructures" />
+        <AssociationConnector Association="SciencecomModel.FK_ListUniqueNumber_TypeOfAdvertisingStructures" />
+        <AssociationConnector Association="SciencecomModel.FK_RelationshipOfAdvertising_Object1" />
+        <AssociationConnector Association="SciencecomModel.FK_RelationshipOfAdvertising_TopicForSocialAdvertising" />
+        <AssociationConnector Association="SciencecomModel.FK_Surfaces_Sides" />
+        <EntityTypeShape EntityType="SciencecomModel.AdvertisingStructure" Width="1.5" PointX="6.875" PointY="19.375" />
         <AssociationConnector Association="SciencecomModel.FK_AdvertisingStructures_Backlight" />
         <AssociationConnector Association="SciencecomModel.FK_AdvertisingStructures_Locality" />
         <AssociationConnector Association="SciencecomModel.FK_AdvertisingStructures_PropertyLocation" />
@@ -37,13 +44,6 @@
         <AssociationConnector Association="SciencecomModel.FK_AdvertisingStructures_ViewBid" />
         <AssociationConnector Association="SciencecomModel.FK_Billboards1_Owners" />
         <AssociationConnector Association="SciencecomModel.FK_Sides_Billboards1" />
-        <AssociationConnector Association="SciencecomModel.FK_Sides_DirectionSide" />
-        <AssociationConnector Association="SciencecomModel.FK_Sides_Identification" />
-        <AssociationConnector Association="SciencecomModel.FK_Increment_TypeOfAdvertisingStructures" />
-        <AssociationConnector Association="SciencecomModel.FK_ListUniqueNumber_TypeOfAdvertisingStructures" />
-        <AssociationConnector Association="SciencecomModel.FK_RelationshipOfAdvertising_Object1" />
-        <AssociationConnector Association="SciencecomModel.FK_RelationshipOfAdvertising_TopicForSocialAdvertising" />
-        <AssociationConnector Association="SciencecomModel.FK_Surfaces_Sides" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

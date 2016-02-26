@@ -13,7 +13,8 @@ namespace Sciencecom.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
-
+    using System.Linq;
+    
     public partial class SciencecomEntities : DbContext
     {
         public SciencecomEntities()
@@ -39,7 +40,6 @@ namespace Sciencecom.Models
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<TheElementOfTheRoadNetwork> TheElementOfTheRoadNetworks { get; set; }
         public virtual DbSet<ViewBid> ViewBids { get; set; }
-        public virtual DbSet<AdvertisingStructure> AdvertisingStructures { get; set; }
         public virtual DbSet<Increment> Increments { get; set; }
         public virtual DbSet<Object> Objects { get; set; }
         public virtual DbSet<Side> Sides { get; set; }
@@ -47,6 +47,7 @@ namespace Sciencecom.Models
         public virtual DbSet<Surface> Surfaces { get; set; }
         public virtual DbSet<TopicForSocialAdvertising> TopicForSocialAdvertisings { get; set; }
         public virtual DbSet<TypeOfAdvertisingStructure> TypeOfAdvertisingStructures { get; set; }
+        public virtual DbSet<AdvertisingStructure> AdvertisingStructures { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

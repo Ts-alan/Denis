@@ -9,7 +9,8 @@
 
 namespace Sciencecom.Models
 {
-
+    using System;
+    
     public partial class sp_helpdiagrams_Result
     {
         public string Database { get; set; }
