@@ -131,36 +131,11 @@
 
     }
 
-    function SetValidate(i) {
-
-        var count = $("#AddButton" + i + "").val();
-        StartCountForSurface = EndCountForSurface;
-        EndCountForSurface = parseInt(count) + parseInt(EndCountForSurface);
-
-        if (count == 1) {
-            $("#" + i + "HiddenIdentification").hide();
-        } else {
-            $("#" + i + "HiddenIdentification").show();
-            //валидация
-            $('[name="IdentificationSurface"]').each(function (indx, element) {
-                $(element)[0].value =ArrayOfSides[indx].IdentificationName;
-                $(element).attr("name", "[" + indx + "].IdentificationForIdentificationSurface");
-            });
-
-            $('[IdentificationForIdentificationSurface]').each(function (indx, element) {
-
-                $(element).rules('add', {
-                    required: true
-                });
-            });
-
-        }
-        $("[side=" + i + "]").remove();
-    }
+   
 
     //Добавить поверхность+
     function AddSurface(i) {
-        SetValidate(i);
+       
 
         $.ajax('@Url.Action("EditSurface", "Data")', { async: true, data: { side: i, StartCountForSurface: StartCountForSurface, EndCountForSurface: EndCountForSurface } })
             .success(function(e) {
@@ -202,7 +177,7 @@
 @using (Html.BeginForm("EditAdvertisingDesign", "Data", FormMethod.Post, new { enctype = "multipart/form-data", id = "test1" }))
 {
 
-    <h3> 1. Общие данные о конструкции</h3>
+    <h3>Общие данные о конструкции</h3>
     @Html.AntiForgeryToken()
     <div class="form-inline" style="margin-bottom: -10px">
         <hr />
@@ -214,37 +189,32 @@
 
         <div class="form-group">
             <label for="Locality">Вид</label>
-            @Html.EditorFor(model => model.TypeOfAdvertisingStructure.Name, new { htmlAttributes = new { @readonly = "" } })
+            @Html.EditorFor(model => model.TypeOfAdvertisingStructure.Name, new { htmlAttributes = new { @readonly = "" , @class = "form-control"} })
         </div>
         
         <br>
 
     </div>
-    <div class="form-horizontal">
-        <div class="form-group">
-            <label for="Owner">конструкции </label>
-        </div>
-    </div>
-    
-    <h3> 2.Данные о месте расположения конструкции</h3>
+    <h3>Данные о месте расположения конструкции</h3>
+    <hr/>
 
-    <div class="form-inline">
-        <hr />
-        <div class="form-group" style="margin-left: -15px">
+    <div class="form-inline" >
+        
+        <div class="form-group">
             <label for="Locality">Нас. пункт</label>
 
-            @Html.EditorFor(model => model.Locality.NameLocality, new { htmlAttributes = new { @readonly = "" } })
+            @Html.EditorFor(model => model.Locality.NameLocality, new { htmlAttributes = new { @readonly = "", @class = "form-control" } })
         </div>
 
         <div class="form-group">
             <label for="Street1">Улица</label>
-            @Html.EditorFor(model => model.Street1, new { htmlAttributes = new { @readonly = "" } })
+            @Html.EditorFor(model => model.Street1, new { htmlAttributes = new { @readonly = "", @class = "form-control" } })
 
         </div>
 
         <div class="form-group">
             <label for="House1">№ дома</label>
-            @Html.EditorFor(model => model.House1, new { htmlAttributes = new { @readonly = "" } })
+            @Html.EditorFor(model => model.House1, new { htmlAttributes = new { @readonly = "", @class = "form-control" } })
 
         </div>
 
@@ -282,29 +252,34 @@
 
         <div class="form-group">
 
-            <div>
-                <label for="Breadth">Широта </label>
-                @Html.EditorFor(model => model.Breadth, new { htmlAttributes = new { @readonly = "" } })
-            </div>
+            <table>
+                <tr>
+                    <td> <label for="Breadth">Широта </label></td>
+                    <td> @Html.EditorFor(model => model.Breadth, new {htmlAttributes = new {@readonly = "", @class = "form-control"}})</td>
+                </tr>
+                <tr>
+                    <td><label for="Height">Долгота</label></td>
+                    <td>@Html.EditorFor(model => model.Height, new { htmlAttributes = new { @readonly = "", @class = "form-control" } })</td>
+                </tr>
+            </table>
 
-            <div>
-                <label for="Height">Долгота</label>
-                @Html.EditorFor(model => model.Height, new { htmlAttributes = new { @readonly = "" } })
-            </div>
+            
         </div>
     </div>
 
-    <h3> 3.Разрешительная документация</h3>
+    <h3>Фото</h3>
     <div class="form-horizontal">
         <hr />
 
-        <div class="form-group" style="margin-bottom: 5px">
-            <label for="StartDate">разреш с</label>
-            @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @readonly = "" } })
-            
-            <label for="EndDate">разреш по</label>
-            @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @readonly = "" } })
+        <div class="form-group" style="margin-bottom: 5px; display: none">
+            <div class="form-inline">
+                <label class="control-label" for="StartDate">разреш с</label>
+                @Html.EditorFor(model => model.StartDate, new {htmlAttributes = new {@readonly = "", @class = "form-control"}})
 
+                <label class="control-label" for="EndDate">разреш по</label>
+                @Html.EditorFor(model => model.EndDate, new {htmlAttributes = new {@readonly = "", @class = "form-control"}})
+            </div>
+           
         </div>
 
     </div>
@@ -360,11 +335,11 @@
 
     </div>
    
-    <h3> 4.Описание конструкции</h3>
+    <h3>Комментарии</h3>
     <hr />
     <div class="form-group">
-        <label>Описание рамещаемой информации</label>
-        @Html.TextAreaFor(model => model.ContentInformationDescription, new { cols = "90", rows = "4" })
+        
+        @Html.TextAreaFor(model => model.ContentInformationDescription, new { cols = "90", rows = "4", @class = "form-control" })
 
         @Html.ValidationMessageFor(model => model.ContentInformationDescription)
     </div>

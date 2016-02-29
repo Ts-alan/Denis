@@ -175,7 +175,7 @@
         </div>
     </div>
 
-    <h3> 1. Общие данные о конструкции</h3>
+    <h3>Общие данные о конструкции</h3>
     @Html.AntiForgeryToken()
     <div class="form-inline" style="margin-bottom: -10px">
         <hr />
@@ -231,7 +231,7 @@
 
             </div>
 
-            <h3> 2.Данные о месте расположения конструкции</h3>
+            <h3>Данные о месте расположения конструкции</h3>
 
             <div class="form-inline">
                 <hr />
@@ -300,7 +300,7 @@
                             </div>
                         </div>
                        
-                        <h3> 3.Проект odd</h3>
+                        <h3>Проект ОДД</h3>
                         <div class="form-horizontal">
                             <hr />
                             <div class="form-group">
@@ -317,7 +317,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="DateOfIssue">Дата выдачи проекта ODD</label>
+                                <label for="DateOfIssue">Дата выдачи проекта ОДД</label>
                                 @Html.EditorFor(model => model.DateOfIssue)
                                 @Html.ValidationMessageFor(model => model.DateOfIssue)
 
@@ -326,14 +326,14 @@
                             <div class="form-inline">
 
                                 <div class="form-group">
-                                    <label for="Scan1Side">Скан проекта ODD (Сторона 1)</label>
+                                    <label for="Scan1Side">Скан проекта ОДД (Сторона 1)</label>
                                     <input type="file" name="Scan1Side" accept="image/jpeg" /><br />
                                     <span data-valmsg-for="Scan1Side" data-valmsg-replace="true"></span>
                                     @Html.Raw("Не более 1 МБ")
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="Scan2Side">Скан проекта ODD (Сторона 2)</label>
+                                    <label for="Scan2Side">Скан проекта ОДД (Сторона 2)</label>
                                     <input type="file" name="Scan2Side" accept="image/jpeg" /><br />
                                     <span data-valmsg-for="Scan2Side" data-valmsg-replace="true"></span>
                                     @Html.Raw("Не более 1 МБ")
@@ -407,7 +407,7 @@
                             </div>
                         </div>
 
-                        <h3> 4.Описание конструкции</h3>
+                        <h3>Описание конструкции</h3>
                         <div class="form-inline" style="display: none">
                             <hr />
                             <div class="form-group">
