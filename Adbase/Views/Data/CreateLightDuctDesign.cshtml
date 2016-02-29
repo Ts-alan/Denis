@@ -42,30 +42,7 @@
     var EndCountForSurface = 0;
     $(document).ready(function ()
     {
-        $(document).on('change', '.btn-file :file', function ()
-        {
-            var input = $(this),
-                numFiles = input.get(0).files ? input.get(0).files.length : 1,
-                label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-            input.trigger('fileselect', [numFiles, label]);
-        });
 
-
-        $('.btn-file :file').on('fileselect', function (event, numFiles, label)
-        {
-
-            var input = $(this).parents('.input-group').find(':text'),
-                log = numFiles > 1 ? numFiles + ' files selected' : label;
-
-            if (input.length)
-            {
-                input.val(log);
-            } else
-            {
-                if (log) alert(log);
-            }
-
-        });
 
         //выпадающий список на согласование
         $("[name=OnAgreement]").change(function ()
@@ -278,38 +255,47 @@
 
     <div class="form-inline">
         <hr />
-        <div class="form-group">
-            <label for="Locality">Нас. пункт</label>
-            @Html.DropDownListFor(a => a.Locality_id, new SelectList(Locality, "id", "NameLocality", "dbfd4d94-48be-4136-b900-74bc2c5c04aa"), new { @class = "form-control input-sm" })
-            @Html.ValidationMessageFor(model => model.Locality_id)
-        </div>
-
-        <div class="form-group">
-            <label for="Street1">Улица</label>
-            @Html.TextBoxFor(model => model.Street1, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.Street1)
-        </div>
-
-        <div class="form-group">
-            <label for="House1">Номер опоры</label>
-            @Html.TextBoxFor(model => model.Support_, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.Support_)
+        <div class="row">
+            <div class="col-md-1">
+                <label for="Locality">Нас. пункт</label>
+            </div>
+            <div class="col-md-2">
+                @Html.DropDownListFor(a => a.Locality_id, new SelectList(Locality, "id", "NameLocality", "dbfd4d94-48be-4136-b900-74bc2c5c04aa"), new { @class = "form-control input-sm" })
+                @Html.ValidationMessageFor(model => model.Locality_id)
+            </div>
+            <div class="col-md-1">
+                <label for="Street1">Улица</label>
+            </div>
+            <div class="col-md-2">
+                @Html.TextBoxFor(model => model.Street1, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Street1)
+            </div>
+            <div class="col-md-1">
+                <label for="House1">Номер опоры</label>
+            </div>
+            <div class="col-md-2">
+                @Html.TextBoxFor(model => model.Support_, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Support_)
+            </div>
         </div>
 
 
     </div>
-    <input type="button" id="MapSearchStreet" value="Поиск на карте" style="margin-left: 185px; margin-top:5px" class="btn">
+    <input type="button" id="MapSearchStreet" value="Поиск на карте" style="margin-left: 185px; margin-top: 5px; margin-bottom: 10px" class="btn">
 
-    <div class="form-inline" style="display: none">
-        <div class="form-group">
+    <div class="row">
+        <div class="col-md-1">
             <label for="Street2">Ближайшая улица по ходу движения</label>
-            @Html.EditorFor(model => model.Street2)
+        </div>
+        <div class="col-md-2 vcenter">
+            @Html.TextBoxFor(model => model.Street2, new {@class = "form-control ui-autocomplete"})
             @Html.ValidationMessageFor(model => model.Street2)
         </div>
-
-        <div class="form-group">
+        <div class="col-md-1">
             <label for="FromStreet">Со стороны улицы</label>
-            @Html.EditorFor(model => model.FromStreet)
+        </div>
+        <div class="col-md-2">
+            @Html.TextBoxFor(model => model.FromStreet, new {@class = "form-control"})
             @Html.ValidationMessageFor(model => model.FromStreet)
         </div>
     </div>
@@ -362,7 +348,7 @@
             </div>
             <div class="col-md-2">
                 <div class="form-group">
-                    @Html.TextBoxFor(model => model.DateOfIssue, new {@class = "form-control"})
+                    @Html.TextBoxFor(model => model.DateOfIssue, new { @class = "form-control", @type = "date" })
                     @Html.ValidationMessageFor(model => model.DateOfIssue)
                 </div>
             </div>
@@ -414,14 +400,14 @@
                 <label for="C_PassportAdvertising">№ паспорта рекламы</label>
             </div>
             <div class="col-md-2">
-                @Html.TextBoxFor(model => model.C_PassportAdvertising, new {@class = "form-control"})
+                @Html.TextBoxFor(model => model.C_PassportAdvertising, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.C_PassportAdvertising)
             </div>
             <div class="col-md-2">
                 <label for="DateOfTakenPassport">Дата выдачи паспорта</label>
             </div>
             <div class="col-md-2">
-                @Html.TextBoxFor(model => model.StartDate, new {@class = "form-control", @type = "date"})
+                @Html.TextBoxFor(model => model.StartDate, new { @class = "form-control", @type = "date" })
                 @Html.ValidationMessageFor(model => model.DateOfTakenPassport)
             </div>
         </div>
@@ -431,14 +417,14 @@
                 <label for="StartDate">разреш с</label>
             </div>
             <div class="col-md-2">
-                @Html.TextBoxFor(model => model.StartDate, new {@class = "form-control", @type = "date"})
+                @Html.TextBoxFor(model => model.StartDate, new { @class = "form-control", @type = "date" })
                 @Html.ValidationMessageFor(model => model.StartDate)
             </div>
             <div class="col-md-2">
-                 <label for="EndDate">разреш по</label>
+                <label for="EndDate">разреш по</label>
             </div>
             <div class="col-md-2">
-                @Html.TextBoxFor(model => model.StartDate, new {@class = "form-control", @type = "date"})
+                @Html.TextBoxFor(model => model.StartDate, new { @class = "form-control", @type = "date" })
                 @Html.ValidationMessageFor(model => model.EndDate)
             </div>
         </div>
@@ -453,34 +439,34 @@
         </div>
     </div>
 
-     <div class="row">
-         <div class="col-md-4">
-             <div class="input-group ">
-                    <span class="input-group-btn">
-                        <span class="btn btn-primary btn-file">
-                            Выберите файл&hellip; <input type="file" name="ScanPassport_1Sides" accept="image/jpeg" />
-                        </span>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="input-group ">
+                <span class="input-group-btn">
+                    <span class="btn btn-primary btn-file">
+                        Выберите файл&hellip; <input type="file" name="ScanPassport_1Sides" accept="image/jpeg" />
                     </span>
-                    <input type="text" class="form-control" readonly>
-                </div>
-             @*<input type="file" name="ScanPassport_1Sides" accept="image/jpeg"/><br/>*@
-             <span data-valmsg-for="ScanPassport_1Sides" data-valmsg-replace="true"></span>
-             @Html.Raw("Не более 1 МБ")
-         </div>
-         <div class="col-md-4">
-             <div class="input-group ">
-                    <span class="input-group-btn">
-                        <span class="btn btn-primary btn-file">
-                            Выберите файл&hellip; <input type="file" name="ScanPassport_2Sides" accept="image/jpeg" />
-                        </span>
-                    </span>
-                    <input type="text" class="form-control" readonly>
-                </div>
-             @*<input type="file" name="ScanPassport_2Sides" accept="image/jpeg"/><br/>*@
-             <span data-valmsg-for="ScanPassport_2Sides" data-valmsg-replace="true"></span>
-             @Html.Raw("Не более 1 МБ")
-         </div>
+                </span>
+                <input type="text" class="form-control" readonly>
+            </div>
+            @*<input type="file" name="ScanPassport_1Sides" accept="image/jpeg"/><br/>*@
+            <span data-valmsg-for="ScanPassport_1Sides" data-valmsg-replace="true"></span>
+            @Html.Raw("Не более 1 МБ")
         </div>
+        <div class="col-md-4">
+            <div class="input-group ">
+                <span class="input-group-btn">
+                    <span class="btn btn-primary btn-file">
+                        Выберите файл&hellip; <input type="file" name="ScanPassport_2Sides" accept="image/jpeg" />
+                    </span>
+                </span>
+                <input type="text" class="form-control" readonly>
+            </div>
+            @*<input type="file" name="ScanPassport_2Sides" accept="image/jpeg"/><br/>*@
+            <span data-valmsg-for="ScanPassport_2Sides" data-valmsg-replace="true"></span>
+            @Html.Raw("Не более 1 МБ")
+        </div>
+    </div>
 
         <div class="form-horizontal">
 
@@ -547,27 +533,27 @@
                                 <label for="[0].Height">Высота</label>
                                 <span class="field-validation-valid" data-valmsg-for="[0].Height" data-valmsg-replace="true"></span>
                                 <input class="text-box single-line form-control" data-val="true" data-val-number="Значением поля Height должно быть число." id="SHeight" name="[0].Height" value="" type="number">
-                                <span class="glyphicon form-control-feedback" ></span>
+                                <span class="glyphicon form-control-feedback"></span>
                             </div>
-                                
+
                             <div class="form-group has-feedback" style="margin-right: 25px">
                                 <label for="[0].Width">Ширина</label>
                                 <span class="field-validation-valid" data-valmsg-for="[0].Width" data-valmsg-replace="true"></span>
                                 <input class="text-box single-line form-control" data-val="true" data-val-number="Значением поля Width должно быть число." name="[0].Width" id="Width" value="" type="number">
-                                <span class="glyphicon form-control-feedback" ></span>
+                                <span class="glyphicon form-control-feedback"></span>
                             </div>
 
-                               
+
 
                             <div class="form-group has-feedback" style="margin-right: 25px">
                                 <label for="[0].Space">Площадь</label>
                                 <span class="field-validation-valid" data-valmsg-for="[0].Space" data-valmsg-replace="true"></span>
                                 <input class="form-control" selectforspace="" data-val="true" data-val-number="Значением поля Space должно быть число." name="[0].Space" onchange="CalculationAS()" value="" type="number" readonly="readonly">
-                                <span class="glyphicon form-control-feedback" ></span>
+                                <span class="glyphicon form-control-feedback"></span>
                             </div>
 
-                                
-                           
+
+
                         </div>
 
                     </div>
