@@ -200,7 +200,7 @@
 @using (Html.BeginForm("CreateMetalPointerDesign", "Data", FormMethod.Post, new { enctype = "multipart/form-data", id = "test1" }))
 {
     <input type="hidden" name="Code" value="@ViewBag.Code">
-    <h3> 1. Общие данные о конструкции</h3>
+    <h3> Общие данные о конструкции</h3>
     @Html.AntiForgeryToken()
     <div class="form-inline" style="margin-bottom: -10px">
         <hr />
@@ -254,7 +254,7 @@
         </div>
 
     </div>
-    <h3> 2.Данные о месте расположения конструкции</h3>
+    <h3> Данные о месте расположения конструкции</h3>
     <hr />
     <div class="row">
         <div class="form-inline">
@@ -371,7 +371,7 @@
         </div>
     </div>
 
-    <h3> 3.Разрешительная документация</h3>
+    <h3> Разрешительная документация</h3>
     <div class="form-horizontal">
         <hr />
         <div class="form-group">
@@ -467,7 +467,7 @@
         </div>
     </div>
 
-    <h3> 4.Описание конструкции</h3>
+    <h3> Описание конструкции</h3>
         <hr />
 
         <div class="form-inline" style="display: none;">
