@@ -1,30 +1,22 @@
 ﻿$(document).ready(function ()
 {
-     $(document).on('change', '.btn-file :file', function ()
-        {
-            var input = $(this),
-                numFiles = input.get(0).files ? input.get(0).files.length : 1,
-                label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-            input.trigger('fileselect', [numFiles, label]);
-        });
+    $("input[type='file']").click(function()
+    {
+        var attr = $(this).attr("name");
+        var btnParent = $(this).parent();
+        btnParent.parent().find("label[for='" + attr + "']").text("Файл не выбран");
+        this.value = null;
+        $(this).parent().removeClass("btn-warning");
+    });
 
-
-        $('.btn-file :file').on('fileselect', function (event, numFiles, label)
-        {
-
-            var input = $(this).parents('.input-group').find(':text'),
-                log = numFiles > 1 ? numFiles + ' files selected' : label;
-
-            if (input.length)
-            {
-                input.val(log);
-            }
-            else
-            {
-                if (log) alert(log);
-            }
-
-        });
+    $("input[type='file']").change(function()
+    {
+        var attr = $(this).attr("name");
+        var btnParent = $(this).parent();
+        var fileName = this.value.split('\\').pop();
+        btnParent.addClass("btn-warning");
+        btnParent.parent().find("label[for='" + attr + "']").text(fileName);
+    });
 
     AddRules();
     
