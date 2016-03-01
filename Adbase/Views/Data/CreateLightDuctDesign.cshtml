@@ -360,16 +360,30 @@
         </div>
         <div class="row">
             <div class="col-md-4">
-                <input type="file" name="Scan1Side" accept="image/jpeg" /><br />
+                @*<input type="file" name="Scan1Side" accept="image/jpeg" /><br />
                 <span data-valmsg-for="Scan1Side" data-valmsg-replace="true"></span>
+                @Html.Raw("Не более 1 МБ")*@
 
-                @Html.Raw("Не более 1 МБ")
+                <div class="fileUpload btn btn-default input-sm">
+                        <span accept="image/jpeg/">Выберите файл</span>
+                        <input type="file" class="upload" name="Scan1Side" accept="image/jpeg/"/>
+                    </div>
+                    <label for="Scan1Side">Файл не выбран</label>
+                    <br/>
+                    @Html.Raw("Не более 1 МБ")
             </div>
             <div class="col-md-4">
-                <input type="file" name="Scan2Side" accept="image/jpeg" /><br />
-                <span data-valmsg-for="Scan2Side" data-valmsg-replace="true"></span>
+                    @*<input type="file" name="Scan2Side" accept="image/jpeg"/><br/>
+                    <span data-valmsg-for="Scan2Side" data-valmsg-replace="true"></span>
 
-                @Html.Raw("Не более 1 МБ")
+                    @Html.Raw("Не более 1 МБ")*@
+                    <div class="fileUpload btn btn-default input-sm">
+                        <span accept="image/jpeg/">Выберите файл</span>
+                        <input type="file" class="upload" name="Scan2Side" accept="image/jpeg/"/>
+                    </div>
+                    <label for="Scan2Side">Файл не выбран</label>
+                    <br/>
+                    @Html.Raw("Не более 1 МБ")
             </div>
         </div>
 
@@ -419,14 +433,28 @@
 
     <div class="row">
         <div class="col-md-4">
-            <input type="file" name="ScanPassport_1Sides" accept="image/jpeg" /><br />
+            @*<input type="file" name="ScanPassport_1Sides" accept="image/jpeg" /><br />
             <span data-valmsg-for="ScanPassport_1Sides" data-valmsg-replace="true"></span>
-            @Html.Raw("Не более 1 МБ")
+            @Html.Raw("Не более 1 МБ")*@
+            <div class="fileUpload btn btn-default input-sm">
+                        <span accept="image/jpeg/">Выберите файл</span>
+                        <input type="file" class="upload" name="ScanPassport_1Sides" accept="image/jpeg/"/>
+                    </div>
+                    <label for="ScanPassport_1Sides">Файл не выбран</label>
+                    <br/>
+                    @Html.Raw("Не более 1 МБ")
         </div>
         <div class="col-md-4">
-            <input class="btn" type="file" name="ScanPassport_2Sides" accept="image/jpeg" /><br />
+            @*<input class="btn" type="file" name="ScanPassport_2Sides" accept="image/jpeg" /><br />
             <span data-valmsg-for="ScanPassport_2Sides" data-valmsg-replace="true"></span>
-            @Html.Raw("Не более 1 МБ")
+            @Html.Raw("Не более 1 МБ")*@
+            <div class="fileUpload btn btn-default input-sm">
+                        <span accept="image/jpeg/">Выберите файл</span>
+                        <input type="file" class="upload" name="ScanPassport_2Sides" accept="image/jpeg/"/>
+                    </div>
+                    <label for="ScanPassport_2Sides">Файл не выбран</label>
+                    <br/>
+                    @Html.Raw("Не более 1 МБ")
         </div>
     </div>
 
