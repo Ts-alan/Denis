@@ -813,22 +813,9 @@ namespace Sciencecom.Controllers
             context.Surfaces.AddRange(ListSurface);
 
             context.Sides.RemoveRange(mc.Sides);
-            try
-            {
-                context.SaveChanges();
-            }
-            catch (DbEntityValidationException e)
-            {
-                foreach (DbEntityValidationResult validationError in e.EntityValidationErrors)
-                {
-                    Response.Write("Object: " + validationError.Entry.Entity.ToString());
-                    Response.Write("");
-                    foreach (DbValidationError err in validationError.ValidationErrors)
-                    {
-                        Response.Write(err.ErrorMessage + "");
-                    }
-                }
-            }
+            context.SaveChanges();
+
+
 
             //картики
             if (Scan1SidesWithFinancialManagement != null)

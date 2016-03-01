@@ -57,6 +57,7 @@ function AddRules()
     var width = $("input[name$='.Width']");
     var space = $("input[name$='.Space']");
     var height = $("input[name$='.Height']");
+
     var widthInpts = $("input[name$='.Width']");
 
     widthInpts.each(function (indx, element) {
@@ -77,6 +78,7 @@ function AddRules()
     });
 
     var hightInpts = $("input[name$='.Height']");
+   
     hightInpts.each(function (indx, element) {
 
         $(element).change(function (event) {
