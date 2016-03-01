@@ -11,7 +11,7 @@ namespace Sciencecom.Controllers
         {
             if (picture != null)
             {
-                string src = "~/Images/"+ documentName  + "/" + structureId + "documentName.jpg";
+                string src = "~/Images/" + documentName + "/" + structureId + documentName + ".jpg";
                 string path = Server.MapPath(src);
                 picture.SaveAs(path);
             }

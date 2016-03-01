@@ -2,7 +2,7 @@
 @model  Sciencecom.Models.AdvertisingStructure
 @{
     var i = 0;
-    ViewBag.Title = "MetalPointersStructure";
+    ViewBag.Title = "CreateLightDuct";
     //Собственник конструкциии
     var owners = new SciencecomEntities().Owners.ToList();
 
@@ -207,7 +207,7 @@
         @Html.ValidationMessage("Error")
 
         <div class="form-group">
-            <label for="Owner">Собственник </label>
+            <label for="Owner">Собственник</label>
             @Html.DropDownListFor(a => a.Owner_Id, new SelectList(owners, "id", "Name"), new { @class = "form-control input-sm" })
             @Html.ValidationMessageFor(model => model.Owner_Id)
         </div>
@@ -231,11 +231,6 @@
         </div>
         <br>
 
-    </div>
-    <div class="form-horizontal">
-        <div class="form-group">
-            <label for="Owner">конструкции </label>
-        </div>
     </div>
     <div class="form-inline">
         <div class="form-group">
@@ -288,14 +283,14 @@
             <label for="Street2">Ближайшая улица по ходу движения</label>
         </div>
         <div class="col-md-2 vcenter">
-            @Html.TextBoxFor(model => model.Street2, new {@class = "form-control ui-autocomplete"})
+            @Html.TextBoxFor(model => model.Street2, new { @class = "form-control ui-autocomplete" })
             @Html.ValidationMessageFor(model => model.Street2)
         </div>
         <div class="col-md-1">
-            <label for="FromStreet">Со стороны улицы</label>
+            <label for="FromStreet">Со сторо- ны улицы</label>
         </div>
         <div class="col-md-2">
-            @Html.TextBoxFor(model => model.FromStreet, new {@class = "form-control"})
+            @Html.TextBoxFor(model => model.FromStreet, new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.FromStreet)
         </div>
     </div>
@@ -365,32 +360,15 @@
         </div>
         <div class="row">
             <div class="col-md-4">
-                <div class="input-group ">
-                    <span class="input-group-btn">
-                        <span class="btn btn-primary btn-file">
-                            Выберите файл&hellip; <input type="file" name="Scan1Side" accept="image/jpeg" />
-                        </span>
-                    </span>
-                    <input type="text" class="form-control" readonly>
-                </div>
-                @*<input type="file" name="Scan1Side" accept="image/jpeg"/><br/>
-                     <br/>
-                    <span data-valmsg-for="Scan1Side" data-valmsg-replace="true"></span>
-                *@
+                <input type="file" name="Scan1Side" accept="image/jpeg" /><br />
+                <span data-valmsg-for="Scan1Side" data-valmsg-replace="true"></span>
+
                 @Html.Raw("Не более 1 МБ")
             </div>
             <div class="col-md-4">
-                <div class="input-group ">
-                    <span class="input-group-btn">
-                        <span class="btn btn-primary btn-file">
-                            Выберите файл&hellip; <input type="file" name="Scan2Side" accept="image/jpeg" />
-                        </span>
-                    </span>
-                    <input type="text" class="form-control" readonly>
-                </div>
-                @*<input type="file" name="Scan2Side" accept="image/jpeg"/><br/>
-                    <span data-valmsg-for="Scan2Side" data-valmsg-replace="true"></span>
-                *@
+                <input type="file" name="Scan2Side" accept="image/jpeg" /><br />
+                <span data-valmsg-for="Scan2Side" data-valmsg-replace="true"></span>
+
                 @Html.Raw("Не более 1 МБ")
             </div>
         </div>
@@ -441,44 +419,28 @@
 
     <div class="row">
         <div class="col-md-4">
-            <div class="input-group ">
-                <span class="input-group-btn">
-                    <span class="btn btn-primary btn-file">
-                        Выберите файл&hellip; <input type="file" name="ScanPassport_1Sides" accept="image/jpeg" />
-                    </span>
-                </span>
-                <input type="text" class="form-control" readonly>
-            </div>
-            @*<input type="file" name="ScanPassport_1Sides" accept="image/jpeg"/><br/>*@
+            <input type="file" name="ScanPassport_1Sides" accept="image/jpeg" /><br />
             <span data-valmsg-for="ScanPassport_1Sides" data-valmsg-replace="true"></span>
             @Html.Raw("Не более 1 МБ")
         </div>
         <div class="col-md-4">
-            <div class="input-group ">
-                <span class="input-group-btn">
-                    <span class="btn btn-primary btn-file">
-                        Выберите файл&hellip; <input type="file" name="ScanPassport_2Sides" accept="image/jpeg" />
-                    </span>
-                </span>
-                <input type="text" class="form-control" readonly>
-            </div>
-            @*<input type="file" name="ScanPassport_2Sides" accept="image/jpeg"/><br/>*@
+            <input class="btn" type="file" name="ScanPassport_2Sides" accept="image/jpeg" /><br />
             <span data-valmsg-for="ScanPassport_2Sides" data-valmsg-replace="true"></span>
             @Html.Raw("Не более 1 МБ")
         </div>
     </div>
 
-        <div class="form-horizontal">
+    <div class="form-horizontal">
 
-            <div class="form-group">
+        <div class="form-group">
 
-                <label for="Scan1SidesWithFinancialManagement" style="display: none">Скан 1 страницы договора с финанаосвым управлением</label>
-                <input type="file" name="Scan1SidesWithFinancialManagement" style="display: none" accept="image/jpeg" /><br />
-                <span class="field-validation-valid" data-valmsg-for="Scan1SidesWithFinancialManagement" data-valmsg-replace="true" style="display: none"></span>
-                @*@Html.Raw("Не более 1 МБ")*@
+            <label for="Scan1SidesWithFinancialManagement" style="display: none">Скан 1 страницы договора с финанаосвым управлением</label>
+            <input type="file" name="Scan1SidesWithFinancialManagement" style="display: none" accept="image/jpeg" /><br />
+            <span class="field-validation-valid" data-valmsg-for="Scan1SidesWithFinancialManagement" data-valmsg-replace="true" style="display: none"></span>
+            @*@Html.Raw("Не более 1 МБ")*@
 
-            </div>
         </div>
+    </div>
 
         <h3>Описание конструкции</h3>
         <hr />
