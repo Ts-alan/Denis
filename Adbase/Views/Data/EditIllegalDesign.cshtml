@@ -3,13 +3,13 @@
 @model  Sciencecom.Models.AdvertisingStructure
 @{
     var i = 0;
-    ViewBag.Title = "MetalPointersStructure";
+    ViewBag.Title = "UnidentifiedStructure";
     //Собственник конструкциии
     var owners = new SciencecomEntities().Owners.ToList();
 
     //Вид
     var ListTypeAdvertising = new SciencecomEntities().TypeOfAdvertisingStructures.ToList();
-    
+
     //ListTypeAdvertising.Insert(0,null);
 
     var ViewBids = new SciencecomEntities().ViewBids.OrderBy(a => a.OrderBy).ToList();
@@ -52,76 +52,66 @@
 
 
     $(document).ready(function() {
-   
-    ////отключение валидации
-    $.validator.methods.number = function (value, element) {
-    return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
-    }
-    //накручивание данных в поля
-    //window.onload = SetCountSize();
-    $("[identificationfordirectionside]").each(function(indx, element) {
-    $(element)[0].value =ArrayOfSides[indx].DirectionSide_id;
 
-    });
-    $("[identificationforcountside]").each(function(indx, element) {
-    $(element)[0].value = ArrayOfSides[indx].length;
+        ////отключение валидации
+        $.validator.methods.number = function (value, element) {
+            return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
+        }
 
-    //AddSurface(indx+1);
-    });
 
-    //выпадающий список на согласование
-    $("[name=OnAgreement]").change(function() {
-    var selectIndex = $("[name=OnAgreement] option:selected").val();
+        //выпадающий список на согласование
+        $("[name=OnAgreement]").change(function() {
+            var selectIndex = $("[name=OnAgreement] option:selected").val();
 
-    if (selectIndex == "true") {
-    $("#ContractHide").css("display", "block");
-    }
-    if (selectIndex == "false") {
-    $("#ContractHide").css("display", "none");
-    }
+            if (selectIndex == "true") {
+                $("#ContractHide").css("display", "block");
+            }
+            if (selectIndex == "false") {
+                $("#ContractHide").css("display", "none");
+            }
 
-    });
+        });
 
-    //выщитывание площади для каждой поверхности
+        //выщитывание площади для каждой поверхности
 
-    $('#SHeight').change(function () {
-    //alert("!!!");
-    CalculationOfTheArea(0);
-    });
-    $('#Width').change(function () {
-    //alert("!!!");
-    CalculationOfTheArea(0);
-    });
+        $('#SHeight').change(function () {
+            //alert("!!!");
+            CalculationOfTheArea(0);
+        });
+        $('#Width').change(function () {
+            //alert("!!!");
+            CalculationOfTheArea(0);
+        });
 
-    function CalculationOfTheArea(j) {
+        function CalculationOfTheArea(j) {
 
-    var Height = $('[name="[' + j + '].Height"]').val();
-    var Width = $('[name="[' + j + '].Width"]').val();
+            var Height = $('[name="[' + j + '].Height"]').val();
+            var Width = $('[name="[' + j + '].Width"]').val();
 
-    if (Height != "" && Width != "") {
+            if (Height != "" && Width != "") {
 
-    var Sum = Height * Width;
+                var Sum = Height * Width;
 
-    $('[name="[' + j + '].Space"]').val(Sum);
-    CalculationAS();
-    }
-    }
+                $('[name="[' + j + '].Space"]').val(Sum);
+                CalculationAS();
+            }
+        }
     });
 
     // подсчет суммы площадей
     function CalculationAS() {
 
-    var Summ=0;
-    $("[selectforspace]").each(function(indx, element) {
-    if ($(element).val() != "") {
-    Summ += parseInt($(element).val());
-    }
-    });
-    $("#ConstructionSquare").val(Summ);
+        var Summ=0;
+        $("[selectforspace]").each(function(indx, element) {
+            if ($(element).val() != "") {
+                Summ += parseInt($(element).val());
+            }
+        });
+        $("#ConstructionSquare").val(Summ);
     }
 
 
-    </script>
+</script>
 <h3> КАРТОЧКА НЕОПОЗНАННОЙ КОНСТРУКЦИИ</h3>
 
 @Scripts.Render("~/Content/Map")
@@ -139,44 +129,58 @@
 
         <div class="form-group">
             <label for="Locality">Вид</label>
-            @Html.DropDownListFor(a => a.Code, new SelectList(ListTypeAdvertising, "Code", "Name"), new { @disabled = "disabled", @class = "form-control input-sm"})
-            @Html.HiddenFor(a=> a.Code)
+            @Html.DropDownListFor(a => a.Code, new SelectList(ListTypeAdvertising, "Code", "Name"), new { @disabled = "disabled", @class = "form-control input-sm" })
+            @Html.HiddenFor(a => a.Code)
             @Html.ValidationMessageFor(model => model.Code)
         </div>
         <br>
     </div>
     <h3>Данные о месте расположения конструкции</h3>
-     <hr/>
+    <hr />
     <div class="row" style="margin-left: 0px">
-    <div class="form-inline">
-       
-        <div class="form-group" style="display: none">
-            <label for="UniqueNumber">Идентификационный номер</label>
-            @Html.EditorFor(model => model.UniqueNumber, new {@class = "form-control"})
-            @Html.ValidationMessageFor(model => model.UniqueNumber)
-        </div>
-        <div class="form-group">
-            <label for="Locality">Нас. пункт</label>
-            @Html.DropDownListFor(a => a.Locality_id, new SelectList(Locality, "id", "NameLocality"), new {@class = "form-control input-sm"})
-            @Html.ValidationMessageFor(model => model.Locality_id)
-        </div>
+        <div class="form-inline">
 
-        <div class="form-group">
-            <label for="Street1">Улица</label>
-            @Html.TextBoxFor(model => model.Street1, new {@class = "form-control"})
-            @Html.ValidationMessageFor(model => model.Street1)
-        </div>
+            <div class="form-group" style="display: none">
+                <label for="UniqueNumber">Идентификационный номер</label>
+                @Html.EditorFor(model => model.UniqueNumber, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.UniqueNumber)
+            </div>
+            <div class="form-group">
+                <label for="Locality">Нас. пункт</label>
+                @Html.DropDownListFor(a => a.Locality_id, new SelectList(Locality, "id", "NameLocality"), new { @class = "form-control input-sm" })
+                @Html.ValidationMessageFor(model => model.Locality_id)
+            </div>
 
-        <div class="form-group">
-            <label for="House1">Номер дома</label>
-            @Html.TextBoxFor(model => model.House1, new {@class = "form-control"})
-            @Html.ValidationMessageFor(model => model.House1)
-        </div>
+            <div class="form-group">
+                <label for="Street1">Улица</label>
+                @Html.TextBoxFor(model => model.Street1, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Street1)
+            </div>
 
+            <div class="form-group">
+                <label for="House1">Номер дома</label>
+                @Html.TextBoxFor(model => model.House1, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.House1)
+            </div>
+
+
+        </div>
+        <div class="form-inline" style="margin-top: 15px">
+            <div class="form-group">
+                <label for="Street2">Ближайшая улица по ходу движения</label>
+                @Html.TextBoxFor(model => model.Street2, new { @class = "form-control" })
+
+            </div>
+
+            <div class="form-group">
+                <label for="FromStreet">Со стороны улицы</label>
+                @Html.TextBoxFor(model => model.FromStreet, new { @class = "form-control" })
+
+            </div>
+        </div>
     </div>
-        </div>
-    <input type="button" id="MapSearchStreet" class="btn" value="Поиск на карте" style="margin-left: 185px; margin-top: 15px">
-    
+        <input type="button" id="MapSearchStreet" class="btn" value="Поиск на карте" style="margin-left: 185px; margin-top: 15px">
+
         <div class="form-inline">
             <hr />
             <div class="form-group" style="width: 600px; height: 500px" id="map"></div>
@@ -188,23 +192,24 @@
                             <label for="Breadth">Широта </label>
                         </td>
                         <td>
-                            @Html.TextBoxFor(m => m.Breadth, new {@class = "form-control"})
+                            @Html.TextBoxFor(m => m.Breadth, new { @class = "form-control" })
                             @*<input class="text-box single-line ui-autocomplete-input" data-val="true" type="text" name="Breadth" id="Breadth">*@
-                            <span data-valmsg-for="Breadth" data-valmsg-replace="true"></span></td>
+                            <span data-valmsg-for="Breadth" data-valmsg-replace="true"></span>
+                        </td>
                     </tr>
                     <tr>
                         <td>
                             <label for="Height">Долгота</label>
                         </td>
                         <td>
-                            @Html.TextBoxFor(m => m.Height, new {@class = "form-control"})
+                            @Html.TextBoxFor(m => m.Height, new { @class = "form-control" })
                             @*<input type="text" name="Height" data-val="true" id="Height">*@
 
                             @Html.ValidationMessageFor(model => model.Height)
                         </td>
                     </tr>
                 </table>
-                
+
             </div>
         </div>
 
@@ -215,23 +220,55 @@
 
             <div class="form-group">
                 <label for="photo1">Фотография 1</label>
-                <input type="file" name="photo1" accept="image/jpeg" /><br />
-                <span data-valmsg-for="photo1" data-valmsg-replace="true"></span>
-                @Html.Raw("Не более 1 МБ")
+                @if (ViewBag.photo1)
+                {
+                    <p>
+                        <h3>@Html.Raw("Фото 1")</h3><br />
+                    </p>
+                    string image = "/Images/photo1/" + ViewBag.Id + "photo1.jpg";
+                    <p>
+                        <a href=@image><img src=@image height="500"></a><br />
+                    </p>
+                }
+                else
+                {
+                    <input type="file" name="photo1" accept="image/jpeg" /><br />
+                    <span data-valmsg-for="photo1" data-valmsg-replace="true"></span>
+                    @Html.Raw("Не более 1 МБ")
+                    <br />
+                }
+
             </div>
 
             <div class="form-group">
-                <label for="photo2">Фотография 2</label>
-                <input type="file" name="photo2" accept="image/jpeg" /><br />
-                <span data-valmsg-for="photo2" data-valmsg-replace="true"></span>
-                @Html.Raw("Не более 1 МБ")
+                @if (ViewBag.photo2)
+                {
+                    <p>
+                        <h3>@Html.Raw("Фото 2")</h3><br />
+                    </p>
+                    string image = "/Images/photo2/" + ViewBag.Id + "photo2.jpg";
+
+                    <p>
+                        <a href=@image><img src=@image height="500"></a><br />
+                    </p>
+                }
+                else
+                {
+                    <label for="photo2">Фотография 2</label>
+                    <input type="file" name="photo2" accept="image/jpeg" /><br />
+                    <span data-valmsg-for="photo2" data-valmsg-replace="true"></span>
+                    @Html.Raw("Не более 1 МБ")
+                    <br />
+                }
+
+
             </div>
         </div>
 
         <h3> Комментарий</h3>
         <hr />
         <div class="form-group">
-            @Html.TextAreaFor(model => model.ContentInformationDescription, new { cols = "90", rows = "4", @class = "form-control"})
+            @Html.TextAreaFor(model => model.ContentInformationDescription, new { cols = "90", rows = "4", @class = "form-control" })
             @Html.ValidationMessageFor(model => model.ContentInformationDescription)
         </div>
 
@@ -252,7 +289,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Сохранить" class="btn btn-default"/>
+                <input type="submit" value="Сохранить" class="btn btn-default" />
                 @Html.ActionLink("Выйти без сохранения", "AdvertisingDesign", null, new { @class = "btn btn-default" })
             </div>
         </div>

@@ -50,8 +50,8 @@
                 if (data[i].NameOfAdvertisingStructure == "Неопознанная конструкция") {
                     bct = "Н";
                     bht = "Неопознанная конструкция";
-                    colour = '#0095b6';
-                    houseSupport = '</br>Номер опоры:&nbsp;' + data[i].Support_;
+                    colour = 'red';
+                    houseSupport = '</br>Номер дома:&nbsp;' + data[i].House1;
                 }
                     var placemark = new ymaps.GeoObject(
                  {
@@ -100,27 +100,32 @@
 function getReferencesBillboard(construction) {
     var result = "";
     var editLink;
-    if (construction.NameOfAdvertisingStructure == "Щит") {
-
-
+    var viewLink;
+    if (construction.NameOfAdvertisingStructure == "Щит")
+    {
+        viewLink = "AdvertisingDesign/";
         editLink = "/Data/EditAdvertisingDesign/";
     }
 
     if (construction.NameOfAdvertisingStructure == "Металлический указатель")
     {
         editLink = "/Data/EditMetalPointerDesign/";
+         viewLink = "Pointer/";
     }
 
     if (construction.NameOfAdvertisingStructure == "Световой короб")
     {
         editLink = "/Data/EditLightDuctDesign/";
+         viewLink = "LightDuct/";
     }
-    if (construction.NameOfAdvertisingStructure == "Неопознанная конструкция") {
+    if (construction.NameOfAdvertisingStructure == "Неопознанная конструкция")
+    {
         editLink = "/Data/EditIllegalDesign/";
+        viewLink = "Illegal/";
     }
-    result += '</br><a href="/Data/Documents/' + construction.Id_show + '" >Показать данные о конструкции</a>'
+    result += '</br><a href="/Data/' + viewLink + construction.Id_show + '" >Показать данные о конструкции</a>'
         + '</br><a href="'+ editLink + construction.Id_show + '" >Изменить данные конструкции</a>'
-        + '</br><a href="#DeleteStructures"  role="button" data-toggle="modal" onclick="setRemove(' + construction.Id_show + ')"  >Удалить конструкцию</a></b>'
+        + '</br><a href="/Data/DeleteAdvertisingDesign/' + construction.Id_show + '" >Удалить конструкцию</a></b>'
 
  
     ;

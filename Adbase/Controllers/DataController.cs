@@ -1199,6 +1199,13 @@ namespace Sciencecom.Controllers
             }
             TempData["surface"] = surfaces;
             mc.Code = "UI";
+            
+            ViewBag.Type = "UI";
+            ViewBag.Id = mc.Id;
+
+            ViewBag.photo1 = LoadPic(mc.Id.ToString(), "photo1");
+            ViewBag.photo2 = LoadPic(mc.Id.ToString(), "photo2");
+
             return View(mc);
         }
 
