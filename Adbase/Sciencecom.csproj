@@ -179,6 +179,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MapController.cs" />
     <Compile Include="Controllers\OwnersController.cs" />
+    <Compile Include="DAL\DbWorker.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -822,6 +823,7 @@
     <Content Include="Scripts\MapSearch.js" />
     <Content Include="Scripts\Map\DesignConstuctions.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\PictureAdder.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\SurfaceAdder.js" />
@@ -1457,6 +1459,7 @@
     <Content Include="Views\Data\EditIllegalDesign.cshtml" />
     <Content Include="Views\Data\Illegal.cshtml" />
     <None Include="Views\Data\Pointer.cshtml" />
+    <Content Include="Views\Shared\PatialView\ModalPicture.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Start\App_Data\" />

@@ -42,7 +42,8 @@ namespace Sciencecom
             "~/Scripts/MapSearch.js",
             "~/Scripts/HouseRoadSwapper.js",
             "~/Scripts/SurfaceAdder.js",
-            "~/Scripts/SurfaceGeometryValidation.js"
+            "~/Scripts/SurfaceGeometryValidation.js",
+            "~/Scripts/PictureAdder.js"
            ));
             //css для Grid
             bundles.Add(new StyleBundle("~/Content/jqCrid").Include(

@@ -10,10 +10,12 @@ using Sciencecom.Models.MapJsonModels;
 namespace Sciencecom.Controllers
 {
     using Models;
+    using DAL;
     using System.Globalization;
     using System.Net;
     public class DataController : BaseDataController
     {
+        DbWorker dbw = new DbWorker();
         private SciencecomEntities context = new SciencecomEntities();
 
         [Authorize]
@@ -1148,7 +1150,7 @@ namespace Sciencecom.Controllers
             var data = context.AdvertisingStructures.SingleOrDefault(a => a.Id_show == id);
             if (data == null)
             {
-                DesignNotFound();
+                return View ("DesignNotFound");
             }
             List<Surface> surfaces = new List<Surface>();
             foreach (var sides in data.Sides.OrderBy(a => a.Name))

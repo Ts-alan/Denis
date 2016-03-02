@@ -194,8 +194,11 @@
             collectionMap.postdata = $("#table").getGridParam("postData");
             $(".ui-state-default .ui-th-ltr input").each(function(indx, element)
             {
-                collectionMap.markup.push({ id: $(element).attr("id"), value: $(element).val().toString() });
+                collectionMap.markup.push({ id: $(element).attr("id"), value: $(element).val().toString() }); //TODO Допилить заполнение разметки из постдаты, а не из разметки страницы т.к. она не успевает подгружаться в бифорреквест
             });
+            //console.log(collectionMap.markup);
+            //console.log(collectionMap.postdata);
+
             var test = JSON.stringify(collectionMap);
 
             $.ajax({
@@ -349,13 +352,16 @@
 
             if (collectionMap != "[]" && collectionMap != '' && collectionMap != undefined)
             {
-                $('#table').jqGrid('setGridParam', { postData: collectionMap.postdata});
+                $('#table').jqGrid('setGridParam', { postData: collectionMap.postdata });
+                ///console.log(collectionMap.postdata);
                 $(".ui-state-default .ui-th-ltr input").each(function(indx, element)
                 {
-                    if (collectionMap.markup != undefined)
+                    //console.log(collectionMap.markup[indx]);
+                    if (collectionMap.markup[indx] != undefined)
                     {
-                        //$(element).val(collectionMap.markup[indx].value);
-                       // $('#table').jqgrid.triggerToolbar();
+                        $(element).val(collectionMap.markup[indx].value);
+                        //console.log(element);
+                        // $('#table').jqgrid.triggerToolbar();
                     }
                 });
                 //alert("Filled!");

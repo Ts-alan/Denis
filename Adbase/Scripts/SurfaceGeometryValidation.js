@@ -1,23 +1,5 @@
 ﻿$(document).ready(function ()
 {
-    $("input[type='file']").click(function()
-    {
-        var attr = $(this).attr("name");
-        var btnParent = $(this).parent();
-        btnParent.parent().find("label[for='" + attr + "']").text("Файл не выбран");
-        this.value = null;
-        $(this).parent().removeClass("btn-warning");
-    });
-
-    $("input[type='file']").change(function()
-    {
-        var attr = $(this).attr("name");
-        var btnParent = $(this).parent();
-        var fileName = this.value.split('\\').pop();
-        btnParent.addClass("btn-warning");
-        btnParent.parent().find("label[for='" + attr + "']").text(fileName);
-    });
-
     AddRules();
     
     $("#CountSizes").change(function ()
@@ -28,7 +10,6 @@
         });
         AddRules();
     });
-
 
 
     //Блокирование кнопки Enter чтобы форма не отправлялась

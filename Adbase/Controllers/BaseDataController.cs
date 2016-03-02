@@ -1,11 +1,15 @@
 ﻿using System.IO;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Sciencecom.DAL;
+using Sciencecom.Models;
 
 namespace Sciencecom.Controllers
 {
     public class BaseDataController : Controller
     {
+       
         // GET: BaseData
         protected internal void SavePic(string structureId, string documentName, HttpPostedFileBase picture)
         {
@@ -39,9 +43,9 @@ namespace Sciencecom.Controllers
             }
         }
 
-        protected internal ViewResult DesignNotFound()
+        protected internal int CountSurfaces(AdvertisingStructure adv)
         {
-            return View("DesignNotFound");
+            return adv.Sides.Sum(side => side.Surfaces.Count);
         }
 
     }
