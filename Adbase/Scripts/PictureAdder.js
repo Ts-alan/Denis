@@ -1,18 +1,20 @@
 ﻿$(document).ready(function()
 {
     var picID = "";
+    //Функция срабатывает при клике на кнопку просмотра изображения
     $(".modalPictureTrigger").click(function()
-    {
+    {   //получение значения атрибута "name" для генерации ссылки на картинку
         var name = $(this).parent().parent().find("input[type='file']").attr("name");
-        //console.log($(this).parent().parent().find("input[type='file']").attr("data-id"));
+        //получение значения атрибута "id" для генерации ссылки на картинку
         picID = $(this).attr("data-id");
 
         var markup = '<img src=/Images/' + name + '/' + picID + name + ".jpg" + ' height="300" width="400" style="display: block;margin-left: auto;margin-right: auto;">';
-        //console.log(markup);
+        //Добавление в модальное коно картинки
         $("#ModalPictureDiv").empty();
         $("#ModalPictureDiv").append(markup);
     });
 
+    //Функция срабатывает при клике на кнопку загрузки файла
     $("input[type='file']").click(function()
     {
         //очистка кнопки выбора файла
@@ -20,25 +22,25 @@
         var btnParent = $(this).parent();
         btnParent.parent().find("label[for='" + attr + "']").text("Файл не выбран");
         this.value = null;
-        $(this).parent().removeClass("btn-warning");
-        $(this).parent().addClass("btn-default");
-        btnParent.find("span").text("Выберите файл");
+       
+       // btnParent.find("span").text("Выберите файл");
         
 
         //удаление кнопки открытия модального окна
-        btnParent.parent().find("button.modalPictureTrigger").remove();
-        btnParent.parent().find("label.fileSize").remove();
-        btnParent.parent().append("<label class='fileSize'>Не более 1 МБ</label>");
+        btnParent.find("button.modalPictureTrigger").remove();
+        btnParent.find("label.fileSize").remove();
+        btnParent.append("<label class='fileSize'>Не более 1 МБ</label>");
     });
 
+    //Функция срабатывает изменении значения кнопки загрузки файла
     $("input[type='file']").change(function()
     {
         var attr = $(this).attr("name");
         var btnParent = $(this).parent();
         var fileName = this.value.split('\\').pop();
         //Изменение стиля кнопки загрузки фала при выборе загружаемого файла
-        btnParent.addClass("btn-warning");
-        btnParent.parent().find("label[for='" + attr + "']").text(fileName);
+        //btnParent.addClass("btn-warning");
+        //btnParent.parent().find("label[for='" + attr + "']").text(fileName);
 
         var markup = '<img id="ModalPictureimg" src=""' + ' height="300" width="400" style="display: block;margin-left: auto;margin-right: auto;">';
         //добавление в модальное окно пустого тега с картинкой
@@ -56,9 +58,9 @@
         }
 
         //добавление кнопки открывания модального окна
-        var modalButton = '<button type="button" class="btn btn-info input-sm modalPictureTrigger" data-toggle="modal" data-id ="@ViewBag.Id" data-target="#ViewModalPicture">Открыть изображение</button>';
-        btnParent.parent().find("label.fileSize").remove();
-        btnParent.parent().append(modalButton);
+        var modalButton = '<button type="button" class="modalPictureTrigger" data-toggle="modal" data-id ="@ViewBag.Id" data-target="#ViewModalPicture">Открыть изображение</button>';
+        btnParent.find("label.fileSize").remove();
+        btnParent.append(modalButton);
     });
     
     
