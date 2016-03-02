@@ -48,5 +48,10 @@ namespace Sciencecom.Controllers
             return adv.Sides.Sum(side => side.Surfaces.Count);
         }
 
+        private double CountSquare(AdvertisingStructure adv)
+        {
+            return adv.Sides.SelectMany(side => side.Surfaces).Sum(Surface => Surface.Space);
+        }
+
     }
 }

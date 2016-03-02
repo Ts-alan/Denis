@@ -10,8 +10,8 @@
 
         //удаление кнопки открытия модального окна
         btnParent.find("button.modalPictureTrigger").remove();
-        btnParent.find("label.fileSize").remove();
-        btnParent.append("<label class='fileSize'>Не более 1 МБ</label>");
+       
+       
     });
 
     //Функция срабатывает изменении значения кнопки загрузки файла
