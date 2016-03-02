@@ -21,6 +21,9 @@
         btnParent.parent().find("label[for='" + attr + "']").text("Файл не выбран");
         this.value = null;
         $(this).parent().removeClass("btn-warning");
+        $(this).parent().addClass("btn-default");
+        btnParent.find("span").text("Выберите файл");
+        
 
         //удаление кнопки открытия модального окна
         btnParent.parent().find("button.modalPictureTrigger").remove();
