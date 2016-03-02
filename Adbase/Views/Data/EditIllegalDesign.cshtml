@@ -239,7 +239,7 @@
                 }
                 else
                 {
-                    <input type="file" name="photo1" accept="image/jpeg" /><br />
+                    <input data-id ="@ViewBag.Id" type="file" name="photo1" accept="image/jpeg" /><br />
                     <span data-valmsg-for="photo1" data-valmsg-replace="true"></span>
                      @*@Html.Raw("Не более 1 МБ")
                    <div class="fileUpload btn btn-default input-sm">
@@ -275,7 +275,7 @@
                 }
                 else
                 {
-                    <input type="file" name="photo2" accept="image/jpeg" /><br />
+                    <input data-id ="@ViewBag.Id" type="file" name="photo2" accept="image/jpeg" /><br />
                     <span data-valmsg-for="photo2" data-valmsg-replace="true"></span>
                     @*<div class="fileUpload btn btn-default input-sm">
                         <span accept="image/jpeg/">Выберите файл</span>
