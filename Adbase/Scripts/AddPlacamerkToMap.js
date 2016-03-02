@@ -75,8 +75,8 @@
         else
         {
             //присвоение  коодинат при клике  
-            myMap.events.add('click', function(e)
-            {
+            myMap.events.add('click', function(e) {
+                
                 if (countE)
                 {
                     if (myPlacemark != undefined)
@@ -88,9 +88,22 @@
                     $("#Breadth").val(str);
                     str = String(coords[1].toPrecision(6).replace('.', ','));
                     $("#Height").val(str);
-                    myPlacemark = new ymaps.Placemark([coords[0], coords[1]], {}, {
-                        draggable: true
-                    });
+                    if (typedesign = "IllegalDesign") {
+                        myPlacemark = new ymaps.Placemark([coords[0], coords[1]], {
+                            iconContent: "Н",
+                            hintContent: "Неопознанная конструкция"
+                            
+                        }, {
+                            draggable: true,
+                            preset: 'islands#redIcon',
+                            iconColor: 'red'
+                        });
+
+                    } else {
+                        myPlacemark = new ymaps.Placemark([coords[0], coords[1]], {}, {
+                            draggable: true
+                        });
+                    }
                     myMap.geoObjects.add(myPlacemark);
                     dragend();
                     countE = false;

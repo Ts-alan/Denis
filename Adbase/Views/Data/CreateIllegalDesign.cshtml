@@ -3,16 +3,9 @@
 @{
     var i = 0;
     ViewBag.Title = "UnidentifiedStructure";
-    //Собственник конструкциии
-    var owners = new SciencecomEntities().Owners.ToList();
-
+  
     //Вид
     var ListTypeAdvertising = new SciencecomEntities().TypeOfAdvertisingStructures.ToList();
-    var ListTypeAdvertisingSelected = ListTypeAdvertising.Single(a => a.Code == ViewBag.Code).id;
-    //ListTypeAdvertising.Insert(0,null);
-
-    var ViewBids = new SciencecomEntities().ViewBids.OrderBy(a => a.OrderBy).ToList();
-
 
     //Элемент улично-дорожной сети
     var ListTypeElementOfTheRoadNetworkName = new SciencecomEntities().TheElementOfTheRoadNetworks.Select(a => new { id = a.id, Value = a.TheElementOfTheRoadNetworkName }).ToList();
@@ -28,15 +21,12 @@
     var DirectionSide = new SciencecomEntities().DirectionSides.OrderBy(x => x.OrderBY).ToList();
     //Индификация поверхности
     var IdentificationSide = new SciencecomEntities().Identifications.ToList();
-    //IdentificationSide.Insert(0, null);
-    //Идентификационный номер
-    var PropertyLocation = new SciencecomEntities().PropertyLocations.ToList();
+  
 
-    //Подсветка
-    var Backlight = new SciencecomEntities().Backlights.ToList();
 
 }
 <script type="text/javascript">
+    var typedesign = "IllegalDesign";
     var i = 0;
     var StartCountForSurface ;
     var EndCountForSurface = 0;
@@ -69,18 +59,18 @@
         //$("#Code option").val("Металлический указатель").prop('selected', true);
 
         $("#Code").change(
-       function () {
-           var end = $('#Code option:selected').text();
-           if (end == "Щит") {
-               window.location.href = '/Data/CreateAdvertisingDesign/';
-           }
-           if (end == "Световой короб") {
-               window.location.href = '/Data/CreateLightDuctDesign/';
-           }
-           if (end == "Металлический указатель") {
-               window.location.href = '/Data/CreateMetalPointerDesign/';
-           }
-       });
+            function () {
+                var end = $('#Code option:selected').text();
+                if (end == "Щит") {
+                    window.location.href = '/Data/CreateAdvertisingDesign/';
+                }
+                if (end == "Световой короб") {
+                    window.location.href = '/Data/CreateLightDuctDesign/';
+                }
+                if (end == "Металлический указатель") {
+                    window.location.href = '/Data/CreateMetalPointerDesign/';
+                }
+            });
 
 
     });
@@ -143,14 +133,12 @@
        
         $('[IdentificationForCountSide]').each(function (indx, element) {
 
-            $(element).rules('add', {
-                required: true
-            });
-        }
+                $(element).rules('add', {
+                    required: true
+                });
+            }
         );
-        //другое решение не тестил
-        //$('[name="DirectionSide"]').data('validator', null);
-        //$.validator.unobtrusive.parse('[name="DirectionSide"]');
+
 
     }
 
@@ -199,7 +187,6 @@
         }
 
     }
-
 
 
 </script>
@@ -312,22 +299,16 @@
 
             <div class="form-group">
                 <label for="photo1">Фотография 1</label>
-                @*<input type="file" name="photo1" accept="image/jpeg" /><br />
+                <input type="file" name="photo1" accept="image/jpeg" /><br />
                 <span data-valmsg-for="photo1" data-valmsg-replace="true"></span>
-                @Html.Raw("Не более 1 МБ")*@
-                <input data-id ="@ViewBag.Id" type="file" name="photo1" accept="image/jpeg" /><br />
-                <span data-valmsg-for="photo1" data-valmsg-replace="true"></span>
-                <label class="fileSize">@Html.Raw("Не более 1 МБ")</label>
+                @Html.Raw("Не более 1 МБ")
             </div>
 
             <div class="form-group">
-               <label for="photo2">Фотография 2</label>
-                 @*<input type="file" name="photo2" accept="image/jpeg" /><br />
+                <label for="photo2">Фотография 2</label>
+                <input type="file" name="photo2" accept="image/jpeg" /><br />
                 <span data-valmsg-for="photo2" data-valmsg-replace="true"></span>
-                @Html.Raw("Не более 1 МБ")*@
-                <input data-id ="@ViewBag.Id" type="file" name="photo2" accept="image/jpeg" /><br />
-                <span data-valmsg-for="photo2" data-valmsg-replace="true"></span>
-                <label class="fileSize">@Html.Raw("Не более 1 МБ")</label>
+                @Html.Raw("Не более 1 МБ")
             </div>
         </div>
 

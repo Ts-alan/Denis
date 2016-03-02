@@ -14,20 +14,12 @@
             var coords = myPlacemark.geometry.getCoordinates();
             var str = String(coords[0].toPrecision(6));
             str = str.replace('.', ',');
-            //if (!isNaN(str)) {
-            //    $("#Shirota").val(str);
-            //} else {
-            //    $("#Shirota").val("");
-            //}
+
             $("#Breadth").val(str);
             
             str = String(coords[1].toPrecision(6));
             str = str.replace('.', ',');
-            //if (!isNaN(str)) {
-            //    $("#Dolgota").val(str);
-            //} else {
-            //    $("#Dolgota").val("");
-            //} 
+
             $("#Height").val(str);
         });
     }
