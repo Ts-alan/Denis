@@ -28,7 +28,7 @@
         //очистка кнопки выбора файла
         var attr = $(this).attr("name");
         var btnParent = $(this).parent();
-        btnParent.parent().find("label[for='" + attr + "']").text("Файл не выбран");
+        //btnParent.parent().find("label[for='" + attr + "']").text("Файл не выбран");
         this.value = null;
        
        // btnParent.find("span").text("Выберите файл");
