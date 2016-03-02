@@ -660,7 +660,9 @@ namespace Sciencecom.Controllers
             }
 
             AdvertisingStructure mc = context.AdvertisingStructures.Single(a => a.Id_show == id);
-            mc.Breadth = double.Parse(mc.Breadth.ToString().Substring(0, 7));
+            if(mc.Breadth!=null)
+                mc.Breadth = double.Parse(mc.Breadth.ToString().Substring(0, 7));
+            if(mc.Height!=null)
             mc.Height = double.Parse(mc.Height.ToString().Substring(0, 7));
             return View(mc);
         }
@@ -758,7 +760,9 @@ namespace Sciencecom.Controllers
             }
             TempData["surface"] = surfaces;
             mc.Code = "MP";
+            if(mc.Breadth!=null)
             mc.Breadth = double.Parse(mc.Breadth.ToString().Substring(0, 7));
+            if(mc.Height!=null)
             mc.Height = double.Parse(mc.Height.ToString().Substring(0, 7));
             return View(mc);
         }
@@ -904,6 +908,13 @@ namespace Sciencecom.Controllers
             }
 
             AdvertisingStructure mc = context.AdvertisingStructures.Single(a => a.Id_show == id);
+            if (mc.Breadth != null)
+            {
+                mc.Breadth = double.Parse(mc.Breadth.ToString().Substring(0, 7));
+            }
+            if (mc.Height != null) { 
+                    mc.Height = double.Parse(mc.Height.ToString().Substring(0, 7));
+            }
             return View(mc);
         }
 
@@ -995,6 +1006,10 @@ namespace Sciencecom.Controllers
             }
             TempData["surface"] = surfaces;
             mc.Code = "LD";
+            if(mc.Breadth!=null)
+            mc.Breadth = double.Parse(mc.Breadth.ToString().Substring(0, 7));
+            if (mc.Height != null)
+                mc.Height = double.Parse(mc.Height.ToString().Substring(0, 7));
             return View(mc);
         }
 
