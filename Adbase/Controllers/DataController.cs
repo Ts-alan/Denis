@@ -1126,7 +1126,15 @@ namespace Sciencecom.Controllers
 
         public ActionResult Illegal(int? id, string type = "UI")
         {
-            var data = context.AdvertisingStructures.Single(a => a.Id_show == id);
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var data = context.AdvertisingStructures.SingleOrDefault(a => a.Id_show == id);
+            if (data == null)
+            {
+                DesignNotFound();
+            }
             List<Surface> surfaces = new List<Surface>();
             foreach (var sides in data.Sides.OrderBy(a => a.Name))
             {
@@ -1136,10 +1144,7 @@ namespace Sciencecom.Controllers
                 }
             }
             TempData["surface"] = surfaces;
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            
             switch (type)
             {
                 case "UI":

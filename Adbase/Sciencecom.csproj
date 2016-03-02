@@ -1430,7 +1430,7 @@
     <Content Include="Views\Owners\Edit.cshtml" />
     <Content Include="Views\Owners\Index.cshtml" />
     <Content Include="Views\Map\Index.cshtml" />
-    <Content Include="Views\Error\Index.cshtml" />
+    <Content Include="Views\Shared\DesignNotFound.cshtml" />
     <Content Include="Views\Data\Documents.cshtml" />
     <Content Include="Views\Illegal\Create.cshtml" />
     <Content Include="Views\Illegal\Delete.cshtml" />
@@ -1470,6 +1470,7 @@
     <Folder Include="Images\Sides\" />
     <Folder Include="Views\BackEndService\" />
     <Folder Include="Views\BaseData\" />
+    <Folder Include="Views\Error\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Project_Readme.html" />

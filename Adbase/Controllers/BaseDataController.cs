@@ -38,5 +38,11 @@ namespace Sciencecom.Controllers
                 info1.Delete();
             }
         }
+
+        protected internal ViewResult DesignNotFound()
+        {
+            return View("DesignNotFound");
+        }
+
     }
 }
