@@ -179,39 +179,39 @@
             </div>
         </div>
     </div>
-        <input type="button" id="MapSearchStreet" class="btn" value="Поиск на карте" style="margin-left: 185px; margin-top: 15px">
+    <input type="button" id="MapSearchStreet" class="btn" value="Поиск на карте" style="margin-left: 185px; margin-top: 15px">
 
-        <div class="form-inline">
-            <hr />
-            <div class="form-group" style="width: 600px; height: 500px" id="map"></div>
+    <div class="form-inline">
+        <hr />
+        <div class="form-group" style="width: 600px; height: 500px" id="map"></div>
 
-            <div class="form-group">
-                <table>
-                    <tr>
-                        <td>
-                            <label for="Breadth">Широта </label>
-                        </td>
-                        <td>
-                            @Html.TextBoxFor(m => m.Breadth, new { @class = "form-control" })
-                            @*<input class="text-box single-line ui-autocomplete-input" data-val="true" type="text" name="Breadth" id="Breadth">*@
-                            <span data-valmsg-for="Breadth" data-valmsg-replace="true"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="Height">Долгота</label>
-                        </td>
-                        <td>
-                            @Html.TextBoxFor(m => m.Height, new { @class = "form-control" })
-                            @*<input type="text" name="Height" data-val="true" id="Height">*@
+        <div class="form-group">
+            <table>
+                <tr>
+                    <td>
+                        <label for="Breadth">Широта </label>
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => m.Breadth, new { @class = "form-control" })
+                        @*<input class="text-box single-line ui-autocomplete-input" data-val="true" type="text" name="Breadth" id="Breadth">*@
+                        <span data-valmsg-for="Breadth" data-valmsg-replace="true"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="Height">Долгота</label>
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => m.Height, new { @class = "form-control" })
+                        @*<input type="text" name="Height" data-val="true" id="Height">*@
 
-                            @Html.ValidationMessageFor(model => model.Height)
-                        </td>
-                    </tr>
-                </table>
+                        @Html.ValidationMessageFor(model => model.Height)
+                    </td>
+                </tr>
+            </table>
 
-            </div>
         </div>
+    </div>
 
         <h3>Фото</h3>
         <hr />
@@ -219,72 +219,69 @@
         <div class="form-inline">
 
             <div class="form-group">
-                <label >Фотография 1</label>
-                <br/>
+                <label>Фотография 1</label>
+                <br />
                 @if (ViewBag.photo1)
                 {
                     string image = "/Images/photo1/" + ViewBag.Id + "photo1.jpg";
-                    <p>
-                        <a href=@image><img src=@image height="500"></a><br />
-                    </p>
+                    @*<p>
+                            <a href=@image><img src=@image height="500"></a><br />
+                        </p>*@
                     @*<div class="fileUpload btn btn-warning input-sm">
-                        <span>Фото 1</span>
-                        <input type="file" class="upload" name="photo1" accept="image/jpeg/"/>
-                    </div>*@
-                    <label for="photo1">Фото 1</label>
-                    <br/>
-                    <div class="modalTriggerContainer">
-                        <button type="button" class="btn btn-info input-sm modalPictureTrigger" data-toggle="modal" data-id ="@ViewBag.Id" data-target="#ViewModalPicture">Открыть изображение</button>
-                    </div>
+                            <span>Фото 1</span>
+                            <input type="file" class="upload" name="photo1" accept="image/jpeg/"/>
+                        </div>*@
+                    <input data-id="@ViewBag.Id" type="file" name="photo1" accept="image/jpeg" /><br />
+                    <span data-valmsg-for="photo1" data-valmsg-replace="true"></span>
+                    <button type="button" class="modalPictureTrigger" data-toggle="modal" onclick="addPic('#ModalPictureDivphoto1', '@image')" data-target="#ViewModalPicturephoto1">Открыть изображение</button>
                 }
                 else
                 {
-                    <input data-id ="@ViewBag.Id" type="file" name="photo1" accept="image/jpeg" /><br />
+                    <input data-id="@ViewBag.Id" type="file" name="photo1" accept="image/jpeg" /><br />
                     <span data-valmsg-for="photo1" data-valmsg-replace="true"></span>
-                     @*@Html.Raw("Не более 1 МБ")
-                   <div class="fileUpload btn btn-default input-sm">
-                        <span accept="image/jpeg/">Выберите файл</span>
-                        <input type="file" class="upload" name="photo1" accept="image/jpeg/"/>
-                    </div>
-                    <label for="photo1">Файл не выбран</label>*@
+                    @*@Html.Raw("Не более 1 МБ")
+                        <div class="fileUpload btn btn-default input-sm">
+                             <span accept="image/jpeg/">Выберите файл</span>
+                             <input type="file" class="upload" name="photo1" accept="image/jpeg/"/>
+                         </div>
+                         <label for="photo1">Файл не выбран</label>*@
                     <label class="fileSize">@Html.Raw("Не более 1 МБ")</label>
-                    
+
                 }
 
             </div>
 
             <div class="form-group">
-                <label for="photo1">Фотография 2</label>
-                <br/>
+                <label for="photo2">Фотография 2</label>
+                <br />
                 @if (ViewBag.photo2)
                 {
                     string image = "/Images/photo2/" + ViewBag.Id + "photo2.jpg";
 
-                    <p>
+                    @*<p>
                         <a href=@image><img src=@image height="500"></a><br />
-                    </p>
+                    </p>*@
                     @*<div class="fileUpload btn btn-warning input-sm">
-                        <span>Фото 1</span>
-                        <input type="file" class="upload" name="photo2" accept="image/jpeg/"/>
-                    </div>
-                    <label for="photo2">Файл не выбран</label>*@
-                    <br/>
+                            <span>Фото 1</span>
+                            <input type="file" class="upload" name="photo2" accept="image/jpeg/"/>
+                        </div>
+                        <label for="photo2">Файл не выбран</label>*@
+                    <br />
                     <div class="modalTriggerContainer">
-                        <button type="button" class="btn btn-info input-sm modalPictureTrigger" data-toggle="modal" data-id ="@ViewBag.Id" data-target="#ViewModalPicture">Открыть изображение</button>
+                        <button type="button" class="modalPictureTrigger" data-toggle="modal" onclick="addPic('#ModalPictureDivphoto2', '@image')" data-target="#ViewModalPicturephoto2">Открыть изображение</button>
                     </div>
                 }
                 else
                 {
-                    <input data-id ="@ViewBag.Id" type="file" name="photo2" accept="image/jpeg" /><br />
+                    <input data-id="@ViewBag.Id" type="file" name="photo2" accept="image/jpeg" /><br />
                     <span data-valmsg-for="photo2" data-valmsg-replace="true"></span>
                     @*<div class="fileUpload btn btn-default input-sm">
-                        <span accept="image/jpeg/">Выберите файл</span>
-                        <input type="file" class="upload" name="photo2" accept="image/jpeg/"/>
-                    </div>
-                    <label for="photo2">Файл не выбран</label>*@
-                 
+                            <span accept="image/jpeg/">Выберите файл</span>
+                            <input type="file" class="upload" name="photo2" accept="image/jpeg/"/>
+                        </div>
+                        <label for="photo2">Файл не выбран</label>*@
                     <label class="fileSize">@Html.Raw("Не более 1 МБ")</label>
-                    
+
                 }
 
             </div>

@@ -77,3 +77,8 @@
     
 
 });
+
+function addPic(id, src)
+{
+    $("#ModalPictureDivphoto1").append('<img id="' + id + '" src="' + src + '" height="300" width="400" style="display: block;margin-left: auto;margin-right: auto;">');
+}
