@@ -224,60 +224,68 @@
                 @if (ViewBag.photo1)
                 {
                     string image = "/Images/photo1/" + ViewBag.Id + "photo1.jpg";
+                    string imgName = ViewBag.Id + "photo1.jpg";
                     @*<p>
                             <a href=@image><img src=@image height="500"></a><br />
                         </p>*@
-                    @*<div class="fileUpload btn btn-warning input-sm">
-                            <span>Фото 1</span>
-                            <input type="file" class="upload" name="photo1" accept="image/jpeg/"/>
-                        </div>*@
-                    <input data-id="@ViewBag.Id" type="file" name="photo1" accept="image/jpeg" /><br />
+                    <div class="fileUpload btn btn-warning input-sm">
+                        <span>&nbsp;&nbsp;Фото 1&nbsp;</span>
+                        <input type="file" class="upload" name="photo1" accept="image/jpeg/"/>
+                    </div>
+                    <label for="photo1">@imgName</label>
+                    <br/>
+                    <br/>
+                    <button type="button" class="modalPictureTrigger btn btn-default input-sm" data-toggle="modal" onclick="addPic('#ModalPictureDivphoto1', '@image')" data-target="#ViewModalPicturephoto1" >Показать</button>
+                    @*<input data-id="@ViewBag.Id" type="file" name="photo1" accept="image/jpeg" /><br />
                     <span data-valmsg-for="photo1" data-valmsg-replace="true"></span>
-                    <button type="button" class="modalPictureTrigger" data-toggle="modal" onclick="addPic('#ModalPictureDivphoto1', '@image')" style=" width: 122px; height: 22px; -webkit-box-shadow: 0 0 0px 1000px white inset" data-target="#ViewModalPicturephoto1">Показать</button>
+                    <button type="button" class="modalPictureTrigger" data-toggle="modal" onclick="addPic('#ModalPictureDivphoto1', '@image')" style=" width: 122px; height: 22px; -webkit-box-shadow: 0 0 0px 1000px white inset" data-target="#ViewModalPicturephoto1">Показать</button>*@
                 }
                 else
                 {
-                    <input data-id="@ViewBag.Id" type="file" name="photo1" accept="image/jpeg" /><br />
-                    <span data-valmsg-for="photo1" data-valmsg-replace="true"></span>
-                    @*@Html.Raw("Не более 1 МБ")
+                    
                         <div class="fileUpload btn btn-default input-sm">
-                             <span accept="image/jpeg/">Выберите файл</span>
+                             <span accept="image/jpeg/">&nbsp;&nbsp;Фото 1&nbsp;</span>
                              <input type="file" class="upload" name="photo1" accept="image/jpeg/"/>
                          </div>
-                         <label for="photo1">Файл не выбран</label>*@
+                    <label for="photo1">Файл не выбран</label>
+                    <br/>
+                    <br/>
                 }
 
             </div>
 
             <div class="form-group">
-                <label for="photo2">Фотография 2</label>
+                <label>Фотография 2</label>
                 <br />
                 @if (ViewBag.photo2)
                 {
                     string image = "/Images/photo2/" + ViewBag.Id + "photo2.jpg";
-
+                 string img2Name = ViewBag.Id + "photo2.jpg";
                     @*<p>
                         <a href=@image><img src=@image height="500"></a><br />
                     </p>*@
-                    @*<div class="fileUpload btn btn-warning input-sm">
-                            <span>Фото 1</span>
-                            <input type="file" class="upload" name="photo2" accept="image/jpeg/"/>
-                        </div>
-                        <label for="photo2">Файл не выбран</label>*@
+                    <div class="fileUpload btn btn-warning input-sm">
+                        <span>&nbsp;&nbsp;Фото 2&nbsp;</span>
+                        <input type="file" class="upload" name="photo2" accept="image/jpeg/"/>
+                    </div>
+                    <label for="photo2">@img2Name</label>
+                    <br />
                     <br />
                     <div class="modalTriggerContainer">
-                        <button type="button" class="modalPictureTrigger" data-toggle="modal" onclick="addPic('#ModalPictureDivphoto2', '@image')" data-target="#ViewModalPicturephoto2" style=" width: 122px; height: 22px; -webkit-box-shadow: 0 0 0px 1000px white inset">Показать</button>
+                        <button type="button" class="modalPictureTrigger btn btn-default input-sm" data-toggle="modal" onclick="addPic('#ModalPictureDivphoto2', '@image')" data-target="#ViewModalPicturephoto2">Показать</button>
                     </div>
                 }
                 else
                 {
-                    <input data-id="@ViewBag.Id" type="file"  name="photo2" accept="image/jpeg" /><br />
-                    <span data-valmsg-for="photo2" data-valmsg-replace="true"></span>
-                    @*<div class="fileUpload btn btn-default input-sm">
-                            <span accept="image/jpeg/">Выберите файл</span>
-                            <input type="file" class="upload" name="photo2" accept="image/jpeg/"/>
-                        </div>
-                        <label for="photo2">Файл не выбран</label>*@
+                    @*<input data-id="@ViewBag.Id" type="file"  name="photo2" accept="image/jpeg" /><br />
+                    <span data-valmsg-for="photo2" data-valmsg-replace="true"></span>*@
+                    <div class="fileUpload btn btn-default input-sm">
+                        <span>&nbsp;&nbsp;Фото 2&nbsp;</span>
+                        <input type="file" class="upload" name="photo2" accept="image/jpeg/"/>
+                    </div>
+                    <label for="photo2">Файл не выбран</label>
+                    <br />
+                    <br />
                    
 
                 }
