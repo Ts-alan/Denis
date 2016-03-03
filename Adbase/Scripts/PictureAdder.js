@@ -58,6 +58,7 @@
         this.value = null;
        
         btnParent.parent().find("label[for^='photo']").text("Файл не выбран");
+        btnParent.parent().find("label[for^='Scan']").text("Файл не выбран");
         btnParent.removeClass("btn-warning");
         btnParent.addClass("btn-default");
         //удаление кнопки открытия модального окна
@@ -75,6 +76,7 @@
         var btnParent = $(this).parent();
         var fileName = this.value.split('\\').pop();
         btnParent.parent().find("label[for^='photo']").text(fileName);
+        btnParent.parent().find("label[for^='Scan']").text(fileName);
         //Изменение стиля кнопки загрузки фала при выборе загружаемого файла
         
         var markup = '<img id="' + modalImgId + '" src=""' + ' height="300" width="400" style="display: block;margin-left: auto;margin-right: auto;">';

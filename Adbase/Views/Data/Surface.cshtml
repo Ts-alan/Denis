@@ -1,46 +1,52 @@
 ﻿@model System.Collections.Generic.List<Sciencecom.Models.Surface>
 
 
-@for (int i = ViewBag.StartCountForSurface, j=1; i <ViewBag.EndCountForSurface; i++,j++)
+@for (int i = ViewBag.StartCountForSurface, j = 1; i < ViewBag.EndCountForSurface; i++, j++)
 {
     <script type="text/javascript">
 
         //выщитывание площади для каждой поверхности
-        $('[name="[' + @i + '].Height"]').change(function () {
+        $('[name="[' + @i + '].Height"]').change(function ()
+        {
 
             CalculationOfTheArea(@i);
         });
-        $('[name="[' + @i + '].Width"]').change(function () {
-       
+        $('[name="[' + @i + '].Width"]').change(function ()
+        {
+
             CalculationOfTheArea(@i);
         });
 
     </script>
-  <text>  <div side="@ViewBag.Side"> 
-        <input type="hidden" name="[@i].SideOfSurface" value="@ViewBag.Side">
-        <h3 style="margin-left: 150px">Поверхность @j &nbsp; Стороны @ViewBag.Side </h3>
+    <text>  <div side="@ViewBag.Side">
+            <input type="hidden" name="[@i].SideOfSurface" value="@ViewBag.Side">
+            <h3 style="margin-left: 150px">Поверхность @j &nbsp; Стороны @ViewBag.Side </h3>
 
-        <div class="form-inline">
-            <hr/>
-            <div class="form-group">
-
-                <input name="[@i].NumberSurface" type="hidden" value="@ViewBag.Side">
-
-                <label for="[@i].Height">Высота</label>
-                @Html.EditorFor(model => model[i].Height)
-                @Html.ValidationMessageFor(model => model[i].Height)
-
-                <label for="[@i].Width">Ширина</label>
-                @Html.EditorFor(model => model[i].Width)
-                @Html.ValidationMessageFor(model => model[i].Width)
-
-                <label for="[@i].Space">Площадь</label>
-                @Html.TextBoxFor(model => model[i].Space, new { type = "number", SelectForSpace = "",onchange = "CalculationAS()" })
-                @Html.ValidationMessageFor(model => model[i].Space)
+            <div class="form-inline">
+                <hr />
+                <div class="form-group">
+                    <input name="[@i].NumberSurface" type="hidden" value="@ViewBag.Side">
+                    <div class="form-group has-feedback">
+                        <label for="[@i].Height">Высота</label>
+                        @Html.ValidationMessageFor(model => model[i].Height)
+                        @Html.TextBoxFor(model => model[i].Height, new { @class = "form-control", type = "number"})
+                        <span class="glyphicon form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback" style="margin-left: 20px">
+                        <label for="[@i].Width">Ширина</label>
+                        @Html.ValidationMessageFor(model => model[i].Width)
+                        @Html.TextBoxFor(model => model[i].Width, new { @class = "form-control", type = "number" })
+                        <span class="glyphicon form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback" style="margin-left: 20px">
+                        <label for="[@i].Space">Площадь</label>
+                        @Html.TextBoxFor(model => model[i].Space, new { @class = "form-control", type = "number", SelectForSpace = "", onchange = "CalculationAS()", @readonly = "readonly" })
+                        @Html.ValidationMessageFor(model => model[i].Space)
+                    </div>
+                </div>
             </div>
-        </div>
 
-    </div></text>
+        </div></text>
 }
 
 
