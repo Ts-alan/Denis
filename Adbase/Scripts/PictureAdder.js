@@ -52,6 +52,7 @@ function addPic(id, src)
     $(id).append('<img id="' + id + '" src="' + src + '" height="300" width="400" style="display: block;margin-left: auto;margin-right: auto;">');
     var style = css($("input[name='photo2']"));
     $(id).css(style);
+    $(id).css({ width: '122px', height: '22px', '-webkit-box-shadow': '0 0 0px 1000px white inset' });
 }
 
 function css(a) {
