@@ -1007,7 +1007,7 @@ namespace Sciencecom.Controllers
         public ActionResult EditIllegalDesign(int id, AdvertisingStructure Structures,
             [ModelBinder(typeof(CustomModelBinderForSide))] List<Side> Sides,
             [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces,
-            HttpPostedFileBase photo1, HttpPostedFileBase photo2, int CountSize = 1)
+            HttpPostedFileBase photo1, HttpPostedFileBase photo2,string PhotoInd1, string PhotoInd2, int CountSize = 1)
         {
 
             AdvertisingStructure mc = context.AdvertisingStructures.Single(a => a.Id_show == id);
@@ -1056,7 +1056,7 @@ namespace Sciencecom.Controllers
 
             //картики
 
-            if (photo1 != null)
+            if (photo1 != null&& PhotoInd1== "setImage")
             {
 
                 string src = "~/Images/photo1/" + Structures.Id + "photo1.jpg";
@@ -1069,11 +1069,11 @@ namespace Sciencecom.Controllers
 
                 photo1.SaveAs(path);
             }
-            else
+            if(PhotoInd1 == "")
             {
                 DeletePic(Structures.Id.ToString(), "photo1");
             }
-            if (photo2 != null)
+            if (photo2 != null && PhotoInd2 == "setImage")
             {
                 string src = "~/Images/photo2/" + Structures.Id + "photo2.jpg";
                 string path = Server.MapPath(src);
@@ -1085,7 +1085,7 @@ namespace Sciencecom.Controllers
 
                 photo2.SaveAs(path);
             }
-            else
+            if (PhotoInd2 == "")
             {
                 DeletePic(Structures.Id.ToString(), "photo2");
             }

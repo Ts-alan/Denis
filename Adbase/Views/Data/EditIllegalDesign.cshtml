@@ -196,18 +196,17 @@
         <h3>Фото</h3>
         <hr />
 
-        <div class="form-inline">
+        <div class="row">
 
-            <div class="form-group">
+            <div class="col-md-4">
                 <label>Фотография 1</label>
-                <br />
+                <br/>
+                
                 @if (ViewBag.photo1)
                 {
                     string image = "/Images/photo1/" + ViewBag.Id + "photo1.jpg";
                     string imgName = ViewBag.Id + "photo1.jpg";
-                    @*<p>
-                            <a href=@image><img src=@image height="500"></a><br />
-                        </p>*@
+                    <input type="hidden" name="PhotoInd1" value="setImage">
                     <div class="fileUpload btn btn-warning input-sm">
                         <span>&nbsp;&nbsp;Фото 1&nbsp;</span>
                         <input type="file" class="upload" name="photo1" accept="image/jpeg/"/>
@@ -216,13 +215,11 @@
                     <br/>
                     <br/>
                     <button type="button" class="modalPictureTrigger btn btn-default input-sm" data-toggle="modal" onclick="addPic('#ModalPictureDivphoto1', '@image')" data-target="#ViewModalPicturephoto1" >Показать</button>
-                    @*<input data-id="@ViewBag.Id" type="file" name="photo1" accept="image/jpeg" /><br />
-                    <span data-valmsg-for="photo1" data-valmsg-replace="true"></span>
-                    <button type="button" class="modalPictureTrigger" data-toggle="modal" onclick="addPic('#ModalPictureDivphoto1', '@image')" style=" width: 122px; height: 22px; -webkit-box-shadow: 0 0 0px 1000px white inset" data-target="#ViewModalPicturephoto1">Показать</button>*@
+
                 }
                 else
                 {
-                    
+                    <input type="hidden" name="PhotoInd1" value="">
                         <div class="fileUpload btn btn-default input-sm">
                              <span accept="image/jpeg/">&nbsp;&nbsp;Фото 1&nbsp;</span>
                              <input type="file" class="upload" name="photo1" accept="image/jpeg/"/>
@@ -234,16 +231,15 @@
 
             </div>
 
-            <div class="form-group">
+            <div class="col-md-4">
                 <label>Фотография 2</label>
                 <br />
                 @if (ViewBag.photo2)
                 {
+                    <input type="hidden" name="PhotoInd2" value="setImage">
                     string image = "/Images/photo2/" + ViewBag.Id + "photo2.jpg";
-                 string img2Name = ViewBag.Id + "photo2.jpg";
-                    @*<p>
-                        <a href=@image><img src=@image height="500"></a><br />
-                    </p>*@
+                    string img2Name = ViewBag.Id + "photo2.jpg";
+
                     <div class="fileUpload btn btn-warning input-sm">
                         <span>&nbsp;&nbsp;Фото 2&nbsp;</span>
                         <input type="file" class="upload" name="photo2" accept="image/jpeg/"/>
@@ -257,6 +253,7 @@
                 }
                 else
                 {
+                    <input type="hidden" name="PhotoInd2" value="">
                     @*<input data-id="@ViewBag.Id" type="file"  name="photo2" accept="image/jpeg" /><br />
                     <span data-valmsg-for="photo2" data-valmsg-replace="true"></span>*@
                     <div class="fileUpload btn btn-default input-sm">

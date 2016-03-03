@@ -48,8 +48,9 @@
 
 
      //Функция срабатывает при клике на кнопку загрузки файла
-    $("input[type='file']").click(function()
-    {
+    $("input[type='file']").click(function() {
+        $(this).parent().prev().attr("value", "");
+       
         //очистка кнопки выбора файла
         var attr = $(this).attr("name");
         var btnParent = $(this).parent();
@@ -61,12 +62,13 @@
         btnParent.addClass("btn-default");
         //удаление кнопки открытия модального окна
         btnParent.parent().find("button.modalPictureTrigger").remove();
-        
+       
     });
 
     //Функция срабатывает изменении значения кнопки загрузки файла
     $("input[type='file']").change(function()
     {
+        $(this).parent().prev().attr("value", "setImage");
         var attr = $(this).attr("name");
         var modalImgId = "ModalPictureimg" + attr;
         var modalId = "#ModalPictureDiv" + attr;
@@ -97,6 +99,7 @@
         var modalButton = '<button type="button" class="modalPictureTrigger btn btn-default" data-toggle="modal" data-target="#ViewModalPicture' + attr + '" >Показать</button>';
         
         btnParent.parent().append(modalButton);
+     
     });
 
 
