@@ -26,7 +26,12 @@
         if (data.length > 0)
         {
 
-            for (var i = 0; i < data.length; i++) {
+            for (var i = 0; i < data.length; i++)
+            {
+                if (data[i].Breadth == null | data[i].Height == null)
+                {
+                    continue;
+                }
                 if (data[i].NameOfAdvertisingStructure == "Щит")
                 {
                     bct = "Щ";
