@@ -1,5 +1,6 @@
-﻿function GetBilboardPoints(role, userCompany, objectId, myMap)
-{
+﻿function GetBilboardPoints(role, userCompany, objectId, myMap) {
+    var StringBalun = "";
+    var indexhouseSupport = "";
     var geoArray = [];
     var clusterer = new ymaps.Clusterer({ clusterDisableClickZoom: false });
     $.ajax({
@@ -36,28 +37,47 @@
                 {
                     bct = "Щ";
                     bht = "Щит";
-                    houseSupport = '</br>Дом:&nbsp;' + data[i].House1;
+                    houseSupport = '<b></br>Дом:&nbsp;' + data[i].House1 + "</b>";
                     colour = '#0095b6';
+                    indexhouseSupport = data[i].House1;
                 }
 
                 if (data[i].NameOfAdvertisingStructure == "Металлический указатель") {
                     bct = "У";
                     bht = "Указатель";
                     colour = '#0095b6';
-                    houseSupport = '</br>Номер опоры:&nbsp;' + data[i].Support_;
+                    houseSupport = '<b></br>Номер опоры:&nbsp;' + data[i].Support_ + "</b>";
+                    indexhouseSupport = data[i].Support_;
                 }
                 if (data[i].NameOfAdvertisingStructure == "Световой короб") {
                     bct = "К";
                     bht = "Короб";
                     colour = '#0095b6';
-                    houseSupport = '</br>Номер опоры:&nbsp;' + data[i].Support_;
+                    houseSupport = '<b></br>Номер опоры:&nbsp;' + data[i].Support_ + "</b>";
+                    indexhouseSupport = data[i].Support_;
                 }
                 if (data[i].NameOfAdvertisingStructure == "Неопознанная конструкция") {
                     bct = "Н";
                     bht = "Неопознанная конструкция";
                     colour = 'red';
-                    houseSupport = '</br>Номер дома:&nbsp;' + data[i].House1;
+                    houseSupport = '<b></br>Номер дома:&nbsp;' + data[i].House1+"</b>";
+                    indexhouseSupport = data[i].House1;
                 }
+           
+                if (data[i].OwnerName != null) {
+                   
+                    StringBalun += '<b>Собственник:&nbsp;' + data[i].OwnerName+"<b>";
+                }
+                if (data[i].NameOfAdvertisingStructure!=null) {
+                    StringBalun += '<b></br>Вид конструкции:&nbsp;' + data[i].NameOfAdvertisingStructure+"</b>";
+                }
+                if (data[i].Street1!=null) {
+                    StringBalun += '<b></br>Улица :&nbsp' + data[i].Street1+"</b>";
+                }
+                if (indexhouseSupport != null) {
+                    StringBalun += houseSupport;
+                }
+                StringBalun += getReferencesBillboard(data[i]);
                     var placemark = new ymaps.GeoObject(
                  {
                      geometry: {
@@ -65,12 +85,8 @@
                          coordinates: [data[i].Breadth, data[i].Height]
                      },
                      properties: {
-                         balloonContentBody: '<b>Собственник:&nbsp;' + data[i].OwnerName
-                                    + '</br>Вид конструкции:&nbsp;' + data[i].NameOfAdvertisingStructure
-                                 + '</br>Улица 1:&nbsp' + data[i].Street1
-                                 + houseSupport
+                         balloonContentBody: StringBalun,
 
-                         + getReferencesBillboard(data[i]),
                          iconContent: bct,
                          hintContent: bht
                      }

@@ -4,37 +4,17 @@
 @{
     var i = 0;
     ViewBag.Title = "UnidentifiedStructure";
-    ////Собственник конструкциии
-    //var owners = new SciencecomEntities().Owners.ToList();
+   
 
     //Вид
     var ListTypeAdvertising = new SciencecomEntities().TypeOfAdvertisingStructures.ToList();
 
-    ////ListTypeAdvertising.Insert(0,null);
 
-    //var ViewBids = new SciencecomEntities().ViewBids.OrderBy(a => a.OrderBy).ToList();
-
-
-    ////Элемент улично-дорожной сети
-    //var ListTypeElementOfTheRoadNetworkName = new SciencecomEntities().TheElementOfTheRoadNetworks.Select(a => new { id = a.id, Value = a.TheElementOfTheRoadNetworkName }).ToList();
-
-    ////Статус
-    //var Status = new SciencecomEntities().Status.OrderBy(x => x.OrderByStatus).Select(a => new { id = a.id, Value = a.NameStatus }).ToList();
-    //Status.Insert(0, null);
 
     //Населенный пункт выпадающий список
     var Locality = new SciencecomEntities().Localities.ToList();
 
-    ////Направление стороны
-    //var DirectionSide = new SciencecomEntities().DirectionSides.OrderBy(x => x.OrderBY).ToList();
-    ////Индификация поверхности
-    //var IdentificationSide = new SciencecomEntities().Identifications.ToList();
-    ////IdentificationSide.Insert(0, null);
-    ////Идентификационный номер
-    //var PropertyLocation = new SciencecomEntities().PropertyLocations.ToList();
 
-    ////Подсветка
-    //var Backlight = new SciencecomEntities().Backlights.ToList();
 
 }
 <script type="text/javascript">
