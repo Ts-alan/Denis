@@ -14,7 +14,7 @@ namespace Sciencecom.DAL
 
     public class DbWorker
     {
-        private SciencecomEntities context = new SciencecomEntities();
+        public SciencecomEntities context = new SciencecomEntities();
         public JSONTableData SearchAdvertisingDesign(int page, string sidx, string sord,
             int rows, string Собственник, string Вид_конструкции, string Населенный_пункт,
             string Улица, string Дом_Номер_опоры, string Количество_сторон, string Количестов_поверхностей,
@@ -246,6 +246,6 @@ namespace Sciencecom.DAL
         {
             return adv.Sides.SelectMany(side => side.Surfaces).Sum(Surface => Surface.Space);
         }
-
+   
     }
 }

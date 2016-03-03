@@ -1168,7 +1168,15 @@ namespace Sciencecom.Controllers
         }
 
         #endregion
-
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                context.Dispose();
+                dbw.context.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }
 
