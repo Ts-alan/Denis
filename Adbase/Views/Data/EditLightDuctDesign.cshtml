@@ -56,18 +56,27 @@
                        }));
 
 
-    //Заполнение полей с рамерами конструкции
-    @*$("#SHeight").val("@Model.Sides.FirstOrDefault().Surfaces.FirstOrDefault().Height");
-    $("#Width").val("@Model.Sides.FirstOrDefault().Surfaces.FirstOrDefault().Width");
-    $("#SSpace").val("@Model.Sides.FirstOrDefault().Surfaces.FirstOrDefault().Space");*@
-
-
     //отключение валидации
     //$.validator.methods.number = function (value, element) {
     //    return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
     //}
     //накручивание данных в поля
     //window.onload = SetCountSize();
+    $(document).ready(function()
+    {
+        //выщитывание площади для каждой поверхности
+
+        $('#SHeight').change(function()
+        {
+            //alert("!!!");
+            CalculationOfTheArea(0);
+        });
+        $('#Width').change(function()
+        {
+            //alert("!!!");
+            CalculationOfTheArea(0);
+        });
+    });
     $("[identificationfordirectionside]").each(function(indx, element)
     {
         $(element)[0].value = ArrayOfSides[indx].DirectionSide_id;
@@ -94,18 +103,7 @@
         }
     });
 
-    //выщитывание площади для каждой поверхности
 
-    $('#SHeight').change(function()
-    {
-        //alert("!!!");
-        CalculationOfTheArea(0);
-    });
-    $('#Width').change(function()
-    {
-        //alert("!!!");
-        CalculationOfTheArea(0);
-    });
 
     function CalculationOfTheArea(j)
     {
@@ -361,7 +359,7 @@
                             </div>
                             <div class="col-md-4">
                                 <br/>
-                                <label >Скан проекта ОДД (Сторона 2)</label>
+                                <label>Скан проекта ОДД (Сторона 2)</label>
                                 <br/>
                                 @if (ViewBag.Scan2Side)
                                 {
@@ -450,58 +448,60 @@
                             <div class="row">
                             <div class="col-md-3">
                                 <br/>
-                                <label >Скан проекта ОДД (Сторона 1)</label>
-                                @if (ViewBag.Scan1Side)
+                                <label>Скан паспорта (стор 1)</label>
+                                <br/>
+                                @if (ViewBag.ScanPassport_1Sides)
                                 {
-                                    string image = "/Images/Scan1Side/" + ViewBag.Id + "Scan1Side.jpg";
-                                    string imgName = ViewBag.Id + "Scan1Side.jpg";
+                                    string image = "/Images/ScanPassport_1Sides/" + ViewBag.Id + "ScanPassport_1Sides.jpg";
+                                    string imgName = ViewBag.Id + "ScanPassport_1Sides.jpg";
 
                                     <div class="fileUpload btn btn-warning input-sm">
-                                        <span>&nbsp;&nbsp;Скан 1&nbsp;</span>
-                                        <input type="file" class="upload" name="Scan1Side" accept="image/jpeg/"/>
+                                        <span>&nbsp;&nbsp;Стор.1&nbsp;</span>
+                                        <input type="file" class="upload" name="ScanPassport_1Sides" accept="image/jpeg/"/>
                                     </div>
-                                    <label for="Scan1Side">@imgName</label>
+                                    <label for="ScanPassport_1Sides">@imgName</label>
                                     <br/>
                                     <br/>
-                                    <button type="button" class="modalPictureTrigger btn btn-default input-sm" data-toggle="modal" onclick="addPic('#ModalScan1DivScan1Side', '@image')" data-target="#ViewModalPictureScan1Side">Показать</button>
+                                    <button type="button" class="modalPictureTrigger btn btn-default input-sm" data-toggle="modal" onclick="addPic('#ModalPictureDivScanPassport_1Sides', '@image')" data-target="#ViewModalPictureScan1Side">Показать</button>
 
                                 }
                                 else
                                 {
                                     <div class="fileUpload btn btn-default input-sm">
-                                        <span accept="image/jpeg/">&nbsp;&nbsp;Скан 1&nbsp;</span>
-                                        <input type="file" class="upload" name="Scan1Side" accept="image/jpeg/"/>
+                                        <span accept="image/jpeg/">&nbsp;&nbsp;Стор.1&nbsp;</span>
+                                        <input type="file" class="upload" name="ScanPassport_1Sides" accept="image/jpeg/"/>
                                     </div>
-                                    <label for="Scan1Side">Файл не выбран</label>
+                                    <label for="ScanPassport_1Sides">Файл не выбран</label>
                                     <br/>
                                     <br/>
                                 }
                             </div>
                             <div class="col-md-3">
                                 <br/>
-                                <label >Скан проекта ОДД (Сторона 2)</label>
-                                @if (ViewBag.Scan1Side)
+                                <label>Скан паспорта (стор 2)</label>
+                                <br/>
+                                @if (ViewBag.ScanPassport_2Sides)
                                 {
-                                    string image = "/Images/Scan2Side/" + ViewBag.Id + "Scan2Side.jpg";
+                                    string image = "/Images/ScanPassport_2Sides/" + ViewBag.Id + "Scan2Side.jpg";
                                     string imgName = ViewBag.Id + "Scan2Side.jpg";
 
                                     <div class="fileUpload btn btn-warning input-sm">
-                                        <span>&nbsp;&nbsp;Скан 2&nbsp;</span>
+                                        <span>&nbsp;&nbsp;Стор.2&nbsp;</span>
                                         <input type="file" class="upload" name="Scan2Side" accept="image/jpeg/"/>
                                     </div>
                                     <label for="Scan2Side">@imgName</label>
                                     <br/>
                                     <br/>
-                                    <button type="button" class="modalPictureTrigger btn btn-default input-sm" data-toggle="modal" onclick="addPic('#ModalScan2DivScan2Side', '@image')" data-target="#ViewModalPictureScan2Side">Показать</button>
+                                    <button type="button" class="modalPictureTrigger btn btn-default input-sm" data-toggle="modal" onclick="addPic('#ModalPictureDivScanPassport_2Sides', '@image')" data-target="#ViewModalPictureScan2Side">Показать</button>
 
                                 }
                                 else
                                 {
                                     <div class="fileUpload btn btn-default input-sm">
-                                        <span accept="image/jpeg/">&nbsp;&nbsp;Скан 2&nbsp;</span>
-                                        <input type="file" class="upload" name="Scan2Side" accept="image/jpeg/"/>
+                                        <span accept="image/jpeg/">&nbsp;&nbsp;Стор.2&nbsp;</span>
+                                        <input type="file" class="upload" name="ScanPassport_2Sides" accept="image/jpeg/"/>
                                     </div>
-                                    <label for="Scan2Side">Файл не выбран</label>
+                                    <label for="ScanPassport_2Sides">Файл не выбран</label>
                                     <br/>
                                     <br/>
                                 }
@@ -628,21 +628,21 @@
 
                                                     <label for="[0].Height">Высота</label>
 
-                                                    @Html.EditorFor(model => model.Sides.FirstOrDefault().Surfaces.FirstOrDefault().Height, new { htmlAttributes = new { @class = "form-control", type = "number", Name = "[0].Height" } })
+                                                    @Html.EditorFor(model => model.Sides.FirstOrDefault().Surfaces.FirstOrDefault().Height, new { htmlAttributes = new { @class = "form-control", type = "number", Name = "[0].Height", id ="SHeight" } })
                                                     @Html.ValidationMessageFor(model => model.Sides.FirstOrDefault().Surfaces.FirstOrDefault().Height)
                                                     <span class="glyphicon form-control-feedback"></span>
                                                 </div>
                                                 <div class="form-group has-feedback" style="margin-left: 20px">
                                                     <label for="[0].Width">Ширина</label>
 
-                                                    @Html.EditorFor(model => model.Sides.FirstOrDefault().Surfaces.FirstOrDefault().Width, new { htmlAttributes = new { @class = "form-control", type = "number", Name = "[0].Width" } })
+                                                    @Html.EditorFor(model => model.Sides.FirstOrDefault().Surfaces.FirstOrDefault().Width, new { htmlAttributes = new { @class = "form-control", type = "number", Name = "[0].Width", id = "Width" } })
                                                     @Html.ValidationMessageFor(model => model.Sides.FirstOrDefault().Surfaces.FirstOrDefault().Width)
                                                     <span class="glyphicon form-control-feedback"></span>
                                                 </div>
                                                 <div class="form-group has-feedback" style="margin-left: 20px">
                                                     <label for="[0].Space">Площадь</label>
 
-                                                    @Html.TextBoxFor(model => model.Sides.FirstOrDefault().Surfaces.FirstOrDefault().Space, new { @class = "form-control", Name = "[0].Space" })
+                                                    @Html.TextBoxFor(model => model.Sides.FirstOrDefault().Surfaces.FirstOrDefault().Space, new { @class = "form-control", Name = "[0].Space", @readonly="readonly" })
                                                     @Html.ValidationMessageFor(model => model.Sides.FirstOrDefault().Surfaces.FirstOrDefault().Space)
                                                     <span class="glyphicon form-control-feedback"></span>
                                                 </div>
