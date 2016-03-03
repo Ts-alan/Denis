@@ -40,7 +40,7 @@ namespace Sciencecom
             "~/Scripts/Autocomplete.js",
             "~/Scripts/AddPlacamerkToMap.js",
             "~/Scripts/MapSearch.js",
-            "~/Scripts/HouseRoadSwapper.js",
+            //"~/Scripts/HouseRoadSwapper.js",
             "~/Scripts/SurfaceAdder.js",
             "~/Scripts/SurfaceGeometryValidation.js",
             "~/Scripts/PictureAdder.js"
