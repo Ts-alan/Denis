@@ -67,10 +67,10 @@
        
         //btnParent.parent().find("label[for^='photo']").text("Файл не выбран");
         //btnParent.parent().find("label[for^='Scan']").text("Файл не выбран");
-        btnParent.removeClass("btn-warning");
-        btnParent.addClass("btn-default");
+        //btnParent.removeClass("btn-warning");
+        //btnParent.addClass("btn-default");
         //удаление кнопки открытия модального окна
-        btnParent.parent().find("button.modalPictureTrigger").remove();
+        //btnParent.parent().find("button.modalPictureTrigger").remove();
        
     });
 
@@ -78,14 +78,16 @@
     $("input[type='file']").change(function()
     {
         $(this).parent().prev().prev().attr("value", "setImage");
-        
+        console.log("123");
         var attr = $(this).attr("name");
         var modalImgId = "ModalPictureimg" + attr;
         var modalId = "#ModalPictureDiv" + attr;
         var btnParent = $(this).parent();
         var fileName = this.value.split('\\').pop();
-        btnParent.parent().find("label[for^='photo']").text(fileName);
-        btnParent.parent().find("label[for^='Scan']").text(fileName);
+        if (fileName != "") {
+            btnParent.parent().find("label[for^='photo']").text(fileName);
+            btnParent.parent().find("label[for^='Scan']").text(fileName);
+        }
         //Изменение стиля кнопки загрузки фала при выборе загружаемого файла
         
         var markup = '<img id="' + modalImgId + '" src=""' + ' height="300" style="display: block;margin-left: auto;margin-right: auto;">';
@@ -107,8 +109,10 @@
         }
 
         //добавление кнопки открывания модального окна
+
         var modalButton = '<button type="button" style="margin-left:25px" class="modalPictureTrigger btn btn-default" data-toggle="modal" data-target="#ViewModalPicture' + attr + '" >Показать</button>';
-        
+       
+        if (btnParent.closest(".fileUpload").next().next().next().next().length == 0)
         btnParent.parent().append(modalButton);
      
     });
