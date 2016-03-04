@@ -3,15 +3,11 @@
 @{
     var i = 0;
     ViewBag.Title = "UnidentifiedStructure";
-    //Собственник конструкциии
-    var owners = new SciencecomEntities().Owners.ToList();
+    
 
     //Вид
     var ListTypeAdvertising = new SciencecomEntities().TypeOfAdvertisingStructures.ToList();
-    var ListTypeAdvertisingSelected = ListTypeAdvertising.Single(a => a.Code == ViewBag.Code).id;
-    //ListTypeAdvertising.Insert(0,null);
 
-    var ViewBids = new SciencecomEntities().ViewBids.OrderBy(a => a.OrderBy).ToList();
 
 
     //Элемент улично-дорожной сети
@@ -29,11 +25,7 @@
     //Индификация поверхности
     var IdentificationSide = new SciencecomEntities().Identifications.ToList();
     //IdentificationSide.Insert(0, null);
-    //Идентификационный номер
-    var PropertyLocation = new SciencecomEntities().PropertyLocations.ToList();
 
-    //Подсветка
-    var Backlight = new SciencecomEntities().Backlights.ToList();
 
 }
 <script type="text/javascript">
@@ -313,7 +305,9 @@
             <div class="col-md-4">
                 <label>Фотография 1</label>
                 <br/>
+                <img class="closeimg"  style="width:20px" src="../../Content/CloseImg.jpg" />
                 <div class="fileUpload btn btn-default input-sm">
+                    
                     <span accept="image/jpeg/">&nbsp;&nbsp;Фото 1&nbsp;</span>
                     <input type="file" class="upload" name="photo1" accept="image/jpeg/"/>
                 </div>
@@ -325,6 +319,7 @@
             <div class="col-md-4">
                 <label>Фотография 2</label>
                 <br/>
+                <img class="closeimg" style="width:20px" src="../../Content/CloseImg.jpg" />
                 <div class="fileUpload btn btn-default input-sm">
                     <span accept="image/jpeg/">&nbsp;&nbsp;Фото 2&nbsp;</span>
                     <input type="file" class="upload" name="photo2" accept="image/jpeg/"/>

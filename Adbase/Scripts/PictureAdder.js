@@ -44,21 +44,29 @@
     //    $(".modalPictureTrigger[data-target='#ViewModalPicture" + attr + "']").css(style);
     //    $(".modalPictureTrigger[data-target='#ViewModalPicture" +  attr + "']").css({ width: '122px', height: '22px', '-webkit-box-shadow': '0 0 0px 1000px white inset' });
     //});
-
+    $(".closeimg").click(function () {
+        $(this).prev().attr("value", "");
+        $(this).next().find("input[type='file']")[0].value = null;
+        $(this).next().next().text("Файл не выбран");
+        $(this).next().removeClass("btn-warning");
+        $(this).next().addClass("btn-default");
+        //$(this).next().find("label[for^='Scan']").text("Файл не выбран");
+        $(this).closest("[class^='col-md']").find("button.modalPictureTrigger").remove();
+    });
 
 
      //Функция срабатывает при клике на кнопку загрузки файла
     $("input[type='file']").click(function() {
-        $(this).parent().prev().attr("value", "");
+      
        
         //очистка кнопки выбора файла
-        var attr = $(this).attr("name");
+        //var attr = $(this).attr("name");
         var btnParent = $(this).parent();
         //btnParent.parent().find("label[for='" + attr + "']").text("Файл не выбран");
-        this.value = null;
        
-        btnParent.parent().find("label[for^='photo']").text("Файл не выбран");
-        btnParent.parent().find("label[for^='Scan']").text("Файл не выбран");
+       
+        //btnParent.parent().find("label[for^='photo']").text("Файл не выбран");
+        //btnParent.parent().find("label[for^='Scan']").text("Файл не выбран");
         btnParent.removeClass("btn-warning");
         btnParent.addClass("btn-default");
         //удаление кнопки открытия модального окна

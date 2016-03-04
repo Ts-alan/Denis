@@ -32,7 +32,6 @@ function AddRules()
     var height = $("input[name$='.Height']");
     
     var widthInpts = $("input[name$='.Width']");
-    console.log(widthInpts);
 
     widthInpts.each(function (indx, element) {
 
