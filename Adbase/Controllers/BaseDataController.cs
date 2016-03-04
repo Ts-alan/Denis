@@ -43,6 +43,19 @@ namespace Sciencecom.Controllers
             }
         }
 
+        protected internal void ValidatePic(HttpPostedFileBase postedPic, string picIndex, string structureId, string documentName)
+        {
+            if (postedPic != null && picIndex == "setImage")
+            {
+                SavePic(structureId, documentName, postedPic);
+               
+            }
+            if (picIndex == "")
+            {
+                DeletePic(structureId, documentName);
+            }
+        }
+
         protected internal int CountSurfaces(AdvertisingStructure adv)
         {
             return adv.Sides.Sum(side => side.Surfaces.Count);

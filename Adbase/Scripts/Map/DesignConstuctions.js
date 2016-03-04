@@ -97,8 +97,8 @@
                      iconColor: colour
                  });
                 
-                geoArray[i] = placemark;
-                
+                    geoArray[i] = placemark;
+                StringBalun = "";
             }
 
             clusterer.add(geoArray);

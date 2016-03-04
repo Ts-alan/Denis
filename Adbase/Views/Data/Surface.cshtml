@@ -4,7 +4,7 @@
 @for (int i = ViewBag.StartCountForSurface, j = 1; i < ViewBag.EndCountForSurface; i++, j++)
 {
     <script type="text/javascript">
-
+        AddRules();
         //выщитывание площади для каждой поверхности
         $('[name="[' + @i + '].Height"]').change(function ()
         {

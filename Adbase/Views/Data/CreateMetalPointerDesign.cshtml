@@ -426,24 +426,33 @@
 
     </div>
     <div class="row">
-        <div class="form-inline">
-
             <div class="col-md-3">
-                <label for="ScanPassport_1Sides">Скан проекта ОДД (стор 1)</label>
-                <input type="file" name="ScanPassport_1Sides" accept="image/jpeg" /><br />
-                <span data-valmsg-for="ScanPassport_1Sides" data-valmsg-replace="true"></span>
-                @Html.Raw("Не более 1 МБ")
-            </div>
+                <br />
+                <label>Скан проекта ОДД (Сторона 1)</label>
+                <br />
+                <div class="fileUpload btn btn-default input-sm">
+                    <span accept="image/jpeg/">&nbsp;&nbsp;Скан 1&nbsp;</span>
+                    <input type="file" class="upload" name="Scan1Side" accept="image/jpeg/" />
+                </div>
+                <label for="Scan1Side">Файл не выбран</label>
+                <br />
+                <br />
 
+            </div>
             <div class="col-md-3">
-                <label for="ScanPassport_2Sides">Скан проекта ОДД (стор 2)</label>
-                <input type="file" name="ScanPassport_2Sides" accept="image/jpeg" /><br />
-                <span data-valmsg-for="ScanPassport_2Sides" data-valmsg-replace="true"></span>
-                @Html.Raw("Не более 1 МБ")
-            </div>
+                <br />
+                <label>Скан проекта ОДД (Сторона 2)</label>
+                <br/>
+                <div class="fileUpload btn btn-default input-sm">
+                    <span accept="image/jpeg/">&nbsp;&nbsp;Скан 2&nbsp;</span>
+                    <input type="file" class="upload" name="Scan2Side" accept="image/jpeg/" />
+                </div>
+                <label for="Scan2Side">Файл не выбран</label>
+                <br />
+                <br />
 
+            </div>
         </div>
-    </div>
     <div class="form-horizontal">
 
         <div class="form-group" style="margin-bottom: 5px">
