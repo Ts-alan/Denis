@@ -22,54 +22,59 @@
 
     var havePlacemark = @Model.Breadth.HasValue.ToString().ToLower();
 
-    var StartCountForSurface ;
+    var StartCountForSurface;
     var EndCountForSurface = 0;
     var isGreateAdvertisingDesign = false;
-    var ArrayOfSides = @Html.Raw(JsonConvert.SerializeObject(Model.Sides.Select(a => new { a.DirectionSide_id, length = a.Surfaces.Count, a.Identification_id }), Formatting.Indented, new JsonSerializerSettings
-                  {
-                      ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-                  }));
+    var ArrayOfSides = @Html.Raw(JsonConvert.SerializeObject(Model.Sides.Select(a => new {a.DirectionSide_id, length = a.Surfaces.Count, a.Identification_id}), Formatting.Indented, new JsonSerializerSettings
+                       {
+                           ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                       }));
 
 
-    $(document).ready(function() {
-
+    $(document).ready(function()
+    {
         ////отключение валидации
-        $.validator.methods.number = function (value, element) {
+        $.validator.methods.number = function(value, element)
+        {
             return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
         }
 
 
         //выпадающий список на согласование
-        $("[name=OnAgreement]").change(function() {
+        $("[name=OnAgreement]").change(function()
+        {
             var selectIndex = $("[name=OnAgreement] option:selected").val();
 
-            if (selectIndex == "true") {
+            if (selectIndex == "true")
+            {
                 $("#ContractHide").css("display", "block");
             }
-            if (selectIndex == "false") {
+            if (selectIndex == "false")
+            {
                 $("#ContractHide").css("display", "none");
             }
-
         });
 
         //выщитывание площади для каждой поверхности
 
-        $('#SHeight').change(function () {
+        $('#SHeight').change(function()
+        {
             //alert("!!!");
             CalculationOfTheArea(0);
         });
-        $('#Width').change(function () {
+        $('#Width').change(function()
+        {
             //alert("!!!");
             CalculationOfTheArea(0);
         });
 
-        function CalculationOfTheArea(j) {
-
+        function CalculationOfTheArea(j)
+        {
             var Height = $('[name="[' + j + '].Height"]').val();
             var Width = $('[name="[' + j + '].Width"]').val();
 
-            if (Height != "" && Width != "") {
-
+            if (Height != "" && Width != "")
+            {
                 var Sum = Height * Width;
 
                 $('[name="[' + j + '].Space"]').val(Sum);
@@ -79,11 +84,13 @@
     });
 
     // подсчет суммы площадей
-    function CalculationAS() {
-
-        var Summ=0;
-        $("[selectforspace]").each(function(indx, element) {
-            if ($(element).val() != "") {
+    function CalculationAS()
+    {
+        var Summ = 0;
+        $("[selectforspace]").each(function(indx, element)
+        {
+            if ($(element).val() != "")
+            {
                 Summ += parseInt($(element).val());
             }
         });
@@ -92,6 +99,28 @@
 
 
 </script>
+<style>
+
+.modal {
+  text-align: center;
+  padding: 0!important;
+}
+
+.modal:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -4px; /* Adjusts for spacing */
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+
+</style>
 <h3> КАРТОЧКА НЕОПОЗНАННОЙ КОНСТРУКЦИИ</h3>
 
 @Scripts.Render("~/Content/Map")

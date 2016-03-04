@@ -30,30 +30,33 @@
 }
 <script type="text/javascript">
     var i = 0;
-    var StartCountForSurface ;
+    var StartCountForSurface;
     var EndCountForSurface = 0;
-    $(document).ready(function() {
-
-
+    $(document).ready(function()
+    {
         //выпадающий список на согласование
-        $("[name=OnAgreement]").change(function() {
+        $("[name=OnAgreement]").change(function()
+        {
             var selectIndex = $("[name=OnAgreement] option:selected").val();
 
-            if (selectIndex == "true") {
+            if (selectIndex == "true")
+            {
                 $("#ContractHide").css("display", "block");
             }
-            if (selectIndex == "false") {
+            if (selectIndex == "false")
+            {
                 $("#ContractHide").css("display", "none");
             }
-
         });
 
         //выщитывание площади для каждой поверхности
-        $('#SHeight').change(function () {
+        $('#SHeight').change(function()
+        {
             //alert("!!!");
             CalculationOfTheArea(0);
         });
-        $('#Width').change(function () {
+        $('#Width').change(function()
+        {
             //alert("!!!");
             CalculationOfTheArea(0);
         });
@@ -61,28 +64,32 @@
         //$("#Code option").val("Металлический указатель").prop('selected', true);
 
         $("#Code").change(
-       function () {
-           var end = $('#Code option:selected').text();
-           if (end == "Щит") {
-               window.location.href = '/Data/CreateAdvertisingDesign/';
-           }
-           if (end == "Световой короб") {
-               window.location.href = '/Data/CreateLightDuctDesign/';
-           }
-           if (end == "Металлический указатель") {
-               window.location.href = '/Data/CreateMetalPointerDesign/';
-           }
-       });
-
-
+            function()
+            {
+                var end = $('#Code option:selected').text();
+                if (end == "Щит")
+                {
+                    window.location.href = '/Data/CreateAdvertisingDesign/';
+                }
+                if (end == "Световой короб")
+                {
+                    window.location.href = '/Data/CreateLightDuctDesign/';
+                }
+                if (end == "Металлический указатель")
+                {
+                    window.location.href = '/Data/CreateMetalPointerDesign/';
+                }
+            });
     });
 
     // подсчет суммы площадей
-    function CalculationAS() {
-
-        var Summ=0;
-        $("[selectforspace]").each(function(indx, element) {
-            if ($(element).val() != "") {
+    function CalculationAS()
+    {
+        var Summ = 0;
+        $("[selectforspace]").each(function(indx, element)
+        {
+            if ($(element).val() != "")
+            {
                 Summ += parseInt($(element).val());
             }
         });
@@ -90,17 +97,20 @@
     }
 
 //кол-во сторон
-    function SetCountSize() {
+    function SetCountSize()
+    {
         EndCountForSurface = 0;
         var CountSizes = $('#CountSizes').val();
         $("#CountSize").val(CountSizes);
-        if (CountSizes != "") {
-            $("[code]").each(function (indx, element) {
+        if (CountSizes != "")
+        {
+            $("[code]").each(function(indx, element)
+            {
                 element.remove();
             });
 
-            for (var i = 1; i <= CountSizes; i++) {
-
+            for (var i = 1; i <= CountSizes; i++)
+            {
                 $("#InsertSide").before("<div code class=\"form-horizontal\" >" +
                     "<div class=\"form-group\" >" +
                     "<h3 class=\"control-label col-md-2\" for=\"\" style=\"margin-left: 55px\">Сторона  " + i + " </h3>" +
@@ -118,83 +128,104 @@
                     "<option>6</option>" +
                     "<option>7</option>" +
                     "<option>8</option>" +
-                    "</select> &nbsp;&nbsp;&nbsp; <b>Направление стороны</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("DirectionSide", new SelectList(DirectionSide, "id", "NameOfDirectionSide"), "", new { IdentificationForDirectionSide = "IdentificationForDirectionSide" }).ToHtmlString().Replace("\"", " "))' +
+                    "</select> &nbsp;&nbsp;&nbsp; <b>Направление стороны</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("DirectionSide", new SelectList(DirectionSide, "id", "NameOfDirectionSide"), "", new {IdentificationForDirectionSide = "IdentificationForDirectionSide"}).ToHtmlString().Replace("\"", " "))' +
                     "</div>" + '@Ajax.JavaScriptStringEncode(Html.ValidationMessage("[0].IdentificationForDirectionSide").ToHtmlString().Replace("\"", " "))' +
-                    "</div> <div style=\"margin-left: -15px;display: none\" id=\"" + i + "HiddenIdentification\"> &nbsp;&nbsp;&nbsp;<b>Идентификация поверхностей</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("IdentificationSurface", new SelectList(IdentificationSide, "id", "IdentificationName"), "", new { IdentificationForIdentificationSurface = "IdentificationForIdentificationSurface" }).ToHtmlString().Replace("\"", " ")) </div>' +
+                    "</div> <div style=\"margin-left: -15px;display: none\" id=\"" + i + "HiddenIdentification\"> &nbsp;&nbsp;&nbsp;<b>Идентификация поверхностей</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("IdentificationSurface", new SelectList(IdentificationSide, "id", "IdentificationName"), "", new {IdentificationForIdentificationSurface = "IdentificationForIdentificationSurface"}).ToHtmlString().Replace("\"", " ")) </div>' +
                     "<div  id=\"InsertPartial" + i + "\"></div>" +
                     "</div>");
 
                 $("#SizeOfCount").val(CountSizes);
-
             }
         }
         //Навешивание валидации
-        $('[name="DirectionSide"]').each(function(indx, element) {
+        $('[name="DirectionSide"]').each(function(indx, element)
+        {
             $(element).attr("name", "[" + indx + "].IdentificationForDirectionSide");
         });
-       
-        $('[IdentificationForCountSide]').each(function (indx, element) {
 
-            $(element).rules('add', {
-                required: true
-            });
-        }
+        $('[IdentificationForCountSide]').each(function(indx, element)
+            {
+                $(element).rules('add', {
+                    required: true
+                });
+            }
         );
         //другое решение не тестил
         //$('[name="DirectionSide"]').data('validator', null);
         //$.validator.unobtrusive.parse('[name="DirectionSide"]');
-
     }
 
     //Добавить поверхность+
-    function AddSurface(i) {
-
+    function AddSurface(i)
+    {
         var count = $("#AddButton" + i + "").val();
         StartCountForSurface = EndCountForSurface;
         EndCountForSurface = parseInt(count) + parseInt(EndCountForSurface);
 
-        if (count == 1) {
+        if (count == 1)
+        {
             $("#" + i + "HiddenIdentification").hide();
-        } else {
+        } else
+        {
             $("#" + i + "HiddenIdentification").show();
             //валидация
-            $('[name="IdentificationSurface"]').each(function (indx, element) {
-
+            $('[name="IdentificationSurface"]').each(function(indx, element)
+            {
                 $(element).attr("name", "[" + indx + "].IdentificationForIdentificationSurface");
             });
-
         }
         $("[side=" + i + "]").remove();
 
 
         $.ajax('@Url.Action("AddSurface", "Data")', { data: { side: i, StartCountForSurface: StartCountForSurface, EndCountForSurface: EndCountForSurface } })
-            .success(function (e) {
-                $("#InsertPartial"+i+"").before(e);
+            .success(function(e)
+            {
+                $("#InsertPartial" + i + "").before(e);
             });
-
     }
 
 
-
     //выщитывание площади для каждой поверхности
-    function CalculationOfTheArea(j) {
-
+    function CalculationOfTheArea(j)
+    {
         var Height = $('[name="[' + j + '].Height"]').val();
         var Width = $('[name="[' + j + '].Width"]').val();
 
-        if (Height != "" && Width != "") {
-
+        if (Height != "" && Width != "")
+        {
             var Sum = Height * Width;
 
             $('[name="[' + j + '].Space"]').val(Sum);
             CalculationAS();
         }
-
     }
 
 
-
 </script>
+<style>
+   
+
+.modal {
+  text-align: center;
+  padding: 0!important;
+}
+
+.modal:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -4px; /* Adjusts for spacing */
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+
+
+</style>
 <h3> КАРТОЧКА НЕОПОЗНАННОЙ КОНСТРУКЦИИ</h3>
 
 @Scripts.Render("~/Content/Map")

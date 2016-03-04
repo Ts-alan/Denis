@@ -87,7 +87,7 @@
         btnParent.parent().find("label[for^='Scan']").text(fileName);
         //Изменение стиля кнопки загрузки фала при выборе загружаемого файла
         
-        var markup = '<img id="' + modalImgId + '" src=""' + ' height="300" width="400" style="display: block;margin-left: auto;margin-right: auto;">';
+        var markup = '<img id="' + modalImgId + '" src=""' + ' height="300" style="display: block;margin-left: auto;margin-right: auto;">';
         //добавление в модальное окно пустого тега с картинкой
         
         $(modalId).empty();
@@ -121,7 +121,8 @@
 //добавление сохраненного в проекте изображения в модальное окно для просмотра
 function addPic(id, src)
 {
-    $(id).append('<img id="' + id + '" src="' + src + '" height="300" width="400" style="display: block;margin-left: auto;margin-right: auto;">');
+    $(id).empty();
+    $(id).append('<img id="' + id + '" src="' + src + '" height="300"  style="display: block;margin-left: auto;margin-right: auto;">');
     //var style = css($("input[name='photo2']"));
     //$(id).css(style);
     //$(id).css({ width: '122px', height: '22px', '-webkit-box-shadow': '0 0 0px 1000px white inset' });
