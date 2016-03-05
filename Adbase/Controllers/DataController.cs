@@ -61,19 +61,19 @@ namespace Sciencecom.Controllers
 
         }
 
-        public JsonResult SearchAdvertisingDesign(int page, string sidx, string sord, 
-            int rows, string собственник, string видКонструкции, string населенныйПункт, 
-            string улица, string домНомерОпоры, string количествоСторон, string количестовПоверхностей, 
-            string площадьКонструкции, string разрешПо)
+        public JsonResult SearchAdvertisingDesign(int page, string sidx, string sord,
+            int rows, string Собственник, string Вид_конструкции, string Населенный_пункт,
+            string Улица, string Дом_Номер_опоры, string Количество_сторон, string Количестов_поверхностей,
+            string Площадь_конструкции, string Разреш_по)
 
         {
-            JSONTableData jd =new JSONTableData();
-            jd = _dbw.SearchAdvertisingDesign(page, sidx, sord, rows, собственник, видКонструкции, населенныйПункт,
-            улица, домНомерОпоры,количествоСторон, количестовПоверхностей, площадьКонструкции, разрешПо);
+            JSONTableData jd = new JSONTableData();
+            jd = _dbw.SearchAdvertisingDesign(page, sidx, sord, rows, Собственник, Вид_конструкции, Населенный_пункт,
+            Улица, Дом_Номер_опоры, Количество_сторон, Количестов_поверхностей, Площадь_конструкции, Разреш_по);
             return Json(jd, JsonRequestBehavior.AllowGet);
         }
 
-        
+
 
         [Authorize(Roles = "Admin, ChiefEditAll,ChiefEditOwn, SupplierEditAll, SupplierEditOwn")]
         public ActionResult DeleteAdvertisingDesign(int? id,string switchtoMap)

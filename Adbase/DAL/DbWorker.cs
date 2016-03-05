@@ -24,9 +24,9 @@ namespace Sciencecom.DAL
         }
 
         public JSONTableData SearchAdvertisingDesign(int page, string sidx, string sord,
-            int rows, string собственник, string видКонструкции, string населенныйПункт,
-            string улица, string домНомерОпоры, string количествоСторон, string количестовПоверхностей,
-            string площадьКонструкции, string разрешПо)
+            int rows, string Собственник, string Вид_конструкции, string Населенный_пункт,
+            string Улица, string Дом_Номер_опоры, string Количество_сторон, string Количестов_поверхностей,
+            string Площадь_конструкции, string Разреш_по)
 
         {
 
@@ -37,50 +37,50 @@ namespace Sciencecom.DAL
             jd.SortOrder = sord;
 
             jd.Data = new List<JSONStructureForJQGrid>();
-            
+
             var adbvertisingList = Context.AdvertisingStructures.AsQueryable();
 
             List<AdvertisingStructure> finalList = new List<AdvertisingStructure>();
 
-            if (!string.IsNullOrWhiteSpace(собственник))
+            if (!string.IsNullOrWhiteSpace(Собственник))
             {
-                adbvertisingList = adbvertisingList.Where(x => x.Owner.Name.Contains(собственник));
+                adbvertisingList = adbvertisingList.Where(x => x.Owner.Name.Contains(Собственник));
             }
-            if (!string.IsNullOrWhiteSpace(видКонструкции))
+            if (!string.IsNullOrWhiteSpace(Вид_конструкции))
             {
                 adbvertisingList =
-                    adbvertisingList.Where(x => x.TypeOfAdvertisingStructure.Name.Contains(видКонструкции));
+                    adbvertisingList.Where(x => x.TypeOfAdvertisingStructure.Name.Contains(Вид_конструкции));
             }
-            if (!string.IsNullOrWhiteSpace(населенныйПункт))
+            if (!string.IsNullOrWhiteSpace(Населенный_пункт))
             {
-                adbvertisingList = adbvertisingList.Where(x => x.Locality.NameLocality.Contains(населенныйПункт));
+                adbvertisingList = adbvertisingList.Where(x => x.Locality.NameLocality.Contains(Населенный_пункт));
             }
-            if (!string.IsNullOrWhiteSpace(улица))
+            if (!string.IsNullOrWhiteSpace(Улица))
             {
-                adbvertisingList = adbvertisingList.Where(x => x.Street1.Contains(улица));
+                adbvertisingList = adbvertisingList.Where(x => x.Street1.Contains(Улица));
             }
-            if (!string.IsNullOrWhiteSpace(домНомерОпоры))
+            if (!string.IsNullOrWhiteSpace(Дом_Номер_опоры))
             {
                 adbvertisingList =
                     adbvertisingList.Where(
-                        x => x.Support_.Contains(домНомерОпоры) | x.House1.Contains(домНомерОпоры));
+                        x => x.Support_.Contains(Дом_Номер_опоры) | x.House1.Contains(Дом_Номер_опоры));
             }
-            if (!string.IsNullOrWhiteSpace(количествоСторон))
+            if (!string.IsNullOrWhiteSpace(Количество_сторон))
             {
-                adbvertisingList = adbvertisingList.Where(x => x.Sides.Count().ToString() == количествоСторон);
+                adbvertisingList = adbvertisingList.Where(x => x.Sides.Count().ToString() == Количество_сторон);
             }
-            if (!string.IsNullOrWhiteSpace(количестовПоверхностей))
+            if (!string.IsNullOrWhiteSpace(Количестов_поверхностей))
             {
-                adbvertisingList = adbvertisingList.Where(x => CountSurfaces(x).ToString() == количестовПоверхностей);
+                adbvertisingList = adbvertisingList.Where(x => CountSurfaces(x).ToString() == Количестов_поверхностей);
             }
-            if (!string.IsNullOrWhiteSpace(разрешПо))
+            if (!string.IsNullOrWhiteSpace(Разреш_по))
             {
-                adbvertisingList = adbvertisingList.Where(x => x.EndDate.ToString().Contains(разрешПо));
+                adbvertisingList = adbvertisingList.Where(x => x.EndDate.ToString().Contains(Разреш_по));
             }
             finalList = adbvertisingList.ToList();
-            if (!string.IsNullOrWhiteSpace(площадьКонструкции))
+            if (!string.IsNullOrWhiteSpace(Площадь_конструкции))
             {
-                double sq = double.Parse(площадьКонструкции, CultureInfo.InvariantCulture);
+                double sq = double.Parse(Площадь_конструкции, CultureInfo.InvariantCulture);
                 List<AdvertisingStructure> templist = new List<AdvertisingStructure>();
                 foreach (AdvertisingStructure advertisingStructure in adbvertisingList)
                 {
@@ -156,7 +156,7 @@ namespace Sciencecom.DAL
             if (backlight != null && backlight != "")
                 backlights = Context.Backlights.Where(a => a.Name.Contains(backlight)).ToList();
             IEnumerable<AdvertisingStructure> result;
-            //var Foo = context.AdvertisingStructures.ToList();
+            //var Foo = Context.AdvertisingStructures.ToList();
             if (countSize != null)
             {
                 result = Context.AdvertisingStructures.Where(a => a.Sides.Count == countSize && a.Breadth != null && a.Height != null).ToList();
