@@ -242,11 +242,11 @@ namespace Sciencecom.Controllers
                 context.SaveChanges();
             }
 
-            SavePic(Structures.Id.ToString(), "Scan1SidesWithFinancialManagement", Scan1SidesWithFinancialManagement);
+            SavePic(Structures.Id_show.ToString(), "Scan1SidesWithFinancialManagement", Scan1SidesWithFinancialManagement);
 
-            SavePic(Structures.Id.ToString(), "ScanPassport_1Sides", ScanPassport_1Sides);
+            SavePic(Structures.Id_show.ToString(), "ScanPassport_1Sides", ScanPassport_1Sides);
 
-            SavePic(Structures.Id.ToString(), "ScanPassport_2Sides", ScanPassport_2Sides);
+            SavePic(Structures.Id_show.ToString(), "ScanPassport_2Sides", ScanPassport_2Sides);
 
             return RedirectToAction("AdvertisingDesign");
 
@@ -374,8 +374,8 @@ namespace Sciencecom.Controllers
 
             //картики
 
-            ValidatePic(ScanPassport_1Sides, ScanPassport_1SidesInd, Structures.Id.ToString(), "ScanPassport_1Sides");
-            ValidatePic(ScanPassport_2Sides, ScanPassport_2SidesInd, Structures.Id.ToString(), "ScanPassport_2Sides");
+            ValidatePic(ScanPassport_1Sides, ScanPassport_1SidesInd, Structures.Id_show.ToString(), "ScanPassport_1Sides");
+            ValidatePic(ScanPassport_2Sides, ScanPassport_2SidesInd, Structures.Id_show.ToString(), "ScanPassport_2Sides");
             
            return RedirectToAction("AdvertisingDesign");
         }
@@ -499,11 +499,11 @@ namespace Sciencecom.Controllers
 
             context.SaveChanges();
 
-            SavePic(Structures.Id.ToString(), "Scan1SidesWithFinancialManagement", Scan1SidesWithFinancialManagement);
+            SavePic(Structures.Id_show.ToString(), "Scan1SidesWithFinancialManagement", Scan1SidesWithFinancialManagement);
 
-            SavePic(Structures.Id.ToString(), "ScanPassport_1Sides", ScanPassport_1Sides);
+            SavePic(Structures.Id_show.ToString(), "ScanPassport_1Sides", ScanPassport_1Sides);
 
-            SavePic(Structures.Id.ToString(), "ScanPassport_2Sides", ScanPassport_2Sides);
+            SavePic(Structures.Id_show.ToString(), "ScanPassport_2Sides", ScanPassport_2Sides);
 
             return RedirectToAction("AdvertisingDesign");
 
@@ -596,8 +596,8 @@ namespace Sciencecom.Controllers
 
             //сохранение картинок
 
-            ValidatePic(ScanPassport_1Sides, ScanPassport_1SidesInd, mc.Id.ToString(), "ScanPassport_1Sides");
-            ValidatePic(ScanPassport_2Sides, ScanPassport_2SidesInd, mc.Id.ToString(), "ScanPassport_2Sides");
+            ValidatePic(ScanPassport_1Sides, ScanPassport_1SidesInd, mc.Id_show.ToString(), "ScanPassport_1Sides");
+            ValidatePic(ScanPassport_2Sides, ScanPassport_2SidesInd, mc.Id_show.ToString(), "ScanPassport_2Sides");
 
             return RedirectToAction("AdvertisingDesign");
 
@@ -715,15 +715,15 @@ namespace Sciencecom.Controllers
 
             context.SaveChanges();
 
-            SavePic(Structures.Id.ToString(), "Scan1SidesWithFinancialManagement", Scan1SidesWithFinancialManagement);
+            SavePic(Structures.Id_show.ToString(), "Scan1SidesWithFinancialManagement", Scan1SidesWithFinancialManagement);
 
-            SavePic(Structures.Id.ToString(), "ScanPassport_1Sides", ScanPassport_1Sides);
+            SavePic(Structures.Id_show.ToString(), "ScanPassport_1Sides", ScanPassport_1Sides);
 
-            SavePic(Structures.Id.ToString(), "ScanPassport_2Sides", ScanPassport_2Sides);
-            
-            SavePic(Structures.Id.ToString(), "Scan1Side", Scan1Side);
+            SavePic(Structures.Id_show.ToString(), "ScanPassport_2Sides", ScanPassport_2Sides);
 
-            SavePic(Structures.Id.ToString(), "Scan2Side", Scan2Side);
+            SavePic(Structures.Id_show.ToString(), "Scan1Side", Scan1Side);
+
+            SavePic(Structures.Id_show.ToString(), "Scan2Side", Scan2Side);
             
             return RedirectToAction("AdvertisingDesign");
         }
@@ -818,10 +818,10 @@ namespace Sciencecom.Controllers
             context.SaveChanges();
 
             //картики
-            ValidatePic(ScanPassport_1Sides, ScanPassport_1SidesInd, Structures.Id.ToString(), "ScanPassport_1Sides");
-            ValidatePic(ScanPassport_2Sides, ScanPassport_2SidesInd, Structures.Id.ToString(), "ScanPassport_2Sides");
-            ValidatePic(Scan1Side, Scan1SideInd, Structures.Id.ToString(), "Scan1Side");
-            ValidatePic(Scan2Side, Scan2SideInd, Structures.Id.ToString(), "Scan2Side");
+            ValidatePic(ScanPassport_1Sides, ScanPassport_1SidesInd, Structures.Id_show.ToString(), "ScanPassport_1Sides");
+            ValidatePic(ScanPassport_2Sides, ScanPassport_2SidesInd, Structures.Id_show.ToString(), "ScanPassport_2Sides");
+            ValidatePic(Scan1Side, Scan1SideInd, Structures.Id_show.ToString(), "Scan1Side");
+            ValidatePic(Scan2Side, Scan2SideInd, Structures.Id_show.ToString(), "Scan2Side");
           
             return RedirectToAction("AdvertisingDesign");
 
@@ -964,8 +964,8 @@ namespace Sciencecom.Controllers
 
             //картики
 
-            ValidatePic(photo1, PhotoInd1, mc.Id.ToString(), "photo1");
-            ValidatePic(photo2, PhotoInd2, mc.Id.ToString(), "photo2");
+            ValidatePic(photo1, PhotoInd1, mc.Id_show.ToString(), "photo1");
+            ValidatePic(photo2, PhotoInd2, mc.Id_show.ToString(), "photo2");
             
             return RedirectToAction("AdvertisingDesign");
 
@@ -1033,9 +1033,9 @@ namespace Sciencecom.Controllers
 
             context.SaveChanges();
 
-            SavePic(Structures.Id.ToString(), "photo1", photo1);
+            SavePic(Structures.Id_show.ToString(), "photo1", photo1);
 
-            SavePic(Structures.Id.ToString(), "photo2", photo2);
+            SavePic(Structures.Id_show.ToString(), "photo2", photo2);
 
             return RedirectToAction("AdvertisingDesign");
         }
