@@ -336,7 +336,7 @@
                                     <input type="hidden" name="Scan1SideInd" value="setImage">
                                     string image = "/Images/Scan1Side/" + ViewBag.Id + "Scan1Side.jpg";
                                     string imgName = ViewBag.Id + "Scan1Side.jpg";
-
+                                 <img class="closeimg" style="width:20px" src="../../Content/CloseImg.jpg" />
                                     <div class="fileUpload btn btn-warning input-sm">
                                         <span>&nbsp;&nbsp;Скан 1&nbsp;</span>
                                         <input type="file" class="upload" name="Scan1Side" accept="image/jpeg/"/>
@@ -349,6 +349,7 @@
                                 }
                                 else
                                 {
+                                    <img class="closeimg" style="width:20px" src="../../Content/CloseImg.jpg" />
                                     <input type="hidden" name="Scan1SideInd" value="">
                                     <div class="fileUpload btn btn-default input-sm">
                                         <span accept="image/jpeg/">&nbsp;&nbsp;Скан 1&nbsp;</span>
@@ -365,6 +366,7 @@
                                 <br/>
                                 @if (ViewBag.Scan2Side)
                                 {
+                                   
                                     <input type="hidden" name="Scan2SideInd" value="setImage">
                                     string image = "/Images/Scan2Side/" + ViewBag.Id + "Scan2Side.jpg";
                                     string imgName = ViewBag.Id + "Scan2Side.jpg";
@@ -381,6 +383,7 @@
                                 }
                                 else
                                 {
+                                    <img class="closeimg" style="width:20px" src="../../Content/CloseImg.jpg" />
                                     <input type="hidden" name="Scan2SideInd" value="">
                                     <div class="fileUpload btn btn-default input-sm">
                                         <span accept="image/jpeg/">&nbsp;&nbsp;Скан 2&nbsp;</span>
@@ -488,6 +491,7 @@
                                 <br/>
                                 @if (ViewBag.ScanPassport_2Sides)
                                 {
+
                                     <input type="hidden" name="ScanPassport_2SidesInd" value="setImage">
                                     string image = "/Images/ScanPassport_2Sides/" + ViewBag.Id + "Scan2Side.jpg";
                                     string imgName = ViewBag.Id + "Scan2Side.jpg";

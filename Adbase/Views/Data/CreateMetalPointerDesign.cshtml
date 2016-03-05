@@ -32,8 +32,6 @@
     //Идентификационный номер
     var PropertyLocation = new SciencecomEntities().PropertyLocations.ToList();
 
-    //Подсветка
-    var Backlight = new SciencecomEntities().Backlights.ToList();
 
 }
 <script type="text/javascript">
@@ -429,7 +427,8 @@
             <div class="col-md-3">
                 <br />
                 <label>Скан проекта ОДД (Сторона 1)</label>
-                <br />
+                <br/>
+                <img class="closeimg" style="width:20px" src="../../Content/CloseImg.jpg" />
                 <div class="fileUpload btn btn-default input-sm">
                     <span accept="image/jpeg/">&nbsp;&nbsp;Скан 1&nbsp;</span>
                     <input type="file" class="upload" name="Scan1Side" accept="image/jpeg/" />
@@ -440,9 +439,11 @@
 
             </div>
             <div class="col-md-3">
-                <br />
+                <br/>
+              
                 <label>Скан проекта ОДД (Сторона 2)</label>
                 <br/>
+                <img class="closeimg" style="width:20px" src="../../Content/CloseImg.jpg" />
                 <div class="fileUpload btn btn-default input-sm">
                     <span accept="image/jpeg/">&nbsp;&nbsp;Скан 2&nbsp;</span>
                     <input type="file" class="upload" name="Scan2Side" accept="image/jpeg/" />
