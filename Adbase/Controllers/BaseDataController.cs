@@ -45,14 +45,17 @@ namespace Sciencecom.Controllers
 
         protected internal void ValidatePic(HttpPostedFileBase postedPic, string picIndex, string structureId, string documentName)
         {
-            if (postedPic != null && picIndex == "setImage")
+            if (postedPic != null & picIndex == "setImage")
             {
                 SavePic(structureId, documentName, postedPic);
-               
             }
-            if (picIndex == "")
+            if (postedPic != null & picIndex == "")
             {
-                DeletePic(structureId, documentName);
+                SavePic(structureId, documentName, postedPic);
+            }
+            if (postedPic == null & picIndex == "setImage")
+            {
+                DeletePic(structureId, documentName); 
             }
         }
 
