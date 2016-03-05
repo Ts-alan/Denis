@@ -158,9 +158,9 @@ namespace Sciencecom.Controllers
                         ViewBag.Type = "BB";
                         ViewBag.Id = data.Id;
 
-                        ViewBag.Scan1Sides = LoadPic(data.Id.ToString(), "Scan1SidesWithFinancialManagement");
-                        ViewBag.ScanPassport_1 = LoadPic(data.Id.ToString(), "ScanPassport_1Sides");
-                        ViewBag.ScanPassport_2 = LoadPic(data.Id.ToString(), "ScanPassport_2Sides");
+                        ViewBag.Scan1Sides = LoadPic(data.Id_show.ToString(), "Scan1SidesWithFinancialManagement");
+                        ViewBag.ScanPassport_1 = LoadPic(data.Id_show.ToString(), "ScanPassport_1Sides");
+                        ViewBag.ScanPassport_2 = LoadPic(data.Id_show.ToString(), "ScanPassport_2Sides");
                         
                     }
                     break;
@@ -419,9 +419,9 @@ namespace Sciencecom.Controllers
                         ViewBag.Type = "MP";
                         ViewBag.Id = data.Id;
 
-                        ViewBag.Scan1Sides = LoadPic(data.Id.ToString(), "Scan1SidesWithFinancialManagement");
-                        ViewBag.ScanPassport_1 = LoadPic(data.Id.ToString(), "ScanPassport_1Sides");
-                        ViewBag.ScanPassport_2 = LoadPic(data.Id.ToString(), "ScanPassport_2Sides");
+                        ViewBag.Scan1Sides = LoadPic(data.Id_show.ToString(), "Scan1SidesWithFinancialManagement");
+                        ViewBag.ScanPassport_1 = LoadPic(data.Id_show.ToString(), "ScanPassport_1Sides");
+                        ViewBag.ScanPassport_2 = LoadPic(data.Id_show.ToString(), "ScanPassport_2Sides");
                         
                     }
                     break;
@@ -537,8 +537,8 @@ namespace Sciencecom.Controllers
             if(mc.Height!=null)
             mc.Height = double.Parse(mc.Height.ToString().Substring(0, 7));
             ViewBag.Id = mc.Id;
-            ViewBag.ScanPassport_1Sides = LoadPic(mc.Id.ToString(), "ScanPassport_1Sides");
-            ViewBag.ScanPassport_2Sides = LoadPic(mc.Id.ToString(), "ScanPassport_2Sides");
+            ViewBag.ScanPassport_1Sides = LoadPic(mc.Id_show.ToString(), "ScanPassport_1Sides");
+            ViewBag.ScanPassport_2Sides = LoadPic(mc.Id_show.ToString(), "ScanPassport_2Sides");
             return View(mc);
         }
 
@@ -638,11 +638,11 @@ namespace Sciencecom.Controllers
                         ViewBag.Type = "LD";
                         ViewBag.Id = data.Id;
 
-                        ViewBag.Scan1Sides = LoadPic(data.Id.ToString(), "Scan1SidesWithFinancialManagement");
-                        ViewBag.ScanPassport_1 = LoadPic(data.Id.ToString(), "ScanPassport_1Sides");
-                        ViewBag.ScanPassport_2 = LoadPic(data.Id.ToString(), "ScanPassport_2Sides");
-                        ViewBag.Scan1Side = LoadPic(data.Id.ToString(), "Scan1Side");
-                        ViewBag.Scan2Side = LoadPic(data.Id.ToString(), "Scan2Side");
+                        ViewBag.Scan1Sides = LoadPic(data.Id_show.ToString(), "Scan1SidesWithFinancialManagement");
+                        ViewBag.ScanPassport_1 = LoadPic(data.Id_show.ToString(), "ScanPassport_1Sides");
+                        ViewBag.ScanPassport_2 = LoadPic(data.Id_show.ToString(), "ScanPassport_2Sides");
+                        ViewBag.Scan1Side = LoadPic(data.Id_show.ToString(), "Scan1Side");
+                        ViewBag.Scan2Side = LoadPic(data.Id_show.ToString(), "Scan2Side");
                 
                     }
                     break;
@@ -756,10 +756,10 @@ namespace Sciencecom.Controllers
             if (mc.Height != null)
                 mc.Height = double.Parse(mc.Height.ToString().Substring(0, 7));
             ViewBag.Id = mc.Id;
-            ViewBag.Scan1Side = LoadPic(mc.Id.ToString(), "Scan1Side");
-            ViewBag.Scan2Side = LoadPic(mc.Id.ToString(), "Scan2Side");
-            ViewBag.ScanPassport_1Sides = LoadPic(mc.Id.ToString(), "ScanPassport_1Sides");
-            ViewBag.ScanPassport_2Sides = LoadPic(mc.Id.ToString(), "ScanPassport_2Sides");
+            ViewBag.Scan1Side = LoadPic(mc.Id_show.ToString(), "Scan1Side");
+            ViewBag.Scan2Side = LoadPic(mc.Id_show.ToString(), "Scan2Side");
+            ViewBag.ScanPassport_1Sides = LoadPic(mc.Id_show.ToString(), "ScanPassport_1Sides");
+            ViewBag.ScanPassport_2Sides = LoadPic(mc.Id_show.ToString(), "ScanPassport_2Sides");
             return View(mc);
         }
 
@@ -861,9 +861,9 @@ namespace Sciencecom.Controllers
                         ViewBag.Type = "UI";
                         ViewBag.Id = data.Id;
 
-                        ViewBag.photo1 = LoadPic(data.Id.ToString(), "photo1");
+                        ViewBag.photo1 = LoadPic(data.Id_show.ToString(), "photo1");
 
-                        ViewBag.photo2 = LoadPic(data.Id.ToString(), "photo2");
+                        ViewBag.photo2 = LoadPic(data.Id_show.ToString(), "photo2");
 
                     }
                     break;
@@ -905,8 +905,8 @@ namespace Sciencecom.Controllers
             ViewBag.Type = "UI";
             ViewBag.Id = mc.Id;
 
-            ViewBag.photo1 = LoadPic(mc.Id.ToString(), "photo1");
-            ViewBag.photo2 = LoadPic(mc.Id.ToString(), "photo2");
+            ViewBag.photo1 = LoadPic(mc.Id_show.ToString(), "photo1");
+            ViewBag.photo2 = LoadPic(mc.Id_show.ToString(), "photo2");
 
             return View(mc);
         }
