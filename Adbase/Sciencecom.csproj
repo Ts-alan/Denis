@@ -409,6 +409,7 @@
     <Content Include="ClassDiagram1.cd" />
     <Content Include="ClassDiagram2.cd" />
     <Fakes Include="Fakes\Antlr3.Runtime.fakes" />
+    <Content Include="Images\Scan1Side\f79e974a-a185-429c-97e5-dbcd183934dcScan1Side.jpg" />
     <Content Include="Models\ContructionsModel.edmx.sql" />
     <Content Include="Models\Users\UsersModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -1469,6 +1470,8 @@
     <Folder Include="Images\photo2\" />
     <Folder Include="Images\PhotoController\" />
     <Folder Include="Images\Scan1SidesWithFinancialManagement\" />
+    <Folder Include="Images\Scan2SidesWithFinancialManagement\" />
+    <Folder Include="Images\Scan2Side\" />
     <Folder Include="Images\ScanPassport_1Sides\" />
     <Folder Include="Images\ScanPassport_2Sides\" />
     <Folder Include="Images\Sides\" />

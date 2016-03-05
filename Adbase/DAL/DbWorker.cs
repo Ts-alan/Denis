@@ -15,6 +15,14 @@ namespace Sciencecom.DAL
     public class DbWorker
     {
         public SciencecomEntities context = new SciencecomEntities();
+
+        public AdvertisingStructure RetrieveStructure(int? id)
+        {
+            AdvertisingStructure data = new AdvertisingStructure();
+            data = context.AdvertisingStructures.SingleOrDefault(a => a.Id_show == id);
+            return data;
+        }
+
         public JSONTableData SearchAdvertisingDesign(int page, string sidx, string sord,
             int rows, string Собственник, string Вид_конструкции, string Населенный_пункт,
             string Улица, string Дом_Номер_опоры, string Количество_сторон, string Количестов_поверхностей,
@@ -232,11 +240,7 @@ namespace Sciencecom.DAL
 
             return result;
         }
-
-
-
-
-
+        
         protected internal int CountSurfaces(AdvertisingStructure adv)
         {
             return adv.Sides.Sum(side => side.Surfaces.Count);
