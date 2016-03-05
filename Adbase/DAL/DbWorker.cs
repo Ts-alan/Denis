@@ -14,19 +14,19 @@ namespace Sciencecom.DAL
 
     public class DbWorker
     {
-        public SciencecomEntities context = new SciencecomEntities();
+        public SciencecomEntities Context = new SciencecomEntities();
 
         public AdvertisingStructure RetrieveStructure(int? id)
         {
             AdvertisingStructure data = new AdvertisingStructure();
-            data = context.AdvertisingStructures.SingleOrDefault(a => a.Id_show == id);
+            data = Context.AdvertisingStructures.SingleOrDefault(a => a.Id_show == id);
             return data;
         }
 
         public JSONTableData SearchAdvertisingDesign(int page, string sidx, string sord,
-            int rows, string Собственник, string Вид_конструкции, string Населенный_пункт,
-            string Улица, string Дом_Номер_опоры, string Количество_сторон, string Количестов_поверхностей,
-            string Площадь_конструкции, string Разреш_по)
+            int rows, string собственник, string видКонструкции, string населенныйПункт,
+            string улица, string домНомерОпоры, string количествоСторон, string количестовПоверхностей,
+            string площадьКонструкции, string разрешПо)
 
         {
 
@@ -38,49 +38,49 @@ namespace Sciencecom.DAL
 
             jd.Data = new List<JSONStructureForJQGrid>();
             
-            var adbvertisingList = context.AdvertisingStructures.AsQueryable();
+            var adbvertisingList = Context.AdvertisingStructures.AsQueryable();
 
             List<AdvertisingStructure> finalList = new List<AdvertisingStructure>();
 
-            if (!string.IsNullOrWhiteSpace(Собственник))
+            if (!string.IsNullOrWhiteSpace(собственник))
             {
-                adbvertisingList = adbvertisingList.Where(x => x.Owner.Name.Contains(Собственник));
+                adbvertisingList = adbvertisingList.Where(x => x.Owner.Name.Contains(собственник));
             }
-            if (!string.IsNullOrWhiteSpace(Вид_конструкции))
+            if (!string.IsNullOrWhiteSpace(видКонструкции))
             {
                 adbvertisingList =
-                    adbvertisingList.Where(x => x.TypeOfAdvertisingStructure.Name.Contains(Вид_конструкции));
+                    adbvertisingList.Where(x => x.TypeOfAdvertisingStructure.Name.Contains(видКонструкции));
             }
-            if (!string.IsNullOrWhiteSpace(Населенный_пункт))
+            if (!string.IsNullOrWhiteSpace(населенныйПункт))
             {
-                adbvertisingList = adbvertisingList.Where(x => x.Locality.NameLocality.Contains(Населенный_пункт));
+                adbvertisingList = adbvertisingList.Where(x => x.Locality.NameLocality.Contains(населенныйПункт));
             }
-            if (!string.IsNullOrWhiteSpace(Улица))
+            if (!string.IsNullOrWhiteSpace(улица))
             {
-                adbvertisingList = adbvertisingList.Where(x => x.Street1.Contains(Улица));
+                adbvertisingList = adbvertisingList.Where(x => x.Street1.Contains(улица));
             }
-            if (!string.IsNullOrWhiteSpace(Дом_Номер_опоры))
+            if (!string.IsNullOrWhiteSpace(домНомерОпоры))
             {
                 adbvertisingList =
                     adbvertisingList.Where(
-                        x => x.Support_.Contains(Дом_Номер_опоры) | x.House1.Contains(Дом_Номер_опоры));
+                        x => x.Support_.Contains(домНомерОпоры) | x.House1.Contains(домНомерОпоры));
             }
-            if (!string.IsNullOrWhiteSpace(Количество_сторон))
+            if (!string.IsNullOrWhiteSpace(количествоСторон))
             {
-                adbvertisingList = adbvertisingList.Where(x => x.Sides.Count().ToString() == Количество_сторон);
+                adbvertisingList = adbvertisingList.Where(x => x.Sides.Count().ToString() == количествоСторон);
             }
-            if (!string.IsNullOrWhiteSpace(Количестов_поверхностей))
+            if (!string.IsNullOrWhiteSpace(количестовПоверхностей))
             {
-                adbvertisingList = adbvertisingList.Where(x => CountSurfaces(x).ToString() == Количестов_поверхностей);
+                adbvertisingList = adbvertisingList.Where(x => CountSurfaces(x).ToString() == количестовПоверхностей);
             }
-            if (!string.IsNullOrWhiteSpace(Разреш_по))
+            if (!string.IsNullOrWhiteSpace(разрешПо))
             {
-                adbvertisingList = adbvertisingList.Where(x => x.EndDate.ToString().Contains(Разреш_по));
+                adbvertisingList = adbvertisingList.Where(x => x.EndDate.ToString().Contains(разрешПо));
             }
             finalList = adbvertisingList.ToList();
-            if (!string.IsNullOrWhiteSpace(Площадь_конструкции))
+            if (!string.IsNullOrWhiteSpace(площадьКонструкции))
             {
-                double sq = double.Parse(Площадь_конструкции, CultureInfo.InvariantCulture);
+                double sq = double.Parse(площадьКонструкции, CultureInfo.InvariantCulture);
                 List<AdvertisingStructure> templist = new List<AdvertisingStructure>();
                 foreach (AdvertisingStructure advertisingStructure in adbvertisingList)
                 {
@@ -110,22 +110,22 @@ namespace Sciencecom.DAL
 
         public void DeleteAdvertisingDesign(int? id)
         {
-            AdvertisingStructure mc = context.AdvertisingStructures.Single(a => a.Id_show == id);
-            context.ListUniqueNumbers.Add(new ListUniqueNumber() { UniqueNumber = mc.UniqueNumber, Code_id = mc.Code, TimeOpen = DateTime.Now });
+            AdvertisingStructure mc = Context.AdvertisingStructures.Single(a => a.Id_show == id);
+            Context.ListUniqueNumbers.Add(new ListUniqueNumber() { UniqueNumber = mc.UniqueNumber, Code_id = mc.Code, TimeOpen = DateTime.Now });
             foreach (var side in mc.Sides)
             {
                 if (side.Surfaces.Count > 0)
                 {
-                    context.Surfaces.RemoveRange(side.Surfaces);
+                    Context.Surfaces.RemoveRange(side.Surfaces);
                 }
             }
             if (mc.Sides.Count > 0)
             {
-                context.Sides.RemoveRange(mc.Sides);
-                context.SaveChanges();
+                Context.Sides.RemoveRange(mc.Sides);
+                Context.SaveChanges();
             }
-            context.AdvertisingStructures.Remove(mc);
-            context.SaveChanges();
+            Context.AdvertisingStructures.Remove(mc);
+            Context.SaveChanges();
             //try
             //{
             //}
@@ -144,28 +144,28 @@ namespace Sciencecom.DAL
         }
 
 
-        public IEnumerable<AdvertisingStructure> SearchAdversing(AdvertisingStructure Advertisin, string owner,
-            string TypeOfAdvertisingStructure, string Locality, int? CountSize, string Backlight, string EndDate, int? AreaConstruction)
+        public IEnumerable<AdvertisingStructure> SearchAdversing(AdvertisingStructure advertisin, string owner,
+            string typeOfAdvertisingStructure, string locality, int? countSize, string backlight, string endDate, int? areaConstruction)
         {
            
-            var owner_id = context.Owners.SingleOrDefault(a => a.Name.ToLower().Contains(owner.ToLower()));
-            var typeOfAdvertisingStructure_id =
-                context.TypeOfAdvertisingStructures.SingleOrDefault(a => a.Name.ToLower().Contains(TypeOfAdvertisingStructure.ToLower()));
-            var locality_id = context.TypeOfAdvertisingStructures.SingleOrDefault(a => a.Name.ToLower().Contains(Locality.ToLower()));
+            var ownerId = Context.Owners.SingleOrDefault(a => a.Name.ToLower().Contains(owner.ToLower()));
+            var typeOfAdvertisingStructureId =
+                Context.TypeOfAdvertisingStructures.SingleOrDefault(a => a.Name.ToLower().Contains(typeOfAdvertisingStructure.ToLower()));
+            var localityId = Context.TypeOfAdvertisingStructures.SingleOrDefault(a => a.Name.ToLower().Contains(locality.ToLower()));
             List<Backlight> backlights = null;
-            if (Backlight != null && Backlight != "")
-                backlights = context.Backlights.Where(a => a.Name.Contains(Backlight)).ToList();
+            if (backlight != null && backlight != "")
+                backlights = Context.Backlights.Where(a => a.Name.Contains(backlight)).ToList();
             IEnumerable<AdvertisingStructure> result;
             //var Foo = context.AdvertisingStructures.ToList();
-            if (CountSize != null)
+            if (countSize != null)
             {
-                result = context.AdvertisingStructures.Where(a => a.Sides.Count == CountSize && a.Breadth != null && a.Height != null).ToList();
+                result = Context.AdvertisingStructures.Where(a => a.Sides.Count == countSize && a.Breadth != null && a.Height != null).ToList();
             }
             else
             {
-                result = context.AdvertisingStructures.Where(a => a.Breadth != null && a.Height != null).ToList();
+                result = Context.AdvertisingStructures.Where(a => a.Breadth != null && a.Height != null).ToList();
             }
-            if (AreaConstruction != null)
+            if (areaConstruction != null)
             {
                 double sum;
                 result = result.Where(a =>
@@ -179,24 +179,24 @@ namespace Sciencecom.DAL
                             }
 
                         }
-                        if (AreaConstruction == sum)
+                        if (areaConstruction == sum)
                         {
                             return true;
                         }
                         return false;
                     });
             }
-            if (owner_id != null)
+            if (ownerId != null)
             {
-                result = result.Where(m => m.Owner.Id == owner_id.Id);
+                result = result.Where(m => m.Owner.Id == ownerId.Id);
             }
-            if (typeOfAdvertisingStructure_id != null)
+            if (typeOfAdvertisingStructureId != null)
             {
-                result = result.Where(m => m.Code == typeOfAdvertisingStructure_id.Code);
+                result = result.Where(m => m.Code == typeOfAdvertisingStructureId.Code);
             }
-            if (locality_id != null)
+            if (localityId != null)
             {
-                result = result.Where(m => m.Locality_id == locality_id.id);
+                result = result.Where(m => m.Locality_id == localityId.id);
             }
             if (backlights != null)
             {
@@ -211,36 +211,41 @@ namespace Sciencecom.DAL
 
                        }).ToList();
             }
-            if (!string.IsNullOrEmpty(Advertisin.Street1))
+            if (!string.IsNullOrEmpty(advertisin.Street1))
             {
-                result = result.Where(m => m.Street1.ToLower().Contains(Advertisin.Street1.ToLower()));
+                result = result.Where(m => m.Street1.ToLower().Contains(advertisin.Street1.ToLower()));
             }
-            if (!string.IsNullOrEmpty(Advertisin.UniqueNumber))
+            if (!string.IsNullOrEmpty(advertisin.UniqueNumber))
             {
-                result = result.Where(m => m.UniqueNumber.ToLower().Contains(Advertisin.UniqueNumber.ToLower()));
+                result = result.Where(m => m.UniqueNumber.ToLower().Contains(advertisin.UniqueNumber.ToLower()));
             }
-            if (!string.IsNullOrEmpty(Advertisin.House1))
+            if (!string.IsNullOrEmpty(advertisin.House1))
             {
-                result = result.Where(m => m.House1.ToLower().Contains(Advertisin.House1.ToLower()));
+                result = result.Where(m => m.House1.ToLower().Contains(advertisin.House1.ToLower()));
             }
-            if (!string.IsNullOrEmpty(Advertisin.C_ContractFinancialManagement))
+            if (!string.IsNullOrEmpty(advertisin.C_ContractFinancialManagement))
             {
-                result = result.Where(m => m.C_ContractFinancialManagement.ToLower().Contains(Advertisin.C_ContractFinancialManagement.ToLower()));
+                result = result.Where(m => m.C_ContractFinancialManagement.ToLower().Contains(advertisin.C_ContractFinancialManagement.ToLower()));
             }
-            if (!string.IsNullOrEmpty(Advertisin.C_PassportAdvertising))
+            if (!string.IsNullOrEmpty(advertisin.C_PassportAdvertising))
             {
-                result = result.Where(m => m.C_PassportAdvertising.ToLower().Contains(Advertisin.C_PassportAdvertising.ToLower()));
+                result = result.Where(m => m.C_PassportAdvertising.ToLower().Contains(advertisin.C_PassportAdvertising.ToLower()));
             }
-            if (!string.IsNullOrEmpty(EndDate))
+            if (!string.IsNullOrEmpty(endDate))
             {
-                result = result.Where(m => m.EndDate.ToString().ToLower().Trim().Contains(EndDate));
+                result = result.Where(m => m.EndDate.ToString().ToLower().Trim().Contains(endDate));
             }
 
 
 
             return result;
         }
-        
+
+        public void AddSurfaces(List<Surface> listSurface)
+        {
+            Context.Surfaces.AddRange(listSurface);
+        }
+
         protected internal int CountSurfaces(AdvertisingStructure adv)
         {
             return adv.Sides.Sum(side => side.Surfaces.Count);
@@ -248,7 +253,7 @@ namespace Sciencecom.DAL
 
         private double CountSquare(AdvertisingStructure adv)
         {
-            return adv.Sides.SelectMany(side => side.Surfaces).Sum(Surface => Surface.Space);
+            return adv.Sides.SelectMany(side => side.Surfaces).Sum(surface => surface.Space);
         }
    
     }
