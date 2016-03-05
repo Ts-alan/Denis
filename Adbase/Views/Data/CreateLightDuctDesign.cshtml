@@ -8,11 +8,8 @@
 
     //Вид
     var ListTypeAdvertising = new SciencecomEntities().TypeOfAdvertisingStructures.ToList();
-    var ListTypeAdvertisingSelected = ListTypeAdvertising.Single(a => a.Code == ViewBag.Code).id;
-    //ListTypeAdvertising.Insert(0,null);
 
-    var ViewBids = new SciencecomEntities().ViewBids.OrderBy(a => a.OrderBy).ToList();
-
+   
 
     //Элемент улично-дорожной сети
     var ListTypeElementOfTheRoadNetworkName = new SciencecomEntities().TheElementOfTheRoadNetworks.Select(a => new { id = a.id, Value = a.TheElementOfTheRoadNetworkName }).ToList();
@@ -32,8 +29,8 @@
     //Идентификационный номер
     var PropertyLocation = new SciencecomEntities().PropertyLocations.ToList();
 
-    //Подсветка
-    var Backlight = new SciencecomEntities().Backlights.ToList();
+  
+   
 
 }
 <script type="text/javascript">
@@ -62,12 +59,12 @@
         //выщитывание площади для каждой поверхности
         $('#SHeight').change(function ()
         {
-            //alert("!!!");
+         
             CalculationOfTheArea(0);
         });
         $('#Width').change(function ()
         {
-            //alert("!!!");
+           
             CalculationOfTheArea(0);
         });
     });
@@ -132,10 +129,6 @@
         {
             $(element).attr("name", "[" + indx + "].IdentificationForDirectionSide");
         });
-
-        //другое решение не тестил
-        //$('[name="DirectionSide"]').data('validator', null);
-        //$.validator.unobtrusive.parse('[name="DirectionSide"]');
     }
 
     //Добавить поверхность+
@@ -353,7 +346,8 @@
             <div class="col-md-4">
                 <br />
                 <label>Скан проекта ОДД (Сторона 1)</label>
-                <br />
+                <br/>
+                <img class="closeimg" style="width:20px" src="../../Content/CloseImg.jpg" />
                 <div class="fileUpload btn btn-default input-sm">
                     <span accept="image/jpeg/">&nbsp;&nbsp;Скан 1&nbsp;</span>
                     <input type="file" class="upload" name="Scan1Side" accept="image/jpeg/" />
@@ -367,6 +361,7 @@
                 <br />
                 <label>Скан проекта ОДД (Сторона 2)</label>
                 <br/>
+                <img class="closeimg" style="width:20px" src="../../Content/CloseImg.jpg" />
                 <div class="fileUpload btn btn-default input-sm">
                     <span accept="image/jpeg/">&nbsp;&nbsp;Скан 2&nbsp;</span>
                     <input type="file" class="upload" name="Scan2Side" accept="image/jpeg/" />

@@ -77,8 +77,8 @@
     //Функция срабатывает изменении значения кнопки загрузки файла
     $("input[type='file']").change(function()
     {
-        $(this).parent().prev().prev().attr("value", "setImage");
-        console.log("123");
+        //$(this).parent().prev().prev().attr("value", "setImage");
+      
         var attr = $(this).attr("name");
         var modalImgId = "ModalPictureimg" + attr;
         var modalId = "#ModalPictureDiv" + attr;
@@ -87,14 +87,15 @@
         if (fileName != "") {
             btnParent.parent().find("label[for^='photo']").text(fileName);
             btnParent.parent().find("label[for^='Scan']").text(fileName);
+            //Изменение стиля кнопки загрузки фала при выборе загружаемого файла
+
+            var markup = '<img id="' + modalImgId + '" src=""' + ' height="300" style="display: block;margin-left: auto;margin-right: auto;">';
+            //добавление в модальное окно пустого тега с картинкой
+
+            $(modalId).empty();
+            $(modalId).append(markup);
         }
-        //Изменение стиля кнопки загрузки фала при выборе загружаемого файла
-        
-        var markup = '<img id="' + modalImgId + '" src=""' + ' height="300" style="display: block;margin-left: auto;margin-right: auto;">';
-        //добавление в модальное окно пустого тега с картинкой
-        
-        $(modalId).empty();
-        $(modalId).append(markup);
+
        
         btnParent.addClass("btn-warning");
         btnParent.removeClass("btn-default");
