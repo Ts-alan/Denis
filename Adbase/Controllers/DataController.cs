@@ -562,7 +562,7 @@ namespace Sciencecom.Controllers
             [ModelBinder(typeof(CustomModelBinderForSide))] List<Side> Sides,
             [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces,
             HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides,
-            HttpPostedFileBase Scan1SidesWithFinancialManagement,
+            HttpPostedFileBase Scan1SidesWithFinancialManagement, string ScanPassport_1SidesInd, string ScanPassport_2SidesInd,
             int CountSize = 1)
         {
 
@@ -609,48 +609,51 @@ namespace Sciencecom.Controllers
             context.Sides.RemoveRange(mc.Sides);
             context.SaveChanges();
 
+            //картики
 
+            ValidatePic(ScanPassport_1Sides, ScanPassport_1SidesInd, mc.Id.ToString(), "ScanPassport_1Sides");
+            ValidatePic(ScanPassport_2Sides, ScanPassport_2SidesInd, mc.Id.ToString(), "ScanPassport_2Sides");
 
             //картики
-            if (Scan1SidesWithFinancialManagement != null)
-            {
-                string src = "~/Images/Scan1SidesWithFinancialManagement/" + Structures.Id +
-                             "FinancialManagement.jpg";
-                string path = Server.MapPath(src);
-                FileInfo info1 = new FileInfo(path);
-                if (info1.Exists)
-                {
-                    info1.Delete();
-                }
+            //if (Scan1SidesWithFinancialManagement != null)
+            //{
+            //    string src = "~/Images/Scan1SidesWithFinancialManagement/" + Structures.Id +
+            //                 "FinancialManagement.jpg";
+            //    string path = Server.MapPath(src);
+            //    FileInfo info1 = new FileInfo(path);
+            //    if (info1.Exists)
+            //    {
+            //        info1.Delete();
+            //    }
 
-                Scan1SidesWithFinancialManagement.SaveAs(path);
-            }
+            //    Scan1SidesWithFinancialManagement.SaveAs(path);
+            //}
 
-            if (ScanPassport_1Sides != null)
-            {
+            //if (ScanPassport_1Sides != null)
+            //{
 
-                string src = "~/Images/ScanPassport_1Sides/" + Structures.Id + "passport.jpg";
-                string path = Server.MapPath(src);
-                FileInfo info1 = new FileInfo(path);
-                if (info1.Exists)
-                {
-                    info1.Delete();
-                }
+            //    string src = "~/Images/ScanPassport_1Sides/" + Structures.Id + "passport.jpg";
+            //    string path = Server.MapPath(src);
+            //    FileInfo info1 = new FileInfo(path);
+            //    if (info1.Exists)
+            //    {
+            //        info1.Delete();
+            //    }
 
-                ScanPassport_1Sides.SaveAs(path);
-            }
-            if (ScanPassport_2Sides != null)
-            {
-                string src = "~/Images/ScanPassport_2Sides/" + Structures.Id + "ScanPassport_2Sides.jpg";
-                string path = Server.MapPath(src);
-                FileInfo info1 = new FileInfo(path);
-                if (info1.Exists)
-                {
-                    info1.Delete();
-                }
+            //    ScanPassport_1Sides.SaveAs(path);
+            //}
+            //if (ScanPassport_2Sides != null)
+            //{
+            //    string src = "~/Images/ScanPassport_2Sides/" + Structures.Id + "ScanPassport_2Sides.jpg";
+            //    string path = Server.MapPath(src);
+            //    FileInfo info1 = new FileInfo(path);
+            //    if (info1.Exists)
+            //    {
+            //        info1.Delete();
+            //    }
 
-                ScanPassport_2Sides.SaveAs(path);
-            }
+            //    ScanPassport_2Sides.SaveAs(path);
+            //}
 
             return RedirectToAction("AdvertisingDesign");
 
@@ -997,10 +1000,10 @@ namespace Sciencecom.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            AdvertisingStructure mc = context.AdvertisingStructures.Single(a => a.Id_show == id);
+            AdvertisingStructure mc = context.AdvertisingStructures.SingleOrDefault(a => a.Id_show == id);
             if (mc == null)
             {
-                return HttpNotFound();
+                return View("DesignNotFound");
             }
             List<Surface> surfaces = new List<Surface>();
             foreach (var sides in mc.Sides.OrderBy(a => a.Name))
@@ -1075,39 +1078,42 @@ namespace Sciencecom.Controllers
 
             //картики
 
-            if (photo1 != null&& PhotoInd1== "setImage")
-            {
+            ValidatePic(photo1, PhotoInd1, mc.Id.ToString(), "photo1");
+            ValidatePic(photo2, PhotoInd2, mc.Id.ToString(), "photo2");
 
-                string src = "~/Images/photo1/" + Structures.Id + "photo1.jpg";
-                string path = Server.MapPath(src);
-                FileInfo info1 = new FileInfo(path);
-                if (info1.Exists)
-                {
-                    info1.Delete();
-                }
+            //if (photo1 != null&& PhotoInd1== "setImage")
+            //{
 
-                photo1.SaveAs(path);
-            }
-            if(PhotoInd1 == "")
-            {
-                DeletePic(Structures.Id.ToString(), "photo1");
-            }
-            if (photo2 != null && PhotoInd2 == "setImage")
-            {
-                string src = "~/Images/photo2/" + Structures.Id + "photo2.jpg";
-                string path = Server.MapPath(src);
-                FileInfo info1 = new FileInfo(path);
-                if (info1.Exists)
-                {
-                    info1.Delete();
-                }
+            //    string src = "~/Images/photo1/" + Structures.Id + "photo1.jpg";
+            //    string path = Server.MapPath(src);
+            //    FileInfo info1 = new FileInfo(path);
+            //    if (info1.Exists)
+            //    {
+            //        info1.Delete();
+            //    }
 
-                photo2.SaveAs(path);
-            }
-            if (PhotoInd2 == "")
-            {
-                DeletePic(Structures.Id.ToString(), "photo2");
-            }
+            //    photo1.SaveAs(path);
+            //}
+            //if(PhotoInd1 == "")
+            //{
+            //    DeletePic(Structures.Id.ToString(), "photo1");
+            //}
+            //if (photo2 != null && PhotoInd2 == "setImage")
+            //{
+            //    string src = "~/Images/photo2/" + Structures.Id + "photo2.jpg";
+            //    string path = Server.MapPath(src);
+            //    FileInfo info1 = new FileInfo(path);
+            //    if (info1.Exists)
+            //    {
+            //        info1.Delete();
+            //    }
+
+            //    photo2.SaveAs(path);
+            //}
+            //if (PhotoInd2 == "")
+            //{
+            //    DeletePic(Structures.Id.ToString(), "photo2");
+            //}
             return RedirectToAction("AdvertisingDesign");
 
         }

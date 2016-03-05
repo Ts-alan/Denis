@@ -45,7 +45,7 @@
     //    $(".modalPictureTrigger[data-target='#ViewModalPicture" +  attr + "']").css({ width: '122px', height: '22px', '-webkit-box-shadow': '0 0 0px 1000px white inset' });
     //});
     $(".closeimg").click(function () {
-        $(this).prev().attr("value", "");
+        //$(this).prev().attr("value", "");
         $(this).next().find("input[type='file']")[0].value = null;
         $(this).next().next().text("Файл не выбран");
         $(this).next().removeClass("btn-warning");
@@ -112,8 +112,13 @@
         //добавление кнопки открывания модального окна
 
         var modalButton = '<button type="button" style="margin-left:25px" class="modalPictureTrigger btn btn-default" data-toggle="modal" data-target="#ViewModalPicture' + attr + '" >Показать</button>';
+
        
-        if (btnParent.closest(".fileUpload").next().next().next().next().length == 0)
+
+        if (btnParent.closest(".fileUpload").next().next().next().next().length != 0)
+        {
+            btnParent.closest(".fileUpload").next().next().next().next().remove();
+        }
         btnParent.parent().append(modalButton);
      
     });
@@ -123,6 +128,12 @@
 
 
 });
+
+function addButton(parameters)
+{
+
+     var modalButton = '<button type="button" style="margin-left:25px" class="modalPictureTrigger btn btn-default" data-toggle="modal" data-target="#ViewModalPicture' + attr + '" >Показать</button>';
+}
 
 //добавление сохраненного в проекте изображения в модальное окно для просмотра
 function addPic(id, src)
