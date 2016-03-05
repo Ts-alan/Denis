@@ -129,6 +129,10 @@ namespace Sciencecom.Controllers
 
         public ActionResult Documents(int? id, string type = "BB")
         {
+            if (id == null)
+            {
+                return RedirectToAction("NotFound");
+            }
             var data = context.AdvertisingStructures.Single(a => a.Id_show == id);
             List<Surface> surfaces = new List<Surface>();
             foreach (var sides in data.Sides.OrderBy(a => a.Name))
@@ -259,9 +263,9 @@ namespace Sciencecom.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("NotFound");
             }
-            
+
             AdvertisingStructure mc = context.AdvertisingStructures.Single(a => a.Id_show == id);
             if (mc == null)
             {
@@ -413,7 +417,19 @@ namespace Sciencecom.Controllers
 
         public ActionResult Pointer(int? id, string type = "MP")
         {
-            var data = context.AdvertisingStructures.Single(a => a.Id_show == id);
+            if (id == null)
+            {
+                return RedirectToAction("NotFound");
+            }
+            AdvertisingStructure data = new AdvertisingStructure();
+            
+                data = dbw.RetrieveStructure(id);
+
+            if (data == null)
+            {
+                return RedirectToAction("NotFound");
+            }
+            
             List<Surface> surfaces = new List<Surface>();
             foreach (var sides in data.Sides.OrderBy(a => a.Name))
             {
@@ -529,7 +545,7 @@ namespace Sciencecom.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("NotFound");
             }
 
             AdvertisingStructure mc = context.AdvertisingStructures.Single(a => a.Id_show == id);
@@ -665,6 +681,10 @@ namespace Sciencecom.Controllers
 
         public ActionResult LightDuct(int? id, string type = "LD")
         {
+            if (id == null)
+            {
+                return RedirectToAction("NotFound");
+            }
             var data = context.AdvertisingStructures.Single(a => a.Id_show == id);
             List<Surface> surfaces = new List<Surface>();
             foreach (var sides in data.Sides.OrderBy(a => a.Name))
@@ -781,7 +801,7 @@ namespace Sciencecom.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("NotFound");
             }
 
             AdvertisingStructure mc = context.AdvertisingStructures.Single(a => a.Id_show == id);
@@ -950,11 +970,20 @@ namespace Sciencecom.Controllers
 
         public ActionResult Illegal(int? id, string type = "UI")
         {
+
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("NotFound");
             }
-            var data = context.AdvertisingStructures.SingleOrDefault(a => a.Id_show == id);
+            AdvertisingStructure data = new AdvertisingStructure();
+            try
+            {
+                data = context.AdvertisingStructures.Single(a => a.Id_show == id);
+            }
+            catch (System.InvalidOperationException ex)
+            {
+                return RedirectToAction("NotFound");
+            }
             if (data == null)
             {
                 return View ("DesignNotFound");
@@ -997,14 +1026,19 @@ namespace Sciencecom.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("NotFound");
             }
 
-            AdvertisingStructure mc = context.AdvertisingStructures.SingleOrDefault(a => a.Id_show == id);
-            if (mc == null)
+            AdvertisingStructure mc = new AdvertisingStructure();
+            try
             {
-                return View("DesignNotFound");
+                mc = context.AdvertisingStructures.Single(a => a.Id_show == id);
             }
+            catch (System.InvalidOperationException ex)
+            {
+                return RedirectToAction("NotFound");
+            }
+            
             List<Surface> surfaces = new List<Surface>();
             foreach (var sides in mc.Sides.OrderBy(a => a.Name))
             {
@@ -1185,6 +1219,11 @@ namespace Sciencecom.Controllers
             SavePic(Structures.Id.ToString(), "photo2", photo2);
 
             return RedirectToAction("AdvertisingDesign");
+        }
+
+        public ActionResult NotFound()
+        {
+            return View("DesignNotFound");
         }
 
         #endregion
