@@ -42,8 +42,7 @@
           <Property Name="CoordinationDate" Type="datetime" />
           <Property Name="ContentInformationDescription" Type="nvarchar(max)" />
           <Property Name="DateOfIssue" Type="datetime" />
-          <Property Name="RoadName" Type="nvarchar(max)" />
-          <Property Name="RoadKM" Type="int" />
+          <Property Name="Area" Type="float" />
         </EntityType>
         <EntityType Name="Backlight">
           <Key>
@@ -733,8 +732,7 @@
           <Property Name="CoordinationDate" Type="DateTime" Precision="3" />
           <Property Name="ContentInformationDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="DateOfIssue" Type="DateTime" Precision="3" />
-          <Property Name="RoadName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="RoadKM" Type="Int32" />
+          <Property Name="Area" Type="Double" />
           <NavigationProperty Name="Backlight" Relationship="SciencecomModel.FK_AdvertisingStructures_Backlight" FromRole="AdvertisingStructure" ToRole="Backlight" />
           <NavigationProperty Name="Locality" Relationship="SciencecomModel.FK_AdvertisingStructures_Locality" FromRole="AdvertisingStructure" ToRole="Locality" />
           <NavigationProperty Name="PropertyLocation" Relationship="SciencecomModel.FK_AdvertisingStructures_PropertyLocation" FromRole="AdvertisingStructure" ToRole="PropertyLocation" />
@@ -1190,8 +1188,7 @@
           <EntitySetMapping Name="AdvertisingStructures">
             <EntityTypeMapping TypeName="SciencecomModel.AdvertisingStructure">
               <MappingFragment StoreEntitySet="AdvertisingStructures">
-                <ScalarProperty Name="RoadKM" ColumnName="RoadKM" />
-                <ScalarProperty Name="RoadName" ColumnName="RoadName" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
                 <ScalarProperty Name="DateOfIssue" ColumnName="DateOfIssue" />
                 <ScalarProperty Name="ContentInformationDescription" ColumnName="ContentInformationDescription" />
                 <ScalarProperty Name="CoordinationDate" ColumnName="CoordinationDate" />

@@ -119,22 +119,10 @@
             {
                 searchOnEnter: false,
                 beforeClear: function () { return true; },
-                beforeSearch:  function(){PullData();},
+                //beforeSearch:  function(){PullData();},
                 afterSearch: function()
                 {
-                    //jQuery("#table").jqGrid('filterToolbar',options);
-                    //console.log($('#table').filtertoolbar);
-                    //console.log($("#table").getGridParam("postData"));
-
-
-                    //for (var property in $("#table").getGridParam("postData"))
-                    //{
-                    //    if ($("#table").getGridParam("postData").hasOwnProperty(property))
-                    //    {
-                    //        console.log(property);
-                    //    }
-                    //}
-                    //$("#table").jqGrid('setGridParam', { postData: });
+                    
                 }
             });
         //$(".ui-jqgrid-bdiv").append("<h1 style=\"margin-left: 700px;margin-top: 300px\">Выберите параметры поиска</h1>");
@@ -190,15 +178,8 @@
         function PullData()
         {
             var collectionMap = {};
-            collectionMap.markup = [];
             collectionMap.postdata = $("#table").getGridParam("postData");
-            $(".ui-state-default .ui-th-ltr input").each(function(indx, element)
-            {
-                collectionMap.markup.push({ id: $(element).attr("id"), value: $(element).val().toString() }); //TODO Допилить заполнение разметки из постдаты, а не из разметки страницы т.к. она не успевает подгружаться в бифорреквест
-            });
-            //console.log(collectionMap.markup);
-            //console.log(collectionMap.postdata);
-
+            
             var test = JSON.stringify(collectionMap);
 
             $.ajax({
@@ -353,19 +334,44 @@
             if (collectionMap != "[]" && collectionMap != '' && collectionMap != undefined)
             {
                 $('#table').jqGrid('setGridParam', { postData: collectionMap.postdata });
-                ///console.log(collectionMap.postdata);
-                $(".ui-state-default .ui-th-ltr input").each(function(indx, element)
+               
+                if (collectionMap.postdata.Собственник !== undefined)
                 {
-                    //console.log(collectionMap.markup[indx]);
-                    if (collectionMap.markup[indx] != undefined)
-                    {
-                        $(element).val(collectionMap.markup[indx].value);
-                        //console.log(element);
-                        // $('#table').jqgrid.triggerToolbar();
-                    }
-                });
-                //alert("Filled!");
-                //jQuery("#table")[0].triggerToolbar(); 
+                    $("input[id$='Собственник']").val(collectionMap.postdata.Собственник);
+                }
+                 if (collectionMap.postdata.Вид_конструкции !== undefined)
+                {
+                    $("input[id$='Вид_конструкции']").val(collectionMap.postdata.Вид_конструкции);
+                 }
+                 if (collectionMap.postdata.Населенный_пункт !== undefined)
+                {
+                    $("input[id$='Населенный_пункт']").val(collectionMap.postdata.Населенный_пункт);
+                 }
+                 if (collectionMap.postdata.Улица !== undefined)
+                {
+                    $("input[id$='Улица']").val(collectionMap.postdata.Улица);
+                 }
+                 if (collectionMap.postdata.Дом_Номер_опоры !== undefined)
+                {
+                    $("input[id$='Дом_Номер_опоры']").val(collectionMap.postdata.Дом_Номер_опоры);
+                 }
+                 if (collectionMap.postdata.Количество_сторон !== undefined)
+                {
+                    $("input[id$='Количество_сторон']").val(collectionMap.postdata.Количество_сторон);
+                 }
+                 if (collectionMap.postdata.Количестов_поверхностей !== undefined)
+                {
+                    $("input[id$='Количестов_поверхностей']").val(collectionMap.postdata.Количестов_поверхностей);
+                 }
+                 if (collectionMap.postdata.Площадь_конструкции !== undefined)
+                {
+                    $("input[id$='Площадь_конструкции']").val(collectionMap.postdata.Площадь_конструкции);
+                 }
+                 if (collectionMap.postdata.Разреш_по !== undefined)
+                {
+                    $("input[id$='Разреш_по']").val(collectionMap.postdata.Разреш_по);
+                }
+                
                 fillDataForFunctionFT();
             }
         }

@@ -65,35 +65,28 @@ namespace Sciencecom.DAL
                     adbvertisingList.Where(
                         x => x.Support_.Contains(Дом_Номер_опоры) | x.House1.Contains(Дом_Номер_опоры));
             }
-            if (!string.IsNullOrWhiteSpace(Количество_сторон))
+
+            int w;
+            if (!string.IsNullOrWhiteSpace(Количество_сторон) && Int32.TryParse(Количество_сторон, out w))
             {
-                adbvertisingList = adbvertisingList.Where(x => x.Sides.Count().ToString() == Количество_сторон);
+                adbvertisingList = adbvertisingList.Where(x => x.Sides.Count() == w);
             }
-            if (!string.IsNullOrWhiteSpace(Количестов_поверхностей))
+            int v;
+            if (!string.IsNullOrWhiteSpace(Количестов_поверхностей) && Int32.TryParse(Количестов_поверхностей, out v))
             {
-                adbvertisingList = adbvertisingList.Where(x => CountSurfaces(x).ToString() == Количестов_поверхностей);
+                adbvertisingList = adbvertisingList.Where(x => x.Sides.SelectMany(side => side.Surfaces).Count() == v);
             }
             if (!string.IsNullOrWhiteSpace(Разреш_по))
             {
                 adbvertisingList = adbvertisingList.Where(x => x.EndDate.ToString().Contains(Разреш_по));
             }
-            finalList = adbvertisingList.ToList();
-            if (!string.IsNullOrWhiteSpace(Площадь_конструкции))
+            double n;
+            if (!string.IsNullOrWhiteSpace(Площадь_конструкции) && double.TryParse(Площадь_конструкции, out n))
             {
-                double sq = double.Parse(Площадь_конструкции, CultureInfo.InvariantCulture);
-                List<AdvertisingStructure> templist = new List<AdvertisingStructure>();
-                foreach (AdvertisingStructure advertisingStructure in adbvertisingList)
-                {
-                    if (sq == CountSquare(advertisingStructure))
-                    {
-                        templist.Add(advertisingStructure);
-                    }
-                }
-                finalList = finalList.Intersect(templist).ToList();
-
+                adbvertisingList = adbvertisingList.Where(x => x.Area == n);
             }
 
-
+            finalList = adbvertisingList.ToList();
             int adsCount = finalList.Count;
             double del = adsCount / rows;
             jd.Total = (int)Math.Ceiling(del) + 1;
