@@ -27,7 +27,6 @@ namespace Sciencecom.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<AdvertisingStructure> AdvertisingStructures { get; set; }
         public virtual DbSet<Backlight> Backlights { get; set; }
         public virtual DbSet<DirectionSide> DirectionSides { get; set; }
         public virtual DbSet<Identification> Identifications { get; set; }
@@ -48,6 +47,7 @@ namespace Sciencecom.Models
         public virtual DbSet<TopicForSocialAdvertising> TopicForSocialAdvertisings { get; set; }
         public virtual DbSet<TypeOfAdvertisingStructure> TypeOfAdvertisingStructures { get; set; }
         public virtual DbSet<ViewBid> ViewBids { get; set; }
+        public virtual DbSet<AdvertisingStructure> AdvertisingStructures { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
