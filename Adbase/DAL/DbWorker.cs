@@ -8,6 +8,7 @@ using System.Web.Helpers;
 using System.Web.Mvc;
 using Sciencecom.Models;
 using Sciencecom.Models.MapJsonModels;
+using System.Diagnostics;
 
 namespace Sciencecom.DAL
 {
@@ -104,6 +105,10 @@ namespace Sciencecom.DAL
         public void DeleteAdvertisingDesign(int? id)
         {
             AdvertisingStructure mc = Context.AdvertisingStructures.Single(a => a.Id_show == id);
+            if (mc.UniqueNumber == null)
+            {
+                mc.UniqueNumber = TableAdapterExtensions.StringSymvol();
+            }
             Context.ListUniqueNumbers.Add(new ListUniqueNumber() { UniqueNumber = mc.UniqueNumber, Code_id = mc.Code, TimeOpen = DateTime.Now });
             foreach (var side in mc.Sides)
             {
@@ -111,14 +116,46 @@ namespace Sciencecom.DAL
                 {
                     Context.Surfaces.RemoveRange(side.Surfaces);
                 }
+                
             }
             if (mc.Sides.Count > 0)
             {
-                Context.Sides.RemoveRange(mc.Sides);
+                try
+                {
+                    Context.Sides.RemoveRange(mc.Sides);
+                    Context.SaveChanges();
+                }
+                catch (DbEntityValidationException dbEx)
+                {
+                    foreach (var validationErrors in dbEx.EntityValidationErrors)
+                    {
+                        foreach (var validationError in validationErrors.ValidationErrors)
+                        {
+                            Trace.TraceInformation("Property: {0} Error: {1}",
+                                                    validationError.PropertyName,
+                                                    validationError.ErrorMessage);
+                        }
+                    }
+                }
+            }
+            try
+            {
+                Context.AdvertisingStructures.Remove(mc);
                 Context.SaveChanges();
             }
-            Context.AdvertisingStructures.Remove(mc);
-            Context.SaveChanges();
+            catch (DbEntityValidationException dbEx)
+            {
+                foreach (var validationErrors in dbEx.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        Trace.TraceInformation("Property: {0} Error: {1}",
+                                                validationError.PropertyName,
+                                                validationError.ErrorMessage);
+                    }
+                }
+            }
+           
             //try
             //{
             //}

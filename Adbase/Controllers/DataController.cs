@@ -78,12 +78,12 @@ namespace Sciencecom.Controllers
         [Authorize(Roles = "Admin, ChiefEditAll,ChiefEditOwn, SupplierEditAll, SupplierEditOwn")]
         public ActionResult DeleteAdvertisingDesign(int? id,string switchtoMap)
         {
-            AdvertisingStructure mc = _context.AdvertisingStructures.Single(a => a.Id_show == id);
-            if (mc.UniqueNumber == null)
+            if (id == null)
             {
-                mc.UniqueNumber = TableAdapterExtensions.StringSymvol();
+                return RedirectToAction("NotFound");
             }
-
+            AdvertisingStructure mc = _context.AdvertisingStructures.Single(a => a.Id_show == id);
+            
             _dbw.DeleteAdvertisingDesign(id);
             
             //удаление картинок
@@ -313,6 +313,8 @@ namespace Sciencecom.Controllers
         {
 
             AdvertisingStructure mc = _context.AdvertisingStructures.Single(a => a.Id_show == id);
+            DeletePic(mc.Id_show.ToString(), "scanPassport1Sides");
+            DeletePic(mc.Id_show.ToString(), "scanPassport2Sides");
             var tempId = mc.Id;
             if (structures.UniqueNumber == null)
             {
@@ -562,7 +564,8 @@ namespace Sciencecom.Controllers
 
             AdvertisingStructure mc = _context.AdvertisingStructures.Single(a => a.Id_show == id);
             var tempId = mc.Id;
-           
+            DeletePic(mc.Id_show.ToString(), "scanPassport1Sides");
+            DeletePic(mc.Id_show.ToString(), "scanPassport2Sides");
             foreach (var side in mc.Sides)
             {
                 _context.Surfaces.RemoveRange(side.Surfaces);
@@ -603,13 +606,13 @@ namespace Sciencecom.Controllers
             _context.Sides.RemoveRange(mc.Sides);
 
             _context.SaveChanges();
-            
-           
+
+
 
             //сохранение картинок
 
-            ValidatePic(scanPassport1Sides, scanPassport1SidesInd, mc.Id_show.ToString(), "ScanPassport_1Sides");
-            ValidatePic(scanPassport2Sides, scanPassport2SidesInd, mc.Id_show.ToString(), "ScanPassport_2Sides");
+            ValidatePic(scanPassport1Sides, scanPassport1SidesInd, structures.Id_show.ToString(), "ScanPassport_1Sides");
+            ValidatePic(scanPassport2Sides, scanPassport2SidesInd, structures.Id_show.ToString(), "ScanPassport_2Sides");
 
             return RedirectToAction("AdvertisingDesign");
 
@@ -790,6 +793,10 @@ namespace Sciencecom.Controllers
         {
 
             AdvertisingStructure mc = _context.AdvertisingStructures.Single(a => a.Id_show == id);
+            DeletePic(mc.Id_show.ToString(), "scanPassport1Sides");
+            DeletePic(mc.Id_show.ToString(), "scanPassport2Sides");
+            DeletePic(mc.Id_show.ToString(), "scan1Side");
+            DeletePic(mc.Id_show.ToString(), "scan1Side");
             var tempId = mc.Id;
             if (structures.Code == null)
             {
@@ -938,7 +945,8 @@ namespace Sciencecom.Controllers
 
             AdvertisingStructure mc = _context.AdvertisingStructures.Single(a => a.Id_show == id);
             var tempId = mc.Id;
-
+            DeletePic(mc.Id_show.ToString(), "photo1");
+            DeletePic(mc.Id_show.ToString(), "photo1");
             foreach (var side in mc.Sides)
             {
                 _context.Surfaces.RemoveRange(side.Surfaces);
@@ -983,8 +991,8 @@ namespace Sciencecom.Controllers
 
             //картики
 
-            ValidatePic(photo1, photoInd1, mc.Id_show.ToString(), "photo1");
-            ValidatePic(photo2, photoInd2, mc.Id_show.ToString(), "photo2");
+            ValidatePic(photo1, photoInd1, structures.Id_show.ToString(), "photo1");
+            ValidatePic(photo2, photoInd2, structures.Id_show.ToString(), "photo2");
 
             
            
@@ -1018,8 +1026,8 @@ namespace Sciencecom.Controllers
             //удаление временно номера из базы данных
             if (_context.ListUniqueNumbers.Any(a => a.UniqueNumber == structures.UniqueNumber))
             {
-                _context.ListUniqueNumbers.Remove(
-                    _context.ListUniqueNumbers.Single(x => x.UniqueNumber == structures.UniqueNumber));
+                _context.ListUniqueNumbers.RemoveRange(
+                    _context.ListUniqueNumbers.Where(x => x.UniqueNumber == structures.UniqueNumber));
 
             }
 
