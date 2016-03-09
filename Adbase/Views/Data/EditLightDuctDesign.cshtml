@@ -25,10 +25,7 @@
     //Населенный пункт выпадающий список
     var Locality = new SciencecomEntities().Localities.ToList();
 
-    //Направление стороны
-    var DirectionSide = new SciencecomEntities().DirectionSides.OrderBy(x => x.OrderBY).ToList();
-    //Индификация поверхности
-    var IdentificationSide = new SciencecomEntities().Identifications.ToList();
+
     //IdentificationSide.Insert(0, null);
     //Идентификационный номер
     var PropertyLocation = new SciencecomEntities().PropertyLocations.ToList();
@@ -169,14 +166,7 @@
                     </div>
                 </div>
             </div>
-            @*<div style="margin-left: -15px;" id="1HiddenIdentification">
-                    &nbsp;&nbsp;&nbsp;<b>Идентификация поверхностей</b>
-                    <select identificationforidentificationsurface="IdentificationForSurface" true="" data-val-required="Выберете" id="IdentificationSurface" name="[0].IdentificationForIdentificationSurface">
-                        <option value=""></option>
-                        <option selected="selected" value="4610cf49-0360-4edb-9f05-752f7d574dcc">Вертикальная</option>
-                        <option value="95ee0238-134f-4a5c-a9ec-a9f0f02c2c75">Горизонтальная </option>
-                    </select>
-                </div>*@
+
         </div>
     </div>
 
@@ -344,7 +334,7 @@
                                     <label for="Scan1Side">@imgName</label>
                                     <br/>
                                     <br/>
-                                    <button type="button" class="modalPictureTrigger btn btn-default input-sm" data-toggle="modal" onclick="addPic('#ModalScan1DivScan1Side', '@image')" data-target="#ViewModalPictureScan1Side">Показать</button>
+                                    <button type="button" style="margin-left: 25px" class="modalPictureTrigger btn btn-default input-sm" data-toggle="modal" onclick="addPic('#ModalScan1DivScan1Side', '@image')" data-target="#ViewModalPictureScan1Side">Показать</button>
 
                                 }
                                 else
@@ -378,7 +368,7 @@
                                     <label for="Scan2Side">@imgName</label>
                                     <br/>
                                     <br/>
-                                    <button type="button" class="modalPictureTrigger btn btn-default input-sm" data-toggle="modal" onclick="addPic('#ModalScan2DivScan2Side', '@image')" data-target="#ViewModalPictureScan2Side">Показать</button>
+                                    <button type="button" style="margin-left: 25px"  class="modalPictureTrigger btn btn-default input-sm" data-toggle="modal" onclick="addPic('#ModalScan2DivScan2Side', '@image')" data-target="#ViewModalPictureScan2Side">Показать</button>
 
                                 }
                                 else
@@ -409,25 +399,7 @@
 
                         </div>
 
-                            @*<div class="form-inline">
-
-                                <div class="form-group">
-                                    <label for="Scan1Side">Скан проекта ОДД (Сторона 1)</label>
-                                    <input type="file" name="Scan1Side" accept="image/jpeg" /><br />
-                                    <span data-valmsg-for="Scan1Side" data-valmsg-replace="true"></span>
-                                    @Html.Raw("Не более 1 МБ")
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="Scan2Side">Скан проекта ОДД (Сторона 2)</label>
-                                    <input type="file" name="Scan2Side" accept="image/jpeg" /><br />
-                                    <span data-valmsg-for="Scan2Side" data-valmsg-replace="true"></span>
-                                    @Html.Raw("Не более 1 МБ")
-                                </div>
-
-                            </div>*@
-
-
+    
                             <div class="form-group" style="margin-bottom: 5px">
 
                                 <label for="C_PassportAdvertising">№ паспорта рекламы</label>
@@ -462,7 +434,7 @@
                                     <input type="hidden" name="ScanPassport_1SidesInd" value="setImage">
                                     string image = "/Images/ScanPassport_1Sides/" + ViewBag.Id + "ScanPassport_1Sides.jpg";
                                     string imgName = ViewBag.Id + "ScanPassport_1Sides.jpg";
-
+                                    <img class="closeimg" style="width:20px" src="../../Content/CloseImg.jpg" />
                                     <div class="fileUpload btn btn-warning input-sm">
                                         <span>&nbsp;&nbsp;Стор.1&nbsp;</span>
                                         <input type="file" class="upload" name="ScanPassport_1Sides" accept="image/jpeg/"/>
@@ -476,6 +448,7 @@
                                 else
                                 {
                                     <input type="hidden" name="ScanPassport_1SidesInd" value="">
+                                    <img class="closeimg" style="width:20px" src="../../Content/CloseImg.jpg" />
                                     <div class="fileUpload btn btn-default input-sm">
                                         <span accept="image/jpeg/">&nbsp;&nbsp;Стор.1&nbsp;</span>
                                         <input type="file" class="upload" name="ScanPassport_1Sides" accept="image/jpeg/"/>
@@ -495,7 +468,7 @@
                                     <input type="hidden" name="ScanPassport_2SidesInd" value="setImage">
                                     string image = "/Images/ScanPassport_2Sides/" + ViewBag.Id + "Scan2Side.jpg";
                                     string imgName = ViewBag.Id + "Scan2Side.jpg";
-
+                                    <img class="closeimg" style="width:20px" src="../../Content/CloseImg.jpg" />
                                     <div class="fileUpload btn btn-warning input-sm">
                                         <span>&nbsp;&nbsp;Стор.2&nbsp;</span>
                                         <input type="file" class="upload" name="Scan2Side" accept="image/jpeg/"/>
@@ -509,6 +482,7 @@
                                 else
                                 {
                                     <input type="hidden" name="ScanPassport_2SidesInd" value="">
+                                    <img class="closeimg" style="width:20px" src="../../Content/CloseImg.jpg" />
                                     <div class="fileUpload btn btn-default input-sm">
                                         <span accept="image/jpeg/">&nbsp;&nbsp;Стор.2&nbsp;</span>
                                         <input type="file" class="upload" name="ScanPassport_2Sides" accept="image/jpeg/"/>
