@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -43,7 +44,7 @@ namespace Sciencecom.Controllers
             }
         }
 
-        protected internal void ValidatePic(HttpPostedFileBase postedPic, string picIndex, string structureId, string documentName)
+        protected internal void ValidatePic(HttpPostedFileBase postedPic, string picIndex, string structureId, string oldstructureId, string documentName)
         {
             if (postedPic != null & picIndex == "setImage")
             {
@@ -55,7 +56,11 @@ namespace Sciencecom.Controllers
             }
             if (postedPic == null & picIndex == "setImage")
             {
-                DeletePic(structureId, documentName); 
+                string src = "~/Images/" + documentName + "/" + oldstructureId + documentName + ".jpg";
+                string oldPath = Server.MapPath(src);
+                src = "~/Images/" + documentName + "/" + structureId + documentName + ".jpg";
+                string newPath = Server.MapPath(src);
+                System.IO.File.Move(oldPath, newPath);
             }
         }
 
