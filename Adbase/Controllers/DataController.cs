@@ -78,12 +78,12 @@ namespace Sciencecom.Controllers
         [Authorize(Roles = "Admin, ChiefEditAll,ChiefEditOwn, SupplierEditAll, SupplierEditOwn")]
         public ActionResult DeleteAdvertisingDesign(int? id,string switchtoMap)
         {
-            AdvertisingStructure mc = _context.AdvertisingStructures.Single(a => a.Id_show == id);
-            if (mc.UniqueNumber == null)
+            if (id == null)
             {
-                mc.UniqueNumber = TableAdapterExtensions.StringSymvol();
+                return RedirectToAction("NotFound");
             }
-
+            AdvertisingStructure mc = _context.AdvertisingStructures.Single(a => a.Id_show == id);
+            
             _dbw.DeleteAdvertisingDesign(id);
             
             //удаление картинок

@@ -41,57 +41,63 @@
 <script type="text/javascript">
     var i = 0;
 
-   // var havePlacemark = @Model.Breadth.HasValue.ToString().ToLower();
+    // var havePlacemark = @Model.Breadth.HasValue.ToString().ToLower();
 
-    var StartCountForSurface ;
+    var StartCountForSurface;
     var EndCountForSurface = 0;
-   
-    var ArrayOfSides = @Html.Raw(JsonConvert.SerializeObject(Model.Sides.Select(a=>new {a.DirectionSide_id,length= a.Surfaces.Count,a.Identification_id}), Formatting.Indented, new JsonSerializerSettings
-    {
-       ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-    }));
 
-    $(document).ready(function() {
-       
+    var ArrayOfSides = @Html.Raw(JsonConvert.SerializeObject(Model.Sides.Select(a => new {a.DirectionSide_id, length = a.Surfaces.Count, a.Identification_id}), Formatting.Indented, new JsonSerializerSettings
+                       {
+                           ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                       }));
+
+    $(document).ready(function()
+    {
         ////отключение валидации
-        $.validator.methods.number = function (value, element) {
+        $.validator.methods.number = function(value, element)
+        {
             return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
         }
         //накручивание данных в поля
         window.onload = SetCountSize();
-        $("[identificationfordirectionside]").each(function(indx, element) {
-            $(element)[0].value =ArrayOfSides[indx].DirectionSide_id;
-
+        $("[identificationfordirectionside]").each(function(indx, element)
+        {
+            $(element)[0].value = ArrayOfSides[indx].DirectionSide_id;
         });
-        $("[identificationforcountside]").each(function(indx, element) {
+        $("[identificationforcountside]").each(function(indx, element)
+        {
             $(element)[0].value = ArrayOfSides[indx].length;
 
-            AddSurface(indx+1);
+            AddSurface(indx + 1);
         });
 
         //выпадающий список на согласование
-        $("[name=OnAgreement]").change(function() {
+        $("[name=OnAgreement]").change(function()
+        {
             var selectIndex = $("[name=OnAgreement] option:selected").val();
 
-            if (selectIndex == "true") {
+            if (selectIndex == "true")
+            {
                 $("#ContractHide").css("display", "block");
             }
-            if (selectIndex == "false") {
+            if (selectIndex == "false")
+            {
                 $("#ContractHide").css("display", "none");
             }
         });
         //css стиль для IdentificationForDirectionSide
-        
-        $("[directionside]").addClass("form-control");
 
+        $("[directionside]").addClass("form-control");
     });
 
     // подсчет суммы площадей
-    function CalculationAS() {
-
-        var Summ=0;
-        $("[selectforspace]").each(function(indx, element) {
-            if ($(element).val() != "") {
+    function CalculationAS()
+    {
+        var Summ = 0;
+        $("[selectforspace]").each(function(indx, element)
+        {
+            if ($(element).val() != "")
+            {
                 Summ += parseInt($(element).val());
             }
         });
@@ -99,24 +105,27 @@
     }
 
     //кол-во сторон
-    function SetCountSize() {
+    function SetCountSize()
+    {
         EndCountForSurface = 0;
         var CountSizes = $('#CountSizes').val();
         $("#CountSize").val(CountSizes);
-        if (CountSizes != "") {
-            $("[code]").each(function (indx, element) {
+        if (CountSizes != "")
+        {
+            $("[code]").each(function(indx, element)
+            {
                 element.remove();
             });
 
-            for (var i = 1; i <= CountSizes; i++) {
-
+            for (var i = 1; i <= CountSizes; i++)
+            {
                 $("#InsertSide").before("<div code class=\"form-horizontal\" >" +
                     "<div class=\"form-group\" >" +
                     "<h3 class=\"control-label col-md-2\" for=\"\" style=\"margin-left: 55px\">Сторона  " + i + " </h3>" +
                     "</div>" +
                     "<div class=\"form-group\">" +
-                    "<div class=\"col-md-10\">" +
-                    "<div style='float:left'>"+
+                    "<div class=\"col-md-10\" style=\"padding-left: 0px\">" +
+                    "<div style='float:left'>" +
                     "<b>Количество поверхностей</b>" +
                     " <select class=\"text-box single-line form-control\" style='width:60px' id=\"AddButton" + i + "\" onchange=EditSurface(" + i + ") name=\"CountSurfuce" + i + "\" IdentificationForCountSide=\"\" type=\"text\" data-val=\"true\" >" +
                     "<option></option>" +
@@ -128,52 +137,51 @@
                     "<option>6</option>" +
                     "<option>7</option>" +
                     "<option>8</option>" +
-                    "</select></div> &nbsp;&nbsp;&nbsp; <b>Направление стороны</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("DirectionSide", new SelectList(DirectionSide, "id", "NameOfDirectionSide"), "", new { IdentificationForDirectionSide = "" }).ToHtmlString().Replace("\"", " "))' +
+                    "</select></div> &nbsp;&nbsp;&nbsp; <b>Направление стороны</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("DirectionSide", new SelectList(DirectionSide, "id", "NameOfDirectionSide"), "", new {IdentificationForDirectionSide = ""}).ToHtmlString().Replace("\"", " "))' +
                     "</div>" +
-                    "</div> <div style=\"margin-left: -15px;display: none\" id=\"" + i + "HiddenIdentification\"> &nbsp;&nbsp;&nbsp;<b>Идентификация поверхностей</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("IdentificationSurface", new SelectList(IdentificationSide, "id", "IdentificationName"),"",new {   IdentificationForIdentificationSurface = "" }).ToHtmlString().Replace("\"", " ")) </div>' +
+                    "</div> <div style=\"display: none\" id=\"" + i + "HiddenIdentification\"> &nbsp;&nbsp;&nbsp;<b>Идентификация поверхностей</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("IdentificationSurface", new SelectList(IdentificationSide, "id", "IdentificationName"), "", new {IdentificationForIdentificationSurface = ""}).ToHtmlString().Replace("\"", " ")) </div>' +
                     "<div  id=\"InsertPartial" + i + "\"></div>" +
                     "</div>");
 
                 $("#SizeOfCount").val(CountSizes);
-
             }
         }
         //Навешивание валидации
-        $('[name="DirectionSide"]').each(function(indx, element) {
+        $('[name="DirectionSide"]').each(function(indx, element)
+        {
             $(element).attr("name", "[" + indx + "].IdentificationForDirectionSide");
         });
 
         //другое решение не тестил
         $('[name="DirectionSide"]').data('validator', null);
         $.validator.unobtrusive.parse('[name="DirectionSide"]');
-
     }
 
-    function SetValidate(i) {
-
+    function SetValidate(i)
+    {
         var count = $("#AddButton" + i + "").val();
         StartCountForSurface = EndCountForSurface;
         EndCountForSurface = parseInt(count) + parseInt(EndCountForSurface);
 
-        if (count == 1) {
+        if (count == 1)
+        {
             $("#" + i + "HiddenIdentification").hide();
-        }
-        else
+        } else
         {
             $("#" + i + "HiddenIdentification").show();
-
         }
         $("[side=" + i + "]").remove();
     }
 
     //Добавить поверхность+
-    function AddSurface(i) {
+    function AddSurface(i)
+    {
         SetValidate(i);
 
         $.ajax('@Url.Action("EditSurface", "Data")', { async: true, data: { side: i, StartCountForSurface: StartCountForSurface, EndCountForSurface: EndCountForSurface } })
-            .success(function(e) {
-
-                var live_str = $('<div>',{html:e});
+            .success(function(e)
+            {
+                var live_str = $('<div>', { html: e });
 
                 var res = live_str.find('.body-content');
 
@@ -181,50 +189,62 @@
 
                 CalculationAS();
                 //отключение валидации
-                $.validator.methods.number = function (value, element) {
+                $.validator.methods.number = function(value, element)
+                {
                     return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
                 }
-            }).error(function(e) {
+            }).error(function(e)
+            {
                 alert("ошибка кукареку");
             });
     }
+
     //Редактировать поверхность+
-    function EditSurface(i) {
+    function EditSurface(i)
+    {
         SetValidate(i);
 
         $.ajax('@Url.Action("AddSurface", "Data")', { async: true, data: { side: i, StartCountForSurface: StartCountForSurface, EndCountForSurface: EndCountForSurface } })
-            .success(function(e) {
-
+            .success(function(e)
+            {
                 $("#InsertPartial" + i + "").before(e);
                 CalculationAS();
                 ////отключение валидации
-                $.validator.methods.number = function (value, element) {
+                $.validator.methods.number = function(value, element)
+                {
                     return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
                 }
-            }).error(function(e) {
+            }).error(function(e)
+            {
                 alert("ошибка кукареку");
             });
     }
 
 
     //выщитывание площади для каждой поверхности
-    function CalculationOfTheArea(j) {
-
+    function CalculationOfTheArea(j)
+    {
         var Height = $('[name="[' + j + '].Height"]').val();
         var Width = $('[name="[' + j + '].Width"]').val();
 
-        if (Height != "" && Width != "") {
-
+        if (Height != "" && Width != "")
+        {
             var Sum = Height * Width;
 
             $('[name="[' + j + '].Space"]').val(Sum);
             CalculationAS();
         }
-
     }
 
 
 </script>
+<style>
+    .form-horizontal .form-group 
+    {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+</style>
 <h3> КАРТОЧКА ЩИТА</h3>
 
 @Scripts.Render("~/Content/Map")
@@ -242,20 +262,20 @@
 
         <div class="form-group">
             <label for="Owner">Собственник </label>
-            @Html.DropDownListFor(a => a.Owner_Id, new SelectList(owners, "id", "Name"), "",new {@class= "form-control"})
+            @Html.DropDownListFor(a => a.Owner_Id, new SelectList(owners, "id", "Name"), "",new {@class= "form-control input-sm"})
             @Html.ValidationMessageFor(model => model.Owner_Id)
         </div>
 
         <div class="form-group">
             <label for="Locality">Вид</label>
-            @Html.DropDownListFor(a => a.Code, new SelectList(ListTypeAdvertising, "Code", "Name"), new { @disabled = "disabled", @class = "form-control" })
+            @Html.DropDownListFor(a => a.Code, new SelectList(ListTypeAdvertising, "Code", "Name"), new { @disabled = "disabled", @class = "form-control input-sm" })
             @Html.HiddenFor(a => a.Code)
             @Html.ValidationMessageFor(model => model.Code)
         </div>
 
         <div class="form-group">
             <label for="Status">Статус</label>
-            @Html.DropDownListFor(a => a.Status_Id, new SelectList(Status, "id", "Value"),new { @class = "form-control" })
+            @Html.DropDownListFor(a => a.Status_Id, new SelectList(Status, "id", "Value"),new { @class = "form-control input-sm" })
             @Html.ValidationMessageFor(model => model.Status_Id)
         </div>
 
@@ -286,14 +306,19 @@
 
     <div class="form-inline">
         <hr />
-        <div class="form-group" style="margin-left: -15px">
+        <div class="form-group">
             <label for="Locality">Нас. пункт</label>
-            
-            @Html.DropDownListFor(a => a.Locality_id, new SelectList(Locality, "id", "NameLocality"),new { @class = "form-control" })
+
+            @Html.DropDownListFor(a => a.Locality_id, new SelectList(Locality, "id", "NameLocality"), new {@class = "form-control input-sm"})
             @Html.ValidationMessageFor(model => model.Locality_id)
         </div>
+        <div class="form-group">
+            <label for="Street1">Улица</label>
+            @Html.TextBoxFor(model => model.Street1, new {@class = "form-control"})
+            @Html.ValidationMessageFor(model => model.Street1)
+        </div>
     </div>
-    <input type="button" id="MapSearchStreet" value="Поиск на карте" style="margin-left: 185px">
+    <input type="button" id="MapSearchStreet" value="Поиск на карте" class="btn" style="margin-left: 185px; margin-top: 15px;  margin-bottom: 15px;">
 
     <div class="form-inline">
         <div class="form-group">
@@ -313,7 +338,7 @@
 
         <div class="form-group">
             <label for="TheElementOfTheRoadNetwork">Элемент улично-дорожной сети</label>
-            @Html.DropDownListFor(a => a.TheElementOfTheRoadNetwork_id, new SelectList(ListTypeElementOfTheRoadNetworkName, "id", "Value"), "", new { @class = "form-control" })
+            @Html.DropDownListFor(a => a.TheElementOfTheRoadNetwork_id, new SelectList(ListTypeElementOfTheRoadNetworkName, "id", "Value"), "", new { @class = "form-control input-sm" })
             @Html.ValidationMessageFor(a => a.TheElementOfTheRoadNetwork_id)
         </div>
 
@@ -451,7 +476,7 @@
 
         <div class="form-group">
             <label for="CommentOwner">Подсветка</label>
-            @Html.DropDownListFor(a => a.Backlight_Id, new SelectList(Backlight, "id", "Name"), "",new { @class = "form-control"})
+            @Html.DropDownListFor(a => a.Backlight_Id, new SelectList(Backlight, "id", "Name"), "",new { @class = "form-control input-sm"})
             @Html.ValidationMessageFor(model => model.Backlight_Id)
         </div>
 
@@ -464,7 +489,7 @@
     <div class="form-horizontal" style="margin-top: 18px">
         <div class="form-group">
             <label for="ConstructionSquare">Площадь конструкции</label>
-            <input id="ConstructionSquare" readonly name="ConstructionSquare"  style="background-color: lightgray" type="text" value="">
+            <input id="ConstructionSquare" class="form-control" readonly name="ConstructionSquare"  style="background-color: lightgray" type="text" value="">
 
         </div>
         <div class="form-group">
