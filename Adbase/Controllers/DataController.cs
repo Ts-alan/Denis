@@ -313,8 +313,7 @@ namespace Sciencecom.Controllers
         {
 
             AdvertisingStructure mc = _context.AdvertisingStructures.Single(a => a.Id_show == id);
-            DeletePic(mc.Id_show.ToString(), "scanPassport1Sides");
-            DeletePic(mc.Id_show.ToString(), "scanPassport2Sides");
+           
             var tempId = mc.Id;
             if (structures.UniqueNumber == null)
             {
@@ -379,12 +378,12 @@ namespace Sciencecom.Controllers
                 _context.SaveChanges();
                
             }
-            
+
 
             //картики
 
-            ValidatePic(scanPassport1Sides, scanPassport1SidesInd, structures.Id_show.ToString(), "ScanPassport_1Sides");
-            ValidatePic(scanPassport2Sides, scanPassport2SidesInd, structures.Id_show.ToString(), "ScanPassport_2Sides");
+            ValidatePic(scanPassport1Sides, scanPassport1SidesInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "ScanPassport_1Sides");
+            ValidatePic(scanPassport2Sides, scanPassport2SidesInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "ScanPassport_2Sides");
             
            return RedirectToAction("AdvertisingDesign");
         }
@@ -611,8 +610,8 @@ namespace Sciencecom.Controllers
 
             //сохранение картинок
 
-            ValidatePic(scanPassport1Sides, scanPassport1SidesInd, structures.Id_show.ToString(), "ScanPassport_1Sides");
-            ValidatePic(scanPassport2Sides, scanPassport2SidesInd, structures.Id_show.ToString(), "ScanPassport_2Sides");
+            ValidatePic(scanPassport1Sides, scanPassport1SidesInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "ScanPassport_1Sides");
+            ValidatePic(scanPassport2Sides, scanPassport2SidesInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "ScanPassport_2Sides");
 
             return RedirectToAction("AdvertisingDesign");
 
@@ -793,10 +792,7 @@ namespace Sciencecom.Controllers
         {
 
             AdvertisingStructure mc = _context.AdvertisingStructures.Single(a => a.Id_show == id);
-            DeletePic(mc.Id_show.ToString(), "scanPassport1Sides");
-            DeletePic(mc.Id_show.ToString(), "scanPassport2Sides");
-            DeletePic(mc.Id_show.ToString(), "scan1Side");
-            DeletePic(mc.Id_show.ToString(), "scan1Side");
+            
             var tempId = mc.Id;
             if (structures.Code == null)
             {
@@ -841,10 +837,10 @@ namespace Sciencecom.Controllers
             _context.SaveChanges();
 
             //картики
-            ValidatePic(scanPassport1Sides, scanPassport1SidesInd, structures.Id_show.ToString(), "ScanPassport_1Sides");
-            ValidatePic(scanPassport2Sides, scanPassport2SidesInd, structures.Id_show.ToString(), "ScanPassport_2Sides");
-            ValidatePic(scan1Side, scan1SideInd, structures.Id_show.ToString(), "Scan1Side");
-            ValidatePic(scan2Side, scan2SideInd, structures.Id_show.ToString(), "Scan2Side");
+            ValidatePic(scanPassport1Sides, scanPassport1SidesInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "ScanPassport_1Sides");
+            ValidatePic(scanPassport2Sides, scanPassport2SidesInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "ScanPassport_2Sides");
+            ValidatePic(scan1Side, scan1SideInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "Scan1Side");
+            ValidatePic(scan2Side, scan2SideInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "Scan2Side");
 
             
            
@@ -945,8 +941,6 @@ namespace Sciencecom.Controllers
 
             AdvertisingStructure mc = _context.AdvertisingStructures.Single(a => a.Id_show == id);
             var tempId = mc.Id;
-            DeletePic(mc.Id_show.ToString(), "photo1");
-            DeletePic(mc.Id_show.ToString(), "photo1");
             foreach (var side in mc.Sides)
             {
                 _context.Surfaces.RemoveRange(side.Surfaces);
@@ -991,8 +985,8 @@ namespace Sciencecom.Controllers
 
             //картики
 
-            ValidatePic(photo1, photoInd1, structures.Id_show.ToString(), "photo1");
-            ValidatePic(photo2, photoInd2, structures.Id_show.ToString(), "photo2");
+            ValidatePic(photo1, photoInd1, structures.Id_show.ToString(), mc.Id_show.ToString(), "photo1");
+            ValidatePic(photo2, photoInd2, structures.Id_show.ToString(), mc.Id_show.ToString(), "photo2");
 
             
            
