@@ -10,7 +10,7 @@
 <script type="text/javascript">
     var i = 0;
 
-    var StartCountForSurface ;
+    var StartCountForSurface;
     var EndCountForSurface = 0;
     var isGreateAdvertisingDesign = false;
     var ArrayOfSides = @Html.Raw(JsonConvert.SerializeObject(Model.Sides.Select(a =>
@@ -18,59 +18,64 @@
 
                            if (a.Identification != null)
                            {
-                               return (new  { NameOfDirectionSide = a.DirectionSide.NameOfDirectionSide, length = a.Surfaces.Count, IdentificationName = a.Identification.IdentificationName });
+                               return (new {NameOfDirectionSide = a.DirectionSide.NameOfDirectionSide, length = a.Surfaces.Count, IdentificationName = a.Identification.IdentificationName});
                            }
-                           return new { NameOfDirectionSide = a.DirectionSide.NameOfDirectionSide, length = a.Surfaces.Count, IdentificationName = "" };
+                           return new {NameOfDirectionSide = a.DirectionSide.NameOfDirectionSide, length = a.Surfaces.Count, IdentificationName = ""};
                        }),
                            Formatting.Indented, new JsonSerializerSettings
+                           {
+                               ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                           }));
+
+
+    $(document).ready(function()
     {
-       ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-    }));
-
-   
-
-
-    $(document).ready(function() {
         IsDragend = false;
-        $('[type="date"]').each(function(indx, element) {
-            if ($(element).val() == "") {
+        $('[type="date"]').each(function(indx, element)
+        {
+            if ($(element).val() == "")
+            {
                 $(element).attr("type", "text");
             }
         });
 
         //накручивание данных в поля
         window.onload = SetCountSize();
-        $("[identificationfordirectionside]").each(function(indx, element) {
-            $(element)[0].value =ArrayOfSides[indx].NameOfDirectionSide;
-
+        $("[identificationfordirectionside]").each(function(indx, element)
+        {
+            $(element)[0].value = ArrayOfSides[indx].NameOfDirectionSide;
         });
-        $("[identificationforcountside]").each(function(indx, element) {
+        $("[identificationforcountside]").each(function(indx, element)
+        {
             $(element)[0].value = ArrayOfSides[indx].length;
 
-            AddSurface(indx+1);
+            AddSurface(indx + 1);
         });
 
         //выпадающий список на согласование
-        $("[name=OnAgreement]").change(function() {
+        $("[name=OnAgreement]").change(function()
+        {
             var selectIndex = $("[name=OnAgreement] option:selected").val();
 
-            if (selectIndex == "true") {
+            if (selectIndex == "true")
+            {
                 $("#ContractHide").css("display", "block");
             }
-            if (selectIndex == "false") {
+            if (selectIndex == "false")
+            {
                 $("#ContractHide").css("display", "none");
             }
-
         });
-
     });
 
     // подсчет суммы площадей
-    function CalculationAS() {
-
-        var Summ=0;
-        $("[selectforspace]").each(function(indx, element) {
-            if ($(element).val() != "") {
+    function CalculationAS()
+    {
+        var Summ = 0;
+        $("[selectforspace]").each(function(indx, element)
+        {
+            if ($(element).val() != "")
+            {
                 Summ += parseInt($(element).val());
             }
         });
@@ -78,17 +83,20 @@
     }
 
     //кол-во сторон
-    function SetCountSize() {
+    function SetCountSize()
+    {
         EndCountForSurface = 0;
         var CountSizes = $('#CountSizes').val();
         $("#CountSize").val(CountSizes);
-        if (CountSizes != "") {
-            $("[code]").each(function (indx, element) {
+        if (CountSizes != "")
+        {
+            $("[code]").each(function(indx, element)
+            {
                 element.remove();
             });
 
-            for (var i = 1; i <= CountSizes; i++) {
-
+            for (var i = 1; i <= CountSizes; i++)
+            {
                 $("#InsertSide").before("<div code class=\"form-horizontal\" >" +
                     "<div class=\"form-group\" >" +
                     "<h3 class=\"control-label col-md-2\" for=\"\" style=\"margin-left: 55px\">Сторона  " + i + " </h3>" +
@@ -99,103 +107,111 @@
                     " <input class=\"text-box single-line\" id=\"AddButton" + i + "\" onchange=EditSurface(" + i + ") readonly name=\"CountSurfuce" + i + "\"  style=\"width: 20px\" IdentificationForCountSide=\"\" type=\"text\"/>" +
                     "</select> &nbsp;&nbsp;&nbsp; <b>Направление стороны</b>" + '<input identificationfordirectionside class="text-box single-line" id="DirectionSide" style="width: 250px"  name="DirectionSide" readonly type="text" />' +
                     "</div>" +
-                    "</div> <div style=\"margin-left: -15px;display: none\" id=\"" + i + "HiddenIdentification\"> &nbsp;&nbsp;&nbsp;<b>Идентификация поверхностей</b>" + 
+                    "</div> <div style=\"margin-left: -15px;display: none\" id=\"" + i + "HiddenIdentification\"> &nbsp;&nbsp;&nbsp;<b>Идентификация поверхностей</b>" +
                     '<input identificationforidentificationsurface class="text-box single-line valid" id="IdentificationSurface" style="width: 120px" name="IdentificationSurface" readonly="" type="text"> </div>' +
                     "<div  id=\"InsertPartial" + i + "\"></div>" +
                     "</div>");
 
                 $("#SizeOfCount").val(CountSizes);
-
             }
         }
 
-        $('[IdentificationForDirectionSide]').each(function (indx, element) {
-
-            $(element).rules('add', {
-                required: true
-            });
-        }
+        $('[IdentificationForDirectionSide]').each(function(indx, element)
+            {
+                $(element).rules('add', {
+                    required: true
+                });
+            }
         );
 
 
-        $('[IdentificationForCountSide]').each(function (indx, element) {
-
-            $(element).rules('add', {
-                required: true
-            });
-        }
+        $('[IdentificationForCountSide]').each(function(indx, element)
+            {
+                $(element).rules('add', {
+                    required: true
+                });
+            }
         );
-
-
     }
 
-    function SetValidate(i) {
-
+    function SetValidate(i)
+    {
         var count = $("#AddButton" + i + "").val();
         StartCountForSurface = EndCountForSurface;
         EndCountForSurface = parseInt(count) + parseInt(EndCountForSurface);
 
-        if (count == 1) {
+        if (count == 1)
+        {
             $("#" + i + "HiddenIdentification").hide();
-        } else {
+        } else
+        {
             $("#" + i + "HiddenIdentification").show();
             //валидация
-            $('[name="IdentificationSurface"]').each(function (indx, element) {
-                $(element)[0].value =ArrayOfSides[indx].IdentificationName;
+            $('[name="IdentificationSurface"]').each(function(indx, element)
+            {
+                $(element)[0].value = ArrayOfSides[indx].IdentificationName;
                 $(element).attr("name", "[" + indx + "].IdentificationForIdentificationSurface");
             });
 
-            $('[IdentificationForIdentificationSurface]').each(function (indx, element) {
-
+            $('[IdentificationForIdentificationSurface]').each(function(indx, element)
+            {
                 $(element).rules('add', {
                     required: true
                 });
             });
-
         }
         $("[side=" + i + "]").remove();
     }
 
     //Добавить поверхность+
-    function AddSurface(i) {
+    function AddSurface(i)
+    {
         SetValidate(i);
 
         $.ajax('@Url.Action("EditSurface", "Data")', { async: true, data: { side: i, StartCountForSurface: StartCountForSurface, EndCountForSurface: EndCountForSurface } })
-            .success(function(e) {
-
+            .success(function(e)
+            {
                 $("#InsertPartial" + i + "").before(e);
                 CalculationAS();
-                $('[data-val-number]').each(function(indx, element) {
-                    $(element).attr('readonly',"");
+                $('[data-val-number]').each(function(indx, element)
+                {
+                    $(element).attr('readonly', "");
                 });
-                $.validator.methods.number = function (value, element) {
+                $.validator.methods.number = function(value, element)
+                {
                     return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
                 }
-            }).error(function(e) {
+            }).error(function(e)
+            {
                 alert("ошибка кукареку");
             });
     }
 
 
-
     //выщитывание площади для каждой поверхности
-    function CalculationOfTheArea(j) {
-
+    function CalculationOfTheArea(j)
+    {
         var Height = $('[name="[' + j + '].Height"]').val();
         var Width = $('[name="[' + j + '].Width"]').val();
 
-        if (Height != "" && Width != "") {
-
+        if (Height != "" && Width != "")
+        {
             var Sum = Height * Width;
 
             $('[name="[' + j + '].Space"]').val(Sum);
             CalculationAS();
         }
-
     }
 
 
 </script>
+<style>
+    .form-horizontal .form-group 
+    {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+</style>
 <h2>Карточка конструкции</h2>
 @using (Html.BeginForm("EditAdvertisingDesign", "Data", FormMethod.Post, new { enctype = "multipart/form-data", id = "test1" }))
 {
@@ -252,7 +268,7 @@
 
     <div class="form-inline">
         <hr />
-        <div class="form-group" style="margin-left: -15px">
+        <div class="form-group" >
             <label for="Locality">Нас. пункт</label>
           
             @Html.EditorFor(model => model.Locality.NameLocality, new { htmlAttributes = new { @readonly = "", @class = "form-control" } })
@@ -274,7 +290,7 @@
     </div>
 
 
-    <div class="form-inline">
+    <div class="form-inline" style="margin-top: 15px;">
         <div class="form-group">
             <label for="Street2">Ближайшая улица по ходу движения</label>
             @Html.EditorFor(model => model.Street2, new { htmlAttributes = new { @readonly = "", @class = "form-control" } })
@@ -471,14 +487,14 @@
         <div class="form-horizontal" style="margin-top: 18px">
             <div class="form-group">
                 <label for="ConstructionSquare">Площадь конструкции</label>
-                <input id="ConstructionSquare" readonly name="ConstructionSquare" style="background-color: lightgray" type="text" value="">
+                <input id="ConstructionSquare" class="form-control" readonly="readonly" name="ConstructionSquare" style="background-color: lightgray" type="text" value="">
 
             </div>
             <div class="form-group">
                 <label for="CountSizes">Количество сторон</label>
                
                 
-                <input class="text-box single-line form-control" id="CountSizes" name="CountSizes" readonly type="text" value="@Model.Sides.Count" style="width: 30px">
+                <input class="text-box single-line form-control" id="CountSizes" name="CountSizes" readonly type="text" value="@Model.Sides.Count" style="width: 60px">
                 
             </div>
         </div>
