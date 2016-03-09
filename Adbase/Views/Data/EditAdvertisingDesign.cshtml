@@ -292,30 +292,6 @@
             @Html.DropDownListFor(a => a.Locality_id, new SelectList(Locality, "id", "NameLocality"),new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.Locality_id)
         </div>
-
-        <div class="form-group RKclear" id="RoadName">
-            <label for="RoadKM">Название трассы</label>
-            @Html.EditorFor(model => model.RoadName,new { htmlattributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.RoadName)
-        </div>
-        <div class="form-group RKclear" id="RoadKM">
-            <label for="RoadKM">Километр</label>
-            @Html.EditorFor(model => model.RoadKM, new { htmlattributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.RoadKM)
-        </div>
-        <div class="form-group HSclear">
-            <label for="Street1">Улица</label>
-            @Html.EditorFor(model => model.Street1, new { htmlattributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Street1)
-        </div>
-        <div class="form-group HSclear" id="House1">
-            <label for="House1">Дом</label>
-            @Html.EditorFor(model => model.House1, new { htmlattributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.House1)
-        </div>
-
-
-
     </div>
     <input type="button" id="MapSearchStreet" value="Поиск на карте" style="margin-left: 185px">
 
