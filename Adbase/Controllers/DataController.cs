@@ -208,6 +208,7 @@ namespace Sciencecom.Controllers
                 }
 
                 _context.Sides.AddRange(sides);
+                structures.Area = CountSquare(structures);
                 _context.AdvertisingStructures.Add(structures);
                 List<Surface> listSurface = new List<Surface>();
                 foreach (var i in surfaces)
@@ -238,6 +239,7 @@ namespace Sciencecom.Controllers
             }
             else
             {
+                structures.Area = CountSquare(structures);
                 _context.AdvertisingStructures.Add(structures);
                 _context.SaveChanges();
             }
@@ -248,9 +250,8 @@ namespace Sciencecom.Controllers
 
             SavePic(structures.Id_show.ToString(), "ScanPassport_2Sides", scanPassport2Sides);
 
-            structures.Area = CountSquare(structures);
-            _context.AdvertisingStructures.Add(structures);
-            _context.SaveChanges();
+            
+           
 
             return RedirectToAction("AdvertisingDesign");
 
@@ -349,7 +350,7 @@ namespace Sciencecom.Controllers
                     sides[j].Id = Guid.NewGuid();
                 }
                 structures.Id = tempId;
-
+                structures.Area = CountSquare(structures);
                 _context.AdvertisingStructures.Add(structures);
                 
                 _context.Sides.AddRange(sides);
@@ -370,15 +371,13 @@ namespace Sciencecom.Controllers
             }
             else
             {
+                structures.Area = CountSquare(structures);
                 _context.AdvertisingStructures.Add(structures);
                 
                 _context.SaveChanges();
                
             }
-
-            structures.Area = CountSquare(structures);
-            _context.AdvertisingStructures.Add(structures);
-            _context.SaveChanges();
+            
 
             //картики
 
@@ -495,6 +494,7 @@ namespace Sciencecom.Controllers
             }
 
             _context.Sides.AddRange(sides);
+            structures.Area = CountSquare(structures);
             _context.AdvertisingStructures.Add(structures);
             List<Surface> listSurface = new List<Surface>();
             foreach (var i in surfaces)
@@ -512,9 +512,8 @@ namespace Sciencecom.Controllers
             SavePic(structures.Id_show.ToString(), "ScanPassport_1Sides", scanPassport1Sides);
 
             SavePic(structures.Id_show.ToString(), "ScanPassport_2Sides", scanPassport2Sides);
-            structures.Area = CountSquare(structures);
-            _context.AdvertisingStructures.Add(structures);
-            _context.SaveChanges();
+           
+           
             return RedirectToAction("AdvertisingDesign");
 
         }
@@ -589,7 +588,7 @@ namespace Sciencecom.Controllers
                 sides[j].Id = Guid.NewGuid();
             }
             structures.Id = tempId;
-
+            structures.Area = CountSquare(structures);
             _context.AdvertisingStructures.Add(structures);
             _context.Sides.AddRange(sides);
             
@@ -604,9 +603,8 @@ namespace Sciencecom.Controllers
             _context.Sides.RemoveRange(mc.Sides);
 
             _context.SaveChanges();
-            structures.Area = CountSquare(structures);
-            _context.AdvertisingStructures.Add(structures);
-            _context.SaveChanges();
+            
+           
 
             //сохранение картинок
 
@@ -717,6 +715,7 @@ namespace Sciencecom.Controllers
             }
 
             _context.Sides.AddRange(sides);
+            structures.Area = CountSquare(structures);
             _context.AdvertisingStructures.Add(structures);
             List<Surface> listSurface = new List<Surface>();
             foreach (var i in surfaces)
@@ -739,9 +738,8 @@ namespace Sciencecom.Controllers
 
             SavePic(structures.Id_show.ToString(), "Scan2Side", scan2Side);
 
-            structures.Area = CountSquare(structures);
-            _context.AdvertisingStructures.Add(structures);
-            _context.SaveChanges();
+           
+            
 
             return RedirectToAction("AdvertisingDesign");
         }
@@ -821,7 +819,7 @@ namespace Sciencecom.Controllers
                 sides[j].Id = Guid.NewGuid();
             }
             structures.Id = tempId;
-
+            structures.Area = CountSquare(structures);
             _context.AdvertisingStructures.Add(structures);
             _context.Sides.AddRange(sides);
 
@@ -841,10 +839,8 @@ namespace Sciencecom.Controllers
             ValidatePic(scan1Side, scan1SideInd, structures.Id_show.ToString(), "Scan1Side");
             ValidatePic(scan2Side, scan2SideInd, structures.Id_show.ToString(), "Scan2Side");
 
-            structures.Area = CountSquare(structures);
-            _context.AdvertisingStructures.Add(structures);
-            _context.SaveChanges();
-
+            
+           
             return RedirectToAction("AdvertisingDesign");
 
         }
@@ -971,6 +967,7 @@ namespace Sciencecom.Controllers
             }
             structures.Id = tempId;
             structures.Code = "UI";
+            structures.Area = CountSquare(structures);
             _context.AdvertisingStructures.Add(structures);
             _context.Sides.AddRange(sides);
 
@@ -989,9 +986,8 @@ namespace Sciencecom.Controllers
             ValidatePic(photo1, photoInd1, mc.Id_show.ToString(), "photo1");
             ValidatePic(photo2, photoInd2, mc.Id_show.ToString(), "photo2");
 
-            structures.Area = CountSquare(structures);
-            _context.AdvertisingStructures.Add(structures);
-            _context.SaveChanges();
+            
+           
 
             return RedirectToAction("AdvertisingDesign");
 
@@ -1048,6 +1044,7 @@ namespace Sciencecom.Controllers
             }
 
             _context.Sides.AddRange(sides);
+            structures.Area = CountSquare(structures);
             _context.AdvertisingStructures.Add(structures);
             List<Surface> listSurface = new List<Surface>();
             foreach (var i in surfaces)
@@ -1062,9 +1059,8 @@ namespace Sciencecom.Controllers
             SavePic(structures.Id_show.ToString(), "photo1", photo1);
 
             SavePic(structures.Id_show.ToString(), "photo2", photo2);
-            structures.Area = CountSquare(structures);
-            _context.AdvertisingStructures.Add(structures);
-            _context.SaveChanges();
+           
+           
 
             return RedirectToAction("AdvertisingDesign");
         }
