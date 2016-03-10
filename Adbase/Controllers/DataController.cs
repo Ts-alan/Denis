@@ -936,7 +936,7 @@ namespace Sciencecom.Controllers
         public ActionResult EditIllegalDesign(int id, AdvertisingStructure structures,
             [ModelBinder(typeof(CustomModelBinderForSide))] List<Side> sides,
             [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces,
-            HttpPostedFileBase photo1, HttpPostedFileBase photo2,string photoInd1, string photoInd2, int countSize = 1)
+            HttpPostedFileBase photo1, HttpPostedFileBase photo2,string photoInd1, string photoInd2, string coord1, string coord2, int countSize = 1)
         {
 
             AdvertisingStructure mc = _context.AdvertisingStructures.Single(a => a.Id_show == id);
@@ -970,6 +970,7 @@ namespace Sciencecom.Controllers
             structures.Id = tempId;
             structures.Code = "UI";
             structures.Area = CountSquare(structures);
+            structures.Breadth = double.Parse(coord1);
             _context.AdvertisingStructures.Add(structures);
             _context.Sides.AddRange(sides);
 
@@ -988,9 +989,9 @@ namespace Sciencecom.Controllers
             ValidatePic(photo1, photoInd1, structures.Id_show.ToString(), mc.Id_show.ToString(), "photo1");
             ValidatePic(photo2, photoInd2, structures.Id_show.ToString(), mc.Id_show.ToString(), "photo2");
 
-            
-           
 
+
+            return RedirectToAction("TryResult", new { coord1 = coord1, coord2 = coord2, id= structures.Id_show });
             return RedirectToAction("AdvertisingDesign");
 
         }
@@ -1081,6 +1082,14 @@ namespace Sciencecom.Controllers
                 _dbw.Context.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public void TryResult(string coord1, string coord2, int id)
+        {
+
+            AdvertisingStructure mc = _context.AdvertisingStructures.Single(a => a.Id_show == id);
+
+            Response.Write(mc.Breadth);
         }
     }
 }
