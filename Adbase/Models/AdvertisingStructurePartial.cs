@@ -69,7 +69,7 @@ namespace Sciencecom.Models
         public string Status { get; set; }
 
         
-        public Nullable<float> Height { get; set; }
+        public Nullable<float> coordH { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
@@ -80,7 +80,7 @@ namespace Sciencecom.Models
         public Nullable<System.DateTime> DateOfTakenPassport { get; set; }
               
        
-        public Nullable<float> Breadth { get; set; }
+        public Nullable<float> coordB { get; set; }
 
       
         public Nullable<int> Owner_Id { get; set; }

@@ -38,14 +38,14 @@ namespace Sciencecom.Models
             DateTime ValueComparison = DateTime.Now.Add(-(new TimeSpan(1, 0, 0, 0)));
             using (SciencecomEntities context = new SciencecomEntities())
             {
-                if (context.ListUniqueNumbers.OrderBy(a => a.id).Where(x => x.TimeOpen <= ValueComparison).Any())
+                if (context.ListUniqueNumbers.OrderBy(a => a.id).Any(x => x.TimeOpen <= ValueComparison))
                 {
                     var valueReturn =
-                        context.ListUniqueNumbers.OrderBy(a => a.id)
-                            .Where(x => x.TimeOpen <= ValueComparison)
-                            .First()
+                        context.ListUniqueNumbers
+                            .OrderBy(a => a.id)
+                            .First(x => x.TimeOpen <= ValueComparison)
                             .UniqueNumber;
-                    context.ListUniqueNumbers.OrderBy(a => a.id).Where(x => x.TimeOpen <= ValueComparison).First().TimeOpen=DateTime.Now;
+                    context.ListUniqueNumbers.OrderBy(a => a.id).First(x => x.TimeOpen <= ValueComparison).TimeOpen=DateTime.Now;
                     context.SaveChanges();
                     return valueReturn;
                 }

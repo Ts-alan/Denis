@@ -936,7 +936,7 @@ namespace Sciencecom.Controllers
         public ActionResult EditIllegalDesign(int id, AdvertisingStructure structures,
             [ModelBinder(typeof(CustomModelBinderForSide))] List<Side> sides,
             [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces,
-            HttpPostedFileBase photo1, HttpPostedFileBase photo2,string photoInd1, string photoInd2, string coordB, int countSize = 1)
+            HttpPostedFileBase photo1, HttpPostedFileBase photo2,string photoInd1, string photoInd2, int countSize = 1)
         {
 
             AdvertisingStructure mc = _context.AdvertisingStructures.Single(a => a.Id_show == id);
@@ -970,7 +970,6 @@ namespace Sciencecom.Controllers
             structures.Id = tempId;
             structures.Code = "UI";
             structures.Area = CountSquare(structures);
-            structures.coordB = double.Parse(coordB);
             _context.AdvertisingStructures.Add(structures);
             _context.Sides.AddRange(sides);
 
@@ -992,7 +991,7 @@ namespace Sciencecom.Controllers
             
            
 
-            return RedirectToAction("TryResult", new {id = structures.Id_show});
+           
             return RedirectToAction("AdvertisingDesign");
 
         }
