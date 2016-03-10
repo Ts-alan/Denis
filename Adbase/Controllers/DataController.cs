@@ -440,10 +440,10 @@ namespace Sciencecom.Controllers
             }
 
             AdvertisingStructure mc = _context.AdvertisingStructures.Single(a => a.Id_show == id);
-            if(mc.Breadth!=null)
-                mc.Breadth = double.Parse(mc.Breadth.ToString().Substring(0, 7));
-            if(mc.Height!=null)
-            mc.Height = double.Parse(mc.Height.ToString().Substring(0, 7));
+            if(mc.coordB!=null)
+                mc.coordB = double.Parse(mc.coordB.ToString().Substring(0, 7));
+            if(mc.coordH!=null)
+            mc.coordH = double.Parse(mc.coordH.ToString().Substring(0, 7));
             return View(mc);
         }
 
@@ -542,10 +542,10 @@ namespace Sciencecom.Controllers
             }
             TempData["surface"] = surfaces;
             mc.Code = "MP";
-            if(mc.Breadth!=null)
-            mc.Breadth = double.Parse(mc.Breadth.ToString().Substring(0, 7));
-            if(mc.Height!=null)
-            mc.Height = double.Parse(mc.Height.ToString().Substring(0, 7));
+            if(mc.coordB!=null)
+            mc.coordB = double.Parse(mc.coordB.ToString().Substring(0, 7));
+            if(mc.coordH!=null)
+            mc.coordH = double.Parse(mc.coordH.ToString().Substring(0, 7));
             ViewBag.Id = mc.Id_show;
             ViewBag.ScanPassport_1Sides = LoadPic(mc.Id_show.ToString(), "ScanPassport_1Sides");
             ViewBag.ScanPassport_2Sides = LoadPic(mc.Id_show.ToString(), "ScanPassport_2Sides");
@@ -667,12 +667,12 @@ namespace Sciencecom.Controllers
             }
 
             AdvertisingStructure mc = _context.AdvertisingStructures.Single(a => a.Id_show == id);
-            if (mc.Breadth != null)
+            if (mc.coordB != null)
             {
-                mc.Breadth = double.Parse(mc.Breadth.ToString().Substring(0, 7));
+                mc.coordB = double.Parse(mc.coordB.ToString().Substring(0, 7));
             }
-            if (mc.Height != null) { 
-                    mc.Height = double.Parse(mc.Height.ToString().Substring(0, 7));
+            if (mc.coordH != null) { 
+                    mc.coordH = double.Parse(mc.coordH.ToString().Substring(0, 7));
             }
             return View(mc);
         }
@@ -769,10 +769,10 @@ namespace Sciencecom.Controllers
             }
             TempData["surface"] = surfaces;
             mc.Code = "LD";
-            if(mc.Breadth!=null)
-            mc.Breadth = double.Parse(mc.Breadth.ToString().Substring(0, 7));
-            if (mc.Height != null)
-                mc.Height = double.Parse(mc.Height.ToString().Substring(0, 7));
+            if(mc.coordB!=null)
+            mc.coordB = double.Parse(mc.coordB.ToString().Substring(0, 7));
+            if (mc.coordH != null)
+                mc.coordH = double.Parse(mc.coordH.ToString().Substring(0, 7));
             ViewBag.Id = mc.Id_show;
             ViewBag.Scan1Side = LoadPic(mc.Id_show.ToString(), "Scan1Side");
             ViewBag.Scan2Side = LoadPic(mc.Id_show.ToString(), "Scan2Side");
@@ -936,7 +936,7 @@ namespace Sciencecom.Controllers
         public ActionResult EditIllegalDesign(int id, AdvertisingStructure structures,
             [ModelBinder(typeof(CustomModelBinderForSide))] List<Side> sides,
             [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces,
-            HttpPostedFileBase photo1, HttpPostedFileBase photo2,string photoInd1, string photoInd2, string coord1, string coord2, int countSize = 1)
+            HttpPostedFileBase photo1, HttpPostedFileBase photo2,string photoInd1, string photoInd2, string coordB, int countSize = 1)
         {
 
             AdvertisingStructure mc = _context.AdvertisingStructures.Single(a => a.Id_show == id);
@@ -970,7 +970,7 @@ namespace Sciencecom.Controllers
             structures.Id = tempId;
             structures.Code = "UI";
             structures.Area = CountSquare(structures);
-            structures.Breadth = double.Parse(coord1);
+            structures.coordB = double.Parse(coordB);
             _context.AdvertisingStructures.Add(structures);
             _context.Sides.AddRange(sides);
 
@@ -989,9 +989,10 @@ namespace Sciencecom.Controllers
             ValidatePic(photo1, photoInd1, structures.Id_show.ToString(), mc.Id_show.ToString(), "photo1");
             ValidatePic(photo2, photoInd2, structures.Id_show.ToString(), mc.Id_show.ToString(), "photo2");
 
+            
+           
 
-
-            return RedirectToAction("TryResult", new { coord1 = coord1, coord2 = coord2, id= structures.Id_show });
+            return RedirectToAction("TryResult", new {id = structures.Id_show});
             return RedirectToAction("AdvertisingDesign");
 
         }
@@ -1084,12 +1085,11 @@ namespace Sciencecom.Controllers
             base.Dispose(disposing);
         }
 
-        public void TryResult(string coord1, string coord2, int id)
+        public void TryResult(int id)
         {
 
             AdvertisingStructure mc = _context.AdvertisingStructures.Single(a => a.Id_show == id);
-
-            Response.Write(mc.Breadth);
+            Response.Write(mc.coordB);
         }
     }
 }
