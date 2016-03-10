@@ -120,41 +120,43 @@ namespace Sciencecom.DAL
             }
             if (mc.Sides.Count > 0)
             {
-                try
-                {
-                    Context.Sides.RemoveRange(mc.Sides);
-                    Context.SaveChanges();
-                }
-                catch (DbEntityValidationException dbEx)
-                {
-                    foreach (var validationErrors in dbEx.EntityValidationErrors)
-                    {
-                        foreach (var validationError in validationErrors.ValidationErrors)
-                        {
-                            Trace.TraceInformation("Property: {0} Error: {1}",
-                                                    validationError.PropertyName,
-                                                    validationError.ErrorMessage);
-                        }
-                    }
-                }
-            }
-            try
-            {
-                Context.AdvertisingStructures.Remove(mc);
+                Context.Sides.RemoveRange(mc.Sides);
                 Context.SaveChanges();
+                //try
+                //{
+                    
+                //}
+                //catch (DbEntityValidationException dbEx)
+                //{
+                //    foreach (var validationErrors in dbEx.EntityValidationErrors)
+                //    {
+                //        foreach (var validationError in validationErrors.ValidationErrors)
+                //        {
+                //            Trace.TraceInformation("Property: {0} Error: {1}",
+                //                                    validationError.PropertyName,
+                //                                    validationError.ErrorMessage);
+                //        }
+                //    }
+                //}
             }
-            catch (DbEntityValidationException dbEx)
-            {
-                foreach (var validationErrors in dbEx.EntityValidationErrors)
-                {
-                    foreach (var validationError in validationErrors.ValidationErrors)
-                    {
-                        Trace.TraceInformation("Property: {0} Error: {1}",
-                                                validationError.PropertyName,
-                                                validationError.ErrorMessage);
-                    }
-                }
-            }
+            Context.AdvertisingStructures.Remove(mc);
+            Context.SaveChanges();
+            //try
+            //{
+                
+            //}
+            //catch (DbEntityValidationException dbEx)
+            //{
+            //    foreach (var validationErrors in dbEx.EntityValidationErrors)
+            //    {
+            //        foreach (var validationError in validationErrors.ValidationErrors)
+            //        {
+            //            Trace.TraceInformation("Property: {0} Error: {1}",
+            //                                    validationError.PropertyName,
+            //                                    validationError.ErrorMessage);
+            //        }
+            //    }
+            //}
            
             //try
             //{

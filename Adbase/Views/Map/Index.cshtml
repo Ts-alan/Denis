@@ -101,7 +101,7 @@
         if ('@(Html.Raw(Session["collectionMap"]))' != '[]' && '@(Html.Raw(Session["collectionMap"]))' != '') {
             var collectionMap = JSON.parse('@(Html.Raw(Session["collectionMap"]))');
             $(".content-col input").each(function (indx, element) {
-                if (collectionMap != undefined)
+                if (collectionMap[indx] != undefined)
                 {
                     $(element).val(collectionMap[indx].value);
                 }
