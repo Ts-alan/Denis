@@ -9,8 +9,8 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Height" Type="float" />
-          <Property Name="Breadth" Type="float" />
+          <Property Name="coordH" Type="float" />
+          <Property Name="coordB" Type="float" />
           <Property Name="Street1" Type="nvarchar(max)" />
           <Property Name="House1" Type="nvarchar(max)" />
           <Property Name="Street2" Type="nvarchar(max)" />
@@ -1003,8 +1003,8 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Height" Type="Double" />
-          <Property Name="Breadth" Type="Double" />
+          <Property Name="coordH" Type="Double" />
+          <Property Name="coordB" Type="Double" />
           <Property Name="Street1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="House1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Street2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -1409,8 +1409,8 @@
                 <ScalarProperty Name="Street2" ColumnName="Street2" />
                 <ScalarProperty Name="House1" ColumnName="House1" />
                 <ScalarProperty Name="Street1" ColumnName="Street1" />
-                <ScalarProperty Name="Breadth" ColumnName="Breadth" />
-                <ScalarProperty Name="Height" ColumnName="Height" />
+                <ScalarProperty Name="coordB" ColumnName="coordB" />
+                <ScalarProperty Name="coordH" ColumnName="coordH" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
