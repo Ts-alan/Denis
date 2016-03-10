@@ -259,11 +259,11 @@
             <table>
                 <tr>
                     <td> <label for="Breadth">Широта </label></td>
-                    <td> @Html.EditorFor(model => model.Breadth, new {htmlAttributes = new {@readonly = "", @class = "form-control"}})</td>
+                    <td> @Html.EditorFor(model => model.coordB, new {htmlAttributes = new {@readonly = "", @class = "form-control"}})</td>
                 </tr>
                 <tr>
                     <td><label for="Height">Долгота</label></td>
-                    <td>@Html.EditorFor(model => model.Height, new { htmlAttributes = new { @readonly = "", @class = "form-control" } })</td>
+                    <td>@Html.EditorFor(model => model.coordH, new { htmlAttributes = new { @readonly = "", @class = "form-control" } })</td>
                 </tr>
             </table>
 

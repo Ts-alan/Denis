@@ -19,8 +19,8 @@ namespace Sciencecom.Models
             this.Sides = new HashSet<Side>();
         }
     
-        public Nullable<double> Height { get; set; }
-        public Nullable<double> Breadth { get; set; }
+        public Nullable<double> coordH { get; set; }
+        public Nullable<double> coordB { get; set; }
         public string Street1 { get; set; }
         public string House1 { get; set; }
         public string Street2 { get; set; }

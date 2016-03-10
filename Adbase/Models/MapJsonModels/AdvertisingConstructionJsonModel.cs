@@ -6,8 +6,8 @@ namespace Sciencecom.Models.MapJsonModels
     {
         public AdvertisingConstructionJsonModel(AdvertisingStructure mc, List<Surface> surfaces)
         {
-            this.Height = (float?)mc.Height;
-            this.Breadth = (float?)mc.Breadth;
+            this.Height = (float?)mc.coordH;
+            this.Breadth = (float?)mc.coordB;
             this.Street1 = mc.Street1;
             this.House1 = mc.House1;
             this.Street2 = mc.Street2;

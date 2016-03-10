@@ -191,11 +191,11 @@ namespace Sciencecom.DAL
             //var Foo = Context.AdvertisingStructures.ToList();
             if (countSize != null)
             {
-                result = Context.AdvertisingStructures.Where(a => a.Sides.Count == countSize && a.Breadth != null && a.Height != null).ToList();
+                result = Context.AdvertisingStructures.Where(a => a.Sides.Count == countSize && a.coordB != null && a.coordH != null).ToList();
             }
             else
             {
-                result = Context.AdvertisingStructures.Where(a => a.Breadth != null && a.Height != null).ToList();
+                result = Context.AdvertisingStructures.Where(a => a.coordB != null && a.coordH != null).ToList();
             }
             if (areaConstruction != null)
             {

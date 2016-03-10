@@ -20,7 +20,7 @@
 <script type="text/javascript">
     var i = 0;
 
-    var havePlacemark = @Model.Breadth.HasValue.ToString().ToLower();
+    var havePlacemark = @Model.coordB.HasValue.ToString().ToLower();
 
     var StartCountForSurface;
     var EndCountForSurface = 0;
@@ -201,8 +201,8 @@
                         <label for="Breadth">Широта </label>
                     </td>
                     <td>
-                         <input type="text" name ="coord1">
-                        @*@Html.TextBoxFor(m => m.Breadth, new {@class = "form-control"})*@
+                        <input class="text-box single-line" type="text" name="coordB">
+                        @Html.TextBoxFor(m => m.coordB, new { @class = "form-control" })
                         @*<input class="text-box single-line ui-autocomplete-input" data-val="true" type="text" name="Breadth" id="Breadth">*@
                         <span data-valmsg-for="Breadth" data-valmsg-replace="true"></span>
                     </td>
@@ -212,10 +212,10 @@
                         <label for="Height">Долгота</label>
                     </td>
                     <td>
-                        @Html.TextBoxFor(m => m.Height, new { @class = "form-control" })
+                        @Html.TextBoxFor(m => m.coordH, new { @class = "form-control" })
                         @*<input type="text" name="Height" data-val="true" id="Height">*@
 
-                        @Html.ValidationMessageFor(model => model.Height)
+                        @Html.ValidationMessageFor(model => model.coordH)
                     </td>
                 </tr>
             </table>
