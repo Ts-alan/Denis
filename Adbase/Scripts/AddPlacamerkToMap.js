@@ -108,9 +108,9 @@
                     }
                     var coords = e.get('coordPosition');
                     var str = String(coords[0].toPrecision(6).replace('.', ','));
-                    $("#Bcoord").val(str);
+                    $("#Bcoord").val(str.replace(",","."));
                     str = String(coords[1].toPrecision(6).replace('.', ','));
-                    $("#Hcoord").val(str);
+                    $("#Hcoord").val(str.replace(",", "."));
                     if (typedesign = "IllegalDesign") {
                         myPlacemark = new ymaps.Placemark([coords[0], coords[1]], {
                             iconContent: "Н",
@@ -143,11 +143,11 @@
             {
                 var coords = myPlacemark.geometry.getCoordinates();
                 var str = String(coords[0].toPrecision(6));
-                str = str.replace('.', ',');
+                //str = str.replace('.', ',');
                 $("#Bcoord").val(str);
 
                 str = String(coords[1].toPrecision(6));
-                str = str.replace('.', ',');
+                //str = str.replace('.', ',');
 
                 $("#Hcoord").val(str);
             });

@@ -973,8 +973,8 @@ namespace Sciencecom.Controllers
             structures.Id = tempId;
             structures.Code = "UI";
             structures.Area = CountSquare(structures);
-            structures.coordB = double.Parse(Bcoord);
-            structures.coordH = double.Parse(Hcoord);
+            structures.coordB = double.Parse(Bcoord, CultureInfo.InvariantCulture);
+            structures.coordH = double.Parse(Hcoord, CultureInfo.InvariantCulture);
             _context.AdvertisingStructures.Add(structures);
             _context.Sides.AddRange(sides);
 
@@ -1050,8 +1050,8 @@ namespace Sciencecom.Controllers
 
             _context.Sides.AddRange(sides);
             structures.Area = CountSquare(structures);
-            structures.coordB = double.Parse(Bcoord);
-            structures.coordH = double.Parse(Hcoord);
+            structures.coordB = double.Parse(Bcoord, CultureInfo.InvariantCulture);
+            structures.coordH = double.Parse(Hcoord, CultureInfo.InvariantCulture);
             _context.AdvertisingStructures.Add(structures);
             List<Surface> listSurface = new List<Surface>();
             foreach (var i in surfaces)
