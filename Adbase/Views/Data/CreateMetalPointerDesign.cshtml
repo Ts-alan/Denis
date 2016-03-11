@@ -337,23 +337,22 @@
         <div class="form-group">
             <table>
                 <tr>
-                    <td>
-                        <label for="Breadth">Широта </label>
-                    </td>
-                    <td>
-                        <input class="text-box single-line ui-autocomplete-input form-control" data-val="true" type="text" name="Breadth" id="Breadth">
-                        <span data-valmsg-for="Breadth" data-valmsg-replace="true"></span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label for="Height">Долгота</label>
-                    </td>
-                    <td>
-                        <input class="form-control" type="text" name="Height" data-val="true" id="Height">
-
-                        @Html.ValidationMessageFor(model => model.Height)
-                    </td>
+                     <td>
+                             <label for="coordB">Широта</label>
+                        </td>
+                        <td>
+                            <input  class="text-box single-line form-control" name="Bcoord" id="Bcoord">
+                            <span data-valmsg-for="coordB" data-valmsg-replace="true"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="coordH">Долгота</label>
+                        </td>
+                        <td>
+                              <input  class="text-box single-line form-control" name="Hcoord" id="Hcoord">
+                             
+                        </td>
                 </tr>
             </table>
             <div>

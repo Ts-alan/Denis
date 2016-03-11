@@ -270,20 +270,26 @@
 
             <div class="form-group">
 
-                <div>
-                    <label for="Breadth">Широта </label>
-                    <input  class="text-box single-line ui-autocomplete-input form-control" data-val="true"  type="text" name="Breadth" id="Breadth">
-                    <span  data-valmsg-for="Breadth" data-valmsg-replace="true"></span>
+            <table>
+                <tr>
+                     <td>
+                             <label for="coordB">Широта</label>
+                        </td>
+                        <td>
+                            <input  class="text-box single-line form-control" name="Bcoord" id="Bcoord">
+                            <span data-valmsg-for="coordB" data-valmsg-replace="true"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="coordH">Долгота</label>
+                        </td>
+                    <td>
+                        <input class="text-box single-line form-control" name="Hcoord" id="Hcoord">
 
-                </div>
-
-                <div>
-                    <label for="Height">Долгота</label>
-                    <input type="text" class="form-control" name="Height" data-val="true"  id="Height">
-
-                    @Html.ValidationMessageFor(model => model.coordH)
-
-                </div>
+                    </td>
+                         </tr>
+                </table>
             </div>
         </div>
 

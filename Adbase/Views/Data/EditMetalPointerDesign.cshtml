@@ -281,20 +281,31 @@
                 <hr />
                 <div class="form-group" style="width: 600px; height: 500px" id="map"></div>
 
-                <div class="form-group">
-
-                    <div style="margin-left: 2px">
+                <table>
+                <tr>
+                    <td>
                         <label for="Breadth">Широта </label>
-
-                        @Html.EditorFor(model => model.Breadth, new { htmlattributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Breadth)
-                    </div>
-
-                    <div>
+                    </td>
+                    <td>
+                        <input class="text-box single-line form-control" value="@ViewBag.Bcoord" name="Bcoord" id="Bcoord">
+                        @*@Html.TextBoxFor(m => m.coordB, new { @class = "form-control" })*@
+                        @*<input class="text-box single-line ui-autocomplete-input" data-val="true" type="text" name="Breadth" id="Breadth">*@
+                        <span data-valmsg-for="Breadth" data-valmsg-replace="true"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
                         <label for="Height">Долгота</label>
-                        @Html.EditorFor(model => model.Height, new { htmlattributes = new { @class = "form-control" } })
-                    </div>
-                </div>
+                    </td>
+                    <td>
+                        <input class="text-box single-line form-control"  value="@ViewBag.Hcoord" name="Hcoord" id="Hcoord">
+                        @*@Html.TextBoxFor(m => m.coordH, new {@class = "form-control"})*@
+                        @*<input type="text" name="Height" data-val="true" id="Height">*@
+
+                        @Html.ValidationMessageFor(model => model.coordH)
+                    </td>
+                </tr>
+            </table>
             </div>
 
             <h3> Разрешительная документация</h3>

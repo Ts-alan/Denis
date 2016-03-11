@@ -181,6 +181,7 @@ namespace Sciencecom.Controllers
             [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces,
             HttpPostedFileBase scanPassport1Sides, HttpPostedFileBase scanPassport2Sides,
             HttpPostedFileBase scan1SidesWithFinancialManagement, List<HttpPostedFileBase> severalPhoto,
+            string Bcoord, string Hcoord,
             int countSize = 0)
         {
 
@@ -191,7 +192,8 @@ namespace Sciencecom.Controllers
             {
                _context.ListUniqueNumbers.RemoveRange(_context.ListUniqueNumbers.Where(x => x.UniqueNumber == structures.UniqueNumber));
             }
-
+            structures.coordB = double.Parse(Bcoord, CultureInfo.InvariantCulture);
+            structures.coordH = double.Parse(Hcoord, CultureInfo.InvariantCulture);
             if (countSize > 0)
             {
                 if (sides.Count == 0)
@@ -299,6 +301,8 @@ namespace Sciencecom.Controllers
                     );
             }
             TempData["surface"] = surfaces;
+            ViewBag.Bcoord = mc.coordB;
+            ViewBag.Hcoord = mc.coordH;
             return View(mc);
         }
 
@@ -308,7 +312,7 @@ namespace Sciencecom.Controllers
             [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces,
             HttpPostedFileBase scanPassport1Sides, HttpPostedFileBase scanPassport2Sides,
             HttpPostedFileBase scan1SidesWithFinancialManagement, string scanPassport1SidesInd,
-            string scanPassport2SidesInd, 
+            string scanPassport2SidesInd, string Bcoord, string Hcoord,
             int countSize = 0)
         {
 
@@ -352,6 +356,8 @@ namespace Sciencecom.Controllers
                 }
                 structures.Id = tempId;
                 structures.Area = CountSquare(structures);
+                structures.coordB = double.Parse(Bcoord, CultureInfo.InvariantCulture);
+                structures.coordH = double.Parse(Hcoord, CultureInfo.InvariantCulture);
                 _context.AdvertisingStructures.Add(structures);
                 
                 _context.Sides.AddRange(sides);
@@ -465,6 +471,7 @@ namespace Sciencecom.Controllers
             [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces,
             HttpPostedFileBase scanPassport1Sides, HttpPostedFileBase scanPassport2Sides,
             HttpPostedFileBase scan1SidesWithFinancialManagement, List<HttpPostedFileBase> severalPhoto,
+            string Bcoord, string Hcoord,
             int countSize = 1)
         {
 
@@ -496,6 +503,8 @@ namespace Sciencecom.Controllers
 
             _context.Sides.AddRange(sides);
             structures.Area = CountSquare(structures);
+            structures.coordB = double.Parse(Bcoord, CultureInfo.InvariantCulture);
+            structures.coordH = double.Parse(Hcoord, CultureInfo.InvariantCulture);
             _context.AdvertisingStructures.Add(structures);
             List<Surface> listSurface = new List<Surface>();
             foreach (var i in surfaces)
@@ -549,6 +558,8 @@ namespace Sciencecom.Controllers
             ViewBag.Id = mc.Id_show;
             ViewBag.ScanPassport_1Sides = LoadPic(mc.Id_show.ToString(), "ScanPassport_1Sides");
             ViewBag.ScanPassport_2Sides = LoadPic(mc.Id_show.ToString(), "ScanPassport_2Sides");
+            ViewBag.Bcoord = mc.coordB;
+            ViewBag.Hcoord = mc.coordH;
             return View(mc);
         }
 
@@ -558,6 +569,7 @@ namespace Sciencecom.Controllers
             [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces,
             HttpPostedFileBase scanPassport1Sides, HttpPostedFileBase scanPassport2Sides,
             HttpPostedFileBase scan1SidesWithFinancialManagement, string scanPassport1SidesInd, string scanPassport2SidesInd,
+            string Bcoord, string Hcoord,
             int countSize = 1)
         {
 
@@ -591,6 +603,8 @@ namespace Sciencecom.Controllers
             }
             structures.Id = tempId;
             structures.Area = CountSquare(structures);
+            structures.coordB = double.Parse(Bcoord, CultureInfo.InvariantCulture);
+            structures.coordH = double.Parse(Hcoord, CultureInfo.InvariantCulture);
             _context.AdvertisingStructures.Add(structures);
             _context.Sides.AddRange(sides);
             
@@ -694,7 +708,8 @@ namespace Sciencecom.Controllers
             [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces,
             HttpPostedFileBase scanPassport1Sides, HttpPostedFileBase scanPassport2Sides,
             HttpPostedFileBase scan1SidesWithFinancialManagement, List<HttpPostedFileBase> severalPhoto,
-            HttpPostedFileBase scan1Side, HttpPostedFileBase scan2Side, int countSize = 1)
+            HttpPostedFileBase scan1Side, HttpPostedFileBase scan2Side,
+            string Bcoord, string Hcoord, int countSize = 1)
         {
 
             Guid structuresId = Guid.NewGuid();
@@ -718,6 +733,8 @@ namespace Sciencecom.Controllers
 
             _context.Sides.AddRange(sides);
             structures.Area = CountSquare(structures);
+            structures.coordB = double.Parse(Bcoord, CultureInfo.InvariantCulture);
+            structures.coordH = double.Parse(Hcoord, CultureInfo.InvariantCulture);
             _context.AdvertisingStructures.Add(structures);
             List<Surface> listSurface = new List<Surface>();
             foreach (var i in surfaces)
@@ -778,6 +795,8 @@ namespace Sciencecom.Controllers
             ViewBag.Scan2Side = LoadPic(mc.Id_show.ToString(), "Scan2Side");
             ViewBag.ScanPassport_1Sides = LoadPic(mc.Id_show.ToString(), "ScanPassport_1Sides");
             ViewBag.ScanPassport_2Sides = LoadPic(mc.Id_show.ToString(), "ScanPassport_2Sides");
+            ViewBag.Bcoord = mc.coordB;
+            ViewBag.Hcoord = mc.coordH;
             return View(mc);
         }
 
@@ -788,7 +807,8 @@ namespace Sciencecom.Controllers
             HttpPostedFileBase scanPassport1Sides, HttpPostedFileBase scanPassport2Sides,
             HttpPostedFileBase scan1SidesWithFinancialManagement,
             HttpPostedFileBase scan1Side, HttpPostedFileBase scan2Side, string scanPassport1SidesInd, 
-            string scanPassport2SidesInd, string scan1SideInd, string scan2SideInd, int countSize = 1)
+            string scanPassport2SidesInd, string scan1SideInd, string scan2SideInd, 
+            string Bcoord, string Hcoord, int countSize = 1)
         {
 
             AdvertisingStructure mc = _context.AdvertisingStructures.Single(a => a.Id_show == id);
@@ -823,6 +843,8 @@ namespace Sciencecom.Controllers
             }
             structures.Id = tempId;
             structures.Area = CountSquare(structures);
+            structures.coordB = double.Parse(Bcoord, CultureInfo.InvariantCulture);
+            structures.coordH = double.Parse(Hcoord, CultureInfo.InvariantCulture);
             _context.AdvertisingStructures.Add(structures);
             _context.Sides.AddRange(sides);
 
