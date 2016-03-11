@@ -192,8 +192,8 @@ namespace Sciencecom.Controllers
             {
                _context.ListUniqueNumbers.RemoveRange(_context.ListUniqueNumbers.Where(x => x.UniqueNumber == structures.UniqueNumber));
             }
-            structures.coordB = double.Parse(Bcoord, CultureInfo.InvariantCulture);
-            structures.coordH = double.Parse(Hcoord, CultureInfo.InvariantCulture);
+            structures.coordB = double.Parse(Bcoord.Replace(",", "."), CultureInfo.InvariantCulture);
+            structures.coordH = double.Parse(Hcoord.Replace(",", "."), CultureInfo.InvariantCulture);
             if (countSize > 0)
             {
                 if (sides.Count == 0)
@@ -356,8 +356,8 @@ namespace Sciencecom.Controllers
                 }
                 structures.Id = tempId;
                 structures.Area = CountSquare(structures);
-                structures.coordB = double.Parse(Bcoord, CultureInfo.InvariantCulture);
-                structures.coordH = double.Parse(Hcoord, CultureInfo.InvariantCulture);
+                structures.coordB = double.Parse(Bcoord.Replace(",", "."), CultureInfo.InvariantCulture);
+                structures.coordH = double.Parse(Hcoord.Replace(",", "."), CultureInfo.InvariantCulture);
                 _context.AdvertisingStructures.Add(structures);
                 
                 _context.Sides.AddRange(sides);
@@ -503,8 +503,8 @@ namespace Sciencecom.Controllers
 
             _context.Sides.AddRange(sides);
             structures.Area = CountSquare(structures);
-            structures.coordB = double.Parse(Bcoord, CultureInfo.InvariantCulture);
-            structures.coordH = double.Parse(Hcoord, CultureInfo.InvariantCulture);
+            structures.coordB = double.Parse(Bcoord.Replace(",", "."), CultureInfo.InvariantCulture);
+            structures.coordH = double.Parse(Hcoord.Replace(",", "."), CultureInfo.InvariantCulture);
             _context.AdvertisingStructures.Add(structures);
             List<Surface> listSurface = new List<Surface>();
             foreach (var i in surfaces)
@@ -603,8 +603,8 @@ namespace Sciencecom.Controllers
             }
             structures.Id = tempId;
             structures.Area = CountSquare(structures);
-            structures.coordB = double.Parse(Bcoord, CultureInfo.InvariantCulture);
-            structures.coordH = double.Parse(Hcoord, CultureInfo.InvariantCulture);
+            structures.coordB = double.Parse(Bcoord.Replace(",", "."), CultureInfo.InvariantCulture);
+            structures.coordH = double.Parse(Hcoord.Replace(",", "."), CultureInfo.InvariantCulture);
             _context.AdvertisingStructures.Add(structures);
             _context.Sides.AddRange(sides);
             
@@ -706,7 +706,7 @@ namespace Sciencecom.Controllers
         public ActionResult CreateLightDuctDesign(AdvertisingStructure structures,
             [ModelBinder(typeof(CustomModelBinderForSide))] List<Side> sides,
             [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces,
-            HttpPostedFileBase scanPassport1Sides, HttpPostedFileBase scanPassport2Sides,
+            HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides,
              List<HttpPostedFileBase> severalPhoto,
             HttpPostedFileBase scan1Side, HttpPostedFileBase scan2Side,
             string Bcoord, string Hcoord, int countSize = 1)
@@ -733,8 +733,8 @@ namespace Sciencecom.Controllers
 
             _context.Sides.AddRange(sides);
             structures.Area = CountSquare(structures);
-            structures.coordB = double.Parse(Bcoord, CultureInfo.InvariantCulture);
-            structures.coordH = double.Parse(Hcoord, CultureInfo.InvariantCulture);
+            structures.coordB = double.Parse(Bcoord.Replace(",", "."), CultureInfo.InvariantCulture);
+            structures.coordH = double.Parse(Hcoord.Replace(",", "."), CultureInfo.InvariantCulture);
             _context.AdvertisingStructures.Add(structures);
             List<Surface> listSurface = new List<Surface>();
             foreach (var i in surfaces)
@@ -749,9 +749,9 @@ namespace Sciencecom.Controllers
 
           
 
-            SavePic(structures.Id_show.ToString(), "ScanPassport_1Sides", scanPassport1Sides);
+            SavePic(structures.Id_show.ToString(), "ScanPassport_1Sides", ScanPassport_1Sides);
 
-            SavePic(structures.Id_show.ToString(), "ScanPassport_2Sides", scanPassport2Sides);
+            SavePic(structures.Id_show.ToString(), "ScanPassport_2Sides", ScanPassport_2Sides);
 
             SavePic(structures.Id_show.ToString(), "Scan1Side", scan1Side);
 
@@ -804,10 +804,10 @@ namespace Sciencecom.Controllers
         public ActionResult EditLightDuctDesign(int id, AdvertisingStructure structures,
             [ModelBinder(typeof(CustomModelBinderForSide))] List<Side> sides,
             [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces,
-            HttpPostedFileBase scanPassport1Sides, HttpPostedFileBase scanPassport2Sides,
-            HttpPostedFileBase scan1SidesWithFinancialManagement,
-            HttpPostedFileBase scan1Side, HttpPostedFileBase scan2Side, string scanPassport1SidesInd, 
-            string scanPassport2SidesInd, string scan1SideInd, string scan2SideInd, 
+            HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides,
+            
+            HttpPostedFileBase scan1Side, HttpPostedFileBase scan2Side, string ScanPassport_1SidesInd, 
+            string ScanPassport_2SidesInd, string scan1SideInd, string scan2SideInd, 
             string Bcoord, string Hcoord, int countSize = 1)
         {
 
@@ -843,8 +843,8 @@ namespace Sciencecom.Controllers
             }
             structures.Id = tempId;
             structures.Area = CountSquare(structures);
-            structures.coordB = double.Parse(Bcoord, CultureInfo.InvariantCulture);
-            structures.coordH = double.Parse(Hcoord, CultureInfo.InvariantCulture);
+            structures.coordB = double.Parse(Bcoord.Replace(",", "."), CultureInfo.InvariantCulture);
+            structures.coordH = double.Parse(Hcoord.Replace(",", "."), CultureInfo.InvariantCulture);
             _context.AdvertisingStructures.Add(structures);
             _context.Sides.AddRange(sides);
 
@@ -859,8 +859,8 @@ namespace Sciencecom.Controllers
             _context.SaveChanges();
 
             //картики
-            ValidatePic(scanPassport1Sides, scanPassport1SidesInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "ScanPassport_1Sides");
-            ValidatePic(scanPassport2Sides, scanPassport2SidesInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "ScanPassport_2Sides");
+            ValidatePic(ScanPassport_1Sides, ScanPassport_1SidesInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "ScanPassport_1Sides");
+            ValidatePic(ScanPassport_2Sides, ScanPassport_2SidesInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "ScanPassport_2Sides");
             ValidatePic(scan1Side, scan1SideInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "Scan1Side");
             ValidatePic(scan2Side, scan2SideInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "Scan2Side");
 
@@ -995,8 +995,8 @@ namespace Sciencecom.Controllers
             structures.Id = tempId;
             structures.Code = "UI";
             structures.Area = CountSquare(structures);
-            structures.coordB = double.Parse(Bcoord, CultureInfo.InvariantCulture);
-            structures.coordH = double.Parse(Hcoord, CultureInfo.InvariantCulture);
+            structures.coordB = double.Parse(Bcoord.Replace(",", "."), CultureInfo.InvariantCulture);
+            structures.coordH = double.Parse(Hcoord.Replace(",", "."), CultureInfo.InvariantCulture);
             _context.AdvertisingStructures.Add(structures);
             _context.Sides.AddRange(sides);
 
@@ -1072,8 +1072,9 @@ namespace Sciencecom.Controllers
 
             _context.Sides.AddRange(sides);
             structures.Area = CountSquare(structures);
-            structures.coordB = double.Parse(Bcoord, CultureInfo.InvariantCulture);
-            structures.coordH = double.Parse(Hcoord, CultureInfo.InvariantCulture);
+            //Bcoord = Bcoord.Replace(",", ".");
+            structures.coordB = double.Parse(Bcoord.Replace(",", "."), CultureInfo.InvariantCulture);
+            structures.coordH = double.Parse(Hcoord.Replace(",", "."), CultureInfo.InvariantCulture);
             _context.AdvertisingStructures.Add(structures);
             List<Surface> listSurface = new List<Surface>();
             foreach (var i in surfaces)
