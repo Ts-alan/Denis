@@ -65,20 +65,21 @@ namespace Sciencecom.Controllers
             }
         }
 
-        protected internal void ValidateCoords(AdvertisingStructure structures, string Bcoord, string Hcoord)
+        protected internal AdvertisingStructure ValidateCoords(AdvertisingStructure structures, string Bcoord, string Hcoord)
         {
-            double q = 0;
-            if(double.TryParse(Bcoord, out q))
+            double q;
+            if(double.TryParse(Bcoord.Replace(".", ","), out q))
             {
                 structures.coordB = double.Parse(Bcoord.Replace(",", "."), CultureInfo.InvariantCulture);
             }
 
-            double z = 0;
-            if (double.TryParse(Bcoord, out z))
+            double z;
+            if (double.TryParse(Bcoord.Replace(".", ","), out z))
             {
                 structures.coordH = double.Parse(Hcoord.Replace(",", "."), CultureInfo.InvariantCulture);
             }
-            
+            return structures;
+
         }
 
         protected internal int CountSurfaces(AdvertisingStructure adv)

@@ -192,7 +192,7 @@ namespace Sciencecom.Controllers
             {
                _context.ListUniqueNumbers.RemoveRange(_context.ListUniqueNumbers.Where(x => x.UniqueNumber == structures.UniqueNumber));
             }
-            ValidateCoords(structures, Bcoord, Hcoord);
+             structures = ValidateCoords(structures, Bcoord, Hcoord);
             //structures.coordB = double.Parse(Bcoord.Replace(",", "."), CultureInfo.InvariantCulture);
             //structures.coordH = double.Parse(Hcoord.Replace(",", "."), CultureInfo.InvariantCulture);
             if (countSize > 0)
@@ -357,7 +357,7 @@ namespace Sciencecom.Controllers
                 }
                 structures.Id = tempId;
                 structures.Area = CountSquare(structures);
-                ValidateCoords(structures, Bcoord, Hcoord);
+                 structures = ValidateCoords(structures, Bcoord, Hcoord);
                 //structures.coordB = double.Parse(Bcoord.Replace(",", "."), CultureInfo.InvariantCulture);
                 //structures.coordH = double.Parse(Hcoord.Replace(",", "."), CultureInfo.InvariantCulture);
                 _context.AdvertisingStructures.Add(structures);
@@ -505,7 +505,7 @@ namespace Sciencecom.Controllers
 
             _context.Sides.AddRange(sides);
             structures.Area = CountSquare(structures);
-            ValidateCoords(structures, Bcoord, Hcoord);
+             structures = ValidateCoords(structures, Bcoord, Hcoord);
             //structures.coordB = double.Parse(Bcoord.Replace(",", "."), CultureInfo.InvariantCulture);
             //structures.coordH = double.Parse(Hcoord.Replace(",", "."), CultureInfo.InvariantCulture);
             _context.AdvertisingStructures.Add(structures);
@@ -606,7 +606,7 @@ namespace Sciencecom.Controllers
             }
             structures.Id = tempId;
             structures.Area = CountSquare(structures);
-            ValidateCoords(structures, Bcoord, Hcoord);
+             structures = ValidateCoords(structures, Bcoord, Hcoord);
             //structures.coordB = double.Parse(Bcoord.Replace(",", "."), CultureInfo.InvariantCulture);
             //structures.coordH = double.Parse(Hcoord.Replace(",", "."), CultureInfo.InvariantCulture);
             _context.AdvertisingStructures.Add(structures);
@@ -737,7 +737,7 @@ namespace Sciencecom.Controllers
 
             _context.Sides.AddRange(sides);
             structures.Area = CountSquare(structures);
-            ValidateCoords(structures, Bcoord, Hcoord);
+             structures = ValidateCoords(structures, Bcoord, Hcoord);
             //structures.coordB = double.Parse(Bcoord.Replace(",", "."), CultureInfo.InvariantCulture);
             //structures.coordH = double.Parse(Hcoord.Replace(",", "."), CultureInfo.InvariantCulture);
             _context.AdvertisingStructures.Add(structures);
@@ -848,7 +848,7 @@ namespace Sciencecom.Controllers
             }
             structures.Id = tempId;
             structures.Area = CountSquare(structures);
-            ValidateCoords(structures, Bcoord, Hcoord);
+             structures = ValidateCoords(structures, Bcoord, Hcoord);
             //structures.coordB = double.Parse(Bcoord.Replace(",", "."), CultureInfo.InvariantCulture);
             //structures.coordH = double.Parse(Hcoord.Replace(",", "."), CultureInfo.InvariantCulture);
             _context.AdvertisingStructures.Add(structures);
@@ -1001,7 +1001,7 @@ namespace Sciencecom.Controllers
             structures.Id = tempId;
             structures.Code = "UI";
             structures.Area = CountSquare(structures);
-            ValidateCoords(structures, Bcoord, Hcoord);
+             structures = ValidateCoords(structures, Bcoord, Hcoord);
             //structures.coordB = double.Parse(Bcoord.Replace(",", "."), CultureInfo.InvariantCulture);
             //structures.coordH = double.Parse(Hcoord.Replace(",", "."), CultureInfo.InvariantCulture);
             _context.AdvertisingStructures.Add(structures);
@@ -1079,7 +1079,7 @@ namespace Sciencecom.Controllers
 
             _context.Sides.AddRange(sides);
             structures.Area = CountSquare(structures);
-            ValidateCoords(structures, Bcoord, Hcoord);
+             structures = ValidateCoords(structures, Bcoord, Hcoord);
             //structures.coordB = double.Parse(Bcoord.Replace(",", "."), CultureInfo.InvariantCulture);
             //structures.coordH = double.Parse(Hcoord.Replace(",", "."), CultureInfo.InvariantCulture);
             _context.AdvertisingStructures.Add(structures);
