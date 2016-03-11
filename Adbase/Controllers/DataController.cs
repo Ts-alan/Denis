@@ -707,7 +707,7 @@ namespace Sciencecom.Controllers
             [ModelBinder(typeof(CustomModelBinderForSide))] List<Side> sides,
             [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces,
             HttpPostedFileBase scanPassport1Sides, HttpPostedFileBase scanPassport2Sides,
-            HttpPostedFileBase scan1SidesWithFinancialManagement, List<HttpPostedFileBase> severalPhoto,
+             List<HttpPostedFileBase> severalPhoto,
             HttpPostedFileBase scan1Side, HttpPostedFileBase scan2Side,
             string Bcoord, string Hcoord, int countSize = 1)
         {
@@ -747,7 +747,7 @@ namespace Sciencecom.Controllers
 
             _context.SaveChanges();
 
-            SavePic(structures.Id_show.ToString(), "Scan1SidesWithFinancialManagement", scan1SidesWithFinancialManagement);
+          
 
             SavePic(structures.Id_show.ToString(), "ScanPassport_1Sides", scanPassport1Sides);
 

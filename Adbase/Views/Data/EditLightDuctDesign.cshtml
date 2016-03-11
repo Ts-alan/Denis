@@ -334,7 +334,7 @@
                                 <br/>
                                 @if (ViewBag.Scan1Side)
                                 {
-                                    <img class="closeimg" style="width:20px" src="../../Content/CloseImg.jpg" />
+                                    
                                     <input type="hidden" name="Scan1SideInd" value="setImage">
                                     string image = "/Images/Scan1Side/" + ViewBag.Id + "Scan1Side.jpg";
                                     string imgName = ViewBag.Id + "Scan1Side.jpg";
@@ -368,8 +368,9 @@
                                 <br/>
                                 @if (ViewBag.Scan2Side)
                                 {
-                                   <img class="closeimg" style="width:20px" src="../../Content/CloseImg.jpg" />
+
                                     <input type="hidden" name="Scan2SideInd" value="setImage">
+                                    <img class="closeimg" style="width:20px" src="../../Content/CloseImg.jpg" />
                                     string image = "/Images/Scan2Side/" + ViewBag.Id + "Scan2Side.jpg";
                                     string imgName = ViewBag.Id + "Scan2Side.jpg";
 
@@ -443,7 +444,7 @@
                                 <br/>
                                 @if (ViewBag.ScanPassport_1Sides)
                                 {
-                                    <img class="closeimg" style="width: 20px" src="../../Content/CloseImg.jpg"/>
+                                   
                                     <input type="hidden" name="ScanPassport_1SidesInd" value="setImage">
                                     string image = "/Images/ScanPassport_1Sides/" + ViewBag.Id + "ScanPassport_1Sides.jpg";
                                     string imgName = ViewBag.Id + "ScanPassport_1Sides.jpg";
@@ -460,7 +461,7 @@
                                 }
                                 else
                                 {
-                                    <img class="closeimg" style="width: 20px" src="../../Content/CloseImg.jpg"/>
+                                   
                                     <input type="hidden" name="ScanPassport_1SidesInd" value="">
                                     <img class="closeimg" style="width:20px" src="../../Content/CloseImg.jpg" />
                                     <div class="fileUpload btn btn-default input-sm">
@@ -478,7 +479,7 @@
                                 <br/>
                                 @if (ViewBag.ScanPassport_2Sides)
                                 {
-                                     <img class="closeimg" style="width: 20px" src="../../Content/CloseImg.jpg"/>
+                                     
                                     <input type="hidden" name="ScanPassport_2SidesInd" value="setImage">
                                     string image = "/Images/ScanPassport_2Sides/" + ViewBag.Id + "Scan2Side.jpg";
                                     string imgName = ViewBag.Id + "Scan2Side.jpg";
@@ -495,7 +496,7 @@
                                 }
                                 else
                                 {
-                                    <img class="closeimg" style="width: 20px" src="../../Content/CloseImg.jpg"/>
+                                    
                                     <input type="hidden" name="ScanPassport_2SidesInd" value="">
                                     <img class="closeimg" style="width:20px" src="../../Content/CloseImg.jpg" />
                                     <div class="fileUpload btn btn-default input-sm">
