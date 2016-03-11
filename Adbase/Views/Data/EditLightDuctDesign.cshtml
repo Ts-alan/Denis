@@ -282,33 +282,31 @@
 
             <div class="form-inline">
                 <hr />
-                <div class="form-group" style="width: 600px; height: 500px" id="map"></div>
+                <div class="form-group" style="width: 600px; height: 500px;" id="map"></div>
+                <div class="form-group">
+                    <table>
+                        <tr>
+                            <td>
+                                <label for="Bcoord">Широта </label>
+                            </td>
+                            <td>
+                                <input class="text-box single-line form-control" value="@ViewBag.Bcoord" name="Bcoord" id="Bcoord">
 
-                <table>
-                    <tr>
-                        <td>
-                            <label for="Bcoord">Широта </label>
-                        </td>
-                        <td>
-                            <input class="text-box single-line form-control" value="@ViewBag.Bcoord" name="Bcoord" id="Bcoord">
-                            @*@Html.TextBoxFor(m => m.coordB, new { @class = "form-control" })*@
-                            @*<input class="text-box single-line ui-autocomplete-input" data-val="true" type="text" name="Bcoord" id="Bcoord">*@
-                            <span data-valmsg-for="Bcoord" data-valmsg-replace="true"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="Hcoord">Долгота</label>
-                        </td>
-                        <td>
-                            <input class="text-box single-line form-control" value="@ViewBag.Hcoord" name="Hcoord" id="Hcoord">
-                            @*@Html.TextBoxFor(m => m.coordH, new {@class = "form-control"})*@
-                            @*<input type="text" name="Height" data-val="true" id="Height">*@
+                                <span data-valmsg-for="Bcoord" data-valmsg-replace="true"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="Hcoord">Долгота</label>
+                            </td>
+                            <td>
+                                <input class="text-box single-line form-control" value="@ViewBag.Hcoord" name="Hcoord" id="Hcoord">
 
-                            @Html.ValidationMessageFor(model => model.coordH)
-                        </td>
-                    </tr>
-                </table>
+                                @Html.ValidationMessageFor(model => model.coordH)
+                            </td>
+                        </tr>
+                    </table>
+                  </div>
             </div>
 
                         <h3>Проект ОДД</h3>
@@ -346,7 +344,7 @@
                                     <label for="Scan1Side">@imgName</label>
                                     <br />
                                     <br />
-                                    <button type="button" style="margin-left: 25px" class="modalPictureTrigger btn btn-default input-sm" data-toggle="modal" onclick="addPic('#ModalScan1DivScan1Side', '@image')" data-target="#ViewModalPictureScan1Side">Показать</button>
+                                    <button type="button" style="margin-left: 25px" class="modalPictureTrigger btn btn-default input-sm" data-toggle="modal" onclick="addPic('#ModalPictureDivScan1Side', '@image')" data-target="#ViewModalPictureScan1Side">Показать</button>
 
                                 }
                                 else
@@ -368,11 +366,12 @@
                                 <br />
                                 @if (ViewBag.Scan2Side)
                                 {
-                                    <img class="closeimg" style="width:20px" src="../../Content/CloseImg.jpg" />
+
                                     <input type="hidden" name="Scan2SideInd" value="setImage">
+
                                     string image = "/Images/Scan2Side/" + ViewBag.Id + "Scan2Side.jpg";
                                     string imgName = ViewBag.Id + "Scan2Side.jpg";
-
+                                    <img class="closeimg" style="width:20px" src="../../Content/CloseImg.jpg" />
                                     <div class="fileUpload btn btn-warning input-sm">
                                         <span>&nbsp;&nbsp;Скан 2&nbsp;</span>
                                         <input type="file" class="upload" name="Scan2Side" accept="image/jpeg/" />
@@ -380,7 +379,7 @@
                                     <label for="Scan2Side">@imgName</label>
                                     <br />
                                     <br />
-                                    <button type="button" style="margin-left: 25px" class="modalPictureTrigger btn btn-default input-sm" data-toggle="modal" onclick="addPic('#ModalScan2DivScan2Side', '@image')" data-target="#ViewModalPictureScan2Side">Показать</button>
+                                    <button type="button" style="margin-left: 25px" class="modalPictureTrigger btn btn-default input-sm" data-toggle="modal" onclick="addPic('#ModalPictureDivScan2Side', '@image')" data-target="#ViewModalPictureScan2Side">Показать</button>
 
                                 }
                                 else
@@ -455,7 +454,7 @@
                                         <label for="ScanPassport_1Sides">@imgName</label>
                                         <br />
                                         <br />
-                                        <button type="button" class="modalPictureTrigger btn btn-default input-sm" data-toggle="modal" onclick="addPic('#ModalPictureDivScanPassport_1Sides', '@image')" data-target="#ViewModalPictureScan1Side">Показать</button>
+                                        <button type="button" style="margin-left: 25px" class="modalPictureTrigger btn btn-default input-sm" data-toggle="modal" onclick="addPic('#ModalPictureDivScan1Side', '@image')" data-target="#ViewModalPictureScan1Side">Показать</button>
 
                                     }
                                     else
@@ -480,7 +479,7 @@
                                     {
                                         
                                         <input type="hidden" name="ScanPassport_2SidesInd" value="setImage">
-                                        string image = "/Images/ScanPassport_2Sides/" + ViewBag.Id + "Scan2Side.jpg";
+                                        string image = "/Images/ScanPassport_2Sides/" + ViewBag.Id + "ScanPassport_2Sides.jpg";
                                         string imgName = ViewBag.Id + "Scan2Side.jpg";
                                         <img class="closeimg" style="width:20px" src="../../Content/CloseImg.jpg" />
                                         <div class="fileUpload btn btn-warning input-sm">
@@ -490,7 +489,7 @@
                                         <label for="ScanPassport_2Sides">@imgName</label>
                                         <br />
                                         <br />
-                                        <button type="button" class="modalPictureTrigger btn btn-default input-sm" data-toggle="modal" onclick="addPic('#ModalPictureDivScanPassport_2Sides', '@image')" data-target="#ViewModalPictureScan2Side">Показать</button>
+                                        <button type="button" style="margin-left: 25px" class="modalPictureTrigger btn btn-default input-sm" data-toggle="modal" onclick="addPic('#ModalPictureDivScan2Side', '@image')" data-target="#ViewModalPictureScan2Side">Показать</button>
 
                                     }
                                     else
@@ -615,21 +614,21 @@
                                                     <label for="[0].Height">Высота</label>
 
                                                     @Html.EditorFor(model => model.Sides.FirstOrDefault().Surfaces.FirstOrDefault().Height, new { htmlAttributes = new { @class = "form-control", type = "number", Name = "[0].Height", id = "SHeight" } })
-                                                    @Html.ValidationMessageFor(model => model.Sides.FirstOrDefault().Surfaces.FirstOrDefault().Height)
+                                                    
                                                     <span class="glyphicon form-control-feedback"></span>
                                                 </div>
                                                 <div class="form-group has-feedback" style="margin-left: 20px">
                                                     <label for="[0].Width">Ширина</label>
 
                                                     @Html.EditorFor(model => model.Sides.FirstOrDefault().Surfaces.FirstOrDefault().Width, new { htmlAttributes = new { @class = "form-control", type = "number", Name = "[0].Width", id = "Width" } })
-                                                    @Html.ValidationMessageFor(model => model.Sides.FirstOrDefault().Surfaces.FirstOrDefault().Width)
+                                                    
                                                     <span class="glyphicon form-control-feedback"></span>
                                                 </div>
                                                 <div class="form-group has-feedback" style="margin-left: 20px">
                                                     <label for="[0].Space">Площадь</label>
 
                                                     @Html.TextBoxFor(model => model.Sides.FirstOrDefault().Surfaces.FirstOrDefault().Space, new { @class = "form-control", Name = "[0].Space", @readonly = "readonly" })
-                                                    @Html.ValidationMessageFor(model => model.Sides.FirstOrDefault().Surfaces.FirstOrDefault().Space)
+                                                   
                                                     <span class="glyphicon form-control-feedback"></span>
                                                 </div>
                                             </div>

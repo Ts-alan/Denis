@@ -75,7 +75,7 @@ function AddRules()
         {
             wId = "input[name ='" + "[" + i + "].Width']";
             $(wId).rules("add", {
-                min: "0,0001",
+                min: "0",
                 messages :{min: "Введите положительное значение" } 
             });
             
@@ -89,7 +89,7 @@ function AddRules()
         {
             sId = "input[name ='" + "[" + i + "].Space']";
             $(sId).rules("add", {
-                min: "0,00000001"
+                min: "0"
 
             });
         }
@@ -103,7 +103,7 @@ function AddRules()
         {
             hId = "input[name ='" + "[" + i + "].Height']";
             $(hId).rules("add", {
-                min: 0.0001,
+                min: "0",
                 messages :{min: "Введите положительное значение" } 
             });
         }

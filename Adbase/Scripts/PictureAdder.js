@@ -45,7 +45,8 @@
     //    $(".modalPictureTrigger[data-target='#ViewModalPicture" +  attr + "']").css({ width: '122px', height: '22px', '-webkit-box-shadow': '0 0 0px 1000px white inset' });
     //});
     $(".closeimg").click(function () {
-        //$(this).prev().attr("value", "");
+        $(this).prev().attr("value", "");
+        
         $(this).next().find("input[type='file']")[0].value = null;
         $(this).next().next().text("Файл не выбран");
         $(this).next().removeClass("btn-warning");
@@ -139,6 +140,7 @@ function addButton(parameters)
 function addPic(id, src)
 {
     $(id).empty();
+   
     $(id).append('<img id="' + id + '" src="' + src + '" height="300"  style="display: block;margin-left: auto;margin-right: auto;">');
     //var style = css($("input[name='photo2']"));
     //$(id).css(style);

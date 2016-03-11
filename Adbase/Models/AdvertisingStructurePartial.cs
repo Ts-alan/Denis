@@ -85,7 +85,7 @@ namespace Sciencecom.Models
       
         public Nullable<int> Owner_Id { get; set; }
 
-        [StringLength(50, ErrorMessage = "не более 50 символов")]
+       
        
         [Display(Name = "Улица 1")]
         public string Street1 { get; set; }
