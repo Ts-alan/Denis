@@ -55,10 +55,10 @@ function init()
 
     onCityChange();
 
-    if ($("#Breadth").val() != "" && $("#Height").val() != "")
+    if ($("#coordB").val() != "" && $("#coordH").val() != "")
     {
         // нанесение обьекта на карту при загрузке
-        myPlacemark = new ymaps.Placemark([$("#Breadth").val().replace(",", "."), $("#Height").val().replace(',', '.')],
+        myPlacemark = new ymaps.Placemark([$("#coordB").val().replace(",", "."), $("#coordH").val().replace(',', '.')],
         {},
         {
             draggable: true
@@ -81,9 +81,9 @@ function init()
                 }
                 var coords = e.get('coordPosition');
                 var str = String(coords[0].toPrecision(6).replace('.', ','));
-                $("#Breadth").val(str);
+                $("#coordB").val(str);
                 str = String(coords[1].toPrecision(6).replace('.', ','));
-                $("#Height").val(str);
+                $("#coordH").val(str);
                 myPlacemark = new ymaps.Placemark([coords[0], coords[1]], {}, {
                     draggable: true
                 });
@@ -104,12 +104,12 @@ function init()
             var coords = myPlacemark.geometry.getCoordinates();
             var str = String(coords[0].toPrecision(6));
             str = str.replace('.', ',');
-            $("#Breadth").val(str);
+            $("#coordB").val(str);
 
             str = String(coords[1].toPrecision(6));
             str = str.replace('.', ',');
 
-            $("#Height").val(str);
+            $("#coordH").val(str);
         });
     }
 }
@@ -119,7 +119,7 @@ function init()
 function SetCoordinates()
 {
 
-    if ($("#Height").val() != "" && $("#Breadth").val() != "")
+    if ($("#coordH").val() != "" && $("#coordB").val() != "")
     {
         //удалить обьект
         if (myPlacemark != undefined)
@@ -128,7 +128,7 @@ function SetCoordinates()
             myMap.geoObjects.remove(myPlacemark);
         }
         //присвоить обьект
-        myPlacemark = new ymaps.Placemark([$("#Height").val(), $("#Breadth").val()],
+        myPlacemark = new ymaps.Placemark([$("#coordH").val(), $("#coordB").val()],
         {},
         {
             draggable: true
@@ -220,9 +220,9 @@ $(document).ready(function ()
                 myMap.geoObjects.add(myPlacemark);
 
                 var str = String(coords[0].toPrecision(6).replace('.', ','));
-                $("#Breadth").val(str);
+                $("#coordB").val(str);
                 str = String(coords[1].toPrecision(6).replace('.', ','));
-                $("#Height").val(str);
+                $("#coordH").val(str);
 
                 dragend();
             });
@@ -240,12 +240,12 @@ $(document).ready(function ()
             var str = String(coords[0].toPrecision(6));
             str = str.replace('.', ',');
 
-            $("#Breadth").val(str);
+            $("#coordB").val(str);
 
             str = String(coords[1].toPrecision(6));
             str = str.replace('.', ',');
 
-            $("#Height").val(str);
+            $("#coordH").val(str);
         });
     }
 

@@ -929,6 +929,9 @@ namespace Sciencecom.Controllers
             ViewBag.photo1 = LoadPic(mc.Id_show.ToString(), "photo1");
             ViewBag.photo2 = LoadPic(mc.Id_show.ToString(), "photo2");
 
+            ViewBag.Bcoord = mc.coordB;
+            ViewBag.Hcoord = mc.coordH;
+
             return View(mc);
         }
 
@@ -936,7 +939,7 @@ namespace Sciencecom.Controllers
         public ActionResult EditIllegalDesign(int id, AdvertisingStructure structures,
             [ModelBinder(typeof(CustomModelBinderForSide))] List<Side> sides,
             [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces,
-            HttpPostedFileBase photo1, HttpPostedFileBase photo2,string photoInd1, string photoInd2, int countSize = 1)
+            HttpPostedFileBase photo1, HttpPostedFileBase photo2,string photoInd1, string photoInd2, string Bcoord, string Hcoord, int countSize = 1)
         {
 
             AdvertisingStructure mc = _context.AdvertisingStructures.Single(a => a.Id_show == id);
@@ -970,6 +973,8 @@ namespace Sciencecom.Controllers
             structures.Id = tempId;
             structures.Code = "UI";
             structures.Area = CountSquare(structures);
+            structures.coordB = double.Parse(Bcoord);
+            structures.coordH = double.Parse(Hcoord);
             _context.AdvertisingStructures.Add(structures);
             _context.Sides.AddRange(sides);
 
@@ -987,9 +992,6 @@ namespace Sciencecom.Controllers
 
             ValidatePic(photo1, photoInd1, structures.Id_show.ToString(), mc.Id_show.ToString(), "photo1");
             ValidatePic(photo2, photoInd2, structures.Id_show.ToString(), mc.Id_show.ToString(), "photo2");
-
-            
-           
 
            
             return RedirectToAction("AdvertisingDesign");
@@ -1084,12 +1086,7 @@ namespace Sciencecom.Controllers
             base.Dispose(disposing);
         }
 
-        public void TryResult(int id)
-        {
-
-            AdvertisingStructure mc = _context.AdvertisingStructures.Single(a => a.Id_show == id);
-            Response.Write(mc.coordB);
-        }
+       
     }
 }
 

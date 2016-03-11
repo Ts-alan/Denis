@@ -60,14 +60,37 @@
 
         onCityChange();
 
-        if ($("#Breadth").val() != "" && $("#Height").val() != "")
+        if ($("#Bcoord").val() != "" && $("#Hcoord").val() != "")
         {
             // нанесение обьекта на карту при загрузке
-            myPlacemark = new ymaps.Placemark([$("#Breadth").val().replace(",", "."), $("#Height").val().replace(',', '.')],
-                {},
-                {
-                    draggable: true
-                });
+
+            if (typedesign = "IllegalDesign") {
+                        myPlacemark = new ymaps.Placemark([$("#Bcoord").val().replace(",", "."), $("#Hcoord").val().replace(',', '.')], {
+                            iconContent: "Н",
+                            hintContent: "Неопознанная конструкция",
+                            iconColor: 'red'
+                            
+                        }, {
+                            draggable: true,
+                            preset: 'islands#redIcon',
+                            iconColor: 'red'
+                        });
+
+                    }
+                    else
+                    {
+                        myPlacemark = new ymaps.Placemark([$("#Bcoord").val().replace(",", "."), $("#Hcoord").val().replace(',', '.')], {}, {
+                            draggable: true
+                        });
+                    }
+
+
+
+            //myPlacemark = new ymaps.Placemark([$("#Bcoord").val().replace(",", "."), $("#Hcoord").val().replace(',', '.')],
+            //    {},
+            //    {
+            //        draggable: true
+            //    });
             myMap.geoObjects.add(myPlacemark);
 
             dragend();
@@ -85,13 +108,14 @@
                     }
                     var coords = e.get('coordPosition');
                     var str = String(coords[0].toPrecision(6).replace('.', ','));
-                    $("#Breadth").val(str);
+                    $("#Bcoord").val(str);
                     str = String(coords[1].toPrecision(6).replace('.', ','));
-                    $("#Height").val(str);
+                    $("#Hcoord").val(str);
                     if (typedesign = "IllegalDesign") {
                         myPlacemark = new ymaps.Placemark([coords[0], coords[1]], {
                             iconContent: "Н",
-                            hintContent: "Неопознанная конструкция"
+                            hintContent: "Неопознанная конструкция",
+                            iconColor: 'red'
                             
                         }, {
                             draggable: true,
@@ -99,7 +123,9 @@
                             iconColor: 'red'
                         });
 
-                    } else {
+                    }
+                    else
+                    {
                         myPlacemark = new ymaps.Placemark([coords[0], coords[1]], {}, {
                             draggable: true
                         });
@@ -118,12 +144,12 @@
                 var coords = myPlacemark.geometry.getCoordinates();
                 var str = String(coords[0].toPrecision(6));
                 str = str.replace('.', ',');
-                $("#Breadth").val(str);
+                $("#Bcoord").val(str);
 
                 str = String(coords[1].toPrecision(6));
                 str = str.replace('.', ',');
 
-                $("#Height").val(str);
+                $("#Hcoord").val(str);
             });
         }
     }
@@ -131,7 +157,7 @@
 
     function SetCoordinates()
     {
-        if ($("#Height").val() != "" && $("#Breadth").val() != "")
+        if ($("#Hcoord").val() != "" && $("#Bcoord").val() != "")
         {
             //удалить обьект
             if (myPlacemark != undefined)
@@ -139,11 +165,34 @@
                 myMap.geoObjects.remove(myPlacemark);
             }
             //присвоить обьект
-            myPlacemark = new ymaps.Placemark([$("#Height").val(), $("#Breadth").val()],
-                {},
-                {
+
+            if (typedesign = "IllegalDesign")
+            {
+                myPlacemark = new ymaps.Placemark([$("#Hcoord").val(), $("#Bcoord").val()], {
+                    iconContent: "Н",
+                    hintContent: "Неопознанная конструкция",
+                    iconColor: 'red'
+
+                }, {
+                    draggable: true,
+                    preset: 'islands#redIcon',
+                    iconColor: 'red'
+                });
+            }
+            else
+            {
+                myPlacemark = new ymaps.Placemark([$("#Hcoord").val(), $("#Bcoord").val()], {}, {
                     draggable: true
                 });
+            }
+
+
+
+            //myPlacemark = new ymaps.Placemark([$("#Hcoord").val(), $("#Bcoord").val()],
+            //    {},
+            //    {
+            //        draggable: true
+            //    });
             myMap.geoObjects.add(myPlacemark);
         }
         dragend();
@@ -216,17 +265,35 @@
                         myMap.geoObjects.remove(myPlacemark);
                     }
 
-                    myPlacemark = new ymaps.Placemark([coords[0].toPrecision(6), coords[1].toPrecision(6)],
-                        {},
-                        {
+                    //myPlacemark = new ymaps.Placemark([coords[0].toPrecision(6), coords[1].toPrecision(6)],
+                    //    {},
+                    //    {
+                    //        draggable: true
+                    //    });
+                    if (typedesign = "IllegalDesign")
+                    {
+                        myPlacemark = new ymaps.Placemark([coords[0].toPrecision(6), coords[1].toPrecision(6)], {
+                            iconContent: "Н",
+                            hintContent: "Неопознанная конструкция",
+                            iconColor: 'red'
+
+                        }, {
+                            draggable: true,
+                            preset: 'islands#redIcon',
+                            iconColor: 'red'
+                        });
+                    } else
+                    {
+                        myPlacemark = new ymaps.Placemark([coords[0].toPrecision(6), coords[1].toPrecision(6)], {}, {
                             draggable: true
                         });
+                    }
                     myMap.geoObjects.add(myPlacemark);
 
                     var str = String(coords[0].toPrecision(6).replace('.', ','));
-                    $("#Breadth").val(str);
+                    $("#Bcoord").val(str);
                     str = String(coords[1].toPrecision(6).replace('.', ','));
-                    $("#Height").val(str);
+                    $("#Hcoord").val(str);
 
                     dragend();
                 });
@@ -242,12 +309,12 @@
                 var str = String(coords[0].toPrecision(6));
                 str = str.replace('.', ',');
 
-                $("#Breadth").val(str);
+                $("#Bcoord").val(str);
 
                 str = String(coords[1].toPrecision(6));
                 str = str.replace('.', ',');
 
-                $("#Height").val(str);
+                $("#Hcoord").val(str);
             });
         }
     });
