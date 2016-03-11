@@ -1014,7 +1014,7 @@ namespace Sciencecom.Controllers
             [ModelBinder(typeof(CustomModelBinderForSide))] List<Side> sides,
             [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces,
             HttpPostedFileBase photo1, HttpPostedFileBase photo2,
-            List<HttpPostedFileBase> severalPhoto,
+            List<HttpPostedFileBase> severalPhoto, string Bcoord, string Hcoord,
             int countSize = 0)
         {
             
@@ -1050,6 +1050,8 @@ namespace Sciencecom.Controllers
 
             _context.Sides.AddRange(sides);
             structures.Area = CountSquare(structures);
+            structures.coordB = double.Parse(Bcoord);
+            structures.coordH = double.Parse(Hcoord);
             _context.AdvertisingStructures.Add(structures);
             List<Surface> listSurface = new List<Surface>();
             foreach (var i in surfaces)
