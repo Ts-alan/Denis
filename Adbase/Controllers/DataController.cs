@@ -192,8 +192,8 @@ namespace Sciencecom.Controllers
             {
                _context.ListUniqueNumbers.RemoveRange(_context.ListUniqueNumbers.Where(x => x.UniqueNumber == structures.UniqueNumber));
             }
-            structures.coordB = double.Parse(Bcoord, CultureInfo.InvariantCulture);
-            structures.coordH = double.Parse(Hcoord, CultureInfo.InvariantCulture);
+            structures.coordB = double.Parse(Bcoord.Replace(",", "."), CultureInfo.InvariantCulture);
+            structures.coordH = double.Parse(Hcoord.Replace(",", "."), CultureInfo.InvariantCulture);
             if (countSize > 0)
             {
                 if (sides.Count == 0)
@@ -356,8 +356,8 @@ namespace Sciencecom.Controllers
                 }
                 structures.Id = tempId;
                 structures.Area = CountSquare(structures);
-                structures.coordB = double.Parse(Bcoord, CultureInfo.InvariantCulture);
-                structures.coordH = double.Parse(Hcoord, CultureInfo.InvariantCulture);
+                structures.coordB = double.Parse(Bcoord.Replace(",", "."), CultureInfo.InvariantCulture);
+                structures.coordH = double.Parse(Hcoord.Replace(",", "."), CultureInfo.InvariantCulture);
                 _context.AdvertisingStructures.Add(structures);
                 
                 _context.Sides.AddRange(sides);
@@ -503,8 +503,8 @@ namespace Sciencecom.Controllers
 
             _context.Sides.AddRange(sides);
             structures.Area = CountSquare(structures);
-            structures.coordB = double.Parse(Bcoord, CultureInfo.InvariantCulture);
-            structures.coordH = double.Parse(Hcoord, CultureInfo.InvariantCulture);
+            structures.coordB = double.Parse(Bcoord.Replace(",", "."), CultureInfo.InvariantCulture);
+            structures.coordH = double.Parse(Hcoord.Replace(",", "."), CultureInfo.InvariantCulture);
             _context.AdvertisingStructures.Add(structures);
             List<Surface> listSurface = new List<Surface>();
             foreach (var i in surfaces)
@@ -603,8 +603,8 @@ namespace Sciencecom.Controllers
             }
             structures.Id = tempId;
             structures.Area = CountSquare(structures);
-            structures.coordB = double.Parse(Bcoord, CultureInfo.InvariantCulture);
-            structures.coordH = double.Parse(Hcoord, CultureInfo.InvariantCulture);
+            structures.coordB = double.Parse(Bcoord.Replace(",", "."), CultureInfo.InvariantCulture);
+            structures.coordH = double.Parse(Hcoord.Replace(",", "."), CultureInfo.InvariantCulture);
             _context.AdvertisingStructures.Add(structures);
             _context.Sides.AddRange(sides);
             
@@ -733,8 +733,8 @@ namespace Sciencecom.Controllers
 
             _context.Sides.AddRange(sides);
             structures.Area = CountSquare(structures);
-            structures.coordB = double.Parse(Bcoord, CultureInfo.InvariantCulture);
-            structures.coordH = double.Parse(Hcoord, CultureInfo.InvariantCulture);
+            structures.coordB = double.Parse(Bcoord.Replace(",", "."), CultureInfo.InvariantCulture);
+            structures.coordH = double.Parse(Hcoord.Replace(",", "."), CultureInfo.InvariantCulture);
             _context.AdvertisingStructures.Add(structures);
             List<Surface> listSurface = new List<Surface>();
             foreach (var i in surfaces)
@@ -843,8 +843,8 @@ namespace Sciencecom.Controllers
             }
             structures.Id = tempId;
             structures.Area = CountSquare(structures);
-            structures.coordB = double.Parse(Bcoord, CultureInfo.InvariantCulture);
-            structures.coordH = double.Parse(Hcoord, CultureInfo.InvariantCulture);
+            structures.coordB = double.Parse(Bcoord.Replace(",", "."), CultureInfo.InvariantCulture);
+            structures.coordH = double.Parse(Hcoord.Replace(",", "."), CultureInfo.InvariantCulture);
             _context.AdvertisingStructures.Add(structures);
             _context.Sides.AddRange(sides);
 
@@ -995,8 +995,8 @@ namespace Sciencecom.Controllers
             structures.Id = tempId;
             structures.Code = "UI";
             structures.Area = CountSquare(structures);
-            structures.coordB = double.Parse(Bcoord, CultureInfo.InvariantCulture);
-            structures.coordH = double.Parse(Hcoord, CultureInfo.InvariantCulture);
+            structures.coordB = double.Parse(Bcoord.Replace(",", "."), CultureInfo.InvariantCulture);
+            structures.coordH = double.Parse(Hcoord.Replace(",", "."), CultureInfo.InvariantCulture);
             _context.AdvertisingStructures.Add(structures);
             _context.Sides.AddRange(sides);
 
@@ -1072,8 +1072,9 @@ namespace Sciencecom.Controllers
 
             _context.Sides.AddRange(sides);
             structures.Area = CountSquare(structures);
-            structures.coordB = double.Parse(Bcoord, CultureInfo.InvariantCulture);
-            structures.coordH = double.Parse(Hcoord, CultureInfo.InvariantCulture);
+            //Bcoord = Bcoord.Replace(",", ".");
+            structures.coordB = double.Parse(Bcoord.Replace(",", "."), CultureInfo.InvariantCulture);
+            structures.coordH = double.Parse(Hcoord.Replace(",", "."), CultureInfo.InvariantCulture);
             _context.AdvertisingStructures.Add(structures);
             List<Surface> listSurface = new List<Surface>();
             foreach (var i in surfaces)
