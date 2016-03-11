@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -62,6 +63,22 @@ namespace Sciencecom.Controllers
                 string newPath = Server.MapPath(src);
                 System.IO.File.Move(oldPath, newPath);
             }
+        }
+
+        protected internal void ValidateCoords(AdvertisingStructure structures, string Bcoord, string Hcoord)
+        {
+            double q = 0;
+            if(double.TryParse(Bcoord, out q))
+            {
+                structures.coordB = double.Parse(Bcoord.Replace(",", "."), CultureInfo.InvariantCulture);
+            }
+
+            double z = 0;
+            if (double.TryParse(Bcoord, out z))
+            {
+                structures.coordH = double.Parse(Hcoord.Replace(",", "."), CultureInfo.InvariantCulture);
+            }
+            
         }
 
         protected internal int CountSurfaces(AdvertisingStructure adv)
