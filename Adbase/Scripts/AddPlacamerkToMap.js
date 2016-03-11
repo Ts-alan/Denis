@@ -60,12 +60,12 @@
 
         onCityChange();
 
-        if ($("#coordB").val() != "" && $("#coordH").val() != "")
+        if ($("#Bcoord").val() != "" && $("#Hcoord").val() != "")
         {
             // нанесение обьекта на карту при загрузке
 
             if (typedesign = "IllegalDesign") {
-                        myPlacemark = new ymaps.Placemark([$("#coordB").val().replace(",", "."), $("#coordH").val().replace(',', '.')], {
+                        myPlacemark = new ymaps.Placemark([$("#Bcoord").val().replace(",", "."), $("#Hcoord").val().replace(',', '.')], {
                             iconContent: "Н",
                             hintContent: "Неопознанная конструкция",
                             iconColor: 'red'
@@ -79,14 +79,14 @@
                     }
                     else
                     {
-                        myPlacemark = new ymaps.Placemark([$("#coordB").val().replace(",", "."), $("#coordH").val().replace(',', '.')], {}, {
+                        myPlacemark = new ymaps.Placemark([$("#Bcoord").val().replace(",", "."), $("#Hcoord").val().replace(',', '.')], {}, {
                             draggable: true
                         });
                     }
 
 
 
-            //myPlacemark = new ymaps.Placemark([$("#coordB").val().replace(",", "."), $("#coordH").val().replace(',', '.')],
+            //myPlacemark = new ymaps.Placemark([$("#Bcoord").val().replace(",", "."), $("#Hcoord").val().replace(',', '.')],
             //    {},
             //    {
             //        draggable: true
@@ -108,9 +108,9 @@
                     }
                     var coords = e.get('coordPosition');
                     var str = String(coords[0].toPrecision(6).replace('.', ','));
-                    $("#coordB").val(str);
+                    $("#Bcoord").val(str);
                     str = String(coords[1].toPrecision(6).replace('.', ','));
-                    $("#coordH").val(str);
+                    $("#Hcoord").val(str);
                     if (typedesign = "IllegalDesign") {
                         myPlacemark = new ymaps.Placemark([coords[0], coords[1]], {
                             iconContent: "Н",
@@ -144,12 +144,12 @@
                 var coords = myPlacemark.geometry.getCoordinates();
                 var str = String(coords[0].toPrecision(6));
                 str = str.replace('.', ',');
-                $("#coordB").val(str);
+                $("#Bcoord").val(str);
 
                 str = String(coords[1].toPrecision(6));
                 str = str.replace('.', ',');
 
-                $("#coordH").val(str);
+                $("#Hcoord").val(str);
             });
         }
     }
@@ -157,7 +157,7 @@
 
     function SetCoordinates()
     {
-        if ($("#coordH").val() != "" && $("#coordB").val() != "")
+        if ($("#Hcoord").val() != "" && $("#Bcoord").val() != "")
         {
             //удалить обьект
             if (myPlacemark != undefined)
@@ -168,7 +168,7 @@
 
             if (typedesign = "IllegalDesign")
             {
-                myPlacemark = new ymaps.Placemark([$("#coordH").val(), $("#coordB").val()], {
+                myPlacemark = new ymaps.Placemark([$("#Hcoord").val(), $("#Bcoord").val()], {
                     iconContent: "Н",
                     hintContent: "Неопознанная конструкция",
                     iconColor: 'red'
@@ -181,14 +181,14 @@
             }
             else
             {
-                myPlacemark = new ymaps.Placemark([$("#coordH").val(), $("#coordB").val()], {}, {
+                myPlacemark = new ymaps.Placemark([$("#Hcoord").val(), $("#Bcoord").val()], {}, {
                     draggable: true
                 });
             }
 
 
 
-            //myPlacemark = new ymaps.Placemark([$("#coordH").val(), $("#coordB").val()],
+            //myPlacemark = new ymaps.Placemark([$("#Hcoord").val(), $("#Bcoord").val()],
             //    {},
             //    {
             //        draggable: true
@@ -291,9 +291,9 @@
                     myMap.geoObjects.add(myPlacemark);
 
                     var str = String(coords[0].toPrecision(6).replace('.', ','));
-                    $("#coordB").val(str);
+                    $("#Bcoord").val(str);
                     str = String(coords[1].toPrecision(6).replace('.', ','));
-                    $("#coordH").val(str);
+                    $("#Hcoord").val(str);
 
                     dragend();
                 });
@@ -309,12 +309,12 @@
                 var str = String(coords[0].toPrecision(6));
                 str = str.replace('.', ',');
 
-                $("#coordB").val(str);
+                $("#Bcoord").val(str);
 
                 str = String(coords[1].toPrecision(6));
                 str = str.replace('.', ',');
 
-                $("#coordH").val(str);
+                $("#Hcoord").val(str);
             });
         }
     });

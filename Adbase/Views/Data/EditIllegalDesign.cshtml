@@ -201,8 +201,8 @@
                         <label for="Breadth">Широта </label>
                     </td>
                     <td>
-                        
-                        @Html.TextBoxFor(m => m.coordB, new { @class = "form-control" })
+                        <input class="text-box single-line" data-val="true" type="text" value="@ViewBag.Bcoord" name="Bcoord" id="Bcoord">
+                        @*@Html.TextBoxFor(m => m.coordB, new { @class = "form-control" })*@
                         @*<input class="text-box single-line ui-autocomplete-input" data-val="true" type="text" name="Breadth" id="Breadth">*@
                         <span data-valmsg-for="Breadth" data-valmsg-replace="true"></span>
                     </td>
@@ -212,7 +212,8 @@
                         <label for="Height">Долгота</label>
                     </td>
                     <td>
-                        @Html.TextBoxFor(m => m.coordH, new { @class = "form-control" })
+                        <input class="text-box single-line" data-val="true" type="text" value="@ViewBag.Hcoord" name="Hcoord" id="Hcoord">
+                        @*@Html.TextBoxFor(m => m.coordH, new {@class = "form-control"})*@
                         @*<input type="text" name="Height" data-val="true" id="Height">*@
 
                         @Html.ValidationMessageFor(model => model.coordH)
