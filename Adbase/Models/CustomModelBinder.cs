@@ -85,21 +85,40 @@ namespace Sciencecom.Models
             return ListSide;
         }
     }
+    public class CustomModelBinderForSideForAD : DefaultModelBinder
+    {
+        public override object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
+        {
+            var request = controllerContext.HttpContext.Request;
+            List<Side> ListSide = new List<Side>();
 
-    //public class CustomModelBinderForNormalcoordinates : DefaultModelBinder
-    //{
-    //    public override object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
-    //    {
-    //        var request = controllerContext.HttpContext.Request;
+            List<string> DirectionSide_id = request.Form.AllKeys.Where(a => a.Contains("DirectionSide")).ToList();
+            List<string> Identification_id = request.Form.AllKeys.Where(a => a.Contains("IdentificationSurface")).ToList();
 
+            
+            for (int i = 0; i < DirectionSide_id.Count; i++)
+            {
+                string tempIdentification_id = "";
+                string tempDirectionSide = "";
+                if (Identification_id.Where(a => a.Contains(i.ToString())).Any())
+                {
+                    tempIdentification_id = request.Form.Get(Identification_id.Single(a => a.Contains(i.ToString())));
+                    
+                }
+                if (DirectionSide_id.Where(a => a.Contains(i.ToString())).Any())
+                {
+                    tempDirectionSide= request.Form.Get(DirectionSide_id.Single(a => a.Contains(i.ToString())));
+                }
+                    ListSide.Add(new Side()
+                    {
+                        DirectionSide_id = tempDirectionSide != ""? (Guid?)new Guid(tempDirectionSide) :null,
+                        Identification_id = tempIdentification_id != "" ? (Guid?)new Guid(tempIdentification_id) : null
 
-    //        string Height = request.Form.Get("Height");
-    //        string Breadth = request.Form.Get("Breadth");
-    //        request.Form.Remove("Breadth");
-    //        request.Form.Remove("Height");
-    //        request.Form.Set("Breadth", Breadth);
-    //        request.Form.Set("Height", Height);
-    //        return base.BindModel(controllerContext,bindingContext);
-    //    }
-    //}
+                    });
+            
+            }
+            return ListSide;
+        }
+    }
+
 }
