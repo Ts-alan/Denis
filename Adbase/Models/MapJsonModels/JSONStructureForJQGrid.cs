@@ -34,7 +34,10 @@ namespace Sciencecom.Models.MapJsonModels
             Вид_конструкции = adv.TypeOfAdvertisingStructure.Name;
             Населенный_пункт = adv.Locality.NameLocality;
             Улица = adv.Street1;
-            Разреш_по = adv.EndDate.ToString();
+            if (adv.EndDate != null)
+            {
+                Разреш_по = adv.EndDate.Value.ToShortDateString();
+            }
             id = adv.Id_show.ToString();
 
         }
