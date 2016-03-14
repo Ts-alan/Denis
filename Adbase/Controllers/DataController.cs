@@ -471,7 +471,7 @@ namespace Sciencecom.Controllers
         public ActionResult CreateMetalPointerDesign(AdvertisingStructure structures,
             [ModelBinder(typeof(CustomModelBinderForSide))] List<Side> sides,
             [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces,
-            HttpPostedFileBase scanPassport1Sides, HttpPostedFileBase scanPassport2Sides,
+            HttpPostedFileBase Scan1Side, HttpPostedFileBase Scan2Side,
             HttpPostedFileBase scan1SidesWithFinancialManagement, List<HttpPostedFileBase> severalPhoto,
             string Bcoord, string Hcoord,
             int countSize = 1)
@@ -482,8 +482,8 @@ namespace Sciencecom.Controllers
             //удаление временно номера из базы данных
             if (_context.ListUniqueNumbers.Any(a => a.UniqueNumber == structures.UniqueNumber))
             {
-                _context.ListUniqueNumbers.Remove(
-                    _context.ListUniqueNumbers.Single(x => x.UniqueNumber == structures.UniqueNumber));
+                _context.ListUniqueNumbers.RemoveRange(
+                    _context.ListUniqueNumbers.Where(x => x.UniqueNumber == structures.UniqueNumber));
 
             }
             if (structures.Code == null)
@@ -522,9 +522,9 @@ namespace Sciencecom.Controllers
 
             SavePic(structures.Id_show.ToString(), "Scan1SidesWithFinancialManagement", scan1SidesWithFinancialManagement);
 
-            SavePic(structures.Id_show.ToString(), "ScanPassport_1Sides", scanPassport1Sides);
+            SavePic(structures.Id_show.ToString(), "Scan1Side", Scan1Side);
 
-            SavePic(structures.Id_show.ToString(), "ScanPassport_2Sides", scanPassport2Sides);
+            SavePic(structures.Id_show.ToString(), "Scan2Side", Scan2Side);
            
            
             return RedirectToAction("AdvertisingDesign");
@@ -559,8 +559,8 @@ namespace Sciencecom.Controllers
             if(mc.coordH!=null)
             mc.coordH = double.Parse(mc.coordH.ToString().Substring(0, 7));
             ViewBag.Id = mc.Id_show;
-            ViewBag.ScanPassport_1Sides = LoadPic(mc.Id_show.ToString(), "ScanPassport_1Sides");
-            ViewBag.ScanPassport_2Sides = LoadPic(mc.Id_show.ToString(), "ScanPassport_2Sides");
+            ViewBag.Scan1Side = LoadPic(mc.Id_show.ToString(), "Scan1Side");
+            ViewBag.Scan2Side = LoadPic(mc.Id_show.ToString(), "Scan2Side");
             ViewBag.Bcoord = mc.coordB;
             ViewBag.Hcoord = mc.coordH;
             return View(mc);
@@ -570,8 +570,8 @@ namespace Sciencecom.Controllers
         public ActionResult EditMetalPointerDesign(int id, AdvertisingStructure structures,
             [ModelBinder(typeof(CustomModelBinderForSide))] List<Side> sides,
             [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces,
-            HttpPostedFileBase scanPassport1Sides, HttpPostedFileBase scanPassport2Sides,
-            HttpPostedFileBase scan1SidesWithFinancialManagement, string scanPassport1SidesInd, string scanPassport2SidesInd,
+            HttpPostedFileBase Scan1Side, HttpPostedFileBase Scan2Side,
+            HttpPostedFileBase scan1SidesWithFinancialManagement, string Scan1SideInd, string Scan2SideInd,
             string Bcoord, string Hcoord,
             int countSize = 1)
         {
@@ -628,8 +628,8 @@ namespace Sciencecom.Controllers
 
             //сохранение картинок
 
-            ValidatePic(scanPassport1Sides, scanPassport1SidesInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "ScanPassport_1Sides");
-            ValidatePic(scanPassport2Sides, scanPassport2SidesInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "ScanPassport_2Sides");
+            ValidatePic(Scan1Side, Scan1SideInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "Scan1Side");
+            ValidatePic(Scan2Side, Scan2SideInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "Scan2Side");
 
             return RedirectToAction("AdvertisingDesign");
 
@@ -721,8 +721,8 @@ namespace Sciencecom.Controllers
             //удаление временно номера из базы данных
             if (_context.ListUniqueNumbers.Any(a => a.UniqueNumber == structures.UniqueNumber))
             {
-                _context.ListUniqueNumbers.Remove(
-                    _context.ListUniqueNumbers.Single(x => x.UniqueNumber == structures.UniqueNumber));
+                _context.ListUniqueNumbers.RemoveRange(
+                    _context.ListUniqueNumbers.Where(x => x.UniqueNumber == structures.UniqueNumber));
 
             }
 
