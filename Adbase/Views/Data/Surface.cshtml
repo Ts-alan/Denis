@@ -14,15 +14,19 @@
                     <input name="[@i].NumberSurface" type="hidden" value="@ViewBag.Side">
                     <div class="form-group has-feedback">
                         <label for="[@i].Height">Высота</label>
-                        @Html.ValidationMessageFor(model => model[i].Height)
-                        @Html.TextBoxFor(model => model[i].Height, new { @class = "form-control", type = "number"})
+                        @*@Html.ValidationMessageFor(model => model[i].Height)*@
+                        <span class="field-validation-valid" data-valmsg-for="[@i].Height" data-valmsg-replace="true"></span>
                         <span class="glyphicon form-control-feedback"></span>
+                        @Html.TextBoxFor(model => model[i].Height, new { @class = "form-control", type = "number"})
+                        
                     </div>
                     <div class="form-group has-feedback" style="margin-left: 20px">
                         <label for="[@i].Width">Ширина</label>
-                        @Html.ValidationMessageFor(model => model[i].Width)
+                        @* @Html.ValidationMessageFor(model => model[i].Width)*@
+                        <span class="field-validation-valid" data-valmsg-for="[@i].Width" data-valmsg-replace="true"></span>
+                         <span class="glyphicon form-control-feedback"></span>
                         @Html.TextBoxFor(model => model[i].Width, new { @class = "form-control", type = "number" })
-                        <span class="glyphicon form-control-feedback"></span>
+                       
                     </div>
                     <div class="form-group has-feedback" style="margin-left: 20px">
                         <label for="[@i].Space">Площадь</label>
