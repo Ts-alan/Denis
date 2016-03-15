@@ -24,11 +24,6 @@
     //Населенный пункт выпадающий список
     var Locality = new SciencecomEntities().Localities.ToList();
 
-    //Направление стороны
-    var DirectionSide = new SciencecomEntities().DirectionSides.OrderBy(x=>x.OrderBY).ToList();
-    //Индификация поверхности
-    var IdentificationSide = new SciencecomEntities().Identifications.ToList();
-    //IdentificationSide.Insert(0, null);
     //Идентификационный номер
     var PropertyLocation = new SciencecomEntities().PropertyLocations.ToList();
    
@@ -73,10 +68,11 @@
 
 //кол-во сторон
     function SetCountSize() {
+
         EndCountForSurface = 0;
         var CountSizes = $('#CountSizes').val();
         $("#CountSize").val(CountSizes);
-        if (CountSizes != "") {
+
             $("[code]").each(function (indx, element) {
                 element.remove();
             });
@@ -101,9 +97,17 @@
                     "<option>6</option>" +
                     "<option>7</option>" +
                     "<option>8</option>" +
-                    "</select> </div> &nbsp;&nbsp;&nbsp; <b>Направление стороны</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("DirectionSide", new SelectList(DirectionSide, "id", "NameOfDirectionSide"), "", new { IdentificationForDirectionSide = "IdentificationForDirectionSide" ,@class= "form-control input-sm" }).ToHtmlString().Replace("\"", " "))' +
+                    "</select> </div> &nbsp;&nbsp;&nbsp; <b>Направление стороны</b>" + "<select identificationfordirectionside='IdentificationForDirectionSide' class='form-control' input-sm=\"\"  name=\"[" + (i-1) + "].DirectionSide\"><option value=\"\"></option>" +
+                        "<option value=\"27b8c509-8f09-4a0d-ae22-048c2611b7ea\">По ходу движения (сторона А)</option>"+
+                        "<option value=\"266ea166-67e8-446b-95b1-288b0b876eed\">Против хода движения (сторона В)</option>"+
+                        "<option value=\"f40319b8-aa82-4182-bec2-4c9b0ba0146d\">На центр перекрестка (сторона А)</option>"+
+                        "<option value=\"7436112a-122c-4809-9f6c-c5aefff17d6d\">Вращается</option>"+
+                        "</select>" +
                     "</div>" +
-                    "</div> <div style=\"display: none\" id=\"" + i + "HiddenIdentification\"> &nbsp;&nbsp;&nbsp;<b>Идентификация поверхностей</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("IdentificationSurface", new SelectList(IdentificationSide, "id", "IdentificationName"), "", new { IdentificationForIdentificationSurface = "IdentificationForIdentificationSurface", @class = "form-control input-sm" }).ToHtmlString().Replace("\"", " ")) </div>' +
+                    "</div> <div style=\"display: none\" id=\"" + i + "HiddenIdentification\"> &nbsp;&nbsp;&nbsp;<b>Идентификация поверхностей</b>" + "<select identificationforidentificationsurface=\"IdentificationForIdentificationSurface\" class=\"form-control valid\" input-sm=\"\" id=\"IdentificationSurface\" name=\"[" + (i-1) + "].IdentificationSurface\"><option value=\"\"></option>" +
+                        "<option value=\"4610cf49-0360-4edb-9f05-752f7d574dcc\">Вертикальная</option>"+
+                        "<option value=\"95ee0238-134f-4a5c-a9ec-a9f0f02c2c75\">Горизонтальная </option>"+
+                        "</select></div>" +
                     "<div  id=\"InsertPartial" + i + "\"></div>" +
                     "</div>");
 
@@ -114,7 +118,7 @@
 
 
 
-    }
+
 
     //Добавить поверхность+
     function AddSurface(i) {
@@ -134,13 +138,31 @@
 
 
         $.ajax('@Url.Action("AddSurface", "Data")', { data: { side: i, StartCountForSurface: StartCountForSurface, EndCountForSurface: EndCountForSurface } })
-            .success(function (e) {
+            .success(function(e) {
                 var live_str = $('<div>', { html: e });
 
                 var res = live_str.find('.body-content');
 
                 $("#InsertPartial" + i + "").prepend(res);
+
+
+                $('[name$="].Height"]').each(function (indx, element) {
+
+                    $(element).on("change", function() {
+
+                        CalculationOfTheArea($(element).attr("name").substring(1, $(element).attr("name").indexOf("]")));
+                        });
+                }
+    );
+                $('[name$="].Width"]').each(function(indx, element) {
+                    $(element).on("change", function() {
+
+                        CalculationOfTheArea($(element).attr("name").substring(1, $(element).attr("name").indexOf("]")));
+                        });
+                });
             });
+
+
 
     }
 
@@ -458,3 +480,6 @@
             </div>
         </div>
 }
+<div id="ModalPicturePartial">
+    @Html.Partial("PatialView/ModalPicture")
+</div>

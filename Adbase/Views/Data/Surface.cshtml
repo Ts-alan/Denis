@@ -6,12 +6,12 @@
     <script type="text/javascript">
         AddRules();
         //выщитывание площади для каждой поверхности
-        $('[name="[' + @i + '].Height"]').change(function ()
+        $('[name="[' + @i + '].Height"]').on("change",function ()
         {
 
             CalculationOfTheArea(@i);
         });
-        $('[name="[' + @i + '].Width"]').change(function ()
+        $('[name="[' + @i + '].Width"]').on("change", function ()
         {
 
             CalculationOfTheArea(@i);

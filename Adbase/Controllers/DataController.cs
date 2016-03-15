@@ -177,10 +177,10 @@ namespace Sciencecom.Controllers
         [Authorize]
         [HttpPost]
         public ActionResult CreateAdvertisingDesign(AdvertisingStructure structures,
-            [ModelBinder(typeof(CustomModelBinderForSide))] List<Side> sides,
+            [ModelBinder(typeof(CustomModelBinderForSideForAD))] List<Side> sides,
             [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces,
-            HttpPostedFileBase scanPassport1Sides, HttpPostedFileBase scanPassport2Sides,
-            HttpPostedFileBase scan1SidesWithFinancialManagement, List<HttpPostedFileBase> severalPhoto,
+            HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides,
+             List<HttpPostedFileBase> severalPhoto,
             string Bcoord, string Hcoord,
             int countSize = 0)
         {
@@ -197,12 +197,7 @@ namespace Sciencecom.Controllers
             //structures.coordH = double.Parse(Hcoord.Replace(",", "."), CultureInfo.InvariantCulture);
             if (countSize > 0)
             {
-                if (sides.Count == 0)
-                {
-                    sides.Add(
-                        new Side(){ DirectionSide_id = new Guid("27b8c509-8f09-4a0d-ae22-048c2611b7ea") }
-                        );
-                }
+   
                 for (int j = 0; j < countSize; j++)
                 {
                     sides[j].AdvertisingStructures_Id = structuresId;
@@ -223,22 +218,10 @@ namespace Sciencecom.Controllers
 
                 _context.Surfaces.AddRange(listSurface);
 
-                try
-                {
+ 
                     _context.SaveChanges();
-                }
-                catch (DbEntityValidationException e)
-                {
-                    foreach (DbEntityValidationResult validationError in e.EntityValidationErrors)
-                    {
-                        Response.Write("Object: " + validationError.Entry.Entity.ToString());
-                        Response.Write("");
-                        foreach (DbValidationError err in validationError.ValidationErrors)
-                        {
-                            Response.Write(err.ErrorMessage + "");
-                        }
-                    }
-                }
+              
+               
             }
             else
             {
@@ -247,11 +230,11 @@ namespace Sciencecom.Controllers
                 _context.SaveChanges();
             }
 
-            SavePic(structures.Id_show.ToString(), "Scan1SidesWithFinancialManagement", scan1SidesWithFinancialManagement);
+           
 
-            SavePic(structures.Id_show.ToString(), "ScanPassport_1Sides", scanPassport1Sides);
+            SavePic(structures.Id_show.ToString(), "ScanPassport_1Sides", ScanPassport_1Sides);
 
-            SavePic(structures.Id_show.ToString(), "ScanPassport_2Sides", scanPassport2Sides);
+            SavePic(structures.Id_show.ToString(), "ScanPassport_2Sides", ScanPassport_2Sides);
 
             return RedirectToAction("AdvertisingDesign");
         }
@@ -775,9 +758,9 @@ namespace Sciencecom.Controllers
             TempData["surface"] = surfaces;
             mc.Code = "LD";
             if(mc.coordB!=null)
-            mc.coordB = double.Parse(mc.coordB.ToString().Substring(0, 7));
+            mc.coordB = double.Parse(mc.coordB.ToString());
             if (mc.coordH != null)
-                mc.coordH = double.Parse(mc.coordH.ToString().Substring(0, 7));
+                mc.coordH = double.Parse(mc.coordH.ToString());
             ViewBag.Id = mc.Id_show;
             ViewBag.Scan1Side = LoadPic(mc.Id_show.ToString(), "Scan1Side");
             ViewBag.Scan2Side = LoadPic(mc.Id_show.ToString(), "Scan2Side");

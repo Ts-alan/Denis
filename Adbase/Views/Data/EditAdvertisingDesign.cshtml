@@ -46,11 +46,11 @@
     var StartCountForSurface;
     var EndCountForSurface = 0;
 
-    var ArrayOfSides = @Html.Raw(JsonConvert.SerializeObject(Model.Sides.Select(a => new {a.DirectionSide_id, length = a.Surfaces.Count, a.Identification_id}), Formatting.Indented, new JsonSerializerSettings
+    var ArrayOfSides = @Html.Raw(JsonConvert.SerializeObject(Model.Sides.OrderBy(a=>a.Name).Select(a => new {a.DirectionSide_id, length = a.Surfaces.Count, a.Identification_id,a.Name}), Formatting.Indented, new JsonSerializerSettings
                        {
                            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                        }));
-
+    
     $(document).ready(function()
     {
         ////отключение валидации
@@ -70,7 +70,11 @@
 
             AddSurface(indx + 1);
         });
+        $("[identificationforidentificationsurface]").each(function(indx, element)
+        {
+            $(element)[0].value = ArrayOfSides[indx].Identification_id;
 
+        });
         //выпадающий список на согласование
         $("[name=OnAgreement]").change(function()
         {
@@ -88,6 +92,7 @@
         //css стиль для IdentificationForDirectionSide
 
         $("[directionside]").addClass("form-control");
+        $("[identificationforidentificationsurface]").addClass("form-control");
     });
 
     // подсчет суммы площадей
@@ -110,8 +115,7 @@
         EndCountForSurface = 0;
         var CountSizes = $('#CountSizes').val();
         $("#CountSize").val(CountSizes);
-        if (CountSizes != "")
-        {
+    
             $("[code]").each(function(indx, element)
             {
                 element.remove();
@@ -146,16 +150,8 @@
                 $("#SizeOfCount").val(CountSizes);
             }
         }
-        //Навешивание валидации
-        $('[name="DirectionSide"]').each(function(indx, element)
-        {
-            $(element).attr("name", "[" + indx + "].IdentificationForDirectionSide");
-        });
-
-        //другое решение не тестил
-        $('[name="DirectionSide"]').data('validator', null);
-        $.validator.unobtrusive.parse('[name="DirectionSide"]');
-    }
+        
+    
 
     function SetValidate(i)
     {
@@ -188,6 +184,22 @@
                 $("#InsertPartial" + i + "").prepend(res);
 
                 CalculationAS();
+
+                $('[name$="].Height"]').each(function (indx, element) {
+
+                    $(element).on("change", function() {
+
+                        CalculationOfTheArea($(element).attr("name").substring(1, $(element).attr("name").indexOf("]")));
+                    });
+                }
+   );
+                $('[name$="].Width"]').each(function(indx, element) {
+                    $(element).on("change", function() {
+
+                        CalculationOfTheArea($(element).attr("name").substring(1, $(element).attr("name").indexOf("]")));
+                    });
+                });
+
                 //отключение валидации
                 $.validator.methods.number = function(value, element)
                 {
