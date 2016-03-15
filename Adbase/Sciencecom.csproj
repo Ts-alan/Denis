@@ -1425,9 +1425,7 @@
     <Content Include="Views\Data\Metal.cshtml" />
     <Content Include="Views\Data\Light.cshtml" />
     <Content Include="Views\Data\Owner.cshtml" />
-    <Content Include="Views\Data\EditMetal.cshtml" />
     <Content Include="Views\Data\AddPassport.cshtml" />
-    <Content Include="Views\Data\EditLight.cshtml" />
     <Content Include="Views\Owners\Create.cshtml" />
     <Content Include="Views\Owners\Delete.cshtml" />
     <Content Include="Views\Owners\Details.cshtml" />

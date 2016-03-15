@@ -59,12 +59,13 @@
         myMap.controls.add('typeSelector');
 
         onCityChange();
-
+        
         if ($("#Bcoord").val() != "" && $("#Hcoord").val() != "")
         {
             // нанесение обьекта на карту при загрузке
 
-            if (typedesign = "IllegalDesign") {
+            if (typedesign == "IllegalDesign") {
+                
                         myPlacemark = new ymaps.Placemark([$("#Bcoord").val().replace(",", "."), $("#Hcoord").val().replace(',', '.')], {
                             iconContent: "Н",
                             hintContent: "Неопознанная конструкция",
@@ -111,7 +112,8 @@
                     $("#Bcoord").val(str.replace(",","."));
                     str = String(coords[1].toPrecision(6).replace('.', ','));
                     $("#Hcoord").val(str.replace(",", "."));
-                    if (typedesign = "IllegalDesign") {
+                    if (typedesign == "IllegalDesign") {
+                        
                         myPlacemark = new ymaps.Placemark([coords[0], coords[1]], {
                             iconContent: "Н",
                             hintContent: "Неопознанная конструкция",
