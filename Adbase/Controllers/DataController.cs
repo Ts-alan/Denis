@@ -282,6 +282,9 @@ namespace Sciencecom.Controllers
             TempData["surface"] = surfaces;
             ViewBag.Bcoord = mc.coordB;
             ViewBag.Hcoord = mc.coordH;
+            ViewBag.Id = mc.Id_show;
+            ViewBag.photo1 = LoadPic(mc.Id_show.ToString(), "ScanPassport_1Sides");
+            ViewBag.photo2 = LoadPic(mc.Id_show.ToString(), "ScanPassport_2Sides");
             return View(mc);
         }
 
@@ -289,9 +292,9 @@ namespace Sciencecom.Controllers
         public ActionResult EditAdvertisingDesign(int id, AdvertisingStructure structures,
             [ModelBinder(typeof(CustomModelBinderForSide))] List<Side> sides,
             [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces,
-            HttpPostedFileBase scanPassport1Sides, HttpPostedFileBase scanPassport2Sides,
-            HttpPostedFileBase scan1SidesWithFinancialManagement, string scanPassport1SidesInd,
-            string scanPassport2SidesInd, string Bcoord, string Hcoord,
+            HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides,
+            HttpPostedFileBase scan1SidesWithFinancialManagement, 
+           string Bcoord, string Hcoord, string photoInd1, string photoInd2,
             int countSize = 0)
         {
 
@@ -365,8 +368,8 @@ namespace Sciencecom.Controllers
 
             //картики
 
-            ValidatePic(scanPassport1Sides, scanPassport1SidesInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "ScanPassport_1Sides");
-            ValidatePic(scanPassport2Sides, scanPassport2SidesInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "ScanPassport_2Sides");
+            ValidatePic(ScanPassport_1Sides, photoInd1, structures.Id_show.ToString(), mc.Id_show.ToString(), "ScanPassport_1Sides");
+            ValidatePic(ScanPassport_2Sides, photoInd2, structures.Id_show.ToString(), mc.Id_show.ToString(), "ScanPassport_2Sides");
             
            return RedirectToAction("AdvertisingDesign");
         }

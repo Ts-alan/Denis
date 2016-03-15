@@ -73,7 +73,7 @@ function AddRules()
         var wId = "";
       
             $("[name$='].Width']").each(function(ind, wId) {
-                console.log($(wId));
+                
             $(wId).rules("add", {
                 min: "0",
                 messages :{min: "Введите положительное значение" } 

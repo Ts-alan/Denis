@@ -257,29 +257,49 @@
 
 </script>
 <style>
-    [identificationfordirectionside] {
-          display: block;
-          width: 100%;
-          height: 34px;
-          padding: 6px 12px;
-          font-size: 14px;
-          line-height: 1.42857143;
-          color: #555555;
-          background-color: #ffffff;
-          background-image: none;
-          border: 1px solid #cccccc;
-          border-radius: 4px;
-          -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-          -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
-          -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-          transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-    }
-     .form-horizontal .form-group 
-     {
-         margin-left: 0px;
-         margin-right: 0px;
+    /*подправление красивых полей для выпадающих списков*/
+     [identificationfordirectionside]  {
+         display: block;
+         width: 100%;
+         height: 34px;
+         padding: 6px 12px;
+         font-size: 14px;
+         line-height: 1.42857143;
+         color: #555555;
+         background-color: #ffffff;
+         background-image: none;
+         border: 1px solid #cccccc;
+         border-radius: 4px;
+         -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+         box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+         -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+         -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+         transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
      }
+    [identificationforidentificationsurface] {
+        display: block;
+        width: 100%;
+        height: 34px;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: #555555;
+        background-color: #ffffff;
+        background-image: none;
+        border: 1px solid #cccccc;
+        border-radius: 4px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+        -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+        -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+        transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s; 
+    }
+
+    .form-horizontal .form-group 
+    {
+        margin-left: 0px;
+        margin-right: 0px;
+    }
 </style>
 <h3> КАРТОЧКА ЩИТА</h3>
 
@@ -391,8 +411,7 @@
                     </td>
                     <td>
                         <input class="text-box single-line form-control" value="@ViewBag.Bcoord" name="Bcoord" id="Bcoord">
-                        @*@Html.TextBoxFor(m => m.coordB, new { @class = "form-control" })*@
-                        @*<input class="text-box single-line ui-autocomplete-input" data-val="true" type="text" name="Breadth" id="Breadth">*@
+
                         <span data-valmsg-for="Breadth" data-valmsg-replace="true"></span>
                     </td>
                 </tr>
@@ -463,28 +482,65 @@
     </div>
      <div class="row" style="margin-top: 15px">
     <div class="col-md-4">
-        
-        <img class="closeimg" style="width: 20px" src="../../Content/CloseImg.jpg"/>
-        <div class="fileUpload btn btn-default input-sm">
-            <span accept="image/jpeg/">&nbsp;Стор. 1&nbsp;</span>
-            <input type="file" class="upload" name="ScanPassport_1Sides" accept="image/jpeg/"/>
-        </div>
-        <label for="ScanPassport_1Sides">Файл не выбран</label>
-        <br/>
-        <br/>
+        @if (ViewBag.photo1)
+        {
+            string image = "/Images/ScanPassport_1Sides/" + ViewBag.Id + "ScanPassport_1Sides.jpg";
+            string imgName = ViewBag.Id + "ScanPassport_1Sides.jpg";
+            <input type="hidden" name="PhotoInd1" value="setImage">
+            <img class="closeimg" style="width: 20px" src="../../Content/CloseImg.jpg"/>
+            <div class="fileUpload btn btn-warning input-sm">
+                <span>&nbsp;&nbsp;Фото 1&nbsp;</span>
+                <input type="file" class="upload" name="ScanPassport_1Sides" accept="image/jpeg/"/>
+            </div>
+            <label for="photo1">@imgName</label>
+            <br/>
+            <br/>
+            <button type="button" style="margin-left: 25px" class="modalPictureTrigger btn btn-default input-sm" data-toggle="modal" onclick="addPic('#ModalPictureDivphoto1', '@image')" data-target="#ViewModalPicturephoto1">Показать</button>
 
+        }
+        else
+        {
+            <input type="hidden" name="PhotoInd1" value="">
+            <img class="closeimg" style="width: 20px" src="../../Content/CloseImg.jpg"/>
+            <div class="fileUpload btn btn-default input-sm">
+                <span accept="image/jpeg/">&nbsp;Стор. 1&nbsp;</span>
+                <input type="file" class="upload" name="ScanPassport_1Sides" accept="image/jpeg/"/>
+            </div>
+            <label for="ScanPassport_1Sides">Файл не выбран</label>
+            <br/>
+            <br/>
+        }
     </div>
-     <div class="col-md-4">
-         <img class="closeimg" style="width: 20px" src="../../Content/CloseImg.jpg"/>
-         <div class="fileUpload btn btn-default input-sm">
-             <span accept="image/jpeg/">&nbsp;Стор. 2&nbsp;</span>
-             <input type="file" class="upload" name="ScanPassport_2Sides" accept="image/jpeg/"/>
-         </div>
-         <label for="ScanPassport_2Sides">Файл не выбран</label>
-         <br/>
-         <br/>
+         <div class="col-md-4">
+             @if (ViewBag.photo2)
+             {
+                 string image = "/Images/ScanPassport_2Sides/" + ViewBag.Id + "ScanPassport_2Sides.jpg";
+                 string imgName = ViewBag.Id + "ScanPassport_1Sides.jpg";
+                 <input type="hidden" name="PhotoInd2" value="setImage">
+                 <img class="closeimg" style="width: 20px" src="../../Content/CloseImg.jpg"/>
+                 <div class="fileUpload btn btn-warning input-sm">
+                     <span>&nbsp;&nbsp;Фото 1&nbsp;</span>
+                     <input type="file" class="upload" name="ScanPassport_2Sides" accept="image/jpeg/"/>
+                 </div>
+                 <label for="photo1">@imgName</label>
+                 <br/>
+                 <br/>
+                 <button type="button" style="margin-left: 25px" class="modalPictureTrigger btn btn-default input-sm" data-toggle="modal" onclick="addPic('#ModalPictureDivphoto1', '@image')" data-target="#ViewModalPicturephoto1">Показать</button>
 
-     </div>
+             }
+             else
+             {
+                <input type="hidden" name="PhotoInd2" value="">
+                 <img class="closeimg" style="width: 20px" src="../../Content/CloseImg.jpg"/>
+                 <div class="fileUpload btn btn-default input-sm">
+                     <span accept="image/jpeg/">&nbsp;Стор. 2&nbsp;</span>
+                     <input type="file" class="upload" name="ScanPassport_2Sides" accept="image/jpeg/"/>
+                 </div>
+                 <label for="ScanPassport_2Sides">Файл не выбран</label>
+                 <br/>
+                 <br/>
+             }
+         </div>
           </div>
 
     <h3> 4.Описание конструкции</h3>
@@ -548,5 +604,7 @@
         </div>
     </div>
 }
-
+<div id="ModalPicturePartial">
+    @Html.Partial("PatialView/ModalPicture")
+</div>
 
