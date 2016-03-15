@@ -236,12 +236,7 @@ namespace Sciencecom.Controllers
 
             SavePic(structures.Id_show.ToString(), "ScanPassport_2Sides", ScanPassport_2Sides);
 
-            
-           
-
             return RedirectToAction("AdvertisingDesign");
-
-
         }
 
         [Authorize]
@@ -359,7 +354,6 @@ namespace Sciencecom.Controllers
                 _context.Surfaces.AddRange(listSurface);
                 
                 _context.SaveChanges();
-
             }
             else
             {
@@ -367,9 +361,7 @@ namespace Sciencecom.Controllers
                 _context.AdvertisingStructures.Add(structures);
                 
                 _context.SaveChanges();
-               
             }
-
 
             //картики
 
@@ -407,20 +399,15 @@ namespace Sciencecom.Controllers
                 }
             }
             TempData["surface"] = surfaces;
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+           
             switch (type)
             {
                 case "MP":
                     {
                         ViewBag.Type = "MP";
                         ViewBag.Id = data.Id_show;
-
-                        ViewBag.Scan1Sides = LoadPic(data.Id_show.ToString(), "Scan1SidesWithFinancialManagement");
-                        ViewBag.ScanPassport_1 = LoadPic(data.Id_show.ToString(), "ScanPassport_1Sides");
-                        ViewBag.ScanPassport_2 = LoadPic(data.Id_show.ToString(), "ScanPassport_2Sides");
+                        ViewBag.Scan1Side = LoadPic(data.Id_show.ToString(), "Scan1Side");
+                        ViewBag.Scan2Side = LoadPic(data.Id_show.ToString(), "Scan2Side");
                         
                     }
                     break;
@@ -431,10 +418,14 @@ namespace Sciencecom.Controllers
             }
 
             AdvertisingStructure mc = _context.AdvertisingStructures.Single(a => a.Id_show == id);
-            if(mc.coordB!=null)
+            if (mc.coordB != null)
+            {
                 mc.coordB = double.Parse(mc.coordB.ToString().Substring(0, 7));
-            if(mc.coordH!=null)
-            mc.coordH = double.Parse(mc.coordH.ToString().Substring(0, 7));
+            }
+            if (mc.coordH != null)
+            {
+                mc.coordH = double.Parse(mc.coordH.ToString().Substring(0, 7));
+            }
             return View(mc);
         }
 
@@ -508,7 +499,6 @@ namespace Sciencecom.Controllers
             SavePic(structures.Id_show.ToString(), "Scan1Side", Scan1Side);
 
             SavePic(structures.Id_show.ToString(), "Scan2Side", Scan2Side);
-           
            
             return RedirectToAction("AdvertisingDesign");
 
@@ -606,8 +596,6 @@ namespace Sciencecom.Controllers
             _context.Sides.RemoveRange(mc.Sides);
 
             _context.SaveChanges();
-
-
 
             //сохранение картинок
 
@@ -735,8 +723,6 @@ namespace Sciencecom.Controllers
 
             _context.SaveChanges();
 
-          
-
             SavePic(structures.Id_show.ToString(), "ScanPassport_1Sides", ScanPassport_1Sides);
 
             SavePic(structures.Id_show.ToString(), "ScanPassport_2Sides", ScanPassport_2Sides);
@@ -744,9 +730,6 @@ namespace Sciencecom.Controllers
             SavePic(structures.Id_show.ToString(), "Scan1Side", scan1Side);
 
             SavePic(structures.Id_show.ToString(), "Scan2Side", scan2Side);
-
-           
-            
 
             return RedirectToAction("AdvertisingDesign");
         }
@@ -793,7 +776,6 @@ namespace Sciencecom.Controllers
             [ModelBinder(typeof(CustomModelBinderForSide))] List<Side> sides,
             [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces,
             HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides,
-            
             HttpPostedFileBase scan1Side, HttpPostedFileBase scan2Side, string ScanPassport_1SidesInd, 
             string ScanPassport_2SidesInd, string scan1SideInd, string scan2SideInd, 
             string Bcoord, string Hcoord, int countSize = 1)
@@ -832,8 +814,6 @@ namespace Sciencecom.Controllers
             structures.Id = tempId;
             structures.Area = CountSquare(structures);
              structures = ValidateCoords(structures, Bcoord, Hcoord);
-            //structures.coordB = double.Parse(Bcoord.Replace(",", "."), CultureInfo.InvariantCulture);
-            //structures.coordH = double.Parse(Hcoord.Replace(",", "."), CultureInfo.InvariantCulture);
             _context.AdvertisingStructures.Add(structures);
             _context.Sides.AddRange(sides);
 
@@ -852,8 +832,6 @@ namespace Sciencecom.Controllers
             ValidatePic(ScanPassport_2Sides, ScanPassport_2SidesInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "ScanPassport_2Sides");
             ValidatePic(scan1Side, scan1SideInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "Scan1Side");
             ValidatePic(scan2Side, scan2SideInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "Scan2Side");
-
-            
            
             return RedirectToAction("AdvertisingDesign");
 
@@ -984,9 +962,8 @@ namespace Sciencecom.Controllers
             structures.Id = tempId;
             structures.Code = "UI";
             structures.Area = CountSquare(structures);
-             structures = ValidateCoords(structures, Bcoord, Hcoord);
-            //structures.coordB = double.Parse(Bcoord.Replace(",", "."), CultureInfo.InvariantCulture);
-            //structures.coordH = double.Parse(Hcoord.Replace(",", "."), CultureInfo.InvariantCulture);
+            structures = ValidateCoords(structures, Bcoord, Hcoord);
+
             _context.AdvertisingStructures.Add(structures);
             _context.Sides.AddRange(sides);
 
@@ -1004,7 +981,6 @@ namespace Sciencecom.Controllers
 
             ValidatePic(photo1, photoInd1, structures.Id_show.ToString(), mc.Id_show.ToString(), "photo1");
             ValidatePic(photo2, photoInd2, structures.Id_show.ToString(), mc.Id_show.ToString(), "photo2");
-
            
             return RedirectToAction("AdvertisingDesign");
 
@@ -1062,9 +1038,7 @@ namespace Sciencecom.Controllers
 
             _context.Sides.AddRange(sides);
             structures.Area = CountSquare(structures);
-             structures = ValidateCoords(structures, Bcoord, Hcoord);
-            //structures.coordB = double.Parse(Bcoord.Replace(",", "."), CultureInfo.InvariantCulture);
-            //structures.coordH = double.Parse(Hcoord.Replace(",", "."), CultureInfo.InvariantCulture);
+            structures = ValidateCoords(structures, Bcoord, Hcoord);
             _context.AdvertisingStructures.Add(structures);
             List<Surface> listSurface = new List<Surface>();
             foreach (var i in surfaces)
@@ -1079,8 +1053,6 @@ namespace Sciencecom.Controllers
             SavePic(structures.Id_show.ToString(), "photo1", photo1);
 
             SavePic(structures.Id_show.ToString(), "photo2", photo2);
-           
-           
 
             return RedirectToAction("AdvertisingDesign");
         }
