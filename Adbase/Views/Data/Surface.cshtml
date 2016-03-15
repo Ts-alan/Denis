@@ -3,21 +3,7 @@
 
 @for (int i = ViewBag.StartCountForSurface, j = 1; i < ViewBag.EndCountForSurface; i++, j++)
 {
-    <script type="text/javascript">
-        AddRules();
-        //выщитывание площади для каждой поверхности
-        $('[name="[' + @i + '].Height"]').on("change",function ()
-        {
-
-            CalculationOfTheArea(@i);
-        });
-        $('[name="[' + @i + '].Width"]').on("change", function ()
-        {
-
-            CalculationOfTheArea(@i);
-        });
-
-    </script>
+    
     <text>  <div side="@ViewBag.Side">
             <input type="hidden" name="[@i].SideOfSurface" value="@ViewBag.Side">
             <h3 style="margin-left: 150px">Поверхность @j &nbsp; Стороны @ViewBag.Side </h3>
@@ -46,7 +32,22 @@
                 </div>
             </div>
 
-        </div></text>
+    </div></text>
+    <script type="text/javascript">
+        AddRules();
+        //выщитывание площади для каждой поверхности
+        $('[name="[' + @i + '].Height"]').on("change",function ()
+        {
+
+            CalculationOfTheArea(@i);
+        });
+        $('[name="[' + @i + '].Width"]').on("change", function ()
+        {
+
+            CalculationOfTheArea(@i);
+        });
+
+    </script>
 }
 
 

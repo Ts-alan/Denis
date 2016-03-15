@@ -71,41 +71,40 @@ function AddRules()
     if (width.length > 0)
     {
         var wId = "";
-        for (var i = 0; i < width.length; i++)
-        {
-            wId = "input[name ='" + "[" + i + "].Width']";
+      
+            $("[name$='].Width']").each(function(ind, wId) {
+                console.log($(wId));
             $(wId).rules("add", {
                 min: "0",
                 messages :{min: "Введите положительное значение" } 
             });
-            
-        }
+            });
+        
     }
 
     if (space.length > 0)
     {
         var sId = "";
-        for (var i = 0; i < space.length; i++)
-        {
-            sId = "input[name ='" + "[" + i + "].Space']";
+        $("[name$='].Space']").each(function(ind, sId) {
+           
             $(sId).rules("add", {
                 min: "0"
 
             });
-        }
+        });
         
     }
 
     if (height.length > 0)
     {
         var hId = "";
-        for (var i = 0; i < space.length; i++)
-        {
-            hId = "input[name ='" + "[" + i + "].Height']";
+
+        $("[name$='].Height']").each(function (ind, hId) {
+            
             $(hId).rules("add", {
                 min: "0",
-                messages :{min: "Введите положительное значение" } 
+                messages: { min: "Введите положительное значение" }
             });
-        }
+        });
     }
 }
