@@ -38,40 +38,44 @@
     var i = 0;
     var StartCountForSurface;
     var EndCountForSurface = 0;
-    $(document).ready(function () {
-
-
+    $(document).ready(function()
+    {
         //выпадающий список на согласование
-        $("[name=OnAgreement]").change(function () {
+        $("[name=OnAgreement]").change(function()
+        {
             var selectIndex = $("[name=OnAgreement] option:selected").val();
 
-            if (selectIndex == "true") {
+            if (selectIndex == "true")
+            {
                 $("#ContractHide").css("display", "block");
             }
-            if (selectIndex == "false") {
+            if (selectIndex == "false")
+            {
                 $("#ContractHide").css("display", "none");
             }
-
         });
 
         //выщитывание площади для каждой поверхности
-        $('#SHeight').change(function () {
+        $('#SHeight').change(function()
+        {
             //alert("!!!");
             CalculationOfTheArea(0);
         });
-        $('#Width').change(function () {
+        $('#Width').change(function()
+        {
             //alert("!!!");
             CalculationOfTheArea(0);
         });
-
     });
 
     // подсчет суммы площадей
-    function CalculationAS() {
-
+    function CalculationAS()
+    {
         var Summ = 0;
-        $("[selectforspace]").each(function (indx, element) {
-            if ($(element).val() != "") {
+        $("[selectforspace]").each(function(indx, element)
+        {
+            if ($(element).val() != "")
+            {
                 Summ += parseInt($(element).val());
             }
         });
@@ -79,17 +83,20 @@
     }
 
     //кол-во сторон
-    function SetCountSize() {
+    function SetCountSize()
+    {
         EndCountForSurface = 0;
         var CountSizes = $('#CountSizes').val();
         $("#CountSize").val(CountSizes);
-        if (CountSizes != "") {
-            $("[code]").each(function (indx, element) {
+        if (CountSizes != "")
+        {
+            $("[code]").each(function(indx, element)
+            {
                 element.remove();
             });
 
-            for (var i = 1; i <= CountSizes; i++) {
-
+            for (var i = 1; i <= CountSizes; i++)
+            {
                 $("#InsertSide").before("<div code class=\"form-horizontal\" >" +
                     "<div class=\"form-group\" >" +
                     "<h3 class=\"control-label col-md-2\" for=\"\" style=\"margin-left: 55px\">Сторона  " + i + " </h3>" +
@@ -114,83 +121,109 @@
                     "</div>");
 
                 $("#SizeOfCount").val(CountSizes);
-
             }
         }
         //Навешивание валидации
-        $('[name="DirectionSide"]').each(function (indx, element) {
+        $('[name="DirectionSide"]').each(function(indx, element)
+        {
             $(element).attr("name", "[" + indx + "].IdentificationForDirectionSide");
         });
 
-        $('[IdentificationForDirectionSide]').each(function (indx, element) {
-
-            $(element).rules('add', {
-                required: true
-            });
-        }
+        $('[IdentificationForDirectionSide]').each(function(indx, element)
+            {
+                $(element).rules('add', {
+                    required: true
+                });
+            }
         );
 
-        $('[IdentificationForCountSide]').each(function (indx, element) {
-
-            $(element).rules('add', {
-                required: true
-            });
-        }
+        $('[IdentificationForCountSide]').each(function(indx, element)
+            {
+                $(element).rules('add', {
+                    required: true
+                });
+            }
         );
         //другое решение не тестил
         //$('[name="DirectionSide"]').data('validator', null);
         //$.validator.unobtrusive.parse('[name="DirectionSide"]');
-
     }
 
     //Добавить поверхность+
-    function AddSurface(i) {
-
+    function AddSurface(i)
+    {
         var count = $("#AddButton" + i + "").val();
         StartCountForSurface = EndCountForSurface;
         EndCountForSurface = parseInt(count) + parseInt(EndCountForSurface);
 
-        if (count == 1) {
+        if (count == 1)
+        {
             $("#" + i + "HiddenIdentification").hide();
-        } else {
+        } else
+        {
             $("#" + i + "HiddenIdentification").show();
             //валидация
-            $('[name="IdentificationSurface"]').each(function (indx, element) {
-
+            $('[name="IdentificationSurface"]').each(function(indx, element)
+            {
                 $(element).attr("name", "[" + indx + "].IdentificationForIdentificationSurface");
             });
-
-
         }
         $("[side=" + i + "]").remove();
 
 
         $.ajax('@Url.Action("AddSurface", "Data")', { data: { side: i, StartCountForSurface: StartCountForSurface, EndCountForSurface: EndCountForSurface } })
-            .success(function (e) {
+            .success(function(e)
+            {
                 $("#InsertPartial" + i + "").before(e);
             });
-
     }
 
 
     //выщитывание площади для каждой поверхности
-    function CalculationOfTheArea(j) {
-
+    function CalculationOfTheArea(j)
+    {
         var Height = $('[name="[' + j + '].Height"]').val();
         var Width = $('[name="[' + j + '].Width"]').val();
 
-        if (Height != "" && Width != "") {
-
+        if (Height != "" && Width != "")
+        {
             var Sum = Height * Width;
 
             $('[name="[' + j + '].Space"]').val(Sum);
             CalculationAS();
         }
-
     }
 
 
 </script>
+
+<style>
+ 
+.row {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.modal {
+  text-align: center;
+  padding: 0!important;
+}
+
+.modal:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -4px; /* Adjusts for spacing */
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+
+</style>
 
 <h3> КАРТОЧКА МЕТАЛЛИЧЕСКОГО УКАЗАТЕЛЯ</h3>
 
@@ -233,11 +266,7 @@
         <br>
 
     </div>
-    <div class="form-horizontal">
-        <div class="form-group">
-            <label for="Owner">конструкции </label>
-        </div>
-    </div>
+
     <div class="form-inline">
         <div class="form-group">
             <label for="PropertyLocation_id" style="display:none;">Форма собственности места размещения </label>
@@ -567,12 +596,12 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" style="margin-top: 15px">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Сохранить" class="btn btn-default" />
                 @Html.ActionLink("Выйти без сохранения", "AdvertisingDesign", null, new { @class = "btn btn-default" })
             </div>
         </div>
 }
-
+@Html.Partial("PatialView/ModalPicture")
 

@@ -130,6 +130,27 @@
 <h3> КАРТОЧКА МЕТАЛЛИЧЕСКОГО УКАЗАТЕЛЯ</h3>
 @Scripts.Render("~/Content/Map")
 
+<style>
+    .modal {
+  text-align: center;
+  padding: 0!important;
+}
+
+.modal:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -4px; /* Adjusts for spacing */
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+</style>
+
 @using (Html.BeginForm("EditMetalPointerDesign", "Data", FormMethod.Post, new { enctype = "multipart/form-data", id = "test1" }))
 {
     <div class="form-inline" style="display:none">
@@ -356,63 +377,67 @@
                                 <br />
                                 <label>Скан паспорта (стор 1)</label>
                                 <br />
-                                @if (ViewBag.ScanPassport_1Sides)
+                                @if (ViewBag.Scan1Side)
                                 {
+                                   
+                                    <input type="hidden" name="Scan1SideInd" value="setImage">
+                                    string image = "/Images/Scan1Side/" + ViewBag.Id + "Scan1Side.jpg";
+                                    string imgName = ViewBag.Id + "Scan1Side.jpg";
                                     <img class="closeimg" style="width:20px" src="../../Content/CloseImg.jpg" />
-                                    <input type="hidden" name="ScanPassport_1SidesInd" value="setImage">
-                                    string image = "/Images/ScanPassport_1Sides/" + ViewBag.Id + "ScanPassport_1Sides.jpg";
-                                    string imgName = ViewBag.Id + "ScanPassport_1Sides.jpg";
-
                                     <div class="fileUpload btn btn-warning input-sm">
-                                        <span>&nbsp;&nbsp;Стор.1&nbsp;</span>
-                                        <input type="file" class="upload" name="ScanPassport_1Sides" accept="image/jpeg/" />
+                                        <span>&nbsp;&nbsp;Скан 1&nbsp;</span>
+                                        <input type="file" class="upload" name="Scan1Side" accept="image/jpeg/" />
                                     </div>
-                                    <label for="ScanPassport_1Sides">@imgName</label>
+                                    <label for="Scan1Side">@imgName</label>
                                     <br />
                                     <br />
-                                    <button type="button" class="modalPictureTrigger btn btn-default input-sm" data-toggle="modal" onclick="addPic('#ModalPictureDivScanPassport_1Sides', '@image')" data-target="#ViewModalPictureScan1Side">Показать</button>
+                                    <button type="button" style="margin-left: 25px" class="modalPictureTrigger btn btn-default input-sm" data-toggle="modal" onclick="addPic('#ModalPictureDivScan1Side', '@image')" data-target="#ViewModalPictureScan1Side">Показать</button>
 
                                 }
                                 else
                                 {
                                     <img class="closeimg" style="width:20px" src="../../Content/CloseImg.jpg" />
-                                    <input type="hidden" name="ScanPassport_1SidesInd" value="">
+                                    <input type="hidden" name="Scan1SideInd" value="">
                                     <div class="fileUpload btn btn-default input-sm">
-                                        <span accept="image/jpeg/">&nbsp;&nbsp;Стор.1&nbsp;</span>
-                                        <input type="file" class="upload" name="ScanPassport_1Sides" accept="image/jpeg/" />
+                                        <span accept="image/jpeg/">&nbsp;&nbsp;Скан 1&nbsp;</span>
+                                        <input type="file" class="upload" name="Scan1Side" accept="image/jpeg/" />
                                     </div>
-                                    <label for="ScanPassport_1Sides">Файл не выбран</label>
+                                    <label for="Scan1Side">Файл не выбран</label>
                                     <br />
                                     <br />
                                 }
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <br />
-                                <label>Скан паспорта (стор 2)</label>
+                                <label>Скан проекта ОДД (Сторона 2)</label>
                                 <br />
-                                @if (ViewBag.ScanPassport_2Sides)
+                                @if (ViewBag.Scan2Side)
                                 {
-                                    string image = "/Images/ScanPassport_2Sides/" + ViewBag.Id + "Scan2Side.jpg";
+
+                                    <input type="hidden" name="Scan2SideInd" value="setImage">
+
+                                    string image = "/Images/Scan2Side/" + ViewBag.Id + "Scan2Side.jpg";
                                     string imgName = ViewBag.Id + "Scan2Side.jpg";
                                     <img class="closeimg" style="width:20px" src="../../Content/CloseImg.jpg" />
                                     <div class="fileUpload btn btn-warning input-sm">
-                                        <span>&nbsp;&nbsp;Стор.2&nbsp;</span>
+                                        <span>&nbsp;&nbsp;Скан 2&nbsp;</span>
                                         <input type="file" class="upload" name="Scan2Side" accept="image/jpeg/" />
                                     </div>
                                     <label for="Scan2Side">@imgName</label>
                                     <br />
                                     <br />
-                                    <button type="button" class="modalPictureTrigger btn btn-default input-sm" data-toggle="modal" onclick="addPic('#ModalPictureDivScanPassport_2Sides', '@image')" data-target="#ViewModalPictureScan2Side">Показать</button>
+                                    <button type="button" style="margin-left: 25px" class="modalPictureTrigger btn btn-default input-sm" data-toggle="modal" onclick="addPic('#ModalPictureDivScan2Side', '@image')" data-target="#ViewModalPictureScan2Side">Показать</button>
 
                                 }
                                 else
                                 {
                                     <img class="closeimg" style="width:20px" src="../../Content/CloseImg.jpg" />
+                                    <input type="hidden" name="Scan2SideInd" value="">
                                     <div class="fileUpload btn btn-default input-sm">
-                                        <span accept="image/jpeg/">&nbsp;&nbsp;Стор.2&nbsp;</span>
-                                        <input type="file" class="upload" name="ScanPassport_2Sides" accept="image/jpeg/" />
+                                        <span accept="image/jpeg/">&nbsp;&nbsp;Скан 2&nbsp;</span>
+                                        <input type="file" class="upload" name="Scan2Side" accept="image/jpeg/" />
                                     </div>
-                                    <label for="ScanPassport_2Sides">Файл не выбран</label>
+                                    <label for="Scan3Side">Файл не выбран</label>
                                     <br />
                                     <br />
                                 }
@@ -570,3 +595,4 @@
                                 </div>
                             </div>
 }
+@Html.Partial("PatialView/ModalPicture")
