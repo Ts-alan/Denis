@@ -357,7 +357,7 @@
                 <label for="DateOfTakenPassport">Дата выдачи паспорта</label>
             </div>
             <div class="col-md-2">
-                @Html.TextBoxFor(model => model.StartDate, new {@readonly = "", @class = "form-control", @type = "date" })
+                @Html.EditorFor(model => model.DateOfTakenPassport,  new { htmlattributes = new {@readonly = "", @class = "form-control", @type = "date" }})
                 @Html.ValidationMessageFor(model => model.DateOfTakenPassport)
             </div>
         </div>
@@ -367,14 +367,14 @@
                 <label for="StartDate">разреш с</label>
             </div>
             <div class="col-md-2">
-                @Html.TextBoxFor(model => model.StartDate, new { @readonly = "",@class = "form-control", @type = "date" })
+                @Html.EditorFor(model => model.StartDate, new { htmlattributes = new { @readonly = "",@class = "form-control", @type = "date" }})
                 @Html.ValidationMessageFor(model => model.StartDate)
             </div>
             <div class="col-md-2">
                 <label for="EndDate">разреш по</label>
             </div>
             <div class="col-md-2">
-                @Html.TextBoxFor(model => model.StartDate, new {@readonly = "", @class = "form-control", @type = "date" })
+                @Html.EditorFor(model => model.EndDate,  new { htmlattributes =  new {@readonly = "", @class = "form-control", @type = "date"} })
                 @Html.ValidationMessageFor(model => model.EndDate)
             </div>
         </div>

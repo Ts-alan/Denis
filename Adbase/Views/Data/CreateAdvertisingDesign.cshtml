@@ -349,24 +349,24 @@
                 <label for="DateOfTakenPassport">Дата выдачи паспорта</label>
             </div>
             <div class="col-md-2">
-                @Html.TextBoxFor(model => model.StartDate, new { @class = "form-control", @type = "date" })
+                @Html.TextBoxFor(model => model.DateOfTakenPassport, new { @class = "form-control", @type = "date" })
                 @Html.ValidationMessageFor(model => model.DateOfTakenPassport)
             </div>
         </div>
 
         <div class="row" style="margin-top: 15px">
             <div class="col-md-2">
-                <label for="StartDate">разреш с</label>
+                <label for="StartDate">разрешен с</label>
             </div>
             <div class="col-md-2">
                 @Html.TextBoxFor(model => model.StartDate, new { @class = "form-control", @type = "date" })
                 @Html.ValidationMessageFor(model => model.StartDate)
             </div>
             <div class="col-md-2">
-                <label for="EndDate">разреш по</label>
+                <label for="EndDate">разрешен по</label>
             </div>
             <div class="col-md-2">
-                @Html.TextBoxFor(model => model.StartDate, new { @class = "form-control", @type = "date" })
+                @Html.TextBoxFor(model => model.EndDate, new { @class = "form-control", @type = "date" })
                 @Html.ValidationMessageFor(model => model.EndDate)
             </div>
         </div>
