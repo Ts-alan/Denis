@@ -43,6 +43,7 @@
           <Property Name="ContentInformationDescription" Type="nvarchar(max)" />
           <Property Name="DateOfIssue" Type="datetime" />
           <Property Name="Area" Type="float" />
+          <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="Backlight">
           <Key>
@@ -742,6 +743,7 @@
           <NavigationProperty Name="ViewBid" Relationship="SciencecomModel.FK_AdvertisingStructures_ViewBid" FromRole="AdvertisingStructure" ToRole="ViewBid" />
           <NavigationProperty Name="Owner" Relationship="SciencecomModel.FK_Billboards1_Owners" FromRole="AdvertisingStructure" ToRole="Owner" />
           <NavigationProperty Name="Sides" Relationship="SciencecomModel.FK_Sides_Billboards1" FromRole="AdvertisingStructure" ToRole="Side" />
+          <Property Name="RowVersion" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
         </EntityType>
         <EntityType Name="Backlight">
           <Key>
@@ -1188,6 +1190,7 @@
           <EntitySetMapping Name="AdvertisingStructures">
             <EntityTypeMapping TypeName="SciencecomModel.AdvertisingStructure">
               <MappingFragment StoreEntitySet="AdvertisingStructures">
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
                 <ScalarProperty Name="Area" ColumnName="Area" />
                 <ScalarProperty Name="DateOfIssue" ColumnName="DateOfIssue" />
                 <ScalarProperty Name="ContentInformationDescription" ColumnName="ContentInformationDescription" />

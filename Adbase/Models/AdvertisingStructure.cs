@@ -53,6 +53,7 @@ namespace Sciencecom.Models
         public string ContentInformationDescription { get; set; }
         public Nullable<System.DateTime> DateOfIssue { get; set; }
         public Nullable<double> Area { get; set; }
+        public byte[] RowVersion { get; set; }
     
         public virtual Backlight Backlight { get; set; }
         public virtual Locality Locality { get; set; }

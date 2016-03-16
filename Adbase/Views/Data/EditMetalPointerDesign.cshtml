@@ -233,28 +233,28 @@
     </div>
 
     <h3> Данные о месте расположения конструкции</h3>
-
+    <div class="form-inline">
     <table>
         <tr>
             <td style="width: 150px">
                 <label for="Locality">Нас. пункт</label>
             </td>
             <td style="width: 210px">
-                @Html.DropDownListFor(a => a.Locality_id, new SelectList(Locality, "id", "NameLocality", "dbfd4d94-48be-4136-b900-74bc2c5c04aa"), new { @class = "form-control input-sm" })
+                @Html.DropDownListFor(a => a.Locality_id, new SelectList(Locality, "id", "NameLocality", "dbfd4d94-48be-4136-b900-74bc2c5c04aa"), new {@class = "form-control input-sm"})
                 @Html.ValidationMessageFor(model => model.Locality_id)
             </td>
             <td style="width: 150px">
                 <label for="Street1">Улица</label>
             </td>
             <td style="width: 210px">
-                @Html.TextBoxFor(model => model.Street1, new { @class = "form-control" })
+                @Html.TextBoxFor(model => model.Street1, new {@class = "form-control"})
                 @Html.ValidationMessageFor(model => model.Street1)
             </td>
             <td style="width: 110px">
                 <label class="control-label" for="House1">Номер опоры</label>
             </td>
             <td>
-                @Html.TextBoxFor(model => model.Support_, new { @class = "form-control" })
+                @Html.TextBoxFor(model => model.Support_, new {@class = "form-control"})
                 @Html.ValidationMessageFor(model => model.Support_)
             </td>
         </tr>
@@ -271,14 +271,14 @@
                 <label for="Street2">Ближайшая улица по ходу движения</label>
             </td>
             <td>
-                @Html.TextBoxFor(model => model.Street2, new { @class = "form-control" })
+                @Html.TextBoxFor(model => model.Street2, new {@class = "form-control"})
                 @Html.ValidationMessageFor(model => model.Street2)
             </td>
             <td>
                 <label for="FromStreet">Со стороны улицы </label>
             </td>
             <td>
-                @Html.TextBoxFor(model => model.FromStreet, new { @class = "form-control" })
+                @Html.TextBoxFor(model => model.FromStreet, new {@class = "form-control"})
 
                 @Html.ValidationMessageFor(model => model.FromStreet)
             </td>
@@ -287,6 +287,7 @@
         </tr>
 
     </table>
+        </div>
 
             <div class="form-inline" style="margin-top: 20px">
 

@@ -141,50 +141,61 @@
     </div>
     <h3>Данные о месте расположения конструкции</h3>
     <hr />
-    <div class="row" style="margin-left: 0px">
-        <div class="form-inline">
-
-            <div class="form-group" style="display: none">
-                <label for="UniqueNumber">Идентификационный номер</label>
-                @Html.EditorFor(model => model.UniqueNumber, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.UniqueNumber)
-            </div>
-            <div class="form-group">
+     <div class="form-inline">
+    <table>
+        <tr>
+            <td style="width: 150px">
                 <label for="Locality">Нас. пункт</label>
-                @Html.DropDownListFor(a => a.Locality_id, new SelectList(Locality, "id", "NameLocality"), new { @class = "form-control input-sm" })
+            </td>
+            <td style="width: 210px">
+                @Html.DropDownListFor(a => a.Locality_id, new SelectList(Locality, "id", "NameLocality", "dbfd4d94-48be-4136-b900-74bc2c5c04aa"), new {@class = "form-control input-sm"})
                 @Html.ValidationMessageFor(model => model.Locality_id)
-            </div>
-
-            <div class="form-group">
+            </td>
+            <td style="width: 150px" class="table-padding">
                 <label for="Street1">Улица</label>
-                @Html.TextBoxFor(model => model.Street1, new { @class = "form-control" })
+            </td>
+            <td style="width: 210px">
+                @Html.TextBoxFor(model => model.Street1, new {@class = "form-control"})
                 @Html.ValidationMessageFor(model => model.Street1)
-            </div>
-
-            <div class="form-group">
-                <label for="House1">Номер дома</label>
-                @Html.TextBoxFor(model => model.House1, new { @class = "form-control" })
+            </td>
+            <td style="width: 110px" class="table-padding">
+                <label class="control-label" for="House1">Номер дома</label>
+            </td>
+            <td>
+                @Html.TextBoxFor(model => model.House1, new {@class = "form-control"})
                 @Html.ValidationMessageFor(model => model.House1)
-            </div>
-
-
-        </div>
-        <div class="form-inline" style="margin-top: 15px">
-            <div class="form-group">
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td><input type="button" id="MapSearchStreet" value="Поиск на карте" class="btn btn-inverse"></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>
                 <label for="Street2">Ближайшая улица по ходу движения</label>
-                @Html.TextBoxFor(model => model.Street2, new { @class = "form-control" })
+            </td>
+            <td>
+                @Html.TextBoxFor(model => model.Street2, new {@class = "form-control"})
+                @Html.ValidationMessageFor(model => model.Street2)
+            </td>
+            <td class="table-padding">
+                <label for="FromStreet">Со стороны улицы </label>
+            </td>
+            <td>
+                @Html.TextBoxFor(model => model.FromStreet, new {@class = "form-control"})
 
-            </div>
+                @Html.ValidationMessageFor(model => model.FromStreet)
+            </td>
+            <td></td>
+            <td></td>
+        </tr>
 
-            <div class="form-group">
-                <label for="FromStreet">Со стороны улицы</label>
-                @Html.TextBoxFor(model => model.FromStreet, new { @class = "form-control" })
-
-            </div>
+    </table>
         </div>
-    </div>
-    <input type="button" id="MapSearchStreet" class="btn" value="Поиск на карте" style="margin-left: 185px; margin-top: 15px">
-
     <div class="form-inline">
         <hr />
         <div class="form-group" style="width: 600px; height: 500px" id="map"></div>

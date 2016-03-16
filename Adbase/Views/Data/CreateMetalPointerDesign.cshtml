@@ -296,7 +296,7 @@
                         @Html.DropDownListFor(a => a.Locality_id, new SelectList(Locality, "id", "NameLocality", "dbfd4d94-48be-4136-b900-74bc2c5c04aa"), new { @class = "form-control input-sm" })
                         @Html.ValidationMessageFor(model => model.Locality_id)
                     </td>
-                    <td style="width: 150px">
+                    <td style="width: 150px" class="table-padding">
                         <label for="Street1">Улица</label>
                     </td>
                     <td style="width: 210px">
@@ -360,6 +360,7 @@
         </div>
 
     </div>
+    <hr/>
     <div class="form-inline">
 
         <div class="form-group" style="width: 600px; height: 500px" id="map"></div>
