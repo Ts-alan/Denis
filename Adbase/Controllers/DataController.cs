@@ -55,6 +55,8 @@ namespace Sciencecom.Controllers
         [HttpGet]
         public ActionResult AdvertisingDesign()
         {
+            Session["action"] = RouteData.Values["action"];
+            Session["controller"] = RouteData.Values["controller"];
             var data = _context.AdvertisingStructures;
 
             return View(data);
@@ -370,8 +372,8 @@ namespace Sciencecom.Controllers
 
             ValidatePic(ScanPassport_1Sides, photoInd1, structures.Id_show.ToString(), mc.Id_show.ToString(), "ScanPassport_1Sides");
             ValidatePic(ScanPassport_2Sides, photoInd2, structures.Id_show.ToString(), mc.Id_show.ToString(), "ScanPassport_2Sides");
-            
-           return RedirectToAction("AdvertisingDesign");
+
+            return RedirectToAction((string)Session["action"], (string)Session["controller"]);
         }
 
         #endregion
@@ -510,6 +512,9 @@ namespace Sciencecom.Controllers
         [HttpGet]
         public ActionResult EditMetalPointerDesign(int? id)
         {
+         
+
+            
             if (id == null)
             {
                 return RedirectToAction("NotFound");
@@ -531,9 +536,9 @@ namespace Sciencecom.Controllers
             TempData["surface"] = surfaces;
             mc.Code = "MP";
             if(mc.coordB!=null)
-            mc.coordB = double.Parse(mc.coordB.ToString().Substring(0, 7));
+            mc.coordB = double.Parse(mc.coordB.ToString());
             if(mc.coordH!=null)
-            mc.coordH = double.Parse(mc.coordH.ToString().Substring(0, 7));
+            mc.coordH = double.Parse(mc.coordH.ToString());
             ViewBag.Id = mc.Id_show;
             ViewBag.Scan1Side = LoadPic(mc.Id_show.ToString(), "Scan1Side");
             ViewBag.Scan2Side = LoadPic(mc.Id_show.ToString(), "Scan2Side");
@@ -604,8 +609,9 @@ namespace Sciencecom.Controllers
 
             ValidatePic(Scan1Side, Scan1SideInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "Scan1Side");
             ValidatePic(Scan2Side, Scan2SideInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "Scan2Side");
-
-            return RedirectToAction("AdvertisingDesign");
+           
+           
+            return RedirectToAction((string)Session["action"], (string)Session["controller"]);
 
         }
 
@@ -835,8 +841,8 @@ namespace Sciencecom.Controllers
             ValidatePic(ScanPassport_2Sides, ScanPassport_2SidesInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "ScanPassport_2Sides");
             ValidatePic(scan1Side, scan1SideInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "Scan1Side");
             ValidatePic(scan2Side, scan2SideInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "Scan2Side");
-           
-            return RedirectToAction("AdvertisingDesign");
+
+            return RedirectToAction((string)Session["action"], (string)Session["controller"]);
 
         }
 
@@ -929,8 +935,8 @@ namespace Sciencecom.Controllers
 
         [HttpPost]
         public ActionResult EditIllegalDesign(int id, AdvertisingStructure structures,
-            [ModelBinder(typeof(CustomModelBinderForSide))] List<Side> sides,
-            [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces,
+            
+            
             HttpPostedFileBase photo1, HttpPostedFileBase photo2,string photoInd1, string photoInd2, string Bcoord, string Hcoord, int countSize = 1)
         {
 
@@ -948,35 +954,15 @@ namespace Sciencecom.Controllers
             _context.AdvertisingStructures.Remove(mc);
             _context.SaveChanges();
 
-            for (int j = 0; j < countSize; j++)
-            {
-                try
-                {
-                    sides[j].AdvertisingStructures_Id = mc.Id;
-                }
-                catch (System.IndexOutOfRangeException e)
-                {
-                    sides.Add(new Side() { DirectionSide_id = new Guid("27b8c509-8f09-4a0d-ae22-048c2611b7ea") });
-                }
-                sides[j].AdvertisingStructures_Id = mc.Id;
-                sides[j].Name = (j + 1).ToString();
-                sides[j].Id = Guid.NewGuid();
-            }
+            
             structures.Id = tempId;
             structures.Code = "UI";
             structures.Area = CountSquare(structures);
             structures = ValidateCoords(structures, Bcoord, Hcoord);
 
             _context.AdvertisingStructures.Add(structures);
-            _context.Sides.AddRange(sides);
+            
 
-            List<Surface> listSurface = new List<Surface>();
-            foreach (var i in surfaces)
-            {
-                i.Side_Id = sides.Single(a => a.Name == i.SideOfSurface).Id;
-                listSurface.Add(i);
-            }
-            _context.Surfaces.AddRange(listSurface);
 
             _context.SaveChanges();
 
@@ -984,8 +970,8 @@ namespace Sciencecom.Controllers
 
             ValidatePic(photo1, photoInd1, structures.Id_show.ToString(), mc.Id_show.ToString(), "photo1");
             ValidatePic(photo2, photoInd2, structures.Id_show.ToString(), mc.Id_show.ToString(), "photo2");
-           
-            return RedirectToAction("AdvertisingDesign");
+
+            return RedirectToAction((string)Session["action"], (string)Session["controller"]);
 
         }
 
@@ -1002,8 +988,8 @@ namespace Sciencecom.Controllers
         [Authorize]
         [HttpPost]
         public ActionResult CreateIllegalDesign(AdvertisingStructure structures,
-            [ModelBinder(typeof(CustomModelBinderForSide))] List<Side> sides,
-            [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces,
+            
+            
             HttpPostedFileBase photo1, HttpPostedFileBase photo2,
             List<HttpPostedFileBase> severalPhoto, string Bcoord, string Hcoord,
             int countSize = 0)
@@ -1024,32 +1010,11 @@ namespace Sciencecom.Controllers
                 structures.Code = "UI";
             }
 
-            for (int j = 0; j < countSize; j++)
-            {
-                try
-                {
-                    sides[j].AdvertisingStructures_Id = structuresId;
-                }
-                catch (System.IndexOutOfRangeException e)
-                {
-                    sides.Add(new Side() { DirectionSide_id = new Guid("27b8c509-8f09-4a0d-ae22-048c2611b7ea") });
-                }
-                sides[j].AdvertisingStructures_Id = structuresId;
-                sides[j].Name = (j + 1).ToString();
-                sides[j].Id = Guid.NewGuid();
-            }
-
-            _context.Sides.AddRange(sides);
+          
             structures.Area = CountSquare(structures);
             structures = ValidateCoords(structures, Bcoord, Hcoord);
             _context.AdvertisingStructures.Add(structures);
-            List<Surface> listSurface = new List<Surface>();
-            foreach (var i in surfaces)
-            {
-                i.Side_Id = sides.Single(a => a.Name == i.SideOfSurface).Id;
-                listSurface.Add(i);
-            }
-            _context.Surfaces.AddRange(listSurface);
+            
 
             _context.SaveChanges();
 
