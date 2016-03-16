@@ -14,8 +14,9 @@ namespace Sciencecom.Controllers
         [Authorize]
         public ActionResult Index(string type = null, int? id = null)
         {
-
-                ViewBag.Type = type;
+            Session["action"] = RouteData.Values["action"];
+            Session["controller"] = RouteData.Values["controller"];
+            ViewBag.Type = type;
                 ViewBag.Id = id;
        
             return View();
