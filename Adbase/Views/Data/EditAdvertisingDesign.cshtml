@@ -453,45 +453,39 @@
     </div>
 
     <h3> 3.Разрешительная документация</h3>
-    <div class="form-horizontal">
-        <hr />
-        <div class="form-group">
-
-            <label for="ViewBad_Id" style = "display:none;">Вид заявки</label>
-            @Html.DropDownListFor(model => model.ViewBad_Id, new SelectList(ViewBids, "id", "Name"),"", new {style = "display:none;", })
-            @Html.ValidationMessageFor(model => model.ViewBad_Id)
-
-
-            <label for="DateOfReceiptOfTheApplication" style = "display:none;">Дата подачи заявки</label>
-            @Html.EditorFor(model => model.DateOfReceiptOfTheApplication, new { htmlattributes = new { style = "display:none;" } })
-            @Html.ValidationMessageFor(model => model.DateOfReceiptOfTheApplication)
-
-        </div>
-        <div class="form-group" style="margin-bottom: 5px">
-
-            <label for="C_PassportAdvertising">№ паспорта рекламы</label>
-            @Html.EditorFor(model => model.C_PassportAdvertising, new { htmlattributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.C_PassportAdvertising)
-
-
-            <label for="DateOfTakenPassport">Дата выдачи паспорта</label>
-            @Html.EditorFor(model => model.DateOfTakenPassport, new { htmlattributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.DateOfTakenPassport)
-
+    <div class="row" style="margin-top: 15px">
+            <div class="col-md-2">
+                <label for="C_PassportAdvertising">№ паспорта рекламы</label>
+            </div>
+            <div class="col-md-2">
+                @Html.TextBoxFor(model => model.C_PassportAdvertising, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.C_PassportAdvertising)
+            </div>
+            <div class="col-md-2">
+                <label for="DateOfTakenPassport">Дата выдачи паспорта</label>
+            </div>
+            <div class="col-md-2">
+                @Html.TextBoxFor(model => model.StartDate, new { @class = "form-control", @type = "date" })
+                @Html.ValidationMessageFor(model => model.DateOfTakenPassport)
+            </div>
         </div>
 
-        <div class="form-group" style="margin-bottom: 5px">
-            <label for="StartDate">разреш с</label>
-            @Html.EditorFor(model => model.StartDate, new { htmlattributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.StartDate)
-
-            <label for="EndDate">разреш по</label>
-            @Html.EditorFor(model => model.EndDate, new { htmlattributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.EndDate)
+        <div class="row" style="margin-top: 15px">
+            <div class="col-md-2">
+                <label for="StartDate">разреш с</label>
+            </div>
+            <div class="col-md-2">
+                @Html.TextBoxFor(model => model.StartDate, new { @class = "form-control", @type = "date" })
+                @Html.ValidationMessageFor(model => model.StartDate)
+            </div>
+            <div class="col-md-2">
+                <label for="EndDate">разреш по</label>
+            </div>
+            <div class="col-md-2">
+                @Html.TextBoxFor(model => model.StartDate, new { @class = "form-control", @type = "date" })
+                @Html.ValidationMessageFor(model => model.EndDate)
+            </div>
         </div>
-
-    </div>
-
  <div class="row" style="margin-top: 15px">
         <div class="col-md-4">
             <label for="ScanPassport_1Sides">Скан паспорта (стор 1)</label>

@@ -218,63 +218,63 @@
 
     </div>
 
-            <h3>Данные о месте расположения конструкции</h3>
+    <h3>Данные о месте расположения конструкции</h3>
 
-   <div class="form-inline">
-<table>
-                <tr>
-                    <td style="width: 150px">
-                        <label for="Locality">Нас. пункт</label>
-                    </td>
-                    <td style="width: 210px">
-                        @Html.DropDownListFor(a => a.Locality_id, new SelectList(Locality, "id", "NameLocality", "dbfd4d94-48be-4136-b900-74bc2c5c04aa"), new { @class = "form-control input-sm" })
-                        @Html.ValidationMessageFor(model => model.Locality_id)
-                    </td>
-                    <td style="width: 150px" class="table-padding">
-                        <label for="Street1">Улица</label>
-                    </td>
-                    <td style="width: 210px">
-                        @Html.TextBoxFor(model => model.Street1, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Street1)
-                    </td>
-                    <td style="width: 110px">
-                        <label class="control-label" for="House1">Номер опоры</label>
-                    </td>
-                    <td>
-                        @Html.TextBoxFor(model => model.Support_, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Support_)
-                    </td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td><input type="button" id="MapSearchStreet" value="Поиск на карте" class="btn btn-inverse"></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>
-                        <label for="Street2">Ближайшая улица по ходу движения</label>
-                    </td>
-                    <td>
-                        @Html.TextBoxFor(model => model.Street2, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Street2)
-                    </td>
-                    <td>
-                        <label for="FromStreet">Со стороны улицы </label>
-                    </td>
-                    <td>
-                        @Html.TextBoxFor(model => model.FromStreet, new { @class = "form-control" })
+    <div class="form-inline">
+        <table>
+            <tr>
+                <td style="width: 150px">
+                    <label for="Locality">Нас. пункт</label>
+                </td>
+                <td style="width: 210px">
+                    @Html.DropDownListFor(a => a.Locality_id, new SelectList(Locality, "id", "NameLocality", "dbfd4d94-48be-4136-b900-74bc2c5c04aa"), new { @class = "form-control input-sm" })
+                    @Html.ValidationMessageFor(model => model.Locality_id)
+                </td>
+                <td style="width: 150px" class="table-padding">
+                    <label for="Street1">Улица</label>
+                </td>
+                <td style="width: 210px">
+                    @Html.TextBoxFor(model => model.Street1, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Street1)
+                </td>
+                <td style="width: 110px">
+                    <label class="control-label" for="House1">Номер опоры</label>
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.Support_, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Support_)
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td><input type="button" id="MapSearchStreet" value="Поиск на карте" class="btn btn-inverse"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="Street2">Ближайшая улица по ходу движения</label>
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.Street2, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Street2)
+                </td>
+                <td>
+                    <label for="FromStreet">Со стороны улицы </label>
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.FromStreet, new { @class = "form-control" })
 
-                        @Html.ValidationMessageFor(model => model.FromStreet)
-                    </td>
-                    <td></td>
-                    <td></td>
-                </tr>
+                    @Html.ValidationMessageFor(model => model.FromStreet)
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
 
-            </table>
-        </div>
+        </table>
+    </div>
 
             <div class="form-inline">
                 <hr />
@@ -302,11 +302,11 @@
                             </td>
                         </tr>
                     </table>
-                  </div>
+                </div>
             </div>
 
-                        <h3>Проект ОДД</h3>
-                        <hr />
+            <h3>Проект ОДД</h3>
+            <hr />
                         <div class="row">
                             <div class="col-md-1">
 
@@ -320,6 +320,14 @@
                                 @Html.TextBoxFor(model => model.DateOfIssue, new { @class = "form-control", @type = "date" })
                                 @Html.ValidationMessageFor(model => model.DateOfIssue)
                             </div>
+
+                            <div class="col-md-2">
+                                <label for="C_PassportAdvertising">№ проекта ОДД</label>
+                            </div>
+                            <div class="col-md-2">
+                                  @Html.EditorFor(model => model.C_PassportAdvertising, new { htmlattributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.C_PassportAdvertising)
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-md-4">
@@ -328,7 +336,7 @@
                                 <br />
                                 @if (ViewBag.Scan1Side)
                                 {
-                                   
+
                                     <input type="hidden" name="Scan1SideInd" value="setImage">
                                     string image = "/Images/Scan1Side/" + ViewBag.Id + "Scan1Side.jpg";
                                     string imgName = ViewBag.Id + "Scan1Side.jpg";
@@ -407,42 +415,53 @@
                         </div>
 
 
-                        <div class="form-group" style="margin-bottom: 5px">
+                         <div class="row" style="margin-top: 15px">
+            <div class="col-md-2">
+                <label for="C_PassportAdvertising">№ паспорта рекламы</label>
+            </div>
+            <div class="col-md-2">
+                @Html.TextBoxFor(model => model.C_PassportAdvertising, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.C_PassportAdvertising)
+            </div>
+            <div class="col-md-2">
+                <label for="DateOfTakenPassport">Дата выдачи паспорта</label>
+            </div>
+            <div class="col-md-2">
+                @Html.TextBoxFor(model => model.DateOfTakenPassport, new { @class = "form-control", @type = "date" })
+                @Html.ValidationMessageFor(model => model.DateOfTakenPassport)
+            </div>
+        </div>
 
-                            <label for="C_PassportAdvertising">№ паспорта рекламы</label>
-                            @Html.EditorFor(model => model.C_PassportAdvertising, new { htmlattributes = new { @class = " form-control" } })
-                            @Html.ValidationMessageFor(model => model.C_PassportAdvertising)
+        <div class="row" style="margin-top: 15px">
+            <div class="col-md-2">
+                <label for="StartDate">разреш с</label>
+            </div>
+            <div class="col-md-2">
+                @Html.TextBoxFor(model => model.StartDate, new { @class = "form-control", @type = "date" })
+                @Html.ValidationMessageFor(model => model.StartDate)
+            </div>
+            <div class="col-md-2">
+                <label for="EndDate">разреш по</label>
+            </div>
+            <div class="col-md-2">
+                @Html.TextBoxFor(model => model.EndDate, new { @class = "form-control", @type = "date" })
+                @Html.ValidationMessageFor(model => model.EndDate)
+            </div>
+        </div>
 
 
-                            <label for="DateOfTakenPassport">Дата выдачи паспорта</label>
-                            @Html.EditorFor(model => model.DateOfTakenPassport, new { htmlattributes = new { @class = " form-control" } })
-                            @Html.ValidationMessageFor(model => model.DateOfTakenPassport)
+                        <div class="row">
+                            <div class="col-md-4">
+                                <br />
+                                <label>Скан паспорта (стор 1)</label>
+                                <br />
+                                @if (ViewBag.ScanPassport_1Sides)
+                                {
 
-                        </div>
-
-                            <div class="form-group" style="margin-bottom: 5px">
-                                <label for="StartDate">разреш с</label>
-                                @Html.EditorFor(model => model.StartDate, new { htmlattributes = new { @class = " form-control" } })
-                                @Html.ValidationMessageFor(model => model.StartDate)
-
-                                <label for="EndDate">разреш по</label>
-                                @Html.EditorFor(model => model.EndDate, new { htmlattributes = new { @class = " form-control" } })
-                                @Html.ValidationMessageFor(model => model.EndDate)
-                            </div>
-
-
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <br />
-                                    <label>Скан паспорта (стор 1)</label>
-                                    <br />
-                                    @if (ViewBag.ScanPassport_1Sides)
-                                    {
-                                        
-                                        <input type="hidden" name="ScanPassport_1SidesInd" value="setImage">
-                                        string image = "/Images/ScanPassport_1Sides/" + ViewBag.Id + "ScanPassport_1Sides.jpg";
-                                        string imgName = ViewBag.Id + "ScanPassport_1Sides.jpg";
-                                        <img class="closeimg" style="width:20px" src="../../Content/CloseImg.jpg" />
+                                    <input type="hidden" name="ScanPassport_1SidesInd" value="setImage">
+                                    string image = "/Images/ScanPassport_1Sides/" + ViewBag.Id + "ScanPassport_1Sides.jpg";
+                                    string imgName = ViewBag.Id + "ScanPassport_1Sides.jpg";
+                                    <img class="closeimg" style="width:20px" src="../../Content/CloseImg.jpg" />
                                         <div class="fileUpload btn btn-warning input-sm">
                                             <span>&nbsp;&nbsp;Стор.1&nbsp;</span>
                                             <input type="file" class="upload" name="ScanPassport_1Sides" accept="image/jpeg/" />
@@ -452,12 +471,12 @@
                                         <br />
                                         <button type="button" style="margin-left: 25px" class="modalPictureTrigger btn btn-default input-sm" data-toggle="modal" onclick="addPic('#ModalPictureDivScan1Side', '@image')" data-target="#ViewModalPictureScan1Side">Показать</button>
 
-                                    }
-                                    else
-                                    {
-                                        
-                                        <input type="hidden" name="ScanPassport_1SidesInd" value="">
-                                        <img class="closeimg" style="width:20px" src="../../Content/CloseImg.jpg" />
+                                }
+                                else
+                                {
+
+                                    <input type="hidden" name="ScanPassport_1SidesInd" value="">
+                                    <img class="closeimg" style="width:20px" src="../../Content/CloseImg.jpg" />
                                         <div class="fileUpload btn btn-default input-sm">
                                             <span accept="image/jpeg/">&nbsp;&nbsp;Стор.1&nbsp;</span>
                                             <input type="file" class="upload" name="ScanPassport_1Sides" accept="image/jpeg/" />
@@ -465,19 +484,19 @@
                                         <label for="ScanPassport_1Sides">Файл не выбран</label>
                                         <br />
                                         <br />
-                                    }
-                                </div>
-                                <div class="col-md-4">
-                                    <br />
-                                    <label>Скан паспорта (стор 2)</label>
-                                    <br />
-                                    @if (ViewBag.ScanPassport_2Sides)
-                                    {
-                                        
-                                        <input type="hidden" name="ScanPassport_2SidesInd" value="setImage">
-                                        string image = "/Images/ScanPassport_2Sides/" + ViewBag.Id + "ScanPassport_2Sides.jpg";
-                                        string imgName = ViewBag.Id + "Scan2Side.jpg";
-                                        <img class="closeimg" style="width:20px" src="../../Content/CloseImg.jpg" />
+                                }
+                            </div>
+                            <div class="col-md-4">
+                                <br />
+                                <label>Скан паспорта (стор 2)</label>
+                                <br />
+                                @if (ViewBag.ScanPassport_2Sides)
+                                {
+
+                                    <input type="hidden" name="ScanPassport_2SidesInd" value="setImage">
+                                    string image = "/Images/ScanPassport_2Sides/" + ViewBag.Id + "ScanPassport_2Sides.jpg";
+                                    string imgName = ViewBag.Id + "Scan2Side.jpg";
+                                    <img class="closeimg" style="width:20px" src="../../Content/CloseImg.jpg" />
                                         <div class="fileUpload btn btn-warning input-sm">
                                             <span>&nbsp;&nbsp;Стор.2&nbsp;</span>
                                             <input type="file" class="upload" name="ScanPassport_2Sides" accept="image/jpeg/" />
@@ -487,12 +506,12 @@
                                         <br />
                                         <button type="button" style="margin-left: 25px" class="modalPictureTrigger btn btn-default input-sm" data-toggle="modal" onclick="addPic('#ModalPictureDivScan2Side', '@image')" data-target="#ViewModalPictureScan2Side">Показать</button>
 
-                                    }
-                                    else
-                                    {
-                                        
-                                        <input type="hidden" name="ScanPassport_2SidesInd" value="">
-                                        <img class="closeimg" style="width:20px" src="../../Content/CloseImg.jpg" />
+                                }
+                                else
+                                {
+
+                                    <input type="hidden" name="ScanPassport_2SidesInd" value="">
+                                    <img class="closeimg" style="width:20px" src="../../Content/CloseImg.jpg" />
                                         <div class="fileUpload btn btn-default input-sm">
                                             <span accept="image/jpeg/">&nbsp;&nbsp;Стор.2&nbsp;</span>
                                             <input type="file" class="upload" name="ScanPassport_2Sides" accept="image/jpeg/" />
@@ -500,9 +519,9 @@
                                         <label for="ScanPassport_2Sides">Файл не выбран</label>
                                         <br />
                                         <br />
-                                    }
-                                </div>
+                                }
                             </div>
+                        </div>
 
 
                             <div class="form-horizontal">
@@ -610,21 +629,21 @@
                                                     <label for="[0].Height">Высота</label>
 
                                                     @Html.EditorFor(model => model.Sides.FirstOrDefault().Surfaces.FirstOrDefault().Height, new { htmlAttributes = new { @class = "form-control", type = "number", Name = "[0].Height", id = "SHeight" } })
-                                                    
+
                                                     <span class="glyphicon form-control-feedback"></span>
                                                 </div>
                                                 <div class="form-group has-feedback" style="margin-left: 20px">
                                                     <label for="[0].Width">Ширина</label>
 
                                                     @Html.EditorFor(model => model.Sides.FirstOrDefault().Surfaces.FirstOrDefault().Width, new { htmlAttributes = new { @class = "form-control", type = "number", Name = "[0].Width", id = "Width" } })
-                                                    
+
                                                     <span class="glyphicon form-control-feedback"></span>
                                                 </div>
                                                 <div class="form-group has-feedback" style="margin-left: 20px">
                                                     <label for="[0].Space">Площадь</label>
 
                                                     @Html.TextBoxFor(model => model.Sides.FirstOrDefault().Surfaces.FirstOrDefault().Space, new { @class = "form-control", Name = "[0].Space", @readonly = "readonly" })
-                                                   
+
                                                     <span class="glyphicon form-control-feedback"></span>
                                                 </div>
                                             </div>

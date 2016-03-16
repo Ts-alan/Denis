@@ -202,53 +202,61 @@
     <h3>Данные о месте расположения конструкции</h3>
     <hr/>
 
-    <div class="form-inline" >
-        
-        <div class="form-group">
-            <label for="Locality">Нас. пункт</label>
+    <div class="form-inline">
+    <table>
+        <tr>
+            <td style="width: 150px">
+                <label for="Locality">Нас. пункт</label>
+            </td>
+            <td style="width: 210px">
+                @Html.EditorFor(model => model.Locality.NameLocality, new { htmlAttributes = new { @readonly = "", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Locality_id)
+            </td>
+            <td style="width: 150px" class="table-padding">
+                <label for="Street1">Улица</label>
+            </td>
+            <td style="width: 210px">
+                @Html.TextBoxFor(model => model.Street1, new {@readonly = "",@class = "form-control"})
+                @Html.ValidationMessageFor(model => model.Street1)
+            </td>
+            <td style="width: 110px" class="table-padding">
+                <label class="control-label" for="House1">Номер дома</label>
+            </td>
+            <td>
+                @Html.TextBoxFor(model => model.House1, new {@readonly = "",@class = "form-control"})
+                @Html.ValidationMessageFor(model => model.House1)
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>
+                <label for="Street2">Ближайшая улица по ходу движения</label>
+            </td>
+            <td>
+                @Html.TextBoxFor(model => model.Street2, new {@readonly = "",@class = "form-control"})
+                @Html.ValidationMessageFor(model => model.Street2)
+            </td>
+            <td class="table-padding">
+                <label for="FromStreet">Со стороны улицы </label>
+            </td>
+            <td>
+                @Html.TextBoxFor(model => model.FromStreet, new {@readonly = "",@class = "form-control"})
 
-            @Html.EditorFor(model => model.Locality.NameLocality, new { htmlAttributes = new { @readonly = "", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.FromStreet)
+            </td>
+            <td></td>
+            <td></td>
+        </tr>
+
+    </table>
         </div>
-
-        <div class="form-group">
-            <label for="Street1">Улица</label>
-            @Html.EditorFor(model => model.Street1, new { htmlAttributes = new { @readonly = "", @class = "form-control" } })
-
-        </div>
-
-        <div class="form-group">
-            <label for="House1">№ дома</label>
-            @Html.EditorFor(model => model.House1, new { htmlAttributes = new { @readonly = "", @class = "form-control" } })
-
-        </div>
-
-
-    </div>
-
-
-    <div class="form-inline" style="margin-top: 15px">
-        <div class="form-group">
-            <label for="Street2">Ближайшая улица по ходу движения</label>
-            @Html.EditorFor(model => model.Street2, new { htmlAttributes = new { @readonly = "", @class = "form-control" } })
-
-        </div>
-
-        <div class="form-group">
-            <label for="FromStreet">Со стороны улицы</label>
-            @Html.EditorFor(model => model.FromStreet, new { htmlAttributes = new { @readonly = "", @class = "form-control"  } })
-
-        </div>
-    </div>
-
-    <div class="form-inline" style="margin-top: 20px; display: none">
-
-        <div class="form-group">
-            <label for="TheElementOfTheRoadNetwork">Элемент улично-дорожной сети</label>
-
-            @Html.EditorFor(model => model.TheElementOfTheRoadNetwork.TheElementOfTheRoadNetworkName, new { htmlAttributes = new { @readonly = "" } })
-        </div>
-
-    </div>
 
     <div class="form-inline">
         <hr />

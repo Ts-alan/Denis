@@ -265,55 +265,66 @@
 
     </div>
     <h3> 2.Данные о месте расположения конструкции</h3>
+    <hr />
+     <div class="form-inline">
+<table>
+                <tr>
+                    <td style="width: 150px">
+                        <label for="Locality">Нас. пункт</label>
+                    </td>
+                    <td style="width: 210px">
+                        @Html.EditorFor(model => model.Locality.NameLocality, new { htmlAttributes = new { @readonly = "", @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Locality_id)
+                    </td>
+                    <td style="width: 150px" class="table-padding">
+                        <label for="Street1">Улица</label>
+                    </td>
+                    <td style="width: 210px">
+                        @Html.TextBoxFor(model => model.Street1, new { @readonly = "", @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Street1)
+                    </td>
+                    <td style="width: 110px">
+                        
+                    </td>
+                    <td>
+                       
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="Street2">Ближайшая улица по ходу движения</label>
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.Street2, new {  @readonly = "", @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Street2)
+                    </td>
+                    <td>
+                        <label for="FromStreet">Со стороны улицы </label>
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.FromStreet, new {  @readonly = "", @class = "form-control" })
 
-    <div class="form-inline">
-        <hr />
-        <div class="form-group" >
-            <label for="Locality">Нас. пункт</label>
-          
-            @Html.EditorFor(model => model.Locality.NameLocality, new { htmlAttributes = new { @readonly = "", @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.FromStreet)
+                    </td>
+                    <td>
+                        <label for="TheElementOfTheRoadNetwork">Элемент улично-дорожной сети</label>
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.TheElementOfTheRoadNetwork.TheElementOfTheRoadNetworkName, new { htmlAttributes = new { @readonly = "", @class = "form-control" } })
+                        @Html.ValidationMessageFor(a => a.TheElementOfTheRoadNetwork_id)
+                    </td>
+                </tr>
+
+            </table>
         </div>
-
-        <div class="form-group">
-            <label for="Street1">Улица</label>
-            @Html.EditorFor(model => model.Street1, new { htmlAttributes = new { @readonly = "", @class = "form-control" } })
-
-        </div>
-
-        <div class="form-group">
-            <label for="House1">Дом</label>
-            @Html.EditorFor(model => model.House1, new { htmlAttributes = new { @readonly = "", @class = "form-control" } })
-           
-        </div>
-
-
-    </div>
-
-
-    <div class="form-inline" style="margin-top: 15px;">
-        <div class="form-group">
-            <label for="Street2">Ближайшая улица по ходу движения</label>
-            @Html.EditorFor(model => model.Street2, new { htmlAttributes = new { @readonly = "", @class = "form-control" } })
-           
-        </div>
-
-        <div class="form-group">
-            <label for="FromStreet">Со стороны улицы</label>
-            @Html.EditorFor(model => model.FromStreet, new { htmlAttributes = new { @readonly = "", @class = "form-control" } })
-        
-        </div>
-    </div>
-
-    <div class="form-inline" style="margin-top: 20px">
-
-        <div class="form-group">
-            <label for="TheElementOfTheRoadNetwork">Элемент улично-дорожной сети</label>
-            
-            @Html.EditorFor(model => model.TheElementOfTheRoadNetwork.TheElementOfTheRoadNetworkName, new { htmlAttributes = new { @readonly = "", @class = "form-control" } })
-        </div>
-
-    </div>
-
     <div class="form-inline">
         <hr/>
         <div class="form-group" style="width: 600px; height: 500px" id="map"></div>
@@ -331,46 +342,43 @@
             </div>
         </div>
     </div>
-    
+
     <h3> 3.Разрешительная документация</h3>
-    <div class="form-horizontal">
-        <hr/>
-        <div class="form-group" style="display: none">
 
-            <label for="ViewBad_Id">Вид заявки</label>
-
-            @Html.EditorFor(model => model.ViewBid.Name, new {htmlAttributes = new {@readonly = "", @class = "form-control" } })
-
-
-            <label for="DateOfReceiptOfTheApplication">Дата подачи заявки</label>
-            @Html.EditorFor(model => model.DateOfReceiptOfTheApplication, new {htmlAttributes = new {@readonly = "", @class = "form-control" } })
-
-
-        </div>
-        <div class="form-group" style="margin-bottom: 5px">
-
-            <label for="C_PassportAdvertising">№ паспорта рекламы</label>
-            @Html.EditorFor(model => model.C_PassportAdvertising, new {htmlAttributes = new {@readonly = "", @class = "form-control" } })
-
-
-
-            <label for="DateOfTakenPassport">Дата выдачи паспорта</label>
-            @Html.EditorFor(model => model.DateOfTakenPassport, new {htmlAttributes = new {@readonly = "", @class = "form-control" } })
-
-
+    <div class="row" style="margin-top: 15px">
+            <div class="col-md-2">
+                <label for="C_PassportAdvertising">№ паспорта рекламы</label>
+            </div>
+            <div class="col-md-2">
+                @Html.TextBoxFor(model => model.C_PassportAdvertising, new {@readonly = "", @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.C_PassportAdvertising)
+            </div>
+            <div class="col-md-2">
+                <label for="DateOfTakenPassport">Дата выдачи паспорта</label>
+            </div>
+            <div class="col-md-2">
+                @Html.TextBoxFor(model => model.StartDate, new {@readonly = "", @class = "form-control", @type = "date" })
+                @Html.ValidationMessageFor(model => model.DateOfTakenPassport)
+            </div>
         </div>
 
-        <div class="form-group" style="margin-bottom: 5px">
-            <label for="StartDate">разреш с</label>
-            @Html.EditorFor(model => model.StartDate, new {htmlAttributes = new {@readonly = "", @class = "form-control" } })
-
-
-            <label for="EndDate">разреш по</label>
-            @Html.EditorFor(model => model.EndDate, new {htmlAttributes = new {@readonly = "", @class = "form-control" } })
-
+        <div class="row" style="margin-top: 15px">
+            <div class="col-md-2">
+                <label for="StartDate">разреш с</label>
+            </div>
+            <div class="col-md-2">
+                @Html.TextBoxFor(model => model.StartDate, new { @readonly = "",@class = "form-control", @type = "date" })
+                @Html.ValidationMessageFor(model => model.StartDate)
+            </div>
+            <div class="col-md-2">
+                <label for="EndDate">разреш по</label>
+            </div>
+            <div class="col-md-2">
+                @Html.TextBoxFor(model => model.StartDate, new {@readonly = "", @class = "form-control", @type = "date" })
+                @Html.ValidationMessageFor(model => model.EndDate)
+            </div>
         </div>
-
-    </div>
+    
     <div class="form-inline">
         <div class="form-group">
             @if (ViewBag.ScanPassport_1)
@@ -449,7 +457,7 @@
         }
         <h3> 4.Описание конструкции</h3>
 
-        <div class="form-inline">
+        <div class="form-inline" style="display: none">
             <hr />
             <div class="form-group">
                 <label for="PlannedInstallationDate">Планируемая дата установки</label>
@@ -463,7 +471,7 @@
 
             </div>
         </div>
-        <div class="form-horizontal">
+        <div class="form-horizontal" style="display: none">
             <div class="form-group">
                 <label for="DateDismantling">Дата демонтажа</label>
                 @Html.EditorFor(model => model.DateDismantling, new { htmlAttributes = new { @readonly = "", @class = "form-control" } })
