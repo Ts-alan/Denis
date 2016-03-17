@@ -208,7 +208,7 @@ namespace Sciencecom.Controllers
                 }
 
                 _context.Sides.AddRange(sides);
-                structures.Area = CountSquare(structures);
+                structures.Area = CountSquare(surfaces);
                 _context.AdvertisingStructures.Add(structures);
                 List<Surface> listSurface = new List<Surface>();
                 foreach (var i in surfaces)
@@ -227,7 +227,7 @@ namespace Sciencecom.Controllers
             }
             else
             {
-                structures.Area = CountSquare(structures);
+                structures.Area = CountSquare(surfaces);
                 _context.AdvertisingStructures.Add(structures);
                 _context.SaveChanges();
             }
@@ -339,7 +339,7 @@ namespace Sciencecom.Controllers
                     sides[j].Id = Guid.NewGuid();
                 }
                 structures.Id = tempId;
-                structures.Area = CountSquare(structures);
+                structures.Area = CountSquare(surfaces);
                  structures = ValidateCoords(structures, Bcoord, Hcoord);
                 //structures.coordB = double.Parse(Bcoord.Replace(",", "."), CultureInfo.InvariantCulture);
                 //structures.coordH = double.Parse(Hcoord.Replace(",", "."), CultureInfo.InvariantCulture);
@@ -362,7 +362,7 @@ namespace Sciencecom.Controllers
             }
             else
             {
-                structures.Area = CountSquare(structures);
+                structures.Area = CountSquare(surfaces);
                 _context.AdvertisingStructures.Add(structures);
                 
                 _context.SaveChanges();
@@ -483,7 +483,7 @@ namespace Sciencecom.Controllers
             }
 
             _context.Sides.AddRange(sides);
-            structures.Area = CountSquare(structures);
+            structures.Area = CountSquare(surfaces);
              structures = ValidateCoords(structures, Bcoord, Hcoord);
             //structures.coordB = double.Parse(Bcoord.Replace(",", "."), CultureInfo.InvariantCulture);
             //structures.coordH = double.Parse(Hcoord.Replace(",", "."), CultureInfo.InvariantCulture);
@@ -586,7 +586,7 @@ namespace Sciencecom.Controllers
                 sides[j].Id = Guid.NewGuid();
             }
             structures.Id = tempId;
-            structures.Area = CountSquare(structures);
+            structures.Area = CountSquare(surfaces);
              structures = ValidateCoords(structures, Bcoord, Hcoord);
             //structures.coordB = double.Parse(Bcoord.Replace(",", "."), CultureInfo.InvariantCulture);
             //structures.coordH = double.Parse(Hcoord.Replace(",", "."), CultureInfo.InvariantCulture);
@@ -716,7 +716,7 @@ namespace Sciencecom.Controllers
             }
 
             _context.Sides.AddRange(sides);
-            structures.Area = CountSquare(structures);
+            structures.Area = CountSquare(surfaces);
              structures = ValidateCoords(structures, Bcoord, Hcoord);
             //structures.coordB = double.Parse(Bcoord.Replace(",", "."), CultureInfo.InvariantCulture);
             //structures.coordH = double.Parse(Hcoord.Replace(",", "."), CultureInfo.InvariantCulture);
@@ -821,7 +821,7 @@ namespace Sciencecom.Controllers
                 sides[j].Id = Guid.NewGuid();
             }
             structures.Id = tempId;
-            structures.Area = CountSquare(structures);
+            structures.Area = CountSquare(surfaces);
              structures = ValidateCoords(structures, Bcoord, Hcoord);
             _context.AdvertisingStructures.Add(structures);
             _context.Sides.AddRange(sides);
@@ -953,17 +953,14 @@ namespace Sciencecom.Controllers
             _context.Sides.RemoveRange(mc.Sides);
             _context.AdvertisingStructures.Remove(mc);
             _context.SaveChanges();
-
             
             structures.Id = tempId;
             structures.Code = "UI";
-            structures.Area = CountSquare(structures);
+
             structures = ValidateCoords(structures, Bcoord, Hcoord);
 
             _context.AdvertisingStructures.Add(structures);
             
-
-
             _context.SaveChanges();
 
             //картики
@@ -1009,9 +1006,7 @@ namespace Sciencecom.Controllers
             {
                 structures.Code = "UI";
             }
-
-          
-            structures.Area = CountSquare(structures);
+            
             structures = ValidateCoords(structures, Bcoord, Hcoord);
             _context.AdvertisingStructures.Add(structures);
             
