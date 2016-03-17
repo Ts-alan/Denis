@@ -27,7 +27,8 @@ namespace Sciencecom.DAL
         public JSONTableData SearchAdvertisingDesign(int page, string sidx, string sord,
             int rows, string Собственник, string Вид_конструкции, string Населенный_пункт,
             string Улица, string Дом_Номер_опоры, string Количество_сторон, string Количестов_поверхностей,
-            string Площадь_конструкции, string Разреш_по)
+            string Площадь_конструкции, string Разреш_по, string НачалоРазреш_по, string КонецРазреш_по,
+            string Разреш_с, string НачалоРазреш_с, string КонецРазреш_с)
 
         {
 
@@ -77,9 +78,41 @@ namespace Sciencecom.DAL
             {
                 adbvertisingList = adbvertisingList.Where(x => x.Sides.SelectMany(side => side.Surfaces).Count() == v);
             }
-            if (!string.IsNullOrWhiteSpace(Разреш_по))
+            DateTime ee;
+            DateTime se;
+            if (DateTime.TryParse(НачалоРазреш_по, out ee) && DateTime.TryParse(КонецРазреш_по, out se))
             {
-                adbvertisingList = adbvertisingList.Where(x => x.EndDate.ToString().Contains(Разреш_по));
+                DateTime beginEndRange = DateTime.Parse(НачалоРазреш_по);
+                DateTime endEndRange = DateTime.Parse(КонецРазреш_по);
+                if (beginEndRange < endEndRange)
+                {
+                    adbvertisingList = adbvertisingList.Where(x => x.EndDate >= beginEndRange && x.EndDate <= endEndRange);
+                }
+               
+            }
+            DateTime eb;
+            DateTime sb;
+            if (DateTime.TryParse(НачалоРазреш_с, out eb) && DateTime.TryParse(КонецРазреш_с, out sb))
+            {
+                DateTime beginStartRange = DateTime.Parse(НачалоРазреш_с);
+                DateTime endStartRange = DateTime.Parse(КонецРазреш_с);
+                if (beginStartRange < endStartRange)
+                {
+                    adbvertisingList = adbvertisingList.Where(x => x.StartDate >= beginStartRange && x.StartDate <= endStartRange);
+                }
+                
+            }
+            DateTime r;
+            if (!string.IsNullOrWhiteSpace(Разреш_по) && DateTime.TryParse(Разреш_по, out r))
+            {
+                DateTime o = DateTime.Parse(Разреш_по);
+                adbvertisingList = adbvertisingList.Where(x => x.EndDate == o);
+            }
+            DateTime s;
+            if (!string.IsNullOrWhiteSpace(Разреш_с) && DateTime.TryParse(Разреш_с, out s))
+            {
+                DateTime l = DateTime.Parse(Разреш_с);
+                adbvertisingList = adbvertisingList.Where(x => x.StartDate == l);
             }
             double n;
             if (!string.IsNullOrWhiteSpace(Площадь_конструкции) && double.TryParse(Площадь_конструкции, out n))

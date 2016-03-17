@@ -14,6 +14,7 @@ namespace Sciencecom.Models.MapJsonModels
         public String Количестов_поверхностей { get; set; }
         public double? Площадь_конструкции { get; set; }
         public String Разреш_по { get; set; }
+        public String Разреш_с { get; set; }
         public String id { get; set; }
 
 
@@ -37,6 +38,10 @@ namespace Sciencecom.Models.MapJsonModels
             if (adv.EndDate != null)
             {
                 Разреш_по = adv.EndDate.Value.ToShortDateString();
+            }
+            if (adv.StartDate != null)
+            {
+                Разреш_с = adv.StartDate.Value.ToShortDateString();
             }
             id = adv.Id_show.ToString();
 
