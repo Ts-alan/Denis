@@ -168,7 +168,7 @@
             }
             //присвоить обьект
 
-            if (typedesign = "IllegalDesign")
+            if (typedesign == "IllegalDesign")
             {
                 myPlacemark = new ymaps.Placemark([$("#Hcoord").val(), $("#Bcoord").val()], {
                     iconContent: "Н",
@@ -272,7 +272,7 @@
                     //    {
                     //        draggable: true
                     //    });
-                    if (typedesign = "IllegalDesign")
+                    if (typedesign == "IllegalDesign")
                     {
                         myPlacemark = new ymaps.Placemark([coords[0].toPrecision(6), coords[1].toPrecision(6)], {
                             iconContent: "Н",

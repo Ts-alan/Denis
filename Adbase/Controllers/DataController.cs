@@ -58,7 +58,7 @@ namespace Sciencecom.Controllers
             Session["action"] = RouteData.Values["action"];
             Session["controller"] = RouteData.Values["controller"];
             var data = _context.AdvertisingStructures;
-
+           
             return View(data);
 
         }
