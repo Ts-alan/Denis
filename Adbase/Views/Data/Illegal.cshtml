@@ -373,7 +373,15 @@
             </div>
         </div>
 }
-@Html.ActionLink("Перейти к таблице конструкций", "AdvertisingDesign", null, new { @class = "btn btn-default" })
+@if ((string)Session["action"] == "AdvertisingDesign")
+{
+    @Html.ActionLink("Перейти к таблице конструкций", "AdvertisingDesign", null, new { @class = "btn btn-default" })
+}
+else
+{
+
+    @Html.ActionLink("Перейти к карте конструкций", "Index", "Map", null, new { @class = "btn btn-default" })
+}
 <div id="ModalPicturePartial">
     @Html.Partial("PatialView/ModalPicture")
 </div>
