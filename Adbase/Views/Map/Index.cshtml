@@ -37,7 +37,7 @@
 
     function CreateMap(param) {
         //записать в сесиию пременные
-        var collectionMap = [];
+        @*var collectionMap = [];
         $(".content-col input").each(function (indx, element) {
             collectionMap.push({ id: $(element).attr("id"), value: $(element).val().toString() });
 
@@ -48,7 +48,7 @@
             url: '@Url.Action("SaveSearch", "BackEndServices")',
             data: { collectionMap: saveValue },
             type: 'POST'
-        });
+        });*@
         //поиск по карте
         var collectionMap = [];
         $(".content-col input").each(function (indx, element) {

@@ -234,6 +234,7 @@ namespace Sciencecom.DAL
         {
            
             var ownerId = Context.Owners.SingleOrDefault(a => a.Name.ToLower().Contains(owner.ToLower()));
+            
             var typeOfAdvertisingStructureId =
                 Context.TypeOfAdvertisingStructures.SingleOrDefault(a => a.Name.ToLower().Contains(typeOfAdvertisingStructure.ToLower()));
             var localityId = Context.TypeOfAdvertisingStructures.SingleOrDefault(a => a.Name.ToLower().Contains(locality.ToLower()));
@@ -271,9 +272,26 @@ namespace Sciencecom.DAL
                         return false;
                     });
             }
-            if (ownerId != null)
+            if (ownerId != null )
             {
-                result = result.Where(m => m.Owner.Id == ownerId.Id);
+                result = result.Where(m =>
+                {
+                    if (m.Owner != null)
+                    {
+                        return m.Owner.Id == ownerId.Id;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                });
+            }
+            else
+            {
+                if (owner != "")
+                {
+                    result = new List<AdvertisingStructure>();
+                }
             }
             if (typeOfAdvertisingStructureId != null)
             {

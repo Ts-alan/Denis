@@ -7,7 +7,7 @@
         type: "POST",
         url: "/Map/GetDesign",
         data: {
-            owner: $("#gs_Собственник").val(),
+            owner: $("#gs_Собственник_конструкции").val(),
             UniqueNumber: $("#gs_Идентификационный_номер").val(),
             TypeOfAdvertisingStructure: $("#gs_Вид_конструкции").val(),
             Locality: $("#gs_Населенный_пункт").val(),
