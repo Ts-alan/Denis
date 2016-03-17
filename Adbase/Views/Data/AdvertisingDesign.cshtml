@@ -36,7 +36,9 @@
                 gridPostData["КонецРазреш_с"] = $("#endingStartDateRange").val();
                 //console.log(gridPostData);
                 $('#table').jqGrid('setGridParam', { postData: gridPostData });
-                $('#table').trigger('reloadGrid');
+                //$('#table').trigger('reloadGrid');
+                //PullData();
+                jQuery("#table")[0].triggerToolbar();
             }
             else
             {
@@ -44,27 +46,10 @@
                 gridPostData["НачалоРазреш_с"] = null;
                 gridPostData["КонецРазреш_с"] = null;
                 $('#table').jqGrid('setGridParam', { postData: gridPostData });
-                $('#table').trigger('reloadGrid');
+                //$('#table').trigger('reloadGrid');
+                jQuery("#table")[0].triggerToolbar();
             }
-            if ($("#endingStartDateRange").val() != "" && $("#endingEndDateRange").val())
-            {
-
-                gridPostData = $("#table").getGridParam("postData");
-                gridPostData["НачалоРазреш_по"] = $("#beginingEndDateRange").val();
-                gridPostData["КонецРазреш_по"] = $("#endingEndDateRange").val();
-                //console.log(gridPostData);
-                $('#table').jqGrid('setGridParam', { postData: gridPostData });
-                $('#table').trigger('reloadGrid');
-            }
-            else
-            {
-                gridPostData = $("#table").getGridParam("postData");
-                gridPostData["НачалоРазреш_по"] = null;
-                gridPostData["КонецРазреш_по"] = null;
-
-                $('#table').jqGrid('setGridParam', { postData: gridPostData });
-                $('#table').trigger('reloadGrid');
-            }
+           
             //$("#beginingStartDateRange").val()
 
         });
@@ -72,24 +57,7 @@
         {
             var gridPostData;
 
-            if ($("#beginingEndDateRange").val() != "" && $("#endingStartDateRange").val())
-            {
-                gridPostData = $("#table").getGridParam("postData");
-                gridPostData["НачалоРазреш_с"] = $("#beginingStartDateRange").val();
-                gridPostData["КонецРазреш_с"] = $("#endingStartDateRange").val();
-                //console.log(gridPostData);
-                $('#table').jqGrid('setGridParam', { postData: gridPostData });
-                $('#table').trigger('reloadGrid');
-            }
-            else
-            {
-                gridPostData = $("#table").getGridParam("postData");
-                gridPostData["НачалоРазреш_с"] = null;
-                gridPostData["КонецРазреш_с"] = null;
-                $('#table').jqGrid('setGridParam', { postData: gridPostData });
-                $('#table').trigger('reloadGrid');
-            }
-            if ($("#endingEndDateRange").val() != "" && $("#endingEndDateRange").val())
+            if ($("#startingEndDateRange").val() != "" && $("#endingEndDateRange").val())
             {
 
                 gridPostData = $("#table").getGridParam("postData");
@@ -268,6 +236,7 @@
         //сбор данные из поиска для передачи на сервер записи в сессию
         function PullData()
         {
+            console.log($("#table").getGridParam("postData"));
             var collectionMap = {};
             collectionMap.postdata = $("#table").getGridParam("postData");
 
@@ -464,19 +433,19 @@
                 }
                 if (collectionMap.postdata.НачалоРазреш_по !== undefined)
                 {
-                    $("#beginingStartDateRange").val(collectionMap.postdata.НачалоРазреш_по);
+                    $("#beginingEndDateRange").val(collectionMap.postdata.НачалоРазреш_по);
                 }
                 if (collectionMap.postdata.КонецРазреш_по !== undefined)
                 {
-                    $("#endingStartDateRange").val(collectionMap.postdata.КонецРазреш_по);
+                    $("#endingEndDateRange").val(collectionMap.postdata.КонецРазреш_по);
                 }
                 if (collectionMap.postdata.НачалоРазреш_с !== undefined)
                 {
-                    $("#beginingEndDateRange").val(collectionMap.postdata.НачалоРазреш_с);
+                    $("#beginingStartDateRange").val(collectionMap.postdata.НачалоРазреш_с);
                 }
                 if (collectionMap.postdata.КонецРазреш_с !== undefined)
                 {
-                    $("#endingEndDateRange").val(collectionMap.postdata.КонецРазреш_с);
+                    $("#endingStartDateRange").val(collectionMap.postdata.КонецРазреш_с);
                 }
                 fillDataForFunctionFT();
             }
