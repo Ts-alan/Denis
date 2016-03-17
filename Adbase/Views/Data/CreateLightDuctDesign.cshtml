@@ -338,6 +338,13 @@
         <hr />
         <div class="row">
             <div class="col-md-2">
+                                <label for="C_PassportAdvertising">№ проекта ОДД</label>
+                            </div>
+                            <div class="col-md-2">
+                                  @Html.EditorFor(model => model.C_PassportAdvertising, new { htmlattributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.C_PassportAdvertising)
+                            </div>
+            <div class="col-md-2">
                 <label for="DateOfIssue">Дата выдачи проекта ОДД</label>
             </div>
             <div class="col-md-2">
@@ -346,13 +353,7 @@
                     @Html.ValidationMessageFor(model => model.DateOfIssue)
                 </div>
             </div>
-             <div class="col-md-2">
-                                <label for="C_PassportAdvertising">№ проекта ОДД</label>
-                            </div>
-                            <div class="col-md-2">
-                                  @Html.EditorFor(model => model.C_PassportAdvertising, new { htmlattributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.C_PassportAdvertising)
-                            </div>
+
         </div>
 
         <div class="row">

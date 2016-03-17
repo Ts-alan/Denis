@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -87,9 +88,9 @@ namespace Sciencecom.Controllers
             return adv.Sides.Sum(side => side.Surfaces.Count);
         }
 
-        protected double CountSquare(AdvertisingStructure adv)
+        protected double CountSquare(List<Surface> surfaces)
         {
-            return adv.Sides.SelectMany(side => side.Surfaces).Sum(Surface => Surface.Space);
+            return surfaces.Sum(Surface => Surface.Space);
         }
 
     }
