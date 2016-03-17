@@ -177,9 +177,9 @@
                 { name: "Дом_Номер_опоры", align: "center" },
                 { name: "Количество_сторон", align: "center" },
                 { name: "Количестов_поверхностей", align: "center" },
-                { name: "Площадь_конструкции", align: "center"  },
-                { name: "Разреш_с", align: "center", searchoptions:{dataInit:function(el){$(el).datepicker({dateFormat:'yy/mm/dd'})} }},
-                { name: "Разреш_по", align: "center" , searchoptions:{dataInit:function(el){$(el).datepicker({dateFormat:'yy/mm/dd'})} } }
+                { name: "Площадь_конструкции", align: "center" },
+                { name: "Разреш_с", align: "center", searchoptions:{dataInit:function(el){$(el).datepicker({dateFormat:'yy/mm/dd'}).change(function(){$("#table")[0].triggerToolbar();});} }},
+                { name: "Разреш_по", align: "center" , searchoptions:{dataInit:function(el){$(el).datepicker({dateFormat:'yy/mm/dd'}).change(function(){$("#table")[0].triggerToolbar();});} } }
 
             ],
             onSearch: function ()
