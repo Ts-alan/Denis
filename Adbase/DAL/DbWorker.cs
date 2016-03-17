@@ -80,7 +80,7 @@ namespace Sciencecom.DAL
             }
             DateTime ee;
             DateTime se;
-            if (DateTime.TryParse(НачалоРазреш_по, out ee) && DateTime.TryParse(КонецРазреш_по, out se))
+            if (DateTime.TryParse(НачалоРазреш_по, out ee) && DateTime.TryParse(КонецРазреш_по, out se) && !string.IsNullOrWhiteSpace(НачалоРазреш_по) && !string.IsNullOrWhiteSpace(КонецРазреш_по))
             {
                 DateTime beginEndRange = DateTime.Parse(НачалоРазреш_по);
                 DateTime endEndRange = DateTime.Parse(КонецРазреш_по);
@@ -90,9 +90,19 @@ namespace Sciencecom.DAL
                 }
                
             }
+            if (DateTime.TryParse(НачалоРазреш_по, out ee)  && !string.IsNullOrWhiteSpace(НачалоРазреш_по) && string.IsNullOrWhiteSpace(КонецРазреш_по))
+            {
+                DateTime beginEndRange = DateTime.Parse(НачалоРазреш_по);
+                adbvertisingList = adbvertisingList.Where(x => x.EndDate >= beginEndRange);
+            }
+            if (DateTime.TryParse(КонецРазреш_по, out se) && string.IsNullOrWhiteSpace(НачалоРазреш_по) && !string.IsNullOrWhiteSpace(КонецРазреш_по))
+            {
+                DateTime endEndRange = DateTime.Parse(КонецРазреш_по);
+                adbvertisingList = adbvertisingList.Where(x => x.EndDate <= endEndRange);
+            }
             DateTime eb;
             DateTime sb;
-            if (DateTime.TryParse(НачалоРазреш_с, out eb) && DateTime.TryParse(КонецРазреш_с, out sb))
+            if (DateTime.TryParse(НачалоРазреш_с, out eb) && DateTime.TryParse(КонецРазреш_с, out sb) && !string.IsNullOrWhiteSpace(НачалоРазреш_с) && !string.IsNullOrWhiteSpace(КонецРазреш_с))
             {
                 DateTime beginStartRange = DateTime.Parse(НачалоРазреш_с);
                 DateTime endStartRange = DateTime.Parse(КонецРазреш_с);
@@ -101,6 +111,16 @@ namespace Sciencecom.DAL
                     adbvertisingList = adbvertisingList.Where(x => x.StartDate >= beginStartRange && x.StartDate <= endStartRange);
                 }
                 
+            }
+            if (DateTime.TryParse(НачалоРазреш_с, out eb) && !string.IsNullOrWhiteSpace(НачалоРазреш_с) && string.IsNullOrWhiteSpace(КонецРазреш_с))
+            {
+                DateTime beginStartRange = DateTime.Parse(НачалоРазреш_с);
+                adbvertisingList = adbvertisingList.Where(x => x.StartDate >= beginStartRange );
+            }
+            if (DateTime.TryParse(КонецРазреш_с, out sb) && string.IsNullOrWhiteSpace(НачалоРазреш_с) && !string.IsNullOrWhiteSpace(КонецРазреш_с))
+            {
+                DateTime endStartRange = DateTime.Parse(КонецРазреш_с);
+                adbvertisingList = adbvertisingList.Where(x => x.StartDate <= endStartRange);
             }
             DateTime r;
             if (!string.IsNullOrWhiteSpace(Разреш_по) && DateTime.TryParse(Разреш_по, out r))

@@ -28,27 +28,53 @@
         $("#searchStartDateRange").click(function ()
         {
             var gridPostData;
-
-            if ($("#beginingStartDateRange").val() != "" && $("#endingStartDateRange").val())
-            {
-                gridPostData = $("#table").getGridParam("postData");
-                gridPostData["НачалоРазреш_с"] = $("#beginingStartDateRange").val();
-                gridPostData["КонецРазреш_с"] = $("#endingStartDateRange").val();
-                //console.log(gridPostData);
-                $('#table').jqGrid('setGridParam', { postData: gridPostData });
-                //$('#table').trigger('reloadGrid');
-                //PullData();
-                jQuery("#table")[0].triggerToolbar();
-            }
-            else
-            {
-                gridPostData = $("#table").getGridParam("postData");
-                gridPostData["НачалоРазреш_с"] = null;
-                gridPostData["КонецРазреш_с"] = null;
-                $('#table').jqGrid('setGridParam', { postData: gridPostData });
-                //$('#table').trigger('reloadGrid');
-                jQuery("#table")[0].triggerToolbar();
-            }
+            gridPostData = $("#table").getGridParam("postData");
+            gridPostData["НачалоРазреш_с"] = $("#beginingStartDateRange").val();
+            gridPostData["КонецРазреш_с"] = $("#endingStartDateRange").val();
+            $('#table').jqGrid('setGridParam', { postData: gridPostData });
+            jQuery("#table")[0].triggerToolbar();
+            //if ($("#beginingStartDateRange").val() != "" && $("#endingStartDateRange").val()!="")
+            //{
+            //    gridPostData = $("#table").getGridParam("postData");
+            //    gridPostData["НачалоРазреш_с"] = $("#beginingStartDateRange").val();
+            //    gridPostData["КонецРазреш_с"] = $("#endingStartDateRange").val();
+            //    //console.log(gridPostData);
+            //    $('#table').jqGrid('setGridParam', { postData: gridPostData });
+            //    //$('#table').trigger('reloadGrid');
+            //    //PullData();
+            //    jQuery("#table")[0].triggerToolbar();
+            //}
+            //if ($("#beginingStartDateRange").val() == "" && $("#endingStartDateRange").val()!="")
+            //{
+            //    gridPostData = $("#table").getGridParam("postData");
+            //    gridPostData["НачалоРазреш_с"] = "";
+            //    gridPostData["КонецРазреш_с"] = $("#endingStartDateRange").val();
+            //    //console.log(gridPostData);
+            //    $('#table').jqGrid('setGridParam', { postData: gridPostData });
+            //    //$('#table').trigger('reloadGrid');
+            //    //PullData();
+            //    jQuery("#table")[0].triggerToolbar();
+            //}
+            //if ($("#beginingStartDateRange").val() != "" && $("#endingStartDateRange").val()!="")
+            //{
+            //    gridPostData = $("#table").getGridParam("postData");
+            //    gridPostData["НачалоРазреш_с"] = $("#beginingStartDateRange").val();
+            //    gridPostData["КонецРазреш_с"] = $("#endingStartDateRange").val();
+            //    //console.log(gridPostData);
+            //    $('#table').jqGrid('setGridParam', { postData: gridPostData });
+            //    //$('#table').trigger('reloadGrid');
+            //    //PullData();
+            //    jQuery("#table")[0].triggerToolbar();
+            //}
+            //else
+            //{
+            //    gridPostData = $("#table").getGridParam("postData");
+            //    gridPostData["НачалоРазреш_с"] = null;
+            //    gridPostData["КонецРазреш_с"] = null;
+            //    $('#table').jqGrid('setGridParam', { postData: gridPostData });
+            //    //$('#table').trigger('reloadGrid');
+            //    jQuery("#table")[0].triggerToolbar();
+            //}
            
             //$("#beginingStartDateRange").val()
 
@@ -56,27 +82,34 @@
          $("#searchEndDateRange").click(function ()
         {
             var gridPostData;
+            gridPostData = $("#table").getGridParam("postData");
+            gridPostData["НачалоРазреш_по"] = $("#beginingEndDateRange").val();
+            gridPostData["КонецРазреш_по"] = $("#endingEndDateRange").val();
+            //console.log(gridPostData);
+            $('#table').jqGrid('setGridParam', { postData: gridPostData });
+            $('#table').trigger('reloadGrid');
 
-            if ($("#startingEndDateRange").val() != "" && $("#endingEndDateRange").val())
-            {
 
-                gridPostData = $("#table").getGridParam("postData");
-                gridPostData["НачалоРазреш_по"] = $("#beginingEndDateRange").val();
-                gridPostData["КонецРазреш_по"] = $("#endingEndDateRange").val();
-                //console.log(gridPostData);
-                $('#table').jqGrid('setGridParam', { postData: gridPostData });
-                $('#table').trigger('reloadGrid');
-            }
-            else
-            {
-                gridPostData = $("#table").getGridParam("postData");
-                gridPostData["НачалоРазреш_по"] = null;
-                gridPostData["КонецРазреш_по"] = null;
+            //if ($("#startingEndDateRange").val() != "" && $("#endingEndDateRange").val())
+            //{
 
-                $('#table').jqGrid('setGridParam', { postData: gridPostData });
-                $('#table').trigger('reloadGrid');
-            }
-            //$("#beginingStartDateRange").val()
+            //    gridPostData = $("#table").getGridParam("postData");
+            //    gridPostData["НачалоРазреш_по"] = $("#beginingEndDateRange").val();
+            //    gridPostData["КонецРазреш_по"] = $("#endingEndDateRange").val();
+            //    //console.log(gridPostData);
+            //    $('#table').jqGrid('setGridParam', { postData: gridPostData });
+            //    $('#table').trigger('reloadGrid');
+            //}
+            //else
+            //{
+            //    gridPostData = $("#table").getGridParam("postData");
+            //    gridPostData["НачалоРазреш_по"] = null;
+            //    gridPostData["КонецРазреш_по"] = null;
+
+            //    $('#table').jqGrid('setGridParam', { postData: gridPostData });
+            //    $('#table').trigger('reloadGrid');
+            //}
+            ////$("#beginingStartDateRange").val()
 
         });
 
