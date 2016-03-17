@@ -39,7 +39,7 @@ function AddRules()
                 messages :{min: "Введите положительное значение" } 
             });
         $(element).change(function (event) {
-            if ($(this).val() > 0) {
+            if ($(this).val() >= 0) {
 
                 $(this).parent().removeClass("has-error").addClass("has-success");
                 $(this).parent().find("span.glyphicon").addClass("glyphicon-ok").removeClass("glyphicon-remove");
