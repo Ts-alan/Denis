@@ -22,10 +22,98 @@
     var $SaveIdForHideTooltip;
     var $Tablebacklight;
     var firstReauquest = true;
-    $(document).ready(function()
+    $(document).ready(function ()
     {
+        //функция для добавления новых параметров поиска и обновления таблицы
+        $("#searchStartDateRange").click(function ()
+        {
+            var gridPostData;
+
+            if ($("#beginingStartDateRange").val() != "" && $("#endingStartDateRange").val())
+            {
+                gridPostData = $("#table").getGridParam("postData");
+                gridPostData["НачалоРазреш_с"] = $("#beginingStartDateRange").val();
+                gridPostData["КонецРазреш_с"] = $("#endingStartDateRange").val();
+                //console.log(gridPostData);
+                $('#table').jqGrid('setGridParam', { postData: gridPostData });
+                $('#table').trigger('reloadGrid');
+            }
+            else
+            {
+                gridPostData = $("#table").getGridParam("postData");
+                gridPostData["НачалоРазреш_с"] = null;
+                gridPostData["КонецРазреш_с"] = null;
+                $('#table').jqGrid('setGridParam', { postData: gridPostData });
+                $('#table').trigger('reloadGrid');
+            }
+            if ($("#endingStartDateRange").val() != "" && $("#endingEndDateRange").val())
+            {
+
+                gridPostData = $("#table").getGridParam("postData");
+                gridPostData["НачалоРазреш_по"] = $("#beginingEndDateRange").val();
+                gridPostData["КонецРазреш_по"] = $("#endingEndDateRange").val();
+                //console.log(gridPostData);
+                $('#table').jqGrid('setGridParam', { postData: gridPostData });
+                $('#table').trigger('reloadGrid');
+            }
+            else
+            {
+                gridPostData = $("#table").getGridParam("postData");
+                gridPostData["НачалоРазреш_по"] = null;
+                gridPostData["КонецРазреш_по"] = null;
+
+                $('#table').jqGrid('setGridParam', { postData: gridPostData });
+                $('#table').trigger('reloadGrid');
+            }
+            //$("#beginingStartDateRange").val()
+
+        });
+         $("#searchEndDateRange").click(function ()
+        {
+            var gridPostData;
+
+            if ($("#beginingEndDateRange").val() != "" && $("#endingStartDateRange").val())
+            {
+                gridPostData = $("#table").getGridParam("postData");
+                gridPostData["НачалоРазреш_с"] = $("#beginingStartDateRange").val();
+                gridPostData["КонецРазреш_с"] = $("#endingStartDateRange").val();
+                //console.log(gridPostData);
+                $('#table').jqGrid('setGridParam', { postData: gridPostData });
+                $('#table').trigger('reloadGrid');
+            }
+            else
+            {
+                gridPostData = $("#table").getGridParam("postData");
+                gridPostData["НачалоРазреш_с"] = null;
+                gridPostData["КонецРазреш_с"] = null;
+                $('#table').jqGrid('setGridParam', { postData: gridPostData });
+                $('#table').trigger('reloadGrid');
+            }
+            if ($("#endingEndDateRange").val() != "" && $("#endingEndDateRange").val())
+            {
+
+                gridPostData = $("#table").getGridParam("postData");
+                gridPostData["НачалоРазреш_по"] = $("#beginingEndDateRange").val();
+                gridPostData["КонецРазреш_по"] = $("#endingEndDateRange").val();
+                //console.log(gridPostData);
+                $('#table').jqGrid('setGridParam', { postData: gridPostData });
+                $('#table').trigger('reloadGrid');
+            }
+            else
+            {
+                gridPostData = $("#table").getGridParam("postData");
+                gridPostData["НачалоРазреш_по"] = null;
+                gridPostData["КонецРазреш_по"] = null;
+
+                $('#table').jqGrid('setGridParam', { postData: gridPostData });
+                $('#table').trigger('reloadGrid');
+            }
+            //$("#beginingStartDateRange").val()
+
+        });
+
         //функция для скрывания открытых всплывающих окон
-        $(document).dblclick(function(e)
+        $(document).dblclick(function (e)
         {
             if (document.activeElement.getAttribute("class") != "HideClass")
             {
@@ -38,7 +126,7 @@
         });
 
         //
-        $("#table").bind('DOMNodeInserted DOMNodeRemoved', function()
+        $("#table").bind('DOMNodeInserted DOMNodeRemoved', function ()
         {
             fillDataForFunctionFT();
         });
@@ -75,6 +163,7 @@
                 "Количество сторон",
                 "Количестов поверхностей",
                 "Площадь конструкции",
+                "Разреш с",
                 "Разреш по"
             ],
             forceFit: false,
@@ -87,20 +176,22 @@
                 { name: "Дом_Номер_опоры", align: "center" },
                 { name: "Количество_сторон", align: "center" },
                 { name: "Количестов_поверхностей", align: "center" },
-                { name: "Площадь_конструкции", align: "center" },
-                { name: "Разреш_по", align: "center" }
+                { name: "Площадь_конструкции", align: "center"  },
+                { name: "Разреш_с", align: "center", searchoptions:{dataInit:function(el){$(el).datepicker({dateFormat:'yy/mm/dd'})} }},
+                { name: "Разреш_по", align: "center" , searchoptions:{dataInit:function(el){$(el).datepicker({dateFormat:'yy/mm/dd'})} } }
+
             ],
-            onSearch: function()
+            onSearch: function ()
             {
                 $(this).setGridParam({ datatype: 'json' });
                 return true;
             },
-            onReset: function()
+            onReset: function ()
             {
                 $(this).setGridParam({ datatype: 'json' });
                 return true;
             },
-            beforeRequest: function()
+            beforeRequest: function ()
             {
                 if (firstReauquest)
                 {
@@ -110,9 +201,9 @@
                 }
                 PullData();
             }
-            
+
         });
-       
+
 
         //Добавление строки с полями для поиска в таблице конструкций
         $('#table').jqGrid('filterToolbar',
@@ -120,15 +211,15 @@
                 searchOnEnter: false,
                 beforeClear: function () { return true; },
                 //beforeSearch:  function(){PullData();},
-                afterSearch: function()
+                afterSearch: function ()
                 {
-                    
+
                 }
             });
         //$(".ui-jqgrid-bdiv").append("<h1 style=\"margin-left: 700px;margin-top: 300px\">Выберите параметры поиска</h1>");
 
         //подсветка
-        $('table tr').on("click", function()
+        $('table tr').on("click", function ()
         {
             if (typeof $Tablebacklight != 'undefined')
             {
@@ -138,7 +229,7 @@
             $Tablebacklight.css("background", "#ADDEFF");
         });
         //спрятать всплывающие окна
-        $("#AddNewAD").click(function()
+        $("#AddNewAD").click(function ()
         {
             if ($('#divForAddNewAD').css("visibility") == "hidden")
             {
@@ -148,7 +239,7 @@
                 $('#divForAddNewAD').css("visibility", "hidden");
             }
         });
-        $("#EditStatusAD").click(function()
+        $("#EditStatusAD").click(function ()
         {
             if ($('#divEditStatusAD').css("visibility") == "hidden")
             {
@@ -159,15 +250,15 @@
             }
         });
         //переход через ajax на edit billbord
-        $('#EditBillbord').click(function()
+        $('#EditBillbord').click(function ()
         {
             if ($Tablebacklight != "undefined")
             {
                 var IdGuid = $Tablebacklight.children("td:last").children().text();
-                $.get('@Url.Action("EditAdvertisingDesign", "Data")', { id: IdGuid }).success(function(result)
+                $.get('@Url.Action("EditAdvertisingDesign", "Data")', { id: IdGuid }).success(function (result)
                 {
                     $("#Page").html(result);
-                }).error(function()
+                }).error(function ()
                 {
                     alert("что то пошло не так");
                 });
@@ -179,14 +270,14 @@
         {
             var collectionMap = {};
             collectionMap.postdata = $("#table").getGridParam("postData");
-            
+
             var test = JSON.stringify(collectionMap);
 
             $.ajax({
                 url: '@Url.Action("SaveSearch", "BackEndServices")',
                 data: { collectionMap: test },
                 type: 'POST',
-                success: function(e)
+                success: function (e)
                 {
                     //alert(e);
                 }
@@ -200,7 +291,7 @@
             //var sgrid = $("#table")[0];
             //sgrid.triggerToolbar();
 
-            $('.ui-widget-content.jqgrow.ui-row-ltr').on("click", function()
+            $('.ui-widget-content.jqgrow.ui-row-ltr').on("click", function ()
             {
                 if (typeof $Tablebacklight != 'undefined')
                 {
@@ -210,115 +301,115 @@
                 $Tablebacklight.css("background", "#ADDEFF");
             });
 
-            
-            //выпадающее меню для всех типов строк
-            tr.each(function(indx, element)
-                {
-                    //поиск ячейки в строке для считывания вида конструкции
-                    var td = $(this).find('[aria-describedby="table_Вид_конструкции"]');
-                    //выпадающее меню для указателей
-                    if (td[0].title == "Металлический указатель")
-                    {
-                        $(element).tooltipsy({
-                            alignTo: 'cursor',
-                            offset: [0, -85],
-                            hideEvent: 'focusout',
-                            content: '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
-                                '+<a href="/Map/Index/' + $(element)[0].id + '">Показать на карте</a></br>' +
-                                '+<a href="/Data/Pointer/' + $(element)[0].id + '">Показать данные о конструкции</a></br>' +
-                                '+<a href="/Data/EditMetalPointerDesign/' + $(element)[0].id + '">Изменить данные о конструкции</a></br>' +
-                                '+<a  href="/Data/DeleteAdvertisingDesign/'+ $(element)[0].id +'">Удалить конструкцию</a></br>' +
-                                '</button>',
-                            show: function(e, $el)
-                            {
-                                $el.show(100);
-                            },
-                            hide: function(e, $el)
-                            {
-                            },
-                            delay: 200,
-                            className: 'tooltipsy',
-                            css: {}
-                        });
-                    }
-                    //выпадающее меню для щитов
-                    if (td[0].title == "Щит")
-                    {
-                        //console.log(tr[indx].id-1);
 
-                        $(element).tooltipsy({
-                            alignTo: 'cursor',
-                            offset: [0, -85],
-                            hideEvent: 'focusout',
-                            content: '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
-                                '+<a href="/Map/Index/' + $(element)[0].id + '">Показать на карте</a></br>' +
-                                '+<a href="/Data/Documents/' + $(element)[0].id + '">Показать данные о конструкции</a></br>' +
-                                '+<a href="/Data/EditAdvertisingDesign/' + $(element)[0].id + '">Изменить данные о конструкции</a></br>' +
-                                '+<a href="/Data/DeleteAdvertisingDesign/'+ $(element)[0].id +'">Удалить конструкцию</a></br>' +
-                                '</button>',
-                            show: function(e, $el)
-                            {
-                                $el.show(100);
-                            },
-                            hide: function(e, $el)
-                            {
-                            },
-                            delay: 200,
-                            className: 'tooltipsy',
-                            css: {}
-                        });
-                    }
-                    //выпадающее меню для световых коробов
-                    if (td[0].title == "Световой короб")
-                    {
-                        $(element).tooltipsy({
-                            alignTo: 'cursor',
-                            offset: [0, -85],
-                            hideEvent: 'focusout',
-                            content: '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
-                                '+<a href="/Map/Index/' + $(element)[0].id + '">Показать на карте</a></br>' +
-                                '+<a href="/Data/LightDuct/' + $(element)[0].id + '">Показать данные о конструкции</a></br>' +
-                                '+<a href="/Data/EditLightDuctDesign/' + $(element)[0].id + '">Изменить данные о конструкции</a></br>' +
-                                '+<a  href="/Data/DeleteAdvertisingDesign/'+ $(element)[0].id +'">Удалить конструкцию</a></br>' +
-                                '</button>',
-                            show: function(e, $el)
-                            {
-                                $el.show(100);
-                            },
-                            hide: function(e, $el)
-                            {
-                            },
-                            delay: 200,
-                            className: 'tooltipsy',
-                            css: {}
-                        });
-                    }
-                    //выпадающее меню для неопознанных конструкций
-                    if (td[0].title == "Неопознанная конструкция")
-                    {
-                        $(element).tooltipsy({
-                            alignTo: 'cursor',
-                            offset: [0, -85],
-                            hideEvent: 'focusout',
-                            content: '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
-                                '+<a href="/Map/Index/' + $(element)[0].id + '">Показать на карте</a></br>' +
-                                '+<a href="/Data/Illegal/' + $(element)[0].id + '">Показать данные о конструкции</a></br>' +
-                                '+<a href="/Data/EditIllegalDesign/' + $(element)[0].id + '">Изменить данные о конструкции</a></br>' +
-                                '+<a  href="/Data/DeleteAdvertisingDesign/'+ $(element)[0].id +'">Удалить конструкцию</a></br>' +
-                                '</button>',
-                            show: function(e, $el)
-                            {
-                                $el.show(100);
-                            },
-                            hide: function(e, $el)
-                            {
-                            },
-                            delay: 200,
-                            className: 'tooltipsy',
-                            css: {}
-                        });
-                    }
+            //выпадающее меню для всех типов строк
+            tr.each(function (indx, element)
+            {
+                //поиск ячейки в строке для считывания вида конструкции
+                var td = $(this).find('[aria-describedby="table_Вид_конструкции"]');
+                //выпадающее меню для указателей
+                if (td[0].title == "Металлический указатель")
+                {
+                    $(element).tooltipsy({
+                        alignTo: 'cursor',
+                        offset: [0, -85],
+                        hideEvent: 'focusout',
+                        content: '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
+                            '+<a href="/Map/Index/' + $(element)[0].id + '">Показать на карте</a></br>' +
+                            '+<a href="/Data/Pointer/' + $(element)[0].id + '">Показать данные о конструкции</a></br>' +
+                            '+<a href="/Data/EditMetalPointerDesign/' + $(element)[0].id + '">Изменить данные о конструкции</a></br>' +
+                            '+<a  href="/Data/DeleteAdvertisingDesign/' + $(element)[0].id + '">Удалить конструкцию</a></br>' +
+                            '</button>',
+                        show: function (e, $el)
+                        {
+                            $el.show(100);
+                        },
+                        hide: function (e, $el)
+                        {
+                        },
+                        delay: 200,
+                        className: 'tooltipsy',
+                        css: {}
+                    });
                 }
+                //выпадающее меню для щитов
+                if (td[0].title == "Щит")
+                {
+                    //console.log(tr[indx].id-1);
+
+                    $(element).tooltipsy({
+                        alignTo: 'cursor',
+                        offset: [0, -85],
+                        hideEvent: 'focusout',
+                        content: '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
+                            '+<a href="/Map/Index/' + $(element)[0].id + '">Показать на карте</a></br>' +
+                            '+<a href="/Data/Documents/' + $(element)[0].id + '">Показать данные о конструкции</a></br>' +
+                            '+<a href="/Data/EditAdvertisingDesign/' + $(element)[0].id + '">Изменить данные о конструкции</a></br>' +
+                            '+<a href="/Data/DeleteAdvertisingDesign/' + $(element)[0].id + '">Удалить конструкцию</a></br>' +
+                            '</button>',
+                        show: function (e, $el)
+                        {
+                            $el.show(100);
+                        },
+                        hide: function (e, $el)
+                        {
+                        },
+                        delay: 200,
+                        className: 'tooltipsy',
+                        css: {}
+                    });
+                }
+                //выпадающее меню для световых коробов
+                if (td[0].title == "Световой короб")
+                {
+                    $(element).tooltipsy({
+                        alignTo: 'cursor',
+                        offset: [0, -85],
+                        hideEvent: 'focusout',
+                        content: '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
+                            '+<a href="/Map/Index/' + $(element)[0].id + '">Показать на карте</a></br>' +
+                            '+<a href="/Data/LightDuct/' + $(element)[0].id + '">Показать данные о конструкции</a></br>' +
+                            '+<a href="/Data/EditLightDuctDesign/' + $(element)[0].id + '">Изменить данные о конструкции</a></br>' +
+                            '+<a  href="/Data/DeleteAdvertisingDesign/' + $(element)[0].id + '">Удалить конструкцию</a></br>' +
+                            '</button>',
+                        show: function (e, $el)
+                        {
+                            $el.show(100);
+                        },
+                        hide: function (e, $el)
+                        {
+                        },
+                        delay: 200,
+                        className: 'tooltipsy',
+                        css: {}
+                    });
+                }
+                //выпадающее меню для неопознанных конструкций
+                if (td[0].title == "Неопознанная конструкция")
+                {
+                    $(element).tooltipsy({
+                        alignTo: 'cursor',
+                        offset: [0, -85],
+                        hideEvent: 'focusout',
+                        content: '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
+                            '+<a href="/Map/Index/' + $(element)[0].id + '">Показать на карте</a></br>' +
+                            '+<a href="/Data/Illegal/' + $(element)[0].id + '">Показать данные о конструкции</a></br>' +
+                            '+<a href="/Data/EditIllegalDesign/' + $(element)[0].id + '">Изменить данные о конструкции</a></br>' +
+                            '+<a  href="/Data/DeleteAdvertisingDesign/' + $(element)[0].id + '">Удалить конструкцию</a></br>' +
+                            '</button>',
+                        show: function (e, $el)
+                        {
+                            $el.show(100);
+                        },
+                        hide: function (e, $el)
+                        {
+                        },
+                        delay: 200,
+                        className: 'tooltipsy',
+                        css: {}
+                    });
+                }
+            }
             );
         }
 
@@ -334,52 +425,67 @@
             if (collectionMap != "[]" && collectionMap != '' && collectionMap != undefined)
             {
                 $('#table').jqGrid('setGridParam', { postData: collectionMap.postdata });
-               
+
                 if (collectionMap.postdata.Собственник !== undefined)
                 {
                     $("input[id$='Собственник']").val(collectionMap.postdata.Собственник);
                 }
-                 if (collectionMap.postdata.Вид_конструкции !== undefined)
+                if (collectionMap.postdata.Вид_конструкции !== undefined)
                 {
                     $("input[id$='Вид_конструкции']").val(collectionMap.postdata.Вид_конструкции);
-                 }
-                 if (collectionMap.postdata.Населенный_пункт !== undefined)
+                }
+                if (collectionMap.postdata.Населенный_пункт !== undefined)
                 {
                     $("input[id$='Населенный_пункт']").val(collectionMap.postdata.Населенный_пункт);
-                 }
-                 if (collectionMap.postdata.Улица !== undefined)
+                }
+                if (collectionMap.postdata.Улица !== undefined)
                 {
                     $("input[id$='Улица']").val(collectionMap.postdata.Улица);
-                 }
-                 if (collectionMap.postdata.Дом_Номер_опоры !== undefined)
+                }
+                if (collectionMap.postdata.Дом_Номер_опоры !== undefined)
                 {
                     $("input[id$='Дом_Номер_опоры']").val(collectionMap.postdata.Дом_Номер_опоры);
-                 }
-                 if (collectionMap.postdata.Количество_сторон !== undefined)
+                }
+                if (collectionMap.postdata.Количество_сторон !== undefined)
                 {
                     $("input[id$='Количество_сторон']").val(collectionMap.postdata.Количество_сторон);
-                 }
-                 if (collectionMap.postdata.Количестов_поверхностей !== undefined)
+                }
+                if (collectionMap.postdata.Количестов_поверхностей !== undefined)
                 {
                     $("input[id$='Количестов_поверхностей']").val(collectionMap.postdata.Количестов_поверхностей);
-                 }
-                 if (collectionMap.postdata.Площадь_конструкции !== undefined)
+                }
+                if (collectionMap.postdata.Площадь_конструкции !== undefined)
                 {
                     $("input[id$='Площадь_конструкции']").val(collectionMap.postdata.Площадь_конструкции);
-                 }
-                 if (collectionMap.postdata.Разреш_по !== undefined)
+                }
+                if (collectionMap.postdata.Разреш_по !== undefined)
                 {
                     $("input[id$='Разреш_по']").val(collectionMap.postdata.Разреш_по);
                 }
-                
+                if (collectionMap.postdata.НачалоРазреш_по !== undefined)
+                {
+                    $("#beginingStartDateRange").val(collectionMap.postdata.НачалоРазреш_по);
+                }
+                if (collectionMap.postdata.КонецРазреш_по !== undefined)
+                {
+                    $("#endingStartDateRange").val(collectionMap.postdata.КонецРазреш_по);
+                }
+                if (collectionMap.postdata.НачалоРазреш_с !== undefined)
+                {
+                    $("#beginingEndDateRange").val(collectionMap.postdata.НачалоРазреш_с);
+                }
+                if (collectionMap.postdata.КонецРазреш_с !== undefined)
+                {
+                    $("#endingEndDateRange").val(collectionMap.postdata.КонецРазреш_с);
+                }
                 fillDataForFunctionFT();
             }
         }
 
-        $("#search").click(function()
+        $("#search").click(function ()
         {
             PullData();
-            jQuery("#table")[0].triggerToolbar(); 
+            jQuery("#table")[0].triggerToolbar();
             fillDataForFunctionFT();
         });
 
@@ -387,13 +493,13 @@
 
         //Повторный вызов функции для навештивания событий по двойному клику на строки таблицы после очистки поля поиска
         $(".clearsearchclass").switchClass("clearsearchclass", "clrsrchcls");
-        $(".clrsrchcls").click(function()
+        $(".clrsrchcls").click(function ()
         {
             fillDataForFunctionFT();
         });
 
         //Повторный вызов функции для навештивания событий по нажатию энтер в строке поиска
-        $('.ui-widget-content.ui-corner-all').keypress(function(event)
+        $('.ui-widget-content.ui-corner-all').keypress(function (event)
         {
             if (event.keyCode == 13)
             {
@@ -401,19 +507,19 @@
             }
         });
         function fillDataForFunctionFT()
-    {
-       var tr = $('#table  tr.ui-widget-content.jqgrow.ui-row-ltr:last ');
-            
+        {
+            var tr = $('#table  tr.ui-widget-content.jqgrow.ui-row-ltr:last ');
+
             if (tr.length > 0)
             {
                 var sel = '#table  tr.ui-widget-content.jqgrow.ui-row-ltr[id="' + tr[0].id + '"] > td';
                 var tds = $(sel);
-                
+
                 FunctionalFortable(tr, tds[0]);
-            } 
-    }
+            }
+        }
     });
-    
+
 </script>
 @*чтобы jqgtid разбивал на несколько строк*@
 <style type="text/css" media="screen">
@@ -427,30 +533,77 @@
 
     <h2>Таблица конструкций</h2>
     <div class="zoom">
-        @{
-            if (role != "ReadOnly")
-            {
-                <p>
-                    <!-- Trigger the modal with a button -->
-                    <b><input type="button" value="+ Добавить новую конструкцию" id="AddConstruction" class="btn btn-default" data-toggle="modal" data-target="#myModal"></b>
-                    <b> <input type="button" value="Поиск" id="search" class="btn btn-default"></b>
-                </p>
-            }
-        }
+        <div class="row">
+            <div class="row">
+                <div class="col-md-4">
+                </div>
+                <div class="col-md-4">
+                    <label>Временной интервал выдачи разрешения</label>
+                </div>
+                <div class="col-md-4">
+                    <label>Временной интервал окончания разрешения</label>
+                </div>
+            </div>
+            <div class="col-md-4" style="padding-top: 21px">
+                @{
+                    if (role != "ReadOnly")
+                    {
+                        <p>
+                            <!-- Trigger the modal with a button -->
+                            <b><input type="button" value="+ Добавить новую конструкцию" id="AddConstruction" class="btn btn-default" data-toggle="modal" data-target="#myModal"></b>
+                            <b> <input type="button" value="Поиск" id="search" class="btn btn-default"></b>
+                        </p>
+                    }
+                }
+            </div>
+            <div class="col-md-4">
+                <div class="form-inline">
+                    <div class="form-group">
+                        <label>Начало </label>
+                        <br />
+                        <input type="date" class="form-control input-sm" id="beginingStartDateRange" />
+                    </div>
+                    <div class="form-group">
+                        <label>Конец</label>
+                        <br />
+                        <input type="date" class="form-control input-sm" id="endingStartDateRange" />
+                    </div>
+                    <div style="position: relative"></div>
+                    <input type="button" value="Поиск" id="searchStartDateRange" style="position: absolute; right: 10px; bottom: 0;" class=" btn btn-default input-sm" />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-inline">
+                    <div class="form-group">
+                        <label>Начало</label>
+                        <br />
+                        <input type="date" class="form-control input-sm" id="beginingEndDateRange" />
+                    </div>
+                    <div class="form-group">
+                        <label>Конец</label>
+                        <br />
+                        <input type="date" class="form-control input-sm" id="endingEndDateRange" />
+                    </div>
+                    <div style="position: relative"></div>
+                    <input type="button" value="Поиск" id="searchEndDateRange" style="position: absolute; right: 10px; bottom: 0;" class=" btn btn-default input-sm" />
+                </div>
+            </div>
+        </div>
+
 
         <table id="table" class="table-bordered" cellpadding="5" style="width: 100%">
-            <tr>
-
-                <th>Собственник</th>
-                <th>Вид_конструкции</th>
-                <th>Населенный_пункт</th>
-                <th>Улица</th>
-                <th>Дом/Номер_опоры</th>
-                <th>Количество_сторон</th>
-                <th>Количестов_поверхностей</th>
-                <th>Площадь_конструкции</th>
-                <th>Разреш_по</th>
-            </tr>
+            @*<tr>
+                    <th>Собственник</th>
+                    <th>Вид_конструкции</th>
+                    <th>Населенный_пункт</th>
+                    <th>Улица</th>
+                    <th>Дом/Номер_опоры</th>
+                    <th>Количество_сторон</th>
+                    <th>Количестов_поверхностей</th>
+                    <th>Площадь_конструкции</th>
+                    <th>Разреш_с</th>
+                    <th>Разреш_по</th>
+                </tr>*@
 
         </table>
         <div id="jpager"></div>
@@ -467,14 +620,14 @@
                 <h4 class="modal-title" align="center">Выберите тип конструкции</h4>
             </div>
             <div class="modal-body" style="text-align: center;">
-                @Html.ActionLink("Щит", "CreateAdvertisingDesign", new {type = "Billboard"}, new {@class = "btn btn-default", style = "width : 196px; margin-bottom: 8px;"})
-                <br/>
-                @Html.ActionLink("Металлический указатель", "CreateMetalPointerDesign", new {}, new {@class = "btn btn-default", style = "width : 196px; margin-bottom: 8px;"})
-                <br/>
-                @Html.ActionLink("Световой короб", "CreateLightDuctDesign", new {}, new {@class = "btn btn-default", style = "width : 196px; margin-bottom: 8px;" })
-                <br/>
-                @Html.ActionLink("Неопознанная конструкция", "CreateIllegalDesign", new {}, new {@class = "btn btn-default", style = "width : 196px"})
-                <br/>
+                @Html.ActionLink("Щит", "CreateAdvertisingDesign", new { type = "Billboard" }, new { @class = "btn btn-default", style = "width : 196px; margin-bottom: 8px;" })
+                <br />
+                @Html.ActionLink("Металлический указатель", "CreateMetalPointerDesign", new { }, new { @class = "btn btn-default", style = "width : 196px; margin-bottom: 8px;" })
+                <br />
+                @Html.ActionLink("Световой короб", "CreateLightDuctDesign", new { }, new { @class = "btn btn-default", style = "width : 196px; margin-bottom: 8px;" })
+                <br />
+                @Html.ActionLink("Неопознанная конструкция", "CreateIllegalDesign", new { }, new { @class = "btn btn-default", style = "width : 196px" })
+                <br />
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
@@ -485,7 +638,8 @@
 </div>
 <hr />
 <footer>
-    <p>&copy; @DateTime.Now.Year – <a href="#">OnCloud</a> @*| @Html.ActionLink("Лицензионное соглашение", "License", "Home")*@
+    <p>
+        &copy; @DateTime.Now.Year – <a href="#">OnCloud</a> @*| @Html.ActionLink("Лицензионное соглашение", "License", "Home")*@
     </p>
 </footer>
 
