@@ -55,9 +55,9 @@
             myMap.controls.add('zoomControl');
             myMap.controls.add('searchControl');
 
-            var clusterer = GetBilboardPoints("@role", "@user.Company", objectId, myMap);
+            var myObjectManager = GetBilboardPoints("@role", "@user.Company", objectId, myMap);
 
-            myMap.geoObjects.add(clusterer);
+            myMap.geoObjects.add(myObjectManager);
         }
     }
 
@@ -92,7 +92,7 @@
                 collectionMap = JSON.parse('@(Html.Raw(Session["collectionMap"]))');
             }
            
-        console.log(collectionMap);
+        
         if (collectionMap != "[]" && collectionMap != '' && collectionMap != undefined)
         {
 
