@@ -50,7 +50,7 @@
             type: 'POST'
         });*@
         //поиск по карте
-        var collectionMap = [];
+        @*var collectionMap = [];
         $(".content-col input").each(function (indx, element) {
             collectionMap.push({ id: $(element).attr("id"), value: $(element).val().toString() });
         });
@@ -63,7 +63,7 @@
             success: function (e) {
 
             }
-        });
+        });*@
         //поиск по карте
         $("#map").empty();
         ymaps.ready(init);

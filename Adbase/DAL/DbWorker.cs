@@ -230,19 +230,19 @@ namespace Sciencecom.DAL
 
 
         public IEnumerable<AdvertisingStructure> SearchAdversing(AdvertisingStructure advertisin, string owner,
-            string typeOfAdvertisingStructure, string locality, int? countSize, string backlight, string endDate, int? areaConstruction)
+            string typeOfAdvertisingStructure, string locality, int? countSize, string backlight, string endDate, int? areaConstruction,int? CountSurface)
         {
            
             var ownerId = Context.Owners.SingleOrDefault(a => a.Name.ToLower().Contains(owner.ToLower()));
             
             var typeOfAdvertisingStructureId =
                 Context.TypeOfAdvertisingStructures.SingleOrDefault(a => a.Name.ToLower().Contains(typeOfAdvertisingStructure.ToLower()));
-            var localityId = Context.TypeOfAdvertisingStructures.SingleOrDefault(a => a.Name.ToLower().Contains(locality.ToLower()));
+            var localityId = Context.Localities.Where(a => a.NameLocality.ToLower().Contains(locality.ToLower())).ToList();
             List<Backlight> backlights = null;
             if (backlight != null && backlight != "")
                 backlights = Context.Backlights.Where(a => a.Name.Contains(backlight)).ToList();
             IEnumerable<AdvertisingStructure> result;
-            //var Foo = Context.AdvertisingStructures.ToList();
+            
             if (countSize != null)
             {
                 result = Context.AdvertisingStructures.Where(a => a.Sides.Count == countSize && a.coordB != null && a.coordH != null).ToList();
@@ -251,7 +251,12 @@ namespace Sciencecom.DAL
             {
                 result = Context.AdvertisingStructures.Where(a => a.coordB != null && a.coordH != null).ToList();
             }
-            if (areaConstruction != null)
+            if (CountSurface != null)
+            {
+                result= result.Where(x => x.Sides.SelectMany(side => side.Surfaces).Count() == CountSurface);
+            }
+           
+                if (areaConstruction != null)
             {
                 double sum;
                 result = result.Where(a =>
@@ -297,9 +302,28 @@ namespace Sciencecom.DAL
             {
                 result = result.Where(m => m.Code == typeOfAdvertisingStructureId.Code);
             }
-            if (localityId != null)
+            else
             {
-                result = result.Where(m => m.Locality_id == localityId.id);
+                if (typeOfAdvertisingStructure != "")
+                {
+                    result = new List<AdvertisingStructure>();
+                }
+            }
+            if (localityId.Count() != 0)
+            {
+                List<AdvertisingStructure> tempValue = new List<AdvertisingStructure>();
+                foreach (var i in localityId)
+                {
+                    tempValue.AddRange(result.Where(m => m.Locality_id == i.id));
+                }
+                result = tempValue;
+            }
+            else
+            {
+                if (locality!="")
+                {
+                    result = new List<AdvertisingStructure>();
+                }
             }
             if (backlights != null)
             {
@@ -316,7 +340,17 @@ namespace Sciencecom.DAL
             }
             if (!string.IsNullOrEmpty(advertisin.Street1))
             {
-                result = result.Where(m => m.Street1.ToLower().Contains(advertisin.Street1.ToLower()));
+                result = result.Where(m =>
+                {
+                    if (m.Street1 != null)
+                    {
+                        return m.Street1.ToLower().Contains(advertisin.Street1.ToLower());
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                });
             }
             if (!string.IsNullOrEmpty(advertisin.UniqueNumber))
             {
@@ -324,7 +358,30 @@ namespace Sciencecom.DAL
             }
             if (!string.IsNullOrEmpty(advertisin.House1))
             {
-                result = result.Where(m => m.House1.ToLower().Contains(advertisin.House1.ToLower()));
+                List<AdvertisingStructure> tempValue = new List<AdvertisingStructure>();
+                tempValue.AddRange(result.Where(m =>
+                {
+                    if (m.Support_ != null)
+                    {
+                        return m.Support_.ToLower().Contains(advertisin.House1.ToLower());
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }));
+                tempValue.AddRange(result.Where(m =>
+                {
+                    if (m.House1 != null)
+                    {
+                        return m.House1.ToLower().Contains(advertisin.House1.ToLower());
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }));
+                result = tempValue;
             }
             if (!string.IsNullOrEmpty(advertisin.C_ContractFinancialManagement))
             {
