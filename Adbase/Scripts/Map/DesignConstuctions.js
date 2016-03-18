@@ -2,7 +2,8 @@
     var StringBalun = "";
     var indexhouseSupport = "";
     var geoArray = [];
-    var clusterer = new ymaps.Clusterer({ clusterDisableClickZoom: false });
+    var myObjectManager = new ymaps.ObjectManager({ clusterize: true }), currentId = 0;
+
     $.ajax({
         type: "POST",
         url: "/Map/GetDesign",
@@ -78,30 +79,34 @@
                     StringBalun += houseSupport;
                 }
                 StringBalun += getReferencesBillboard(data[i]);
-                    var placemark = new ymaps.GeoObject(
-                 {
-                     geometry: {
-                         type: "Point",
-                         coordinates: [data[i].Breadth, data[i].Height]
-                     },
-                     properties: {
-                         balloonContentBody: StringBalun,
+                geoArray.push(
+                    {
+                        type: 'Feature',
+                        id: i,
+                        geometry:
+                            {
+                                type: "Point",
+                                coordinates: [data[i].Breadth, data[i].Height]
+                            },
+                        properties:
+                            {
+                                balloonContentBody: StringBalun,
 
-                         iconContent: bct,
-                         hintContent: bht
-                     }
-
-                 },
-                 {
-                     preset: 'islands#redClusterIcons',
-                     iconColor: colour
-                 });
+                                iconContent: bct,
+                                hintContent: bht
+                            },
+                        options:
+                            {
+                                preset: 'islands#redClusterIcons',
+                                iconColor: colour
+                            }
+                    });
                 
-                    geoArray[i] = placemark;
+                   
                 StringBalun = "";
             }
 
-            clusterer.add(geoArray);
+            myObjectManager.add(geoArray);
             if (geoArray.length == 1)
             {
                     
@@ -114,7 +119,7 @@
         alert("Ошибка запроса ТРАТАТА");
     });
     
-    return clusterer;
+    return myObjectManager;
     
 }
 

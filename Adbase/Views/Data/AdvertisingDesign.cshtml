@@ -41,7 +41,7 @@
             //    //console.log(gridPostData);
             //    $('#table').jqGrid('setGridParam', { postData: gridPostData });
             //    //$('#table').trigger('reloadGrid');
-            //    //PullData();
+            //    //SaveData();
             //    jQuery("#table")[0].triggerToolbar();
             //}
             //if ($("#beginingStartDateRange").val() == "" && $("#endingStartDateRange").val()!="")
@@ -52,7 +52,7 @@
             //    //console.log(gridPostData);
             //    $('#table').jqGrid('setGridParam', { postData: gridPostData });
             //    //$('#table').trigger('reloadGrid');
-            //    //PullData();
+            //    //SaveData();
             //    jQuery("#table")[0].triggerToolbar();
             //}
             //if ($("#beginingStartDateRange").val() != "" && $("#endingStartDateRange").val()!="")
@@ -63,7 +63,7 @@
             //    //console.log(gridPostData);
             //    $('#table').jqGrid('setGridParam', { postData: gridPostData });
             //    //$('#table').trigger('reloadGrid');
-            //    //PullData();
+            //    //SaveData();
             //    jQuery("#table")[0].triggerToolbar();
             //}
             //else
@@ -88,7 +88,7 @@
             //console.log(gridPostData);
             $('#table').jqGrid('setGridParam', { postData: gridPostData });
             $('#table').trigger('reloadGrid');
-
+             
 
             //if ($("#startingEndDateRange").val() != "" && $("#endingEndDateRange").val())
             //{
@@ -196,11 +196,11 @@
             {
                 if (firstReauquest)
                 {
-                    SetDate();
+                    LoadData();
                     firstReauquest = false;
 
                 }
-                PullData();
+                SaveData();
             }
 
         });
@@ -211,7 +211,7 @@
             {
                 searchOnEnter: false,
                 beforeClear: function () { return true; },
-                //beforeSearch:  function(){PullData();},
+                //beforeSearch:  function(){SaveData();},
                 afterSearch: function ()
                 {
 
@@ -266,10 +266,10 @@
             }
         });
 
-        //сбор данные из поиска для передачи на сервер записи в сессию
-        function PullData()
+        //сбор данные из поиска для передачи на сервер и записи в сессию
+        function SaveData()
         {
-            console.log($("#table").getGridParam("postData"));
+            
             var collectionMap = {};
             collectionMap.postdata = $("#table").getGridParam("postData");
 
@@ -286,7 +286,7 @@
             });
         }
 
-        //навешивание на строки окошек, подсветки
+        //навешивание на строки таблицы всплывающий по двойному клику на строки окошек, подсветки
         function FunctionalFortable(tr, td1)
         {
             $(".ui-jqgrid-bdiv>h1").remove();
@@ -416,14 +416,14 @@
         }
 
         //извлечение данных из сессии для записи в отправляемые таблицей запросы и заполнения шапки таблицы
-        function SetDate()
+        function LoadData()
         {
             var collectionMap;
             if ('@(Html.Raw(Session["collectionMap"]))' != '[]' && '@(Html.Raw(Session["collectionMap"]))' != '')
             {
                 collectionMap = JSON.parse('@(Html.Raw(Session["collectionMap"]))');
             }
-
+            console.log(collectionMap);
             if (collectionMap != "[]" && collectionMap != '' && collectionMap != undefined)
             {
                 $('#table').jqGrid('setGridParam', { postData: collectionMap.postdata });
@@ -486,12 +486,12 @@
 
         $("#search").click(function ()
         {
-            PullData();
+            SaveData();
             jQuery("#table")[0].triggerToolbar();
             fillDataForFunctionFT();
         });
 
-        window.onload = SetDate();
+        window.onload = LoadData();
 
         //Повторный вызов функции для навештивания событий по двойному клику на строки таблицы после очистки поля поиска
         $(".clearsearchclass").switchClass("clearsearchclass", "clrsrchcls");
