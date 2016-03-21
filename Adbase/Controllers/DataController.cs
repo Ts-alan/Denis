@@ -427,11 +427,11 @@ namespace Sciencecom.Controllers
             AdvertisingStructure mc = _context.AdvertisingStructures.Single(a => a.Id_show == id);
             if (mc.coordB != null)
             {
-                mc.coordB = double.Parse(mc.coordB.ToString().Substring(0, 7));
+                mc.coordB = double.Parse(mc.coordB.ToString());
             }
             if (mc.coordH != null)
             {
-                mc.coordH = double.Parse(mc.coordH.ToString().Substring(0, 7));
+                mc.coordH = double.Parse(mc.coordH.ToString());
             }
             return View(mc);
         }
