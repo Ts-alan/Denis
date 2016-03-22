@@ -35,8 +35,35 @@
 <script type="text/javascript">
     var param = true;
 
-    function CreateMap(param)
-    {
+    function CreateMap(param) {
+        //записать в сесиию пременные
+        @*var collectionMap = [];
+        $(".content-col input").each(function (indx, element) {
+            collectionMap.push({ id: $(element).attr("id"), value: $(element).val().toString() });
+
+        });
+        var saveValue = JSON.stringify(collectionMap);
+
+        $.ajax({
+            url: '@Url.Action("SaveSearch", "BackEndServices")',
+            data: { collectionMap: saveValue },
+            type: 'POST'
+        });*@
+        //поиск по карте
+        @*var collectionMap = [];
+        $(".content-col input").each(function (indx, element) {
+            collectionMap.push({ id: $(element).attr("id"), value: $(element).val().toString() });
+        });
+        var SaveData = JSON.stringify(collectionMap);
+
+        $.ajax({
+            url: '@Url.Action("SaveSearch", "BackEndServices")',
+            data: { collectionMap: SaveData },
+            type: 'POST',
+            success: function (e) {
+
+            }
+        });*@
         //поиск по карте
         $("#map").empty();
         ymaps.ready(init);
@@ -44,8 +71,9 @@
 
         var objectId = "@ViewBag.Id";
 
-        function init()
-        {
+
+
+        function init() {
             myMap = new ymaps.Map("map", {
                 center: [53.901, 27.5601],
                 zoom: 11,
@@ -55,184 +83,94 @@
             myMap.controls.add('zoomControl');
             myMap.controls.add('searchControl');
 
-            var myObjectManager = GetBilboardPoints("@role", "@user.Company", objectId, myMap);
+            var clusterer = GetBilboardPoints("@role", "@user.Company", objectId, myMap);
 
-            myMap.geoObjects.add(myObjectManager);
+            myMap.geoObjects.add(clusterer);
         }
     }
 
-    function setRemove(param)
-    {
+    function setRemove(param) {
+
         $('[href="/Data/DeleteAdvertisingDesign"]').
-            attr("href", "/Data/DeleteAdvertisingDesign?id=" + param + "&switchtoMap=true");
+        attr("href", "/Data/DeleteAdvertisingDesign?id=" + param + "&switchtoMap=true");
     }
 
     CreateMap(param);
-    $(document).ready(function()
-    {
-        $("#showMap").click(function()
-        {
-           SaveData();
-        });
+    $(document).ready(function () {
 
-        LoadData();
-
+        if ('@(Html.Raw(Session["collectionMap"]))' != '[]' && '@(Html.Raw(Session["collectionMap"]))' != '') {
+            var collectionMap = JSON.parse('@(Html.Raw(Session["collectionMap"]))');
+            $(".content-col input").each(function (indx, element) {
+                if (collectionMap[indx] != undefined)
+                {
+                    $(element).val(collectionMap[indx].value);
+                }
+            });
+        }
         //чистит инпуты
-        $('a').click(function ()
-        {
+        $('a').click(function () {
             $(this).prev().find("input").val("");
         });
     });
-
-    function LoadData()
-    {
-         var collectionMap;
-            if ('@(Html.Raw(Session["collectionMap"]))' != '[]' && '@(Html.Raw(Session["collectionMap"]))' != '')
-            {
-                collectionMap = JSON.parse('@(Html.Raw(Session["collectionMap"]))');
-            }
-           
-        
-        if (collectionMap != "[]" && collectionMap != '' && collectionMap != undefined)
-        {
-
-            if (collectionMap.postdata.Собственник !== undefined)
-            {
-                $("#gs_Собственник_конструкции").val(collectionMap.postdata.Собственник);
-            }
-            if (collectionMap.postdata.Вид_конструкции !== undefined)
-            {
-                $("#gs_Вид_конструкции").val(collectionMap.postdata.Вид_конструкции);
-            }
-            if (collectionMap.postdata.Населенный_пункт !== undefined)
-            {
-                $("#gs_Населенный_пункт").val(collectionMap.postdata.Населенный_пункт);
-            }
-            if (collectionMap.postdata.Улица !== undefined)
-            {
-                $("#gs_Улица").val(collectionMap.postdata.Улица);
-            }
-            if (collectionMap.postdata.Дом_Номер_опоры !== undefined)
-            {
-                $("input[id$='Номер_опоры']").val(collectionMap.postdata.Дом_Номер_опоры);
-            }
-            if (collectionMap.postdata.Количество_сторон !== undefined)
-            {
-                $("#gs_Количество_сторон").val(collectionMap.postdata.Количество_сторон);
-            }
-            if (collectionMap.postdata.Количестов_поверхностей !== undefined)
-            {
-                $("#gs_Количестов_поверхностей").val(collectionMap.postdata.Количестов_поверхностей);
-            }
-            if (collectionMap.postdata.Площадь_конструкции !== undefined)
-            {
-                $("#gs_Площадь_конструкции").val(collectionMap.postdata.Площадь_конструкции);
-            }
-            if (collectionMap.postdata.Разреш_по !== undefined)
-            {
-                $("#gs_Разреш_по").val(collectionMap.postdata.Разреш_по);
-            }
-        }
-    }
-
-    function SaveData()
-    {
-
-        var collectionMap = {};
-        collectionMap["postdata"] = {};
-        collectionMap.postdata["Собственник"] = "";
-        collectionMap.postdata["Вид_конструкции"] = "";
-        collectionMap.postdata["Населенный_пункт"] = "";
-        collectionMap.postdata["Улица"] = "";
-        collectionMap.postdata["Дом_Номер_опоры"] = "";
-        collectionMap.postdata["Количество_сторон"] = "";
-        collectionMap.postdata["Количестов_поверхностей"] = "";
-        collectionMap.postdata["Площадь_конструкции"] = "";
-        collectionMap.postdata["Разреш_по"] = "";
-
-        collectionMap.postdata.Собственник = $("#gs_Собственник_конструкции").val();
-        collectionMap.postdata.Вид_конструкции = $("#gs_Вид_конструкции").val();
-        collectionMap.postdata.Населенный_пункт = $("#gs_Населенный_пункт").val();
-        collectionMap.postdata.Улица = $("#gs_Улица").val();
-        collectionMap.postdata.Дом_Номер_опоры = $("input[id$='Номер_опоры']").val();
-        collectionMap.postdata.Количество_сторон = $("#gs_Количество_сторон").val();
-        collectionMap.postdata.Количестов_поверхностей = $("#gs_Количестов_поверхностей").val();
-        collectionMap.postdata.Площадь_конструкции = $("#gs_Площадь_конструкции").val();
-        collectionMap.postdata.Разреш_по = $("#gs_Разреш_по").val();
-        
-        var test = JSON.stringify(collectionMap);
-
-        $.ajax({
-            url: '@Url.Action("SaveSearch", "BackEndServices")',
-            data: { collectionMap: test },
-            type: 'POST',
-            success: function (e)
-            {
-                //alert(e);
-            }
-        });
-    }
-
 
 
 </script>
 @*оформление столбца*@
 <style type="text/css">
+    
     #hidden {
         display: none;
     }
 
-    .ui-state-default {
-        line-height: 1.428571429;
-        float: left;
-    }
+     .ui-state-default {
+         line-height: 1.428571429;
+         float: left;
+     }
 
     .name-col {
         height: 46px;
         width: 55%;
-        position: relative;
+        position: relative; 
+        
     }
 
-        .name-col > div {
-            font-size: 11px;
-            /*padding: auto;*/
-            margin-left: auto;
-            margin-right: auto;
-            position: absolute;
-            top: 25%;
-            left: 50%;
-            transform: translateX(-50%);
-            align: justify;
-        }
+    .name-col > div {
+        font-size: 11px;
+        /*padding: auto;*/
+        margin-left: auto;
+        margin-right: auto;
+        position: absolute;   
+        top: 25%; 
+        left: 50%;    
+        transform: translateX(-50%); 
+        align: justify;
+    }
 
     .content-col > div {
         font-size: 11px;
         padding: 2px;
         float: left;
-        width: 90%;
+        width:90% 
     }
-
     .content-col {
         width: 45%;
     }
+    .content-col > div > div {
+        background-color: white;
+        height: 40px;
+        border: 1px solid #dddddd;
+         
+    }
 
-        .content-col > div > div {
-            background-color: white;
-            height: 40px;
-            border: 1px solid #dddddd;
-        }
-
-        .content-col [href="#"] {
-            padding-right: 0.3em;
-            padding-left: 0.3em;
-            font-size: 11px;
-            padding: 2px;
-        }
+    .content-col [href="#"] {
+        padding-right: 0.3em;
+        padding-left: 0.3em;
+        font-size: 11px;
+        padding: 2px;
+    }
     /*изменить цвет*/
     input {
-        color: black;
-        width: 100%;
-        height: 100%;
+        color: black;width: 100%;height: 100%;
     }
 </style>
 
@@ -242,8 +180,7 @@
     <h3 style="text-align: center">
         <h2>Карта конструкций</h2>
     </h3>
-    <div>
-        <b><input type="button" value="+ Добавить новую конструкцию" id="AddConstruction" class="btn btn-default" data-toggle="modal" data-target="#myModal"></b>
+    <div><b><input type="button" value="+ Добавить новую конструкцию" id="AddConstruction" class="btn btn-default" data-toggle="modal" data-target="#myModal"></b>
         @*<b>@Html.ActionLink("+ Добавить новую конструкцию", "CreateAdvertisingDesign", "Data", new {type = "Billboard"}, new {@class = "btn btn-default", style = "margin-bottom: 10px"})</b>*@
     </div>
 
@@ -452,7 +389,7 @@
                 @Html.ActionLink("Металлический указатель", "CreateMetalPointerDesign", "Data", new { }, new { @class = "btn btn-default", style = "width : 196px; margin-bottom: 8px;" })
                 <br />
                 @Html.ActionLink("Световой короб", "CreateLightDuctDesign", "Data", new { }, new { @class = "btn btn-default", style = "width : 196px; margin-bottom: 8px;n" })
-                <br />
+                <br/>
                 @Html.ActionLink("Неопознанная конструкция", "CreateIllegalDesign", "Data", new { }, new { @class = "btn btn-default", style = "width : 196px" })
                 <br />
             </div>

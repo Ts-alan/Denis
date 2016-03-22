@@ -2,8 +2,7 @@
     var StringBalun = "";
     var indexhouseSupport = "";
     var geoArray = [];
-    var myObjectManager = new ymaps.ObjectManager({ clusterize: true }), currentId = 0;
-
+    var clusterer = new ymaps.Clusterer({ clusterDisableClickZoom: false });
     $.ajax({
         type: "POST",
         url: "/Map/GetDesign",
@@ -79,34 +78,30 @@
                     StringBalun += houseSupport;
                 }
                 StringBalun += getReferencesBillboard(data[i]);
-                geoArray.push(
-                    {
-                        type: 'Feature',
-                        id: i,
-                        geometry:
-                            {
-                                type: "Point",
-                                coordinates: [data[i].Breadth, data[i].Height]
-                            },
-                        properties:
-                            {
-                                balloonContentBody: StringBalun,
+                    var placemark = new ymaps.GeoObject(
+                 {
+                     geometry: {
+                         type: "Point",
+                         coordinates: [data[i].Breadth, data[i].Height]
+                     },
+                     properties: {
+                         balloonContentBody: StringBalun,
 
-                                iconContent: bct,
-                                hintContent: bht
-                            },
-                        options:
-                            {
-                                preset: 'islands#redClusterIcons',
-                                iconColor: colour
-                            }
-                    });
+                         iconContent: bct,
+                         hintContent: bht
+                     }
+
+                 },
+                 {
+                     preset: 'islands#redClusterIcons',
+                     iconColor: colour
+                 });
                 
-                   
+                    geoArray[i] = placemark;
                 StringBalun = "";
             }
 
-            myObjectManager.add(geoArray);
+            clusterer.add(geoArray);
             if (geoArray.length == 1)
             {
                     
@@ -119,7 +114,7 @@
         alert("Ошибка запроса ТРАТАТА");
     });
     
-    return myObjectManager;
+    return clusterer;
     
 }
 
