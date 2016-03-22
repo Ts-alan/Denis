@@ -24,13 +24,6 @@
     var firstReauquest = true;
     $(document).ready(function ()
     {
-        //функция для выставления ширины столбцов таблицы под ширину шапки
-         function SetTableWidth()
-         {
-             
-         }
-
-
         //функция для добавления новых параметров поиска и обновления таблицы
         $("#searchStartDateRange").click(function ()
         {
@@ -40,7 +33,51 @@
             gridPostData["КонецРазреш_с"] = $("#endingStartDateRange").val();
             $('#table').jqGrid('setGridParam', { postData: gridPostData });
             jQuery("#table")[0].triggerToolbar();
+            //if ($("#beginingStartDateRange").val() != "" && $("#endingStartDateRange").val()!="")
+            //{
+            //    gridPostData = $("#table").getGridParam("postData");
+            //    gridPostData["НачалоРазреш_с"] = $("#beginingStartDateRange").val();
+            //    gridPostData["КонецРазреш_с"] = $("#endingStartDateRange").val();
+            //    //console.log(gridPostData);
+            //    $('#table').jqGrid('setGridParam', { postData: gridPostData });
+            //    //$('#table').trigger('reloadGrid');
+            //    //SaveData();
+            //    jQuery("#table")[0].triggerToolbar();
+            //}
+            //if ($("#beginingStartDateRange").val() == "" && $("#endingStartDateRange").val()!="")
+            //{
+            //    gridPostData = $("#table").getGridParam("postData");
+            //    gridPostData["НачалоРазреш_с"] = "";
+            //    gridPostData["КонецРазреш_с"] = $("#endingStartDateRange").val();
+            //    //console.log(gridPostData);
+            //    $('#table').jqGrid('setGridParam', { postData: gridPostData });
+            //    //$('#table').trigger('reloadGrid');
+            //    //SaveData();
+            //    jQuery("#table")[0].triggerToolbar();
+            //}
+            //if ($("#beginingStartDateRange").val() != "" && $("#endingStartDateRange").val()!="")
+            //{
+            //    gridPostData = $("#table").getGridParam("postData");
+            //    gridPostData["НачалоРазреш_с"] = $("#beginingStartDateRange").val();
+            //    gridPostData["КонецРазреш_с"] = $("#endingStartDateRange").val();
+            //    //console.log(gridPostData);
+            //    $('#table').jqGrid('setGridParam', { postData: gridPostData });
+            //    //$('#table').trigger('reloadGrid');
+            //    //SaveData();
+            //    jQuery("#table")[0].triggerToolbar();
+            //}
+            //else
+            //{
+            //    gridPostData = $("#table").getGridParam("postData");
+            //    gridPostData["НачалоРазреш_с"] = null;
+            //    gridPostData["КонецРазреш_с"] = null;
+            //    $('#table').jqGrid('setGridParam', { postData: gridPostData });
+            //    //$('#table').trigger('reloadGrid');
+            //    jQuery("#table")[0].triggerToolbar();
+            //}
            
+            //$("#beginingStartDateRange").val()
+
         });
          $("#searchEndDateRange").click(function ()
         {
@@ -52,7 +89,27 @@
             $('#table').jqGrid('setGridParam', { postData: gridPostData });
             $('#table').trigger('reloadGrid');
              
-            
+
+            //if ($("#startingEndDateRange").val() != "" && $("#endingEndDateRange").val())
+            //{
+
+            //    gridPostData = $("#table").getGridParam("postData");
+            //    gridPostData["НачалоРазреш_по"] = $("#beginingEndDateRange").val();
+            //    gridPostData["КонецРазреш_по"] = $("#endingEndDateRange").val();
+            //    //console.log(gridPostData);
+            //    $('#table').jqGrid('setGridParam', { postData: gridPostData });
+            //    $('#table').trigger('reloadGrid');
+            //}
+            //else
+            //{
+            //    gridPostData = $("#table").getGridParam("postData");
+            //    gridPostData["НачалоРазреш_по"] = null;
+            //    gridPostData["КонецРазреш_по"] = null;
+
+            //    $('#table').jqGrid('setGridParam', { postData: gridPostData });
+            //    $('#table').trigger('reloadGrid');
+            //}
+            ////$("#beginingStartDateRange").val()
 
         });
 
@@ -103,15 +160,12 @@
                 "Вид конструкции",
                 "Населенный пункт",
                 "Улица",
-                "Со стороны",
-                "Ближайшая по ходу",
-                "Дом",
-                "Номер опоры",
+                "Дом/Номер_опоры",
+                "Количество сторон",
+                "Количестов поверхностей",
+                "Площадь конструкции",
                 "Разреш с",
-                "Разреш по",
-                "Кол-во сторон",
-                "Кол-во пов.",
-                "Площадь"
+                "Разреш по"
             ],
             forceFit: false,
             cmTemplate: { "resizable": false, sortable: false },
@@ -120,15 +174,12 @@
                 { name: "Вид_конструкции", align: "center" },
                 { name: "Населенный_пункт", align: "center" },
                 { name: "Улица", align: "center" },
-                { name: "Со_стороны", align: "center" },
-                { name: "Ближайшая_по_ходу", align: "center" },
-                { name: "Дом", align: "center" },
-                { name: "Номер_опоры", align: "center" },
-                { name: "Разреш_с", align: "center", searchoptions:{dataInit:function(el){$(el).datepicker({dateFormat:'yy/mm/dd'}).change(function(){$("#table")[0].triggerToolbar();});} }},
-                { name: "Разреш_по", align: "center" , searchoptions:{dataInit:function(el){$(el).datepicker({dateFormat:'yy/mm/dd'}).change(function(){$("#table")[0].triggerToolbar();});} } },
+                { name: "Дом_Номер_опоры", align: "center" },
                 { name: "Количество_сторон", align: "center" },
                 { name: "Количестов_поверхностей", align: "center" },
-                { name: "Площадь_конструкции", align: "center" }
+                { name: "Площадь_конструкции", align: "center" },
+                { name: "Разреш_с", align: "center", searchoptions:{dataInit:function(el){$(el).datepicker({dateFormat:'yy/mm/dd'}).change(function(){$("#table")[0].triggerToolbar();});} }},
+                { name: "Разреш_по", align: "center" , searchoptions:{dataInit:function(el){$(el).datepicker({dateFormat:'yy/mm/dd'}).change(function(){$("#table")[0].triggerToolbar();});} } }
 
             ],
             onSearch: function ()
@@ -469,7 +520,6 @@
                 FunctionalFortable(tr, tds[0]);
             }
         }
-       
     });
 
 </script>

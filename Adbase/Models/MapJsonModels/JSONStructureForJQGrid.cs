@@ -9,10 +9,7 @@ namespace Sciencecom.Models.MapJsonModels
         public String Вид_конструкции { get; set; }
         public String Населенный_пункт { get; set; }
         public String Улица { get; set; }
-        public String Со_стороны { get; set; }
-        public String Ближайшая_по_ходу { get; set; }
-        public String Дом { get; set; }
-        public String Номер_опоры { get; set; }
+        public String Дом_Номер_опоры { get; set; }
         public String Количество_сторон { get; set; }
         public String Количестов_поверхностей { get; set; }
         public double? Площадь_конструкции { get; set; }
@@ -26,8 +23,7 @@ namespace Sciencecom.Models.MapJsonModels
             double SurfaceSumm = 0;
             int SurfaceCOunt = adv.Sides.Sum(side => side.Surfaces.Count);
 
-            Дом = adv.House1; 
-            Номер_опоры = adv.Support_; 
+            Дом_Номер_опоры = adv.Code == "BB" | adv.Code == "UI"  ? adv.House1 : adv.Support_; ;
             Площадь_конструкции = adv.Area;
             Количество_сторон = adv.Sides.Count.ToString();
             Количестов_поверхностей = SurfaceCOunt.ToString();
@@ -39,8 +35,6 @@ namespace Sciencecom.Models.MapJsonModels
             Вид_конструкции = adv.TypeOfAdvertisingStructure.Name;
             Населенный_пункт = adv.Locality.NameLocality;
             Улица = adv.Street1;
-            Со_стороны = adv.FromStreet;
-            Ближайшая_по_ходу = adv.Street2;
             if (adv.EndDate != null)
             {
                 Разреш_по = adv.EndDate.Value.ToShortDateString();
