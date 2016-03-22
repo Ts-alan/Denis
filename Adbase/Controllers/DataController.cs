@@ -106,7 +106,7 @@ namespace Sciencecom.Controllers
             {
                 return RedirectToAction("Index", "Map");
             }
-            return RedirectToAction((string)Session["action"], (string)Session["controller"]);
+            return RedirectToAction("AdvertisingDesign");
         }
 
         public ActionResult AddSurface(string side, int? startCountForSurface, int? endCountForSurface, bool isEdit = false)
