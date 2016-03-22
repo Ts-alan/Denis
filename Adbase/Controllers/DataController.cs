@@ -65,14 +65,14 @@ namespace Sciencecom.Controllers
 
         public JsonResult SearchAdvertisingDesign(int page, string sidx, string sord,
             int rows, string Собственник, string Вид_конструкции, string Населенный_пункт,
-            string Улица, string Дом_Номер_опоры, string Количество_сторон, string Количестов_поверхностей,
-            string Площадь_конструкции, string Разреш_по, string НачалоРазреш_по, string КонецРазреш_по,
+            string Улица, string Со_стороны, string Ближайшая_по_ходу, string Дом, string Номер_опоры, string Количество_сторон, 
+            string Количестов_поверхностей, string Площадь_конструкции, string Разреш_по, string НачалоРазреш_по, string КонецРазреш_по,
             string Разреш_с, string НачалоРазреш_с, string КонецРазреш_с)
 
         {
             JSONTableData jd = new JSONTableData();
             jd = _dbw.SearchAdvertisingDesign(page, sidx, sord, rows, Собственник, Вид_конструкции, Населенный_пункт,
-            Улица, Дом_Номер_опоры, Количество_сторон, Количестов_поверхностей, Площадь_конструкции, Разреш_по, НачалоРазреш_по, КонецРазреш_по,
+            Улица, Со_стороны, Ближайшая_по_ходу, Дом, Номер_опоры, Количество_сторон, Количестов_поверхностей, Площадь_конструкции, Разреш_по, НачалоРазреш_по, КонецРазреш_по,
             Разреш_с, НачалоРазреш_с, КонецРазреш_с);
             return Json(jd, JsonRequestBehavior.AllowGet);
         }
