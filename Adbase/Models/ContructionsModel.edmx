@@ -92,14 +92,6 @@
           <Property Name="id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="NameLocality" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
-        <EntityType Name="Object">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Visible" Type="bit" Nullable="false" />
-          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
-        </EntityType>
         <EntityType Name="Owners">
           <Key>
             <PropertyRef Name="Id" />
@@ -116,16 +108,6 @@
           <Property Name="id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="NamePropertyLocation" Type="nvarchar(max)" Nullable="false" />
           <Property Name="OrderBY" Type="int" />
-        </EntityType>
-        <EntityType Name="RelationshipOfAdvertising">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="idOfTopicForSocialAdvertising" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="idOfSubtopicForSocialAdvertising" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Visible" Type="bit" Nullable="false" />
-          <Property Name="id_Object" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="Sides">
           <Key>
@@ -154,14 +136,6 @@
           <Property Name="Type" Type="nvarchar" MaxLength="50" />
           <Property Name="CityId" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
-        <EntityType Name="SubtopicForSocialAdvertising">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Visible" Type="bit" Nullable="false" />
-        </EntityType>
         <EntityType Name="Surfaces">
           <Key>
             <PropertyRef Name="Id" />
@@ -189,14 +163,6 @@
           </Key>
           <Property Name="id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="TheElementOfTheRoadNetworkName" Type="nvarchar(max)" Nullable="false" />
-        </EntityType>
-        <EntityType Name="TopicForSocialAdvertising">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Visible" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="TypeOfAdvertisingStructures">
           <Key>
@@ -334,42 +300,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_RelationshipOfAdvertising_Object1">
-          <End Role="Object" Type="Self.Object" Multiplicity="1" />
-          <End Role="RelationshipOfAdvertising" Type="Self.RelationshipOfAdvertising" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Object">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="RelationshipOfAdvertising">
-              <PropertyRef Name="id_Object" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_RelationshipOfAdvertising_SubtopicForSocialAdvertising">
-          <End Role="SubtopicForSocialAdvertising" Type="Self.SubtopicForSocialAdvertising" Multiplicity="1" />
-          <End Role="RelationshipOfAdvertising" Type="Self.RelationshipOfAdvertising" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SubtopicForSocialAdvertising">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="RelationshipOfAdvertising">
-              <PropertyRef Name="idOfSubtopicForSocialAdvertising" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_RelationshipOfAdvertising_TopicForSocialAdvertising">
-          <End Role="TopicForSocialAdvertising" Type="Self.TopicForSocialAdvertising" Multiplicity="1" />
-          <End Role="RelationshipOfAdvertising" Type="Self.RelationshipOfAdvertising" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TopicForSocialAdvertising">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="RelationshipOfAdvertising">
-              <PropertyRef Name="idOfTopicForSocialAdvertising" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Sides_Billboards1">
           <End Role="AdvertisingStructures" Type="Self.AdvertisingStructures" Multiplicity="1" />
           <End Role="Sides" Type="Self.Sides" Multiplicity="*" />
@@ -469,18 +399,14 @@
           <EntitySet Name="Increment" EntityType="Self.Increment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ListUniqueNumber" EntityType="Self.ListUniqueNumber" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Locality" EntityType="Self.Locality" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Object" EntityType="Self.Object" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Owners" EntityType="Self.Owners" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PropertyLocation" EntityType="Self.PropertyLocation" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="RelationshipOfAdvertising" EntityType="Self.RelationshipOfAdvertising" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sides" EntityType="Self.Sides" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Streets" EntityType="Self.Streets" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="SubtopicForSocialAdvertising" EntityType="Self.SubtopicForSocialAdvertising" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Surfaces" EntityType="Self.Surfaces" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TheElementOfTheRoadNetwork" EntityType="Self.TheElementOfTheRoadNetwork" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TopicForSocialAdvertising" EntityType="Self.TopicForSocialAdvertising" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TypeOfAdvertisingStructures" EntityType="Self.TypeOfAdvertisingStructures" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ViewBid" EntityType="Self.ViewBid" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_AdvertisingStructures_Backlight" Association="Self.FK_AdvertisingStructures_Backlight">
@@ -522,18 +448,6 @@
           <AssociationSet Name="FK_ListUniqueNumber_TypeOfAdvertisingStructures" Association="Self.FK_ListUniqueNumber_TypeOfAdvertisingStructures">
             <End Role="TypeOfAdvertisingStructures" EntitySet="TypeOfAdvertisingStructures" />
             <End Role="ListUniqueNumber" EntitySet="ListUniqueNumber" />
-          </AssociationSet>
-          <AssociationSet Name="FK_RelationshipOfAdvertising_Object1" Association="Self.FK_RelationshipOfAdvertising_Object1">
-            <End Role="Object" EntitySet="Object" />
-            <End Role="RelationshipOfAdvertising" EntitySet="RelationshipOfAdvertising" />
-          </AssociationSet>
-          <AssociationSet Name="FK_RelationshipOfAdvertising_SubtopicForSocialAdvertising" Association="Self.FK_RelationshipOfAdvertising_SubtopicForSocialAdvertising">
-            <End Role="SubtopicForSocialAdvertising" EntitySet="SubtopicForSocialAdvertising" />
-            <End Role="RelationshipOfAdvertising" EntitySet="RelationshipOfAdvertising" />
-          </AssociationSet>
-          <AssociationSet Name="FK_RelationshipOfAdvertising_TopicForSocialAdvertising" Association="Self.FK_RelationshipOfAdvertising_TopicForSocialAdvertising">
-            <End Role="TopicForSocialAdvertising" EntitySet="TopicForSocialAdvertising" />
-            <End Role="RelationshipOfAdvertising" EntitySet="RelationshipOfAdvertising" />
           </AssociationSet>
           <AssociationSet Name="FK_Sides_Billboards1" Association="Self.FK_Sides_Billboards1">
             <End Role="AdvertisingStructures" EntitySet="AdvertisingStructures" />
@@ -598,18 +512,14 @@
           <EntitySet Name="Increments" EntityType="SciencecomModel.Increment" />
           <EntitySet Name="ListUniqueNumbers" EntityType="SciencecomModel.ListUniqueNumber" />
           <EntitySet Name="Localities" EntityType="SciencecomModel.Locality" />
-          <EntitySet Name="Objects" EntityType="SciencecomModel.Object" />
           <EntitySet Name="Owners" EntityType="SciencecomModel.Owner" />
           <EntitySet Name="PropertyLocations" EntityType="SciencecomModel.PropertyLocation" />
-          <EntitySet Name="RelationshipOfAdvertisings" EntityType="SciencecomModel.RelationshipOfAdvertising" />
           <EntitySet Name="Sides" EntityType="SciencecomModel.Side" />
           <EntitySet Name="Status" EntityType="SciencecomModel.Status" />
           <EntitySet Name="Streets" EntityType="SciencecomModel.Street" />
-          <EntitySet Name="SubtopicForSocialAdvertisings" EntityType="SciencecomModel.SubtopicForSocialAdvertising" />
           <EntitySet Name="Surfaces" EntityType="SciencecomModel.Surface" />
           <EntitySet Name="sysdiagrams" EntityType="SciencecomModel.sysdiagram" />
           <EntitySet Name="TheElementOfTheRoadNetworks" EntityType="SciencecomModel.TheElementOfTheRoadNetwork" />
-          <EntitySet Name="TopicForSocialAdvertisings" EntityType="SciencecomModel.TopicForSocialAdvertising" />
           <EntitySet Name="TypeOfAdvertisingStructures" EntityType="SciencecomModel.TypeOfAdvertisingStructure" />
           <EntitySet Name="ViewBids" EntityType="SciencecomModel.ViewBid" />
           <AssociationSet Name="FK_AdvertisingStructures_Backlight" Association="SciencecomModel.FK_AdvertisingStructures_Backlight">
@@ -667,18 +577,6 @@
           <AssociationSet Name="FK_Streets_Locality" Association="SciencecomModel.FK_Streets_Locality">
             <End Role="Locality" EntitySet="Localities" />
             <End Role="Street" EntitySet="Streets" />
-          </AssociationSet>
-          <AssociationSet Name="FK_RelationshipOfAdvertising_Object1" Association="SciencecomModel.FK_RelationshipOfAdvertising_Object1">
-            <End Role="Object" EntitySet="Objects" />
-            <End Role="RelationshipOfAdvertising" EntitySet="RelationshipOfAdvertisings" />
-          </AssociationSet>
-          <AssociationSet Name="FK_RelationshipOfAdvertising_SubtopicForSocialAdvertising" Association="SciencecomModel.FK_RelationshipOfAdvertising_SubtopicForSocialAdvertising">
-            <End Role="SubtopicForSocialAdvertising" EntitySet="SubtopicForSocialAdvertisings" />
-            <End Role="RelationshipOfAdvertising" EntitySet="RelationshipOfAdvertisings" />
-          </AssociationSet>
-          <AssociationSet Name="FK_RelationshipOfAdvertising_TopicForSocialAdvertising" Association="SciencecomModel.FK_RelationshipOfAdvertising_TopicForSocialAdvertising">
-            <End Role="TopicForSocialAdvertising" EntitySet="TopicForSocialAdvertisings" />
-            <End Role="RelationshipOfAdvertising" EntitySet="RelationshipOfAdvertisings" />
           </AssociationSet>
           <AssociationSet Name="FK_Surfaces_Sides" Association="SciencecomModel.FK_Surfaces_Sides">
             <End Role="Side" EntitySet="Sides" />
@@ -799,15 +697,6 @@
           <NavigationProperty Name="AdvertisingStructures" Relationship="SciencecomModel.FK_AdvertisingStructures_Locality" FromRole="Locality" ToRole="AdvertisingStructure" />
           <NavigationProperty Name="Streets" Relationship="SciencecomModel.FK_Streets_Locality" FromRole="Locality" ToRole="Street" />
         </EntityType>
-        <EntityType Name="Object">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Visible" Type="Boolean" Nullable="false" />
-          <Property Name="id" Type="Guid" Nullable="false" />
-          <NavigationProperty Name="RelationshipOfAdvertisings" Relationship="SciencecomModel.FK_RelationshipOfAdvertising_Object1" FromRole="Object" ToRole="RelationshipOfAdvertising" />
-        </EntityType>
         <EntityType Name="Owner">
           <Key>
             <PropertyRef Name="Id" />
@@ -826,19 +715,6 @@
           <Property Name="NamePropertyLocation" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="OrderBY" Type="Int32" />
           <NavigationProperty Name="AdvertisingStructures" Relationship="SciencecomModel.FK_AdvertisingStructures_PropertyLocation" FromRole="PropertyLocation" ToRole="AdvertisingStructure" />
-        </EntityType>
-        <EntityType Name="RelationshipOfAdvertising">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Guid" Nullable="false" />
-          <Property Name="idOfTopicForSocialAdvertising" Type="Guid" Nullable="false" />
-          <Property Name="idOfSubtopicForSocialAdvertising" Type="Guid" Nullable="false" />
-          <Property Name="Visible" Type="Boolean" Nullable="false" />
-          <Property Name="id_Object" Type="Guid" Nullable="false" />
-          <NavigationProperty Name="Object" Relationship="SciencecomModel.FK_RelationshipOfAdvertising_Object1" FromRole="RelationshipOfAdvertising" ToRole="Object" />
-          <NavigationProperty Name="SubtopicForSocialAdvertising" Relationship="SciencecomModel.FK_RelationshipOfAdvertising_SubtopicForSocialAdvertising" FromRole="RelationshipOfAdvertising" ToRole="SubtopicForSocialAdvertising" />
-          <NavigationProperty Name="TopicForSocialAdvertising" Relationship="SciencecomModel.FK_RelationshipOfAdvertising_TopicForSocialAdvertising" FromRole="RelationshipOfAdvertising" ToRole="TopicForSocialAdvertising" />
         </EntityType>
         <EntityType Name="Side">
           <Key>
@@ -873,15 +749,6 @@
           <Property Name="CityId" Type="Guid" Nullable="false" />
           <NavigationProperty Name="Locality" Relationship="SciencecomModel.FK_Streets_Locality" FromRole="Street" ToRole="Locality" />
         </EntityType>
-        <EntityType Name="SubtopicForSocialAdvertising">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Guid" Nullable="false" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Visible" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="RelationshipOfAdvertisings" Relationship="SciencecomModel.FK_RelationshipOfAdvertising_SubtopicForSocialAdvertising" FromRole="SubtopicForSocialAdvertising" ToRole="RelationshipOfAdvertising" />
-        </EntityType>
         <EntityType Name="Surface">
           <Key>
             <PropertyRef Name="Id" />
@@ -911,15 +778,6 @@
           <Property Name="id" Type="Guid" Nullable="false" />
           <Property Name="TheElementOfTheRoadNetworkName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AdvertisingStructures" Relationship="SciencecomModel.FK_AdvertisingStructures_TheElementOfTheRoadNetwork" FromRole="TheElementOfTheRoadNetwork" ToRole="AdvertisingStructure" />
-        </EntityType>
-        <EntityType Name="TopicForSocialAdvertising">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Guid" Nullable="false" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Visible" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="RelationshipOfAdvertisings" Relationship="SciencecomModel.FK_RelationshipOfAdvertising_TopicForSocialAdvertising" FromRole="TopicForSocialAdvertising" ToRole="RelationshipOfAdvertising" />
         </EntityType>
         <EntityType Name="TypeOfAdvertisingStructure">
           <Key>
@@ -1109,42 +967,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_RelationshipOfAdvertising_Object1">
-          <End Type="SciencecomModel.Object" Role="Object" Multiplicity="1" />
-          <End Type="SciencecomModel.RelationshipOfAdvertising" Role="RelationshipOfAdvertising" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Object">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="RelationshipOfAdvertising">
-              <PropertyRef Name="id_Object" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_RelationshipOfAdvertising_SubtopicForSocialAdvertising">
-          <End Type="SciencecomModel.SubtopicForSocialAdvertising" Role="SubtopicForSocialAdvertising" Multiplicity="1" />
-          <End Type="SciencecomModel.RelationshipOfAdvertising" Role="RelationshipOfAdvertising" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SubtopicForSocialAdvertising">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="RelationshipOfAdvertising">
-              <PropertyRef Name="idOfSubtopicForSocialAdvertising" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_RelationshipOfAdvertising_TopicForSocialAdvertising">
-          <End Type="SciencecomModel.TopicForSocialAdvertising" Role="TopicForSocialAdvertising" Multiplicity="1" />
-          <End Type="SciencecomModel.RelationshipOfAdvertising" Role="RelationshipOfAdvertising" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TopicForSocialAdvertising">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="RelationshipOfAdvertising">
-              <PropertyRef Name="idOfTopicForSocialAdvertising" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Surfaces_Sides">
           <End Type="SciencecomModel.Side" Role="Side" Multiplicity="0..1" />
           <End Type="SciencecomModel.Surface" Role="Surface" Multiplicity="*" />
@@ -1281,15 +1103,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Objects">
-            <EntityTypeMapping TypeName="SciencecomModel.Object">
-              <MappingFragment StoreEntitySet="Object">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="Visible" ColumnName="Visible" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Owners">
             <EntityTypeMapping TypeName="SciencecomModel.Owner">
               <MappingFragment StoreEntitySet="Owners">
@@ -1305,17 +1118,6 @@
               <MappingFragment StoreEntitySet="PropertyLocation">
                 <ScalarProperty Name="OrderBY" ColumnName="OrderBY" />
                 <ScalarProperty Name="NamePropertyLocation" ColumnName="NamePropertyLocation" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="RelationshipOfAdvertisings">
-            <EntityTypeMapping TypeName="SciencecomModel.RelationshipOfAdvertising">
-              <MappingFragment StoreEntitySet="RelationshipOfAdvertising">
-                <ScalarProperty Name="id_Object" ColumnName="id_Object" />
-                <ScalarProperty Name="Visible" ColumnName="Visible" />
-                <ScalarProperty Name="idOfSubtopicForSocialAdvertising" ColumnName="idOfSubtopicForSocialAdvertising" />
-                <ScalarProperty Name="idOfTopicForSocialAdvertising" ColumnName="idOfTopicForSocialAdvertising" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1350,15 +1152,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="SubtopicForSocialAdvertisings">
-            <EntityTypeMapping TypeName="SciencecomModel.SubtopicForSocialAdvertising">
-              <MappingFragment StoreEntitySet="SubtopicForSocialAdvertising">
-                <ScalarProperty Name="Visible" ColumnName="Visible" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Surfaces">
             <EntityTypeMapping TypeName="SciencecomModel.Surface">
               <MappingFragment StoreEntitySet="Surfaces">
@@ -1386,15 +1179,6 @@
             <EntityTypeMapping TypeName="SciencecomModel.TheElementOfTheRoadNetwork">
               <MappingFragment StoreEntitySet="TheElementOfTheRoadNetwork">
                 <ScalarProperty Name="TheElementOfTheRoadNetworkName" ColumnName="TheElementOfTheRoadNetworkName" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TopicForSocialAdvertisings">
-            <EntityTypeMapping TypeName="SciencecomModel.TopicForSocialAdvertising">
-              <MappingFragment StoreEntitySet="TopicForSocialAdvertising">
-                <ScalarProperty Name="Visible" ColumnName="Visible" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
