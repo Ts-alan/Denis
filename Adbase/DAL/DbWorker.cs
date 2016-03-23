@@ -26,9 +26,9 @@ namespace Sciencecom.DAL
 
         public JSONTableData SearchAdvertisingDesign(int page, string sidx, string sord,
             int rows, string Собственник, string Вид_конструкции, string Населенный_пункт,
-            string Улица, string Дом_Номер_опоры, string Количество_сторон, string Количестов_поверхностей,
-            string Площадь_конструкции, string Разреш_по, string НачалоРазреш_по, string КонецРазреш_по,
-            string Разреш_с, string НачалоРазреш_с, string КонецРазреш_с)
+            string Улица, string Со_стороны, string Ближайшая_по_ходу, string Дом, string Номер_опоры, string Количество_сторон, 
+            string Количестов_поверхностей, string Площадь_конструкции, string Разреш_по, string НачалоРазреш_по, 
+            string КонецРазреш_по, string Разреш_с, string НачалоРазреш_с, string КонецРазреш_с)
 
         {
 
@@ -61,13 +61,22 @@ namespace Sciencecom.DAL
             {
                 adbvertisingList = adbvertisingList.Where(x => x.Street1.Contains(Улица));
             }
-            if (!string.IsNullOrWhiteSpace(Дом_Номер_опоры))
+            if (!string.IsNullOrWhiteSpace(Со_стороны))
             {
-                adbvertisingList =
-                    adbvertisingList.Where(
-                        x => x.Support_.Contains(Дом_Номер_опоры) | x.House1.Contains(Дом_Номер_опоры));
+                adbvertisingList = adbvertisingList.Where(x => x.FromStreet.Contains(Со_стороны));
             }
-
+            if (!string.IsNullOrWhiteSpace(Ближайшая_по_ходу))
+            {
+                adbvertisingList = adbvertisingList.Where(x => x.Street2.Contains(Ближайшая_по_ходу));
+            }
+            if (!string.IsNullOrWhiteSpace(Дом))
+            {
+                adbvertisingList = adbvertisingList.Where(x => x.House1.Contains(Дом));
+            }
+            if (!string.IsNullOrWhiteSpace(Номер_опоры))
+            {
+                adbvertisingList = adbvertisingList.Where(x => x.Support_.Contains(Номер_опоры));
+            }
             int w;
             if (!string.IsNullOrWhiteSpace(Количество_сторон) && Int32.TryParse(Количество_сторон, out w))
             {

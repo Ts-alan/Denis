@@ -20,11 +20,12 @@
   padding-right: 15px;
 }
 
-/*#table {
-    min-width: 1800px !important;
-}*/
+#table > tbody{
+    width: 100% !important;
+}
 table {
     width: 100% !important;
+    table-layout: fixed;
 }
 .ui-jqgrid-labels {
 
@@ -36,22 +37,23 @@ table {
 {
   position: relative !important;
   min-height: 1px !important;
-  padding-left: 15px !important;
-  padding-right: 15px !important;
+  /*padding-left: 15px !important;
+  padding-right: 15px !important;*/
 }
 /*.col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-13*/
 /*#table_Идентификационный_номер, #table_Собственник, #table_Вид_конструкции, #table_Населенный_пункт, #table_Улица, #table_Дом, #table_Количество_сторон, #table_Количестов_поверхностей, #table_Площадь_конструкции, #table_Подстветка, #table_№_договора_с_фин_упр , #table_№_паспорта_рекл ,#table_Разреш_по
 {
   float: left  ;
 }*/
-#gbox_table, #gview_table, [class='ui-state-default ui-jqgrid-hdiv ui-corner-top'],[class="ui-jqgrid-bdiv"]
+/*#gbox_table, #gview_table, [class='ui-state-default ui-jqgrid-hdiv ui-corner-top'],[class="ui-jqgrid-bdiv"]
 
  {
     width: 100% !important;
-}
+}*/
 [class="table-bordered ui-jqgrid-btable"] {
-   width: 100% !important;
-   table-layout: inherit !important;
+   /*width: 100% !important;*/
+   /*table-layout: inherit !important;*/
+   table-layout: fixed;
 }
 
 
@@ -69,43 +71,75 @@ table {
 }
 
 
-
-#table_Разреш_по,[aria-describedby="table_Разреш_по"]
+#table_Собственник, [aria-describedby="table"]
 {
- width: 10% !important;
+  width: 9% !important;
+  word-wrap: break-word;
 }
-#table_Площадь_конструкции,[aria-describedby="table_Площадь_конструкции"]
+#table_Вид_конструкции,[aria-describedby="table_Вид_конструкции"]
 {
-width:  10% !important;
+ width: 9% !important;
+ word-wrap: break-word;
 }
-#table_Количестов_поверхностей,[aria-describedby="table_Количестов_поверхностей"]
+#table_Населенный_пункт,[aria-describedby="table_Населенный_пункт"]
 {
-width:  10%  !important;
-}
-#table_Количество_сторон,[aria-describedby="table_Количество_сторон"]
-{
-width: 10% !important;
-}
-#table_Дом\/_Номер_опоры,[aria-describedby="table_Дом/_Номер_опоры"]
- {
- width: 10% !important;
+ width: 9% !important;
+ word-wrap: break-word;
 }
 #table_Улица,[aria-describedby="table_Улица"]
 {
  width: 10% !important;
+ word-wrap: break-word;
 }
-#table_Населенный_пункт,[aria-describedby="table_Населенный_пункт"]
+#table_Со_стороны,[aria-describedby="table_Со_стороны"]
 {
  width: 10% !important;
+ word-wrap: break-word;
 }
-#table_Вид_конструкции,[aria-describedby="table_Вид_конструкции"]
+#table_Ближайшая_по_ходу,[aria-describedby="table_Ближайшая_по_ходу"]
 {
  width: 10% !important;
+ word-wrap: break-word;
 }
-#table_Собственник, [aria-describedby="table"]
+#table_Дом,[aria-describedby="table_Дом"]
+ {
+ width: 5% !important;
+ word-wrap: break-word;
+}
+#table_Номер_опоры,[aria-describedby="table_Номер_опоры"]
+ {
+ width: 5% !important;
+ word-wrap: break-word;
+}
+#table_Разреш_с,[aria-describedby="table_Разреш_с"]
 {
-  width: 10% !important;
+ width: 9% !important;
+ word-wrap: break-word;
 }
+#table_Разреш_по,[aria-describedby="table_Разреш_по"]
+{
+ width: 9% !important;
+ word-wrap: break-word;
+}
+
+#table_Количество_сторон,[aria-describedby="table_Количество_сторон"]
+{
+width: 5% !important;
+word-wrap: break-word;
+}
+
+#table_Количестов_поверхностей,[aria-describedby="table_Количестов_поверхностей"]
+{
+width:  5%  !important;
+word-wrap: break-word;
+}
+#table_Площадь_конструкции,[aria-describedby="table_Площадь_конструкции"]
+{
+width:  5% !important;
+word-wrap: break-word;
+}
+
+
 
 
 
@@ -121,28 +155,82 @@ width: 10% !important;
 .ui-state-default .ui-jqgrid-hdiv .ui-corner-top  {
     border: 0px solid #dddddd !important;
 }
-th {
-    width: 10% !important;
+.ui-jqgrid-btable table > td:nth-child(1) {
+    width: 9% !important;
     border: 1px solid #dddddd !important;  
 }
+
 tr.ui-widget-content.jqgrow.ui-row-ltr > td  {
-    width: 10% !important;
-    max-width: 0;
+    /*max-width: 0;*/
     overflow: hidden;
     -ms-text-overflow: ellipsis;
     -o-text-overflow: ellipsis;
     -moz-text-overflow: ellipsis;
     text-overflow: ellipsis;
     white-space: nowrap;
-    
 }
 
+.jqgfirstrow > td:nth-child(1) {
+    width: 9% !important;
+    border: 1px solid #dddddd !important;  
+}
+.jqgfirstrow > td:nth-child(2) {
+    width: 9% !important;
+    border: 1px solid #dddddd !important;  
+}
+.jqgfirstrow > td:nth-child(3) {
+    width: 9% !important;
+    border: 1px solid #dddddd !important;  
+}
+.jqgfirstrow > td:nth-child(4) {
+    width: 10% !important;
+    border: 1px solid #dddddd !important;  
+}
+.jqgfirstrow > td:nth-child(5) {
+    width: 10% !important;
+    border: 1px solid #dddddd !important;  
+}
+.jqgfirstrow > td:nth-child(6) {
+    width: 10% !important;
+    border: 1px solid #dddddd !important;  
+}
+.jqgfirstrow > td:nth-child(7) {
+    width: 5% !important;
+    border: 1px solid #dddddd !important;  
+}
+
+.jqgfirstrow > td:nth-child(8) {
+    width: 5% !important;
+    border: 1px solid #dddddd !important;  
+}
+.jqgfirstrow > td:nth-child(9) {
+    width: 9% !important;
+    border: 1px solid #dddddd !important;  
+}
+.jqgfirstrow > td:nth-child(10) {
+    width: 9% !important;
+    border: 1px solid #dddddd !important;  
+}
+.jqgfirstrow > td:nth-child(11) {
+    width: 5% !important;
+    border: 1px solid #dddddd !important;  
+}
+.jqgfirstrow > td:nth-child(12) {
+    width: 5% !important;
+    border: 1px solid #dddddd !important;  
+}
+.jqgfirstrow > td:nth-child(13) {
+    width: 5% !important;
+    border: 1px solid #dddddd !important;  
+}
+tr.ui-widget-content.jqgrow.ui-row-ltr > td {
+    -ms-word-wrap: break-word;
+word-wrap: break-word;
+}
 .ui-jqgrid .ui-jqgrid-htable {
     table-layout: inherit;
 }
-.ui-jqgrid .ui-jqgrid-btable {
-    table-layout: inherit;
-}
+
 
 /*.col-xs-13
  {
