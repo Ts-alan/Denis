@@ -1,15 +1,15 @@
 ﻿@media (min-width: 768px) {
-  table {
+  table .table-bordered.ui-jqgrid-btable {
     width: 750px;
   }
 }
 @media (min-width: 992px) {
-  table {
+  table .table-bordered.ui-jqgrid-btable {
     width: 970px;
   }
 }
 @media (min-width: 1200px) {
-  table {
+  table .table-bordered.ui-jqgrid-btable {
     width: 1170px;
   }
 }
@@ -23,7 +23,7 @@
 #table > tbody{
     width: 100% !important;
 }
-table {
+table .table-bordered.ui-jqgrid-btable {
     width: 100% !important;
     table-layout: fixed;
 }
