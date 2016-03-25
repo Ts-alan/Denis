@@ -251,7 +251,7 @@
                 @Html.ValidationMessageFor(model => model.Street1)
             </td>
             <td style="width: 110px">
-                <label class="control-label" for="House1">Номер опоры</label>
+                <label class="control-label" for="Support_">Номер опоры</label>
             </td>
             <td>
                 @Html.TextBoxFor(model => model.Support_, new {@class = "form-control"})
@@ -279,11 +279,12 @@
             </td>
             <td>
                 @Html.TextBoxFor(model => model.FromStreet, new {@class = "form-control"})
-
                 @Html.ValidationMessageFor(model => model.FromStreet)
             </td>
             <td></td>
-            <td></td>
+            <td>
+
+            </td>
         </tr>
 
     </table>
@@ -444,7 +445,43 @@
                                 }
                             </div>
                         </div>
+                        <div class="row">
 
+                            <div class="col-md-4">
+                                <label>Фото</label>
+                                <br />
+
+                                @if (ViewBag.photo1)
+                                {
+                                    string image = "/Images/photo1/" + ViewBag.Id + "photo1.jpg";
+                                    string imgName = ViewBag.Id + "photo1.jpg";
+                                    <input type="hidden" name="PhotoInd1" value="setImage">
+                                    <img class="closeimg" style="width: 20px" src="../../Content/CloseImg.jpg" />
+                                    <div class="fileUpload btn btn-warning input-sm">
+                                        <span>&nbsp;&nbsp;Фото 1&nbsp;</span>
+                                        <input type="file" class="upload" name="photo1" accept="image/jpeg/" />
+                                    </div>
+                                    <label for="photo1">@imgName</label>
+                                    <br />
+                                    <br />
+                                    <button type="button" style="margin-left: 25px" class="modalPictureTrigger btn btn-default input-sm" data-toggle="modal" onclick="addPic('#ModalPictureDivphoto1', '@image')" data-target="#ViewModalPicturephoto1">Показать</button>
+
+                                }
+                                else
+                                {
+
+                                    <input type="hidden" name="PhotoInd1" value="">
+                                    <img class="closeimg" style="width: 20px" src="../../Content/CloseImg.jpg" />
+                                    <div class="fileUpload btn btn-default input-sm">
+                                        <span accept="image/jpeg/">&nbsp;&nbsp;Фото 1&nbsp;</span>
+                                        <input type="file" class="upload" name="photo1" accept="image/jpeg/" />
+                                    </div>
+                                    <label for="photo1">Файл не выбран</label>
+                                    <br />
+                                    <br />
+                                }
+                            </div>
+                        </div>
                         <div class="form-horizontal" style="display: none">
 
                             <div class="form-group" style="margin-bottom: 5px">

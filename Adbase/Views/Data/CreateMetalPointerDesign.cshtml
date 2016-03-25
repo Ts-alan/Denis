@@ -332,11 +332,14 @@
                     </td>
                     <td>
                         @Html.TextBoxFor(model => model.FromStreet, new { @class = "form-control" })
-
                         @Html.ValidationMessageFor(model => model.FromStreet)
                     </td>
-                    <td></td>
-                    <td></td>
+                    <td>
+                        
+                    </td>
+                    <td>
+
+                    </td>
                 </tr>
 
             </table>
@@ -386,16 +389,7 @@
                         </td>
                 </tr>
             </table>
-            <div>
-
-
-            </div>
-
-            <div>
-
-
-
-            </div>
+   
         </div>
     </div>
 
@@ -454,36 +448,51 @@
 
     </div>
     <div class="row">
-            <div class="col-md-3">
-                <br />
-                <label>Скан проекта ОДД (Сторона 1)</label>
-                <br/>
-                <img class="closeimg" style="width:20px" src="../../Content/CloseImg.jpg" />
-                <div class="fileUpload btn btn-default input-sm">
-                    <span accept="image/jpeg/">&nbsp;&nbsp;Скан 1&nbsp;</span>
-                    <input type="file" class="upload" name="Scan1Side" accept="image/jpeg/" />
-                </div>
-                <label for="Scan1Side">Файл не выбран</label>
-                <br />
-                <br />
-
+        <div class="col-md-3">
+            <br/>
+            <label>Скан проекта ОДД (Сторона 1)</label>
+            <br/>
+            <img class="closeimg" style="width: 20px" src="../../Content/CloseImg.jpg"/>
+            <div class="fileUpload btn btn-default input-sm">
+                <span accept="image/jpeg/">&nbsp;&nbsp;Скан 1&nbsp;</span>
+                <input type="file" class="upload" name="Scan1Side" accept="image/jpeg/"/>
             </div>
-            <div class="col-md-3">
-                <br/>
-              
-                <label>Скан проекта ОДД (Сторона 2)</label>
-                <br/>
-                <img class="closeimg" style="width:20px" src="../../Content/CloseImg.jpg" />
-                <div class="fileUpload btn btn-default input-sm">
-                    <span accept="image/jpeg/">&nbsp;&nbsp;Скан 2&nbsp;</span>
-                    <input type="file" class="upload" name="Scan2Side" accept="image/jpeg/" />
-                </div>
-                <label for="Scan2Side">Файл не выбран</label>
-                <br />
-                <br />
+            <label for="Scan1Side">Файл не выбран</label>
+            <br/>
+            <br/>
 
-            </div>
         </div>
+        <div class="col-md-3">
+            <br/>
+
+            <label>Скан проекта ОДД (Сторона 2)</label>
+            <br/>
+            <img class="closeimg" style="width: 20px" src="../../Content/CloseImg.jpg"/>
+            <div class="fileUpload btn btn-default input-sm">
+                <span accept="image/jpeg/">&nbsp;&nbsp;Скан 2&nbsp;</span>
+                <input type="file" class="upload" name="Scan2Side" accept="image/jpeg/"/>
+            </div>
+            <label for="Scan2Side">Файл не выбран</label>
+            <br/>
+            <br/>
+
+        </div>
+    </div>
+    <div class="row">
+            <div class="col-md-3">
+                <br />
+                <label>Фото</label>
+                <br/>
+                <img class="closeimg" style="width:20px" src="../../Content/CloseImg.jpg" />
+                <div class="fileUpload btn btn-default input-sm">
+                    <span accept="image/jpeg/">&nbsp;&nbsp;Фото&nbsp;</span>
+                    <input type="file" class="upload" name="photo1" accept="image/jpeg/" />
+                </div>
+                <label for="photo1">Файл не выбран</label>
+                <br />
+                <br />
+            </div>
+    </div>
     <div class="form-horizontal">
 
         <div class="form-group" style="margin-bottom: 5px">

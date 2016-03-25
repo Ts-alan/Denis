@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 
 namespace Sciencecom.Models
@@ -17,11 +18,13 @@ namespace Sciencecom.Models
             List<string> AllKeysWidth = request.Form.AllKeys.Where(a => a.Contains("].Width")).ToList();
             List<string> AllKeysSpace = request.Form.AllKeys.Where(a => a.Contains("].Space")).ToList();
             List<string> AllKeysSideOfSurface = request.Form.AllKeys.Where(a => a.Contains("].SideOfSurface")).ToList();
+            List<string> AllKeysGuids = request.Form.AllKeys.Where(a => a.Contains("Guid")).ToList();
 
             double height = 0;
             double space = 0;
             double width = 0;
             var sideOfSurface = "";
+            int guid = 0;
 
             for (int i=0; i<AllKeysHeight.Count(); i++)
             {
@@ -42,10 +45,16 @@ namespace Sciencecom.Models
                 {
                     sideOfSurface = request.Form.Get(AllKeysSideOfSurface[i]);
                 }
+                if (!string.IsNullOrWhiteSpace(request.Form.Get(AllKeysGuids[i])))
+                {
+                    guid = int.Parse(request.Form.Get(AllKeysGuids[i]));
+                }
+
                 ListSurface.Add(new Surface() { Height = height, 
                     Space = space, 
                     Width = width, 
-                    SideOfSurface = sideOfSurface
+                    SideOfSurface = sideOfSurface,
+                    NumberSurface = guid
                 });
 
             }
@@ -94,7 +103,6 @@ namespace Sciencecom.Models
 
             List<string> DirectionSide_id = request.Form.AllKeys.Where(a => a.Contains("DirectionSide")).ToList();
             List<string> Identification_id = request.Form.AllKeys.Where(a => a.Contains("IdentificationSurface")).ToList();
-
             
             for (int i = 0; i < DirectionSide_id.Count; i++)
             {
@@ -118,6 +126,35 @@ namespace Sciencecom.Models
             
             }
             return ListSide;
+        }
+    }
+
+    public class CustomModelBinderForPicInd : DefaultModelBinder
+    {
+        public override object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
+        {
+            var request = controllerContext.HttpContext.Request;
+            List<string> picIndexes = request.Form.AllKeys.Where(a => a.Contains("PhotoInd[")).ToList();
+            return picIndexes;
+        }
+    }
+
+    public class CustomModelBinderForPicsForAD : DefaultModelBinder
+    {
+        public override object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
+        {
+            var request = controllerContext.HttpContext.Request;
+
+            var files = request.Files;
+            var photos = files.AllKeys.Where(x => x.Contains("photo[")).ToList();
+            Dictionary<int, HttpPostedFileBase> photosDic = new Dictionary<int, HttpPostedFileBase>();
+            List<string> AllKeysGuids = request.Form.AllKeys.Where(a => a.Contains("Guid")).ToList();
+            foreach (var photo in photos)
+            {
+                photosDic.Add(int.Parse(photo.Split('[', ']')[1]), files.Get(photo));
+            }
+
+            return photosDic;
         }
     }
 

@@ -314,8 +314,13 @@
 
                     @Html.ValidationMessageFor(model => model.FromStreet)
                 </td>
-                <td></td>
-                <td></td>
+                <td>
+                    <label class="control-label" for="House1">Номер опоры</label>
+                </td>
+                <td>
+                @Html.TextBoxFor(model => model.House1, new {@class = "form-control"})
+                @Html.ValidationMessageFor(model => model.House1)
+                </td>
             </tr>
 
         </table>

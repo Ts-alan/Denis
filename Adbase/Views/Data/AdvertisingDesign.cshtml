@@ -24,12 +24,6 @@
     var firstReauquest = true;
     $(document).ready(function ()
     {
-        //функция для выставления ширины столбцов таблицы под ширину шапки
-         function SetTableWidth()
-         {
-             
-         }
-
 
         //функция для добавления новых параметров поиска и обновления таблицы
         $("#searchStartDateRange").click(function ()
@@ -372,7 +366,7 @@
             {
                 collectionMap = JSON.parse('@(Html.Raw(Session["collectionMap"]))');
             }
-            console.log(collectionMap);
+           
             if (collectionMap != "[]" && collectionMap != '' && collectionMap != undefined)
             {
                 $('#table').jqGrid('setGridParam', { postData: collectionMap.postdata });

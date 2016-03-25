@@ -180,6 +180,7 @@
     <Compile Include="Controllers\MapController.cs" />
     <Compile Include="Controllers\OwnersController.cs" />
     <Compile Include="DAL\DbWorker.cs" />
+    <Compile Include="DAL\PhotoWorker.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

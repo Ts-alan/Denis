@@ -17,22 +17,60 @@
                         @*@Html.ValidationMessageFor(model => model[i].Height)*@
                         <span class="field-validation-valid" data-valmsg-for="[@i].Height" data-valmsg-replace="true"></span>
                         <span class="glyphicon form-control-feedback"></span>
-                        @Html.TextBoxFor(model => model[i].Height, new { @class = "form-control", type = "number"})
-                        
+                        @Html.TextBoxFor(model => model[i].Height, new {@class = "form-control", type = "number"})
+
                     </div>
                     <div class="form-group has-feedback" style="margin-left: 20px">
                         <label for="[@i].Width">Ширина</label>
                         @* @Html.ValidationMessageFor(model => model[i].Width)*@
                         <span class="field-validation-valid" data-valmsg-for="[@i].Width" data-valmsg-replace="true"></span>
-                         <span class="glyphicon form-control-feedback"></span>
-                        @Html.TextBoxFor(model => model[i].Width, new { @class = "form-control", type = "number" })
-                       
+                        <span class="glyphicon form-control-feedback"></span>
+                        @Html.TextBoxFor(model => model[i].Width, new {@class = "form-control", type = "number"})
+
                     </div>
                     <div class="form-group has-feedback" style="margin-left: 20px">
                         <label for="[@i].Space">Площадь</label>
-                        @Html.TextBoxFor(model => model[i].Space, new { @class = "form-control", type = "number", SelectForSpace = "", onchange = "CalculationAS()", @readonly = "readonly" })
+                        @Html.TextBoxFor(model => model[i].Space, new {@class = "form-control", type = "number", SelectForSpace = "", onchange = "CalculationAS()", @readonly = "readonly"})
                         @Html.ValidationMessageFor(model => model[i].Space)
                     </div>
+                
+                <div style="margin-left: 30px" class ="form-group">
+                    
+                    <label>Фотография</label>
+                    <br/>
+                    <input type="hidden" name="Guid" value="@{@ViewBag.Guid}">
+                    @if (@ViewBag.Side != null)
+                    {
+
+                        string image = "/Images/photo/photo[" + ViewBag.Guid + "].jpg";
+                        string imgName = "photo[" + @ViewBag.Guid + "].jpg";
+                        <input type="hidden" name="PhotoInd[@{@ViewBag.Guid}]" value="setImage">
+                        <img class="closeimg" style="width: 20px" src="../../Content/CloseImg.jpg"/>
+                        <div class="fileUpload btn btn-warning input-sm">
+                            <span>&nbsp;&nbsp;Фото&nbsp;</span>
+                            <input type="file" class="upload" name="photo[@{@ViewBag.Guid}]" accept="image/jpeg/"/>
+                        </div>
+                        <label>@imgName</label>
+                        <br/>
+                        <br/>
+                        <button type="button" style="margin-left: 25px" class="modalPictureTrigger btn btn-default input-sm" data-toggle="modal" onclick="addPic('#ModalPictureDivphoto1', '@image')" data-target="#ViewModalPicturephoto1">Показать</button>
+
+                    }
+                    else
+                    {
+
+                        <input type="hidden" name="PhotoInd[@{@ViewBag.Guid}]" value="">
+                        <img class="closeimg" style="width: 20px" src="../../Content/CloseImg.jpg"/>
+                        <div class="fileUpload btn btn-default input-sm">
+                            <span accept="image/jpeg/">&nbsp;&nbsp;Фото&nbsp;</span>
+                            <input type="file" class="upload" name="photo[@{@ViewBag.Guid}]" accept="image/jpeg/"/>
+                        </div>
+                        <label>Файл не выбран</label>
+                        <br/>
+                        <br/>
+                    }
+
+                </div>
                 </div>
             </div>
 

@@ -23,6 +23,7 @@ namespace Sciencecom.Controllers
                 picture.SaveAs(path);
             }
         }
+       
 
         protected internal bool LoadPic(string dataId, string photoName)
         {

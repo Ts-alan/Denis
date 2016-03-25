@@ -55,7 +55,8 @@
                 $("#ContractHide").css("display", "none");
             }
         });
-
+       
+       
         //выщитывание площади для каждой поверхности
         $('#SHeight').change(function ()
         {
@@ -99,30 +100,34 @@
             for (var i = 1; i <= CountSizes; i++)
             {
                 $("#InsertSide").before("<div code class=\"form-horizontal\" >" +
-                    "<div class=\"form-group\" >" +
-                    "<h3 class=\"control-label col-md-2\" for=\"\" style=\"margin-left: 55px\">Сторона  " + i + " </h3>" +
+                    "<div  class=\"form-group\" >" +
                     "</div>" +
                     "<div class=\"form-group\">" +
-                    "<div class=\"col-md-10\">" +
-                    "<b>Количество поверхностей</b>" +
-                    " <select class=\"text-box single-line\" id=\"AddButton" + i + "\" onchange=AddSurface(" + i + ") name=\"CountSurfuce" + i + "\" IdentificationForCountSide=\"\" type=\"text\" data-val=\"true\" data-val-required=\"Укажите кол-во сторон\">" +
-                    "<option></option>" +
-                    "<option>1</option>" +
-                    "<option>2</option>" +
-                    "<option>3</option>" +
-                    "<option>4</option>" +
-                    "<option>5</option>" +
-                    "<option>6</option>" +
-                    "<option>7</option>" +
-                    "<option>8</option>" +
-                    "</select> &nbsp;&nbsp;&nbsp; <b>Направление стороны</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("DirectionSide", new SelectList(DirectionSide, "id", "NameOfDirectionSide"), "", new {IdentificationForDirectionSide = "IdentificationForDirectionSide"}).ToHtmlString().Replace("\"", " "))' +
-                    "</div>" + '@Ajax.JavaScriptStringEncode(Html.ValidationMessage("[0].IdentificationForDirectionSide").ToHtmlString().Replace("\"", " "))' +
-                    "</div> <div style=\"display: none\" id=\"" + i + "HiddenIdentification\"> &nbsp;&nbsp;&nbsp;<b>Идентификация поверхностей</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("IdentificationSurface", new SelectList(IdentificationSide, "id", "IdentificationName"), "", new {IdentificationForIdentificationSurface = "IdentificationForIdentificationSurface"}).ToHtmlString().Replace("\"", " ")) </div>' +
+                    "<div style=\"display: inline-block\" class=\"col-md-12\">" +
+                    "<div style=\"display:none\" class=\"form-group\">" +
+                    "<select class=\"text-box single-line\" id=\"AddButton"+ i + "\" onchange=\"AddSurface(1)\" name=\"CountSurfuce1\" identificationforcountside=\"\" type=\"text\" data-val=\"true\" data-val-required=\"Укажите кол-во сторон\">"+
+                    "<option selected=\"selected\">1</option>"+
+                    "</select>"+
+                    "<select class=\"valid\" identificationfordirectionside=\"IdentificationForDirectionSide\" id=\"DirectionSide\" name=\"[" + i + "].IdentificationForDirectionSide\">"+
+                    "<option value=\"27b8c509-8f09-4a0d-ae22-048c2611b7ea\" selected=\"selected\">По ходу движения (сторона А)</option>"+
+                    "</select></div>"+
                     "<div  id=\"InsertPartial" + i + "\"></div>" +
-                    "</div>");
-
+                    //"<div>"+ 
+                    //"<label>Фотография " + i +"</label><br/>" +
+                    //"<img class=\"closeimg\"  style=\"width:20px\" src=\"../../Content/CloseImg.jpg\" />" +
+                    //"<div class=\"fileUpload btn btn-default input-sm\">" +
+                    //"<span accept=\"image/jpeg/\">&nbsp;&nbsp;Фото " + i + "&nbsp;</span>" +
+                    //"<input type=\"file\" class=\"upload\" name=\"photo" + i +"\" accept=\"image/jpeg/\"/>" +
+                    //"</div></br>" +
+                    //"<label for=\"photo" + i + "\">Файл не выбран</label><br/><br/>" +
+                    //"</div>" +
+                    "</div>" 
+                    
+                    );
                 $("#SizeOfCount").val(CountSizes);
+                AddSurface(i);
             }
+            
         }
         //Навешивание валидации
         $('[name="DirectionSide"]').each(function (indx, element)
@@ -290,8 +295,13 @@
 
                         @Html.ValidationMessageFor(model => model.FromStreet)
                     </td>
-                    <td></td>
-                    <td></td>
+                    <td>
+                        <label class="control-label" for="House1">Номер дома</label>
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.House1, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.House1)
+                    </td>
                 </tr>
 
             </table>
@@ -496,16 +506,27 @@
                 @Html.ValidationMessageFor(model => model.CoordinationDate)
             </div>
         </div>
-        <div class="form-inline" style="display: none;">
+    <div class="form-inline" style="display: none;">
 
-            <div class="form-group">
-                <label>Описание рамещаемой информации</label>
-                @Html.TextAreaFor(model => model.ContentInformationDescription, new { cols = "90", rows = "4" })
+        <div class="form-group">
+            <label>Описание рамещаемой информации</label>
+            @Html.TextAreaFor(model => model.ContentInformationDescription, new {cols = "90", rows = "4"})
 
-                @Html.ValidationMessageFor(model => model.ContentInformationDescription)
-            </div>
+            @Html.ValidationMessageFor(model => model.ContentInformationDescription)
         </div>
-        <div class="form-horizontal" style="margin-top: 18px">
+    </div>
+    <div class="form-group">
+                <label for="CountSizes">Количество сторон</label>
+                <select class="form-control input-sm" style="width: 60px" id="CountSizes" onchange="SetCountSize()" name="CountSizes" type="text" data-val="true">
+                    <option></option>
+                    <option>1</option>
+                    <option>2</option>
+
+                </select>
+                <span class="field-validation-validr" data-valmsg-for="CountSizes" data-valmsg-replace="true">
+                </span>
+            </div>
+        @*<div class="form-horizontal" style="margin-top: 18px">
             <div class="form-group">
 
                 <div class="body-content" style="margin-top: 40px">
@@ -539,19 +560,13 @@
                                 <input class="form-control" selectforspace="" data-val="true" data-val-number="Значением поля Space должно быть число." name="[0].Space" onchange="CalculationAS()" value="" type="number" readonly="readonly">
                                 <span class="glyphicon form-control-feedback"></span>
                             </div>
-
-
-
                         </div>
-
                     </div>
-
-
                 </div>
             </div>
-        </div>
-        <div id="InsertSide" style="display: none">
-            <div code="" class="form-horizontal">
+        </div>*@
+        <div id="InsertSide" >
+            @*<div code="" class="form-horizontal">
                 <div class="form-group">
                     <select class="text-box single-line" id="AddButton1" onchange="AddSurface(1)" name="CountSurfuce1" identificationforcountside="" type="text" data-val="true" data-val-required="Укажите кол-во сторон">
                         <option selected="selected">1</option>
@@ -562,7 +577,7 @@
                     </select>
 
                 </div>
-            </div>
+            </div>*@
         </div>
 
         <div class="form-group">
