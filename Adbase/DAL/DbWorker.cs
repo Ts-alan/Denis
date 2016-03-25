@@ -245,7 +245,7 @@ namespace Sciencecom.DAL
             var ownerId = Context.Owners.SingleOrDefault(a => a.Name.ToLower().Contains(owner.ToLower()));
             
             var typeOfAdvertisingStructureId =
-                Context.TypeOfAdvertisingStructures.SingleOrDefault(a => a.Name.ToLower().Contains(typeOfAdvertisingStructure.ToLower()));
+                Context.TypeOfAdvertisingStructures.Where(a => a.Name.ToLower().Contains(typeOfAdvertisingStructure.ToLower())).ToList();
             var localityId = Context.Localities.Where(a => a.NameLocality.ToLower().Contains(locality.ToLower())).ToList();
             List<Backlight> backlights = null;
             if (backlight != null && backlight != "")
@@ -307,17 +307,22 @@ namespace Sciencecom.DAL
                     result = new List<AdvertisingStructure>();
                 }
             }
-            if (typeOfAdvertisingStructureId != null)
+            if (typeOfAdvertisingStructureId.Count != 0)
             {
-                result = result.Where(m => m.Code == typeOfAdvertisingStructureId.Code);
-            }
-            else
-            {
-                if (typeOfAdvertisingStructure != "")
+                List<Sciencecom.Models.AdvertisingStructure> collList=new List<AdvertisingStructure>();
+                for (int i = 0; i < typeOfAdvertisingStructureId.Count(); i++)
                 {
-                    result = new List<AdvertisingStructure>();
+                    collList.AddRange(result.Where(m => m.Code == typeOfAdvertisingStructureId.ElementAt(i).Code));
                 }
+                result = collList;
             }
+            //else
+            //{
+            //    if (typeOfAdvertisingStructure != "")
+            //    {
+            //        result = new List<AdvertisingStructure>();
+            //    }
+            //}
             if (localityId.Count() != 0)
             {
                 List<AdvertisingStructure> tempValue = new List<AdvertisingStructure>();
