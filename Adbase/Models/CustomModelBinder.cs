@@ -45,16 +45,13 @@ namespace Sciencecom.Models
                 {
                     sideOfSurface = request.Form.Get(AllKeysSideOfSurface[i]);
                 }
-                if (!string.IsNullOrWhiteSpace(request.Form.Get(AllKeysGuids[i])))
-                {
-                    guid = int.Parse(request.Form.Get(AllKeysGuids[i]));
-                }
+
 
                 ListSurface.Add(new Surface() { Height = height, 
                     Space = space, 
                     Width = width, 
                     SideOfSurface = sideOfSurface,
-                    NumberSurface = guid
+                    
                 });
 
             }
@@ -121,9 +118,7 @@ namespace Sciencecom.Models
                     {
                         DirectionSide_id = tempDirectionSide != ""? (Guid?)new Guid(tempDirectionSide) :null,
                         Identification_id = tempIdentification_id != "" ? (Guid?)new Guid(tempIdentification_id) : null
-
                     });
-            
             }
             return ListSide;
         }
@@ -134,7 +129,13 @@ namespace Sciencecom.Models
         public override object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
         {
             var request = controllerContext.HttpContext.Request;
-            List<string> picIndexes = request.Form.AllKeys.Where(a => a.Contains("PhotoInd[")).ToList();
+            
+            Dictionary<string, string> picIndexes = new Dictionary<string, string>();
+            for (int i = 0; i < request.Form.AllKeys.Count(a => a.Contains("PhotoInd[")); i++ )
+            {
+                picIndexes.Add(request.Form.AllKeys[i],request.Form.Get(request.Form.AllKeys[i]));
+            }
+            
             return picIndexes;
         }
     }
@@ -144,17 +145,10 @@ namespace Sciencecom.Models
         public override object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
         {
             var request = controllerContext.HttpContext.Request;
-
             var files = request.Files;
             var photos = files.AllKeys.Where(x => x.Contains("photo[")).ToList();
-            Dictionary<int, HttpPostedFileBase> photosDic = new Dictionary<int, HttpPostedFileBase>();
-            List<string> AllKeysGuids = request.Form.AllKeys.Where(a => a.Contains("Guid")).ToList();
-            foreach (var photo in photos)
-            {
-                photosDic.Add(int.Parse(photo.Split('[', ']')[1]), files.Get(photo));
-            }
 
-            return photosDic;
+            return photos.ToDictionary(photo => photo.Substring(5), photo => files.Get(photo));
         }
     }
 

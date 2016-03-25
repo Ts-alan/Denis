@@ -193,7 +193,7 @@ namespace Sciencecom.Controllers
         [HttpPost]
         public ActionResult CreateAdvertisingDesign(AdvertisingStructure structures,
             [ModelBinder(typeof(CustomModelBinderForSideForAD))] List<Side> sides,
-            [ModelBinder(typeof(CustomModelBinderForPicsForAD))] Dictionary<int, HttpPostedFileBase> photos,
+            [ModelBinder(typeof(CustomModelBinderForPicsForAD))] Dictionary<string, HttpPostedFileBase> photos,
             [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces,
             HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides,
             string Bcoord, string Hcoord,
@@ -245,7 +245,7 @@ namespace Sciencecom.Controllers
 
             foreach (var photo in photos)
             {
-                SavePic(structures.Id_show.ToString(), "photo[" + photo.Key + "]", photo.Value);
+                _phw.SavePic(structures.Id_show.ToString(), photo.Key + "photo", photo.Value);
             }
 
             return RedirectToAction("AdvertisingDesign");
@@ -291,15 +291,8 @@ namespace Sciencecom.Controllers
             ViewBag.photo1 = LoadPic(mc.Id_show.ToString(), "ScanPassport_1Sides");
             ViewBag.photo2 = LoadPic(mc.Id_show.ToString(), "ScanPassport_2Sides");
 
-            Dictionary<string, bool> dic = new Dictionary<string, bool>();
-            string index;
-            foreach (Side side in mc.Sides)
-            {
-                foreach (Surface surface in surfaces)
-                {
-                    dic[surface.Id.ToString()] = LoadPic(idShow.ToString(), "photo" + surface.Id.ToString());
-                }
-            }
+            List<string> photoNames = _phw.LoadPic(idShow.ToString());
+            ViewBag.PhotoNames = photoNames;
             return View(mc);
         }
 
@@ -307,8 +300,8 @@ namespace Sciencecom.Controllers
         public ActionResult EditAdvertisingDesign(int id, AdvertisingStructure structures,
             [ModelBinder(typeof(CustomModelBinderForSide))] List<Side> sides,
             [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces,
-            [ModelBinder(typeof(CustomModelBinderForPicsForAD))] Dictionary<int, HttpPostedFileBase> photos,
-            [ModelBinder(typeof(CustomModelBinderForPicInd))] Dictionary<int, string> picIndexes,
+            [ModelBinder(typeof(CustomModelBinderForPicsForAD))] Dictionary<string, HttpPostedFileBase> photos,
+            [ModelBinder(typeof(CustomModelBinderForPicInd))] Dictionary<string, string> picIndexes,
             HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides,
             HttpPostedFileBase scan1SidesWithFinancialManagement, 
             string Bcoord, string Hcoord, string photoInd1, string photoInd2,
@@ -386,9 +379,10 @@ namespace Sciencecom.Controllers
 
             ValidatePic(ScanPassport_1Sides, photoInd1, structures.Id_show.ToString(), mc.Id_show.ToString(), "ScanPassport_1Sides");
             ValidatePic(ScanPassport_2Sides, photoInd2, structures.Id_show.ToString(), mc.Id_show.ToString(), "ScanPassport_2Sides");
+
             foreach (var photo in photos)
             {
-                ValidatePic(photo.Value, picIndexes[photo.Key], structures.Id_show.ToString(), mc.Id_show.ToString(), "photo[" + photo.Key + "]");
+                _phw.ValidatePic(photos, picIndexes, structures.Id_show.ToString(), mc.Id_show.ToString());
             }
 
             return RedirectToAction((string)Session["action"], (string)Session["controller"]);
@@ -721,9 +715,9 @@ namespace Sciencecom.Controllers
             [ModelBinder(typeof(CustomModelBinderForSide))] List<Side> sides,
             [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces,
             HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides,
-            [ModelBinder(typeof(CustomModelBinderForPicsForAD))] Dictionary<int, HttpPostedFileBase> photos,
+            [ModelBinder(typeof(CustomModelBinderForPicsForAD))] Dictionary<string, HttpPostedFileBase> photos,
             HttpPostedFileBase Application,
-             List<HttpPostedFileBase> severalPhoto,
+             
             HttpPostedFileBase scan1Side, HttpPostedFileBase scan2Side,
             string Bcoord, string Hcoord, int countSize = 1)
         {
@@ -793,14 +787,7 @@ namespace Sciencecom.Controllers
             {
                 return RedirectToAction("NotFound");
             }
-            List<Surface> surfaces = new List<Surface>();
-            foreach (var sides in mc.Sides.OrderBy(a => a.Name))
-            {
-                foreach (var surface in sides.Surfaces)
-                {
-                    surfaces.Add(surface);
-                }
-            }
+            List<Surface> surfaces = mc.Sides.OrderBy(a => a.Name).SelectMany(sides => sides.Surfaces).ToList();
             TempData["surface"] = surfaces;
             mc.Code = "LD";
             if (mc.coordB != null)
@@ -817,18 +804,10 @@ namespace Sciencecom.Controllers
             ViewBag.Scan2Side = LoadPic(idShow.ToString(), "Scan2Side");
             ViewBag.ScanPassport_1Sides = LoadPic(idShow.ToString(), "ScanPassport_1Sides");
             ViewBag.ScanPassport_2Sides = LoadPic(idShow.ToString(), "ScanPassport_2Sides");
+           
+            List<string> photoNames = _phw.LoadPic(idShow.ToString());
 
-            Dictionary<string, bool> dic = new Dictionary<string, bool>();
-
-            string index;
-            foreach (Side side in mc.Sides)
-            {
-                foreach (Surface surface in surfaces)
-                {
-                    index = surface.NumberSurface.ToString();
-                    dic[index] = _phw.LoadPic(idShow.ToString(), "photo" + index);
-                }
-            }
+            ViewBag.PhotoNames = photoNames;
             ViewBag.Application = LoadPic(mc.Id_show.ToString(), "Application");
             ViewBag.Bcoord = mc.coordB;
             ViewBag.Hcoord = mc.coordH;
@@ -839,8 +818,9 @@ namespace Sciencecom.Controllers
         public ActionResult EditLightDuctDesign(int id, AdvertisingStructure structures,
             [ModelBinder(typeof(CustomModelBinderForSide))] List<Side> sides,
             [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces,
-            HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides,
-            HttpPostedFileBase photo1, HttpPostedFileBase photo2, HttpPostedFileBase Application,
+            [ModelBinder(typeof(CustomModelBinderForPicsForAD))] Dictionary<string, HttpPostedFileBase> photos,
+            [ModelBinder(typeof(CustomModelBinderForPicInd))] Dictionary<string, string> picIndexes,
+            HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides, HttpPostedFileBase Application,
             HttpPostedFileBase scan1Side, HttpPostedFileBase scan2Side, 
             string ScanPassport_1SidesInd, string ScanPassport_2SidesInd, string scan1SideInd, string scan2SideInd, 
             string photo1Ind, string photo2Ind, string ApplicationInd, 
@@ -898,9 +878,12 @@ namespace Sciencecom.Controllers
             ValidatePic(ScanPassport_2Sides, ScanPassport_2SidesInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "ScanPassport_2Sides");
             ValidatePic(scan1Side, scan1SideInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "Scan1Side");
             ValidatePic(scan2Side, scan2SideInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "Scan2Side");
-            ValidatePic(photo1, photo1Ind, structures.Id_show.ToString(), mc.Id_show.ToString(), "photo1");
-            ValidatePic(photo2, photo2Ind, structures.Id_show.ToString(), mc.Id_show.ToString(), "photo2");
             ValidatePic(scan2Side, scan2SideInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "Application");
+
+            foreach (var photo in photos)
+            {
+                _phw.ValidatePic(photos, picIndexes, structures.Id_show.ToString(), mc.Id_show.ToString());
+            }
 
             return RedirectToAction((string)Session["action"], (string)Session["controller"]);
 
