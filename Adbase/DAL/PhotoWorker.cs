@@ -45,15 +45,16 @@ namespace Sciencecom.DAL
         {
             foreach (KeyValuePair<string, HttpPostedFileBase> photo in photos)
             {
-                if (photo.Value != null & picIndexes.Single( x => x.Key.Contains(photo.Key)).Value == "setImage")
+                //var d = ;
+                if (photo.Value != null & picIndexes.SingleOrDefault( x => x.Key.Contains(photo.Key)).Value == "setImage")
                 {
                     SavePic(structureId, "photo" + photo.Key, photo.Value);
                 }
-                if (photo.Value != null & picIndexes.Single(x => x.Key.Contains(photo.Key)).Value == "")
+                if (photo.Value != null & picIndexes.SingleOrDefault(x => x.Key.Contains(photo.Key)).Value == "")
                 {
                     SavePic(structureId, "photo" + photo.Key, photo.Value);
                 }
-                if (photo.Value == null & picIndexes.Single(x => x.Key.Contains(photo.Key)).Value == "setImage")
+                if (photo.Value == null & picIndexes.SingleOrDefault(x => x.Key.Contains(photo.Key)).Value == "setImage")
                 {
                     string src = "~/Images/photo1/" + "photo" + photo.Key + oldstructureId + ".jpg";
                     string oldPath = System.Web.HttpContext.Current.Server.MapPath(src);

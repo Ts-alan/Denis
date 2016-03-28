@@ -24,20 +24,21 @@ namespace Sciencecom.Models
             double space = 0;
             double width = 0;
             var sideOfSurface = "";
-            int guid = 0;
 
-            for (int i=0; i<AllKeysHeight.Count(); i++)
+            for (int i=0; i<AllKeysHeight.Count; i++)
             {
-
-                if (!string.IsNullOrWhiteSpace(request.Form.Get(AllKeysHeight[i])))
+                double z;
+                if (double.TryParse(request.Form.Get(AllKeysHeight[i]), out z))
                 {
                     height = double.Parse(request.Form.Get(AllKeysHeight[i]), CultureInfo.InvariantCulture);
                 }
-                if (!string.IsNullOrWhiteSpace(request.Form.Get(AllKeysSpace[i])))
+                double q;
+                if (double.TryParse(request.Form.Get(AllKeysSpace[i]), out q))
                 {
                     space = double.Parse(request.Form.Get(AllKeysSpace[i]), CultureInfo.InvariantCulture);
                 }
-                if (!string.IsNullOrWhiteSpace(request.Form.Get(AllKeysWidth[i])))
+                double x;
+                if (double.TryParse(request.Form.Get(AllKeysWidth[i]), out x))
                 {
                     width = double.Parse(request.Form.Get(AllKeysWidth[i]), CultureInfo.InvariantCulture);
                 }
@@ -50,8 +51,7 @@ namespace Sciencecom.Models
                 ListSurface.Add(new Surface() { Height = height, 
                     Space = space, 
                     Width = width, 
-                    SideOfSurface = sideOfSurface,
-                    
+                    SideOfSurface = sideOfSurface
                 });
 
             }

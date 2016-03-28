@@ -86,8 +86,11 @@ namespace Sciencecom.Controllers
             {
                 return RedirectToAction("NotFound");
             }
-            AdvertisingStructure mc = _context.AdvertisingStructures.Single(a => a.Id_show == id);
-            
+            AdvertisingStructure mc = _context.AdvertisingStructures.SingleOrDefault(a => a.Id_show == id);
+            if (mc==null)
+            {
+                return RedirectToAction("NotFound");
+            }
             _dbw.DeleteAdvertisingDesign(id);
             
             //удаление картинок
