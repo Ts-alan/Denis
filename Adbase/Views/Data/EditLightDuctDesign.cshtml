@@ -446,12 +446,6 @@
 
 
 
-<style>
-    .form-horizontal .form-group {
-        margin-left: 0;
-        margin-right: 0;
-    }
-</style>
 
 <h3> КАРТОЧКА СВЕТОВОГО КОРОБА</h3>
 @Scripts.Render("~/Content/Map")
@@ -970,9 +964,9 @@
                                 </div>
                             </div>
 
-                            <div class="form-horizontal" style="margin-top: 18px">
-                                <div class="form-group">
-                                    <div class="form-group">
+                            <div class="form-horizontal" style="margin-top: 18px;">
+                                <div>
+                                    <div>
                                         <label for="CountSizes">Количество сторон</label>
                                         @Html.DropDownList("CountSizes", new SelectList(new[] { "", "1", "2" }, Model.Sides.Count.ToString()), new { onchange = "SetCountSize()", @class = "form-control", style = "width: 60px" })
                                         <span class="field-validation-validr" data-valmsg-for="CountSizes" data-valmsg-replace="true">
@@ -1025,3 +1019,15 @@
                             </div>
 }
 @Html.Partial("PatialView/ModalPicture")
+
+
+<style>
+    .form-horizontal .form-group {
+        margin-left: 1px;
+        margin-right: 0px;
+    }
+    .surfaceInputGroup {
+       margin-left: 0px;
+       margin-right: 0px; 
+    }
+</style>

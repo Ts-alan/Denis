@@ -105,6 +105,8 @@ namespace Sciencecom.Controllers
 
             DeletePic(mc.Id_show.ToString(), "Scan2Side");
 
+            DeletePic(mc.Id_show.ToString(), "Application");
+
             if (switchtoMap == "true")
             {
                 return RedirectToAction("Index", "Map");
