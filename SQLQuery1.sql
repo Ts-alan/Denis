@@ -1,4 +1,4 @@
-delete  from [dbo].[Surfaces]
-delete  from [dbo].[ListUniqueNumber]
-delete  from [dbo].[Sides]
-delete  from [dbo].[AdvertisingStructures]
+delete  from [D:\BACKUP1\ADBASE\APP_DATA\SCIENCECOM.MDF].[dbo].[Surfaces]
+delete  from [D:\BACKUP1\ADBASE\APP_DATA\SCIENCECOM.MDF].[dbo].[ListUniqueNumber]
+delete  from [D:\BACKUP1\ADBASE\APP_DATA\SCIENCECOM.MDF].[dbo].[Sides]
+delete  from [D:\BACKUP1\ADBASE\APP_DATA\SCIENCECOM.MDF].[dbo].[AdvertisingStructures]
