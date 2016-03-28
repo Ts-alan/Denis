@@ -403,7 +403,23 @@
                     @Html.Raw("Скан проекта ОДД (Сторона 2) отсутствует.")<br />
                 }
             </div>
+             <div class="form-group">
+                @if (ViewBag.Application)
+                {
+                    <p>
+                        <h3>@Html.Raw("Скан проекта ОДД (Сторона 1)")</h3><br />
+                    </p>
+                    string image = "/Images/Application/" + ViewBag.Id + "Application.jpg";
 
+                    <p>
+                        <a href=@image><img src=@image height="500"></a><br />
+                    </p>
+                }
+                else
+                {
+                    @Html.Raw("Заявление отсутствует.")<br />
+                }
+            </div>
 
              <div class="row" style="margin-top: 15px">
             <div class="col-md-2">

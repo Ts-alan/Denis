@@ -3,13 +3,13 @@
 
 @for (int i = ViewBag.StartCountForSurface, j = 1; i < ViewBag.EndCountForSurface; i++, j++)
 {
-
-    <text>  <div side="@ViewBag.Side">
+    <text>
+        <div side="@ViewBag.Side">
             <input type="hidden" name="[@i].SideOfSurface" value="@ViewBag.Side">
             <h3 style="margin-left: 150px">Поверхность @j &nbsp; Стороны @ViewBag.Side </h3>
 
             <div class="form-inline">
-                <hr />
+                <hr/>
                 <div class="form-group">
                     <input name="[@i].NumberSurface" type="hidden" value="@ViewBag.Side">
                     <div class="form-group has-feedback">
@@ -17,7 +17,7 @@
                         @*@Html.ValidationMessageFor(model => model[i].Height)*@
                         <span class="field-validation-valid" data-valmsg-for="[@i].Height" data-valmsg-replace="true"></span>
                         <span class="glyphicon form-control-feedback"></span>
-                        @Html.TextBoxFor(model => model[i].Height, new { @class = "form-control", type = "number" })
+                        @Html.TextBoxFor(model => model[i].Height, new {@class = "form-control", type = "number"})
 
                     </div>
                     <div class="form-group has-feedback" style="margin-left: 20px">
@@ -25,19 +25,19 @@
                         @* @Html.ValidationMessageFor(model => model[i].Width)*@
                         <span class="field-validation-valid" data-valmsg-for="[@i].Width" data-valmsg-replace="true"></span>
                         <span class="glyphicon form-control-feedback"></span>
-                        @Html.TextBoxFor(model => model[i].Width, new { @class = "form-control", type = "number" })
+                        @Html.TextBoxFor(model => model[i].Width, new {@class = "form-control", type = "number"})
 
                     </div>
                     <div class="form-group has-feedback" style="margin-left: 20px">
                         <label for="[@i].Space">Площадь</label>
-                        @Html.TextBoxFor(model => model[i].Space, new { @class = "form-control", type = "number", SelectForSpace = "", onchange = "CalculationAS()", @readonly = "readonly" })
+                        @Html.TextBoxFor(model => model[i].Space, new {@class = "form-control", type = "number", SelectForSpace = "", onchange = "CalculationAS()", @readonly = "readonly"})
                         @Html.ValidationMessageFor(model => model[i].Space)
                     </div>
 
                     <div style="margin-left: 30px" class="form-group">
 
                         <label>Фотография</label>
-                        <br />
+                        <br/>
                         @{
                             string photoName = "[" + ViewBag.Side + "](" + j + ")";
                             List<string> listOfNames = new List<string>();
@@ -45,9 +45,8 @@
                             {
                                 listOfNames = @ViewBag.PhotoNames;
                             }
-                            
                         }
-                        @if (listOfNames!= null && listOfNames.Any(x => x.Contains(photoName)))
+                        @if (listOfNames != null && listOfNames.Any(x => x.Contains(photoName)))
                         {
                             string image = "/Images/photo1/photo(" + ViewBag.Side + ")[" + @j + "].jpg";
                             string imgName = "photo(" + ViewBag.Side + ")[" + @j + "].jpg";
@@ -57,10 +56,10 @@
                                 <span>&nbsp;&nbsp;Фото&nbsp;</span>
                                 <input type="file" class="upload" name="photo[@{@ViewBag.Side}](@j)" accept="image/jpeg/"/>
                             </div>
-                            <label>@imgName</label>
+                            <label for="photo[@{@ViewBag.Side}](@j)">@imgName</label>
                             <br/>
                             <br/>
-                            <button type="button" style="margin-left: 25px" class="modalPictureTrigger btn btn-default input-sm" data-toggle="modal" onclick="addPic('#ModalPictureDivphoto1', '@image')" data-target="#ViewModalPicturephoto1">Показать</button>
+                            <button type="button" style="margin-left: 25px" class="modalPictureTrigger btn btn-default input-sm" data-toggle="modal" onclick="addPic('#ModalPictureDivPhoto', '@image')" data-target="#ViewModalPicturePhoto">Показать</button>
                         }
                         else
                         {
@@ -69,32 +68,93 @@
                             <div class="fileUpload btn btn-default input-sm">
                                 <span accept="image/jpeg/">&nbsp;&nbsp;Фото&nbsp;</span>
                                 <input type="file" class="upload" name="photo[@{@ViewBag.Side}](@j)" accept="image/jpeg/"/>
-                            </div>
-                            <label>Файл не выбран</label>
+                                                                                </div>
+                            <label for="photo[@{@ViewBag.Side}](@j)">Файл не выбран</label>
                             <br/>
                             <br/>
                         }
 
+                    </div>
                 </div>
             </div>
         </div>
-
-    </div></text>
+    </text>
     <script type="text/javascript">
         AddRules();
         //выщитывание площади для каждой поверхности
-        $('[name="[' + @i + '].Height"]').on("change", function ()
+        $('[name="[' + @i + '].Height"]').on("change", function()
         {
-
             CalculationOfTheArea(@i);
         });
-        $('[name="[' + @i + '].Width"]').on("change", function ()
+        $('[name="[' + @i + '].Width"]').on("change", function()
         {
-
             CalculationOfTheArea(@i);
         });
+
+        $(".closeimg").click(function () {
+        $(this).prev().attr("value", "");
+        $(this).next().find("input[type='file']")[0].value = null;
+        $(this).next().next().text("Файл не выбран");
+        $(this).next().removeClass("btn-warning");
+        $(this).next().addClass("btn-default");
+        $(this).parent().find("button.modalPictureTrigger").remove();
+    });
+
+     //Функция срабатывает при клике на кнопку загрузки файла
+    $("input[type='file']").click(function() {
+        $(this).prev().attr("value", "");
+       
+        //очистка кнопки выбора файла
+        var btnParent = $(this).parent();
+    });
+
+    //Функция срабатывает изменении значения кнопки загрузки файла
+    $("input[type='file']").change(function()
+    {
+        var attr = $(this).attr("name");
+        var modalImgId = "ModalPictureimgPhoto";
+        var modalId = "#ModalPictureDivPhoto";
+        var btnParent = $(this).parent();
+        var fileName = this.value.split('\\').pop();
+        if (fileName != "")
+        {
+            //console.log(btnParent.parent().find("label[for^='photo']"));
+            btnParent.parent().find("label[for^='photo']").text(fileName);
+            btnParent.parent().find("label[for^='Scan']").text(fileName);
+            //Изменение стиля кнопки загрузки фала при выборе загружаемого файла
+
+            var markup = '<img id="' + modalImgId + '" src=""' + ' height="300" style="display: block;margin-left: auto;margin-right: auto;">';
+            //добавление в модальное окно пустого тега с картинкой
+
+            $(modalId).empty();
+            $(modalId).append(markup);
+        }
+
+        btnParent.addClass("btn-warning");
+        btnParent.removeClass("btn-default");
+
+        //считывание загружаемой кратинки и запись её в атрибут src тега img
+        var fReader = new FileReader();
+        fReader.readAsDataURL(this.files[0]);
+        fReader.onloadend = function(event)
+        {
+           var imgid = "#" + modalImgId;
+           $(imgid).attr("src", event.target.result);
+        }
+
+        //добавление кнопки открывания модального окна
+
+        var modalButton = '<button type="button" style="margin-left:25px" class="modalPictureTrigger btn btn-default" data-toggle="modal" data-target="#ViewModalPicturePhoto">Показать</button>';
+        
+        if (btnParent.closest(".fileUpload").next().next().next().next().length != 0)
+        {
+            btnParent.closest(".fileUpload").next().next().next().next().remove();
+        }
+        btnParent.parent().append(modalButton);
+     
+    });
 
     </script>
-                        }
+}
 
 
