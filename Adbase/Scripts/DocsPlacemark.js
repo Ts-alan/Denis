@@ -8,7 +8,7 @@ var changable = false;
 
 function onCityChange()
 {
-    console.log($("inputinput#Locality_NameLocality").val());
+   
     var loc;
     if ($("input#Locality_NameLocality").val() == "Константиново")
     {

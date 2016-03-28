@@ -1,10 +1,9 @@
 ﻿@model System.Collections.Generic.List<Sciencecom.Models.Surface>
 
-
 @for (int i = ViewBag.StartCountForSurface, j = 1; i < ViewBag.EndCountForSurface; i++, j++)
 {
     <text>
-        <div side="@ViewBag.Side">
+        <div side="@ViewBag.Side" class="SideDiv">
             <input type="hidden" name="[@i].SideOfSurface" value="@ViewBag.Side">
             <h3 style="margin-left: 150px">Поверхность @j &nbsp; Стороны @ViewBag.Side </h3>
 
@@ -17,7 +16,7 @@
                         @*@Html.ValidationMessageFor(model => model[i].Height)*@
                         <span class="field-validation-valid" data-valmsg-for="[@i].Height" data-valmsg-replace="true"></span>
                         <span class="glyphicon form-control-feedback"></span>
-                        @Html.TextBoxFor(model => model[i].Height, new {@class = "form-control", type = "number"})
+                        @Html.TextBoxFor(model => model[j-1].Height, new {@class = "form-control", type = "number"})
 
                     </div>
                     <div class="form-group has-feedback" style="margin-left: 20px">
@@ -25,31 +24,31 @@
                         @* @Html.ValidationMessageFor(model => model[i].Width)*@
                         <span class="field-validation-valid" data-valmsg-for="[@i].Width" data-valmsg-replace="true"></span>
                         <span class="glyphicon form-control-feedback"></span>
-                        @Html.TextBoxFor(model => model[i].Width, new {@class = "form-control", type = "number"})
+                        @Html.TextBoxFor(model => model[j-1].Width, new {@class = "form-control", type = "number"})
 
                     </div>
                     <div class="form-group has-feedback" style="margin-left: 20px">
                         <label for="[@i].Space">Площадь</label>
-                        @Html.TextBoxFor(model => model[i].Space, new {@class = "form-control", type = "number", SelectForSpace = "", onchange = "CalculationAS()", @readonly = "readonly"})
-                        @Html.ValidationMessageFor(model => model[i].Space)
+                        @Html.TextBoxFor(model => model[j-1].Space, new {@class = "form-control", type = "number", SelectForSpace = "", onchange = "CalculationAS()", @readonly = "readonly"})
+                        @Html.ValidationMessageFor(model => model[j-1].Space)
                     </div>
 
-                    <div style="margin-left: 30px" class="form-group">
+                    <div style="margin-left: 10px" class="form-group">
 
                         <label>Фотография</label>
                         <br/>
                         @{
                             string photoName = "[" + ViewBag.Side + "](" + j + ")";
                             List<string> listOfNames = new List<string>();
-                            if (@ViewBag.PhotoNames != null)
+                            if ( Session["PhotoNames"] != null)
                             {
-                                listOfNames = @ViewBag.PhotoNames;
+                                listOfNames = (List<string>)Session["PhotoNames"];
                             }
                         }
                         @if (listOfNames != null && listOfNames.Any(x => x.Contains(photoName)))
                         {
-                            string image = "/Images/photo1/photo(" + ViewBag.Side + ")[" + @j + "].jpg";
-                            string imgName = "photo(" + ViewBag.Side + ")[" + @j + "].jpg";
+                            string image = "/Images/photo1/[" + ViewBag.Side + "](" + @j + ")photo" + Model[0].Side.AdvertisingStructure.Id_show + ".jpg";
+                            string imgName = "[" + ViewBag.Side + "](" + @j + ")photo.jpg";
                             <input type="hidden" name="PhotoInd[@{@ViewBag.Side}](@j)" value="setImage">
                             <img class="closeimg" style="width: 20px" src="../../Content/CloseImg.jpg"/>
                             <div class="fileUpload btn btn-warning input-sm">

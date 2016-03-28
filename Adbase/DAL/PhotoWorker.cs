@@ -1,20 +1,22 @@
-﻿using System;
+﻿
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
-using System.Web.Mvc;
+using Sciencecom.Controllers;
+
 
 namespace Sciencecom.DAL
 {
-    public class PhotoWorker: Controller
+    public class PhotoWorkerController : BaseDataController
     {
-        internal void SavePic(string structureId, string documentName, HttpPostedFileBase picture)
+        internal new void SavePic(string structureId, string documentName, HttpPostedFileBase picture)
         {
             if (picture != null)
             {
+                string path = "";
                 string src = "~/Images/photo1/" + documentName + structureId + ".jpg";
-                string path = Server.MapPath(src);
+                path = System.Web.HttpContext.Current.Server.MapPath(src);
                 picture.SaveAs(path);
             }
         }
@@ -22,14 +24,16 @@ namespace Sciencecom.DAL
 
         internal List<string> LoadPic(string dataId)
         {
-            List<string> photoNames = Directory.GetFiles("~/Images/photo1/").Where(x => x.Contains(dataId)).ToList();
+            string src = "~/Images/photo1/";
+            string path = System.Web.HttpContext.Current.Server.MapPath(src);
+            List<string> photoNames = Directory.GetFiles(path).Where(x => x.Contains(dataId)).ToList();
             return photoNames;
         }
 
-        internal void DeletePic(string dataId, string photoName)
+        internal new void DeletePic(string dataId, string photoName)
         {
             string src = "~/Images/photo1/" + dataId + photoName + ".jpg";
-            string path = Server.MapPath(src);
+            string path = System.Web.HttpContext.Current.Server.MapPath(src);
             FileInfo info1 = new FileInfo(path);
             if (info1.Exists)
             {
@@ -52,9 +56,9 @@ namespace Sciencecom.DAL
                 if (photo.Value == null & picIndexes.Single(x => x.Key.Contains(photo.Key)).Value == "setImage")
                 {
                     string src = "~/Images/photo1/" + "photo" + photo.Key + oldstructureId + ".jpg";
-                    string oldPath = Server.MapPath(src);
+                    string oldPath = System.Web.HttpContext.Current.Server.MapPath(src);
                     src = "~/Images/photo1/" + "photo" + photo.Key + structureId + ".jpg";
-                    string newPath = Server.MapPath(src);
+                    string newPath = System.Web.HttpContext.Current.Server.MapPath(src);
                     System.IO.File.Move(oldPath, newPath);
                 }
             }

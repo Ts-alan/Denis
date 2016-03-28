@@ -64,6 +64,7 @@
         {
             $(element)[0].value = ArrayOfSides[indx].DirectionSide_id;
         });
+        
         $("[identificationforcountside]").each(function(indx, element)
         {
             $(element)[0].value = ArrayOfSides[indx].length;
@@ -156,6 +157,34 @@
             }
         }
         
+        //Добавить поверхность+
+    function AddSurface(i)
+    {
+        var count = $("#AddButton" + i + "").val();
+        StartCountForSurface = EndCountForSurface;
+        EndCountForSurface = parseInt(count) + parseInt(EndCountForSurface);
+
+        if (count == 1)
+        {
+            $("#" + i + "HiddenIdentification").hide();
+        } else
+        {
+            $("#" + i + "HiddenIdentification").show();
+            //валидация
+            $('[name="IdentificationSurface"]').each(function (indx, element)
+            {
+                $(element).attr("name", "[" + indx + "].IdentificationForIdentificationSurface");
+            });
+        }
+        $("[side=" + i + "]").remove();
+
+
+        $.ajax('@Url.Action("AddSurface", "Data")', { data: { side: i, StartCountForSurface: StartCountForSurface, EndCountForSurface: EndCountForSurface } })
+            .success(function (e)
+            {
+                $("#InsertPartial" + i + "").before(e);
+            });
+    }
     
 
     function SetValidate(i)
@@ -300,6 +329,12 @@
         margin-left: 0px;
         margin-right: 0px;
     }
+    
+    .SideDiv 
+    {
+        margin-left: -25px;
+    }
+
 </style>
 <h3> КАРТОЧКА ЩИТА</h3>
 

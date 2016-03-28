@@ -2,11 +2,11 @@
 @model  Sciencecom.Models.AdvertisingStructure
 
 @{
-    ViewBag.Title = "Просмотр документов";
+    ViewBag.Title = "Billboard";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@Scripts.Render("~/Content/Map")
+@Scripts.Render("~/Content/Docs")
 <script type="text/javascript">
     var i = 0;
 
@@ -20,7 +20,15 @@
                            {
                                return (new {NameOfDirectionSide = a.DirectionSide.NameOfDirectionSide, length = a.Surfaces.Count, IdentificationName = a.Identification.IdentificationName});
                            }
-                           return new {NameOfDirectionSide = a.DirectionSide.NameOfDirectionSide, length = a.Surfaces.Count, IdentificationName = ""};
+                           if (a.DirectionSide != null)
+                           {
+                               return new {NameOfDirectionSide = a.DirectionSide.NameOfDirectionSide, length = a.Surfaces.Count, IdentificationName = ""};
+                           }
+                           else
+                           {
+                               return new {NameOfDirectionSide = "", length = a.Surfaces.Count, IdentificationName = ""};
+                           }
+                           
                        }),
                            Formatting.Indented, new JsonSerializerSettings
                            {
@@ -102,13 +110,13 @@
                     "<h3 class=\"control-label col-md-2\" for=\"\" style=\"margin-left: 55px\">Сторона  " + i + " </h3>" +
                     "</div>" +
                     "<div class=\"form-group\">" +
-                    "<div class=\"col-md-10\">" +
+                    "<div class=\"form-inline sidesControl\">" +
                     "<b>Количество поверхностей</b>" +
-                    " <input class=\"text-box single-line\" id=\"AddButton" + i + "\" onchange=EditSurface(" + i + ") readonly name=\"CountSurfuce" + i + "\"  style=\"width: 20px\" IdentificationForCountSide=\"\" type=\"text\"/>" +
-                    "</select> &nbsp;&nbsp;&nbsp; <b>Направление стороны</b>" + '<input identificationfordirectionside class="text-box single-line" id="DirectionSide" style="width: 250px"  name="DirectionSide" readonly type="text" />' +
+                    " <input class=\"text-box single-line form-control\" id=\"AddButton" + i + "\" onchange=EditSurface(" + i + ") readonly name=\"CountSurfuce" + i + "\"  style=\"width: 20px\" IdentificationForCountSide=\"\" type=\"text\"/>" +
+                    "</select> &nbsp;&nbsp;&nbsp; <b>Направление стороны</b>" + '<input identificationfordirectionside class="text-box single-line form-control" id="DirectionSide" style="width: 250px"  name="DirectionSide" readonly type="text" />' +
                     "</div>" +
-                    "</div> <div style=\"margin-left: -15px;display: none\" id=\"" + i + "HiddenIdentification\"> &nbsp;&nbsp;&nbsp;<b>Идентификация поверхностей</b>" +
-                    '<input identificationforidentificationsurface class="text-box single-line valid" id="IdentificationSurface" style="width: 120px" name="IdentificationSurface" readonly="" type="text"> </div>' +
+                    "</div> <div class=\"HiddenIdentification\" id=\"" + i + "HiddenIdentification\"> &nbsp;&nbsp;&nbsp;<b>Идентификация поверхностей</b>" +
+                    '<input identificationforidentificationsurface class="text-box single-line valid form-control" id="IdentificationSurface" name="IdentificationSurface" readonly="" type="text"> </div>' +
                     "<div  id=\"InsertPartial" + i + "\"></div>" +
                     "</div>");
 
@@ -208,9 +216,15 @@
 <style>
     .form-horizontal .form-group 
     {
-    margin-left: 0px;
+    margin-left: 20px;
     margin-right: 0px;
 }
+    .HiddenIdentification {
+         display:none;
+    }
+    .sidesControl {
+        margin-left: 15px;
+    }
 </style>
 <h2>Карточка конструкции</h2>
 @using (Html.BeginForm("EditAdvertisingDesign", "Data", FormMethod.Post, new { enctype = "multipart/form-data", id = "test1" }))
@@ -333,7 +347,7 @@
 
             <div>
                 <label for="Breadth">Широта </label>
-                @Html.EditorFor(model => model.coordB, new { htmlAttributes = new { @readonly = "", @class = "form-control" } })
+                @Html.EditorFor(model => model.coordB , new { htmlAttributes = new { @readonly = "", @class = "form-control" } })
            </div>
 
             <div>
@@ -492,7 +506,7 @@
             </div>
 
         </div>
-        <div class="form-horizontal" style="margin-top: 18px">
+        <div class="form-horizontal" style="margin-top: 18px; margin-left: 15px">
             <div class="form-group">
                 <label for="ConstructionSquare">Площадь конструкции</label>
                 <input id="ConstructionSquare" class="form-control" readonly="readonly" name="ConstructionSquare" style="background-color: lightgray" type="text" value="">

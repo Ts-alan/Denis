@@ -13,7 +13,7 @@ namespace Sciencecom.Controllers
     public class DataController : BaseDataController
     {
         private DbWorker _dbw = new DbWorker();
-        private PhotoWorker _phw = new PhotoWorker();
+        private PhotoWorkerController _phw = new PhotoWorkerController();
         private SciencecomEntities _context = new SciencecomEntities();
 
         [Authorize]
@@ -292,7 +292,7 @@ namespace Sciencecom.Controllers
             ViewBag.photo2 = LoadPic(mc.Id_show.ToString(), "ScanPassport_2Sides");
 
             List<string> photoNames = _phw.LoadPic(idShow.ToString());
-            ViewBag.PhotoNames = photoNames;
+            Session["PhotoNames"] = photoNames;
             return View(mc);
         }
 
@@ -741,7 +741,7 @@ namespace Sciencecom.Controllers
 
             _context.Sides.AddRange(sides);
             structures.Area = CountSquare(surfaces);
-             structures = ValidateCoords(structures, Bcoord, Hcoord);
+            structures = ValidateCoords(structures, Bcoord, Hcoord);
 
             _context.AdvertisingStructures.Add(structures);
             List<Surface> listSurface = new List<Surface>();
@@ -807,7 +807,7 @@ namespace Sciencecom.Controllers
            
             List<string> photoNames = _phw.LoadPic(idShow.ToString());
 
-            ViewBag.PhotoNames = photoNames;
+            Session["PhotoNames"] = photoNames;
             ViewBag.Application = LoadPic(mc.Id_show.ToString(), "Application");
             ViewBag.Bcoord = mc.coordB;
             ViewBag.Hcoord = mc.coordH;

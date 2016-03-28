@@ -63,8 +63,12 @@
         if ($("#Bcoord").val() != "" && $("#Hcoord").val() != "")
         {
             // нанесение обьекта на карту при загрузке
-
-            if (typedesign == "IllegalDesign") {
+            if (typedesign == undefined)
+            {
+                var typedesign = "";
+            }
+            if ( typedesign == "IllegalDesign") 
+            {
                 
                         myPlacemark = new ymaps.Placemark([$("#Bcoord").val().replace(",", "."), $("#Hcoord").val().replace(',', '.')], {
                             iconContent: "Н",

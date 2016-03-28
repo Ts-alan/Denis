@@ -35,11 +35,17 @@
 
     //Подсветка
     //var ContentInformationDescription = new SciencecomEntities().Backlights.ToList();
-
+     
+    //Направление стороны
+    var DirectionSide = new SciencecomEntities().DirectionSides.OrderBy(x=>x.OrderBY).ToList();
+    //Индификация поверхности
+    var IdentificationSide = new SciencecomEntities().Identifications.ToList();
 
 }
 
-<script type="text/javascript">
+
+
+@*<script type="text/javascript">
     var i = 0;
 
     var havePlacemark = @Model.coordB.HasValue.ToString().ToLower();
@@ -56,6 +62,8 @@
     var typedesign ;
     $(document).ready(function()
     {
+
+        window.onload = SetCountSize();
         //выщитывание площади для каждой поверхности
 
         $('#SHeight').change(function()
@@ -68,6 +76,7 @@
             //alert("!!!");
             CalculationOfTheArea(0);
         });
+        
     });
     $("[identificationfordirectionside]").each(function(indx, element)
     {
@@ -126,9 +135,316 @@
         $("#ConstructionSquare").val(Summ);
     }
 
+     //кол-во сторон
+    function SetCountSize()
+    {
+        EndCountForSurface = 0;
+        var CountSizes = $('#CountSizes').val();
+        $("#CountSize").val(CountSizes);
+    
+            $("[code]").each(function(indx, element)
+            {
+                element.remove();
+            });
+
+            for (var i = 1; i <= CountSizes; i++)
+            {
+                $("#InsertSide").before("<div code class=\"form-horizontal\" >" +
+                    "<div class=\"form-group\" >" +
+                    "<h3 class=\"control-label col-md-2\" for=\"\" style=\"margin-left: 55px\">Сторона  " + i + " </h3>" +
+                    "</div>" +
+                    "<div class=\"form-group\">" +
+                    "<div class=\"col-md-10\" style=\"padding-left: 0px\">" +
+                    "<div style='float:left'>" +
+                    "<b>Количество поверхностей</b>" +
+                    " <select class=\"text-box single-line form-control\" style='width:60px' id=\"AddButton" + i + "\" onchange=EditSurface(" + i + ") name=\"CountSurfuce" + i + "\" IdentificationForCountSide=\"\" type=\"text\" data-val=\"true\" >" +
+                    "<option></option>" +
+                    "<option>1</option>" +
+                    "<option>2</option>" +
+                    "<option>3</option>" +
+                    "<option>4</option>" +
+                    "<option>5</option>" +
+                    "<option>6</option>" +
+                    "<option>7</option>" +
+                    "<option>8</option>" +
+                    "</select></div> &nbsp;&nbsp;&nbsp; <b>Направление стороны</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("DirectionSide", new SelectList(DirectionSide, "id", "NameOfDirectionSide"), "", new {IdentificationForDirectionSide = ""}).ToHtmlString().Replace("\"", " "))' +
+                    "</div>" +
+                    "</div> <div style=\"display: none\" id=\"" + i + "HiddenIdentification\"> &nbsp;&nbsp;&nbsp;<b>Идентификация поверхностей</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("IdentificationSurface", new SelectList(IdentificationSide, "id", "IdentificationName"), "", new {IdentificationForIdentificationSurface = ""}).ToHtmlString().Replace("\"", " ")) </div>' +
+                    "<div  id=\"InsertPartial" + i + "\"></div>" +
+                    "</div>");
+
+                $("#SizeOfCount").val(CountSizes);
+                $("[directionside]").each(function(ind, element) {
+                   
+                });
+               
+
+            }
+        }
+
+
+</script>*@
+<style>
+    .SideDiv 
+    {
+        margin-left: -40px;
+    }
+</style>
+
+<script type="text/javascript">
+    var i = 0;
+
+    // var havePlacemark = @Model.coordB.HasValue.ToString().ToLower();
+
+    var StartCountForSurface;
+    var EndCountForSurface = 0;
+
+    var ArrayOfSides = @Html.Raw(JsonConvert.SerializeObject(Model.Sides.OrderBy(a=>a.Name).Select(a => new {a.DirectionSide_id, length = a.Surfaces.Count, a.Identification_id,a.Name}), Formatting.Indented, new JsonSerializerSettings
+                       {
+                           ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                       }));
+    var typedesign;
+    $(document).ready(function()
+    {
+        ////отключение валидации
+        $.validator.methods.number = function(value, element)
+        {
+            return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
+        }
+        //накручивание данных в поля
+        window.onload = SetCountSize();
+        $("[identificationfordirectionside]").each(function(indx, element)
+        {
+            $(element)[0].value = ArrayOfSides[indx].DirectionSide_id;
+        });
+        console.log($("[identificationforcountside]"));
+        $("[identificationforcountside]").each(function(indx, element)
+        {
+            $(element)[0].value = ArrayOfSides[indx].length;
+
+            //AddSurface(indx + 1);
+        });
+        $("[identificationforidentificationsurface]").each(function(indx, element)
+        {
+            $(element)[0].value = ArrayOfSides[indx].Identification_id;
+
+        });
+        //выпадающий список на согласование
+        $("[name=OnAgreement]").change(function()
+        {
+            var selectIndex = $("[name=OnAgreement] option:selected").val();
+
+            if (selectIndex == "true")
+            {
+                $("#ContractHide").css("display", "block");
+            }
+            if (selectIndex == "false")
+            {
+                $("#ContractHide").css("display", "none");
+            }
+        });
+        //css стиль для IdentificationForDirectionSide
+
+        $("[directionside]").addClass("form-control");
+        $("[identificationforidentificationsurface]").addClass("form-control");
+    });
+
+    // подсчет суммы площадей
+    function CalculationAS()
+    {
+        var Summ = 0;
+        $("[selectforspace]").each(function(indx, element)
+        {
+            if ($(element).val() != "")
+            {
+                Summ += parseInt($(element).val());
+            }
+        });
+        $("#ConstructionSquare").val(Summ);
+    }
+
+    //кол-во сторон
+    function SetCountSize()
+    {
+        EndCountForSurface = 0;
+        var CountSizes = $('#CountSizes').val();
+        $("#CountSize").val(CountSizes);
+        if (CountSizes != "")
+        {
+            $("[code]").each(function (indx, element)
+            {
+                element.remove();
+            });
+
+            for (var i = 1; i <= CountSizes; i++)
+            {
+                $("#InsertSide").before("<div code class=\"form-horizontal\" >" +
+                    "<div  class=\"form-group\" >" +
+                    "</div>" +
+                    "<div class=\"form-group\">" +
+                    "<div style=\"display: inline-block\" class=\"col-md-12\">" +
+                    "<div style=\"display:none\" class=\"form-group\">" +
+                    "<select class=\"text-box single-line\" id=\"AddButton"+ i + "\" onchange=\"AddSurface(1)\" name=\"CountSurfuce1\" identificationforcountside=\"\" type=\"text\" data-val=\"true\" data-val-required=\"Укажите кол-во сторон\">"+
+                    "<option selected=\"selected\">1</option>"+
+                    "</select>"+
+                    "<select class=\"valid\" identificationfordirectionside=\"IdentificationForDirectionSide\" id=\"DirectionSide\" name=\"[" + i + "].IdentificationForDirectionSide\">"+
+                    "<option value=\"27b8c509-8f09-4a0d-ae22-048c2611b7ea\" selected=\"selected\">По ходу движения (сторона А)</option>"+
+                    "</select></div>"+
+                    "<div  id=\"InsertPartial" + i + "\"></div>" +
+                    //"<div>"+ 
+                    //"<label>Фотография " + i +"</label><br/>" +
+                    //"<img class=\"closeimg\"  style=\"width:20px\" src=\"../../Content/CloseImg.jpg\" />" +
+                    //"<div class=\"fileUpload btn btn-default input-sm\">" +
+                    //"<span accept=\"image/jpeg/\">&nbsp;&nbsp;Фото " + i + "&nbsp;</span>" +
+                    //"<input type=\"file\" class=\"upload\" name=\"photo" + i +"\" accept=\"image/jpeg/\"/>" +
+                    //"</div></br>" +
+                    //"<label for=\"photo" + i + "\">Файл не выбран</label><br/><br/>" +
+                    //"</div>" +
+                    "</div>" 
+                    
+                    );
+                $("#SizeOfCount").val(CountSizes);
+                AddSurface(i);
+            }
+            
+        }
+        //Навешивание валидации
+        $('[name="DirectionSide"]').each(function (indx, element)
+        {
+            $(element).attr("name", "[" + indx + "].IdentificationForDirectionSide");
+        });
+    }
+        
+        //Добавить поверхность+
+    function AddSurface(i)
+    {
+        var count = $("#AddButton" + i + "").val();
+        StartCountForSurface = EndCountForSurface;
+        EndCountForSurface = parseInt(count) + parseInt(EndCountForSurface);
+
+        if (count == 1)
+        {
+            $("#" + i + "HiddenIdentification").hide();
+        } else
+        {
+            $("#" + i + "HiddenIdentification").show();
+            //валидация
+            $('[name="IdentificationSurface"]').each(function (indx, element)
+            {
+                $(element).attr("name", "[" + indx + "].IdentificationForIdentificationSurface");
+            });
+        }
+        $("[side=" + i + "]").remove();
+
+
+        $.ajax('@Url.Action("AddSurface", "Data")', { data: { side: i, StartCountForSurface: StartCountForSurface, EndCountForSurface: EndCountForSurface } })
+            .success(function (e)
+            {
+                $("#InsertPartial" + i + "").before(e);
+            });
+    }
+    
+
+    function SetValidate(i)
+    {
+        var count = $("#AddButton" + i + "").val();
+        StartCountForSurface = EndCountForSurface;
+        EndCountForSurface = parseInt(count) + parseInt(EndCountForSurface);
+
+        if (count == 1)
+        {
+            $("#" + i + "HiddenIdentification").hide();
+        } else
+        {
+            $("#" + i + "HiddenIdentification").show();
+        }
+        $("[side=" + i + "]").remove();
+    }
+
+    //Добавить поверхность+
+    function AddSurface(i)
+    {
+        SetValidate(i);
+
+        $.ajax('@Url.Action("EditSurface", "Data")', { async: true, data: { side: i, StartCountForSurface: StartCountForSurface, EndCountForSurface: EndCountForSurface } })
+            .success(function(e)
+            {
+                var live_str = $('<div>', { html: e });
+
+                var res = live_str.find('.body-content');
+
+                $("#InsertPartial" + i + "").prepend(res);
+
+                CalculationAS();
+
+                $('[name$="].Height"]').each(function (indx, element) {
+
+                    $(element).on("change", function() {
+
+                        CalculationOfTheArea($(element).attr("name").substring(1, $(element).attr("name").indexOf("]")));
+                    });
+                }
+   );
+                $('[name$="].Width"]').each(function(indx, element) {
+                    $(element).on("change", function() {
+
+                        CalculationOfTheArea($(element).attr("name").substring(1, $(element).attr("name").indexOf("]")));
+                    });
+                });
+
+                //отключение валидации
+                $.validator.methods.number = function(value, element)
+                {
+                    return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
+                }
+            }).error(function(e)
+            {
+                alert("ошибка кукареку");
+            });
+    }
+
+    //Редактировать поверхность+
+    function EditSurface(i)
+    {
+        SetValidate(i);
+
+        $.ajax('@Url.Action("AddSurface", "Data")', { async: true, data: { side: i, StartCountForSurface: StartCountForSurface, EndCountForSurface: EndCountForSurface } })
+            .success(function(e)
+            {
+                $("#InsertPartial" + i + "").before(e);
+                CalculationAS();
+         
+                ////отключение валидации
+                $.validator.methods.number = function(value, element)
+                {
+                    return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
+                }
+            }).error(function(e)
+            {
+                alert("ошибка кукареку");
+            });
+    }
+
+
+    //выщитывание площади для каждой поверхности
+    function CalculationOfTheArea(j)
+    {
+        var Height = $('[name="[' + j + '].Height"]').val();
+        var Width = $('[name="[' + j + '].Width"]').val();
+
+        if (Height != "" && Width != "")
+        {
+            var Sum = Height * Width;
+
+            $('[name="[' + j + '].Space"]').val(Sum);
+            CalculationAS();
+        }
+    }
 
 
 </script>
+
+
 
 <style>
     .form-horizontal .form-group {
@@ -142,7 +458,7 @@
 
 @using (Html.BeginForm("EditLightDuctDesign", "Data", FormMethod.Post, new { enctype = "multipart/form-data", id = "test1" }))
 {
-    <div class="form-inline" style="display:none">
+    @*<div class="form-inline" style="display:none">
         <div class="form-group">
             <div id="InsertSide">
                 <div class="form-horizontal">
@@ -163,7 +479,7 @@
             </div>
 
         </div>
-    </div>
+    </div>*@
 
     <h3>Общие данные о конструкции</h3>
     @Html.AntiForgeryToken()
@@ -274,67 +590,67 @@
                 </td>
                 <td>
                     @Html.TextBoxFor(model => model.House1, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.House1)                    
+                    @Html.ValidationMessageFor(model => model.House1)
                 </td>
             </tr>
 
         </table>
     </div>
 
-            <div class="form-inline">
-                <hr />
-                <div class="form-group" style="width: 600px; height: 500px;" id="map"></div>
-                <div class="form-group">
-                    <table>
-                        <tr>
-                            <td>
-                                <label for="Bcoord">Широта </label>
-                            </td>
-                            <td>
-                                <input class="text-box single-line form-control" value="@ViewBag.Bcoord" name="Bcoord" id="Bcoord">
+    <div class="form-inline">
+        <hr />
+        <div class="form-group" style="width: 600px; height: 500px;" id="map"></div>
+        <div class="form-group">
+            <table>
+                <tr>
+                    <td>
+                        <label for="Bcoord">Широта </label>
+                    </td>
+                    <td>
+                        <input class="text-box single-line form-control" value="@ViewBag.Bcoord" name="Bcoord" id="Bcoord">
 
-                                <span data-valmsg-for="Bcoord" data-valmsg-replace="true"></span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label for="Hcoord">Долгота</label>
-                            </td>
-                            <td>
-                                <input class="text-box single-line form-control" value="@ViewBag.Hcoord" name="Hcoord" id="Hcoord">
+                        <span data-valmsg-for="Bcoord" data-valmsg-replace="true"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="Hcoord">Долгота</label>
+                    </td>
+                    <td>
+                        <input class="text-box single-line form-control" value="@ViewBag.Hcoord" name="Hcoord" id="Hcoord">
 
-                                @Html.ValidationMessageFor(model => model.coordH)
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
+                        @Html.ValidationMessageFor(model => model.coordH)
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
 
             <h3>Проект ОДД</h3>
             <hr />
-                        <div class="row">
-                            <div class="col-md-1">
+            <div class="row">
+                <div class="col-md-1">
 
-                            </div>
-                        </div>
-    <div class="row">
-        <div class="col-md-2">
+                </div>
+            </div>
+                        <div class="row">
+                            <div class="col-md-2">
                                 <label for="C_PassportAdvertising">№ проекта ОДД</label>
                             </div>
                             <div class="col-md-2">
-                                  @Html.EditorFor(model => model.C_PassportAdvertising, new { htmlattributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.C_PassportAdvertising)
+                                @Html.EditorFor(model => model.C_PassportAdvertising, new { htmlattributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.C_PassportAdvertising)
                             </div>
-        <div class="col-md-2">
-            <label for="DateOfIssue">Дата выдачи проекта ОДД</label>
-        </div>
-        <div class="col-md-2">
-            @Html.TextBoxFor(model => model.DateOfIssue, new {@class = "form-control", @type = "date"})
-            @Html.ValidationMessageFor(model => model.DateOfIssue)
-        </div>
+                            <div class="col-md-2">
+                                <label for="DateOfIssue">Дата выдачи проекта ОДД</label>
+                            </div>
+                            <div class="col-md-2">
+                                @Html.TextBoxFor(model => model.DateOfIssue, new { @class = "form-control", @type = "date" })
+                                @Html.ValidationMessageFor(model => model.DateOfIssue)
+                            </div>
 
 
-    </div>
+                        </div>
                         <div class="row">
                             <div class="col-md-4">
                                 <br />
@@ -421,175 +737,175 @@
                         </div>
 
 
-                         <div class="row" style="margin-top: 15px">
-            <div class="col-md-2">
-                <label for="C_PassportAdvertising">№ паспорта рекламы</label>
-            </div>
-            <div class="col-md-2">
-                @Html.EditorFor(model => model.C_PassportAdvertising, new { htmlattributes = new { @class = "form-control" }})
-                @Html.ValidationMessageFor(model => model.C_PassportAdvertising)
-            </div>
-            <div class="col-md-2">
-                <label for="DateOfTakenPassport">Дата выдачи паспорта</label>
-            </div>
-            <div class="col-md-2">
-                @Html.EditorFor(model => model.DateOfTakenPassport, new { htmlattributes = new { @class = "form-control", @type = "date" }})
-                @Html.ValidationMessageFor(model => model.DateOfTakenPassport)
-            </div>
-        </div>
-
-        <div class="row" style="margin-top: 15px">
-            <div class="col-md-2">
-                <label for="StartDate">разреш с</label>
-            </div>
-            <div class="col-md-2">
-                @Html.EditorFor(model => model.StartDate, new { htmlattributes =new { @class = "form-control", @type = "date" }})
-                @Html.ValidationMessageFor(model => model.StartDate)
-            </div>
-            <div class="col-md-2">
-                <label for="EndDate">разреш по</label>
-            </div>
-            <div class="col-md-2">
-                @Html.EditorFor(model => model.EndDate,new { htmlattributes = new { @class = "form-control", @type = "date" }})
-                @Html.ValidationMessageFor(model => model.EndDate)
-            </div>
-        </div>
-
-
-    <div class="row">
-        <div class="col-md-4">
-            <br/>
-            <label>Скан паспорта (стор 1)</label>
-            <br/>
-            @if (ViewBag.ScanPassport_1Sides)
-            {
-
-                <input type="hidden" name="ScanPassport_1SidesInd" value="setImage">
-                string image = "/Images/ScanPassport_1Sides/" + ViewBag.Id + "ScanPassport_1Sides.jpg";
-                string imgName = ViewBag.Id + "ScanPassport_1Sides.jpg";
-                <img class="closeimg" style="width: 20px" src="../../Content/CloseImg.jpg"/>
-                <div class="fileUpload btn btn-warning input-sm">
-                    <span>&nbsp;&nbsp;Стор.1&nbsp;</span>
-                    <input type="file" class="upload" name="ScanPassport_1Sides" accept="image/jpeg/"/>
-                </div>
-                <label for="ScanPassport_1Sides">@imgName</label>
-                <br/>
-                <br/>
-                <button type="button" style="margin-left: 25px" class="modalPictureTrigger btn btn-default input-sm" data-toggle="modal" onclick="addPic('#ModalPictureDivScan1Side', '@image')" data-target="#ViewModalPictureScan1Side">Показать</button>
-
-            }
-            else
-            {
-
-                <input type="hidden" name="ScanPassport_1SidesInd" value="">
-                <img class="closeimg" style="width: 20px" src="../../Content/CloseImg.jpg"/>
-                <div class="fileUpload btn btn-default input-sm">
-                    <span accept="image/jpeg/">&nbsp;&nbsp;Стор.1&nbsp;</span>
-                    <input type="file" class="upload" name="ScanPassport_1Sides" accept="image/jpeg/"/>
-                </div>
-                <label for="ScanPassport_1Sides">Файл не выбран</label>
-                <br/>
-                <br/>
-            }
-        </div>
-        <div class="col-md-4">
-            <br/>
-            <label>Скан паспорта (стор 2)</label>
-            <br/>
-            @if (ViewBag.ScanPassport_2Sides)
-            {
-
-                <input type="hidden" name="ScanPassport_2SidesInd" value="setImage">
-                string image = "/Images/ScanPassport_2Sides/" + ViewBag.Id + "ScanPassport_2Sides.jpg";
-                string imgName = ViewBag.Id + "Scan2Side.jpg";
-                <img class="closeimg" style="width: 20px" src="../../Content/CloseImg.jpg"/>
-                <div class="fileUpload btn btn-warning input-sm">
-                    <span>&nbsp;&nbsp;Стор.2&nbsp;</span>
-                    <input type="file" class="upload" name="ScanPassport_2Sides" accept="image/jpeg/"/>
-                </div>
-                <label for="ScanPassport_2Sides">@imgName</label>
-                <br/>
-                <br/>
-                <button type="button" style="margin-left: 25px" class="modalPictureTrigger btn btn-default input-sm" data-toggle="modal" onclick="addPic('#ModalPictureDivScan2Side', '@image')" data-target="#ViewModalPictureScan2Side">Показать</button>
-
-            }
-            else
-            {
-
-                <input type="hidden" name="ScanPassport_2SidesInd" value="">
-                <img class="closeimg" style="width: 20px" src="../../Content/CloseImg.jpg"/>
-                <div class="fileUpload btn btn-default input-sm">
-                    <span accept="image/jpeg/">&nbsp;&nbsp;Стор.2&nbsp;</span>
-                    <input type="file" class="upload" name="ScanPassport_2Sides" accept="image/jpeg/"/>
-                </div>
-                <label for="ScanPassport_2Sides">Файл не выбран</label>
-                <br/>
-                <br/>
-            }
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4">
-            <br/>
-            <label>Заявление</label>
-            <br/>
-            @if (ViewBag.Application)
-            {
-
-                <input type="hidden" name="ApplicationInd" value="setImage">
-                string image = "/Images/Application/" + ViewBag.Id + "Application.jpg";
-                string imgName = ViewBag.Id + "Application.jpg";
-                <img class="closeimg" style="width: 20px" src="../../Content/CloseImg.jpg"/>
-                <div class="fileUpload btn btn-warning input-sm">
-                    <span>&nbsp;&nbsp;Стор.1&nbsp;</span>
-                    <input type="file" class="upload" name="Application" accept="image/jpeg/"/>
-                </div>
-                <label for="Application">@imgName</label>
-                <br/>
-                <br/>
-                <button type="button" style="margin-left: 25px" class="modalPictureTrigger btn btn-default input-sm" data-toggle="modal" onclick="addPic('#ModalPictureDivScan1Side', '@image')" data-target="#ViewModalPictureScan1Side">Показать</button>
-
-            }
-            else
-            {
-
-                <input type="hidden" name="ApplicationInd" value="">
-                <img class="closeimg" style="width: 20px" src="../../Content/CloseImg.jpg"/>
-                <div class="fileUpload btn btn-default input-sm">
-                    <span accept="image/jpeg/">&nbsp;&nbsp;Стор.1&nbsp;</span>
-                    <input type="file" class="upload" name="Application" accept="image/jpeg/"/>
-                </div>
-                <label for="Application">Файл не выбран</label>
-                <br/>
-                <br/>
-            }
-        </div>
-    </div>
-
-
-
-                            <div class="form-horizontal">
-
-                                <div class="form-group" style="margin-bottom: 5px">
-                                    <label for="C_ContractFinancialManagement" style="display: none">№ договора с финансовым управлением</label>
-                                    @*@Html.EditorFor(model => model.C_ContractFinancialManagement)
-                                        @Html.ValidationMessageFor(model => model.C_ContractFinancialManagement)*@
-
-                                    <label for="TheDateOfTheContract" style="display: none">Дата договора</label>
-                                    @*@Html.EditorFor(model => model.TheDateOfTheContract)
-                                        @Html.ValidationMessageFor(model => model.TheDateOfTheContract)*@
-
-                                </div>
-
-                                <div class="form-group">
-
-                                    <label for="Scan1SidesWithFinancialManagement" style="display: none">Скан 1 страницы договора с финанаосвым управлением</label>
-                                    <input type="file" name="Scan1SidesWithFinancialManagement" style="display: none" accept="image/jpeg" /><br />
-                                    <span class="field-validation-valid" data-valmsg-for="Scan1SidesWithFinancialManagement" data-valmsg-replace="true" style="display: none"></span>
-                                    @*@Html.Raw("Не более 1 МБ")*@
-
-                                </div>
+                        <div class="row" style="margin-top: 15px">
+                            <div class="col-md-2">
+                                <label for="C_PassportAdvertising">№ паспорта рекламы</label>
                             </div>
+                            <div class="col-md-2">
+                                @Html.EditorFor(model => model.C_PassportAdvertising, new { htmlattributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.C_PassportAdvertising)
+                            </div>
+                            <div class="col-md-2">
+                                <label for="DateOfTakenPassport">Дата выдачи паспорта</label>
+                            </div>
+                            <div class="col-md-2">
+                                @Html.EditorFor(model => model.DateOfTakenPassport, new { htmlattributes = new { @class = "form-control", @type = "date" } })
+                                @Html.ValidationMessageFor(model => model.DateOfTakenPassport)
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-top: 15px">
+                            <div class="col-md-2">
+                                <label for="StartDate">разреш с</label>
+                            </div>
+                            <div class="col-md-2">
+                                @Html.EditorFor(model => model.StartDate, new { htmlattributes = new { @class = "form-control", @type = "date" } })
+                                @Html.ValidationMessageFor(model => model.StartDate)
+                            </div>
+                            <div class="col-md-2">
+                                <label for="EndDate">разреш по</label>
+                            </div>
+                            <div class="col-md-2">
+                                @Html.EditorFor(model => model.EndDate, new { htmlattributes = new { @class = "form-control", @type = "date" } })
+                                @Html.ValidationMessageFor(model => model.EndDate)
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <br />
+                                <label>Скан паспорта (стор 1)</label>
+                                <br />
+                                @if (ViewBag.ScanPassport_1Sides)
+                                {
+
+                                    <input type="hidden" name="ScanPassport_1SidesInd" value="setImage">
+                                    string image = "/Images/ScanPassport_1Sides/" + ViewBag.Id + "ScanPassport_1Sides.jpg";
+                                    string imgName = ViewBag.Id + "ScanPassport_1Sides.jpg";
+                                    <img class="closeimg" style="width: 20px" src="../../Content/CloseImg.jpg" />
+                                    <div class="fileUpload btn btn-warning input-sm">
+                                        <span>&nbsp;&nbsp;Стор.1&nbsp;</span>
+                                        <input type="file" class="upload" name="ScanPassport_1Sides" accept="image/jpeg/" />
+                                    </div>
+                                    <label for="ScanPassport_1Sides">@imgName</label>
+                                    <br />
+                                    <br />
+                                    <button type="button" style="margin-left: 25px" class="modalPictureTrigger btn btn-default input-sm" data-toggle="modal" onclick="addPic('#ModalPictureDivScan1Side', '@image')" data-target="#ViewModalPictureScan1Side">Показать</button>
+
+                                }
+                                else
+                                {
+
+                                    <input type="hidden" name="ScanPassport_1SidesInd" value="">
+                                    <img class="closeimg" style="width: 20px" src="../../Content/CloseImg.jpg" />
+                                    <div class="fileUpload btn btn-default input-sm">
+                                        <span accept="image/jpeg/">&nbsp;&nbsp;Стор.1&nbsp;</span>
+                                        <input type="file" class="upload" name="ScanPassport_1Sides" accept="image/jpeg/" />
+                                    </div>
+                                    <label for="ScanPassport_1Sides">Файл не выбран</label>
+                                    <br />
+                                    <br />
+                                }
+                            </div>
+                            <div class="col-md-4">
+                                <br />
+                                <label>Скан паспорта (стор 2)</label>
+                                <br />
+                                @if (ViewBag.ScanPassport_2Sides)
+                                {
+
+                                    <input type="hidden" name="ScanPassport_2SidesInd" value="setImage">
+                                    string image = "/Images/ScanPassport_2Sides/" + ViewBag.Id + "ScanPassport_2Sides.jpg";
+                                    string imgName = ViewBag.Id + "Scan2Side.jpg";
+                                    <img class="closeimg" style="width: 20px" src="../../Content/CloseImg.jpg" />
+                                    <div class="fileUpload btn btn-warning input-sm">
+                                        <span>&nbsp;&nbsp;Стор.2&nbsp;</span>
+                                        <input type="file" class="upload" name="ScanPassport_2Sides" accept="image/jpeg/" />
+                                    </div>
+                                    <label for="ScanPassport_2Sides">@imgName</label>
+                                    <br />
+                                    <br />
+                                    <button type="button" style="margin-left: 25px" class="modalPictureTrigger btn btn-default input-sm" data-toggle="modal" onclick="addPic('#ModalPictureDivScan2Side', '@image')" data-target="#ViewModalPictureScan2Side">Показать</button>
+
+                                }
+                                else
+                                {
+
+                                    <input type="hidden" name="ScanPassport_2SidesInd" value="">
+                                    <img class="closeimg" style="width: 20px" src="../../Content/CloseImg.jpg" />
+                                    <div class="fileUpload btn btn-default input-sm">
+                                        <span accept="image/jpeg/">&nbsp;&nbsp;Стор.2&nbsp;</span>
+                                        <input type="file" class="upload" name="ScanPassport_2Sides" accept="image/jpeg/" />
+                                    </div>
+                                    <label for="ScanPassport_2Sides">Файл не выбран</label>
+                                    <br />
+                                    <br />
+                                }
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <br />
+                                <label>Заявление</label>
+                                <br />
+                                @if (ViewBag.Application)
+                                {
+
+                                    <input type="hidden" name="ApplicationInd" value="setImage">
+                                    string image = "/Images/Application/" + ViewBag.Id + "Application.jpg";
+                                    string imgName = ViewBag.Id + "Application.jpg";
+                                    <img class="closeimg" style="width: 20px" src="../../Content/CloseImg.jpg" />
+                                    <div class="fileUpload btn btn-warning input-sm">
+                                        <span>&nbsp;&nbsp;Стор.1&nbsp;</span>
+                                        <input type="file" class="upload" name="Application" accept="image/jpeg/" />
+                                    </div>
+                                    <label for="Application">@imgName</label>
+                                    <br />
+                                    <br />
+                                    <button type="button" style="margin-left: 25px" class="modalPictureTrigger btn btn-default input-sm" data-toggle="modal" onclick="addPic('#ModalPictureDivScan1Side', '@image')" data-target="#ViewModalPictureScan1Side">Показать</button>
+
+                                }
+                                else
+                                {
+
+                                    <input type="hidden" name="ApplicationInd" value="">
+                                    <img class="closeimg" style="width: 20px" src="../../Content/CloseImg.jpg" />
+                                    <div class="fileUpload btn btn-default input-sm">
+                                        <span accept="image/jpeg/">&nbsp;&nbsp;Стор.1&nbsp;</span>
+                                        <input type="file" class="upload" name="Application" accept="image/jpeg/" />
+                                    </div>
+                                    <label for="Application">Файл не выбран</label>
+                                    <br />
+                                    <br />
+                                }
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-horizontal">
+
+                            <div class="form-group" style="margin-bottom: 5px">
+                                <label for="C_ContractFinancialManagement" style="display: none">№ договора с финансовым управлением</label>
+                                @*@Html.EditorFor(model => model.C_ContractFinancialManagement)
+                                    @Html.ValidationMessageFor(model => model.C_ContractFinancialManagement)*@
+
+                                <label for="TheDateOfTheContract" style="display: none">Дата договора</label>
+                                @*@Html.EditorFor(model => model.TheDateOfTheContract)
+                                    @Html.ValidationMessageFor(model => model.TheDateOfTheContract)*@
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <label for="Scan1SidesWithFinancialManagement" style="display: none">Скан 1 страницы договора с финанаосвым управлением</label>
+                                <input type="file" name="Scan1SidesWithFinancialManagement" style="display: none" accept="image/jpeg" /><br />
+                                <span class="field-validation-valid" data-valmsg-for="Scan1SidesWithFinancialManagement" data-valmsg-replace="true" style="display: none"></span>
+                                @*@Html.Raw("Не более 1 МБ")*@
+
+                            </div>
+                        </div>
 
                             <h3>Описание конструкции</h3>
                             <div class="form-inline" style="display: none">
@@ -654,49 +970,52 @@
                                 </div>
                             </div>
 
-
-
                             <div class="form-horizontal" style="margin-top: 18px">
                                 <div class="form-group">
+                                    <div class="form-group">
+                                        <label for="CountSizes">Количество сторон</label>
+                                        @Html.DropDownList("CountSizes", new SelectList(new[] { "", "1", "2" }, Model.Sides.Count.ToString()), new { onchange = "SetCountSize()", @class = "form-control", style = "width: 60px" })
+                                        <span class="field-validation-validr" data-valmsg-for="CountSizes" data-valmsg-replace="true">
+                                        </span>
+                                    </div>
+                                    @*<div class="body-content" style="margin-top: 40px">
 
-                                    <div class="body-content" style="margin-top: 40px">
+                                            <div side="1">
+                                                <input name="[0].SideOfSurface" value="1" type="hidden">
 
-                                        <div side="1">
-                                            <input name="[0].SideOfSurface" value="1" type="hidden">
+                                                <div class="form-inline">
 
-                                            <div class="form-inline">
+                                                    <div class="form-group has-feedback">
 
-                                                <div class="form-group has-feedback">
+                                                        <input name="[0].NumberSurface" value="1" type="hidden">
 
-                                                    <input name="[0].NumberSurface" value="1" type="hidden">
+                                                        <label for="[0].Height">Высота</label>
 
-                                                    <label for="[0].Height">Высота</label>
+                                                        @Html.EditorFor(model => model.Sides.FirstOrDefault().Surfaces.FirstOrDefault().Height, new { htmlAttributes = new { @class = "form-control", type = "number", Name = "[0].Height", id = "SHeight" } })
 
-                                                    @Html.EditorFor(model => model.Sides.FirstOrDefault().Surfaces.FirstOrDefault().Height, new { htmlAttributes = new { @class = "form-control", type = "number", Name = "[0].Height", id = "SHeight" } })
+                                                        <span class="glyphicon form-control-feedback"></span>
+                                                    </div>
+                                                    <div class="form-group has-feedback" style="margin-left: 20px">
+                                                        <label for="[0].Width">Ширина</label>
 
-                                                    <span class="glyphicon form-control-feedback"></span>
+                                                        @Html.EditorFor(model => model.Sides.FirstOrDefault().Surfaces.FirstOrDefault().Width, new { htmlAttributes = new { @class = "form-control", type = "number", Name = "[0].Width", id = "Width" } })
+
+                                                        <span class="glyphicon form-control-feedback"></span>
+                                                    </div>
+                                                    <div class="form-group has-feedback" style="margin-left: 20px">
+                                                        <label for="[0].Space">Площадь</label>
+
+                                                        @Html.TextBoxFor(model => model.Sides.FirstOrDefault().Surfaces.FirstOrDefault().Space, new { @class = "form-control", Name = "[0].Space", @readonly = "readonly" })
+
+                                                        <span class="glyphicon form-control-feedback"></span>
+                                                    </div>
                                                 </div>
-                                                <div class="form-group has-feedback" style="margin-left: 20px">
-                                                    <label for="[0].Width">Ширина</label>
 
-                                                    @Html.EditorFor(model => model.Sides.FirstOrDefault().Surfaces.FirstOrDefault().Width, new { htmlAttributes = new { @class = "form-control", type = "number", Name = "[0].Width", id = "Width" } })
-
-                                                    <span class="glyphicon form-control-feedback"></span>
-                                                </div>
-                                                <div class="form-group has-feedback" style="margin-left: 20px">
-                                                    <label for="[0].Space">Площадь</label>
-
-                                                    @Html.TextBoxFor(model => model.Sides.FirstOrDefault().Surfaces.FirstOrDefault().Space, new { @class = "form-control", Name = "[0].Space", @readonly = "readonly" })
-
-                                                    <span class="glyphicon form-control-feedback"></span>
-                                                </div>
                                             </div>
 
-                                        </div>
-
-                                    </div>
+                                        </div>*@
                                 </div>
-
+                                <div id="InsertSide"></div>
                                 <div class="form-group">
                                     <div class="col-md-offset-2 col-md-10">
                                         <input type="submit" value="Сохранить" class="btn btn-default" style="margin: 30px" />
