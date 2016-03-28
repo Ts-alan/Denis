@@ -392,6 +392,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\Application\5295Application.jpg" />
     <Content Include="Images\bx_loader.gif" />
     <Content Include="Images\controls.png" />
     <Content Include="Images\ONCLOUD logo site.png" />

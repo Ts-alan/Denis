@@ -720,7 +720,6 @@ namespace Sciencecom.Controllers
             HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides,
             [ModelBinder(typeof(CustomModelBinderForPicsForAD))] Dictionary<string, HttpPostedFileBase> photos,
             HttpPostedFileBase Application,
-             
             HttpPostedFileBase scan1Side, HttpPostedFileBase scan2Side,
             string Bcoord, string Hcoord, int countSize = 1)
         {
@@ -752,7 +751,6 @@ namespace Sciencecom.Controllers
             {
                 i.Side_Id = sides.Single(a => a.Name == i.SideOfSurface).Id;
                 listSurface.Add(i);
-
             }
             _context.Surfaces.AddRange(listSurface);
 
@@ -767,12 +765,12 @@ namespace Sciencecom.Controllers
 
             SavePic(id, "Scan2Side", scan2Side);
 
+            SavePic(id, "Application", Application);
+
             foreach (var photo in photos)
             {
                 _phw.SavePic(id, photo.Key + "photo", photo.Value);
             }
-
-            SavePic(structures.Id_show.ToString(), "Application", Application);
 
             return RedirectToAction("AdvertisingDesign");
         }
@@ -881,7 +879,7 @@ namespace Sciencecom.Controllers
             ValidatePic(ScanPassport_2Sides, ScanPassport_2SidesInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "ScanPassport_2Sides");
             ValidatePic(scan1Side, scan1SideInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "Scan1Side");
             ValidatePic(scan2Side, scan2SideInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "Scan2Side");
-            ValidatePic(scan2Side, scan2SideInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "Application");
+            ValidatePic(Application, ApplicationInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "Application");
 
             foreach (var photo in photos)
             {
