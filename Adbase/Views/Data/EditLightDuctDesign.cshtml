@@ -15,9 +15,7 @@
     var ViewBids = new SciencecomEntities().ViewBids.OrderBy(a => a.OrderBy).ToList();
 
 
-    //Элемент улично-дорожной сети
-    var ListTypeElementOfTheRoadNetworkName = new SciencecomEntities().TheElementOfTheRoadNetworks.Select(a => new { id = a.id, Value = a.TheElementOfTheRoadNetworkName }).ToList();
-
+    Session["IdShow"] = Model.Id_show;
     //Статус
     var Status = new SciencecomEntities().Status.OrderBy(x => x.OrderByStatus).Select(a => new { id = a.id, Value = a.NameStatus }).ToList();
     Status.Insert(0, null);
@@ -35,11 +33,8 @@
 
     //Подсветка
     //var ContentInformationDescription = new SciencecomEntities().Backlights.ToList();
-     
-    //Направление стороны
-    var DirectionSide = new SciencecomEntities().DirectionSides.OrderBy(x=>x.OrderBY).ToList();
-    //Индификация поверхности
-    var IdentificationSide = new SciencecomEntities().Identifications.ToList();
+
+
 
 }
 
@@ -407,7 +402,7 @@
     function EditSurface(i)
     {
         SetValidate(i);
-
+       
         $.ajax('@Url.Action("AddSurface", "Data")', { async: true, data: { side: i, StartCountForSurface: StartCountForSurface, EndCountForSurface: EndCountForSurface } })
             .success(function(e)
             {
@@ -452,28 +447,7 @@
 
 @using (Html.BeginForm("EditLightDuctDesign", "Data", FormMethod.Post, new { enctype = "multipart/form-data", id = "test1" }))
 {
-    @*<div class="form-inline" style="display:none">
-        <div class="form-group">
-            <div id="InsertSide">
-                <div class="form-horizontal">
-                    <div class="form-group">
-                        <select class="text-box single-line" id="AddButton1" name="CountSurfuce1" identificationforcountside="" type="text" data-val="true" data-val-required="Укажите кол-во сторон">
-                            <option selected="selected">1</option>
-                        </select>
-                        <select identificationforidentificationsurface="IdentificationForIdentificationSurface" true="" data-val-required="Выберете" id="IdentificationSurface" name="[0].IdentificationForIdentificationSurface">
-                            <option value=""></option>
-                            <option selected="selected" value="4610cf49-0360-4edb-9f05-752f7d574dcc">Вертикальная</option>
-                            <option value="95ee0238-134f-4a5c-a9ec-a9f0f02c2c75">Горизонтальная </option>
-                        </select>
-                        <select class="valid" identificationfordirectionside="IdentificationForDirectionSide" id="DirectionSide" name="[0].IdentificationForDirectionSide">
-                            <option value="27b8c509-8f09-4a0d-ae22-048c2611b7ea" selected="selected">По ходу движения (сторона А)</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
 
-        </div>
-    </div>*@
 
     <h3>Общие данные о конструкции</h3>
     @Html.AntiForgeryToken()
