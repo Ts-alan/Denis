@@ -206,6 +206,7 @@
     //Добавить поверхность+
     function AddSurface(i)
     {
+       
         SetValidate(i);
 
         $.ajax('@Url.Action("EditSurface", "Data")', { async: true, data: { side: i, StartCountForSurface: StartCountForSurface, EndCountForSurface: EndCountForSurface } })
