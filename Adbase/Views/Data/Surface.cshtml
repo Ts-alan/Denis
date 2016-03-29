@@ -48,7 +48,7 @@
                         }
                         @if (listOfNames != null && listOfNames.Any(x => x.Contains(photoName)))
                         {
-                            string image = "/Images/photo1/[" + ViewBag.Side + "](" + @j + ")photo" + Model[0].Side.AdvertisingStructure.Id_show + ".jpg";
+                            string image = "/Images/photo1/[" + ViewBag.Side + "](" + @j + ")photo" + Session["IdShow"] + ".jpg";
                             string imgName = "[" + ViewBag.Side + "](" + @j + ")photo.jpg";
                             <input type="hidden" name="PhotoInd[@{@ViewBag.Side}](@j)" value="setImage">
                             <img class="closeimg" style="width: 20px" src="../../Content/CloseImg.jpg"/>
