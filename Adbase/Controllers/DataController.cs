@@ -787,10 +787,8 @@ namespace Sciencecom.Controllers
             ValidatePic(scan2Side, scan2SideInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "Scan2Side");
             ValidatePic(Application, ApplicationInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "Application");
 
-            foreach (var photo in photos)
-            {
-                _phw.ValidatePic(photos, picIndexes, structures.Id_show.ToString(), mc.Id_show.ToString());
-            }
+            _phw.ValidatePic(photos, picIndexes, structures.Id_show.ToString(), mc.Id_show.ToString());
+       
 
             return RedirectToAction((string)Session["action"], (string)Session["controller"]);
 

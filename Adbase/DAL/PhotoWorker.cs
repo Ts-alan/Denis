@@ -45,7 +45,8 @@ namespace Sciencecom.DAL
         {
             foreach (KeyValuePair<string, HttpPostedFileBase> photo in photos)
             {
-                //var d = ;
+
+                
                 if (photo.Value != null & picIndexes.SingleOrDefault( x => x.Key.Contains(photo.Key)).Value == "setImage")
                 {
                     SavePic(structureId, photo.Key+"photo" , photo.Value);
@@ -64,6 +65,7 @@ namespace Sciencecom.DAL
                 }
                 if (photo.Value == null & picIndexes.SingleOrDefault(x => x.Key.Contains(photo.Key)).Value == "")
                 {
+                 
                     DeletePic(photo.Key, oldstructureId);
                 }
             }
