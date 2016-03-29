@@ -131,8 +131,8 @@ namespace Sciencecom.Controllers
             ViewBag.EndCountForSurface = endCountForSurface ?? 1;
             ViewBag.StartCountForSurface = startCountForSurface ?? 0;
             ViewBag.Side = side;
-            var result = TempData.Peek("surface");
-            
+            var tempRresult = (List<Side>)TempData.Peek("sides");
+            var result = tempRresult[int.Parse(side) - 1].Surfaces.ToList();
             return View("Surface", result);
         }
 
@@ -238,20 +238,22 @@ namespace Sciencecom.Controllers
             {
                 mc.Sides.Add(new Side() { DirectionSide_id = new Guid("27b8c509-8f09-4a0d-ae22-048c2611b7ea") });
             }
-            foreach (var sides in mc.Sides.OrderBy(a => a.Name))
+           
+            foreach (var side in mc.Sides.OrderBy(a => a.Name))
             {
-                foreach (var surface in sides.Surfaces)
+                foreach (var surface in side.Surfaces)
                 {
                     surfaces.Add(surface);
                 }
+                
             }
             
             if (surfaces.Count == 0)
             {
-                surfaces.Add(new Surface() {}
-                    );
+                surfaces.Add(new Surface() {});
             }
             TempData["surface"] = surfaces;
+            TempData["sides"] = mc.Sides.ToList();
             ViewBag.Bcoord = mc.coordB;
             ViewBag.Hcoord = mc.coordH;
             int idShow = mc.Id_show;
@@ -344,7 +346,6 @@ namespace Sciencecom.Controllers
             }
 
             //картики
-
             ValidatePic(ScanPassport_1Sides, photoInd1, structures.Id_show.ToString(), mc.Id_show.ToString(), "ScanPassport_1Sides");
             ValidatePic(ScanPassport_2Sides, photoInd2, structures.Id_show.ToString(), mc.Id_show.ToString(), "ScanPassport_2Sides");
 
@@ -423,8 +424,7 @@ namespace Sciencecom.Controllers
             ViewBag.SeizesCount = 1;
             return View();
         }
-
-
+        
         [Authorize]
         [HttpPost]
         public ActionResult CreateMetalPointerDesign(AdvertisingStructure structures,
@@ -468,8 +468,6 @@ namespace Sciencecom.Controllers
         [HttpGet]
         public ActionResult EditMetalPointerDesign(int? id)
         {
-         
-
             
             if (id == null)
             {
@@ -596,10 +594,7 @@ namespace Sciencecom.Controllers
                 }
             }
             TempData["surface"] = surfaces;
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+
             switch (type)
             {
                 case "LD":
@@ -833,7 +828,6 @@ namespace Sciencecom.Controllers
                         ViewBag.photo1 = LoadPic(data.Id_show.ToString(), "photo1");
 
                         ViewBag.photo2 = LoadPic(data.Id_show.ToString(), "photo2");
-
                     }
                     break;
 
@@ -841,7 +835,6 @@ namespace Sciencecom.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             }
-
             
             return View(data);
         }
@@ -970,8 +963,6 @@ namespace Sciencecom.Controllers
             }
             base.Dispose(disposing);
         }
-
-       
     }
 }
 
