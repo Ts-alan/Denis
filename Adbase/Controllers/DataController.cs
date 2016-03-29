@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -157,10 +158,7 @@ namespace Sciencecom.Controllers
                 }
             }
             TempData["surface"] = surfaces;
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+
             switch (type)
             {
                 case "BB":
@@ -206,43 +204,47 @@ namespace Sciencecom.Controllers
         {
             Guid structuresId = Guid.NewGuid();
             structures.Id = structuresId;
-            //удаление временно номера из базы данных
-            if (_context.ListUniqueNumbers.Any(a => a.UniqueNumber == structures.UniqueNumber))
-            {
-                _context.ListUniqueNumbers.RemoveRange(
-                    _context.ListUniqueNumbers.Where(x => x.UniqueNumber == structures.UniqueNumber));
-            }
             structures = ValidateCoords(structures, Bcoord, Hcoord);
 
-            if (countSize > 0)
-            {
-                for (int j = 0; j < countSize; j++)
-                {
-                    sides[j].AdvertisingStructures_Id = structuresId;
-                    sides[j].Name = (j + 1).ToString();
-                    sides[j].Id = Guid.NewGuid();
-                }
+            _dbw.CreateAdvertisingDesign(structures, sides, surfaces, countSize);
 
-                _context.Sides.AddRange(sides);
-                structures.Area = CountSquare(surfaces);
-                _context.AdvertisingStructures.Add(structures);
-                List<Surface> listSurface = new List<Surface>();
-                foreach (var i in surfaces)
-                {
-                    i.Side_Id = sides.Single(a => a.Name == i.SideOfSurface).Id;
-                    listSurface.Add(i);
-                }
+            #region Закоменченая часть
+            //if (_context.ListUniqueNumbers.Any(a => a.UniqueNumber == structures.UniqueNumber))
+            //{
+            //    _context.ListUniqueNumbers.RemoveRange(
+            //        _context.ListUniqueNumbers.Where(x => x.UniqueNumber == structures.UniqueNumber));
+            //}
 
-                _context.Surfaces.AddRange(listSurface);
+            //if (countSize > 0)
+            //{
+            //    for (int j = 0; j < countSize; j++)
+            //    {
+            //        sides[j].AdvertisingStructures_Id = structuresId;
+            //        sides[j].Name = (j + 1).ToString();
+            //        sides[j].Id = Guid.NewGuid();
+            //    }
 
-                _context.SaveChanges();
-            }
-            else
-            {
-                structures.Area = CountSquare(surfaces);
-                _context.AdvertisingStructures.Add(structures);
-                _context.SaveChanges();
-            }
+            //    _context.Sides.AddRange(sides);
+            //    structures.Area = CountSquare(surfaces);
+            //    _context.AdvertisingStructures.Add(structures);
+            //    List<Surface> listSurface = new List<Surface>();
+            //    foreach (var i in surfaces)
+            //    {
+            //        i.Side_Id = sides.Single(a => a.Name == i.SideOfSurface).Id;
+            //        listSurface.Add(i);
+            //    }
+
+            //    _context.Surfaces.AddRange(listSurface);
+
+            //    _context.SaveChanges();
+            //}
+            //else
+            //{
+            //    structures.Area = CountSquare(surfaces);
+            //    _context.AdvertisingStructures.Add(structures);
+            //    _context.SaveChanges();
+            //}
+            #endregion
 
             SavePic(structures.Id_show.ToString(), "ScanPassport_1Sides", ScanPassport_1Sides);
 
@@ -473,16 +475,6 @@ namespace Sciencecom.Controllers
             string Bcoord, string Hcoord,
             int countSize = 1)
         {
-
-            Guid structuresId = Guid.NewGuid();
-            structures.Id = structuresId;
-            //удаление временно номера из базы данных
-            if (_context.ListUniqueNumbers.Any(a => a.UniqueNumber == structures.UniqueNumber))
-            {
-                _context.ListUniqueNumbers.RemoveRange(
-                    _context.ListUniqueNumbers.Where(x => x.UniqueNumber == structures.UniqueNumber));
-
-            }
             if (structures.Code == null)
             {
                 structures.Code = "MP";
@@ -491,30 +483,52 @@ namespace Sciencecom.Controllers
             {
                 sides.Add(new Side() { DirectionSide_id = new Guid("27b8c509-8f09-4a0d-ae22-048c2611b7ea") });
             }
+            Guid structuresId = Guid.NewGuid();
+            structures.Id = structuresId;
+            _dbw.CreateAdvertisingDesign(structures, sides, surfaces, countSize);
 
-            for (int j = 0; j < countSize; j++)
-            {
+            #region закомменченая часть
+            ////удаление временно номера из базы данных
+            //if (_context.ListUniqueNumbers.Any(a => a.UniqueNumber == structures.UniqueNumber))
+            //{
+            //    _context.ListUniqueNumbers.RemoveRange(
+            //        _context.ListUniqueNumbers.Where(x => x.UniqueNumber == structures.UniqueNumber));
 
-                sides[j].AdvertisingStructures_Id = structuresId;
-                sides[j].Name = (j + 1).ToString();
-                sides[j].Id = Guid.NewGuid();
-            }
+            //}
+            //if (structures.Code == null)
+            //{
+            //    structures.Code = "MP";
+            //}
+            //if (sides.Count == 0)
+            //{
+            //    sides.Add(new Side() { DirectionSide_id = new Guid("27b8c509-8f09-4a0d-ae22-048c2611b7ea") });
+            //}
 
-            _context.Sides.AddRange(sides);
-            structures.Area = CountSquare(surfaces);
-             structures = ValidateCoords(structures, Bcoord, Hcoord);
+            //for (int j = 0; j < countSize; j++)
+            //{
 
-            _context.AdvertisingStructures.Add(structures);
-            List<Surface> listSurface = new List<Surface>();
-            foreach (var i in surfaces)
-            {
-                i.Side_Id = sides.Single(a => a.Name == i.SideOfSurface).Id;
-                listSurface.Add(i);
+            //    sides[j].AdvertisingStructures_Id = structuresId;
+            //    sides[j].Name = (j + 1).ToString();
+            //    sides[j].Id = Guid.NewGuid();
+            //}
 
-            }
-            _context.Surfaces.AddRange(listSurface);
+            //_context.Sides.AddRange(sides);
+            //structures.Area = CountSquare(surfaces);
+            //structures = ValidateCoords(structures, Bcoord, Hcoord);
 
-            _context.SaveChanges();
+            //_context.AdvertisingStructures.Add(structures);
+            //List<Surface> listSurface = new List<Surface>();
+            //foreach (var i in surfaces)
+            //{
+            //    i.Side_Id = sides.Single(a => a.Name == i.SideOfSurface).Id;
+            //    listSurface.Add(i);
+
+            //}
+            //_context.Surfaces.AddRange(listSurface);
+
+            //_context.SaveChanges();
+            #endregion
+
 
             SavePic(structures.Id_show.ToString(), "Scan1SidesWithFinancialManagement", scan1SidesWithFinancialManagement);
 
@@ -728,36 +742,43 @@ namespace Sciencecom.Controllers
 
             Guid structuresId = Guid.NewGuid();
             structures.Id = structuresId;
-            //удаление временно номера из базы данных
-            if (_context.ListUniqueNumbers.Any(a => a.UniqueNumber == structures.UniqueNumber))
-            {
-                _context.ListUniqueNumbers.RemoveRange(
-                    _context.ListUniqueNumbers.Where(x => x.UniqueNumber == structures.UniqueNumber));
-
-            }
-
-            for (int j = 0; j < countSize; j++)
-            {
-                sides[j].AdvertisingStructures_Id = structuresId;
-                sides[j].Name = (j + 1).ToString();
-                sides[j].Id = Guid.NewGuid();
-            }
-
-            _context.Sides.AddRange(sides);
-            structures.Area = CountSquare(surfaces);
             structures = ValidateCoords(structures, Bcoord, Hcoord);
-
-            _context.AdvertisingStructures.Add(structures);
-            List<Surface> listSurface = new List<Surface>();
-            foreach (var i in surfaces)
-            {
-                i.Side_Id = sides.Single(a => a.Name == i.SideOfSurface).Id;
-                listSurface.Add(i);
-            }
-            _context.Surfaces.AddRange(listSurface);
-
-            _context.SaveChanges();
             string id = structures.Id_show.ToString();
+            _dbw.CreateAdvertisingDesign(structures, sides, surfaces, countSize);
+
+            #region закоменченная часть
+
+            ////удаление временно номера из базы данных
+            //if (_context.ListUniqueNumbers.Any(a => a.UniqueNumber == structures.UniqueNumber))
+            //{
+            //    _context.ListUniqueNumbers.RemoveRange(
+            //        _context.ListUniqueNumbers.Where(x => x.UniqueNumber == structures.UniqueNumber));
+
+            //}
+
+            //for (int j = 0; j < countSize; j++)
+            //{
+            //    sides[j].AdvertisingStructures_Id = structuresId;
+            //    sides[j].Name = (j + 1).ToString();
+            //    sides[j].Id = Guid.NewGuid();
+            //}
+
+            //_context.Sides.AddRange(sides);
+            //structures.Area = CountSquare(surfaces);
+
+
+            //_context.AdvertisingStructures.Add(structures);
+            //List<Surface> listSurface = new List<Surface>();
+            //foreach (var i in surfaces)
+            //{
+            //    i.Side_Id = sides.Single(a => a.Name == i.SideOfSurface).Id;
+            //    listSurface.Add(i);
+            //}
+            //_context.Surfaces.AddRange(listSurface);
+
+            //_context.SaveChanges();
+            #endregion
+
 
             SavePic(id, "ScanPassport_1Sides", ScanPassport_1Sides);
 

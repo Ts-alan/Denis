@@ -371,7 +371,7 @@
         </div>
 
         <div class="form-group">
-            <label for="UniqueNumber">Идентификационный номер</label>
+            <label for="uniqueNumber">Идентификационный номер</label>
             @Html.EditorFor(model=>model.UniqueNumber, new { htmlattributes = new { @class = "form-control", @readonly = "readonly" }})
             @Html.ValidationMessageFor(model => model.UniqueNumber)
         </div>
@@ -523,23 +523,23 @@
         </div>
  <div class="row" style="margin-top: 15px">
         <div class="col-md-4">
-            <label for="ScanPassport_1Sides">Скан паспорта (стор 1)</label>
+            <label for="scanPassport1Sides">Скан паспорта (стор 1)</label>
         </div>
         <div class="col-md-4">
-            <label for="ScanPassport_2Sides">Скан паспорта (стор 2)</label>
+            <label for="scanPassport2Sides">Скан паспорта (стор 2)</label>
         </div>
     </div>
      <div class="row" style="margin-top: 15px">
     <div class="col-md-4">
         @if (ViewBag.photo1)
         {
-            string image = "/Images/ScanPassport_1Sides/" + ViewBag.Id + "ScanPassport_1Sides.jpg";
-            string imgName = ViewBag.Id + "ScanPassport_1Sides.jpg";
+            string image = "/Images/scanPassport1Sides/" + ViewBag.Id + "scanPassport1Sides.jpg";
+            string imgName = ViewBag.Id + "scanPassport1Sides.jpg";
             <input type="hidden" name="PhotoInd1" value="setImage">
             <img class="closeimg" style="width: 20px" src="../../Content/CloseImg.jpg"/>
             <div class="fileUpload btn btn-warning input-sm">
                 <span>&nbsp;&nbsp;Фото 1&nbsp;</span>
-                <input type="file" class="upload" name="ScanPassport_1Sides" accept="image/jpeg/"/>
+                <input type="file" class="upload" name="scanPassport1Sides" accept="image/jpeg/"/>
             </div>
             <label for="photo1">@imgName</label>
             <br/>
@@ -553,9 +553,9 @@
             <img class="closeimg" style="width: 20px" src="../../Content/CloseImg.jpg"/>
             <div class="fileUpload btn btn-default input-sm">
                 <span accept="image/jpeg/">&nbsp;Стор. 1&nbsp;</span>
-                <input type="file" class="upload" name="ScanPassport_1Sides" accept="image/jpeg/"/>
+                <input type="file" class="upload" name="scanPassport1Sides" accept="image/jpeg/"/>
             </div>
-            <label for="ScanPassport_1Sides">Файл не выбран</label>
+            <label for="scanPassport1Sides">Файл не выбран</label>
             <br/>
             <br/>
         }
@@ -563,13 +563,13 @@
          <div class="col-md-4">
              @if (ViewBag.photo2)
              {
-                 string image = "/Images/ScanPassport_2Sides/" + ViewBag.Id + "ScanPassport_2Sides.jpg";
-                 string imgName = ViewBag.Id + "ScanPassport_1Sides.jpg";
+                 string image = "/Images/scanPassport2Sides/" + ViewBag.Id + "scanPassport2Sides.jpg";
+                 string imgName = ViewBag.Id + "scanPassport1Sides.jpg";
                  <input type="hidden" name="PhotoInd2" value="setImage">
                  <img class="closeimg" style="width: 20px" src="../../Content/CloseImg.jpg"/>
                  <div class="fileUpload btn btn-warning input-sm">
                      <span>&nbsp;&nbsp;Фото 1&nbsp;</span>
-                     <input type="file" class="upload" name="ScanPassport_2Sides" accept="image/jpeg/"/>
+                     <input type="file" class="upload" name="scanPassport2Sides" accept="image/jpeg/"/>
                  </div>
                  <label for="photo1">@imgName</label>
                  <br/>
@@ -583,9 +583,9 @@
                  <img class="closeimg" style="width: 20px" src="../../Content/CloseImg.jpg"/>
                  <div class="fileUpload btn btn-default input-sm">
                      <span accept="image/jpeg/">&nbsp;Стор. 2&nbsp;</span>
-                     <input type="file" class="upload" name="ScanPassport_2Sides" accept="image/jpeg/"/>
+                     <input type="file" class="upload" name="scanPassport2Sides" accept="image/jpeg/"/>
                  </div>
-                 <label for="ScanPassport_2Sides">Файл не выбран</label>
+                 <label for="scanPassport2Sides">Файл не выбран</label>
                  <br/>
                  <br/>
              }

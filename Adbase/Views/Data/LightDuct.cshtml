@@ -240,7 +240,7 @@
         </div>
 
         <div class="form-group">
-            <label for="UniqueNumber">Идентификационный номер</label>
+            <label for="uniqueNumber">Идентификационный номер</label>
             @Html.EditorFor(model => model.UniqueNumber, new { htmlAttributes = new { @readonly = "", @class = " form-control" } })
 
         </div>
@@ -462,7 +462,7 @@
                     <p>
                         <h3>@Html.Raw("Скан паспорта (стор 1) ")</h3><br />
                     </p>
-                    string image = "/Images/ScanPassport_1Sides/" + ViewBag.Id + "ScanPassport_1Sides.jpg";
+                    string image = "/Images/scanPassport1Sides/" + ViewBag.Id + "scanPassport1Sides.jpg";
                     <p>
                         <a href=@image><img src=@image height="500"></a><br />
                     </p>
@@ -476,7 +476,7 @@
                     <p>
                         <h3>@Html.Raw("Скан паспорта (стор 1) ")</h3><br />
                     </p>
-                    string image = "/Images/ScanPassport_2Sides/" + ViewBag.Id + "ScanPassport_2Sides.jpg";
+                    string image = "/Images/scanPassport2Sides/" + ViewBag.Id + "scanPassport2Sides.jpg";
                     <p>
                         <a href=@image><img src=@image height="500"></a><br />
                     </p>
