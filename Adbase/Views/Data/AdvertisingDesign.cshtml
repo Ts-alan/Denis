@@ -25,6 +25,7 @@
     $(document).ready(function ()
     {
 
+        
         //функция для добавления новых параметров поиска и обновления таблицы
         $("#searchStartDateRange").click(function ()
         {
@@ -118,8 +119,8 @@
                 { name: "Ближайшая_по_ходу", align: "center" },
                 { name: "Дом", align: "center" },
                 { name: "Номер_опоры", align: "center" },
-                { name: "Разреш_с", align: "center", searchoptions:{dataInit:function(el){$(el).datepicker({dateFormat:'yy/mm/dd'}).change(function(){$("#table")[0].triggerToolbar();});} }},
-                { name: "Разреш_по", align: "center" , searchoptions:{dataInit:function(el){$(el).datepicker({dateFormat:'yy/mm/dd'}).change(function(){$("#table")[0].triggerToolbar();});} } },
+                { name: "Разреш_с", align: "center", searchoptions:{dataInit:function(el){$(el).datepicker({dateFormat:'yy/mm/dd', changeMonth: true, changeYear: true}).change(function(){$("#table")[0].triggerToolbar();});} }},
+                { name: "Разреш_по", align: "center" , searchoptions:{dataInit:function(el){$(el).datepicker({dateFormat:'yy/mm/dd', changeMonth: true, changeYear: true}).change(function(){$("#table")[0].triggerToolbar();});} } },
                 { name: "Количество_сторон", align: "center" },
                 { name: "Количестов_поверхностей", align: "center" },
                 { name: "Площадь_конструкции", align: "center" }

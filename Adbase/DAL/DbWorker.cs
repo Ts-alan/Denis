@@ -471,7 +471,10 @@ namespace Sciencecom.DAL
             }
             else
             {
-                structure.Area = CountSquare(surfaces);
+                if (surfaces != null)
+                {
+                    structure.Area = CountSquare(surfaces);
+                }
                 Context.AdvertisingStructures.Add(structure);
                 Context.SaveChanges();
             }

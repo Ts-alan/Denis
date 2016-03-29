@@ -208,44 +208,6 @@ namespace Sciencecom.Controllers
 
             _dbw.CreateAdvertisingDesign(structures, sides, surfaces, countSize);
 
-            #region Закоменченая часть
-            //if (_context.ListUniqueNumbers.Any(a => a.UniqueNumber == structures.UniqueNumber))
-            //{
-            //    _context.ListUniqueNumbers.RemoveRange(
-            //        _context.ListUniqueNumbers.Where(x => x.UniqueNumber == structures.UniqueNumber));
-            //}
-
-            //if (countSize > 0)
-            //{
-            //    for (int j = 0; j < countSize; j++)
-            //    {
-            //        sides[j].AdvertisingStructures_Id = structuresId;
-            //        sides[j].Name = (j + 1).ToString();
-            //        sides[j].Id = Guid.NewGuid();
-            //    }
-
-            //    _context.Sides.AddRange(sides);
-            //    structures.Area = CountSquare(surfaces);
-            //    _context.AdvertisingStructures.Add(structures);
-            //    List<Surface> listSurface = new List<Surface>();
-            //    foreach (var i in surfaces)
-            //    {
-            //        i.Side_Id = sides.Single(a => a.Name == i.SideOfSurface).Id;
-            //        listSurface.Add(i);
-            //    }
-
-            //    _context.Surfaces.AddRange(listSurface);
-
-            //    _context.SaveChanges();
-            //}
-            //else
-            //{
-            //    structures.Area = CountSquare(surfaces);
-            //    _context.AdvertisingStructures.Add(structures);
-            //    _context.SaveChanges();
-            //}
-            #endregion
-
             SavePic(structures.Id_show.ToString(), "ScanPassport_1Sides", ScanPassport_1Sides);
 
             SavePic(structures.Id_show.ToString(), "ScanPassport_2Sides", ScanPassport_2Sides);
@@ -486,50 +448,7 @@ namespace Sciencecom.Controllers
             Guid structuresId = Guid.NewGuid();
             structures.Id = structuresId;
             _dbw.CreateAdvertisingDesign(structures, sides, surfaces, countSize);
-
-            #region закомменченая часть
-            ////удаление временно номера из базы данных
-            //if (_context.ListUniqueNumbers.Any(a => a.UniqueNumber == structures.UniqueNumber))
-            //{
-            //    _context.ListUniqueNumbers.RemoveRange(
-            //        _context.ListUniqueNumbers.Where(x => x.UniqueNumber == structures.UniqueNumber));
-
-            //}
-            //if (structures.Code == null)
-            //{
-            //    structures.Code = "MP";
-            //}
-            //if (sides.Count == 0)
-            //{
-            //    sides.Add(new Side() { DirectionSide_id = new Guid("27b8c509-8f09-4a0d-ae22-048c2611b7ea") });
-            //}
-
-            //for (int j = 0; j < countSize; j++)
-            //{
-
-            //    sides[j].AdvertisingStructures_Id = structuresId;
-            //    sides[j].Name = (j + 1).ToString();
-            //    sides[j].Id = Guid.NewGuid();
-            //}
-
-            //_context.Sides.AddRange(sides);
-            //structures.Area = CountSquare(surfaces);
-            //structures = ValidateCoords(structures, Bcoord, Hcoord);
-
-            //_context.AdvertisingStructures.Add(structures);
-            //List<Surface> listSurface = new List<Surface>();
-            //foreach (var i in surfaces)
-            //{
-            //    i.Side_Id = sides.Single(a => a.Name == i.SideOfSurface).Id;
-            //    listSurface.Add(i);
-
-            //}
-            //_context.Surfaces.AddRange(listSurface);
-
-            //_context.SaveChanges();
-            #endregion
-
-
+            
             SavePic(structures.Id_show.ToString(), "Scan1SidesWithFinancialManagement", scan1SidesWithFinancialManagement);
 
             SavePic(structures.Id_show.ToString(), "Scan1Side", Scan1Side);
@@ -745,41 +664,7 @@ namespace Sciencecom.Controllers
             structures = ValidateCoords(structures, Bcoord, Hcoord);
             string id = structures.Id_show.ToString();
             _dbw.CreateAdvertisingDesign(structures, sides, surfaces, countSize);
-
-            #region закоменченная часть
-
-            ////удаление временно номера из базы данных
-            //if (_context.ListUniqueNumbers.Any(a => a.UniqueNumber == structures.UniqueNumber))
-            //{
-            //    _context.ListUniqueNumbers.RemoveRange(
-            //        _context.ListUniqueNumbers.Where(x => x.UniqueNumber == structures.UniqueNumber));
-
-            //}
-
-            //for (int j = 0; j < countSize; j++)
-            //{
-            //    sides[j].AdvertisingStructures_Id = structuresId;
-            //    sides[j].Name = (j + 1).ToString();
-            //    sides[j].Id = Guid.NewGuid();
-            //}
-
-            //_context.Sides.AddRange(sides);
-            //structures.Area = CountSquare(surfaces);
-
-
-            //_context.AdvertisingStructures.Add(structures);
-            //List<Surface> listSurface = new List<Surface>();
-            //foreach (var i in surfaces)
-            //{
-            //    i.Side_Id = sides.Single(a => a.Name == i.SideOfSurface).Id;
-            //    listSurface.Add(i);
-            //}
-            //_context.Surfaces.AddRange(listSurface);
-
-            //_context.SaveChanges();
-            #endregion
-
-
+            
             SavePic(id, "ScanPassport_1Sides", ScanPassport_1Sides);
 
             SavePic(id, "ScanPassport_2Sides", ScanPassport_2Sides);
@@ -1060,24 +945,12 @@ namespace Sciencecom.Controllers
             
             Guid structuresId = Guid.NewGuid();
             structures.Id = structuresId;
-            //удаление временно номера из базы данных
-            if (_context.ListUniqueNumbers.Any(a => a.UniqueNumber == structures.UniqueNumber))
-            {
-                _context.ListUniqueNumbers.RemoveRange(
-                    _context.ListUniqueNumbers.Where(x => x.UniqueNumber == structures.UniqueNumber));
-
-            }
-
             if (structures.Code == null)
             {
                 structures.Code = "UI";
             }
-            
             structures = ValidateCoords(structures, Bcoord, Hcoord);
-            _context.AdvertisingStructures.Add(structures);
-            
-
-            _context.SaveChanges();
+            _dbw.CreateAdvertisingDesign(structures, null, null, 0);
 
             SavePic(structures.Id_show.ToString(), "photo1", photo1);
 
