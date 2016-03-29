@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -86,7 +87,7 @@ namespace Sciencecom.Controllers
             {
                 return RedirectToAction("NotFound");
             }
-            AdvertisingStructure mc = _context.AdvertisingStructures.SingleOrDefault(a => a.Id_show == id);
+            AdvertisingStructure mc = _dbw.RetrieveStructure(id);
             if (mc==null)
             {
                 return RedirectToAction("NotFound");
@@ -157,10 +158,7 @@ namespace Sciencecom.Controllers
                 }
             }
             TempData["surface"] = surfaces;
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+
             switch (type)
             {
                 case "BB":
@@ -179,9 +177,8 @@ namespace Sciencecom.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             }
-
-            AdvertisingStructure mc = _context.AdvertisingStructures.Single(a => a.Id_show == id);
-            return View(mc);
+            
+            return View(data);
         }
 
         [Authorize]
@@ -206,43 +203,9 @@ namespace Sciencecom.Controllers
         {
             Guid structuresId = Guid.NewGuid();
             structures.Id = structuresId;
-            //удаление временно номера из базы данных
-            if (_context.ListUniqueNumbers.Any(a => a.UniqueNumber == structures.UniqueNumber))
-            {
-                _context.ListUniqueNumbers.RemoveRange(
-                    _context.ListUniqueNumbers.Where(x => x.UniqueNumber == structures.UniqueNumber));
-            }
             structures = ValidateCoords(structures, Bcoord, Hcoord);
 
-            if (countSize > 0)
-            {
-                for (int j = 0; j < countSize; j++)
-                {
-                    sides[j].AdvertisingStructures_Id = structuresId;
-                    sides[j].Name = (j + 1).ToString();
-                    sides[j].Id = Guid.NewGuid();
-                }
-
-                _context.Sides.AddRange(sides);
-                structures.Area = CountSquare(surfaces);
-                _context.AdvertisingStructures.Add(structures);
-                List<Surface> listSurface = new List<Surface>();
-                foreach (var i in surfaces)
-                {
-                    i.Side_Id = sides.Single(a => a.Name == i.SideOfSurface).Id;
-                    listSurface.Add(i);
-                }
-
-                _context.Surfaces.AddRange(listSurface);
-
-                _context.SaveChanges();
-            }
-            else
-            {
-                structures.Area = CountSquare(surfaces);
-                _context.AdvertisingStructures.Add(structures);
-                _context.SaveChanges();
-            }
+            _dbw.CreateAdvertisingDesign(structures, sides, surfaces, countSize);
 
             SavePic(structures.Id_show.ToString(), "ScanPassport_1Sides", ScanPassport_1Sides);
 
@@ -439,17 +402,16 @@ namespace Sciencecom.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             }
-
-            AdvertisingStructure mc = _context.AdvertisingStructures.Single(a => a.Id_show == id);
-            if (mc.coordB != null)
+            
+            if (data.coordB != null)
             {
-                mc.coordB = double.Parse(mc.coordB.ToString().Substring(0, 7));
+                data.coordB = double.Parse(data.coordB.ToString().Substring(0, 7));
             }
-            if (mc.coordH != null)
+            if (data.coordH != null)
             {
-                mc.coordH = double.Parse(mc.coordH.ToString().Substring(0, 7));
+                data.coordH = double.Parse(data.coordH.ToString().Substring(0, 7));
             }
-            return View(mc);
+            return View(data);
         }
 
         [Authorize]
@@ -473,16 +435,6 @@ namespace Sciencecom.Controllers
             string Bcoord, string Hcoord,
             int countSize = 1)
         {
-
-            Guid structuresId = Guid.NewGuid();
-            structures.Id = structuresId;
-            //удаление временно номера из базы данных
-            if (_context.ListUniqueNumbers.Any(a => a.UniqueNumber == structures.UniqueNumber))
-            {
-                _context.ListUniqueNumbers.RemoveRange(
-                    _context.ListUniqueNumbers.Where(x => x.UniqueNumber == structures.UniqueNumber));
-
-            }
             if (structures.Code == null)
             {
                 structures.Code = "MP";
@@ -491,31 +443,10 @@ namespace Sciencecom.Controllers
             {
                 sides.Add(new Side() { DirectionSide_id = new Guid("27b8c509-8f09-4a0d-ae22-048c2611b7ea") });
             }
-
-            for (int j = 0; j < countSize; j++)
-            {
-
-                sides[j].AdvertisingStructures_Id = structuresId;
-                sides[j].Name = (j + 1).ToString();
-                sides[j].Id = Guid.NewGuid();
-            }
-
-            _context.Sides.AddRange(sides);
-            structures.Area = CountSquare(surfaces);
-             structures = ValidateCoords(structures, Bcoord, Hcoord);
-
-            _context.AdvertisingStructures.Add(structures);
-            List<Surface> listSurface = new List<Surface>();
-            foreach (var i in surfaces)
-            {
-                i.Side_Id = sides.Single(a => a.Name == i.SideOfSurface).Id;
-                listSurface.Add(i);
-
-            }
-            _context.Surfaces.AddRange(listSurface);
-
-            _context.SaveChanges();
-
+            Guid structuresId = Guid.NewGuid();
+            structures.Id = structuresId;
+            _dbw.CreateAdvertisingDesign(structures, sides, surfaces, countSize);
+            
             SavePic(structures.Id_show.ToString(), "Scan1SidesWithFinancialManagement", scan1SidesWithFinancialManagement);
 
             SavePic(structures.Id_show.ToString(), "Scan1Side", Scan1Side);
@@ -692,16 +623,15 @@ namespace Sciencecom.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             }
-
-            AdvertisingStructure mc = _context.AdvertisingStructures.Single(a => a.Id_show == id);
-            if (mc.coordB != null)
+            
+            if (data.coordB != null)
             {
-                mc.coordB = double.Parse(mc.coordB.ToString().Substring(0, 7));
+                data.coordB = double.Parse(data.coordB.ToString().Substring(0, 7));
             }
-            if (mc.coordH != null) { 
-                    mc.coordH = double.Parse(mc.coordH.ToString().Substring(0, 7));
+            if (data.coordH != null) {
+                data.coordH = double.Parse(data.coordH.ToString().Substring(0, 7));
             }
-            return View(mc);
+            return View(data);
         }
 
         [Authorize]
@@ -729,37 +659,10 @@ namespace Sciencecom.Controllers
 
             Guid structuresId = Guid.NewGuid();
             structures.Id = structuresId;
-            //удаление временно номера из базы данных
-            if (_context.ListUniqueNumbers.Any(a => a.UniqueNumber == structures.UniqueNumber))
-            {
-                _context.ListUniqueNumbers.RemoveRange(
-                    _context.ListUniqueNumbers.Where(x => x.UniqueNumber == structures.UniqueNumber));
-
-            }
-
-            for (int j = 0; j < countSize; j++)
-            {
-                sides[j].AdvertisingStructures_Id = structuresId;
-                sides[j].Name = (j + 1).ToString();
-                sides[j].Id = Guid.NewGuid();
-            }
-
-            _context.Sides.AddRange(sides);
-            structures.Area = CountSquare(surfaces);
             structures = ValidateCoords(structures, Bcoord, Hcoord);
-
-            _context.AdvertisingStructures.Add(structures);
-            List<Surface> listSurface = new List<Surface>();
-            foreach (var i in surfaces)
-            {
-                i.Side_Id = sides.Single(a => a.Name == i.SideOfSurface).Id;
-                listSurface.Add(i);
-            }
-            _context.Surfaces.AddRange(listSurface);
-
-            _context.SaveChanges();
             string id = structures.Id_show.ToString();
-
+            _dbw.CreateAdvertisingDesign(structures, sides, surfaces, countSize);
+            
             SavePic(id, "ScanPassport_1Sides", ScanPassport_1Sides);
 
             SavePic(id, "ScanPassport_2Sides", ScanPassport_2Sides);
@@ -939,8 +842,8 @@ namespace Sciencecom.Controllers
 
             }
 
-            AdvertisingStructure mc = _context.AdvertisingStructures.Single(a => a.Id_show == id);
-            return View(mc);
+            
+            return View(data);
         }
 
         [HttpGet]
@@ -1031,8 +934,6 @@ namespace Sciencecom.Controllers
         [Authorize]
         [HttpPost]
         public ActionResult CreateIllegalDesign(AdvertisingStructure structures,
-            
-            
             HttpPostedFileBase photo1, HttpPostedFileBase photo2,
             List<HttpPostedFileBase> severalPhoto, string Bcoord, string Hcoord,
             int countSize = 0)
@@ -1040,24 +941,12 @@ namespace Sciencecom.Controllers
             
             Guid structuresId = Guid.NewGuid();
             structures.Id = structuresId;
-            //удаление временно номера из базы данных
-            if (_context.ListUniqueNumbers.Any(a => a.UniqueNumber == structures.UniqueNumber))
-            {
-                _context.ListUniqueNumbers.RemoveRange(
-                    _context.ListUniqueNumbers.Where(x => x.UniqueNumber == structures.UniqueNumber));
-
-            }
-
             if (structures.Code == null)
             {
                 structures.Code = "UI";
             }
-            
             structures = ValidateCoords(structures, Bcoord, Hcoord);
-            _context.AdvertisingStructures.Add(structures);
-            
-
-            _context.SaveChanges();
+            _dbw.CreateAdvertisingDesign(structures, null, null, 0);
 
             SavePic(structures.Id_show.ToString(), "photo1", photo1);
 

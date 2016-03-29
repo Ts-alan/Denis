@@ -10,27 +10,27 @@
             <div class="form-inline">
                 <hr/>
                 <div class="form-group surfaceInputGroup">
-                    <input name="[@i].NumberSurface" type="hidden" value="@ViewBag.Side">
+                    <input name="[@j-1].NumberSurface" type="hidden" value="@ViewBag.Side">
                     <div class="form-group has-feedback">
-                        <label for="[@i].Height">Высота</label>
+                        <label for="[@j-1].Height">Высота</label>
                         @*@Html.ValidationMessageFor(model => model[i].Height)*@
-                        <span class="field-validation-valid" data-valmsg-for="[@i].Height" data-valmsg-replace="true"></span>
+                        <span class="field-validation-valid" data-valmsg-for="[@j-1].Height" data-valmsg-replace="true"></span>
                         <span class="glyphicon form-control-feedback"></span>
                         @{ var l = @Model;}
-                        @Html.TextBoxFor(model => model[j-1].Height, new {@class = "form-control", type = "number"})
+                        @Html.TextBoxFor(model => model[j-1].Height, new {@class = "form-control", type = "number", Name = "(" + ViewBag.Side + ")[" + (j-1) + "].Height", onchange = "CalculateArea(" + @ViewBag.Side + "," + (@j-1) + ")"})
 
                     </div>
                     <div class="form-group has-feedback" style="margin-left: 20px">
-                        <label for="[@i].Width">Ширина</label>
+                        <label for="[@j-1].Width">Ширина</label>
                         @* @Html.ValidationMessageFor(model => model[i].Width)*@
-                        <span class="field-validation-valid" data-valmsg-for="[@i].Width" data-valmsg-replace="true"></span>
+                        <span class="field-validation-valid" data-valmsg-for="[@j-1].Width" data-valmsg-replace="true"></span>
                         <span class="glyphicon form-control-feedback"></span>
-                        @Html.TextBoxFor(model => model[j].Width, new {@class = "form-control", type = "number"})
+                        @Html.TextBoxFor(model => model[j-1].Width, new {@class = "form-control", type = "number", Name = "(" + ViewBag.Side + ")[" + (j-1) + "].Width", onchange = "CalculateArea(" + @ViewBag.Side + "," + (@j-1) + ")"})
 
                     </div>
                     <div class="form-group has-feedback" style="margin-left: 20px">
-                        <label for="[@i].Space">Площадь</label>
-                        @Html.TextBoxFor(model => model[j-1].Space, new {@class = "form-control", type = "number", SelectForSpace = "", onchange = "CalculationAS()", @readonly = "readonly"})
+                        <label for="[@j-1].Space">Площадь</label>
+                        @Html.TextBoxFor(model => model[j-1].Space, new {@class = "form-control", type = "number", SelectForSpace = "", onchange = "CalculationAS()", @readonly = "readonly", Name = "(" + ViewBag.Side + ")[" + (j-1) + "].Space"})
                         @Html.ValidationMessageFor(model => model[j-1].Space)
                     </div>
 
@@ -69,7 +69,7 @@
                             <div class="fileUpload btn btn-default input-sm">
                                 <span accept="image/jpeg/">&nbsp;&nbsp;Фото&nbsp;</span>
                                 <input type="file" class="upload" name="photo[@{@ViewBag.Side}](@j)" accept="image/jpeg/"/>
-                                                                                </div>
+                            </div>
                             <label for="photo[@{@ViewBag.Side}](@j)">Файл не выбран</label>
                             <br/>
                             <br/>
@@ -82,15 +82,15 @@
     </text>
     <script type="text/javascript">
         AddRules();
-        //выщитывание площади для каждой поверхности
-        $('[name="[' + @i + '].Height"]').on("change", function()
+        @*//выщитывание площади для каждой поверхности
+        $('[name="(' + @ViewBag.Side + ')[' + @i + '].Height"]').on("change", function()
         {
-            CalculationOfTheArea(@i);
+            CalculateArea(@ViewBag.Side, @i);
         });
-        $('[name="[' + @i + '].Width"]').on("change", function()
+        $('[name="(' + @ViewBag.Side + ')[' + @i + '].Width"]').on("change", function()
         {
-            CalculationOfTheArea(@i);
-        });
+            CalculateArea(@ViewBag.Side, @i);
+        });*@
 
         $(".closeimg").click(function () {
         $(this).prev().attr("value", "");
@@ -100,6 +100,25 @@
         $(this).next().addClass("btn-default");
         $(this).parent().find("button.modalPictureTrigger").remove();
     });
+
+    //выщитывание площади для каждой поверхности
+    function CalculateArea(side, surface)
+    {
+        
+        var Height = $('[name="(' + side + ')[' + surface + '].Height"]').val();
+        var Width = $('[name="(' + side + ')[' + surface + '].Width"]').val();
+        console.log(Height);
+        console.log(Width);
+        if (Height != "" && Width != "")
+        {
+
+            var Sum = Height * Width;
+             console.log(Sum);
+            $('[name="(' + side + ')[' + surface + '].Space"]').val(Sum);
+            CalculationAS();
+        }
+    }
+
 
      //Функция срабатывает при клике на кнопку загрузки файла
     $("input[type='file']").click(function() {

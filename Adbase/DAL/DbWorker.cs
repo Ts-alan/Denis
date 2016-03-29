@@ -248,7 +248,7 @@ namespace Sciencecom.DAL
                 Context.TypeOfAdvertisingStructures.Where(a => a.Name.ToLower().Contains(typeOfAdvertisingStructure.ToLower())).ToList();
             var localityId = Context.Localities.Where(a => a.NameLocality.ToLower().Contains(locality.ToLower())).ToList();
             List<Backlight> backlights = null;
-            if (backlight != null && backlight != "")
+            if (!string.IsNullOrEmpty(backlight))
                 backlights = Context.Backlights.Where(a => a.Name.Contains(backlight)).ToList();
             IEnumerable<AdvertisingStructure> result;
             
@@ -415,20 +415,69 @@ namespace Sciencecom.DAL
             return result;
         }
 
-        public void AddSurfaces(List<Surface> listSurface)
-        {
-            Context.Surfaces.AddRange(listSurface);
-        }
-
+    
+        
         protected internal int CountSurfaces(AdvertisingStructure adv)
         {
             return adv.Sides.Sum(side => side.Surfaces.Count);
         }
 
-        private double CountSquare(AdvertisingStructure adv)
+        private double CountSquare(List<Surface> surfaces)
         {
-            return adv.Sides.SelectMany(side => side.Surfaces).Sum(surface => surface.Space);
+            return surfaces.Sum(surface => surface.Space);
         }
-   
+
+     
+
+
+
+        public void CreateAdvertisingDesign(AdvertisingStructure structure, List<Side> sides, List<Surface> surfaces, int countSize = 0)
+        {
+            //удаление временного номера из базы данных
+            DeleteTempId(structure.UniqueNumber);
+            ProcessStructureSidesAndSurfaces(sides, surfaces, countSize, structure);
+        }
+        internal void DeleteTempId(string uniqueNumber)
+        {
+            if (Context.ListUniqueNumbers.Any(a => a.UniqueNumber == uniqueNumber))
+            {
+                Context.ListUniqueNumbers.RemoveRange(Context.ListUniqueNumbers.Where(x => x.UniqueNumber == uniqueNumber));
+            }
+        }
+
+        protected void ProcessStructureSidesAndSurfaces(List<Side> sides, List<Surface> surfaces, int countSize, AdvertisingStructure structure)
+        {
+            if (countSize > 0)
+            {
+                for (int j = 0; j < countSize; j++)
+                {
+                    sides[j].AdvertisingStructures_Id = structure.Id;
+                    sides[j].Name = (j + 1).ToString();
+                    sides[j].Id = Guid.NewGuid();
+                }
+
+                Context.Sides.AddRange(sides);
+                structure.Area = CountSquare(surfaces);
+                Context.AdvertisingStructures.Add(structure);
+                List<Surface> listSurface = new List<Surface>();
+                foreach (var i in surfaces)
+                {
+                    i.Side_Id = sides.Single(a => a.Name == i.SideOfSurface).Id;
+                    listSurface.Add(i);
+                }
+
+                Context.Surfaces.AddRange(listSurface);
+                Context.SaveChanges();
+            }
+            else
+            {
+                if (surfaces != null)
+                {
+                    structure.Area = CountSquare(surfaces);
+                }
+                Context.AdvertisingStructures.Add(structure);
+                Context.SaveChanges();
+            }
+        }
     }
 }
