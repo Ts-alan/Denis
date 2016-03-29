@@ -87,7 +87,7 @@ namespace Sciencecom.Controllers
             {
                 return RedirectToAction("NotFound");
             }
-            AdvertisingStructure mc = _context.AdvertisingStructures.SingleOrDefault(a => a.Id_show == id);
+            AdvertisingStructure mc = _dbw.RetrieveStructure(id);
             if (mc==null)
             {
                 return RedirectToAction("NotFound");
@@ -177,9 +177,8 @@ namespace Sciencecom.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             }
-
-            AdvertisingStructure mc = _context.AdvertisingStructures.Single(a => a.Id_show == id);
-            return View(mc);
+            
+            return View(data);
         }
 
         [Authorize]
@@ -403,17 +402,16 @@ namespace Sciencecom.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             }
-
-            AdvertisingStructure mc = _context.AdvertisingStructures.Single(a => a.Id_show == id);
-            if (mc.coordB != null)
+            
+            if (data.coordB != null)
             {
-                mc.coordB = double.Parse(mc.coordB.ToString().Substring(0, 7));
+                data.coordB = double.Parse(data.coordB.ToString().Substring(0, 7));
             }
-            if (mc.coordH != null)
+            if (data.coordH != null)
             {
-                mc.coordH = double.Parse(mc.coordH.ToString().Substring(0, 7));
+                data.coordH = double.Parse(data.coordH.ToString().Substring(0, 7));
             }
-            return View(mc);
+            return View(data);
         }
 
         [Authorize]
@@ -625,16 +623,15 @@ namespace Sciencecom.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             }
-
-            AdvertisingStructure mc = _context.AdvertisingStructures.Single(a => a.Id_show == id);
-            if (mc.coordB != null)
+            
+            if (data.coordB != null)
             {
-                mc.coordB = double.Parse(mc.coordB.ToString().Substring(0, 7));
+                data.coordB = double.Parse(data.coordB.ToString().Substring(0, 7));
             }
-            if (mc.coordH != null) { 
-                    mc.coordH = double.Parse(mc.coordH.ToString().Substring(0, 7));
+            if (data.coordH != null) {
+                data.coordH = double.Parse(data.coordH.ToString().Substring(0, 7));
             }
-            return View(mc);
+            return View(data);
         }
 
         [Authorize]
@@ -844,8 +841,8 @@ namespace Sciencecom.Controllers
 
             }
 
-            AdvertisingStructure mc = _context.AdvertisingStructures.Single(a => a.Id_show == id);
-            return View(mc);
+            
+            return View(data);
         }
 
         [HttpGet]
@@ -936,8 +933,6 @@ namespace Sciencecom.Controllers
         [Authorize]
         [HttpPost]
         public ActionResult CreateIllegalDesign(AdvertisingStructure structures,
-            
-            
             HttpPostedFileBase photo1, HttpPostedFileBase photo2,
             List<HttpPostedFileBase> severalPhoto, string Bcoord, string Hcoord,
             int countSize = 0)

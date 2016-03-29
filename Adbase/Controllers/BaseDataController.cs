@@ -65,6 +65,10 @@ namespace Sciencecom.Controllers
                 string newPath = Server.MapPath(src);
                 System.IO.File.Move(oldPath, newPath);
             }
+            if (postedPic == null & picIndex == "")
+            {
+                DeletePic(oldstructureId, documentName);
+            }
         }
 
         protected internal AdvertisingStructure ValidateCoords(AdvertisingStructure structures, string Bcoord, string Hcoord)

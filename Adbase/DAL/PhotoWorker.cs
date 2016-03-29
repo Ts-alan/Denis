@@ -30,9 +30,9 @@ namespace Sciencecom.DAL
             return photoNames;
         }
 
-        internal new void DeletePic(string dataId, string photoName)
+        internal new void DeletePic(string ssId, string structureId)
         {
-            string src = "~/Images/photo1/" + dataId + photoName + ".jpg";
+            string src = "~/Images/photo1/" + ssId + "photo" + structureId + ".jpg";
             string path = System.Web.HttpContext.Current.Server.MapPath(src);
             FileInfo info1 = new FileInfo(path);
             if (info1.Exists)
@@ -61,6 +61,10 @@ namespace Sciencecom.DAL
                     src = "~/Images/photo1/" + "photo" + photo.Key + structureId + ".jpg";
                     string newPath = System.Web.HttpContext.Current.Server.MapPath(src);
                     System.IO.File.Move(oldPath, newPath);
+                }
+                if (photo.Value == null & picIndexes.SingleOrDefault(x => x.Key.Contains(photo.Key)).Value == "")
+                {
+                    DeletePic(photo.Key, oldstructureId);
                 }
             }
             
