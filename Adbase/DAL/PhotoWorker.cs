@@ -48,17 +48,17 @@ namespace Sciencecom.DAL
                 //var d = ;
                 if (photo.Value != null & picIndexes.SingleOrDefault( x => x.Key.Contains(photo.Key)).Value == "setImage")
                 {
-                    SavePic(structureId, "photo" + photo.Key, photo.Value);
+                    SavePic(structureId, photo.Key+"photo" , photo.Value);
                 }
                 if (photo.Value != null & picIndexes.SingleOrDefault(x => x.Key.Contains(photo.Key)).Value == "")
                 {
-                    SavePic(structureId, "photo" + photo.Key, photo.Value);
+                    SavePic(structureId, photo.Key + "photo", photo.Value);
                 }
                 if (photo.Value == null & picIndexes.SingleOrDefault(x => x.Key.Contains(photo.Key)).Value == "setImage")
                 {
-                    string src = "~/Images/photo1/" + "photo" + photo.Key + oldstructureId + ".jpg";
+                    string src = "~/Images/photo1/" + photo.Key + "photo"  + oldstructureId + ".jpg";
                     string oldPath = System.Web.HttpContext.Current.Server.MapPath(src);
-                    src = "~/Images/photo1/" + "photo" + photo.Key + structureId + ".jpg";
+                    src = "~/Images/photo1/" + photo.Key + "photo"  + structureId + ".jpg";
                     string newPath = System.Web.HttpContext.Current.Server.MapPath(src);
                     System.IO.File.Move(oldPath, newPath);
                 }

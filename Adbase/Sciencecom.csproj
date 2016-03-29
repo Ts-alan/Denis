@@ -399,6 +399,7 @@
     <Content Include="ClassDiagram1.cd" />
     <Content Include="ClassDiagram2.cd" />
     <Fakes Include="Fakes\Antlr3.Runtime.fakes" />
+    <Content Include="Images\photo1\[2]%281%29photo101399.jpg" />
     <Content Include="Images\Scan1Side\f79e974a-a185-429c-97e5-dbcd183934dcScan1Side.jpg" />
     <Content Include="Models\ContructionsModel.edmx.sql" />
     <Content Include="Models\Users\UsersModel.Context.tt">
@@ -1454,7 +1455,6 @@
   <ItemGroup>
     <Folder Include="App_Start\App_Data\" />
     <Folder Include="Images\Patterns\" />
-    <Folder Include="Images\photo1\" />
     <Folder Include="Images\photo2\" />
     <Folder Include="Images\PhotoController\" />
     <Folder Include="Images\Scan1SidesWithFinancialManagement\" />

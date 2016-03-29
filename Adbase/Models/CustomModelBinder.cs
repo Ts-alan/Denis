@@ -131,9 +131,11 @@ namespace Sciencecom.Models
             var request = controllerContext.HttpContext.Request;
             
             Dictionary<string, string> picIndexes = new Dictionary<string, string>();
+            var tempPhotoInd = request.Form.AllKeys.Where(a => a.Contains("PhotoInd["));
             for (int i = 0; i < request.Form.AllKeys.Count(a => a.Contains("PhotoInd[")); i++ )
             {
-                picIndexes.Add(request.Form.AllKeys[i],request.Form.Get(request.Form.AllKeys[i]));
+
+                picIndexes.Add(tempPhotoInd.ElementAt(i),request.Form.Get(tempPhotoInd.ElementAt(i)));
             }
             
             return picIndexes;
