@@ -711,6 +711,7 @@ namespace Sciencecom.Controllers
             ViewBag.Code = "LD";
             ViewBag.UniqueNumber = TableAdapterExtensions.StringSymvol();
             ViewBag.SeizesCount = 2;
+            Session["PhotoNames"] = null;
             return View();
         }
 

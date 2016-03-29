@@ -65,6 +65,7 @@ namespace Sciencecom.Controllers
                 string newPath = Server.MapPath(src);
                 System.IO.File.Move(oldPath, newPath);
             }
+         
         }
 
         protected internal AdvertisingStructure ValidateCoords(AdvertisingStructure structures, string Bcoord, string Hcoord)
