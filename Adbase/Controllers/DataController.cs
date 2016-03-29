@@ -659,9 +659,9 @@ namespace Sciencecom.Controllers
             Guid structuresId = Guid.NewGuid();
             structures.Id = structuresId;
             structures = ValidateCoords(structures, Bcoord, Hcoord);
-            string id = structures.Id_show.ToString();
-            _dbw.CreateAdvertisingDesign(structures, sides, surfaces, countSize);
             
+            _dbw.CreateAdvertisingDesign(structures, sides, surfaces, countSize);
+            string id = structures.Id_show.ToString();
             SavePic(id, "ScanPassport_1Sides", ScanPassport_1Sides);
 
             SavePic(id, "ScanPassport_2Sides", ScanPassport_2Sides);
