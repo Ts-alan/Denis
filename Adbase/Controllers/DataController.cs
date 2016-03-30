@@ -430,7 +430,7 @@ namespace Sciencecom.Controllers
             HttpPostedFileBase Scan1Side, HttpPostedFileBase Scan2Side, HttpPostedFileBase photo1,
             HttpPostedFileBase scan1SidesWithFinancialManagement, List<HttpPostedFileBase> severalPhoto,
             string Bcoord, string Hcoord,
-            int countSize = 1)
+            int countSize = 0)
         {
             if (structures.Code == null)
             {
@@ -506,7 +506,7 @@ namespace Sciencecom.Controllers
             HttpPostedFileBase Scan1Side, HttpPostedFileBase Scan2Side, HttpPostedFileBase photo1,
             HttpPostedFileBase scan1SidesWithFinancialManagement, string Scan1SideInd, string Scan2SideInd, string photo1Ind,
             string Bcoord, string Hcoord,
-            int countSize = 1)
+            int countSize = 0)
         {
 
             AdvertisingStructure mc = _dbw.RetrieveStructure(id);
@@ -646,7 +646,7 @@ namespace Sciencecom.Controllers
             [ModelBinder(typeof(CustomModelBinderForPicsForAD))] Dictionary<string, HttpPostedFileBase> photos,
             HttpPostedFileBase Application,
             HttpPostedFileBase scan1Side, HttpPostedFileBase scan2Side,
-            string Bcoord, string Hcoord, int countSize = 1)
+            string Bcoord, string Hcoord, int countSize = 0)
         {
 
             Guid structuresId = Guid.NewGuid();
@@ -723,7 +723,7 @@ namespace Sciencecom.Controllers
             HttpPostedFileBase scan1Side, HttpPostedFileBase scan2Side, 
             string ScanPassport_1SidesInd, string ScanPassport_2SidesInd, string scan1SideInd, string scan2SideInd, 
             string photo1Ind, string photo2Ind, string ApplicationInd, 
-            string Bcoord, string Hcoord, int countSize = 1)
+            string Bcoord, string Hcoord, int countSize = 0)
         {
 
             AdvertisingStructure mc = _dbw.RetrieveStructure(id);
@@ -873,7 +873,7 @@ namespace Sciencecom.Controllers
         [HttpPost]
         public ActionResult EditIllegalDesign(int id, AdvertisingStructure structures,
             HttpPostedFileBase photo1, HttpPostedFileBase photo2,string photoInd1, string photoInd2, 
-            string Bcoord, string Hcoord, int countSize = 1)
+            string Bcoord, string Hcoord, int countSize = 0)
         {
 
             AdvertisingStructure mc = _dbw.RetrieveStructure(id);
