@@ -107,13 +107,12 @@
         
         var Height = $('[name="(' + side + ')[' + surface + '].Height"]').val();
         var Width = $('[name="(' + side + ')[' + surface + '].Width"]').val();
-        console.log(Height);
-        console.log(Width);
+
         if (Height != "" && Width != "")
         {
 
             var Sum = Height * Width;
-             console.log(Sum);
+             
             $('[name="(' + side + ')[' + surface + '].Space"]').val(Sum);
             CalculationAS();
         }
@@ -123,7 +122,7 @@
      //Функция срабатывает при клике на кнопку загрузки файла
     $("input[type='file']").click(function() {
         $(this).prev().attr("value", "");
-       
+        
         //очистка кнопки выбора файла
         var btnParent = $(this).parent();
     });
@@ -138,7 +137,7 @@
         var fileName = this.value.split('\\').pop();
         if (fileName != "")
         {
-            //console.log(btnParent.parent().find("label[for^='photo']"));
+
             btnParent.parent().find("label[for^='photo']").text(fileName);
             btnParent.parent().find("label[for^='Scan']").text(fileName);
             //Изменение стиля кнопки загрузки фала при выборе загружаемого файла
@@ -153,14 +152,7 @@
         btnParent.addClass("btn-warning");
         btnParent.removeClass("btn-default");
 
-        //считывание загружаемой кратинки и запись её в атрибут src тега img
-        var fReader = new FileReader();
-        fReader.readAsDataURL(this.files[0]);
-        fReader.onloadend = function(event)
-        {
-           var imgid = "#" + modalImgId;
-           $(imgid).attr("src", event.target.result);
-        }
+ 
 
         //добавление кнопки открывания модального окна
 

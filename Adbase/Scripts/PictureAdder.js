@@ -21,13 +21,14 @@
     $("input[type='file']").change(function()
     {
         var attr = $(this).attr("name");
+      
         var modalImgId = "ModalPictureimg" + attr;
         var modalId = "#ModalPictureDiv" + attr;
         var btnParent = $(this).parent();
         var fileName = this.value.split('\\').pop();
         if (fileName != "")
         {
-            btnParent.parent().find("label[for^='photo']").text(fileName);
+            btnParent.parent().find("label[for^='scanPassport']").text(fileName);
             btnParent.parent().find("label[for^='Scan']").text(fileName);
             //Изменение стиля кнопки загрузки фала при выборе загружаемого файла
 
@@ -51,15 +52,27 @@
         }
 
         //добавление кнопки открывания модального окна
-
+        
         var modalButton = '<button type="button" style="margin-left:25px" class="modalPictureTrigger btn btn-default" data-toggle="modal" data-target="#ViewModalPicture' + attr + '" >Показать</button>';
         
         if (btnParent.closest(".fileUpload").next().next().next().next().length != 0)
         {
             btnParent.closest(".fileUpload").next().next().next().next().remove();
         }
+  
         btnParent.parent().append(modalButton);
      
+    });
+    //для поверхностей считывание загружаемой кратинки и запись её в атрибут src тега img
+    $('form').on("click", '[data-target="#ViewModalPicturePhoto"]', function () {
+        var modalImgId = "ModalPictureimgPhoto";
+     
+        var fReader = new FileReader();
+        fReader.readAsDataURL($(this).closest(".form-group").find("input[type='file']")[0].files[0]);
+        fReader.onloadend = function (event) {
+            var imgid = "#" + modalImgId;
+            $(imgid).attr("src", event.target.result);
+        }
     });
 
 });
