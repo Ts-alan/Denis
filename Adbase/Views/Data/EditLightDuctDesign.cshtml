@@ -31,154 +31,12 @@
     //Подсветка
     var Backlight = new SciencecomEntities().Backlights.ToList();
 
-    //Подсветка
-    //var ContentInformationDescription = new SciencecomEntities().Backlights.ToList();
-
-
+    
 
 }
 
 
 
-@*<script type="text/javascript">
-    var i = 0;
-
-    var havePlacemark = @Model.coordB.HasValue.ToString().ToLower();
-
-    var StartCountForSurface;
-    var EndCountForSurface = 0;
-    var isGreateAdvertisingDesign = false;
-    var ArrayOfSides = @Html.Raw(JsonConvert.SerializeObject(Model.Sides.Select(a => new {a.DirectionSide_id, length = a.Surfaces.Count, a.Identification_id}), Formatting.Indented, new JsonSerializerSettings
-                       {
-                           ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-                       }));
-
-
-    var typedesign ;
-    $(document).ready(function()
-    {
-
-        window.onload = SetCountSize();
-        //выщитывание площади для каждой поверхности
-
-        $('#SHeight').change(function()
-        {
-            //alert("!!!");
-            CalculationOfTheArea(0);
-        });
-        $('#Width').change(function()
-        {
-            //alert("!!!");
-            CalculationOfTheArea(0);
-        });
-        
-    });
-    $("[identificationfordirectionside]").each(function(indx, element)
-    {
-        $(element)[0].value = ArrayOfSides[indx].DirectionSide_id;
-    });
-    $("[identificationforcountside]").each(function(indx, element)
-    {
-        $(element)[0].value = ArrayOfSides[indx].length;
-
-        //AddSurface(indx+1);
-    });
-
-    //выпадающий список на согласование
-    $("[name=OnAgreement]").change(function()
-    {
-        var selectIndex = $("[name=OnAgreement] option:selected").val();
-
-        if (selectIndex == "true")
-        {
-            $("#ContractHide").css("display", "block");
-        }
-        if (selectIndex == "false")
-        {
-            $("#ContractHide").css("display", "none");
-        }
-    });
-
-
-
-    function CalculationOfTheArea(j)
-    {
-        var Height = $('[name="[' + j + '].Height"]').val();
-        var Width = $('[name="[' + j + '].Width"]').val();
-
-        if (Height != "" && Width != "")
-        {
-            var Sum = Height * Width;
-
-            $('[name="[' + j + '].Space"]').val(Sum);
-            CalculationAS();
-        }
-    }
-
-
-    // подсчет суммы площадей
-    function CalculationAS()
-    {
-        var Summ = 0;
-        $("[selectforspace]").each(function(indx, element)
-        {
-            if ($(element).val() != "")
-            {
-                Summ += parseInt($(element).val());
-            }
-        });
-        $("#ConstructionSquare").val(Summ);
-    }
-
-     //кол-во сторон
-    function SetCountSize()
-    {
-        EndCountForSurface = 0;
-        var CountSizes = $('#CountSizes').val();
-        $("#CountSize").val(CountSizes);
-    
-            $("[code]").each(function(indx, element)
-            {
-                element.remove();
-            });
-
-            for (var i = 1; i <= CountSizes; i++)
-            {
-                $("#InsertSide").before("<div code class=\"form-horizontal\" >" +
-                    "<div class=\"form-group\" >" +
-                    "<h3 class=\"control-label col-md-2\" for=\"\" style=\"margin-left: 55px\">Сторона  " + i + " </h3>" +
-                    "</div>" +
-                    "<div class=\"form-group\">" +
-                    "<div class=\"col-md-10\" style=\"padding-left: 0px\">" +
-                    "<div style='float:left'>" +
-                    "<b>Количество поверхностей</b>" +
-                    " <select class=\"text-box single-line form-control\" style='width:60px' id=\"AddButton" + i + "\" onchange=EditSurface(" + i + ") name=\"CountSurfuce" + i + "\" IdentificationForCountSide=\"\" type=\"text\" data-val=\"true\" >" +
-                    "<option></option>" +
-                    "<option>1</option>" +
-                    "<option>2</option>" +
-                    "<option>3</option>" +
-                    "<option>4</option>" +
-                    "<option>5</option>" +
-                    "<option>6</option>" +
-                    "<option>7</option>" +
-                    "<option>8</option>" +
-                    "</select></div> &nbsp;&nbsp;&nbsp; <b>Направление стороны</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("DirectionSide", new SelectList(DirectionSide, "id", "NameOfDirectionSide"), "", new {IdentificationForDirectionSide = ""}).ToHtmlString().Replace("\"", " "))' +
-                    "</div>" +
-                    "</div> <div style=\"display: none\" id=\"" + i + "HiddenIdentification\"> &nbsp;&nbsp;&nbsp;<b>Идентификация поверхностей</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("IdentificationSurface", new SelectList(IdentificationSide, "id", "IdentificationName"), "", new {IdentificationForIdentificationSurface = ""}).ToHtmlString().Replace("\"", " ")) </div>' +
-                    "<div  id=\"InsertPartial" + i + "\"></div>" +
-                    "</div>");
-
-                $("#SizeOfCount").val(CountSizes);
-                $("[directionside]").each(function(ind, element) {
-                   
-                });
-               
-
-            }
-        }
-
-
-</script>*@
 <style>
     .SideDiv 
     {
@@ -198,6 +56,8 @@
                        {
                            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                        }));
+   
+ 
     var typedesign;
     $(document).ready(function()
     {
@@ -212,7 +72,7 @@
         {
             $(element)[0].value = ArrayOfSides[indx].DirectionSide_id;
         });
-        console.log($("[identificationforcountside]"));
+
         $("[identificationforcountside]").each(function(indx, element)
         {
             $(element)[0].value = ArrayOfSides[indx].length;
@@ -286,15 +146,7 @@
                     "<option value=\"27b8c509-8f09-4a0d-ae22-048c2611b7ea\" selected=\"selected\">По ходу движения (сторона А)</option>"+
                     "</select></div>"+
                     "<div  id=\"InsertPartial" + i + "\"></div>" +
-                    //"<div>"+ 
-                    //"<label>Фотография " + i +"</label><br/>" +
-                    //"<img class=\"closeimg\"  style=\"width:20px\" src=\"../../Content/CloseImg.jpg\" />" +
-                    //"<div class=\"fileUpload btn btn-default input-sm\">" +
-                    //"<span accept=\"image/jpeg/\">&nbsp;&nbsp;Фото " + i + "&nbsp;</span>" +
-                    //"<input type=\"file\" class=\"upload\" name=\"photo" + i +"\" accept=\"image/jpeg/\"/>" +
-                    //"</div></br>" +
-                    //"<label for=\"photo" + i + "\">Файл не выбран</label><br/><br/>" +
-                    //"</div>" +
+  
                     "</div>" 
                     
                     );
@@ -332,10 +184,11 @@
         $("[side=" + i + "]").remove();
 
 
-        $.ajax('@Url.Action("AddSurface", "Data")', { data: { side: i, StartCountForSurface: StartCountForSurface, EndCountForSurface: EndCountForSurface } })
+        $.ajax('@Url.Action("AddSurfaceForLightDuct", "Data")', { data: { side: i, StartCountForSurface: StartCountForSurface, EndCountForSurface: EndCountForSurface } })
             .success(function (e)
             {
                 $("#InsertPartial" + i + "").before(e);
+                
             });
     }
     
@@ -356,47 +209,7 @@
         $("[side=" + i + "]").remove();
     }
 
-    @*//Добавить поверхность+
-    function AddSurface(i)
-    {
-        SetValidate(i);
-
-        $.ajax('@Url.Action("EditSurface", "Data")', { async: true, data: { side: i, StartCountForSurface: StartCountForSurface, EndCountForSurface: EndCountForSurface } })
-            .success(function(e)
-            {
-                var live_str = $('<div>', { html: e });
-
-                var res = live_str.find('.body-content');
-
-                $("#InsertPartial" + i + "").prepend(res);
-
-                CalculationAS();
-
-                $('[name$="].Height"]').each(function (indx, element) {
-
-                    $(element).on("change", function() {
-
-                        CalculationOfTheArea($(element).attr("name").substring(1, $(element).attr("name").indexOf("]")));
-                    });
-                }
-   );
-                $('[name$="].Width"]').each(function(indx, element) {
-                    $(element).on("change", function() {
-
-                        CalculationOfTheArea($(element).attr("name").substring(1, $(element).attr("name").indexOf("]")));
-                    });
-                });
-
-                //отключение валидации
-                $.validator.methods.number = function(value, element)
-                {
-                    return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
-                }
-            }).error(function(e)
-            {
-                alert("ошибка кукареку");
-            });
-    }*@
+   
 
     //Редактировать поверхность+
     function EditSurface(i)
@@ -404,11 +217,11 @@
         SetValidate(i);
        
         $.ajax('@Url.Action("AddSurface", "Data")', { async: true, data: { side: i, StartCountForSurface: StartCountForSurface, EndCountForSurface: EndCountForSurface } })
-            .success(function(e)
-            {
+            .success(function(e) {
+               
                 $("#InsertPartial" + i + "").before(e);
                 CalculationAS();
-         
+              
                 ////отключение валидации
                 $.validator.methods.number = function(value, element)
                 {

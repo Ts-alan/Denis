@@ -149,8 +149,16 @@ namespace Sciencecom.Models
             var request = controllerContext.HttpContext.Request;
             var files = request.Files;
             var photos = files.AllKeys.Where(x => x.Contains("photo[")).ToList();
-
-            return photos.ToDictionary(photo => photo.Substring(5), photo => files.Get(photo));
+            
+            return photos.ToDictionary(photo => photo.Substring(5), photo =>
+            {
+                if (files.Get(photo).ContentLength != 0)
+                    return files.Get(photo);
+                else
+                {
+                    return null;
+                }
+            });
         }
     }
 
