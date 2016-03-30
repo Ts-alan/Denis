@@ -43,9 +43,9 @@ namespace Sciencecom.DAL
 
         internal void DeleteSurfacePhotos(string name)
         {
-            string src = "~/Images/photo1/" + name;
-            string path = System.Web.HttpContext.Current.Server.MapPath(src);
-            FileInfo info1 = new FileInfo(path);
+            //string src = "~/Images/photo1/" + name;
+            //string path = System.Web.HttpContext.Current.Server.MapPath(name);
+            FileInfo info1 = new FileInfo(name);
             if (info1.Exists)
             {
                 info1.Delete();

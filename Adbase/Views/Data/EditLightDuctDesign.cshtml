@@ -67,7 +67,7 @@
             return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
         }
         //накручивание данных в поля
-        window.onload = SetCountSize();
+        window.onload = SetCountSize(true);
         $("[identificationfordirectionside]").each(function(indx, element)
         {
             $(element)[0].value = ArrayOfSides[indx].DirectionSide_id;
@@ -119,8 +119,9 @@
     }
 
     //кол-во сторон
-    function SetCountSize()
+    function SetCountSize(bool)
     {
+        
         EndCountForSurface = 0;
         var CountSizes = $('#CountSizes').val();
         $("#CountSize").val(CountSizes);
@@ -151,7 +152,12 @@
                     
                     );
                 $("#SizeOfCount").val(CountSizes);
-                AddSurface(i);
+               
+                if (bool == true) {
+                    AddSurface(i);
+                } else {
+                    AddSurfaceForLightDuct(i);
+                }
             }
             
         }
@@ -161,7 +167,34 @@
             $(element).attr("name", "[" + indx + "].IdentificationForDirectionSide");
         });
     }
-        
+    function AddSurfaceForLightDuct(i)
+    {
+        var count = $("#AddButton" + i + "").val();
+        StartCountForSurface = EndCountForSurface;
+        EndCountForSurface = parseInt(count) + parseInt(EndCountForSurface);
+
+        if (count == 1)
+        {
+            $("#" + i + "HiddenIdentification").hide();
+        } else
+        {
+            $("#" + i + "HiddenIdentification").show();
+            //валидация
+            $('[name="IdentificationSurface"]').each(function (indx, element)
+            {
+                $(element).attr("name", "[" + indx + "].IdentificationForIdentificationSurface");
+            });
+        }
+        $("[side=" + i + "]").remove();
+
+
+        $.ajax('@Url.Action("AddSurface", "Data")', { data: { side: i, StartCountForSurface: StartCountForSurface, EndCountForSurface: EndCountForSurface } })
+            .success(function (e)
+            {
+                $("#InsertPartial" + i + "").before(e);
+                
+            });
+    }  
         //Добавить поверхность+
     function AddSurface(i)
     {
@@ -755,7 +788,7 @@
                                 <div>
                                     <div>
                                         <label for="CountSizes">Количество сторон</label>
-                                        @Html.DropDownList("CountSizes", new SelectList(new[] { "", "1", "2" }, Model.Sides.Count.ToString()), new { onchange = "SetCountSize()", @class = "form-control", style = "width: 60px" })
+                                        @Html.DropDownList("CountSizes", new SelectList(new[] { "", "1", "2" }, Model.Sides.Count.ToString()), new { onchange = "SetCountSize(false)", @class = "form-control", style = "width: 60px" })
                                         <span class="field-validation-validr" data-valmsg-for="CountSizes" data-valmsg-replace="true">
                                         </span>
                                     </div>
