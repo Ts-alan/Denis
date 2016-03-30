@@ -94,6 +94,7 @@
     function SetCountSize()
     {
         EndCountForSurface = 0;
+
         var CountSizes = $('#CountSizes').val();
         $("#CountSize").val(CountSizes);
         if (CountSizes != "")
@@ -104,23 +105,56 @@
             });
 
             for (var i = 1; i <= CountSizes; i++)
-            {
+            //{
+            //    $("#InsertSide").before("<div code class=\"form-horizontal\" >" +
+            //        "<div class=\"form-group\" >" +
+            //        "<h3 class=\"control-label col-md-2\" for=\"\" style=\"margin-left: 55px\">Сторона  " + i + " </h3>" +
+            //        "</div>" +
+            //        "<div class=\"form-group\">" +
+            //        "<div class=\"form-inline sidesControl\">" +
+            //        "<b>Количество поверхностей</b>" +
+            //        "<input class=\"text-box single-line form-control\" id=\"AddButton" + i + "\" onchange=EditSurface(" + i + ") readonly name=\"CountSurfuce" + i + "\"  style=\"width: 20px\" IdentificationForCountSide=\"\" type=\"text\"/>" +
+            //        "</select> &nbsp;&nbsp;&nbsp; <b>Направление стороны</b>" + '<input identificationfordirectionside class="text-box single-line form-control" id="DirectionSide" style="width: 250px"  name="DirectionSide" readonly type="text" />' +
+            //        "</div>" +
+            //        "</div> <div class=\"HiddenIdentification\" id=\"" + i + "HiddenIdentification\"> &nbsp;&nbsp;&nbsp;<b>Идентификация поверхностей</b>" +
+            //        '<input identificationforidentificationsurface class="text-box single-line valid form-control" id="IdentificationSurface" name="IdentificationSurface" readonly="" type="text"> </div>' +
+            //        "<div  id=\"InsertPartial" + i + "\"></div>" +
+            //        "</div>");
+
+            //    $("#SizeOfCount").val(CountSizes);
+                //}
+                {
                 $("#InsertSide").before("<div code class=\"form-horizontal\" >" +
                     "<div class=\"form-group\" >" +
                     "<h3 class=\"control-label col-md-2\" for=\"\" style=\"margin-left: 55px\">Сторона  " + i + " </h3>" +
                     "</div>" +
                     "<div class=\"form-group\">" +
-                    "<div class=\"form-inline sidesControl\">" +
+                    "<div class=\"col-md-10\" style=\"padding-left: 0px\">" +
+                    "<div style='float:left'>" +
                     "<b>Количество поверхностей</b>" +
-                    " <input class=\"text-box single-line form-control\" id=\"AddButton" + i + "\" onchange=EditSurface(" + i + ") readonly name=\"CountSurfuce" + i + "\"  style=\"width: 20px\" IdentificationForCountSide=\"\" type=\"text\"/>" +
-                    "</select> &nbsp;&nbsp;&nbsp; <b>Направление стороны</b>" + '<input identificationfordirectionside class="text-box single-line form-control" id="DirectionSide" style="width: 250px"  name="DirectionSide" readonly type="text" />' +
+                    " <select class=\"text-box single-line form-control\" style='width:60px' id=\"AddButton" + i + "\" onchange=EditSurface(" + i + ") name=\"CountSurfuce" + i + "\" IdentificationForCountSide=\"\" type=\"text\" data-val=\"true\" >" +
+                    "<option></option>" +
+                    "<option>1</option>" +
+                    "<option>2</option>" +
+                    "<option>3</option>" +
+                    "<option>4</option>" +
+                    "<option>5</option>" +
+                    "<option>6</option>" +
+                    "<option>7</option>" +
+                    "<option>8</option>" +
+                    "</select></div> &nbsp;&nbsp;&nbsp; <b>Направление стороны</b>" + '<input identificationfordirectionside class="text-box single-line form-control" id="DirectionSide" style="width: 250px"  name="DirectionSide" readonly type="text" />' +
                     "</div>" +
                     "</div> <div class=\"HiddenIdentification\" id=\"" + i + "HiddenIdentification\"> &nbsp;&nbsp;&nbsp;<b>Идентификация поверхностей</b>" +
                     '<input identificationforidentificationsurface class="text-box single-line valid form-control" id="IdentificationSurface" name="IdentificationSurface" readonly="" type="text"> </div>' +
                     "<div  id=\"InsertPartial" + i + "\"></div>" +
                     "</div>");
-
+                    console.log($("#SizeOfCount"));
                 $("#SizeOfCount").val(CountSizes);
+                $("[directionside]").each(function(ind, element) {
+                   
+                });
+               
+
             }
         }
 
@@ -144,6 +178,7 @@
 
     function SetValidate(i)
     {
+        
         var count = $("#AddButton" + i + "").val();
         StartCountForSurface = EndCountForSurface;
         EndCountForSurface = parseInt(count) + parseInt(EndCountForSurface);

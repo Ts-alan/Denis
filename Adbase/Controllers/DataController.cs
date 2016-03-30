@@ -35,8 +35,8 @@ namespace Sciencecom.Controllers
         public ActionResult FindStreets(string term, string cityname)
         {
             cityname.Normalize();
-            var streets = _dbw.FindStreets(term);
-            var projection = from street in streets
+            //var streets = _dbw.FindStreets(term);
+            var projection = from street in _dbw.FindStreets(term)
                              where street.Locality.NameLocality == cityname
                              select new
                              {
@@ -135,7 +135,7 @@ namespace Sciencecom.Controllers
             ViewBag.EndCountForSurface = endCountForSurface ?? 1;
             ViewBag.StartCountForSurface = startCountForSurface ?? 0;
             ViewBag.Side = side;
-            var tempRresult = (List<Side>)TempData.Peek("sides");
+            var tempRresult = (List<Side>)Session["sides"];
             var result = tempRresult[int.Parse(side) - 1].Surfaces.ToList();
             return View("Surface", result);
         }
@@ -161,8 +161,8 @@ namespace Sciencecom.Controllers
                     surfaces.Add(surface);
                 }
             }
-            TempData["surface"] = surfaces;
-
+            
+            Session["sides"] = data.Sides.OrderBy(side => int.Parse(side.Name)).ToList();
             switch (type)
             {
                 case "BB":
@@ -255,8 +255,8 @@ namespace Sciencecom.Controllers
             {
                 surfaces.Add(new Surface() {});
             }
-            TempData["surface"] = surfaces;
-            TempData["sides"] = mc.Sides.OrderBy(side => int.Parse(side.Name)).ToList();
+            
+            Session["sides"] = mc.Sides.OrderBy(side => int.Parse(side.Name)).ToList();
             ViewBag.Bcoord = mc.coordB;
             ViewBag.Hcoord = mc.coordH;
             int idShow = mc.Id_show;
@@ -379,7 +379,7 @@ namespace Sciencecom.Controllers
                     surfaces.Add(surface);
                 }
             }
-            TempData["surface"] = surfaces;
+            Session["sides"] = data.Sides.OrderBy(side => int.Parse(side.Name)).ToList();
            
             switch (type)
             {
@@ -482,7 +482,7 @@ namespace Sciencecom.Controllers
                     surfaces.Add(surface);
                 }
             }
-            TempData["surface"] = surfaces;
+            Session["sides"] = mc.Sides.OrderBy(side => int.Parse(side.Name)).ToList();
             mc.Code = "MP";
             if(mc.coordB!=null)
             mc.coordB = double.Parse(mc.coordB.ToString());
@@ -587,7 +587,7 @@ namespace Sciencecom.Controllers
                     surfaces.Add(surface);
                 }
             }
-            TempData["surface"] = surfaces;
+            Session["sides"] = data.Sides.OrderBy(side => int.Parse(side.Name)).ToList();
 
             switch (type)
             {
@@ -685,7 +685,7 @@ namespace Sciencecom.Controllers
                 return RedirectToAction("NotFound");
             }
             List<Surface> surfaces = mc.Sides.OrderBy(a => a.Name).SelectMany(sides => sides.Surfaces).ToList();
-            TempData["surface"] = surfaces;
+            Session["sides"] = mc.Sides.OrderBy(side => int.Parse(side.Name)).ToList();
             mc.Code = "LD";
             if (mc.coordB != null)
             {
@@ -703,7 +703,7 @@ namespace Sciencecom.Controllers
             ViewBag.ScanPassport_2Sides = LoadPic(idShow.ToString(), "ScanPassport_2Sides");
            
             List<string> photoNames = _phw.LoadPic(idShow.ToString());
-            TempData["sides"] = mc.Sides.OrderBy(side => int.Parse(side.Name)).ToList();
+            Session["sides"] = mc.Sides.OrderBy(side => int.Parse(side.Name)).ToList();
             Session["PhotoNames"] = photoNames;
             ViewBag.Application = LoadPic(mc.Id_show.ToString(), "Application");
             ViewBag.Bcoord = mc.coordB;
@@ -808,7 +808,7 @@ namespace Sciencecom.Controllers
                     surfaces.Add(surface);
                 }
             }
-            TempData["surface"] = surfaces;
+            Session["sides"] = data.Sides.OrderBy(side => int.Parse(side.Name)).ToList();
             
             switch (type)
             {
@@ -853,7 +853,7 @@ namespace Sciencecom.Controllers
                     surfaces.Add(surface);
                 }
             }
-            TempData["surface"] = surfaces;
+            Session["sides"] = mc.Sides.OrderBy(side => int.Parse(side.Name)).ToList();
             mc.Code = "UI";
             
             ViewBag.Type = "UI";
