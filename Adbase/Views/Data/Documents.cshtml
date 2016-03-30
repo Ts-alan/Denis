@@ -265,6 +265,15 @@
     {
         margin-left: 0px;
     }
+   .hideInView {
+       display: none;
+   }
+     #hideMe {
+       display: none;
+   }
+     .marginedLabel {
+         margin-left: 25px;
+     }
 </style>
 <h2>Карточка конструкции</h2>
 @using (Html.BeginForm("EditAdvertisingDesign", "Data", FormMethod.Post, new { enctype = "multipart/form-data", id = "test1" }))
@@ -541,3 +550,4 @@ else
     @Html.ActionLink("Перейти к карте конструкций", "Index", "Map", null, new { @class = "btn btn-default" })
 }
 
+@Html.Partial("PatialView/ModalPicture")

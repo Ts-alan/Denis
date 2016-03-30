@@ -67,7 +67,8 @@ namespace Sciencecom
             ));
 
             bundles.Add(new ScriptBundle("~/Content/Docs").Include(
-            "~/Scripts/DocsPlacemark.js"
+            "~/Scripts/DocsPlacemark.js",
+            "~/Scripts/PictureAdder.js"
            ));
 
         }

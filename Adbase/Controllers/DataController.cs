@@ -173,7 +173,9 @@ namespace Sciencecom.Controllers
                         ViewBag.Scan1Sides = LoadPic(data.Id_show.ToString(), "Scan1SidesWithFinancialManagement");
                         ViewBag.ScanPassport_1 = LoadPic(data.Id_show.ToString(), "ScanPassport_1Sides");
                         ViewBag.ScanPassport_2 = LoadPic(data.Id_show.ToString(), "ScanPassport_2Sides");
-                        
+                        List<string> photoNames = _phw.LoadPic(data.Id_show.ToString());
+                        Session["PhotoNames"] = photoNames;
+                        Session["IdShow"] = data.Id_show;
                     }
                     break;
 
