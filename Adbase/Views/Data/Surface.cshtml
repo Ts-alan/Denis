@@ -13,16 +13,13 @@
                     <input name="[@j-1].NumberSurface" type="hidden" value="@ViewBag.Side">
                     <div class="form-group has-feedback">
                         <label for="[@j-1].Height">Высота</label>
-                        @*@Html.ValidationMessageFor(model => model[i].Height)*@
                         <span class="field-validation-valid" data-valmsg-for="[@j-1].Height" data-valmsg-replace="true"></span>
                         <span class="glyphicon form-control-feedback"></span>
-                        @{ var l = @Model;}
                         @Html.TextBoxFor(model => model[j-1].Height, new {@class = "form-control", type = "number", Name = "(" + ViewBag.Side + ")[" + (j-1) + "].Height", onchange = "CalculateArea(" + @ViewBag.Side + "," + (@j-1) + ")"})
 
                     </div>
                     <div class="form-group has-feedback" style="margin-left: 20px">
                         <label for="[@j-1].Width">Ширина</label>
-                        @* @Html.ValidationMessageFor(model => model[i].Width)*@
                         <span class="field-validation-valid" data-valmsg-for="[@j-1].Width" data-valmsg-replace="true"></span>
                         <span class="glyphicon form-control-feedback"></span>
                         @Html.TextBoxFor(model => model[j-1].Width, new {@class = "form-control", type = "number", Name = "(" + ViewBag.Side + ")[" + (j-1) + "].Width", onchange = "CalculateArea(" + @ViewBag.Side + "," + (@j-1) + ")"})
@@ -36,8 +33,8 @@
 
                     <div style="margin-left: 10px" class="form-group">
 
-                        <label>Фотография</label>
-                        <br/>
+                        @*<label>Фотография</label>
+                        <br/>*@
                         @{
                             string photoName = "[" + ViewBag.Side + "](" + j + ")";
                             List<string> listOfNames = new List<string>();
@@ -48,29 +45,33 @@
                         }
                         @if (listOfNames.Count != 0 && listOfNames.Any(x => x.Contains(photoName)))
                         {
+                            <label class="marginedLabel">Фотография</label>
+                            <br  class="hideInView"/>
                             string image = "/Images/photo1/[" + ViewBag.Side + "](" + @j + ")photo" + Session["IdShow"] + ".jpg";
                             string imgName = "[" + ViewBag.Side + "](" + @j + ")photo.jpg";
                             
                             <input type="hidden" name="PhotoInd[@{@ViewBag.Side}](@j)" value="setImage">
-                            <img class="closeimg" style="width: 20px" src="../../Content/CloseImg.jpg"/>
-                            <div class="fileUpload btn btn-warning input-sm">
-                                <span>&nbsp;&nbsp;Фото&nbsp;</span>
-                                <input type="file" class="upload" name="photo[@{@ViewBag.Side}](@j)" accept="image/jpeg/"/>
+                            <img class="closeimg hideInView" style="width: 20px" src="../../Content/CloseImg.jpg"/>
+                            <div id="hideMe" class="fileUpload btn btn-warning input-sm hideInView">
+                                <span class="hideInView" >&nbsp;&nbsp;Фото&nbsp;</span>
+                                <input type="file" class="upload hideInView" name="photo[@{@ViewBag.Side}](@j)" accept="image/jpeg/"/>
                             </div>
-                            <label for="photo[@{@ViewBag.Side}](@j)">@imgName</label>
-                            <br/>
+                            <label class ="hideInView" for="photo[@{@ViewBag.Side}](@j)">@imgName</label>
+                            <br class="hideInView" />
                             <br/>
                             <button type="button" style="margin-left: 25px" class="modalPictureTrigger btn btn-default input-sm" data-toggle="modal" onclick="addPic('#ModalPictureDivPhoto', '@image')" data-target="#ViewModalPicturePhoto">Показать</button>
                         }
                         else
                         {
+                            <label class="hideInView">Фотография</label>
+                            <br/>
                             <input type="hidden" name="PhotoInd[@{@ViewBag.Side}](@j)" value="">
-                            <img class="closeimg" style="width: 20px" src="../../Content/CloseImg.jpg"/>
-                            <div class="fileUpload btn btn-default input-sm">
-                                <span accept="image/jpeg/">&nbsp;&nbsp;Фото&nbsp;</span>
-                                <input type="file" class="upload" name="photo[@{@ViewBag.Side}](@j)" accept="image/jpeg/"/>
+                            <img class="closeimg hideInView" style="width: 20px" src="../../Content/CloseImg.jpg"/>
+                            <div id="hideMe" class="hideInView fileUpload btn btn-default input-sm">
+                                <span id="hideMe" accept="image/jpeg/">&nbsp;&nbsp;Фото&nbsp;</span>
+                                <input type="file" id="hideMe" class="upload hideInView" name="photo[@{@ViewBag.Side}](@j)" accept="image/jpeg/"/>
                             </div>
-                            <label for="photo[@{@ViewBag.Side}](@j)">Файл не выбран</label>
+                            <label class="hideInView" for="photo[@{@ViewBag.Side}](@j)">Файл не выбран</label>
                             <br/>
                             <br/>
                         }
@@ -82,15 +83,6 @@
     </text>
     <script type="text/javascript">
         AddRules();
-        @*//выщитывание площади для каждой поверхности
-        $('[name="(' + @ViewBag.Side + ')[' + @i + '].Height"]').on("change", function()
-        {
-            CalculateArea(@ViewBag.Side, @i);
-        });
-        $('[name="(' + @ViewBag.Side + ')[' + @i + '].Width"]').on("change", function()
-        {
-            CalculateArea(@ViewBag.Side, @i);
-        });*@
 
         $(".closeimg").click(function () {
         $(this).prev().attr("value", "");

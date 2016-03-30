@@ -147,11 +147,11 @@
                     "</div> <div style=\"display: none\" id=\"" + i + "HiddenIdentification\"> &nbsp;&nbsp;&nbsp;<b>Идентификация поверхностей</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("IdentificationSurface", new SelectList(IdentificationSide, "id", "IdentificationName"), "", new {IdentificationForIdentificationSurface = ""}).ToHtmlString().Replace("\"", " ")) </div>' +
                     "<div  id=\"InsertPartial" + i + "\"></div>" +
                     "</div>");
-
-                $("#SizeOfCount").val(CountSizes);
-                $("[directionside]").each(function(ind, element) {
+                //console.log($("#SizeOfCount"));
+                //$("#SizeOfCount").val(CountSizes);
+                //$("[directionside]").each(function(ind, element) {
                    
-                });
+                //});
                
 
             }

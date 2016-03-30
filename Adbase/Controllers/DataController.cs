@@ -35,8 +35,8 @@ namespace Sciencecom.Controllers
         public ActionResult FindStreets(string term, string cityname)
         {
             cityname.Normalize();
-            var streets = _dbw.FindStreets(term);
-            var projection = from street in streets
+            //var streets = _dbw.FindStreets(term);
+            var projection = from street in _dbw.FindStreets(term)
                              where street.Locality.NameLocality == cityname
                              select new
                              {
@@ -135,7 +135,7 @@ namespace Sciencecom.Controllers
             ViewBag.EndCountForSurface = endCountForSurface ?? 1;
             ViewBag.StartCountForSurface = startCountForSurface ?? 0;
             ViewBag.Side = side;
-            var tempRresult = (List<Side>)TempData.Peek("sides");
+            var tempRresult = (List<Side>)Session["sides"];
             var result = tempRresult[int.Parse(side) - 1].Surfaces.ToList();
             return View("Surface", result);
         }
@@ -161,8 +161,8 @@ namespace Sciencecom.Controllers
                     surfaces.Add(surface);
                 }
             }
-            TempData["surface"] = surfaces;
-
+            
+            Session["sides"] = data.Sides.OrderBy(side => int.Parse(side.Name)).ToList();
             switch (type)
             {
                 case "BB":
@@ -173,7 +173,9 @@ namespace Sciencecom.Controllers
                         ViewBag.Scan1Sides = LoadPic(data.Id_show.ToString(), "Scan1SidesWithFinancialManagement");
                         ViewBag.ScanPassport_1 = LoadPic(data.Id_show.ToString(), "ScanPassport_1Sides");
                         ViewBag.ScanPassport_2 = LoadPic(data.Id_show.ToString(), "ScanPassport_2Sides");
-                        
+                        List<string> photoNames = _phw.LoadPic(data.Id_show.ToString());
+                        Session["PhotoNames"] = photoNames;
+                        Session["IdShow"] = data.Id_show;
                     }
                     break;
 
@@ -255,8 +257,8 @@ namespace Sciencecom.Controllers
             {
                 surfaces.Add(new Surface() {});
             }
-            TempData["surface"] = surfaces;
-            TempData["sides"] = mc.Sides.OrderBy(side => int.Parse(side.Name)).ToList();
+            
+            Session["sides"] = mc.Sides.OrderBy(side => int.Parse(side.Name)).ToList();
             ViewBag.Bcoord = mc.coordB;
             ViewBag.Hcoord = mc.coordH;
             int idShow = mc.Id_show;
@@ -379,7 +381,7 @@ namespace Sciencecom.Controllers
                     surfaces.Add(surface);
                 }
             }
-            TempData["surface"] = surfaces;
+            Session["sides"] = data.Sides.OrderBy(side => int.Parse(side.Name)).ToList();
            
             switch (type)
             {
@@ -428,7 +430,7 @@ namespace Sciencecom.Controllers
             HttpPostedFileBase Scan1Side, HttpPostedFileBase Scan2Side, HttpPostedFileBase photo1,
             HttpPostedFileBase scan1SidesWithFinancialManagement, List<HttpPostedFileBase> severalPhoto,
             string Bcoord, string Hcoord,
-            int countSize = 1)
+            int countSize = 0)
         {
             if (structures.Code == null)
             {
@@ -482,7 +484,7 @@ namespace Sciencecom.Controllers
                     surfaces.Add(surface);
                 }
             }
-            TempData["surface"] = surfaces;
+            Session["sides"] = mc.Sides.OrderBy(side => int.Parse(side.Name)).ToList();
             mc.Code = "MP";
             if(mc.coordB!=null)
             mc.coordB = double.Parse(mc.coordB.ToString());
@@ -504,7 +506,7 @@ namespace Sciencecom.Controllers
             HttpPostedFileBase Scan1Side, HttpPostedFileBase Scan2Side, HttpPostedFileBase photo1,
             HttpPostedFileBase scan1SidesWithFinancialManagement, string Scan1SideInd, string Scan2SideInd, string photo1Ind,
             string Bcoord, string Hcoord,
-            int countSize = 1)
+            int countSize = 0)
         {
 
             AdvertisingStructure mc = _dbw.RetrieveStructure(id);
@@ -587,7 +589,7 @@ namespace Sciencecom.Controllers
                     surfaces.Add(surface);
                 }
             }
-            TempData["surface"] = surfaces;
+            Session["sides"] = data.Sides.OrderBy(side => int.Parse(side.Name)).ToList();
 
             switch (type)
             {
@@ -644,7 +646,7 @@ namespace Sciencecom.Controllers
             [ModelBinder(typeof(CustomModelBinderForPicsForAD))] Dictionary<string, HttpPostedFileBase> photos,
             HttpPostedFileBase Application,
             HttpPostedFileBase scan1Side, HttpPostedFileBase scan2Side,
-            string Bcoord, string Hcoord, int countSize = 1)
+            string Bcoord, string Hcoord, int countSize = 0)
         {
 
             Guid structuresId = Guid.NewGuid();
@@ -685,7 +687,7 @@ namespace Sciencecom.Controllers
                 return RedirectToAction("NotFound");
             }
             List<Surface> surfaces = mc.Sides.OrderBy(a => a.Name).SelectMany(sides => sides.Surfaces).ToList();
-            TempData["surface"] = surfaces;
+            Session["sides"] = mc.Sides.OrderBy(side => int.Parse(side.Name)).ToList();
             mc.Code = "LD";
             if (mc.coordB != null)
             {
@@ -703,7 +705,7 @@ namespace Sciencecom.Controllers
             ViewBag.ScanPassport_2Sides = LoadPic(idShow.ToString(), "ScanPassport_2Sides");
            
             List<string> photoNames = _phw.LoadPic(idShow.ToString());
-            TempData["sides"] = mc.Sides.OrderBy(side => int.Parse(side.Name)).ToList();
+            Session["sides"] = mc.Sides.OrderBy(side => int.Parse(side.Name)).ToList();
             Session["PhotoNames"] = photoNames;
             ViewBag.Application = LoadPic(mc.Id_show.ToString(), "Application");
             ViewBag.Bcoord = mc.coordB;
@@ -721,7 +723,7 @@ namespace Sciencecom.Controllers
             HttpPostedFileBase scan1Side, HttpPostedFileBase scan2Side, 
             string ScanPassport_1SidesInd, string ScanPassport_2SidesInd, string scan1SideInd, string scan2SideInd, 
             string photo1Ind, string photo2Ind, string ApplicationInd, 
-            string Bcoord, string Hcoord, int countSize = 1)
+            string Bcoord, string Hcoord, int countSize = 0)
         {
 
             AdvertisingStructure mc = _dbw.RetrieveStructure(id);
@@ -808,7 +810,7 @@ namespace Sciencecom.Controllers
                     surfaces.Add(surface);
                 }
             }
-            TempData["surface"] = surfaces;
+            Session["sides"] = data.Sides.OrderBy(side => int.Parse(side.Name)).ToList();
             
             switch (type)
             {
@@ -853,7 +855,7 @@ namespace Sciencecom.Controllers
                     surfaces.Add(surface);
                 }
             }
-            TempData["surface"] = surfaces;
+            Session["sides"] = mc.Sides.OrderBy(side => int.Parse(side.Name)).ToList();
             mc.Code = "UI";
             
             ViewBag.Type = "UI";
@@ -871,7 +873,7 @@ namespace Sciencecom.Controllers
         [HttpPost]
         public ActionResult EditIllegalDesign(int id, AdvertisingStructure structures,
             HttpPostedFileBase photo1, HttpPostedFileBase photo2,string photoInd1, string photoInd2, 
-            string Bcoord, string Hcoord, int countSize = 1)
+            string Bcoord, string Hcoord, int countSize = 0)
         {
 
             AdvertisingStructure mc = _dbw.RetrieveStructure(id);

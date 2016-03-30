@@ -12,7 +12,7 @@
     var StartCountForSurface;
     var EndCountForSurface = 0;
     var isGreateAdvertisingDesign = false;
-    var ArrayOfSides = @Html.Raw(JsonConvert.SerializeObject(Model.Sides.Select(a =>
+    var ArrayOfSides = @Html.Raw(JsonConvert.SerializeObject(Model.Sides.OrderBy(side=> side.Name).Select(a =>
                        {
 
                            if (a.Identification != null)
@@ -209,6 +209,15 @@
         margin-left: 0px;
         margin-right: 0px;
     }
+      .hideInView {
+       display: none;
+   }
+     #hideMe {
+       display: none;
+   }
+     .marginedLabel {
+         margin-left: 25px;
+     }
 </style>
 <h2>Карточка конструкции</h2>
 @using (Html.BeginForm("EditAdvertisingDesign", "Data", FormMethod.Post, new { enctype = "multipart/form-data", id = "test1" }))
