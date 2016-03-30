@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -20,7 +19,7 @@ namespace Sciencecom.Controllers
         [Authorize]
         public ActionResult Owner(string name, string backTo)
         {
-            var owner = _context.Owners.First(m => m.Name == name);
+            var owner = _dbw.Owner(name);
             ViewBag.BackRef = backTo;
             return View(owner);
         }
@@ -36,7 +35,7 @@ namespace Sciencecom.Controllers
         public ActionResult FindStreets(string term, string cityname)
         {
             cityname.Normalize();
-            var streets = from m in _context.Streets where m.Street1.Contains(term) select m;
+            var streets = _dbw.FindStreets(term);
             var projection = from street in streets
                              where street.Locality.NameLocality == cityname
                              select new
@@ -56,10 +55,7 @@ namespace Sciencecom.Controllers
         {
             Session["action"] = RouteData.Values["action"];
             Session["controller"] = RouteData.Values["controller"];
-            var data = _context.AdvertisingStructures;
-           
-            return View(data);
-
+            return View();
         }
 
         public JsonResult SearchAdvertisingDesign(int page, string sidx, string sord,
@@ -253,7 +249,6 @@ namespace Sciencecom.Controllers
                 {
                     surfaces.Add(surface);
                 }
-                
             }
             
             if (surfaces.Count == 0)
@@ -285,10 +280,6 @@ namespace Sciencecom.Controllers
             string Bcoord, string Hcoord, string photoInd1, string photoInd2,
             int countSize = 0)
         {
-
-            AdvertisingStructure mc = _context.AdvertisingStructures.Single(a => a.Id_show == id);
-           
-            var tempId = mc.Id;
             if (structures.UniqueNumber == null)
             {
                 structures.UniqueNumber = TableAdapterExtensions.StringSymvol();
@@ -297,6 +288,9 @@ namespace Sciencecom.Controllers
             {
                 structures.Code = "BB";
             }
+            structures = ValidateCoords(structures, Bcoord, Hcoord);
+            AdvertisingStructure mc = _dbw.RetrieveStructure(id);
+            var tempId = mc.Id;
             
             foreach (var side in mc.Sides)
             {
@@ -326,8 +320,7 @@ namespace Sciencecom.Controllers
                 }
                 structures.Id = tempId;
                 structures.Area = CountSquare(surfaces);
-                structures = ValidateCoords(structures, Bcoord, Hcoord);
-
+                
                 _context.AdvertisingStructures.Add(structures);
                 
                 _context.Sides.AddRange(sides);
@@ -339,29 +332,23 @@ namespace Sciencecom.Controllers
                 {
                     i.Side_Id = sides.Single(a => a.Name == i.SideOfSurface).Id;
                     listSurface.Add(i);
-
                 }
                 _context.Surfaces.AddRange(listSurface);
-                
                 _context.SaveChanges();
             }
             else
             {
                 structures.Area = CountSquare(surfaces);
                 _context.AdvertisingStructures.Add(structures);
-                
                 _context.SaveChanges();
             }
 
             //картики
             ValidatePic(ScanPassport_1Sides, photoInd1, structures.Id_show.ToString(), mc.Id_show.ToString(), "ScanPassport_1Sides");
             ValidatePic(ScanPassport_2Sides, photoInd2, structures.Id_show.ToString(), mc.Id_show.ToString(), "ScanPassport_2Sides");
-
-            foreach (var photo in photos)
-            {
-                _phw.ValidatePic(photos, picIndexes, structures.Id_show.ToString(), mc.Id_show.ToString());
-            }
-
+            
+            _phw.ValidatePic(photos, picIndexes, structures.Id_show.ToString(), mc.Id_show.ToString());
+            
             return RedirectToAction((string)Session["action"], (string)Session["controller"]);
         }
 
@@ -520,7 +507,7 @@ namespace Sciencecom.Controllers
             int countSize = 1)
         {
 
-            AdvertisingStructure mc = _context.AdvertisingStructures.Single(a => a.Id_show == id);
+            AdvertisingStructure mc = _dbw.RetrieveStructure(id);
             var tempId = mc.Id;
             DeletePic(mc.Id_show.ToString(), "scanPassport1Sides");
             DeletePic(mc.Id_show.ToString(), "scanPassport2Sides");
@@ -572,7 +559,6 @@ namespace Sciencecom.Controllers
             ValidatePic(Scan1Side, Scan1SideInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "Scan1Side");
             ValidatePic(Scan2Side, Scan2SideInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "Scan2Side");
             ValidatePic(photo1, photo1Ind, structures.Id_show.ToString(), mc.Id_show.ToString(), "photo1");
-           
            
             return RedirectToAction((string)Session["action"], (string)Session["controller"]);
 
@@ -738,13 +724,13 @@ namespace Sciencecom.Controllers
             string Bcoord, string Hcoord, int countSize = 1)
         {
 
-            AdvertisingStructure mc = _context.AdvertisingStructures.Single(a => a.Id_show == id);
-            
+            AdvertisingStructure mc = _dbw.RetrieveStructure(id);
             var tempId = mc.Id;
             if (structures.Code == null)
             {
                 structures.Code = "LD";
             }
+            
             foreach (var side in mc.Sides)
             {
                 _context.Surfaces.RemoveRange(side.Surfaces);
@@ -793,7 +779,6 @@ namespace Sciencecom.Controllers
 
             _phw.ValidatePic(photos, picIndexes, structures.Id_show.ToString(), mc.Id_show.ToString());
        
-
             return RedirectToAction((string)Session["action"], (string)Session["controller"]);
 
         }
@@ -889,7 +874,7 @@ namespace Sciencecom.Controllers
             string Bcoord, string Hcoord, int countSize = 1)
         {
 
-            AdvertisingStructure mc = _context.AdvertisingStructures.Single(a => a.Id_show == id);
+            AdvertisingStructure mc = _dbw.RetrieveStructure(id);
             var tempId = mc.Id;
             foreach (var side in mc.Sides)
             {

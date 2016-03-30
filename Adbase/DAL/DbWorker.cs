@@ -1,14 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity.Validation;
-using System.Globalization;
 using System.Linq;
-using System.Web;
-using System.Web.Helpers;
-using System.Web.Mvc;
 using Sciencecom.Models;
 using Sciencecom.Models.MapJsonModels;
-using System.Diagnostics;
 
 namespace Sciencecom.DAL
 {
@@ -478,6 +472,75 @@ namespace Sciencecom.DAL
                 Context.AdvertisingStructures.Add(structure);
                 Context.SaveChanges();
             }
+        }
+
+        protected void EditStructure(AdvertisingStructure oldStructure, AdvertisingStructure newStructure, int countSize, List<Side> sides, List<Surface> surfaces)
+        {
+            var tempId = oldStructure.Id;
+
+            foreach (var side in oldStructure.Sides)
+            {
+                Context.Surfaces.RemoveRange(side.Surfaces);
+
+            }
+
+            Context.Sides.RemoveRange(oldStructure.Sides);
+            Context.AdvertisingStructures.Remove(oldStructure);
+            Context.SaveChanges();
+            if (countSize > 0)
+            {
+                for (int j = 0; j < countSize; j++)
+                {
+                    try
+                    {
+                        sides[j].AdvertisingStructures_Id = oldStructure.Id;
+                    }
+                    catch (Exception e)
+                    {
+                        sides.Add(new Side() { DirectionSide_id = new Guid("27b8c509-8f09-4a0d-ae22-048c2611b7ea") });
+                    }
+
+                    sides[j].AdvertisingStructures_Id = oldStructure.Id;
+                    sides[j].Name = (j + 1).ToString();
+                    sides[j].Id = Guid.NewGuid();
+                }
+                newStructure.Id = tempId;
+                newStructure.Area = CountSquare(surfaces);
+                
+
+                Context.AdvertisingStructures.Add(newStructure);
+
+                Context.Sides.AddRange(sides);
+
+                Context.SaveChanges();
+
+                List<Surface> listSurface = new List<Surface>();
+                foreach (var i in surfaces)
+                {
+                    i.Side_Id = sides.Single(a => a.Name == i.SideOfSurface).Id;
+                    listSurface.Add(i);
+
+                }
+                Context.Surfaces.AddRange(listSurface);
+
+                Context.SaveChanges();
+            }
+            else
+            {
+                newStructure.Area = CountSquare(surfaces);
+                Context.AdvertisingStructures.Add(newStructure);
+                Context.SaveChanges();
+            }
+        }
+
+        public IQueryable<Street> FindStreets(string term)
+        {
+            var streets = from m in Context.Streets where m.Street1.Contains(term) select m;
+            return streets;
+        }
+        public Owner Owner(string name)
+        {
+            return Context.Owners.First(m => m.Name == name);
         }
     }
 }
