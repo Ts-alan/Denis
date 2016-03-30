@@ -131,20 +131,7 @@ namespace Sciencecom.Controllers
             ViewBag.StartCountForSurface = startCountForSurface ?? 0;
             ViewBag.Side = side;
             ViewBag.Guid = Guid.NewGuid().GetHashCode();
-
             return View("Surface");
-        }
-        public ActionResult AddSurfaceForLightDuct(string side, int? startCountForSurface, int? endCountForSurface, bool isEdit = false)
-        {
-
-            ViewBag.EndCountForSurface = endCountForSurface ?? 1;
-            ViewBag.StartCountForSurface = startCountForSurface ?? 0;
-            ViewBag.Side = side;
-            ViewBag.Guid = Guid.NewGuid().GetHashCode();
-            
-            var tempRresult = (List<Side>)Session["Sides"];
-            var result = tempRresult[int.Parse(side) - 1].Surfaces.ToList();
-            return View("Surface", result);
         }
 
         public ActionResult EditSurface(string side, int? startCountForSurface, int? endCountForSurface)
@@ -274,7 +261,7 @@ namespace Sciencecom.Controllers
                 surfaces.Add(new Surface() {});
             }
             TempData["surface"] = surfaces;
-            TempData["sides"] = mc.Sides.ToList();
+            TempData["sides"] = mc.Sides.OrderBy(side => int.Parse(side.Name)).ToList();
             ViewBag.Bcoord = mc.coordB;
             ViewBag.Hcoord = mc.coordH;
             int idShow = mc.Id_show;
@@ -658,6 +645,7 @@ namespace Sciencecom.Controllers
             ViewBag.UniqueNumber = TableAdapterExtensions.StringSymvol();
             ViewBag.SeizesCount = 2;
             Session["PhotoNames"] = null;
+
             return View();
         }
 
@@ -729,7 +717,7 @@ namespace Sciencecom.Controllers
             ViewBag.ScanPassport_2Sides = LoadPic(idShow.ToString(), "ScanPassport_2Sides");
            
             List<string> photoNames = _phw.LoadPic(idShow.ToString());
-            Session["Sides"] = mc.Sides.ToList();
+            TempData["sides"] = mc.Sides.OrderBy(side => int.Parse(side.Name)).ToList();
             Session["PhotoNames"] = photoNames;
             ViewBag.Application = LoadPic(mc.Id_show.ToString(), "Application");
             ViewBag.Bcoord = mc.coordB;

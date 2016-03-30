@@ -217,7 +217,7 @@
         $("[side=" + i + "]").remove();
 
 
-        $.ajax('@Url.Action("AddSurfaceForLightDuct", "Data")', { data: { side: i, StartCountForSurface: StartCountForSurface, EndCountForSurface: EndCountForSurface } })
+        $.ajax('@Url.Action("EditSurface", "Data")', { data: { side: i, StartCountForSurface: StartCountForSurface, EndCountForSurface: EndCountForSurface } })
             .success(function (e)
             {
                 $("#InsertPartial" + i + "").before(e);
