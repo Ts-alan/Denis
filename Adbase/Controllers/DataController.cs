@@ -92,7 +92,6 @@ namespace Sciencecom.Controllers
             {
                 return RedirectToAction("NotFound");
             }
-            _dbw.DeleteAdvertisingDesign(id);
             
             //удаление картинок
 
@@ -107,6 +106,16 @@ namespace Sciencecom.Controllers
             DeletePic(mc.Id_show.ToString(), "Scan2Side");
 
             DeletePic(mc.Id_show.ToString(), "Application");
+
+            if (mc.Code == "BB" | mc.Code=="LD")
+            {
+                foreach (string name in _phw.LoadPic(mc.Id_show.ToString()))
+                {
+                    _phw.DeleteSurfacePhotos(name);
+                }
+            }
+
+            _dbw.DeleteAdvertisingDesign(id);
 
             if (switchtoMap == "true")
             {

@@ -41,6 +41,17 @@ namespace Sciencecom.DAL
             }
         }
 
+        internal void DeleteSurfacePhotos(string name)
+        {
+            string src = "~/Images/photo1/" + name;
+            string path = System.Web.HttpContext.Current.Server.MapPath(src);
+            FileInfo info1 = new FileInfo(path);
+            if (info1.Exists)
+            {
+                info1.Delete();
+            }
+        }
+
         internal void ValidatePic(Dictionary<string, HttpPostedFileBase> photos, Dictionary<string, string> picIndexes, string structureId, string oldstructureId)
         {
             foreach (KeyValuePair<string, HttpPostedFileBase> photo in photos)
