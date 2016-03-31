@@ -481,7 +481,6 @@ namespace Sciencecom.DAL
             foreach (var side in oldStructure.Sides)
             {
                 Context.Surfaces.RemoveRange(side.Surfaces);
-
             }
 
             Context.Sides.RemoveRange(oldStructure.Sides);
@@ -506,7 +505,6 @@ namespace Sciencecom.DAL
                 }
                 newStructure.Id = tempId;
                 newStructure.Area = CountSquare(surfaces);
-                
 
                 Context.AdvertisingStructures.Add(newStructure);
 
@@ -519,7 +517,6 @@ namespace Sciencecom.DAL
                 {
                     i.Side_Id = sides.Single(a => a.Name == i.SideOfSurface).Id;
                     listSurface.Add(i);
-
                 }
                 Context.Surfaces.AddRange(listSurface);
 
