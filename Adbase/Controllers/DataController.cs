@@ -240,25 +240,22 @@ namespace Sciencecom.Controllers
                 return RedirectToAction("NotFound");
             }
             List<Surface> surfaces = new List<Surface>();
-            if (mc.Sides.Count == 0)
+            if (mc.Sides.Count != 0)
             {
-                mc.Sides.Add(new Side() { DirectionSide_id = new Guid("27b8c509-8f09-4a0d-ae22-048c2611b7ea") });
-            }
-           
-            foreach (var side in mc.Sides.OrderBy(a => a.Name))
-            {
-                foreach (var surface in side.Surfaces)
+                foreach (var side in mc.Sides.OrderBy(a => a.Name))
                 {
-                    surfaces.Add(surface);
+                    foreach (var surface in side.Surfaces)
+                    {
+                        surfaces.Add(surface);
+                    }
                 }
+                if (surfaces.Count == 0)
+                {
+                    surfaces.Add(new Surface() { });
+                }
+                Session["sides"] = mc.Sides.OrderBy(side => int.Parse(side.Name)).ToList();
             }
             
-            if (surfaces.Count == 0)
-            {
-                surfaces.Add(new Surface() {});
-            }
-            
-            Session["sides"] = mc.Sides.OrderBy(side => int.Parse(side.Name)).ToList();
             ViewBag.Bcoord = mc.coordB;
             ViewBag.Hcoord = mc.coordH;
             int idShow = mc.Id_show;
@@ -704,7 +701,11 @@ namespace Sciencecom.Controllers
             ViewBag.ScanPassport_2Sides = LoadPic(idShow.ToString(), "ScanPassport_2Sides");
            
             List<string> photoNames = _phw.LoadPic(idShow.ToString());
-            Session["sides"] = mc.Sides.OrderBy(side => int.Parse(side.Name)).ToList();
+            if (mc.Sides != null)
+            {
+                Session["sides"] = mc.Sides.OrderBy(side => int.Parse(side.Name)).ToList();
+            }
+           
             Session["PhotoNames"] = photoNames;
             ViewBag.Application = LoadPic(mc.Id_show.ToString(), "Application");
             ViewBag.Bcoord = mc.coordB;
