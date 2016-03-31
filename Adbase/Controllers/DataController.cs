@@ -293,15 +293,14 @@ namespace Sciencecom.Controllers
             structures = ValidateCoords(structures, Bcoord, Hcoord);
             AdvertisingStructure mc = _dbw.RetrieveStructure(id);
             var tempId = mc.Id;
-            
+
             foreach (var side in mc.Sides)
             {
-                _context.Surfaces.RemoveRange(side.Surfaces);
-
+                _context.Surfaces.RemoveRange(from s in mc.Sides from sur in s.Surfaces select _context.Surfaces.FirstOrDefault(si => si.Id == sur.Id));
             }
 
-            _context.Sides.RemoveRange(mc.Sides);
-            _context.AdvertisingStructures.Remove(mc);
+            _context.Sides.RemoveRange(mc.Sides.Select(side => _context.Sides.FirstOrDefault(x => x.Id == side.Id)));
+            _context.AdvertisingStructures.Remove(_context.AdvertisingStructures.FirstOrDefault(x => x.Id_show == mc.Id_show));
             _context.SaveChanges();
             if (countSize > 0)
             {
@@ -515,11 +514,11 @@ namespace Sciencecom.Controllers
             DeletePic(mc.Id_show.ToString(), "scanPassport2Sides");
             foreach (var side in mc.Sides)
             {
-                _context.Surfaces.RemoveRange(side.Surfaces);
+                _context.Surfaces.RemoveRange(from s in mc.Sides from sur in s.Surfaces select _context.Surfaces.FirstOrDefault(si => si.Id == sur.Id));
             }
 
-            _context.Sides.RemoveRange(mc.Sides);
-            _context.AdvertisingStructures.Remove(mc);
+            _context.Sides.RemoveRange(mc.Sides.Select(side => _context.Sides.FirstOrDefault(x => x.Id == side.Id)));
+            _context.AdvertisingStructures.Remove(_context.AdvertisingStructures.FirstOrDefault(x => x.Id_show == mc.Id_show));
             _context.SaveChanges();
             if (structures.Code == null)
             {
@@ -735,11 +734,11 @@ namespace Sciencecom.Controllers
             
             foreach (var side in mc.Sides)
             {
-                _context.Surfaces.RemoveRange(side.Surfaces);
+                _context.Surfaces.RemoveRange(from s in mc.Sides from sur in s.Surfaces select _context.Surfaces.FirstOrDefault(si => si.Id == sur.Id));
             }
-
-            _context.Sides.RemoveRange(mc.Sides);
-            _context.AdvertisingStructures.Remove(mc);
+            
+            _context.Sides.RemoveRange(mc.Sides.Select(side => _context.Sides.FirstOrDefault(x => x.Id == side.Id)));
+            _context.AdvertisingStructures.Remove(_context.AdvertisingStructures.FirstOrDefault(x=>x.Id_show == mc.Id_show));
             _context.SaveChanges();
 
             for (int j = 0; j < countSize; j++)
@@ -880,14 +879,16 @@ namespace Sciencecom.Controllers
             var tempId = mc.Id;
             foreach (var side in mc.Sides)
             {
-                _context.Surfaces.RemoveRange(side.Surfaces);
+                _context.Surfaces.RemoveRange(from s in mc.Sides from sur in s.Surfaces select _context.Surfaces.FirstOrDefault(si => si.Id == sur.Id));
             }
+
+            _context.Sides.RemoveRange(mc.Sides.Select(side => _context.Sides.FirstOrDefault(x => x.Id == side.Id)));
+            _context.AdvertisingStructures.Remove(_context.AdvertisingStructures.FirstOrDefault(x => x.Id_show == mc.Id_show));
             if (structures.Code == null)
             {
                 structures.Code = "UI";
             }
-            _context.Sides.RemoveRange(mc.Sides);
-            _context.AdvertisingStructures.Remove(mc);
+
             _context.SaveChanges();
             
             structures.Id = tempId;
