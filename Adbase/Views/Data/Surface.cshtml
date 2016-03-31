@@ -45,6 +45,7 @@
                         }
                         @if (listOfNames.Count != 0 && listOfNames.Any(x => x.Contains(photoName)))
                         {
+                         
                             <label class="marginedLabel">Фотография</label>
                             <br  class="hideInView"/>
                             string image = "/Images/photo1/[" + ViewBag.Side + "](" + @j + ")photo" + Session["IdShow"] + ".jpg";

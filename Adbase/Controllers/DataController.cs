@@ -192,6 +192,7 @@ namespace Sciencecom.Controllers
         public ActionResult CreateAdvertisingDesign()
         {
             ViewBag.Code = "BB";
+            Session["PhotoNames"] = null;
             ViewBag.UniqueNumber = TableAdapterExtensions.StringSymvol();
             return View();
         }
@@ -207,6 +208,7 @@ namespace Sciencecom.Controllers
             string Bcoord, string Hcoord,
             int countSize = 0)
         {
+            
             Guid structuresId = Guid.NewGuid();
             structures.Id = structuresId;
             structures = ValidateCoords(structures, Bcoord, Hcoord);
@@ -647,7 +649,7 @@ namespace Sciencecom.Controllers
             HttpPostedFileBase scan1Side, HttpPostedFileBase scan2Side,
             string Bcoord, string Hcoord, int countSize = 0)
         {
-
+            
             Guid structuresId = Guid.NewGuid();
             structures.Id = structuresId;
             structures = ValidateCoords(structures, Bcoord, Hcoord);
@@ -720,7 +722,7 @@ namespace Sciencecom.Controllers
             [ModelBinder(typeof(CustomModelBinderForPicInd))] Dictionary<string, string> picIndexes,
             HttpPostedFileBase scanPassport1Sides, HttpPostedFileBase scanPassport2Sides, HttpPostedFileBase Application,
             HttpPostedFileBase scan1Side, HttpPostedFileBase scan2Side, 
-            string ScanPassport_1SidesInd, string ScanPassport_2SidesInd, string scan1SideInd, string scan2SideInd, 
+            string scanPassport1SidesInd, string scanPassport2SidesInd, string scan1SideInd, string scan2SideInd, 
             string photo1Ind, string photo2Ind, string ApplicationInd, 
             string Bcoord, string Hcoord, int countSize = 0)
         {
@@ -772,8 +774,8 @@ namespace Sciencecom.Controllers
             _context.SaveChanges();
 
             //картики
-            ValidatePic(scanPassport1Sides, ScanPassport_1SidesInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "ScanPassport_1Sides");
-            ValidatePic(scanPassport2Sides, ScanPassport_2SidesInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "ScanPassport_2Sides");
+            ValidatePic(scanPassport1Sides, scanPassport1SidesInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "ScanPassport_1Sides");
+            ValidatePic(scanPassport2Sides, scanPassport2SidesInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "ScanPassport_2Sides");
             ValidatePic(scan1Side, scan1SideInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "Scan1Side");
             ValidatePic(scan2Side, scan2SideInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "Scan2Side");
             ValidatePic(Application, ApplicationInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "Application");
