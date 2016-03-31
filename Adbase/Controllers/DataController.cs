@@ -642,7 +642,7 @@ namespace Sciencecom.Controllers
         public ActionResult CreateLightDuctDesign(AdvertisingStructure structures,
             [ModelBinder(typeof(CustomModelBinderForSide))] List<Side> sides,
             [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces,
-            HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides,
+            HttpPostedFileBase scanPassport1Sides, HttpPostedFileBase scanPassport2Sides,
             [ModelBinder(typeof(CustomModelBinderForPicsForAD))] Dictionary<string, HttpPostedFileBase> photos,
             HttpPostedFileBase Application,
             HttpPostedFileBase scan1Side, HttpPostedFileBase scan2Side,
@@ -655,9 +655,9 @@ namespace Sciencecom.Controllers
             
             _dbw.CreateAdvertisingDesign(structures, sides, surfaces, countSize);
             string id = structures.Id_show.ToString();
-            SavePic(id, "ScanPassport_1Sides", ScanPassport_1Sides);
+            SavePic(id, "ScanPassport_1Sides", scanPassport1Sides);
 
-            SavePic(id, "ScanPassport_2Sides", ScanPassport_2Sides);
+            SavePic(id, "ScanPassport_2Sides", scanPassport2Sides);
 
             SavePic(id, "Scan1Side", scan1Side);
 
@@ -719,7 +719,7 @@ namespace Sciencecom.Controllers
             [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces,
             [ModelBinder(typeof(CustomModelBinderForPicsForAD))] Dictionary<string, HttpPostedFileBase> photos,
             [ModelBinder(typeof(CustomModelBinderForPicInd))] Dictionary<string, string> picIndexes,
-            HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides, HttpPostedFileBase Application,
+            HttpPostedFileBase scanPassport1Sides, HttpPostedFileBase scanPassport2Sides, HttpPostedFileBase Application,
             HttpPostedFileBase scan1Side, HttpPostedFileBase scan2Side, 
             string ScanPassport_1SidesInd, string ScanPassport_2SidesInd, string scan1SideInd, string scan2SideInd, 
             string photo1Ind, string photo2Ind, string ApplicationInd, 
@@ -773,8 +773,8 @@ namespace Sciencecom.Controllers
             _context.SaveChanges();
 
             //картики
-            ValidatePic(ScanPassport_1Sides, ScanPassport_1SidesInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "ScanPassport_1Sides");
-            ValidatePic(ScanPassport_2Sides, ScanPassport_2SidesInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "ScanPassport_2Sides");
+            ValidatePic(scanPassport1Sides, ScanPassport_1SidesInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "ScanPassport_1Sides");
+            ValidatePic(scanPassport2Sides, ScanPassport_2SidesInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "ScanPassport_2Sides");
             ValidatePic(scan1Side, scan1SideInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "Scan1Side");
             ValidatePic(scan2Side, scan2SideInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "Scan2Side");
             ValidatePic(Application, ApplicationInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "Application");
