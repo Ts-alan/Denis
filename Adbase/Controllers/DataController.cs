@@ -149,7 +149,7 @@ namespace Sciencecom.Controllers
                 return RedirectToAction("NotFound");
             }
             var data = _dbw.RetrieveStructure(id);
-            if (data == null)
+            if (data == null || data.Code != "BB")
             {
                 return RedirectToAction("NotFound");
             }
@@ -163,26 +163,16 @@ namespace Sciencecom.Controllers
             }
             
             Session["sides"] = data.Sides.OrderBy(side => int.Parse(side.Name)).ToList();
-            switch (type)
-            {
-                case "BB":
-                    {
-                        ViewBag.Type = "BB";
-                        ViewBag.Id = data.Id_show;
+            ViewBag.Type = "BB";
+            ViewBag.Id = data.Id_show;
 
-                        ViewBag.Scan1Sides = LoadPic(data.Id_show.ToString(), "Scan1SidesWithFinancialManagement");
-                        ViewBag.ScanPassport_1 = LoadPic(data.Id_show.ToString(), "ScanPassport_1Sides");
-                        ViewBag.ScanPassport_2 = LoadPic(data.Id_show.ToString(), "ScanPassport_2Sides");
-                        List<string> photoNames = _phw.LoadPic(data.Id_show.ToString());
-                        Session["PhotoNames"] = photoNames;
-                        Session["IdShow"] = data.Id_show;
-                    }
-                    break;
+            ViewBag.Scan1Sides = LoadPic(data.Id_show.ToString(), "Scan1SidesWithFinancialManagement");
+            ViewBag.ScanPassport_1 = LoadPic(data.Id_show.ToString(), "ScanPassport_1Sides");
+            ViewBag.ScanPassport_2 = LoadPic(data.Id_show.ToString(), "ScanPassport_2Sides");
+            List<string> photoNames = _phw.LoadPic(data.Id_show.ToString());
 
-                default:
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-
-            }
+            Session["PhotoNames"] = photoNames;
+            Session["IdShow"] = data.Id_show;
             
             return View(data);
         }
@@ -366,7 +356,7 @@ namespace Sciencecom.Controllers
             
             data = _dbw.RetrieveStructure(id);
 
-            if (data == null)
+            if (data == null || data.Code != "MP")
             {
                 return RedirectToAction("NotFound");
             }
@@ -380,24 +370,14 @@ namespace Sciencecom.Controllers
                 }
             }
             Session["sides"] = data.Sides.OrderBy(side => int.Parse(side.Name)).ToList();
-           
-            switch (type)
-            {
-                case "MP":
-                    {
-                        ViewBag.Type = "MP";
-                        ViewBag.Id = data.Id_show;
-                        ViewBag.Scan1Side = LoadPic(data.Id_show.ToString(), "Scan1Side");
-                        ViewBag.Scan2Side = LoadPic(data.Id_show.ToString(), "Scan2Side");
-                        ViewBag.Scan2Side = LoadPic(data.Id_show.ToString(), "photo1");
-                        
-                    }
-                    break;
 
-                default:
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            ViewBag.Type = "MP";
+            ViewBag.Id = data.Id_show;
+            ViewBag.Scan1Side = LoadPic(data.Id_show.ToString(), "Scan1Side");
+            ViewBag.Scan2Side = LoadPic(data.Id_show.ToString(), "Scan2Side");
+            ViewBag.photo1 = LoadPic(data.Id_show.ToString(), "photo1");
+            ViewBag.photo2 = LoadPic(data.Id_show.ToString(), "photo2");
 
-            }
             
             if (data.coordB != null)
             {
@@ -575,7 +555,7 @@ namespace Sciencecom.Controllers
                 return RedirectToAction("NotFound");
             }
             var data = _dbw.RetrieveStructure(id);
-            if (data == null)
+            if (data == null || data.Code != "LD")
             {
                 return RedirectToAction("NotFound");
             }
@@ -589,30 +569,16 @@ namespace Sciencecom.Controllers
             }
             Session["sides"] = data.Sides.OrderBy(side => int.Parse(side.Name)).ToList();
 
-            switch (type)
-            {
-                case "LD":
-                    {
-                        ViewBag.Type = "LD";
-                        ViewBag.Id = data.Id_show;
-
-                        ViewBag.Scan1Sides = LoadPic(data.Id_show.ToString(), "Scan1SidesWithFinancialManagement");
-                        ViewBag.ScanPassport_1 = LoadPic(data.Id_show.ToString(), "ScanPassport_1Sides");
-                        ViewBag.ScanPassport_2 = LoadPic(data.Id_show.ToString(), "ScanPassport_2Sides");
-                        ViewBag.Scan1Side = LoadPic(data.Id_show.ToString(), "Scan1Side");
-                        ViewBag.Scan2Side = LoadPic(data.Id_show.ToString(), "Scan2Side");
-                        ViewBag.photo1 = LoadPic(data.Id_show.ToString(), "photo1");
-                        ViewBag.photo2 = LoadPic(data.Id_show.ToString(), "photo2");
-                        ViewBag.Application = LoadPic(data.Id_show.ToString(), "Application");
-
-                    }
-                    break;
-
-                default:
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-
-            }
-            
+            ViewBag.Type = "LD";
+            ViewBag.Id = data.Id_show;
+            ViewBag.Scan1Sides = LoadPic(data.Id_show.ToString(), "Scan1SidesWithFinancialManagement");
+            ViewBag.ScanPassport_1 = LoadPic(data.Id_show.ToString(), "ScanPassport_1Sides");
+            ViewBag.ScanPassport_2 = LoadPic(data.Id_show.ToString(), "ScanPassport_2Sides");
+            ViewBag.Scan1Side = LoadPic(data.Id_show.ToString(), "Scan1Side");
+            ViewBag.Scan2Side = LoadPic(data.Id_show.ToString(), "Scan2Side");
+            ViewBag.photo1 = LoadPic(data.Id_show.ToString(), "photo1");
+            ViewBag.photo2 = LoadPic(data.Id_show.ToString(), "photo2");
+            ViewBag.Application = LoadPic(data.Id_show.ToString(), "Application");
             if (data.coordB != null)
             {
                 data.coordB = double.Parse(data.coordB.ToString().Substring(0, 7));
@@ -799,8 +765,8 @@ namespace Sciencecom.Controllers
                 return RedirectToAction("NotFound");
             }
             AdvertisingStructure data = _dbw.RetrieveStructure(id);
-            
-            if (data == null)
+
+            if (data == null || data.Code != "UI")
             {
                 return RedirectToAction("NotFound");
             }
@@ -813,25 +779,12 @@ namespace Sciencecom.Controllers
                 }
             }
             Session["sides"] = data.Sides.OrderBy(side => int.Parse(side.Name)).ToList();
-            
-            switch (type)
-            {
-                case "UI":
-                    {
-                        ViewBag.Type = "UI";
-                        ViewBag.Id = data.Id_show;
 
-                        ViewBag.photo1 = LoadPic(data.Id_show.ToString(), "photo1");
+            ViewBag.Type = "UI";
+            ViewBag.Id = data.Id_show;
+            ViewBag.photo1 = LoadPic(data.Id_show.ToString(), "photo1");
+            ViewBag.photo2 = LoadPic(data.Id_show.ToString(), "photo2");
 
-                        ViewBag.photo2 = LoadPic(data.Id_show.ToString(), "photo2");
-                    }
-                    break;
-
-                default:
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-
-            }
-            
             return View(data);
         }
 
