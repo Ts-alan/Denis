@@ -34,36 +34,37 @@
 
 <script type="text/javascript">
     var param = true;
-    var coord;
+
     function CreateMap(param) {
-       
-        if ($("#gs_Населенный_пункт").val() == undefined || $("#gs_Населенный_пункт").val()=="") {
-            coord = [53.901, 27.5601];
-            GetMap(coord);
-        } else {
-            var myGeocoder = ymaps.geocode($("#gs_Населенный_пункт").val());
-            
-            myGeocoder.then(
-                function(res) {
-                    coord = res.geoObjects.get(0).geometry.getCoordinates();
-                    GetMap(coord);
-                });
-          
-        }
-       
+        //записать в сесиию пременные
+        @*var collectionMap = [];
+        $(".content-col input").each(function (indx, element) {
+            collectionMap.push({ id: $(element).attr("id"), value: $(element).val().toString() });
 
+        });
+        var saveValue = JSON.stringify(collectionMap);
 
-    }
-
-    function setRemove(param) {
-
-        $('[href="/Data/DeleteAdvertisingDesign"]').
-        attr("href", "/Data/DeleteAdvertisingDesign?id=" + param + "&switchtoMap=true");
-    }
-
-    function GetMap(coord) {
+        $.ajax({
+            url: '@Url.Action("SaveSearch", "BackEndServices")',
+            data: { collectionMap: saveValue },
+            type: 'POST'
+        });*@
         //поиск по карте
+        @*var collectionMap = [];
+        $(".content-col input").each(function (indx, element) {
+            collectionMap.push({ id: $(element).attr("id"), value: $(element).val().toString() });
+        });
+        var SaveData = JSON.stringify(collectionMap);
 
+        $.ajax({
+            url: '@Url.Action("SaveSearch", "BackEndServices")',
+            data: { collectionMap: SaveData },
+            type: 'POST',
+            success: function (e) {
+
+            }
+        });*@
+        //поиск по карте
         $("#map").empty();
         ymaps.ready(init);
         var myMap;
@@ -74,7 +75,7 @@
 
         function init() {
             myMap = new ymaps.Map("map", {
-                center: coord,
+                center: [53.901, 27.5601],
                 zoom: 11,
                 behaviors: ['default', 'scrollZoom']
             });
@@ -87,6 +88,13 @@
             myMap.geoObjects.add(clusterer);
         }
     }
+
+    function setRemove(param) {
+
+        $('[href="/Data/DeleteAdvertisingDesign"]').
+        attr("href", "/Data/DeleteAdvertisingDesign?id=" + param + "&switchtoMap=true");
+    }
+
     CreateMap(param);
     $(document).ready(function () {
 
@@ -120,7 +128,7 @@
      }
 
     .name-col {
-        height: 46px;
+        height: 10%;
         width: 55%;
         position: relative; 
         
@@ -142,14 +150,16 @@
         font-size: 11px;
         padding: 2px;
         float: left;
-        width:90% 
+        width: 90%;
+        
     }
     .content-col {
         width: 45%;
+         height: 10%;
     }
     .content-col > div > div {
         background-color: white;
-        height: 40px;
+        height: 30px;
         border: 1px solid #dddddd;
          
     }
@@ -173,15 +183,15 @@
         <h2>Карта конструкций</h2>
     </h3>
     <div><b><input type="button" value="+ Добавить новую конструкцию" id="AddConstruction" class="btn btn-default" data-toggle="modal" data-target="#myModal"></b>
-       
+        @*<b>@Html.ActionLink("+ Добавить новую конструкцию", "CreateAdvertisingDesign", "Data", new {type = "Billboard"}, new {@class = "btn btn-default", style = "margin-bottom: 10px"})</b>*@
     </div>
 
-   
-    <div style="width: 33%; float: left; height: 400px">
+    @*<div  style="height: 800px">*@
+    <div style="width: 33%; float: left; height: 415px">
 
         <div id="divForAddNewAD">
 
-           
+            @*<b>@Html.ActionLink("+ Изменить конструкции", "", new {type = "Billboard"}, new {style = "display: block"})</b>*@
 
         </div>
 
@@ -351,12 +361,24 @@
         <div class="ui-state-default ui-th-column content-col">
             <div>
                 <div>
-                    <input type="text" name="Разреш_по" id="gs_Разреш_по" style="width: 100%;">
+                    <input type="date" name="Разреш_по" id="gs_Разреш_по" style="width: 100%;">
                 </div>
             </div>
             <a href="#" style="">x</a>
         </div>
+        
+        <div class="ui-state-default ui-th-column name-col">
+            <div>Разреш с</div>
+        </div>
 
+        <div class="ui-state-default ui-th-column content-col">
+            <div>
+                <div>
+                    <input type="date" name="Разреш_с" id="gs_Разреш_с" style="width: 100%;">
+                </div>
+            </div>
+            <a href="#" style="">x</a>
+        </div>
         <div class="ui-state-default">
             <a class="btn btn-info" style="color: #ffffff" href="#" id="showMap" onclick="CreateMap(false)">Показать</a>
         </div>
