@@ -34,36 +34,25 @@
 
 <script type="text/javascript">
     var param = true;
-
+    var coor;
     function CreateMap(param) {
-        //записать в сесиию пременные
-        @*var collectionMap = [];
-        $(".content-col input").each(function (indx, element) {
-            collectionMap.push({ id: $(element).attr("id"), value: $(element).val().toString() });
+        if ($("#gs_Населенный_пункт").val() == undefined || $("#gs_Населенный_пункт").val() == "") {
+            coord = [53.901, 27.5601];
+            GetMap(coord);
+        } else {
+            var myGeocoder = ymaps.geocode($("#gs_Населенный_пункт").val());
 
-        });
-        var saveValue = JSON.stringify(collectionMap);
+            myGeocoder.then(
+                function (res) {
+                    coord = res.geoObjects.get(0).geometry.getCoordinates();
+                    GetMap(coord);
+                });
 
-        $.ajax({
-            url: '@Url.Action("SaveSearch", "BackEndServices")',
-            data: { collectionMap: saveValue },
-            type: 'POST'
-        });*@
-        //поиск по карте
-        @*var collectionMap = [];
-        $(".content-col input").each(function (indx, element) {
-            collectionMap.push({ id: $(element).attr("id"), value: $(element).val().toString() });
-        });
-        var SaveData = JSON.stringify(collectionMap);
+        }
+    }
+    function GetMap(coords) {
+        
 
-        $.ajax({
-            url: '@Url.Action("SaveSearch", "BackEndServices")',
-            data: { collectionMap: SaveData },
-            type: 'POST',
-            success: function (e) {
-
-            }
-        });*@
         //поиск по карте
         $("#map").empty();
         ymaps.ready(init);
@@ -75,7 +64,7 @@
 
         function init() {
             myMap = new ymaps.Map("map", {
-                center: [53.901, 27.5601],
+                center: coords,
                 zoom: 11,
                 behaviors: ['default', 'scrollZoom']
             });
@@ -88,7 +77,6 @@
             myMap.geoObjects.add(clusterer);
         }
     }
-
     function setRemove(param) {
 
         $('[href="/Data/DeleteAdvertisingDesign"]').
