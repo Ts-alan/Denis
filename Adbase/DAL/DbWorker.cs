@@ -425,24 +425,24 @@ namespace Sciencecom.DAL
             }
             DateTime eb;
             DateTime sb;
-            if (DateTime.TryParse(startStartDate, out eb) && DateTime.TryParse(endEndDate, out sb) && !string.IsNullOrWhiteSpace(startStartDate) && !string.IsNullOrWhiteSpace(endEndDate))
+            if (DateTime.TryParse(startStartDate, out eb) && DateTime.TryParse(startEndDate, out sb) && !string.IsNullOrWhiteSpace(startStartDate) && !string.IsNullOrWhiteSpace(endStartDate))
             {
                 DateTime beginStartRange = DateTime.Parse(startStartDate);
-                DateTime endStartRange = DateTime.Parse(endEndDate);
+                DateTime endStartRange = DateTime.Parse(endStartDate);
                 if (beginStartRange < endStartRange)
                 {
                     result = result.Where(x => x.StartDate >= beginStartRange && x.StartDate <= endStartRange);
                 }
 
             }
-            if (DateTime.TryParse(startStartDate, out eb) && !string.IsNullOrWhiteSpace(startStartDate) && string.IsNullOrWhiteSpace(endEndDate))
+            if (DateTime.TryParse(startStartDate, out eb) && !string.IsNullOrWhiteSpace(startStartDate) && string.IsNullOrWhiteSpace(startEndDate))
             {
                 DateTime beginStartRange = DateTime.Parse(startStartDate);
                 result = result.Where(x => x.StartDate >= beginStartRange);
             }
-            if (DateTime.TryParse(endEndDate, out sb) && string.IsNullOrWhiteSpace(startStartDate) && !string.IsNullOrWhiteSpace(endEndDate))
+            if (DateTime.TryParse(endStartDate, out sb) && string.IsNullOrWhiteSpace(startStartDate) && !string.IsNullOrWhiteSpace(endStartDate))
             {
-                DateTime endStartRange = DateTime.Parse(endEndDate);
+                DateTime endStartRange = DateTime.Parse(endStartDate);
                 result = result.Where(x => x.StartDate <= endStartRange);
             }
             if (!string.IsNullOrWhiteSpace(house1))

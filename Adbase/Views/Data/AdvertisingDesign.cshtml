@@ -31,8 +31,8 @@
         {
             var gridPostData;
             gridPostData = $("#table").getGridParam("postData");
-            gridPostData["НачалоРазреш_с"] = $("#beginingStartDateRange").val();
-            gridPostData["КонецРазреш_с"] = $("#endingStartDateRange").val();
+            gridPostData["НачалоРазреш_с"] = $("#НачалоРазреш_с").val();
+            gridPostData["КонецРазреш_с"] = $("#КонецРазреш_с").val();
             $('#table').jqGrid('setGridParam', { postData: gridPostData });
             jQuery("#table")[0].triggerToolbar();
            
@@ -41,8 +41,8 @@
         {
             var gridPostData;
             gridPostData = $("#table").getGridParam("postData");
-            gridPostData["НачалоРазреш_по"] = $("#beginingEndDateRange").val();
-            gridPostData["КонецРазреш_по"] = $("#endingEndDateRange").val();
+            gridPostData["НачалоРазреш_по"] = $("#НачалоРазреш_по").val();
+            gridPostData["КонецРазреш_по"] = $("#КонецРазреш_по").val();
             //console.log(gridPostData);
             $('#table').jqGrid('setGridParam', { postData: gridPostData });
             $('#table').trigger('reloadGrid');
@@ -417,12 +417,12 @@
                     <div class="form-group">
                         <label>Начало </label>
                         <br />
-                        <input type="date" class="form-control input-sm" id="beginingStartDateRange" />
+                        <input type="date" class="form-control input-sm" id="НачалоРазреш_с" />
                     </div>
                     <div class="form-group">
                         <label>Конец</label>
                         <br />
-                        <input type="date" class="form-control input-sm" id="endingStartDateRange" />
+                        <input type="date" class="form-control input-sm" id="КонецРазреш_с" />
                     </div>
                     <div style="position: relative"></div>
                     <input type="button" value="Поиск" id="searchStartDateRange" style="position: absolute; right: 10px; bottom: 0;" class=" btn btn-default input-sm" />
@@ -433,12 +433,12 @@
                     <div class="form-group">
                         <label>Начало</label>
                         <br />
-                        <input type="date" class="form-control input-sm" id="beginingEndDateRange" />
+                        <input type="date" class="form-control input-sm" id="НачалоРазреш_по" />
                     </div>
                     <div class="form-group">
                         <label>Конец</label>
                         <br />
-                        <input type="date" class="form-control input-sm" id="endingEndDateRange" />
+                        <input type="date" class="form-control input-sm" id="КонецРазреш_по" />
                     </div>
                     <div style="position: relative"></div>
                     <input type="button" value="Поиск" id="searchEndDateRange" style="position: absolute; right: 10px; bottom: 0;" class=" btn btn-default input-sm" />
