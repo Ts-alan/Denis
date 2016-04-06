@@ -128,7 +128,7 @@
      }
 
     .name-col {
-        height: 46px;
+        height: 10%;
         width: 55%;
         position: relative; 
         
@@ -150,14 +150,16 @@
         font-size: 11px;
         padding: 2px;
         float: left;
-        width:90% 
+        width: 90%;
+        
     }
     .content-col {
         width: 45%;
+         height: 10%;
     }
     .content-col > div > div {
         background-color: white;
-        height: 40px;
+        height: 30px;
         border: 1px solid #dddddd;
          
     }
@@ -185,7 +187,7 @@
     </div>
 
     @*<div  style="height: 800px">*@
-    <div style="width: 33%; float: left; height: 400px">
+    <div style="width: 33%; float: left; height: 415px">
 
         <div id="divForAddNewAD">
 
@@ -359,12 +361,24 @@
         <div class="ui-state-default ui-th-column content-col">
             <div>
                 <div>
-                    <input type="text" name="Разреш_по" id="gs_Разреш_по" style="width: 100%;">
+                    <input type="date" name="Разреш_по" id="gs_Разреш_по" style="width: 100%;">
                 </div>
             </div>
             <a href="#" style="">x</a>
         </div>
+        
+        <div class="ui-state-default ui-th-column name-col">
+            <div>Разреш с</div>
+        </div>
 
+        <div class="ui-state-default ui-th-column content-col">
+            <div>
+                <div>
+                    <input type="date" name="Разреш_с" id="gs_Разреш_с" style="width: 100%;">
+                </div>
+            </div>
+            <a href="#" style="">x</a>
+        </div>
         <div class="ui-state-default">
             <a class="btn btn-info" style="color: #ffffff" href="#" id="showMap" onclick="CreateMap(false)">Показать</a>
         </div>

@@ -20,6 +20,7 @@
             ContractFinancialManagement: $("#gs_№_договора_с_фин_упр").val(),
             PassportAdvertising: $("#gs_№_паспорта_рекл").val(),
             EndDate: $("#gs_Разреш_по").val(),
+            StartDate: $("#gs_Разреш_с").val(),
             id: parseInt(objectId)
         }
     }).success(function (data) {

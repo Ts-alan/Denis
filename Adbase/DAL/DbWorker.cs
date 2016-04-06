@@ -233,7 +233,7 @@ namespace Sciencecom.DAL
 
 
         public IEnumerable<AdvertisingStructure> SearchAdversing(AdvertisingStructure advertisin, string owner,
-            string typeOfAdvertisingStructure, string locality, int? countSize, string backlight, string endDate, int? areaConstruction,int? CountSurface)
+            string typeOfAdvertisingStructure, string locality, int? countSize, string backlight, string endDate, string startDate, int? areaConstruction,int? CountSurface)
         {
            
             var ownerId = Context.Owners.SingleOrDefault(a => a.Name.ToLower().Contains(owner.ToLower()));
@@ -399,12 +399,18 @@ namespace Sciencecom.DAL
             {
                 result = result.Where(m => m.C_PassportAdvertising.ToLower().Contains(advertisin.C_PassportAdvertising.ToLower()));
             }
-            if (!string.IsNullOrEmpty(endDate))
+            DateTime s;
+            if (!string.IsNullOrWhiteSpace(endDate) && DateTime.TryParse(endDate, out s))
             {
-                result = result.Where(m => m.EndDate.ToString().ToLower().Trim().Contains(endDate));
+                DateTime l = DateTime.Parse(endDate);
+                result = result.Where(x => x.EndDate == l);
             }
-
-
+            DateTime q;
+            if (!string.IsNullOrWhiteSpace(startDate) && DateTime.TryParse(startDate, out q))
+            {
+                DateTime l = DateTime.Parse(startDate);
+                result = result.Where(x => x.StartDate == l);
+            }
 
             return result;
         }
