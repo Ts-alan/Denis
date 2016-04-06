@@ -34,37 +34,36 @@
 
 <script type="text/javascript">
     var param = true;
-
+    var coord;
     function CreateMap(param) {
-        //записать в сесиию пременные
-        @*var collectionMap = [];
-        $(".content-col input").each(function (indx, element) {
-            collectionMap.push({ id: $(element).attr("id"), value: $(element).val().toString() });
+       
+        if ($("#gs_Населенный_пункт").val() == undefined || $("#gs_Населенный_пункт").val()=="") {
+            coord = [53.901, 27.5601];
+            GetMap(coord);
+        } else {
+            var myGeocoder = ymaps.geocode($("#gs_Населенный_пункт").val());
+            
+            myGeocoder.then(
+                function(res) {
+                    coord = res.geoObjects.get(0).geometry.getCoordinates();
+                    GetMap(coord);
+                });
+          
+        }
+       
 
-        });
-        var saveValue = JSON.stringify(collectionMap);
 
-        $.ajax({
-            url: '@Url.Action("SaveSearch", "BackEndServices")',
-            data: { collectionMap: saveValue },
-            type: 'POST'
-        });*@
+    }
+
+    function setRemove(param) {
+
+        $('[href="/Data/DeleteAdvertisingDesign"]').
+        attr("href", "/Data/DeleteAdvertisingDesign?id=" + param + "&switchtoMap=true");
+    }
+
+    function GetMap(coord) {
         //поиск по карте
-        @*var collectionMap = [];
-        $(".content-col input").each(function (indx, element) {
-            collectionMap.push({ id: $(element).attr("id"), value: $(element).val().toString() });
-        });
-        var SaveData = JSON.stringify(collectionMap);
 
-        $.ajax({
-            url: '@Url.Action("SaveSearch", "BackEndServices")',
-            data: { collectionMap: SaveData },
-            type: 'POST',
-            success: function (e) {
-
-            }
-        });*@
-        //поиск по карте
         $("#map").empty();
         ymaps.ready(init);
         var myMap;
@@ -75,7 +74,7 @@
 
         function init() {
             myMap = new ymaps.Map("map", {
-                center: [53.901, 27.5601],
+                center: coord,
                 zoom: 11,
                 behaviors: ['default', 'scrollZoom']
             });
@@ -88,13 +87,6 @@
             myMap.geoObjects.add(clusterer);
         }
     }
-
-    function setRemove(param) {
-
-        $('[href="/Data/DeleteAdvertisingDesign"]').
-        attr("href", "/Data/DeleteAdvertisingDesign?id=" + param + "&switchtoMap=true");
-    }
-
     CreateMap(param);
     $(document).ready(function () {
 
@@ -181,15 +173,15 @@
         <h2>Карта конструкций</h2>
     </h3>
     <div><b><input type="button" value="+ Добавить новую конструкцию" id="AddConstruction" class="btn btn-default" data-toggle="modal" data-target="#myModal"></b>
-        @*<b>@Html.ActionLink("+ Добавить новую конструкцию", "CreateAdvertisingDesign", "Data", new {type = "Billboard"}, new {@class = "btn btn-default", style = "margin-bottom: 10px"})</b>*@
+       
     </div>
 
-    @*<div  style="height: 800px">*@
+   
     <div style="width: 33%; float: left; height: 400px">
 
         <div id="divForAddNewAD">
 
-            @*<b>@Html.ActionLink("+ Изменить конструкции", "", new {type = "Billboard"}, new {style = "display: block"})</b>*@
+           
 
         </div>
 

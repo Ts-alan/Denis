@@ -11,9 +11,7 @@
  
     //ListTypeAdvertising.Insert(0,null);
 
-    var ViewBids = new SciencecomEntities().ViewBids.OrderBy(a=>a.OrderBy).ToList();
-   
-   
+ 
     //Элемент улично-дорожной сети
     var ListTypeElementOfTheRoadNetworkName = new SciencecomEntities().TheElementOfTheRoadNetworks.Select(a => new { id = a.id, Value = a.TheElementOfTheRoadNetworkName }).ToList();
     
