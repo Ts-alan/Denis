@@ -38,21 +38,24 @@
                     bct = "Щ";
                     bht = "Щит";
                     houseSupport = '<b></br>Дом:&nbsp;' + data[i].House1 + "</b>";
-                    colour = '#0095b6';
+                    //colour = '#0095b6';
+                    colour = "yellow";
                     indexhouseSupport = data[i].House1;
                 }
 
                 if (data[i].NameOfAdvertisingStructure == "Металлический указатель") {
                     bct = "У";
                     bht = "Указатель";
-                    colour = '#0095b6';
+                    //colour = '#0095b6';
+                    colour = "blue";
                     houseSupport = '<b></br>Номер опоры:&nbsp;' + data[i].Support_ + "</b>";
                     indexhouseSupport = data[i].Support_;
                 }
                 if (data[i].NameOfAdvertisingStructure == "Световой короб") {
                     bct = "К";
                     bht = "Короб";
-                    colour = '#0095b6';
+                    //colour = '#0095b6';
+                    colour = "green";
                     houseSupport = '<b></br>Номер опоры:&nbsp;' + data[i].Support_ + "</b>";
                     indexhouseSupport = data[i].Support_;
                 }
