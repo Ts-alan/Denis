@@ -12,15 +12,18 @@
             TypeOfAdvertisingStructure: $("#gs_Вид_конструкции").val(),
             Locality: $("#gs_Населенный_пункт").val(),
             Street1: $("#gs_Улица").val(),
-            House1: $("#gs_Дом\\/Номер_опоры").val(),
+            house1: $("#gs_Дом").val(),
+            support: $("#gs_Номер_опоры").val(),
             CountSize: $("#gs_Количество_сторон").val(),
             AreaConstruction: $("#gs_Площадь_конструкции").val(),
             CountSurface: $("#gs_Количестов_поверхностей").val(),
             Backlight: $("#gs_Подстветка").val(),
             ContractFinancialManagement: $("#gs_№_договора_с_фин_упр").val(),
             PassportAdvertising: $("#gs_№_паспорта_рекл").val(),
-            EndDate: $("#gs_Разреш_по").val(),
-            StartDate: $("#gs_Разреш_с").val(),
+            startEndDate: $("#gs_beginingEndDateRange").val(),
+            endEndDate: $("#gs_endingEndDateRange").val(),
+            startStartDate: $("#gs_beginingStartDateRange").val(),
+            endStartDate: $("#gs_endingStartDateRange").val(),
             id: parseInt(objectId)
         }
     }).success(function (data) {
@@ -115,7 +118,7 @@
         }
         $("#hidden").remove();
     }).error(function () {
-        alert("Ошибка запроса ТРАТАТА");
+        alert("Ошибка запроса");
     });
     
     return clusterer;

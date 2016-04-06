@@ -65,7 +65,7 @@ namespace Sciencecom.DAL
             }
             if (!string.IsNullOrWhiteSpace(Дом))
             {
-                adbvertisingList = adbvertisingList.Where(x => x.House1.Contains(Дом));
+                adbvertisingList = adbvertisingList.Where(x => !string.IsNullOrWhiteSpace(x.House1) && x.House1.Contains(Дом));
             }
             if (!string.IsNullOrWhiteSpace(Номер_опоры))
             {
@@ -233,7 +233,9 @@ namespace Sciencecom.DAL
 
 
         public IEnumerable<AdvertisingStructure> SearchAdversing(AdvertisingStructure advertisin, string owner,
-            string typeOfAdvertisingStructure, string locality, int? countSize, string backlight, string endDate, string startDate, int? areaConstruction,int? CountSurface)
+            string typeOfAdvertisingStructure, string locality, int? countSize, string backlight, string startEndDate, 
+            string endEndDate, string startStartDate, string endStartDate, int? areaConstruction,int? CountSurface,
+            string house1, string support)
         {
            
             var ownerId = Context.Owners.SingleOrDefault(a => a.Name.ToLower().Contains(owner.ToLower()));
@@ -399,17 +401,57 @@ namespace Sciencecom.DAL
             {
                 result = result.Where(m => m.C_PassportAdvertising.ToLower().Contains(advertisin.C_PassportAdvertising.ToLower()));
             }
-            DateTime s;
-            if (!string.IsNullOrWhiteSpace(endDate) && DateTime.TryParse(endDate, out s))
+            DateTime ee;
+            DateTime se;
+            if (DateTime.TryParse(startEndDate, out ee) && DateTime.TryParse(endEndDate, out se) && !string.IsNullOrWhiteSpace(startEndDate) && !string.IsNullOrWhiteSpace(endEndDate))
             {
-                DateTime l = DateTime.Parse(endDate);
-                result = result.Where(x => x.EndDate == l);
+                DateTime beginEndRange = DateTime.Parse(startEndDate);
+                DateTime endEndRange = DateTime.Parse(endEndDate);
+                if (beginEndRange < endEndRange)
+                {
+                    result = result.Where(x => x.EndDate >= beginEndRange && x.EndDate <= endEndRange);
+                }
+
             }
-            DateTime q;
-            if (!string.IsNullOrWhiteSpace(startDate) && DateTime.TryParse(startDate, out q))
+            if (DateTime.TryParse(startEndDate, out ee) && !string.IsNullOrWhiteSpace(startEndDate) && string.IsNullOrWhiteSpace(endEndDate))
             {
-                DateTime l = DateTime.Parse(startDate);
-                result = result.Where(x => x.StartDate == l);
+                DateTime beginEndRange = DateTime.Parse(startEndDate);
+                result = result.Where(x => x.EndDate >= beginEndRange);
+            }
+            if (DateTime.TryParse(endEndDate, out se) && string.IsNullOrWhiteSpace(startEndDate) && !string.IsNullOrWhiteSpace(endEndDate))
+            {
+                DateTime endEndRange = DateTime.Parse(endEndDate);
+                result = result.Where(x => x.EndDate <= endEndRange);
+            }
+            DateTime eb;
+            DateTime sb;
+            if (DateTime.TryParse(startStartDate, out eb) && DateTime.TryParse(endEndDate, out sb) && !string.IsNullOrWhiteSpace(startStartDate) && !string.IsNullOrWhiteSpace(endEndDate))
+            {
+                DateTime beginStartRange = DateTime.Parse(startStartDate);
+                DateTime endStartRange = DateTime.Parse(endEndDate);
+                if (beginStartRange < endStartRange)
+                {
+                    result = result.Where(x => x.StartDate >= beginStartRange && x.StartDate <= endStartRange);
+                }
+
+            }
+            if (DateTime.TryParse(startStartDate, out eb) && !string.IsNullOrWhiteSpace(startStartDate) && string.IsNullOrWhiteSpace(endEndDate))
+            {
+                DateTime beginStartRange = DateTime.Parse(startStartDate);
+                result = result.Where(x => x.StartDate >= beginStartRange);
+            }
+            if (DateTime.TryParse(endEndDate, out sb) && string.IsNullOrWhiteSpace(startStartDate) && !string.IsNullOrWhiteSpace(endEndDate))
+            {
+                DateTime endStartRange = DateTime.Parse(endEndDate);
+                result = result.Where(x => x.StartDate <= endStartRange);
+            }
+            if (!string.IsNullOrWhiteSpace(house1))
+            {
+                result = result.Where(x => !string.IsNullOrWhiteSpace(x.House1) && x.House1.Contains(house1));
+            }
+            if (!string.IsNullOrWhiteSpace(support))
+            {
+                result = result.Where(x => !string.IsNullOrWhiteSpace(x.Support_) && x.Support_.Contains(support));
             }
 
             return result;

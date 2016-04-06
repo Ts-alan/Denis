@@ -25,10 +25,12 @@ namespace Sciencecom.Controllers
         }
         
         public IEnumerable<AdvertisingStructure> SearchAdversing(AdvertisingStructure advertisin, string owner,
-            string typeOfAdvertisingStructure, string locality, int? countSize, string backlight, string endDate, string startDate, int? areaConstruction,int? CountSurface)
+            string typeOfAdvertisingStructure, string locality, int? countSize, string backlight, string startEndDate, 
+            string endEndDate, string startStartDate, string endStartDate, int? areaConstruction,int? CountSurface,
+            string house1, string support)
         {
             var result = _dbw.SearchAdversing( advertisin, owner,typeOfAdvertisingStructure, locality, countSize, backlight,
-                endDate, startDate, areaConstruction, CountSurface);
+                startEndDate, endEndDate, startStartDate, endStartDate, areaConstruction, CountSurface, house1, support);
             return result;
         }
 
