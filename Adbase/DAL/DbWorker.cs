@@ -87,7 +87,7 @@ namespace Sciencecom.DAL
             {
                 DateTime beginEndRange = DateTime.Parse(НачалоРазреш_по);
                 DateTime endEndRange = DateTime.Parse(КонецРазреш_по);
-                if (beginEndRange < endEndRange)
+                if (beginEndRange <= endEndRange)
                 {
                     adbvertisingList = adbvertisingList.Where(x => x.EndDate >= beginEndRange && x.EndDate <= endEndRange);
                 }
@@ -109,7 +109,7 @@ namespace Sciencecom.DAL
             {
                 DateTime beginStartRange = DateTime.Parse(НачалоРазреш_с);
                 DateTime endStartRange = DateTime.Parse(КонецРазреш_с);
-                if (beginStartRange < endStartRange)
+                if (beginStartRange <= endStartRange)
                 {
                     adbvertisingList = adbvertisingList.Where(x => x.StartDate >= beginStartRange && x.StartDate <= endStartRange);
                 }
@@ -425,7 +425,7 @@ namespace Sciencecom.DAL
             }
             DateTime eb;
             DateTime sb;
-            if (DateTime.TryParse(startStartDate, out eb) && DateTime.TryParse(startEndDate, out sb) && !string.IsNullOrWhiteSpace(startStartDate) && !string.IsNullOrWhiteSpace(endStartDate))
+            if (DateTime.TryParse(startStartDate, out eb) && DateTime.TryParse(endStartDate, out sb) && !string.IsNullOrWhiteSpace(startStartDate) && !string.IsNullOrWhiteSpace(endStartDate))
             {
                 DateTime beginStartRange = DateTime.Parse(startStartDate);
                 DateTime endStartRange = DateTime.Parse(endStartDate);
