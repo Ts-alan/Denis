@@ -374,61 +374,8 @@
                 $('#table').jqGrid('setGridParam', { postData: collectionMap.postdata });
                 for (var prop in collectionMap.postdata)
                 {
-                    //console.log("Свойство:" + prop + "       Значение:"+ collectionMap.postdata[prop]);
                     $("input[id$='" + prop + "']").val(collectionMap.postdata[prop]);
                 }
-                //if (collectionMap.postdata.Собственник !== undefined)
-                //{
-                //    $("input[id$='Собственник']").val(collectionMap.postdata.Собственник);
-                //}
-                //if (collectionMap.postdata.Вид_конструкции !== undefined)
-                //{
-                //    $("input[id$='Вид_конструкции']").val(collectionMap.postdata.Вид_конструкции);
-                //}
-                //if (collectionMap.postdata.Населенный_пункт !== undefined)
-                //{
-                //    $("input[id$='Населенный_пункт']").val(collectionMap.postdata.Населенный_пункт);
-                //}
-                //if (collectionMap.postdata.Улица !== undefined)
-                //{
-                //    $("input[id$='Улица']").val(collectionMap.postdata.Улица);
-                //}
-                //if (collectionMap.postdata.Дом_Номер_опоры !== undefined)
-                //{
-                //    $("input[id$='Дом_Номер_опоры']").val(collectionMap.postdata.Дом_Номер_опоры);
-                //}
-                //if (collectionMap.postdata.Количество_сторон !== undefined)
-                //{
-                //    $("input[id$='Количество_сторон']").val(collectionMap.postdata.Количество_сторон);
-                //}
-                //if (collectionMap.postdata.Количестов_поверхностей !== undefined)
-                //{
-                //    $("input[id$='Количестов_поверхностей']").val(collectionMap.postdata.Количестов_поверхностей);
-                //}
-                //if (collectionMap.postdata.Площадь_конструкции !== undefined)
-                //{
-                //    $("input[id$='Площадь_конструкции']").val(collectionMap.postdata.Площадь_конструкции);
-                //}
-                //if (collectionMap.postdata.Разреш_по !== undefined)
-                //{
-                //    $("input[id$='Разреш_по']").val(collectionMap.postdata.Разреш_по);
-                //}
-                //if (collectionMap.postdata.НачалоРазреш_по !== undefined)
-                //{
-                //    $("#beginingEndDateRange").val(collectionMap.postdata.НачалоРазреш_по);
-                //}
-                //if (collectionMap.postdata.КонецРазреш_по !== undefined)
-                //{
-                //    $("#endingEndDateRange").val(collectionMap.postdata.КонецРазреш_по);
-                //}
-                //if (collectionMap.postdata.НачалоРазреш_с !== undefined)
-                //{
-                //    $("#beginingStartDateRange").val(collectionMap.postdata.НачалоРазреш_с);
-                //}
-                //if (collectionMap.postdata.КонецРазреш_с !== undefined)
-                //{
-                //    $("#endingStartDateRange").val(collectionMap.postdata.КонецРазреш_с);
-                //}
                 fillDataForFunctionFT();
             }
         }

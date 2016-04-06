@@ -20,10 +20,10 @@
             Backlight: $("#gs_Подстветка").val(),
             ContractFinancialManagement: $("#gs_№_договора_с_фин_упр").val(),
             PassportAdvertising: $("#gs_№_паспорта_рекл").val(),
-            startEndDate: $("#gs_beginingEndDateRange").val(),
-            endEndDate: $("#gs_endingEndDateRange").val(),
             startStartDate: $("#gs_beginingStartDateRange").val(),
             endStartDate: $("#gs_endingStartDateRange").val(),
+            startEndDate: $("#gs_beginingEndDateRange").val(),
+            endEndDate: $("#gs_endingEndDateRange").val(),
             id: parseInt(objectId)
         }
     }).success(function (data) {
