@@ -34,7 +34,7 @@
 
 <script type="text/javascript">
     var param = true;
-    var coor;
+    var coord;
 
     function CreateMap(param) {
         if ($("#gs_Населенный_пункт").val() == undefined || $("#gs_Населенный_пункт").val() == "")
@@ -112,7 +112,6 @@
             var collectionMap = JSON.parse('@(Html.Raw(Session["collectionMap"]))');
                 for (var prop in collectionMap.postdata)
                 {
-                    //console.log("Свойство:" + prop + "       Значение:"+ collectionMap.postdata[prop]);
                     $("input[id$='" + prop + "']").val(collectionMap.postdata[prop]);
                 }
         }
@@ -381,7 +380,7 @@
         <div class="ui-state-default ui-th-column content-col">
             <div>
                 <div>
-                    <input type="date" name="beginingStartDateRange" id="gs_beginingStartDateRange" style="width: 100%;">
+                    <input type="date" name="НачалоРазреш_с" id="gs_beginingStartDateRange" style="width: 100%;">
                 </div>
             </div>
             <a href="#" style="">x</a>
@@ -394,7 +393,7 @@
         <div class="ui-state-default ui-th-column content-col">
             <div>
                 <div>
-                    <input type="date" name="endingStartDateRange" id="gs_endingStartDateRange" style="width: 100%;">
+                    <input type="date" name="КонецРазреш_с" id="gs_endingStartDateRange" style="width: 100%;">
                 </div>
             </div>
             <a href="#" style="">x</a>
@@ -407,7 +406,7 @@
     <div class="ui-state-default ui-th-column content-col">
         <div>
             <div>
-                <input type="date" name="beginingEndDateRange" id="gs_beginingEndDateRange" style="width: 100%;">
+                <input type="date" name="НачалоРазреш_по" id="gs_beginingEndDateRange" style="width: 100%;">
             </div>
         </div>
         <a href="#" style="">x</a>
@@ -419,7 +418,7 @@
         <div class="ui-state-default ui-th-column content-col">
             <div>
                 <div>
-                    <input type="date" name="endingEndDateRange" id="gs_endingEndDateRange" style="width: 100%;">
+                    <input type="date" name="КонецРазреш_по" id="gs_endingEndDateRange" style="width: 100%;">
                 </div>
             </div>
             <a href="#" style="">x</a>

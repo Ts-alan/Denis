@@ -138,12 +138,14 @@
             },
             beforeRequest: function ()
             {
+
                 if (firstReauquest)
                 {
                     LoadData();
                     firstReauquest = false;
 
                 }
+                console.log($("#table").getGridParam("postData"));
                 SaveData();
             }
 
@@ -253,96 +255,52 @@
             {
                 //поиск ячейки в строке для считывания вида конструкции
                 var td = $(this).find('[aria-describedby="table_Вид_конструкции"]');
+                var content = "";
                 //выпадающее меню для указателей
                 if (td[0].title == "Металлический указатель")
                 {
-                    $(element).tooltipsy({
-                        alignTo: 'cursor',
-                        offset: [0, -85],
-                        hideEvent: 'focusout',
-                        content: '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
+                       content = '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
                             '+<a href="/Map/Index/' + $(element)[0].id + '">Показать на карте</a></br>' +
                             '+<a href="/Data/Pointer/' + $(element)[0].id + '">Показать данные о конструкции</a></br>' +
                             '+<a href="/Data/EditMetalPointerDesign/' + $(element)[0].id + '">Изменить данные о конструкции</a></br>' +
                             '+<a  href="/Data/DeleteAdvertisingDesign/' + $(element)[0].id + '">Удалить конструкцию</a></br>' +
-                            '</button>',
-                        show: function (e, $el)
-                        {
-                            $el.show(100);
-                        },
-                        hide: function (e, $el)
-                        {
-                        },
-                        delay: 200,
-                        className: 'tooltipsy',
-                        css: {}
-                    });
+                            '</button>';
                 }
                 //выпадающее меню для щитов
                 if (td[0].title == "Щит")
                 {
-                    //console.log(tr[indx].id-1);
-
-                    $(element).tooltipsy({
-                        alignTo: 'cursor',
-                        offset: [0, -85],
-                        hideEvent: 'focusout',
-                        content: '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
+                        content = '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
                             '+<a href="/Map/Index/' + $(element)[0].id + '">Показать на карте</a></br>' +
                             '+<a href="/Data/Documents/' + $(element)[0].id + '">Показать данные о конструкции</a></br>' +
                             '+<a href="/Data/EditAdvertisingDesign/' + $(element)[0].id + '">Изменить данные о конструкции</a></br>' +
                             '+<a href="/Data/DeleteAdvertisingDesign/' + $(element)[0].id + '">Удалить конструкцию</a></br>' +
-                            '</button>',
-                        show: function (e, $el)
-                        {
-                            $el.show(100);
-                        },
-                        hide: function (e, $el)
-                        {
-                        },
-                        delay: 200,
-                        className: 'tooltipsy',
-                        css: {}
-                    });
+                            '</button>';
                 }
                 //выпадающее меню для световых коробов
                 if (td[0].title == "Световой короб")
                 {
-                    $(element).tooltipsy({
-                        alignTo: 'cursor',
-                        offset: [0, -85],
-                        hideEvent: 'focusout',
-                        content: '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
+                       content = '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
                             '+<a href="/Map/Index/' + $(element)[0].id + '">Показать на карте</a></br>' +
                             '+<a href="/Data/LightDuct/' + $(element)[0].id + '">Показать данные о конструкции</a></br>' +
                             '+<a href="/Data/EditLightDuctDesign/' + $(element)[0].id + '">Изменить данные о конструкции</a></br>' +
                             '+<a  href="/Data/DeleteAdvertisingDesign/' + $(element)[0].id + '">Удалить конструкцию</a></br>' +
-                            '</button>',
-                        show: function (e, $el)
-                        {
-                            $el.show(100);
-                        },
-                        hide: function (e, $el)
-                        {
-                        },
-                        delay: 200,
-                        className: 'tooltipsy',
-                        css: {}
-                    });
+                            '</button>';
                 }
                 //выпадающее меню для неопознанных конструкций
                 if (td[0].title == "Неопознанная конструкция")
                 {
-                    $(element).tooltipsy({
-                        alignTo: 'cursor',
-                        offset: [0, -85],
-                        hideEvent: 'focusout',
-                        content: '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
+                        content = '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
                             '+<a href="/Map/Index/' + $(element)[0].id + '">Показать на карте</a></br>' +
                             '+<a href="/Data/Illegal/' + $(element)[0].id + '">Показать данные о конструкции</a></br>' +
                             '+<a href="/Data/EditIllegalDesign/' + $(element)[0].id + '">Изменить данные о конструкции</a></br>' +
                             '+<a  href="/Data/DeleteAdvertisingDesign/' + $(element)[0].id + '">Удалить конструкцию</a></br>' +
-                            '</button>',
+                            '</button>';
+                }
+                 $(element).tooltipsy({
+                        alignTo: 'cursor',
+                        offset: [0, -85],
+                        hideEvent: 'focusout',
+                        content: content,
                         show: function (e, $el)
                         {
                             $el.show(100);
@@ -354,7 +312,6 @@
                         className: 'tooltipsy',
                         css: {}
                     });
-                }
             }
             );
         }
