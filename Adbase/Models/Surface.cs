@@ -38,6 +38,8 @@ public partial class Surface
 
     public string Type { get; set; }
 
+    public bool? FreeOrEngaged { get; set; }
+
 
 
     public virtual Side Side { get; set; }

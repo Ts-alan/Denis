@@ -150,6 +150,7 @@
           <Property Name="RentUntil" Type="date" />
           <Property Name="Theme" Type="nvarchar(max)" />
           <Property Name="Type" Type="nvarchar" MaxLength="50" />
+          <Property Name="FreeOrEngaged" Type="bit" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -768,6 +769,7 @@
           <Property Name="RentUntil" Type="DateTime" Precision="0" />
           <Property Name="Theme" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FreeOrEngaged" Type="Boolean" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -1163,6 +1165,7 @@
           <EntitySetMapping Name="Surfaces">
             <EntityTypeMapping TypeName="SciencecomModel.Surface">
               <MappingFragment StoreEntitySet="Surfaces">
+                <ScalarProperty Name="FreeOrEngaged" ColumnName="FreeOrEngaged" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="Theme" ColumnName="Theme" />
                 <ScalarProperty Name="RentUntil" ColumnName="RentUntil" />

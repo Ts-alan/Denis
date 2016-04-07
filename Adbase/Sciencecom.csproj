@@ -448,6 +448,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\ChangeDropDown.js" />
+    <Content Include="Scripts\DateTimeFixer.js" />
     <Content Include="Scripts\datetimepicker\jquery.datetimepicker.js" />
     <Content Include="Scripts\demos\accordion\collapsible.html" />
     <Content Include="Scripts\demos\accordion\custom-icons.html" />

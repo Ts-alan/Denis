@@ -71,6 +71,10 @@ namespace Sciencecom
             "~/Scripts/PictureAdder.js"
            ));
 
+            bundles.Add(new ScriptBundle("~/Content/Compatibility").Include(
+            "~/Scripts/DateTimeFixer.js"
+           ));
+
         }
     }
 }
