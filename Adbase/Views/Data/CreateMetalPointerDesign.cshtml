@@ -9,7 +9,7 @@
     //Вид
     var ListTypeAdvertising = new SciencecomEntities().TypeOfAdvertisingStructures.ToList();
     var ListTypeAdvertisingSelected = ListTypeAdvertising.Single(a => a.Code == ViewBag.Code).id;
-    //ListTypeAdvertising.Insert(0,null);
+    
 
     var ViewBids = new SciencecomEntities().ViewBids.OrderBy(a => a.OrderBy).ToList();
 
@@ -28,7 +28,7 @@
     var DirectionSide = new SciencecomEntities().DirectionSides.OrderBy(x => x.OrderBY).ToList();
     //Индификация поверхности
     var IdentificationSide = new SciencecomEntities().Identifications.ToList();
-    //IdentificationSide.Insert(0, null);
+    
     //Идентификационный номер
     var PropertyLocation = new SciencecomEntities().PropertyLocations.ToList();
 
@@ -145,9 +145,7 @@
                 });
             }
         );
-        //другое решение не тестил
-        //$('[name="DirectionSide"]').data('validator', null);
-        //$.validator.unobtrusive.parse('[name="DirectionSide"]');
+
     }
 
     //Добавить поверхность+
@@ -424,7 +422,13 @@
                 </div>
             </div>
         </div>
-
+    <div class="row">
+        <div class="col-md-3">
+            <label for="StartDate">Разрешен с</label>
+            @Html.TextBoxFor(model => model.StartDate, new { @class = "form-control", type = "date" })
+           
+        </div>
+    </div>
         <div class="row">
 
             <div class="form-inline" style="margin-bottom: 5px">

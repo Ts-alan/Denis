@@ -364,7 +364,13 @@
 
             </div>
 
-            <div class="form-group" style="margin-bottom: 5px; display: none;">
+        <div class="row" style="margin-left: 0px">
+
+            <label for="StartDate">разреш с</label>
+            @Html.EditorFor(model => model.StartDate, new { htmlattributes = new { @class = "form-control", @readonly = "" } })
+            
+        </div>
+        <div class="form-group" style="margin-bottom: 5px; display: none;">
                 <label for="StartDate">разреш с</label>
                 @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @readonly = "", @class = "form-control" } })
 
