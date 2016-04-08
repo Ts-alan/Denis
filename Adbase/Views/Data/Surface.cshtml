@@ -81,39 +81,40 @@
                 </div>
             </div>
         </div>
-        <div class="row left-align hideIfFree">
+        <div class="row left-align">
             <div class="form-inline">
                 <div class="col-md-2">
                     <label>Занята ли сторона</label>
                 </div>
                 <div class="col-md-2">
-                     @if (@Model != null)
-                {
-                    if (@Model[j - 1].FreeOrEngaged == null)
+                    @{ string name = ""; }
+                    @if (@Model != null)
                     {
-                        string name = "(" + ViewBag.Side + ")[" + (j - 1) + "].FreeOrEngaged";
-                        <input type="checkbox" name=@name/>
-                    }
-                    else
-                    {
-                        if (@Model[j - 1].FreeOrEngaged == false)
+                        if (@Model[j - 1].FreeOrEngaged == null)
                         {
-                            string name = "(" + ViewBag.Side + ")[" + (j - 1) + "].FreeOrEngaged";
+                            name = "(" + ViewBag.Side + ")[" + (j - 1) + "].FreeOrEngaged";
                             <input type="checkbox" name=@name/>
                         }
                         else
                         {
-                            string name = "(" + ViewBag.Side + ")[" + (j - 1) + "].FreeOrEngaged";
-                            <input type="checkbox" name=@name checked="checked"/>
+                            if (@Model[j - 1].FreeOrEngaged == false)
+                            {
+                                name = "(" + ViewBag.Side + ")[" + (j - 1) + "].FreeOrEngaged";
+                                <input type="checkbox" name=@name/>
+                            }
+                            else
+                            {
+                                name = "(" + ViewBag.Side + ")[" + (j - 1) + "].FreeOrEngaged";
+                                <input type="checkbox" name=@name checked="checked"/>
 
+                            }
                         }
                     }
-                }
-                else
-                {
-                    string name = "(" + ViewBag.Side + ")[" + (j - 1) + "].FreeOrEngaged";
-                    <input type="checkbox" name=@name/>
-                }
+                    else
+                    {
+                        name = "(" + ViewBag.Side + ")[" + (j - 1) + "].FreeOrEngaged";
+                        <input type="checkbox" name=@name/>
+                    }
                 </div>
                 
                
@@ -147,7 +148,17 @@
                 @Html.TextBoxFor(model => model[j - 1].RentUntil, new { @type = "date", @class = "input-sm form-control" })
             </div>
         </div>
-
+        <div class="row left-align hideIfFree">
+            <div class="form-inline">
+                <div class="col-md-2">
+                <label>Описание</label>
+            </div>
+            <div class="col-md-2">
+                @Html.TextAreaFor(model => model[j - 1].Theme , new {@class = "form-control"})
+            </div>
+            </div>
+                                                                       
+        </div>
 
 
     </text>
@@ -227,8 +238,57 @@
                 btnParent.closest(".fileUpload").next().next().next().next().remove();
             }
             btnParent.parent().append(modalButton);
-
+            
         });
 
+       var name = "@Html.Raw(HttpUtility.JavaScriptStringEncode(name))";
+        var checkbox = $("input[name*='" + name + "']");
+        $("div.hideIfFree > div > input, div.hideIfFree > div > div > select").each(function(index, element)
+        {
+            $(element).val("");
+        });
+        if (checkbox[0].checked != true)
+        {
+            $("div.hideIfFree > div > input, div.hideIfFree > div > div > textarea").each(function (index, element)
+            {
+                console.log(element);
+                $(element).val("");
+            });
+            $("div.hideIfFree > div > div > select").each(function (index, element)
+            {
+                $("element option[value='']").attr('selected', 'true');
+            });
+            $("div.hideIfFree").each(function(index, element)
+            {
+                $(element).hide();
+            });
+        };
+       $(checkbox).change(function()
+       {
+        if (checkbox[0].checked != true)
+        {
+            $("div.hideIfFree > div > input, div.hideIfFree > div > div > textarea").each(function(index, element)
+            {
+                $(element).val("");
+            });
+            $("div.hideIfFree > div > div > select").each(function(index, element)
+            {
+                $("element option[value='']").attr('selected', 'true');
+            });
+            $("div.hideIfFree").each(function(index, element)
+            {
+                $(element).hide();
+            });
+        }
+        else
+        {
+          $("div.hideIfFree").each(function(index, element)
+            {
+                $(element).show();
+            });  
+        }
+       });
+
+            
     </script>
     }

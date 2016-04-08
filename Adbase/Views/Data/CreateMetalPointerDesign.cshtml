@@ -235,7 +235,7 @@
     <div class="form-inline" style="margin-bottom: -10px">
         <hr />
 
-        <input type="hidden" id="CountSize" id="SizeOfCount" name="CountSize" value="">
+        <input type="hidden" id="CountSize" id="SizeOfCount" name="CountSize" value="1">
         @Html.ValidationSummary(true)
         @Html.ValidationMessage("Error")
 
@@ -367,9 +367,9 @@
         <div class="form-group" style="width: 600px; height: 500px" id="map"></div>
 
         <div class="form-group">
-            <table>
-                <tr>
-                     <td>
+                <table>
+                    <tr>
+                        <td>
                              <label for="coordB">Широта</label>
                         </td>
                         <td>
@@ -385,9 +385,8 @@
                               <input  class="text-box single-line form-control" name="Hcoord" id="Hcoord">
                              
                         </td>
-                </tr>
-            </table>
-   
+                    </tr>
+                </table>
         </div>
     </div>
 
@@ -598,7 +597,7 @@
             </div>
         </div>
         
-        <div id="InsertSide" style="display: none">
+<div id="InsertSide" style="display: none">
             <div code="" class="form-horizontal">
                 <div class="form-group">
                     <select class="text-box single-line" id="AddButton1" onchange="AddSurface(1)" name="CountSurfuce1" identificationforcountside="" type="text" data-val="true" data-val-required="Укажите кол-во сторон">
