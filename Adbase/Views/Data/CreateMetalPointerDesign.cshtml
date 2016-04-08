@@ -41,20 +41,71 @@
     var typedesign;
     $(document).ready(function() {
         
-        //выпадающий список на согласование
-        $("[name=OnAgreement]").change(function()
+        var name = "FreeOrEngaged";
+        var checkbox = $("input[name*='" + name + "']");
+        $("div.hideIfFree > div > input, div.hideIfFree > div > div > select").each(function(index, element)
         {
-            var selectIndex = $("[name=OnAgreement] option:selected").val();
-
-            if (selectIndex == "true")
-            {
-                $("#ContractHide").css("display", "block");
-            }
-            if (selectIndex == "false")
-            {
-                $("#ContractHide").css("display", "none");
-            }
+            $(element).val("");
         });
+        if (checkbox[0].checked != true)
+        {
+            $("div.hideIfFree > div > input, div.hideIfFree > div > div > textarea").each(function (index, element)
+            {
+                console.log(element);
+                $(element).val("");
+            });
+            $("div.hideIfFree > div > div > select").each(function (index, element)
+            {
+                $("element option[value='']").attr('selected', 'true');
+            });
+            $("div.hideIfFree").each(function(index, element)
+            {
+                $(element).hide();
+            });
+        };
+       $(checkbox).change(function()
+       {
+        if (checkbox[0].checked != true)
+        {
+            $("div.hideIfFree > div > input, div.hideIfFree > div > div > textarea").each(function(index, element)
+            {
+                $(element).val("");
+            });
+            $("div.hideIfFree > div > div > select").each(function(index, element)
+            {
+                $("element option[value='']").attr('selected', 'true');
+            });
+            $("div.hideIfFree").each(function(index, element)
+            {
+                $(element).hide();
+            });
+        }
+        else
+        {
+          $("div.hideIfFree").each(function(index, element)
+            {
+                $(element).show();
+            });  
+        }
+       });
+
+
+
+
+        ////выпадающий список на согласование
+        //$("[name=OnAgreement]").change(function()
+        //{
+        //    var selectIndex = $("[name=OnAgreement] option:selected").val();
+
+        //    if (selectIndex == "true")
+        //    {
+        //        $("#ContractHide").css("display", "block");
+        //    }
+        //    if (selectIndex == "false")
+        //    {
+        //        $("#ContractHide").css("display", "none");
+        //    }
+        //});
 
         //выщитывание площади для каждой поверхности
         $('#SHeight').change(function()
@@ -83,7 +134,7 @@
         $("#ConstructionSquare").val(Summ);
     }
 
-    //кол-во сторон
+    @*//кол-во сторон
     function SetCountSize()
     {
         EndCountForSurface = 0;
@@ -146,9 +197,9 @@
             }
         );
 
-    }
+    }*@
 
-    //Добавить поверхность+
+    @*//Добавить поверхность+
     function AddSurface(i)
     {
         var count = $("#AddButton" + i + "").val();
@@ -175,7 +226,7 @@
             {
                 $("#InsertPartial" + i + "").before(e);
             });
-    }
+    }*@
 
 
     //выщитывание площади для каждой поверхности
@@ -543,7 +594,6 @@
         <div class="form-group">
             <label>Дата согласования</label>
             @Html.TextBoxFor(model => model.CoordinationDate, new {@class = "form-control"})
-
             @Html.ValidationMessageFor(model => model.CoordinationDate)
         </div>
     </div>
@@ -587,6 +637,61 @@
             </div>
         </div>
     </div>
+    <div style="display: none ">
+        <div class="row">
+         <div class="col-md-2">
+            <label>Занята ли </label>
+        </div>
+        <div class="col-md-2">
+            <input type="radio" name="(1)[0].FreeOrEngaged" value="false"/>Не занята<br>
+            <input type="radio" name="(1)[0].FreeOrEngaged" value="true">Занята<br>
+        </div>
+    </div>
+
+    <div class="row left-align hideIfFree">
+            <div class="form-inline">
+                <div class="col-md-2">
+                    <label>Тип рекламы</label>
+                </div>
+                <div class="col-md-2">
+                    <select class = "input-sm form-control" name="(1)[0].Type">
+                        <option value=""></option>
+                        <option value="Коммерческая реклама">Коммерческая реклама</option>
+                        <option value="Социальная реклама">Социальная реклама</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row left-align hideIfFree">
+            <div class="col-md-2">
+            <label>Арендован с</label>
+                 </div>
+            <div class="col-md-2">
+                <input type="date" class = "input-sm form-control" value =" " name="(1)[0].RentFrom"/>
+            </div>
+        </div>
+
+        <div class="row left-align hideIfFree">
+            <div class="col-md-2">
+                <label>Арендован до</label>
+            </div>
+            <div class="col-md-2">
+                <input type="date" class = "input-sm form-control" value =" " name="(1)[0].RentUntil"/>
+            </div>
+        </div>
+        <div class="row left-align hideIfFree">
+            <div class="form-inline">
+                <div class="col-md-2">
+                <label>Описание</label>
+            </div>
+                <div class="col-md-2">
+                    <textarea class = "form-control" name="(1)[0].Theme"></textarea >
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
     <label>Размещаемая информация</label>
         <div class="form-inline">
 

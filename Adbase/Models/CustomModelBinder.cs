@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Sciencecom.Models
@@ -12,50 +11,88 @@ namespace Sciencecom.Models
         public override object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
         {
             var request = controllerContext.HttpContext.Request;
-            List<Surface> ListSurface=new List<Surface>();
+            List<Surface> listSurface=new List<Surface>();
 
-            List<string> AllKeysHeight = request.Form.AllKeys.Where(a=>a.Contains("].Height")).ToList();
-            List<string> AllKeysWidth = request.Form.AllKeys.Where(a => a.Contains("].Width")).ToList();
-            List<string> AllKeysSpace = request.Form.AllKeys.Where(a => a.Contains("].Space")).ToList();
-            List<string> AllKeysSideOfSurface = request.Form.AllKeys.Where(a => a.Contains("].SideOfSurface")).ToList();
-            List<string> AllKeysGuids = request.Form.AllKeys.Where(a => a.Contains("Guid")).ToList();
+            List<string> allKeysHeight = request.Form.AllKeys.Where(a=>a.Contains("].Height")).ToList();
+            List<string> allKeysWidth = request.Form.AllKeys.Where(a => a.Contains("].Width")).ToList();
+            List<string> allKeysSpace = request.Form.AllKeys.Where(a => a.Contains("].Space")).ToList();
+            List<string> allKeysSideOfSurface = request.Form.AllKeys.Where(a => a.Contains("].SideOfSurface")).ToList();
+            List<string> types = request.Form.AllKeys.Where(a => a.Contains("].Type")).ToList();
+            List<string> themes = request.Form.AllKeys.Where(a => a.Contains("].Theme")).ToList();
+            List<string> rentUntils = request.Form.AllKeys.Where(a => a.Contains("].RentUntil")).ToList();
+            List<string> rentFroms = request.Form.AllKeys.Where(a => a.Contains("].RentFrom")).ToList();
+            List<string> freeOrEngagedChckxs = request.Form.AllKeys.Where(a => a.Contains(".FreeOrEngaged")).ToList();
+
+            for(  )
 
             double height = 0;
             double space = 0;
             double width = 0;
             var sideOfSurface = "";
+            string type = "";
+            string theme = "";
+            DateTime? rentUntil = null;
+            DateTime? rentFrom = null;
+            bool freeOrEngagedChckx = false;
 
-            for (int i=0; i<AllKeysHeight.Count; i++)
+            for (int i=0; i<allKeysHeight.Count; i++)
             {
                 double z;
-                if (double.TryParse(request.Form.Get(AllKeysHeight[i]), out z))
+                if (double.TryParse(request.Form.Get(allKeysHeight[i]), out z))
                 {
-                    height = double.Parse(request.Form.Get(AllKeysHeight[i]), CultureInfo.InvariantCulture);
+                    height = double.Parse(request.Form.Get(allKeysHeight[i]), CultureInfo.InvariantCulture);
                 }
                 double q;
-                if (double.TryParse(request.Form.Get(AllKeysSpace[i]), out q))
+                if (double.TryParse(request.Form.Get(allKeysSpace[i]), out q))
                 {
-                    space = double.Parse(request.Form.Get(AllKeysSpace[i]), CultureInfo.InvariantCulture);
+                    space = double.Parse(request.Form.Get(allKeysSpace[i]), CultureInfo.InvariantCulture);
                 }
                 double x;
-                if (double.TryParse(request.Form.Get(AllKeysWidth[i]), out x))
+                if (double.TryParse(request.Form.Get(allKeysWidth[i]), out x))
                 {
-                    width = double.Parse(request.Form.Get(AllKeysWidth[i]), CultureInfo.InvariantCulture);
+                    width = double.Parse(request.Form.Get(allKeysWidth[i]), CultureInfo.InvariantCulture);
                 }
-                if (!string.IsNullOrWhiteSpace(request.Form.Get(AllKeysSideOfSurface[i])))
+                if (!string.IsNullOrWhiteSpace(request.Form.Get(allKeysSideOfSurface[i])))
                 {
-                    sideOfSurface = request.Form.Get(AllKeysSideOfSurface[i]);
+                    sideOfSurface = request.Form.Get(allKeysSideOfSurface[i]);
+                }
+                if (!string.IsNullOrWhiteSpace(request.Form.Get(types[i])))
+                {
+                    type = request.Form.Get(types[i]);
+                }
+                if (!string.IsNullOrWhiteSpace(request.Form.Get(themes[i])))
+                {
+                    theme = request.Form.Get(types[i]);
+                }
+                DateTime u;
+                if (rentUntils[i] != null && DateTime.TryParse(rentUntils[i], out u))
+                {
+                    rentUntil = DateTime.Parse(request.Form.Get(rentUntils[i]));
+                }
+                DateTime a;
+                if (rentFroms[i] != null && DateTime.TryParse(rentFroms[i], out a))
+                {
+                    rentFrom = DateTime.Parse(rentFroms[i]);
+                }
+                if (!string.IsNullOrWhiteSpace(request.Form.Get(freeOrEngagedChckxs[i])))
+                {
+                    freeOrEngagedChckx = Boolean.Parse(request.Form.Get(freeOrEngagedChckxs[i]));
                 }
 
-
-                ListSurface.Add(new Surface() { Height = height, 
+                listSurface.Add(new Surface() {
+                    Height = height, 
                     Space = space, 
                     Width = width, 
-                    SideOfSurface = sideOfSurface
+                    SideOfSurface = sideOfSurface,
+                    Theme = theme,
+                    Type = type,
+                    RentFrom = rentFrom,
+                    RentUntil = rentUntil,
+                    FreeOrEngaged = freeOrEngagedChckx
                 });
 
             }
-            return ListSurface;
+            return listSurface;
         }
     }
     public class CustomModelBinderForSide : DefaultModelBinder
@@ -63,64 +100,64 @@ namespace Sciencecom.Models
         public override object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
         {
             var request = controllerContext.HttpContext.Request;
-            List<Side> ListSide = new List<Side>();
+            List<Side> listSide = new List<Side>();
 
-            List<string> DirectionSide_id = request.Form.AllKeys.Where(a => a.Contains("].IdentificationForDirectionSide")).ToList();
-            List<string> Identification_id = request.Form.AllKeys.Where(a => a.Contains("].IdentificationForIdentificationSurface")).ToList();
+            List<string> directionSideId = request.Form.AllKeys.Where(a => a.Contains("].IdentificationForDirectionSide")).ToList();
+            List<string> identificationId = request.Form.AllKeys.Where(a => a.Contains("].IdentificationForIdentificationSurface")).ToList();
 
-            string tempIdentification_id="" ;
-            for (int i = 0; i < DirectionSide_id.Count; i++)
+            string tempIdentificationId="" ;
+            for (int i = 0; i < directionSideId.Count; i++)
             {
-                if (Identification_id.Where(a => a.Contains(i.ToString())).Any())
+                if (identificationId.Any(a => a.Contains(i.ToString())))
                 {
-                    tempIdentification_id = request.Form.Get(Identification_id.Single(a => a.Contains(i.ToString())));
+                    tempIdentificationId = request.Form.Get(identificationId.Single(a => a.Contains(i.ToString())));
                 }
 
-                var test = request.Form.Get(DirectionSide_id[i]);
+                var test = request.Form.Get(directionSideId[i]);
                 if (test != "")
                 {
-                    ListSide.Add(new Side()
+                    listSide.Add(new Side()
                     {
-                        DirectionSide_id = new Guid(request.Form.Get(DirectionSide_id[i])),
-                        Identification_id = tempIdentification_id != "" ? (Guid?)new Guid(tempIdentification_id) : null
+                        DirectionSide_id = new Guid(request.Form.Get(directionSideId[i])),
+                        Identification_id = tempIdentificationId != "" ? (Guid?)new Guid(tempIdentificationId) : null
 
                     });
                 }
 
             }
-            return ListSide;
+            return listSide;
         }
     }
-    public class CustomModelBinderForSideForAD : DefaultModelBinder
+    public class CustomModelBinderForSideForAd : DefaultModelBinder
     {
         public override object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
         {
             var request = controllerContext.HttpContext.Request;
-            List<Side> ListSide = new List<Side>();
+            List<Side> listSide = new List<Side>();
 
-            List<string> DirectionSide_id = request.Form.AllKeys.Where(a => a.Contains("DirectionSide")).ToList();
-            List<string> Identification_id = request.Form.AllKeys.Where(a => a.Contains("IdentificationSurface")).ToList();
+            List<string> directionSideId = request.Form.AllKeys.Where(a => a.Contains("DirectionSide")).ToList();
+            List<string> identificationId = request.Form.AllKeys.Where(a => a.Contains("IdentificationSurface")).ToList();
             
-            for (int i = 0; i < DirectionSide_id.Count; i++)
+            for (int i = 0; i < directionSideId.Count; i++)
             {
-                string tempIdentification_id = "";
+                string tempIdentificationId = "";
                 string tempDirectionSide = "";
-                if (Identification_id.Where(a => a.Contains(i.ToString())).Any())
+                if (identificationId.Any(a => a.Contains(i.ToString())))
                 {
-                    tempIdentification_id = request.Form.Get(Identification_id.Single(a => a.Contains(i.ToString())));
+                    tempIdentificationId = request.Form.Get(identificationId.Single(a => a.Contains(i.ToString())));
                     
                 }
-                if (DirectionSide_id.Where(a => a.Contains(i.ToString())).Any())
+                if (directionSideId.Any(a => a.Contains(i.ToString())))
                 {
-                    tempDirectionSide= request.Form.Get(DirectionSide_id.Single(a => a.Contains(i.ToString())));
+                    tempDirectionSide= request.Form.Get(directionSideId.Single(a => a.Contains(i.ToString())));
                 }
-                    ListSide.Add(new Side()
+                    listSide.Add(new Side()
                     {
                         DirectionSide_id = tempDirectionSide != ""? (Guid?)new Guid(tempDirectionSide) :null,
-                        Identification_id = tempIdentification_id != "" ? (Guid?)new Guid(tempIdentification_id) : null
+                        Identification_id = tempIdentificationId != "" ? (Guid?)new Guid(tempIdentificationId) : null
                     });
             }
-            return ListSide;
+            return listSide;
         }
     }
 
@@ -142,7 +179,7 @@ namespace Sciencecom.Models
         }
     }
 
-    public class CustomModelBinderForPicsForAD : DefaultModelBinder
+    public class CustomModelBinderForPicsForAd : DefaultModelBinder
     {
         public override object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
         {

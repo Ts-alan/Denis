@@ -193,8 +193,8 @@ namespace Sciencecom.Controllers
         [Authorize]
         [HttpPost]
         public ActionResult CreateAdvertisingDesign(AdvertisingStructure structures,
-            [ModelBinder(typeof(CustomModelBinderForSideForAD))] List<Side> sides,
-            [ModelBinder(typeof(CustomModelBinderForPicsForAD))] Dictionary<string, HttpPostedFileBase> photos,
+            [ModelBinder(typeof(CustomModelBinderForSideForAd))] List<Side> sides,
+            [ModelBinder(typeof(CustomModelBinderForPicsForAd))] Dictionary<string, HttpPostedFileBase> photos,
             [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces,
             HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides,
             string Bcoord, string Hcoord,
@@ -266,7 +266,7 @@ namespace Sciencecom.Controllers
         public ActionResult EditAdvertisingDesign(int id, AdvertisingStructure structures,
             [ModelBinder(typeof(CustomModelBinderForSide))] List<Side> sides,
             [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces,
-            [ModelBinder(typeof(CustomModelBinderForPicsForAD))] Dictionary<string, HttpPostedFileBase> photos,
+            [ModelBinder(typeof(CustomModelBinderForPicsForAd))] Dictionary<string, HttpPostedFileBase> photos,
             [ModelBinder(typeof(CustomModelBinderForPicInd))] Dictionary<string, string> picIndexes,
             HttpPostedFileBase ScanPassport_1Sides, HttpPostedFileBase ScanPassport_2Sides,
             HttpPostedFileBase scan1SidesWithFinancialManagement, 
@@ -610,7 +610,7 @@ namespace Sciencecom.Controllers
             [ModelBinder(typeof(CustomModelBinderForSide))] List<Side> sides,
             [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces,
             HttpPostedFileBase scanPassport1Sides, HttpPostedFileBase scanPassport2Sides,
-            [ModelBinder(typeof(CustomModelBinderForPicsForAD))] Dictionary<string, HttpPostedFileBase> photos,
+            [ModelBinder(typeof(CustomModelBinderForPicsForAd))] Dictionary<string, HttpPostedFileBase> photos,
             HttpPostedFileBase Application,
             HttpPostedFileBase scan1Side, HttpPostedFileBase scan2Side,
             string Bcoord, string Hcoord, int countSize = 0)
@@ -688,7 +688,7 @@ namespace Sciencecom.Controllers
         public ActionResult EditLightDuctDesign(int id, AdvertisingStructure structures,
             [ModelBinder(typeof(CustomModelBinderForSide))] List<Side> sides,
             [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces,
-            [ModelBinder(typeof(CustomModelBinderForPicsForAD))] Dictionary<string, HttpPostedFileBase> photos,
+            [ModelBinder(typeof(CustomModelBinderForPicsForAd))] Dictionary<string, HttpPostedFileBase> photos,
             [ModelBinder(typeof(CustomModelBinderForPicInd))] Dictionary<string, string> picIndexes,
             HttpPostedFileBase scanPassport1Sides, HttpPostedFileBase scanPassport2Sides, HttpPostedFileBase Application,
             HttpPostedFileBase scan1Side, HttpPostedFileBase scan2Side, 

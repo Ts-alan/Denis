@@ -60,7 +60,7 @@
                             <label class="hideInView" for="photo[@{@ViewBag.Side}](@j)">@imgName</label>
                             <br class="hideInView" />
                             <br />
-                                                                                        <button type="button" style="margin-left: 25px" class="modalPictureTrigger btn btn-default input-sm" data-toggle="modal" onclick="addPic('#ModalPictureDivPhoto', '@image')" data-target="#ViewModalPicturePhoto">Показать</button>
+                            <button type="button" style="margin-left: 25px" class="modalPictureTrigger btn btn-default input-sm" data-toggle="modal" onclick="addPic('#ModalPictureDivPhoto', '@image')" data-target="#ViewModalPicturePhoto">Показать</button>
     }
     else
     {
@@ -106,7 +106,6 @@
                             {
                                 name = "(" + ViewBag.Side + ")[" + (j - 1) + "].FreeOrEngaged";
                                 <input type="checkbox" name=@name checked="checked"/>
-
                             }
                         }
                     }
@@ -127,7 +126,7 @@
                     <label>Тип рекламы</label>
                 </div>
                 <div class="col-md-2">
-                @Html.DropDownListFor(model => model[j - 1].Theme, new SelectList(new[] { "", "Коммерческая реклама", "Социальная реклама" }), new { @class = "input-sm form-control" })
+                @Html.DropDownListFor(model => model[j - 1].Type, new SelectList(new[] { "", "Коммерческая реклама", "Социальная реклама" }), new { @class = "input-sm form-control", Name = "(" + ViewBag.Side + ")[" + (j - 1) + "].Type"})
                 </div>
             </div>
         </div>
@@ -136,7 +135,7 @@
             <label>Арендован с</label>
                  </div>
             <div class="col-md-2">
-            @Html.TextBoxFor(model => model[j - 1].RentFrom, new { @type = "date", @class = "input-sm form-control" })
+            @Html.TextBoxFor(model => model[j - 1].RentFrom, new { @type = "date", @class = "input-sm form-control", Name = "(" + ViewBag.Side + ")[" + (j - 1) + "].RentFrom" })
             </div>
         </div>
 
@@ -145,7 +144,7 @@
                 <label>Арендован до</label>
             </div>
             <div class="col-md-2">
-                @Html.TextBoxFor(model => model[j - 1].RentUntil, new { @type = "date", @class = "input-sm form-control" })
+                @Html.TextBoxFor(model => model[j - 1].RentUntil, new { @type = "date", @class = "input-sm form-control" , Name = "(" + ViewBag.Side + ")[" + (j - 1) + "].RentUntil" })
             </div>
         </div>
         <div class="row left-align hideIfFree">
@@ -154,7 +153,7 @@
                 <label>Описание</label>
             </div>
             <div class="col-md-2">
-                @Html.TextAreaFor(model => model[j - 1].Theme , new {@class = "form-control"})
+                @Html.TextAreaFor(model => model[j - 1].Theme , new {@class = "form-control", Name = "(" + ViewBag.Side + ")[" + (j - 1) + "].Type"})
             </div>
             </div>
                                                                        
@@ -184,9 +183,7 @@
 
             if (Height != "" && Width != "")
             {
-
                 var Sum = Height * Width;
-
                 $('[name="(' + side + ')[' + surface + '].Space"]').val(Sum);
                 CalculationAS();
             }
@@ -215,11 +212,11 @@
 
                 btnParent.parent().find("label[for^='photo']").text(fileName);
                 btnParent.parent().find("label[for^='Scan']").text(fileName);
+
                 //Изменение стиля кнопки загрузки фала при выборе загружаемого файла
-
                 var markup = '<img id="' + modalImgId + '" src=""' + ' height="300" style="display: block;margin-left: auto;margin-right: auto;">';
-                //добавление в модальное окно пустого тега с картинкой
 
+                //добавление в модальное окно пустого тега с картинкой
                 $(modalId).empty();
                 $(modalId).append(markup);
             }
@@ -230,7 +227,6 @@
 
 
             //добавление кнопки открывания модального окна
-
             var modalButton = '<button type="button" style="margin-left:25px" class="modalPictureTrigger btn btn-default" data-toggle="modal" data-target="#ViewModalPicturePhoto">Показать</button>';
 
             if (btnParent.closest(".fileUpload").next().next().next().next().length != 0)
@@ -241,7 +237,7 @@
             
         });
 
-       var name = "@Html.Raw(HttpUtility.JavaScriptStringEncode(name))";
+        var name = "@Html.Raw(HttpUtility.JavaScriptStringEncode(name))";
         var checkbox = $("input[name*='" + name + "']");
         $("div.hideIfFree > div > input, div.hideIfFree > div > div > select").each(function(index, element)
         {
