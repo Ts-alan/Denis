@@ -17,7 +17,7 @@
         <EntityTypeShape EntityType="SciencecomModel.Status" Width="1.5" PointX="3.75" PointY="30.375" />
         <EntityTypeShape EntityType="SciencecomModel.Street" Width="1.5" PointX="5.875" PointY="27.75" />
         <EntityTypeShape EntityType="SciencecomModel.Surface" Width="1.5" PointX="10.5" PointY="7.625" />
-        <EntityTypeShape EntityType="SciencecomModel.sysdiagram" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="SciencecomModel.sysdiagram" Width="1.5" PointX="0.75" PointY="0.875" />
         <EntityTypeShape EntityType="SciencecomModel.TheElementOfTheRoadNetwork" Width="1.5" PointX="3.75" PointY="11.125" />
         <EntityTypeShape EntityType="SciencecomModel.TypeOfAdvertisingStructure" Width="1.5" PointX="0.75" PointY="7.75" />
         <EntityTypeShape EntityType="SciencecomModel.ViewBid" Width="1.5" PointX="3.75" PointY="13.5" />

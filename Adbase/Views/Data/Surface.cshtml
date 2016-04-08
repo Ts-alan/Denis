@@ -8,158 +8,287 @@
             <h3 style="margin-left: 150px">Поверхность @j &nbsp; Стороны @ViewBag.Side </h3>
 
             <div class="form-inline">
-                <hr/>
+                <hr />
                 <div class="form-group surfaceInputGroup">
                     <input name="[@j-1].NumberSurface" type="hidden" value="@ViewBag.Side">
                     <div class="form-group has-feedback">
                         <label for="[@j-1].Height">Высота</label>
                         <span class="field-validation-valid" data-valmsg-for="[@j-1].Height" data-valmsg-replace="true"></span>
                         <span class="glyphicon form-control-feedback"></span>
-                        @Html.TextBoxFor(model => model[j-1].Height, new {@class = "form-control", type = "number", Name = "(" + ViewBag.Side + ")[" + (j-1) + "].Height", onchange = "CalculateArea(" + @ViewBag.Side + "," + (@j-1) + ")"})
+                        @Html.TextBoxFor(model => model[j - 1].Height, new { @class = "form-control", type = "number", Name = "(" + ViewBag.Side + ")[" + (j - 1) + "].Height", onchange = "CalculateArea(" + @ViewBag.Side + "," + (@j - 1) + ")" })
 
                     </div>
                     <div class="form-group has-feedback" style="margin-left: 20px">
                         <label for="[@j-1].Width">Ширина</label>
                         <span class="field-validation-valid" data-valmsg-for="[@j-1].Width" data-valmsg-replace="true"></span>
                         <span class="glyphicon form-control-feedback"></span>
-                        @Html.TextBoxFor(model => model[j-1].Width, new {@class = "form-control", type = "number", Name = "(" + ViewBag.Side + ")[" + (j-1) + "].Width", onchange = "CalculateArea(" + @ViewBag.Side + "," + (@j-1) + ")"})
+                        @Html.TextBoxFor(model => model[j - 1].Width, new { @class = "form-control", type = "number", Name = "(" + ViewBag.Side + ")[" + (j - 1) + "].Width", onchange = "CalculateArea(" + @ViewBag.Side + "," + (@j - 1) + ")" })
 
                     </div>
                     <div class="form-group has-feedback" style="margin-left: 20px">
                         <label for="[@j-1].Space">Площадь</label>
-                        @Html.TextBoxFor(model => model[j-1].Space, new {@class = "form-control", type = "number", SelectForSpace = "", onchange = "CalculationAS()", @readonly = "readonly", Name = "(" + ViewBag.Side + ")[" + (j-1) + "].Space"})
-                        @Html.ValidationMessageFor(model => model[j-1].Space)
+                        @Html.TextBoxFor(model => model[j - 1].Space, new { @class = "form-control", type = "number", SelectForSpace = "", onchange = "CalculationAS()", @readonly = "readonly", Name = "(" + ViewBag.Side + ")[" + (j - 1) + "].Space" })
+                        @Html.ValidationMessageFor(model => model[j - 1].Space)
                     </div>
 
                     <div style="margin-left: 10px" class="form-group">
 
                         @*<label>Фотография</label>
-                        <br/>*@
+                            <br/>*@
                         @{
                             string photoName = "[" + ViewBag.Side + "](" + j + ")";
                             List<string> listOfNames = new List<string>();
-                            if ( Session["PhotoNames"] != null)
+                            if (Session["PhotoNames"] != null)
                             {
                                 listOfNames = (List<string>)Session["PhotoNames"];
                             }
                         }
                         @if (listOfNames.Count != 0 && listOfNames.Any(x => x.Contains(photoName)))
-                        {
-                         
+                {
+
                             <label class="marginedLabel">Фотография</label>
-                            <br  class="hideInView"/>
+                            <br class="hideInView" />
                             string image = "/Images/photo1/[" + ViewBag.Side + "](" + @j + ")photo" + Session["IdShow"] + ".jpg";
                             string imgName = "[" + ViewBag.Side + "](" + @j + ")photo.jpg";
-                            
+
                             <input type="hidden" name="PhotoInd[@{@ViewBag.Side}](@j)" value="setImage">
-                            <img class="closeimg hideInView" style="width: 20px" src="../../Content/CloseImg.jpg"/>
+                            <img class="closeimg hideInView" style="width: 20px" src="../../Content/CloseImg.jpg" />
                             <div id="hideMe" class="fileUpload btn btn-warning input-sm hideInView">
-                                <span class="hideInView" >&nbsp;&nbsp;Фото&nbsp;</span>
-                                <input type="file" class="upload hideInView" name="photo[@{@ViewBag.Side}](@j)" accept="image/jpeg/"/>
+                                <span class="hideInView">&nbsp;&nbsp;Фото&nbsp;</span>
+                                <input type="file" class="upload hideInView" name="photo[@{@ViewBag.Side}](@j)" accept="image/jpeg/" />
                             </div>
-                            <label class ="hideInView" for="photo[@{@ViewBag.Side}](@j)">@imgName</label>
+                            <label class="hideInView" for="photo[@{@ViewBag.Side}](@j)">@imgName</label>
                             <br class="hideInView" />
-                            <br/>
-                            <button type="button" style="margin-left: 25px" class="modalPictureTrigger btn btn-default input-sm" data-toggle="modal" onclick="addPic('#ModalPictureDivPhoto', '@image')" data-target="#ViewModalPicturePhoto">Показать</button>
-                        }
-                        else
-                        {
-                            <label class="hideInView">Фотография</label>
-                            <br/>
-                            <input type="hidden" name="PhotoInd[@{@ViewBag.Side}](@j)" value="">
-                            <img class="closeimg hideInView" style="width: 20px" src="../../Content/CloseImg.jpg"/>
-                            <div id="hideMe" class="hideInView fileUpload btn btn-default input-sm">
-                                <span id="hideMe" accept="image/jpeg/">&nbsp;&nbsp;Фото&nbsp;</span>
-                                <input type="file" id="hideMe" class="upload hideInView" name="photo[@{@ViewBag.Side}](@j)" accept="image/jpeg/"/>
-                            </div>
+                            <br />
+                                                                                        <button type="button" style="margin-left: 25px" class="modalPictureTrigger btn btn-default input-sm" data-toggle="modal" onclick="addPic('#ModalPictureDivPhoto', '@image')" data-target="#ViewModalPicturePhoto">Показать</button>
+    }
+    else
+    {
+        <label class="hideInView">Фотография</label>
+        <br />
+        <input type="hidden" name="PhotoInd[@{@ViewBag.Side}](@j)" value="">
+        <img class="closeimg hideInView" style="width: 20px" src="../../Content/CloseImg.jpg" />
+        <div id="hideMe" class="hideInView fileUpload btn btn-default input-sm">
+            <span id="hideMe" accept="image/jpeg/">&nbsp;&nbsp;Фото&nbsp;</span>
+            <input type="file" id="hideMe" class="upload hideInView" name="photo[@{@ViewBag.Side}](@j)" accept="image/jpeg/" />
+        </div>
                             <label class="hideInView" for="photo[@{@ViewBag.Side}](@j)">Файл не выбран</label>
-                            <br/>
-                            <br/>
-                        }
+                            <br />
+                            <br />
+    }
 
                     </div>
                 </div>
             </div>
         </div>
+        <div class="row left-align">
+            <div class="form-inline">
+                <div class="col-md-2">
+                    <label>Занята ли сторона</label>
+                </div>
+                <div class="col-md-2">
+                    @{ string name = ""; }
+                    @if (@Model != null)
+                    {
+                        if (@Model[j - 1].FreeOrEngaged == null)
+                        {
+                            name = "(" + ViewBag.Side + ")[" + (j - 1) + "].FreeOrEngaged";
+                            <input type="checkbox" name=@name/>
+                        }
+                        else
+                        {
+                            if (@Model[j - 1].FreeOrEngaged == false)
+                            {
+                                name = "(" + ViewBag.Side + ")[" + (j - 1) + "].FreeOrEngaged";
+                                <input type="checkbox" name=@name/>
+                            }
+                            else
+                            {
+                                name = "(" + ViewBag.Side + ")[" + (j - 1) + "].FreeOrEngaged";
+                                <input type="checkbox" name=@name checked="checked"/>
+
+                            }
+                        }
+                    }
+                    else
+                    {
+                        name = "(" + ViewBag.Side + ")[" + (j - 1) + "].FreeOrEngaged";
+                        <input type="checkbox" name=@name/>
+                    }
+                </div>
+                
+               
+
+            </div>
+        </div>
+        <div class="row left-align hideIfFree">
+            <div class="form-inline">
+                <div class="col-md-2">
+                    <label>Тип рекламы</label>
+                </div>
+                <div class="col-md-2">
+                @Html.DropDownListFor(model => model[j - 1].Theme, new SelectList(new[] { "", "Коммерческая реклама", "Социальная реклама" }), new { @class = "input-sm form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="row left-align hideIfFree">
+            <div class="col-md-2">
+            <label>Арендован с</label>
+                 </div>
+            <div class="col-md-2">
+            @Html.TextBoxFor(model => model[j - 1].RentFrom, new { @type = "date", @class = "input-sm form-control" })
+            </div>
+        </div>
+
+        <div class="row left-align hideIfFree">
+            <div class="col-md-2">
+                <label>Арендован до</label>
+            </div>
+            <div class="col-md-2">
+                @Html.TextBoxFor(model => model[j - 1].RentUntil, new { @type = "date", @class = "input-sm form-control" })
+            </div>
+        </div>
+        <div class="row left-align hideIfFree">
+            <div class="form-inline">
+                <div class="col-md-2">
+                <label>Описание</label>
+            </div>
+            <div class="col-md-2">
+                @Html.TextAreaFor(model => model[j - 1].Theme , new {@class = "form-control"})
+            </div>
+            </div>
+                                                                       
+        </div>
+
+
     </text>
     <script type="text/javascript">
         AddRules();
 
-        $(".closeimg").click(function () {
-        $(this).prev().attr("value", "");
-        $(this).next().find("input[type='file']")[0].value = null;
-        $(this).next().next().text("Файл не выбран");
-        $(this).next().removeClass("btn-warning");
-        $(this).next().addClass("btn-default");
-        $(this).parent().find("button.modalPictureTrigger").remove();
-    });
+        $(".closeimg").click(function ()
+        {
+            $(this).prev().attr("value", "");
+            $(this).next().find("input[type='file']")[0].value = null;
+            $(this).next().next().text("Файл не выбран");
+            $(this).next().removeClass("btn-warning");
+            $(this).next().addClass("btn-default");
+            $(this).parent().find("button.modalPictureTrigger").remove();
+        });
 
-    //выщитывание площади для каждой поверхности
-    function CalculateArea(side, surface)
-    {
-        
-        var Height = $('[name="(' + side + ')[' + surface + '].Height"]').val();
-        var Width = $('[name="(' + side + ')[' + surface + '].Width"]').val();
-
-        if (Height != "" && Width != "")
+        //выщитывание площади для каждой поверхности
+        function CalculateArea(side, surface)
         {
 
-            var Sum = Height * Width;
-             
-            $('[name="(' + side + ')[' + surface + '].Space"]').val(Sum);
-            CalculationAS();
+            var Height = $('[name="(' + side + ')[' + surface + '].Height"]').val();
+            var Width = $('[name="(' + side + ')[' + surface + '].Width"]').val();
+
+            if (Height != "" && Width != "")
+            {
+
+                var Sum = Height * Width;
+
+                $('[name="(' + side + ')[' + surface + '].Space"]').val(Sum);
+                CalculationAS();
+            }
         }
-    }
 
 
-     //Функция срабатывает при клике на кнопку загрузки файла
-    $("input[type='file']").click(function() {
-        $(this).prev().attr("value", "");
-        
-        //очистка кнопки выбора файла
-        var btnParent = $(this).parent();
-    });
-
-    //Функция срабатывает изменении значения кнопки загрузки файла
-    $("input[type='file']").change(function()
-    {
-        var attr = $(this).attr("name");
-        var modalImgId = "ModalPictureimgPhoto";
-        var modalId = "#ModalPictureDivPhoto";
-        var btnParent = $(this).parent();
-        var fileName = this.value.split('\\').pop();
-        if (fileName != "")
+        //Функция срабатывает при клике на кнопку загрузки файла
+        $("input[type='file']").click(function ()
         {
+            $(this).prev().attr("value", "");
 
-            btnParent.parent().find("label[for^='photo']").text(fileName);
-            btnParent.parent().find("label[for^='Scan']").text(fileName);
-            //Изменение стиля кнопки загрузки фала при выборе загружаемого файла
+            //очистка кнопки выбора файла
+            var btnParent = $(this).parent();
+        });
 
-            var markup = '<img id="' + modalImgId + '" src=""' + ' height="300" style="display: block;margin-left: auto;margin-right: auto;">';
-            //добавление в модальное окно пустого тега с картинкой
-
-            $(modalId).empty();
-            $(modalId).append(markup);
-        }
-
-        btnParent.addClass("btn-warning");
-        btnParent.removeClass("btn-default");
-
- 
-
-        //добавление кнопки открывания модального окна
-
-        var modalButton = '<button type="button" style="margin-left:25px" class="modalPictureTrigger btn btn-default" data-toggle="modal" data-target="#ViewModalPicturePhoto">Показать</button>';
-        
-        if (btnParent.closest(".fileUpload").next().next().next().next().length != 0)
+        //Функция срабатывает изменении значения кнопки загрузки файла
+        $("input[type='file']").change(function ()
         {
-            btnParent.closest(".fileUpload").next().next().next().next().remove();
-        }
-        btnParent.parent().append(modalButton);
-     
-    });
+            var attr = $(this).attr("name");
+            var modalImgId = "ModalPictureimgPhoto";
+            var modalId = "#ModalPictureDivPhoto";
+            var btnParent = $(this).parent();
+            var fileName = this.value.split('\\').pop();
+            if (fileName != "")
+            {
 
+                btnParent.parent().find("label[for^='photo']").text(fileName);
+                btnParent.parent().find("label[for^='Scan']").text(fileName);
+                //Изменение стиля кнопки загрузки фала при выборе загружаемого файла
+
+                var markup = '<img id="' + modalImgId + '" src=""' + ' height="300" style="display: block;margin-left: auto;margin-right: auto;">';
+                //добавление в модальное окно пустого тега с картинкой
+
+                $(modalId).empty();
+                $(modalId).append(markup);
+            }
+
+            btnParent.addClass("btn-warning");
+            btnParent.removeClass("btn-default");
+
+
+
+            //добавление кнопки открывания модального окна
+
+            var modalButton = '<button type="button" style="margin-left:25px" class="modalPictureTrigger btn btn-default" data-toggle="modal" data-target="#ViewModalPicturePhoto">Показать</button>';
+
+            if (btnParent.closest(".fileUpload").next().next().next().next().length != 0)
+            {
+                btnParent.closest(".fileUpload").next().next().next().next().remove();
+            }
+            btnParent.parent().append(modalButton);
+            
+        });
+
+       var name = "@Html.Raw(HttpUtility.JavaScriptStringEncode(name))";
+        var checkbox = $("input[name*='" + name + "']");
+        $("div.hideIfFree > div > input, div.hideIfFree > div > div > select").each(function(index, element)
+        {
+            $(element).val("");
+        });
+        if (checkbox[0].checked != true)
+        {
+            $("div.hideIfFree > div > input, div.hideIfFree > div > div > textarea").each(function (index, element)
+            {
+                console.log(element);
+                $(element).val("");
+            });
+            $("div.hideIfFree > div > div > select").each(function (index, element)
+            {
+                $("element option[value='']").attr('selected', 'true');
+            });
+            $("div.hideIfFree").each(function(index, element)
+            {
+                $(element).hide();
+            });
+        };
+       $(checkbox).change(function()
+       {
+        if (checkbox[0].checked != true)
+        {
+            $("div.hideIfFree > div > input, div.hideIfFree > div > div > textarea").each(function(index, element)
+            {
+                $(element).val("");
+            });
+            $("div.hideIfFree > div > div > select").each(function(index, element)
+            {
+                $("element option[value='']").attr('selected', 'true');
+            });
+            $("div.hideIfFree").each(function(index, element)
+            {
+                $(element).hide();
+            });
+        }
+        else
+        {
+          $("div.hideIfFree").each(function(index, element)
+            {
+                $(element).show();
+            });  
+        }
+       });
+
+            
     </script>
-}
-
-
+    }

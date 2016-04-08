@@ -17,7 +17,7 @@ namespace Sciencecom.Controllers
             Session["action"] = RouteData.Values["action"];
             Session["controller"] = RouteData.Values["controller"];
             ViewBag.Type = type;
-                ViewBag.Id = id;
+            ViewBag.Id = id;
        
             return View();
         }

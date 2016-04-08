@@ -93,3 +93,8 @@ input:-webkit-autofill {
   text-align: left;
   vertical-align: middle;
 }
+
+.left-align {
+    margin-left: -45px;
+    margin-bottom: 8px;
+}

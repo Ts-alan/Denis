@@ -146,6 +146,11 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Side_Id" Type="uniqueidentifier" />
           <Property Name="NumberSurface" Type="int" />
+          <Property Name="RentFrom" Type="date" />
+          <Property Name="RentUntil" Type="date" />
+          <Property Name="Theme" Type="nvarchar(max)" />
+          <Property Name="Type" Type="nvarchar" MaxLength="50" />
+          <Property Name="FreeOrEngaged" Type="bit" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -760,6 +765,11 @@
           <Property Name="Side_Id" Type="Guid" />
           <Property Name="NumberSurface" Type="Int32" />
           <NavigationProperty Name="Side" Relationship="SciencecomModel.FK_Surfaces_Sides" FromRole="Surface" ToRole="Side" />
+          <Property Name="RentFrom" Type="DateTime" Precision="0" />
+          <Property Name="RentUntil" Type="DateTime" Precision="0" />
+          <Property Name="Theme" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FreeOrEngaged" Type="Boolean" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -1155,6 +1165,11 @@
           <EntitySetMapping Name="Surfaces">
             <EntityTypeMapping TypeName="SciencecomModel.Surface">
               <MappingFragment StoreEntitySet="Surfaces">
+                <ScalarProperty Name="FreeOrEngaged" ColumnName="FreeOrEngaged" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Theme" ColumnName="Theme" />
+                <ScalarProperty Name="RentUntil" ColumnName="RentUntil" />
+                <ScalarProperty Name="RentFrom" ColumnName="RentFrom" />
                 <ScalarProperty Name="NumberSurface" ColumnName="NumberSurface" />
                 <ScalarProperty Name="Side_Id" ColumnName="Side_Id" />
                 <ScalarProperty Name="Id" ColumnName="Id" />

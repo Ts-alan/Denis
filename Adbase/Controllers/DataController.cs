@@ -422,6 +422,7 @@ namespace Sciencecom.Controllers
             }
             Guid structuresId = Guid.NewGuid();
             structures.Id = structuresId;
+            structures = ValidateCoords(structures, Bcoord, Hcoord);
             _dbw.CreateAdvertisingDesign(structures, sides, surfaces, countSize);
             
             SavePic(structures.Id_show.ToString(), "Scan1SidesWithFinancialManagement", scan1SidesWithFinancialManagement);

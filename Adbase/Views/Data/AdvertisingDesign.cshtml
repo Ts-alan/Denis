@@ -138,14 +138,12 @@
             },
             beforeRequest: function ()
             {
-
                 if (firstReauquest)
                 {
                     LoadData();
                     firstReauquest = false;
-
                 }
-                console.log($("#table").getGridParam("postData"));
+
                 SaveData();
             }
 
