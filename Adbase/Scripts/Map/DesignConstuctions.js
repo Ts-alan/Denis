@@ -149,6 +149,7 @@
                             }
                         }
                     }
+                  
                     StringBalun +=
                         
                   
@@ -162,6 +163,12 @@
                         '<span class="sr-only">Next</span>'+
                     '</a>'+
                     '</div>';
+                }
+                if (data[i].NameOfAdvertisingStructure == "Металлический указатель") {
+                    if (imageExists("/Images/photo1/" + data[0].Id_show + "photo1.jpg")) {
+                        StringBalun += "<br>Cторона 1";
+                        StringBalun += "<br><img  style='witdh:150px;height:150px' src='/Images/photo1/" + data[0].Id_show + "photo1.jpg' >";
+                    };
                 }
                 var placemark = new ymaps.GeoObject(
                  {

@@ -485,7 +485,7 @@ namespace Sciencecom.Controllers
             [ModelBinder(typeof(CustomModelBinderForSide))] List<Side> sides,
             [ModelBinder(typeof(CustomModelBinderForSurface))] List<Surface> surfaces,
             HttpPostedFileBase Scan1Side, HttpPostedFileBase Scan2Side, HttpPostedFileBase photo1,
-            HttpPostedFileBase scan1SidesWithFinancialManagement, string Scan1SideInd, string Scan2SideInd, string photo1Ind,
+            HttpPostedFileBase scan1SidesWithFinancialManagement, string Scan1SideInd, string Scan2SideInd, string PhotoInd1,
             string Bcoord, string Hcoord,
             int countSize = 0)
         {
@@ -541,7 +541,7 @@ namespace Sciencecom.Controllers
 
             ValidatePic(Scan1Side, Scan1SideInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "Scan1Side");
             ValidatePic(Scan2Side, Scan2SideInd, structures.Id_show.ToString(), mc.Id_show.ToString(), "Scan2Side");
-            ValidatePic(photo1, photo1Ind, structures.Id_show.ToString(), mc.Id_show.ToString(), "photo1");
+            ValidatePic(photo1, PhotoInd1, structures.Id_show.ToString(), mc.Id_show.ToString(), "photo1");
            
             return RedirectToAction((string)Session["action"], (string)Session["controller"]);
 
