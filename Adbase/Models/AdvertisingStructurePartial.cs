@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Sciencecom.Models
@@ -29,6 +30,7 @@ namespace Sciencecom.Models
     [MetadataType(typeof(AdvertisingStructureConstructionMetaData))]
     public partial class AdvertisingStructure
     {
+  
         public string OwnerName { get; set; }
         public string CountSize{ get; set; }
     }

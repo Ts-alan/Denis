@@ -510,7 +510,7 @@ namespace Sciencecom.Controllers
                 sides.Add(new Side() {DirectionSide_id = new Guid("27b8c509-8f09-4a0d-ae22-048c2611b7ea") });
             }
 
-            for (int j = 0; j < countSize; j++)
+            for (int j = 0; j < 1; j++)
             {
                
                 sides[j].AdvertisingStructures_Id = mc.Id;
@@ -532,7 +532,7 @@ namespace Sciencecom.Controllers
             }
             _context.Surfaces.AddRange(listSurface);
 
-            _context.Sides.RemoveRange(mc.Sides);
+           
 
             _context.SaveChanges();
 
