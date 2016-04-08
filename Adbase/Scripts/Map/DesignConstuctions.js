@@ -28,11 +28,25 @@
         }
     }).success(function (data) {
         var colour, bct, bht, houseSupport;
-        if (data.length > 0)
-        {
+        if (data.length > 0) {
 
+            
+            function imageExists(image_url) {
+
+                var http = new XMLHttpRequest();
+
+                http.open('HEAD', image_url, false);
+                http.send();
+
+                return http.status != 404;
+
+            }
+            
             for (var i = 0; i < data.length; i++)
             {
+                
+               
+               
                 if (data[i].Breadth == null | data[i].Height == null)
                 {
                     continue;
@@ -62,6 +76,8 @@
                     colour = "green";
                     houseSupport = '<b></br>Номер опоры:&nbsp;' + data[i].Support_ + "</b>";
                     indexhouseSupport = data[i].Support_;
+                  
+                    
                 }
                 if (data[i].NameOfAdvertisingStructure == "Неопознанная конструкция") {
                     bct = "Н";
@@ -85,7 +101,76 @@
                     StringBalun += houseSupport;
                 }
                 StringBalun += getReferencesBillboard(data[i]);
-                    var placemark = new ymaps.GeoObject(
+
+                if (data[i].NameOfAdvertisingStructure == "Световой короб") {
+   
+
+                if (imageExists("/Images/photo1/[1](1)photo" + data[0].Id_show + ".jpg")) {
+                        StringBalun += "<br>Cторона 1";
+                        StringBalun += "<br><img  style='witdh:150px;height:150px' src='/Images/photo1/[1](1)photo" + data[0].Id_show + ".jpg' >";
+                };
+                if (imageExists("/Images/photo1/[2](1)photo" + data[0].Id_show + ".jpg")) {
+                    StringBalun += "<br>Cторона 2";
+                    StringBalun += "<br><img  style='witdh:150px;height:150px' src='/Images/photo1/[2](1)photo" + data[0].Id_show + ".jpg' >";
+                };
+
+                }
+                if (data[i].NameOfAdvertisingStructure == "Неопознанная конструкция") {
+                    if (imageExists("/Images/photo1/" + data[0].Id_show + "photo1.jpg")) {
+                       StringBalun += "<br>Фотография 1";
+                       StringBalun += "<br><img  style='witdh:150px;height:150px' src='/Images/photo1/" + data[0].Id_show + "photo1.jpg' >";
+                    };
+                    if (imageExists("/Images/photo2/" + data[0].Id_show + "photo2.jpg")) {
+                        StringBalun += "<br>Фотография 2";
+                        StringBalun += "<br><img  style='witdh:150px;height:150px' src='/Images/photo2/" + data[0].Id_show + "photo2.jpg' >";
+                    };
+                }
+               
+                if (data[i].NameOfAdvertisingStructure == "Щит") {
+                    StringBalun += '<br>  <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">' +
+                        '<ol class="carousel-indicators" ></ol>' +
+                        '<div class="carousel-inner" role="listbox">';
+                    var firstelement = true;
+                    for (var j = 1; j < 9; j++) {
+                        for (var z = 1; z < 9; z++) {
+
+                            if (imageExists("/Images/photo1/[" + z + "](" + j + ")photo" + data[0].Id_show + ".jpg")) {
+
+                                if (firstelement) {
+                                    StringBalun += '<div class="item active">' +
+                                        "<img  style='witdh:150px;height:150px' src='/Images/photo1/[" + z + "](" + j + ")photo" + data[0].Id_show + ".jpg' >" +
+                                        '</div>';
+                                    firstelement = false;
+                                } else {
+                                    StringBalun += '<div class="item ">' +
+                                        "<img  style='witdh:150px;height:150px' src='/Images/photo1/[" + z + "](" + j + ")photo" + data[0].Id_show + ".jpg' >" +
+                                        '</div>';
+                                }
+                            }
+                        }
+                    }
+                  
+                    StringBalun +=
+                        
+                  
+                    '</div>'+
+                    '<a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">'+
+                        '<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>'+
+                        '<span class="sr-only">Previous</span>'+
+                    '</a>'+
+                    '<a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">'+
+                        '<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>'+
+                        '<span class="sr-only">Next</span>'+
+                    '</a>'+
+                    '</div>';
+                }
+                if (data[i].NameOfAdvertisingStructure == "Металлический указатель") {
+                    if (imageExists("/Images/photo1/" + data[0].Id_show + "photo1.jpg")) {
+                        StringBalun += "<br>Cторона 1";
+                        StringBalun += "<br><img  style='witdh:150px;height:150px' src='/Images/photo1/" + data[0].Id_show + "photo1.jpg' >";
+                    };
+                }
+                var placemark = new ymaps.GeoObject(
                  {
                      geometry: {
                          type: "Point",

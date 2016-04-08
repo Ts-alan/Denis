@@ -312,13 +312,7 @@ namespace Sciencecom.DAL
                 }
                 result = collList;
             }
-            //else
-            //{
-            //    if (typeOfAdvertisingStructure != "")
-            //    {
-            //        result = new List<AdvertisingStructure>();
-            //    }
-            //}
+ 
             if (localityId.Count() != 0)
             {
                 List<AdvertisingStructure> tempValue = new List<AdvertisingStructure>();
@@ -453,7 +447,7 @@ namespace Sciencecom.DAL
             {
                 result = result.Where(x => !string.IsNullOrWhiteSpace(x.Support_) && x.Support_.Contains(support));
             }
-
+         
             return result;
         }
 

@@ -30,6 +30,8 @@
         {
             btnParent.parent().find("label[for^='scanPassport']").text(fileName);
             btnParent.parent().find("label[for^='Scan']").text(fileName);
+            btnParent.parent().find("label[for^='photo1']").text(fileName);
+            btnParent.parent().find("label[for^='photo2']").text(fileName);
             //Изменение стиля кнопки загрузки фала при выборе загружаемого файла
 
             var markup = '<img id="' + modalImgId + '" src=""' + ' height="300" style="display: block;margin-left: auto;margin-right: auto;">';
