@@ -23,7 +23,7 @@ namespace Sciencecom.Models
             List<string> rentFroms = request.Form.AllKeys.Where(a => a.Contains("].RentFrom")).ToList();
             List<string> freeOrEngagedChckxs = request.Form.AllKeys.Where(a => a.Contains(".FreeOrEngaged")).ToList();
 
-            for(  )
+            
 
             double height = 0;
             double space = 0;

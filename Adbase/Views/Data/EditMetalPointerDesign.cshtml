@@ -505,42 +505,52 @@
 
                 <h3> Описание конструкции</h3>
 
-                <div class="form-horizontal">
-                    <div class="form-group">
+    <div class="form-horizontal">
+        <div class="form-group">
 
-                        <div class="body-content">
+            <div class="body-content">
 
-                            <div side="1">
-                                <input name="[0].SideOfSurface" value="1" type="hidden">
+                <div side="1">
+                    <input name="[0].SideOfSurface" value="1" type="hidden">
 
-                                <div class="form-inline">
-                                    <hr>
-                                    <input class="form-control " name="[0].NumberSurface" value="1" type="hidden">
-                                    <div class="form-group has-feedback">
+                    <div class="form-inline">
+                        <hr>
+                        <input class="form-control " name="[0].NumberSurface" value="1" type="hidden">
+                        <div class="form-group has-feedback">
 
-                                        <label for="[0].Height">Высота</label>
-                                        @Html.EditorFor(model => model.Sides.FirstOrDefault().Surfaces.FirstOrDefault().Height, new { htmlAttributes = new { @class = " form-control", type = "number", Name = "[0].Height" } })
-                                        @Html.ValidationMessageFor(model => model.Sides.FirstOrDefault().Surfaces.FirstOrDefault().Height)
-                                        <span class="glyphicon form-control-feedback"></span>
-                                    </div>
-                                    <div class="form-group has-feedback" style="margin-left: 20px">
-                                        <label for="[0].Width">Ширина</label>
-                                        @Html.EditorFor(model => model.Sides.FirstOrDefault().Surfaces.FirstOrDefault().Width, new { htmlAttributes = new { @class = "form-control", type = "number", Name = "[0].Width" } })
-                                        @Html.ValidationMessageFor(model => model.Sides.FirstOrDefault().Surfaces.FirstOrDefault().Width)
+                            <label for="[0].Height">Высота</label>
+                            @Html.EditorFor(model => model.Sides.FirstOrDefault().Surfaces.FirstOrDefault().Height, new {htmlAttributes = new {@class = " form-control", type = "number", Name = "[0].Height"}})
+                            @Html.ValidationMessageFor(model => model.Sides.FirstOrDefault().Surfaces.FirstOrDefault().Height)
+                            <span class="glyphicon form-control-feedback"></span>
+                        </div>
+                        <div class="form-group has-feedback" style="margin-left: 20px">
+                            <label for="[0].Width">Ширина</label>
+                            @Html.EditorFor(model => model.Sides.FirstOrDefault().Surfaces.FirstOrDefault().Width, new {htmlAttributes = new {@class = "form-control", type = "number", Name = "[0].Width"}})
+                            @Html.ValidationMessageFor(model => model.Sides.FirstOrDefault().Surfaces.FirstOrDefault().Width)
 
-                                        <span class="glyphicon form-control-feedback"></span>
-                                    </div>
-                                    <div class="form-group has-feedback" style="margin-left: 20px">
-                                        <label for="[0].Space">Площадь</label>
-                                        @Html.TextBoxFor(model => model.Sides.FirstOrDefault().Surfaces.FirstOrDefault().Space, new { type = "number", SelectForSpace = "", onchange = "CalculationAS()", @class = "form-control", @readonly = "", Name = "[0].Space" })
-                                        @Html.ValidationMessageFor(model => model.Sides.FirstOrDefault().Surfaces.FirstOrDefault().Space)
-                                    </div>
-                                </div>
-
-                            </div>
+                            <span class="glyphicon form-control-feedback"></span>
+                        </div>
+                        <div class="form-group has-feedback" style="margin-left: 20px">
+                            <label for="[0].Space">Площадь</label>
+                            @Html.TextBoxFor(model => model.Sides.FirstOrDefault().Surfaces.FirstOrDefault().Space, new {type = "number", SelectForSpace = "", onchange = "CalculationAS()", @class = "form-control", @readonly = "", Name = "[0].Space"})
+                            @Html.ValidationMessageFor(model => model.Sides.FirstOrDefault().Surfaces.FirstOrDefault().Space)
                         </div>
                     </div>
+
                 </div>
+            </div>
+        </div>
+    </div>
+     
+        <div class="row" style="display: none">
+         <div class="col-md-2">
+            <label>Занята ли </label>
+        </div>
+        <div class="col-md-2">
+            <input type="radio" name="(1)[0].FreeOrEngaged" value="false" checked="checked"/>Не занята<br>
+            <input type="radio" name="(1)[0].FreeOrEngaged" value="true">Занята<br>
+        </div>
+    </div>
                 <label>Размещаемая информация</label>
                 <div class="form-inline">
                     <div class="form-group">
