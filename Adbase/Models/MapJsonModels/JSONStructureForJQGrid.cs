@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Sciencecom.Models.MapJsonModels
@@ -20,9 +21,11 @@ namespace Sciencecom.Models.MapJsonModels
         public String Разреш_с { get; set; }
         public String id { get; set; }
 
+        public String Поверхности { get; set; }
 
         public JSONStructureForJQGrid(AdvertisingStructure adv)
         {
+           // Поверхности = new List<SurfaceJSONModel>();
             double SurfaceSumm = 0;
             int SurfaceCOunt = adv.Sides.Sum(side => side.Surfaces.Count);
 
@@ -50,6 +53,13 @@ namespace Sciencecom.Models.MapJsonModels
                 Разреш_с = adv.StartDate.Value.ToShortDateString();
             }
             id = adv.Id_show.ToString();
+            List<Surface> sfs = adv.Sides.SelectMany(s => s.Surfaces).ToList();
+            Поверхности += "<select role = 'select'>";
+            for (int i = 0; i < sfs.Count; i++)
+            {
+                Поверхности += "<option value='" + i + "'>" + (sfs[i].FreeOrEngaged == true ? "'Поверхность " + i + " занята';" : "'Поверхность " + i + " свободна';") + "</option>";
+            }
+            Поверхности += "</select>";
 
         }
     }

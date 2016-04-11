@@ -32,7 +32,7 @@ table .table-bordered.ui-jqgrid-btable {
   margin-left: -15px  !important;
   margin-right: -15px  !important;
 }
-/*.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12, .col-xs-13, .col-sm-13, .col-md-13, .col-lg-13*/ 
+
 #table_Идентификационный_номер,#table_Собственник,#table_Вид_конструкции,#table_Населенный_пункт,#table_Улица,#table_Дом\/_Номер_опоры,#table_Количество_сторон,#table_Количестов_поверхностей,#table_Площадь_конструкции,#table_Подстветка, #table_№_договора_с_фин_упр , #table_№_паспорта_рекл ,#table_Разреш_по
 {
   position: relative !important;
@@ -40,16 +40,7 @@ table .table-bordered.ui-jqgrid-btable {
   /*padding-left: 15px !important;
   padding-right: 15px !important;*/
 }
-/*.col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-13*/
-/*#table_Идентификационный_номер, #table_Собственник, #table_Вид_конструкции, #table_Населенный_пункт, #table_Улица, #table_Дом, #table_Количество_сторон, #table_Количестов_поверхностей, #table_Площадь_конструкции, #table_Подстветка, #table_№_договора_с_фин_упр , #table_№_паспорта_рекл ,#table_Разреш_по
-{
-  float: left  ;
-}*/
-/*#gbox_table, #gview_table, [class='ui-state-default ui-jqgrid-hdiv ui-corner-top'],[class="ui-jqgrid-bdiv"]
 
- {
-    width: 100% !important;
-}*/
 [class="table-bordered ui-jqgrid-btable"] {
    /*width: 100% !important;*/
    /*table-layout: inherit !important;*/
@@ -183,15 +174,15 @@ tr.ui-widget-content.jqgrow.ui-row-ltr > td  {
     border: 1px solid #dddddd !important;  
 }
 .jqgfirstrow > td:nth-child(4) {
-    width: 10% !important;
+    width: 8% !important;
     border: 1px solid #dddddd !important;  
 }
 .jqgfirstrow > td:nth-child(5) {
-    width: 10% !important;
+    width: 8% !important;
     border: 1px solid #dddddd !important;  
 }
 .jqgfirstrow > td:nth-child(6) {
-    width: 10% !important;
+    width: 8% !important;
     border: 1px solid #dddddd !important;  
 }
 .jqgfirstrow > td:nth-child(7) {
@@ -223,6 +214,13 @@ tr.ui-widget-content.jqgrow.ui-row-ltr > td  {
     width: 5% !important;
     border: 1px solid #dddddd !important;  
 }
+.jqgfirstrow > td:nth-child(13) {
+    width: 6% !important;
+    border: 1px solid #dddddd !important;  
+}
+
+
+
 tr.ui-widget-content.jqgrow.ui-row-ltr > td {
     -ms-word-wrap: break-word;
 word-wrap: break-word;
@@ -231,47 +229,6 @@ word-wrap: break-word;
     table-layout: inherit;
 }
 
-
-/*.col-xs-13
- {
-  width: 100%;
-}
-.col-xs-12 {
-  width: 92.30769231%;
-}
-.col-xs-11 {
-  width: 84.61538462%;
-}
-.col-xs-10 {
-  width: 76.92307692%;
-}
-.col-xs-9 {
-  width: 69.23076923%;
-}
-.col-xs-8 {
-  width: 61.53846154%;
-}
-.col-xs-7 {
-  width: 53.84615385%;
-}
-.col-xs-6 {
-  width: 46.15384615%;
-}
-.col-xs-5 {
-  width: 38.46153846%;
-}
-.col-xs-4 {
-  width: 30.76923077%;
-}
-.col-xs-3 {
-  width: 23.07692308%;
-}
-.col-xs-2 {
-  width: 15.38461538%;
-}
-.col-xs-1 {
-  width: 7.69230769%;
-}*/
 
 .col-xs-pull-13 {
   right: 100%;

@@ -74,15 +74,21 @@
         {
             $('table[id="table"] > tbody > tr').hide();
         }
-
+        var selectOp = "";
+        function getSequenceNumbers()
+        {
+            selectOp += "'1': 'Option 1;'";
+            console.log(selectOp);
+        }
         //создание таблицы
         tableToGrid("#table", {
             url: '@Url.Action("SearchAdvertisingDesign", "Data")',
             datatype: "json",
             rowList: [10, 20, 30],
-            //loadonce: true,
             gridview: true,
-            autoencode: true,
+            // autoencode: true,
+            cellEdit : true,
+	        cellsubmit : 'clientArray',
             pager: '#jpager',
             jsonReader: {
                 root: "Data",
@@ -106,7 +112,8 @@
                 "Разреш по",
                 "Кол-во сторон",
                 "Кол-во пов.",
-                "Площадь"
+                "Площадь",
+                "Поверхности"
             ],
             forceFit: false,
             cmTemplate: { "resizable": false, sortable: false },
@@ -119,11 +126,12 @@
                 { name: "Ближайшая_по_ходу", align: "center" },
                 { name: "Дом", align: "center" },
                 { name: "Номер_опоры", align: "center" },
-                { name: "Разреш_с", align: "center", searchoptions:{dataInit:function(el){$(el).datepicker({dateFormat:'yy/mm/dd', changeMonth: true, changeYear: true}).change(function(){$("#table")[0].triggerToolbar();});} }},
-                { name: "Разреш_по", align: "center" , searchoptions:{dataInit:function(el){$(el).datepicker({dateFormat:'yy/mm/dd', changeMonth: true, changeYear: true}).change(function(){$("#table")[0].triggerToolbar();});} } },
+                { name: "Разреш_с", align: "center", searchoptions: { dataInit: function(el) { $(el).datepicker({ dateFormat: 'yy/mm/dd', changeMonth: true, changeYear: true }).change(function() { $("#table")[0].triggerToolbar(); }); } } },
+                { name: "Разреш_по", align: "center", searchoptions: { dataInit: function(el) { $(el).datepicker({ dateFormat: 'yy/mm/dd', changeMonth: true, changeYear: true }).change(function() { $("#table")[0].triggerToolbar(); }); } } },
                 { name: "Количество_сторон", align: "center" },
                 { name: "Количестов_поверхностей", align: "center" },
-                { name: "Площадь_конструкции", align: "center" }
+                { name: "Площадь_конструкции", align: "center" },
+                { name: 'Поверхности', editable: false, edittype: 'select'}
 
             ],
             onSearch: function ()

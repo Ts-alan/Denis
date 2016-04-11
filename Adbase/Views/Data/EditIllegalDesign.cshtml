@@ -315,6 +315,14 @@
             @Html.ValidationMessageFor(model => model.ContentInformationDescription)
         </div>
 
+    <div class="row" style="display: none">
+         
+        <div class="col-md-2">
+            <input type="radio" name="(1)[0].FreeOrEngaged" value="false" />
+            <input type="radio" name="(1)[0].FreeOrEngaged" value="true" checked="checked" />
+        </div>
+    </div>
+
         <div id="InsertSide" style="display: none">
             <div code="" class="form-horizontal">
                 <div class="form-group">
