@@ -79,17 +79,17 @@ table .table-bordered.ui-jqgrid-btable {
 }
 #table_Улица,[aria-describedby="table_Улица"]
 {
- width: 10% !important;
+ width: 8% !important;
  word-wrap: break-word;
 }
 #table_Со_стороны,[aria-describedby="table_Со_стороны"]
 {
- width: 10% !important;
+ width: 8% !important;
  word-wrap: break-word;
 }
 #table_Ближайшая_по_ходу,[aria-describedby="table_Ближайшая_по_ходу"]
 {
- width: 10% !important;
+ width: 8% !important;
  word-wrap: break-word;
 }
 #table_Дом,[aria-describedby="table_Дом"]
@@ -129,7 +129,11 @@ word-wrap: break-word;
 width:  5% !important;
 word-wrap: break-word;
 }
-
+#table_Поверхности,[aria-describedby="table_Поверхности"]
+{
+width:  6% !important;
+word-wrap: break-word;
+}
 
 
 
@@ -214,7 +218,7 @@ tr.ui-widget-content.jqgrow.ui-row-ltr > td  {
     width: 5% !important;
     border: 1px solid #dddddd !important;  
 }
-.jqgfirstrow > td:nth-child(13) {
+.jqgfirstrow > td:nth-child(14) {
     width: 6% !important;
     border: 1px solid #dddddd !important;  
 }
