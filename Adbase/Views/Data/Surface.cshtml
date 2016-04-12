@@ -3,14 +3,14 @@
 
 @for (int i = ViewBag.StartCountForSurface, j = 1; i < ViewBag.EndCountForSurface; i++, j++)
 {
-
+     <hr/>
     <div side="@ViewBag.Side" class="SideDiv">
         <input type="hidden" name="[@i].SideOfSurface" value="@ViewBag.Side">
         <h3 style="margin-left: 150px">Поверхность @j &nbsp; Стороны @ViewBag.Side </h3>
 
         <div class="form-inline">
-            <hr/>
-            <div class="form-group surfaceInputGroup">
+           
+            <div class="surfaceInputGroup ">
                 <input name="[@j-1].NumberSurface" type="hidden" value="@ViewBag.Side">
                 <div class="form-group has-feedback">
                     <label for="[@j-1].Height">Высота</label>
