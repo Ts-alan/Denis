@@ -223,7 +223,6 @@
             var fileName = this.value.split('\\').pop();
             if (fileName != "")
             {
-
                 btnParent.parent().find("label[for^='photo']").text(fileName);
                 btnParent.parent().find("label[for^='Scan']").text(fileName);
 
@@ -238,8 +237,6 @@
             btnParent.addClass("btn-warning");
             btnParent.removeClass("btn-default");
 
-
-
             //добавление кнопки открывания модального окна
             var modalButton = '<button type="button" style="margin-left:25px" class="modalPictureTrigger btn btn-default" data-toggle="modal" data-target="#ViewModalPicturePhoto">Показать</button>';
 
@@ -252,8 +249,11 @@
         });
 
         var name = "@Html.Raw(HttpUtility.JavaScriptStringEncode(name))";
-        var checkbox = $("input[name*='" + name + "']");
+       // console.log(name);
         
+        //var checkbox = $("input[name*='" + name + "']");
+        var checkbox = $("input[type='radio']");
+        //console.log(checkbox);
         $("div.hideIfFree > div > input, div.hideIfFree > div > div > select[name='" + name +"']").each(function(index, element)
         {
             $(element).val("");
@@ -262,7 +262,6 @@
         {
             $("div.hideIfFree > div > input, div.hideIfFree > div > div > textarea[name='" + name +"']").each(function (index, element)
             {
-               
                 $(element).val("");
             });
             $("div.hideIfFree > div > div > select[name='" + name +"']").each(function (index, element)
@@ -274,12 +273,16 @@
                 $(element).hide();
             });
         };
-       $(checkbox).change(function(evt)
+
+       $(checkbox).off( "change" );
+       $(checkbox).on('change', function azaza (evt)
        {
-           //console.log($(evt.target).parent().parent().parent().parent().find("div.hideIfFree"));
-           var wrapper = $(evt.target).parent().parent().parent().parent();
-        if (checkbox[0].checked == true)
+          console.log(checkbox); 
+        var wrapper = $(evt.target).parent().parent().parent().parent();
+           
+        if (evt.target.value === "false")
         {
+            
             $(wrapper).find("textarea").each(function(index, element)
             {
                 $(element).val("");
@@ -295,6 +298,7 @@
         }
         else
         {
+          
           $(wrapper).find("div.hideIfFree").each(function(index, element)
             {
                 $(element).show();
@@ -302,7 +306,7 @@
         }
 
        });
-
+       
             
     </script>
     }
