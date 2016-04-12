@@ -15,7 +15,10 @@ namespace Sciencecom.Models
 
     public class SurfaceConstructionMetaData
     {
-       
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
+        public Nullable<System.DateTime> RentFrom { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
+        public Nullable<System.DateTime> RentUntil { get; set; }
         public int Height { get; set; }
      
         public int Width { get; set; }

@@ -8,7 +8,7 @@
 
     //Вид
     var ListTypeAdvertising = new SciencecomEntities().TypeOfAdvertisingStructures.ToList();
-    var ListTypeAdvertisingSelected = ListTypeAdvertising.Single(a => a.Code == ViewBag.Code).id;
+   
     
 
     var ViewBids = new SciencecomEntities().ViewBids.OrderBy(a => a.OrderBy).ToList();
@@ -24,10 +24,7 @@
     //Населенный пункт выпадающий список
     var Locality = new SciencecomEntities().Localities.ToList();
 
-    //Направление стороны
-    var DirectionSide = new SciencecomEntities().DirectionSides.OrderBy(x => x.OrderBY).ToList();
-    //Индификация поверхности
-    var IdentificationSide = new SciencecomEntities().Identifications.ToList();
+  
     
     //Идентификационный номер
     var PropertyLocation = new SciencecomEntities().PropertyLocations.ToList();
