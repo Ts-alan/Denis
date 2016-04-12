@@ -1,17 +1,16 @@
-﻿@model System.Collections.Generic.List<Sciencecom.Models.Surface>
-@{
-    
-}
+﻿@{ Layout = null; }
+@model System.Collections.Generic.List<Sciencecom.Models.Surface>
+
 @for (int i = ViewBag.StartCountForSurface, j = 1; i < ViewBag.EndCountForSurface; i++, j++)
 {
-
+     <hr/>
     <div side="@ViewBag.Side" class="SideDiv">
         <input type="hidden" name="[@i].SideOfSurface" value="@ViewBag.Side">
         <h3 style="margin-left: 150px">Поверхность @j &nbsp; Стороны @ViewBag.Side </h3>
 
         <div class="form-inline">
-            <hr/>
-            <div class="form-group surfaceInputGroup">
+           
+            <div class="surfaceInputGroup ">
                 <input name="[@j-1].NumberSurface" type="hidden" value="@ViewBag.Side">
                 <div class="form-group has-feedback">
                     <label for="[@j-1].Height">Высота</label>
@@ -143,7 +142,7 @@
                     <label>Тип рекламы</label>
                 </div>
                 <div class="col-md-2">
-                   
+                  
                     @Html.DropDownListFor(model => model[j - 1].Type, new SelectList(new[] {"", "Коммерческая реклама", "Социальная реклама"},Model.Single().Type), new {@class = "input-sm form-control", Name = "(" + ViewBag.Side + ")[" + (j - 1) + "].Type"})
                 </div>
             </div>
@@ -153,6 +152,7 @@
             <label>Арендован с</label>
                  </div>
             <div class="col-md-2">
+         
             @Html.EditorFor(model => model[j - 1].RentFrom, new { htmlattributes =  new { type = "date", @class = "input-sm form-control", Name = "(" + ViewBag.Side + ")[" + (j - 1) + "].RentFrom" }})
             </div>
         </div>
@@ -162,6 +162,7 @@
                 <label>Арендован до</label>
             </div>
             <div class="col-md-2">
+               
                 @Html.EditorFor(model => model[j - 1].RentUntil, new { htmlattributes = new { @type = "date", @class = "input-sm form-control" , Name = "(" + ViewBag.Side + ")[" + (j - 1) + "].RentUntil"} })
             </div>
         </div>
@@ -253,18 +254,21 @@
         });
 
         var name = "@Html.Raw(HttpUtility.JavaScriptStringEncode(name))";
-       // console.log(name);
+      
+       
         
         //var checkbox = $("input[name*='" + name + "']");
         var checkbox = $("input[type='radio']");
-        //console.log(checkbox);
+      
+        
         //$("div.hideIfFree > div > input, div.hideIfFree > div > div > select[name='" + name +"']").each(function(index, element)
         //{
         //    $(element).val("");
         //});
         $(checkbox).filter(":even").each(function(ind, el)
         {
-            //console.log(typeof el.checked);
+         
+            
             if (el.checked == true)
             {
                 $("div.hideIfFree > div > input, div.hideIfFree > div > div > textarea[name='" + name +"']").each(function (index, element)
@@ -286,7 +290,8 @@
        $(checkbox).off( "change" );
        $(checkbox).on('change', function azaza (evt)
        {
-          console.log(checkbox); 
+         
+          
         var wrapper = $(evt.target).parent().parent().parent().parent();
            
         if (evt.target.value === "false")
@@ -316,12 +321,11 @@
 
        });
        
-       $(function ()
-       {
-           
+ 
+       $(function(){           
         if (!Modernizr.inputtypes.date) {
-            // If not native HTML5 support, fallback to jQuery datePicker
-            console.log($('input[type=date]'));
+            /;
+        // If not native HTML5 support, fallback to jQuery datePicker
             $('input[type=date]').datepicker({
                 // Consistent format with the HTML5 picker
                 dateFormat: 'yy-mm-dd',
@@ -330,7 +334,24 @@
                 showAnim: 'blind'
                 },
                 // Localization
-                $.datepicker.regional['it']
+              
+                $.datepicker.regional['ru'] = {
+closeText: 'Закрыть',
+prevText: '&#x3c;Пред',
+nextText: 'След&#x3e;',
+currentText: 'Сегодня',
+monthNames: ['Январь','Февраль','Март','Апрель','Май','Июнь',
+'Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'],
+monthNamesShort: ['Янв','Фев','Мар','Апр','Май','Июн',
+'Июл','Авг','Сен','Окт','Ноя','Дек'],
+dayNames: ['воскресенье','понедельник','вторник','среда','четверг','пятница','суббота'],
+dayNamesShort: ['вск','пнд','втр','срд','чтв','птн','сбт'],
+dayNamesMin: ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'],
+dateFormat: 'dd.mm.yy',
+firstDay: 1,
+isRTL: false
+                },
+                $.datepicker.setDefaults($.datepicker.regional['ru'])
             );
         }
     });

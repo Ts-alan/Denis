@@ -44,9 +44,9 @@
 
     // var havePlacemark = @Model.coordB.HasValue.ToString().ToLower();
 
-    var StartCountForSurface;
+    var StartCountForSurface = 0;
     var EndCountForSurface = 0;
-
+    console.log("StartCountForSurface:" + StartCountForSurface + "    EndCountForSurface:" + EndCountForSurface);
     var ArrayOfSides = @Html.Raw(JsonConvert.SerializeObject(Model.Sides.OrderBy(a=>a.Name).Select(a => new {a.DirectionSide_id, length = a.Surfaces.Count, a.Identification_id,a.Name}), Formatting.Indented, new JsonSerializerSettings
                        {
                            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
@@ -125,7 +125,19 @@
 
             for (var i = 1; i <= CountSizes; i++)
             {
-                $("#InsertSide").before("<div code class=\"form-horizontal\" >" +
+                $("#InsertSide").before(
+                    //
+                    //Начало секции баяна
+                    "<div code class=\"panel panel-default\" >" +
+                    //Хедер секции баяна
+                    "<div class=\"panel-heading\">" +
+                    "<h4 class=\"panel-title\">" +
+                    "<a data-toggle=\"collapse\" href=\"#collapse" + i + "\">Сторона " + i + "</a>" +
+                    "</h4></div>" +
+                    //Тело секции баяна
+                    "<div  id=\"collapse" + i + "\" class=\"panel-collapse collapse in\" >" +
+                    "<div  class=\"panel-body\" >" +    
+                    "<div code class=\"form-horizontal\" >" +
                     "<div class=\"form-group\" >" +
                     "<h3 class=\"control-label col-md-2\" for=\"\" style=\"margin-left: 55px\">Сторона  " + i + " </h3>" +
                     "</div>" +
@@ -133,7 +145,7 @@
                     "<div class=\"col-md-10\" style=\"padding-left: 0px\">" +
                     "<div style='float:left'>" +
                     "<b>Количество поверхностей</b>" +
-                    " <select class=\"text-box single-line form-control\" style='width:60px' id=\"AddButton" + i + "\" onchange=EditSurface(" + i + ") name=\"CountSurfuce" + i + "\" IdentificationForCountSide=\"\" type=\"text\" data-val=\"true\" >" +
+                    "<select class=\"text-box single-line form-control\" style='width:60px' id=\"AddButton" + i + "\" onchange=EditSurface(" + i + ") name=\"CountSurfuce" + i + "\" IdentificationForCountSide=\"\" type=\"text\" data-val=\"true\" >" +
                     "<option></option>" +
                     "<option>1</option>" +
                     "<option>2</option>" +
@@ -147,9 +159,12 @@
                     "</div>" +
                     "</div> <div style=\"display: none\" id=\"" + i + "HiddenIdentification\"> &nbsp;&nbsp;&nbsp;<b>Идентификация поверхностей</b>" + '@Ajax.JavaScriptStringEncode(Html.DropDownList("IdentificationSurface", new SelectList(IdentificationSide, "id", "IdentificationName"), "", new {IdentificationForIdentificationSurface = ""}).ToHtmlString().Replace("\"", " ")) </div>' +
                     "<div  id=\"InsertPartial" + i + "\"></div>" +
+                    "</div>"+
+                    "</div>" +
+                    "</div>" +
                     "</div>");
                 //console.log($("#SizeOfCount"));
-                //$("#SizeOfCount").val(CountSizes);
+                $("#SizeOfCount").val(CountSizes);
                 //$("[directionside]").each(function(ind, element) {
                    
                 //});
@@ -161,10 +176,11 @@
         //Добавить поверхность+
     function AddSurface(i)
     {
+        console.log("StartCountForSurface:" + StartCountForSurface + "    EndCountForSurface:" + EndCountForSurface);
         var count = $("#AddButton" + i + "").val();
         StartCountForSurface = EndCountForSurface;
         EndCountForSurface = parseInt(count) + parseInt(EndCountForSurface);
-
+        console.log("StartCountForSurface:" + StartCountForSurface + "    EndCountForSurface:" + EndCountForSurface);
         if (count == 1)
         {
             $("#" + i + "HiddenIdentification").hide();
@@ -183,17 +199,28 @@
         $.ajax('@Url.Action("AddSurface", "Data")', { data: { side: i, StartCountForSurface: StartCountForSurface, EndCountForSurface: EndCountForSurface } })
             .success(function (e)
             {
-                $("#InsertPartial" + i + "").before(e);
+                //$("#InsertPartial" + i + "").before(e);
+                $("#InsertPartial" + i + "").html(e);
             });
     }
     
 
     function SetValidate(i)
     {
+        
         var count = $("#AddButton" + i + "").val();
         StartCountForSurface = EndCountForSurface;
-        EndCountForSurface = parseInt(count) + parseInt(EndCountForSurface);
-
+        if (isNaN(parseInt(count)))
+        {
+            count = 0;
+            EndCountForSurface = count + parseInt(EndCountForSurface);
+        } 
+        else
+        {
+            EndCountForSurface = parseInt(count) + parseInt(EndCountForSurface); 
+        }
+       
+        
         if (count == 1)
         {
             $("#" + i + "HiddenIdentification").hide();
@@ -209,15 +236,20 @@
     {
        
         SetValidate(i);
-
+        // var count = $("#AddButton" + i + "").val();
+        //StartCountForSurface = EndCountForSurface;
+        //EndCountForSurface = parseInt(count) + parseInt(EndCountForSurface);
         $.ajax('@Url.Action("EditSurface", "Data")', { async: true, data: { side: i, StartCountForSurface: StartCountForSurface, EndCountForSurface: EndCountForSurface } })
             .success(function(e)
             {
-                var live_str = $('<div>', { html: e });
+                //var live_str = $('<div>', { html: e });
 
-                var res = live_str.find('.body-content');
+                //var res = live_str.find('.body-content');
 
-                $("#InsertPartial" + i + "").prepend(res);
+                //$("#InsertPartial" + i + "").prepend(res);
+
+                $("#InsertPartial" + i + "").html(e);
+                //$("#InsertPartial" + i + "").before(e);
 
                 CalculationAS();
 
@@ -251,11 +283,11 @@
     function EditSurface(i)
     {
         SetValidate(i);
-
+        console.log("StartCountForSurface:" + StartCountForSurface + "    EndCountForSurface:" + EndCountForSurface);
         $.ajax('@Url.Action("AddSurface", "Data")', { async: true, data: { side: i, StartCountForSurface: StartCountForSurface, EndCountForSurface: EndCountForSurface } })
             .success(function(e)
             {
-                $("#InsertPartial" + i + "").before(e);
+                $("#InsertPartial" + i + "").html(e);
                 CalculationAS();
          
                 ////отключение валидации
@@ -336,7 +368,13 @@
     {
         margin-left: -25px;
     }
-
+    
+    .surfaceInputGroup {
+        margin-left: 15px;
+    }
+    .left-align {
+       margin-left: 0px; 
+    }
 </style>
 <h3> КАРТОЧКА ЩИТА</h3>
 
@@ -631,17 +669,23 @@
     <div class="form-horizontal" style="margin-top: 18px">
         <div class="form-group">
             <label for="ConstructionSquare">Площадь конструкции</label>
-            <input id="ConstructionSquare" class="form-control" readonly name="ConstructionSquare"  style="background-color: lightgray" type="text" value="">
+            <input id="ConstructionSquare" class="form-control" readonly name="ConstructionSquare" style="background-color: lightgray" type="text" value="">
 
         </div>
         <div class="form-group">
             <label for="CountSizes">Количество сторон</label>
-            @Html.DropDownList("CountSizes", new SelectList(new[] { "", "1", "2", "3", "4", "5", "6", "7", "8"},Model.Sides.Count.ToString()),new {onchange= "SetCountSize()", @class = "form-control",style="width: 60px" })
+            @Html.DropDownList("CountSizes", new SelectList(new[] {"", "1", "2", "3", "4", "5", "6", "7", "8"}, Model.Sides.Count.ToString()), new {onchange = "SetCountSize()", @class = "form-control", style = "width: 60px"})
             <span class="field-validation-validr" data-valmsg-for="CountSizes" data-valmsg-replace="true">
             </span>
         </div>
     </div>
-    <div id="InsertSide"></div>
+
+    <div class="container">
+        <div class="panel-group" id="accordion">
+            <div id="InsertSide"></div>
+        </div>
+    </div>
+
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">

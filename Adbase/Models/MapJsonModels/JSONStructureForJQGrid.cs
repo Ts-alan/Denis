@@ -54,7 +54,7 @@ namespace Sciencecom.Models.MapJsonModels
             }
             id = adv.Id_show.ToString();
             List<Surface> sfs = adv.Sides.SelectMany(s => s.Surfaces).ToList();
-            Поверхности += "<select role = 'select'>";
+            Поверхности += "<select role='select' class='rowDropdown'>";
             for (int i = 0; i < sfs.Count; i++)
             {
                 Поверхности += "<option value='" + (i + 1) + "'>" + (sfs[i].FreeOrEngaged == true ? "П. " + (i + 1) + " занята" : "П. " + (i + 1) + " свободна") + "</option>";

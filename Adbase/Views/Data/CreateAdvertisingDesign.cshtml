@@ -31,34 +31,35 @@
 }
 <script type="text/javascript">
     var i = 0;
-    var StartCountForSurface ;
+    var StartCountForSurface;
     var EndCountForSurface = 0;
     var typedesign;
-    $(document).ready(function() {
-        
-
+    $(document).ready(function()
+    {
         //выпадающий список на согласование
-        $("[name=OnAgreement]").change(function() {
+        $("[name=OnAgreement]").change(function()
+        {
             var selectIndex = $("[name=OnAgreement] option:selected").val();
 
-            if (selectIndex == "true") {
+            if (selectIndex == "true")
+            {
                 $("#ContractHide").css("display", "block");
             }
-            if (selectIndex == "false") {
+            if (selectIndex == "false")
+            {
                 $("#ContractHide").css("display", "none");
             }
-
         });
-
-
     });
 
     // подсчет суммы площадей
-    function CalculationAS() {
-
-        var Summ=0;
-        $("[selectforspace]").each(function(indx, element) {
-            if ($(element).val() != "") {
+    function CalculationAS()
+    {
+        var Summ = 0;
+        $("[selectforspace]").each(function(indx, element)
+        {
+            if ($(element).val() != "")
+            {
                 Summ += parseInt($(element).val());
             }
         });
@@ -66,126 +67,123 @@
     }
 
 //кол-во сторон
-    function SetCountSize() {
-
+    function SetCountSize()
+    {
         EndCountForSurface = 0;
         var CountSizes = $('#CountSizes').val();
         $("#CountSize").val(CountSizes);
 
-            $("[code]").each(function (indx, element) {
-                element.remove();
-            });
+        $("[code]").each(function(indx, element)
+        {
+            element.remove();
+        });
 
-            for (var i = 1; i <= CountSizes; i++) {
+        for (var i = 1; i <= CountSizes; i++)
+        {
+            $("#InsertSide").before(
+                //
+                //Начало секции баяна
+                "<div code class=\"panel panel-default\" >" +
+                //Хедер секции баяна
+                "<div class=\"panel-heading\">" +
+                "<h4 class=\"panel-title\">" +
+                "<a data-toggle=\"collapse\" href=\"#collapse" + i + "\">Сторона " + i + "</a>" +
+                "</h4></div>" +
+                //Тело секции баяна
+                "<div  id=\"collapse" + i + "\" class=\"panel-collapse collapse in\" >" +
+                "<div  class=\"panel-body\" >" +
+                "<div  class=\"form-horizontal\" >" +
+                "<div class=\"form-group\" >" +
+                "<h3 class=\"control-label col-md-2\" for=\"\" style=\"margin-left: 55px\">Сторона  " + i + " </h3>" +
+                "</div>" +
+                "<div class=\"form-group\">" +
+                "<div class=\"col-md-10\">" +
+                "<div style=\"float:left\">" +
+                "<b>Количество поверхностей</b>" +
+                "<select  style=\"width:60px\" class=\"text-box single-line form-control input-sm\" id=\"AddButton" + i + "\" onchange=AddSurface(" + i + ") name=\"CountSurfuce" + i + "\" IdentificationForCountSide=\"\" type=\"text\" data-val=\"true\" data-val-required=\"Укажите кол-во сторон\">" +
+                "<option></option>" +
+                "<option>1</option>" +
+                "<option>2</option>" +
+                "<option>3</option>" +
+                "<option>4</option>" +
+                "<option>5</option>" +
+                "<option>6</option>" +
+                "<option>7</option>" +
+                "<option>8</option>" +
+                "</select> </div> &nbsp;&nbsp;&nbsp; <b>Направление стороны</b>" + "<select identificationfordirectionside='IdentificationForDirectionSide' class='form-control' input-sm=\"\"  name=\"[" + (i - 1) + "].DirectionSide\"><option value=\"\"></option>" +
+                "<option value=\"27b8c509-8f09-4a0d-ae22-048c2611b7ea\">По ходу движения (сторона А)</option>" +
+                "<option value=\"266ea166-67e8-446b-95b1-288b0b876eed\">Против хода движения (сторона В)</option>" +
+                "<option value=\"f40319b8-aa82-4182-bec2-4c9b0ba0146d\">На центр перекрестка (сторона А)</option>" +
+                "<option value=\"7436112a-122c-4809-9f6c-c5aefff17d6d\">Вращается</option>" +
+                "</select>" +
+                "</div>" +
+                "</div> <div style=\"display: none\" id=\"" + i + "HiddenIdentification\"> &nbsp;&nbsp;&nbsp;<b>Идентификация поверхностей</b>" + "<select identificationforidentificationsurface=\"IdentificationForIdentificationSurface\" class=\"form-control valid\" input-sm=\"\" id=\"IdentificationSurface\" name=\"[" + (i - 1) + "].IdentificationSurface\"><option value=\"\"></option>" +
+                "<option value=\"4610cf49-0360-4edb-9f05-752f7d574dcc\">Вертикальная</option>" +
+                "<option value=\"95ee0238-134f-4a5c-a9ec-a9f0f02c2c75\">Горизонтальная </option>" +
+                "</select></div>" +
+                "<div  id=\"InsertPartial" + i + "\"></div>" +
+                "</div>" +
+                "</div>" +
+                "</div>" +
+                "</div>"
+            );
 
-                $("#InsertSide").before("<div code class=\"form-horizontal\" >" +
-                    "<div class=\"form-group\" >" +
-                    "<h3 class=\"control-label col-md-2\" for=\"\" style=\"margin-left: 55px\">Сторона  " + i + " </h3>" +
-                    "</div>" +
-                    "<div class=\"form-group\">" +
-                    "<div class=\"col-md-10\">" +
-                    "<div style=\"float:left\">"+
-                    "<b>Количество поверхностей</b>" +
-                    " <select  style=\"width:60px\" class=\"text-box single-line form-control input-sm\" id=\"AddButton" + i + "\" onchange=AddSurface(" + i + ") name=\"CountSurfuce" + i + "\" IdentificationForCountSide=\"\" type=\"text\" data-val=\"true\" data-val-required=\"Укажите кол-во сторон\">" +
-                    "<option></option>" +
-                    "<option>1</option>" +
-                    "<option>2</option>" +
-                    "<option>3</option>" +
-                    "<option>4</option>" +
-                    "<option>5</option>" +
-                    "<option>6</option>" +
-                    "<option>7</option>" +
-                    "<option>8</option>" +
-                    "</select> </div> &nbsp;&nbsp;&nbsp; <b>Направление стороны</b>" + "<select identificationfordirectionside='IdentificationForDirectionSide' class='form-control' input-sm=\"\"  name=\"[" + (i-1) + "].DirectionSide\"><option value=\"\"></option>" +
-                        "<option value=\"27b8c509-8f09-4a0d-ae22-048c2611b7ea\">По ходу движения (сторона А)</option>"+
-                        "<option value=\"266ea166-67e8-446b-95b1-288b0b876eed\">Против хода движения (сторона В)</option>"+
-                        "<option value=\"f40319b8-aa82-4182-bec2-4c9b0ba0146d\">На центр перекрестка (сторона А)</option>"+
-                        "<option value=\"7436112a-122c-4809-9f6c-c5aefff17d6d\">Вращается</option>"+
-                        "</select>" +
-                    "</div>" +
-                    "</div> <div style=\"display: none\" id=\"" + i + "HiddenIdentification\"> &nbsp;&nbsp;&nbsp;<b>Идентификация поверхностей</b>" + "<select identificationforidentificationsurface=\"IdentificationForIdentificationSurface\" class=\"form-control valid\" input-sm=\"\" id=\"IdentificationSurface\" name=\"[" + (i-1) + "].IdentificationSurface\"><option value=\"\"></option>" +
-                        "<option value=\"4610cf49-0360-4edb-9f05-752f7d574dcc\">Вертикальная</option>"+
-                        "<option value=\"95ee0238-134f-4a5c-a9ec-a9f0f02c2c75\">Горизонтальная </option>"+
-                        "</select></div>" +
-                    "<div  id=\"InsertPartial" + i + "\"></div>" +
-                    "</div>");
-
-                $("#SizeOfCount").val(CountSizes);
-
-            }
+            $("#SizeOfCount").val(CountSizes);
         }
-
-
-
+    }
 
 
     //Добавить поверхность+
-    function AddSurface(i) {
-
+    function AddSurface(i)
+    {
         var count = $("#AddButton" + i + "").val();
         StartCountForSurface = EndCountForSurface;
         EndCountForSurface = parseInt(count) + parseInt(EndCountForSurface);
 
-        if (count == 1) {
+        if (count == 1)
+        {
             $("#" + i + "HiddenIdentification").hide();
-        } else {
+        } else
+        {
             $("#" + i + "HiddenIdentification").show();
             //валидация
-
         }
         $("[side=" + i + "]").remove();
 
 
         $.ajax('@Url.Action("AddSurface", "Data")', { data: { side: i, StartCountForSurface: StartCountForSurface, EndCountForSurface: EndCountForSurface } })
-            .success(function(e) {
-                var live_str = $('<div>', { html: e });
-
-                var res = live_str.find('.body-content');
-
-                $("#InsertPartial" + i + "").prepend(res);
-
-
-                //$('[name$="].Height"]').each(function (indx, element) {
-
-                //    $(element).on("change", function() {
-
-                //        CalculationOfTheArea($(element).attr("name").substring(1, $(element).attr("name").indexOf("]")));
-                //        });
-                //});
-                //$('[name$="].Width"]').each(function(indx, element) {
-                //    $(element).on("change", function() {
-
-                //        CalculationOfTheArea($(element).attr("name").substring(1, $(element).attr("name").indexOf("]")));
-                //        });
-                //});
+            .success(function(e)
+            {
+                $("#InsertPartial" + i + "").before(e);
             });
-
-
-
     }
-
 
 
     //выщитывание площади для каждой поверхности
     function CalculationOfTheArea(j)
     {
-
         var Height = $('[name="[' + j + '].Height"]').val();
         var Width = $('[name="[' + j + '].Width"]').val();
 
-        if (Height != "" && Width != "") {
-
+        if (Height != "" && Width != "")
+        {
             var Sum = Height * Width;
 
             $('[name="[' + j + '].Space"]').val(Sum);
             CalculationAS();
         }
-
     }
 
 
-
 </script>
+<style>
+    .surfaceInputGroup {
+        margin-left: 15px;
+    }
+    .left-align {
+       margin-left: 0px; 
+    }
+</style>
 <h3> КАРТОЧКА КОНСТРУКЦИИ</h3>
 
 @Scripts.Render("~/Content/Map")
@@ -463,29 +461,36 @@
             </div>
 
         </div>
-        <div class="form-horizontal" style="margin-top: 18px;margin-left:15px">
-            <div class="form-group">
-                <label for="ConstructionSquare">Площадь конструкции</label>
-                <input id="ConstructionSquare" class="form-control" readonly name="ConstructionSquare"  style="background-color: lightgray" type="text" value="">
-             </div>
-            <div class="form-group">
-                <label for="CountSizes">Количество сторон</label>
-                <select class="form-control input-sm" style="width: 60px" id="CountSizes" onchange="SetCountSize()" name="CountSizes" type="text" data-val="true">
-                    <option></option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option>
-                    <option>8</option>
-                </select>
-                <span class="field-validation-validr" data-valmsg-for="CountSizes" data-valmsg-replace="true">
-                </span>
-            </div>
+    <div class="form-horizontal" style="margin-top: 18px; margin-left: 15px">
+        <div class="form-group">
+            <label for="ConstructionSquare">Площадь конструкции</label>
+            <input id="ConstructionSquare" class="form-control" readonly name="ConstructionSquare" style="background-color: lightgray" type="text" value="">
         </div>
-        <div id="InsertSide"></div>
+        <div class="form-group">
+            <label for="CountSizes">Количество сторон</label>
+            <select class="form-control input-sm" style="width: 60px" id="CountSizes" onchange="SetCountSize()" name="CountSizes" type="text" data-val="true">
+                <option></option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+            </select>
+            <span class="field-validation-validr" data-valmsg-for="CountSizes" data-valmsg-replace="true">
+                </span>
+        </div>
+    </div>
+    <div class="container">
+        <div class="panel-group" id="accordion">
+            <div id="InsertSide"></div>
+        </div>
+    </div>
+
+
+        
 
         <div class="form-group" style="margin-top: 15px;">
             <div class="col-md-offset-2 col-md-10">
