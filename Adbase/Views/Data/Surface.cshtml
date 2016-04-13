@@ -3,85 +3,85 @@
 
 @for (int i = ViewBag.StartCountForSurface, j = 1; i < ViewBag.EndCountForSurface; i++, j++)
 {
-     <hr/>
+    <hr />
     <div side="@ViewBag.Side" class="SideDiv">
         <input type="hidden" name="[@i].SideOfSurface" value="@ViewBag.Side">
         <h3 style="margin-left: 150px">Поверхность @j &nbsp; Стороны @ViewBag.Side </h3>
 
         <div class="form-inline">
-           
+
             <div class="surfaceInputGroup ">
                 <input name="[@j-1].NumberSurface" type="hidden" value="@ViewBag.Side">
                 <div class="form-group has-feedback">
                     <label for="[@j-1].Height">Высота</label>
                     <span class="field-validation-valid" data-valmsg-for="[@j-1].Height" data-valmsg-replace="true"></span>
                     <span class="glyphicon form-control-feedback"></span>
-                    @Html.TextBoxFor(model => model[j - 1].Height, new {@class = "form-control", type = "number", Name = "(" + ViewBag.Side + ")[" + (j - 1) + "].Height", onchange = "CalculateArea(" + @ViewBag.Side + "," + (@j - 1) + ")"})
+                    @Html.TextBoxFor(model => model[j - 1].Height, new { @class = "form-control", type = "number", Name = "(" + ViewBag.Side + ")[" + (j - 1) + "].Height", onchange = "CalculateArea(" + @ViewBag.Side + "," + (@j - 1) + ")" })
 
                 </div>
                 <div class="form-group has-feedback" style="margin-left: 20px">
                     <label for="[@j-1].Width">Ширина</label>
                     <span class="field-validation-valid" data-valmsg-for="[@j-1].Width" data-valmsg-replace="true"></span>
                     <span class="glyphicon form-control-feedback"></span>
-                    @Html.TextBoxFor(model => model[j - 1].Width, new {@class = "form-control", type = "number", Name = "(" + ViewBag.Side + ")[" + (j - 1) + "].Width", onchange = "CalculateArea(" + @ViewBag.Side + "," + (@j - 1) + ")"})
+                    @Html.TextBoxFor(model => model[j - 1].Width, new { @class = "form-control", type = "number", Name = "(" + ViewBag.Side + ")[" + (j - 1) + "].Width", onchange = "CalculateArea(" + @ViewBag.Side + "," + (@j - 1) + ")" })
 
                 </div>
                 <div class="form-group has-feedback" style="margin-left: 20px">
                     <label for="[@j-1].Space">Площадь</label>
-                    @Html.TextBoxFor(model => model[j - 1].Space, new {@class = "form-control", type = "number", SelectForSpace = "", onchange = "CalculationAS()", @readonly = "readonly", Name = "(" + ViewBag.Side + ")[" + (j - 1) + "].Space"})
+                    @Html.TextBoxFor(model => model[j - 1].Space, new { @class = "form-control", type = "number", SelectForSpace = "", onchange = "CalculationAS()", @readonly = "readonly", Name = "(" + ViewBag.Side + ")[" + (j - 1) + "].Space" })
                     @Html.ValidationMessageFor(model => model[j - 1].Space)
                 </div>
 
                 <div style="margin-left: 10px" class="form-group">
 
                     @*<label>Фотография</label>
-                            <br/>*@
+                        <br/>*@
                     @{
                         string photoName = "[" + ViewBag.Side + "](" + j + ")";
                         List<string> listOfNames = new List<string>();
                         if (Session["PhotoNames"] != null)
                         {
-                            listOfNames = (List<string>) Session["PhotoNames"];
+                            listOfNames = (List<string>)Session["PhotoNames"];
                         }
                     }
                     @if (listOfNames.Count != 0 && listOfNames.Any(x => x.Contains(photoName)))
                     {
 
                         <label class="marginedLabel">Фотография</label>
-                        <br class="hideInView"/>
+                        <br class="hideInView" />
                         string image = "/Images/photo1/[" + ViewBag.Side + "](" + @j + ")photo" + Session["IdShow"] + ".jpg";
                         string imgName = "[" + ViewBag.Side + "](" + @j + ")photo.jpg";
 
                         <input type="hidden" name="PhotoInd[@{@ViewBag.Side}](@j)" value="setImage">
-                        <img class="closeimg hideInView" style="width: 20px" src="../../Content/CloseImg.jpg"/>
+                        <img class="closeimg hideInView" style="width: 20px" src="../../Content/CloseImg.jpg" />
                         <div id="hideMe" class="fileUpload btn btn-warning input-sm hideInView">
                             <span class="hideInView">&nbsp;&nbsp;Фото&nbsp;</span>
-                            <input type="file" class="upload hideInView" name="photo[@{@ViewBag.Side}](@j)" accept="image/jpeg/"/>
-                                                                                       </div>
+                            <input type="file" class="upload hideInView" name="photo[@{@ViewBag.Side}](@j)" accept="image/jpeg/" />
+                        </div>
                         <label class="hideInView" for="photo[@{@ViewBag.Side}](@j)">@imgName</label>
-                        <br class="hideInView"/>
-                        <br/>
-                        <button type="button" style="margin-left: 25px" class="modalPictureTrigger btn btn-default input-sm" data-toggle="modal" onclick="addPic('#ModalPictureDivPhoto', '@image')" data-target="#ViewModalPicturePhoto">Показать</button>
-                    }
-                    else
-                    {
-                        <label class="hideInView">Фотография</label>
-                        <br/>
-                        <input type="hidden" name="PhotoInd[@{@ViewBag.Side}](@j)" value="">
-                        <img class="closeimg hideInView" style="width: 20px" src="../../Content/CloseImg.jpg"/>
+                        <br class="hideInView" />
+                                                                                    <br />
+                                                                                    <button type="button" style="margin-left: 25px" class="modalPictureTrigger btn btn-default input-sm" data-toggle="modal" onclick="addPic('#ModalPictureDivPhoto', '@image')" data-target="#ViewModalPicturePhoto">Показать</button>
+    }
+    else
+    {
+        <label class="hideInView">Фотография</label>
+        <br />
+        <input type="hidden" name="PhotoInd[@{@ViewBag.Side}](@j)" value="">
+        <img class="closeimg hideInView" style="width: 20px" src="../../Content/CloseImg.jpg" />
                         <div id="hideMe" class="hideInView fileUpload btn btn-default input-sm">
                             <span id="hideMe" accept="image/jpeg/">&nbsp;&nbsp;Фото&nbsp;</span>
-                            <input type="file" id="hideMe" class="upload hideInView" name="photo[@{@ViewBag.Side}](@j)" accept="image/jpeg/"/>
-                                                                                                   </div>
+                            <input type="file" id="hideMe" class="upload hideInView" name="photo[@{@ViewBag.Side}](@j)" accept="image/jpeg/" />
+                        </div>
                         <label class="hideInView" for="photo[@{@ViewBag.Side}](@j)">Файл не выбран</label>
-                        <br/>
-                        <br/>
-                    }
+                        <br />
+                                                                                                <br />
+    }
 
-                                                               </div>
-                                                               </div>
-                                                               </div>
-                                                               </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="hiddenInputWrapper">
         <div class="row left-align">
             <div class="form-inline">
@@ -96,28 +96,28 @@
                         {
                             name = "(" + ViewBag.Side + ")[" + (j - 1) + "].FreeOrEngaged";
                             <text>
-                            <input type="radio" name=@name value="false" checked="checked"/>Не занята<br/>
-                            <input type="radio" name=@name value="true">Занята<br/>
+                                <input type="radio" name=@name value="false" checked="checked" />Не занята<br />
+                                <input type="radio" name=@name value="true">Занята<br />
                             </text>
-                            
+
                         }
                         else
                         {
                             if (@Model[j - 1].FreeOrEngaged == false)
                             {
-                            name = "(" + ViewBag.Side + ")[" + (j - 1) + "].FreeOrEngaged";
-                            <text>
-                            <input type="radio" name=@name value="false" checked="checked"/>Не занята<br/>
-                            <input type="radio" name=@name value="true">Занята<br/>
-                            </text>
+                                name = "(" + ViewBag.Side + ")[" + (j - 1) + "].FreeOrEngaged";
+                                <text>
+                                    <input type="radio" name=@name value="false" checked="checked" />Не занята<br />
+                                    <input type="radio" name=@name value="true">Занята<br />
+                                </text>
                             }
                             else
                             {
-                            name = "(" + ViewBag.Side + ")[" + (j - 1) + "].FreeOrEngaged";
-                            <text>
-                            <input type="radio" name=@name value="false" />Не занята<br/>
-                            <input type="radio" name=@name value="true" checked="checked">Занята<br/>
-                            </text>
+                                name = "(" + ViewBag.Side + ")[" + (j - 1) + "].FreeOrEngaged";
+                                <text>
+                                    <input type="radio" name=@name value="false" />Не занята<br />
+                                    <input type="radio" name=@name value="true" checked="checked">Занята<br />
+                                </text>
                             }
                         }
                     }
@@ -125,35 +125,42 @@
                     {
                         name = "(" + ViewBag.Side + ")[" + (j - 1) + "].FreeOrEngaged";
                         <text>
-                        <input type="radio" name=@name value="false" checked="checked"/>Не занята<br/>
-                        <input type="radio" name=@name value="true">Занята<br/>
+                            <input type="radio" name=@name value="false" checked="checked" />Не занята<br />
+                            <input type="radio" name=@name value="true">Занята<br />
                         </text>
                     }
                 </div>
-                
-               
+
+
 
             </div>
         </div>
         <div class="row left-align hideIfFree" name=@name>
             <div class="form-inline">
                 <div class="col-md-2">
-                    
+
                     <label>Тип рекламы</label>
                 </div>
                 <div class="col-md-2">
-                  
-                    @Html.DropDownListFor(model => model[j - 1].Type, new SelectList(new[] {"", "Коммерческая реклама", "Социальная реклама"},Model.Single().Type), new {@class = "input-sm form-control", Name = "(" + ViewBag.Side + ")[" + (j - 1) + "].Type"})
+                    
+                    @try
+                    {
+                        @Html.DropDownListFor(model => model[j - 1].Type, new SelectList(new[] {"", "Коммерческая реклама", "Социальная реклама"}, Model.Single().Type), new {@class = "input-sm form-control", Name = "(" + ViewBag.Side + ")[" + (j - 1) + "].Type"});
+                    }
+                    catch
+                    {
+                        @Html.DropDownListFor(model => model[j - 1].Type, new SelectList(new[] {"", "Коммерческая реклама", "Социальная реклама"}), new {@class = "input-sm form-control", Name = "(" + ViewBag.Side + ")[" + (j - 1) + "].Type"});
+                    }
                 </div>
             </div>
         </div>
         <div class="row left-align hideIfFree" name=@name>
             <div class="col-md-2">
-            <label>Арендован с</label>
-                 </div>
+                <label>Арендован с</label>
+            </div>
             <div class="col-md-2">
-         
-            @Html.EditorFor(model => model[j - 1].RentFrom, new { htmlattributes =  new { type = "date", @class = "input-sm form-control", Name = "(" + ViewBag.Side + ")[" + (j - 1) + "].RentFrom" }})
+
+                @Html.EditorFor(model => model[j - 1].RentFrom, new { htmlattributes = new { type = "date", @class = "input-sm form-control", Name = "(" + ViewBag.Side + ")[" + (j - 1) + "].RentFrom" } })
             </div>
         </div>
 
@@ -162,198 +169,198 @@
                 <label>Арендован до</label>
             </div>
             <div class="col-md-2">
-               
-                @Html.EditorFor(model => model[j - 1].RentUntil, new { htmlattributes = new { @type = "date", @class = "input-sm form-control" , Name = "(" + ViewBag.Side + ")[" + (j - 1) + "].RentUntil"} })
+
+                @Html.EditorFor(model => model[j - 1].RentUntil, new { htmlattributes = new { @type = "date", @class = "input-sm form-control", Name = "(" + ViewBag.Side + ")[" + (j - 1) + "].RentUntil" } })
             </div>
         </div>
         <div class="row left-align hideIfFree" name=@name>
             <div class="form-inline">
                 <div class="col-md-2">
-                <label>Описание</label>
+                    <label>Описание</label>
+                </div>
+                <div class="col-md-2">
+                    @Html.TextAreaFor(model => model[j - 1].Theme, new { @class = "form-control", Name = "(" + ViewBag.Side + ")[" + (j - 1) + "].Theme" })
+                </div>
             </div>
-            <div class="col-md-2">
-                @Html.TextAreaFor(model => model[j - 1].Theme , new {@class = "form-control", Name = "(" + ViewBag.Side + ")[" + (j - 1) + "].Theme"})
-            </div>
-            </div>
-                                                                       
-        </div>
 
         </div>
-   
+
+    </div>
+
     <script type="text/javascript">
-        AddRules();
+                                                                AddRules();
 
-        $(".closeimg").click(function ()
-        {
-            $(this).prev().attr("value", "");
-            $(this).next().find("input[type='file']")[0].value = null;
-            $(this).next().next().text("Файл не выбран");
-            $(this).next().removeClass("btn-warning");
-            $(this).next().addClass("btn-default");
-            $(this).parent().find("button.modalPictureTrigger").remove();
-        });
+                                                                $(".closeimg").click(function ()
+                                                                {
+                                                                    $(this).prev().attr("value", "");
+                                                                    $(this).next().find("input[type='file']")[0].value = null;
+                                                                    $(this).next().next().text("Файл не выбран");
+                                                                    $(this).next().removeClass("btn-warning");
+                                                                    $(this).next().addClass("btn-default");
+                                                                    $(this).parent().find("button.modalPictureTrigger").remove();
+                                                                });
 
-        //выщитывание площади для каждой поверхности
-        function CalculateArea(side, surface)
-        {
+                                                                //выщитывание площади для каждой поверхности
+                                                                function CalculateArea(side, surface)
+                                                                {
 
-            var Height = $('[name="(' + side + ')[' + surface + '].Height"]').val();
-            var Width = $('[name="(' + side + ')[' + surface + '].Width"]').val();
+                                                                    var Height = $('[name="(' + side + ')[' + surface + '].Height"]').val();
+                                                                    var Width = $('[name="(' + side + ')[' + surface + '].Width"]').val();
 
-            if (Height != "" && Width != "")
-            {
-                var Sum = Height * Width;
-                $('[name="(' + side + ')[' + surface + '].Space"]').val(Sum);
-                CalculationAS();
-            }
-        }
+                                                                    if (Height != "" && Width != "")
+                                                                    {
+                                                                        var Sum = Height * Width;
+                                                                        $('[name="(' + side + ')[' + surface + '].Space"]').val(Sum);
+                                                                        CalculationAS();
+                                                                    }
+                                                                }
 
 
-        //Функция срабатывает при клике на кнопку загрузки файла
-        $("input[type='file']").click(function ()
-        {
-            $(this).prev().attr("value", "");
+                                                                //Функция срабатывает при клике на кнопку загрузки файла
+                                                                $("input[type='file']").click(function ()
+                                                                {
+                                                                    $(this).prev().attr("value", "");
 
-            //очистка кнопки выбора файла
-            var btnParent = $(this).parent();
-        });
+                                                                    //очистка кнопки выбора файла
+                                                                    var btnParent = $(this).parent();
+                                                                });
 
-        //Функция срабатывает изменении значения кнопки загрузки файла
-        $("input[type='file']").change(function ()
-        {
-            var attr = $(this).attr("name");
-            var modalImgId = "ModalPictureimgPhoto";
-            var modalId = "#ModalPictureDivPhoto";
-            var btnParent = $(this).parent();
-            var fileName = this.value.split('\\').pop();
-            if (fileName != "")
-            {
-                btnParent.parent().find("label[for^='photo']").text(fileName);
-                btnParent.parent().find("label[for^='Scan']").text(fileName);
+                                                                //Функция срабатывает изменении значения кнопки загрузки файла
+                                                                $("input[type='file']").change(function ()
+                                                                {
+                                                                    var attr = $(this).attr("name");
+                                                                    var modalImgId = "ModalPictureimgPhoto";
+                                                                    var modalId = "#ModalPictureDivPhoto";
+                                                                    var btnParent = $(this).parent();
+                                                                    var fileName = this.value.split('\\').pop();
+                                                                    if (fileName != "")
+                                                                    {
+                                                                        btnParent.parent().find("label[for^='photo']").text(fileName);
+                                                                        btnParent.parent().find("label[for^='Scan']").text(fileName);
 
-                //Изменение стиля кнопки загрузки фала при выборе загружаемого файла
-                var markup = '<img id="' + modalImgId + '" src=""' + ' height="300" style="display: block;margin-left: auto;margin-right: auto;">';
+                                                                        //Изменение стиля кнопки загрузки фала при выборе загружаемого файла
+                                                                        var markup = '<img id="' + modalImgId + '" src=""' + ' height="300" style="display: block;margin-left: auto;margin-right: auto;">';
 
-                //добавление в модальное окно пустого тега с картинкой
-                $(modalId).empty();
-                $(modalId).append(markup);
-            }
+                                                                        //добавление в модальное окно пустого тега с картинкой
+                                                                        $(modalId).empty();
+                                                                        $(modalId).append(markup);
+                                                                    }
 
-            btnParent.addClass("btn-warning");
-            btnParent.removeClass("btn-default");
+                                                                    btnParent.addClass("btn-warning");
+                                                                    btnParent.removeClass("btn-default");
 
-            //добавление кнопки открывания модального окна
-            var modalButton = '<button type="button" style="margin-left:25px" class="modalPictureTrigger btn btn-default" data-toggle="modal" data-target="#ViewModalPicturePhoto">Показать</button>';
+                                                                    //добавление кнопки открывания модального окна
+                                                                    var modalButton = '<button type="button" style="margin-left:25px" class="modalPictureTrigger btn btn-default" data-toggle="modal" data-target="#ViewModalPicturePhoto">Показать</button>';
 
-            if (btnParent.closest(".fileUpload").next().next().next().next().length != 0)
-            {
-                btnParent.closest(".fileUpload").next().next().next().next().remove();
-            }
-            btnParent.parent().append(modalButton);
-            
-        });
+                                                                    if (btnParent.closest(".fileUpload").next().next().next().next().length != 0)
+                                                                    {
+                                                                        btnParent.closest(".fileUpload").next().next().next().next().remove();
+                                                                    }
+                                                                    btnParent.parent().append(modalButton);
 
-        var name = "@Html.Raw(HttpUtility.JavaScriptStringEncode(name))";
-      
-       
-        
-        //var checkbox = $("input[name*='" + name + "']");
-        var checkbox = $("input[type='radio']");
-      
-        
-        //$("div.hideIfFree > div > input, div.hideIfFree > div > div > select[name='" + name +"']").each(function(index, element)
-        //{
-        //    $(element).val("");
-        //});
-        $(checkbox).filter(":even").each(function(ind, el)
-        {
-         
-            
-            if (el.checked == true)
-            {
-                $("div.hideIfFree > div > input, div.hideIfFree > div > div > textarea[name='" + name +"']").each(function (index, element)
-                {
-                    $(element).val("");
-                });
-                $("div.hideIfFree > div > div > select[name='" + name +"']").each(function (index, element)
-                {
-                    $("element option[value='']").attr('selected', 'true');
-                });
-                $("div.hideIfFree[name='" + name +"']").each(function(index, element)
-                {
-                    $(element).hide();
-                });
-            };
-        });
-        
+                                                                });
 
-       $(checkbox).off( "change" );
-       $(checkbox).on('change', function azaza (evt)
-       {
-         
-          
-        var wrapper = $(evt.target).parent().parent().parent().parent();
-           
-        if (evt.target.value === "false")
-        {
-            
-            $(wrapper).find("textarea").each(function(index, element)
-            {
-                $(element).val("");
-            });
-            $(wrapper).find("select").each(function(index, element)
-            {
-                $("element option[value='']").attr('selected', 'true');
-            });
-            $(wrapper).find("div.hideIfFree").each(function(index, element)
-            {
-                $(element).hide();
-            });
-        }
-        else
-        {
-          
-          $(wrapper).find("div.hideIfFree").each(function(index, element)
-            {
-                $(element).show();
-            });  
-        }
+                                                                var name = "@Html.Raw(HttpUtility.JavaScriptStringEncode(name))";
 
-       });
-       
- 
-       $(function(){           
-        if (!Modernizr.inputtypes.date) {
-            /;
-        // If not native HTML5 support, fallback to jQuery datePicker
-            $('input[type=date]').datepicker({
-                // Consistent format with the HTML5 picker
-                dateFormat: 'yy-mm-dd',
-                changeMonth: true,
-                changeYear: true,
-                showAnim: 'blind'
-                },
-                // Localization
-              
-                $.datepicker.regional['ru'] = {
-closeText: 'Закрыть',
-prevText: '&#x3c;Пред',
-nextText: 'След&#x3e;',
-currentText: 'Сегодня',
-monthNames: ['Январь','Февраль','Март','Апрель','Май','Июнь',
-'Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'],
-monthNamesShort: ['Янв','Фев','Мар','Апр','Май','Июн',
-'Июл','Авг','Сен','Окт','Ноя','Дек'],
-dayNames: ['воскресенье','понедельник','вторник','среда','четверг','пятница','суббота'],
-dayNamesShort: ['вск','пнд','втр','срд','чтв','птн','сбт'],
-dayNamesMin: ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'],
-dateFormat: 'dd.mm.yy',
-firstDay: 1,
-isRTL: false
-                },
-                $.datepicker.setDefaults($.datepicker.regional['ru'])
-            );
-        }
-    });
+
+
+                                                                //var checkbox = $("input[name*='" + name + "']");
+                                                                var checkbox = $("input[type='radio']");
+
+
+                                                                //$("div.hideIfFree > div > input, div.hideIfFree > div > div > select[name='" + name +"']").each(function(index, element)
+                                                                //{
+                                                                //    $(element).val("");
+                                                                //});
+                                                                $(checkbox).filter(":even").each(function(ind, el)
+                                                                {
+
+
+                                                                    if (el.checked == true)
+                                                                    {
+                                                                        $("div.hideIfFree > div > input, div.hideIfFree > div > div > textarea[name='" + name +"']").each(function (index, element)
+                                                                        {
+                                                                            $(element).val("");
+                                                                        });
+                                                                        $("div.hideIfFree > div > div > select[name='" + name +"']").each(function (index, element)
+                                                                        {
+                                                                            $("element option[value='']").attr('selected', 'true');
+                                                                        });
+                                                                        $("div.hideIfFree[name='" + name +"']").each(function(index, element)
+                                                                        {
+                                                                            $(element).hide();
+                                                                        });
+                                                                    };
+                                                                });
+
+
+                                                                $(checkbox).off( "change" );
+                                                                $(checkbox).on('change', function azaza (evt)
+                                                                {
+
+
+                                                                    var wrapper = $(evt.target).parent().parent().parent().parent();
+
+                                                                    if (evt.target.value === "false")
+                                                                    {
+
+                                                                        $(wrapper).find("textarea").each(function(index, element)
+                                                                        {
+                                                                            $(element).val("");
+                                                                        });
+                                                                        $(wrapper).find("select").each(function(index, element)
+                                                                        {
+                                                                            $("element option[value='']").attr('selected', 'true');
+                                                                        });
+                                                                        $(wrapper).find("div.hideIfFree").each(function(index, element)
+                                                                        {
+                                                                            $(element).hide();
+                                                                        });
+                                                                    }
+                                                                    else
+                                                                    {
+
+                                                                        $(wrapper).find("div.hideIfFree").each(function(index, element)
+                                                                        {
+                                                                            $(element).show();
+                                                                        });
+                                                                    }
+
+                                                                });
+
+
+                                                                $(function(){
+                                                                    if (!Modernizr.inputtypes.date) {
+                                                                        
+                                                                        // If not native HTML5 support, fallback to jQuery datePicker
+                                                                        $('input[type=date]').datepicker({
+                                                                            // Consistent format with the HTML5 picker
+                                                                            dateFormat: 'yy-mm-dd',
+                                                                            changeMonth: true,
+                                                                            changeYear: true,
+                                                                            showAnim: 'blind'
+                                                                        },
+                                                                            // Localization
+
+                                                                            $.datepicker.regional['ru'] = {
+                                                                                closeText: 'Закрыть',
+                                                                                prevText: '&#x3c;Пред',
+                                                                                nextText: 'След&#x3e;',
+                                                                                currentText: 'Сегодня',
+                                                                                monthNames: ['Январь','Февраль','Март','Апрель','Май','Июнь',
+                                                                                'Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'],
+                                                                                monthNamesShort: ['Янв','Фев','Мар','Апр','Май','Июн',
+                                                                                'Июл','Авг','Сен','Окт','Ноя','Дек'],
+                                                                                dayNames: ['воскресенье','понедельник','вторник','среда','четверг','пятница','суббота'],
+                                                                                dayNamesShort: ['вск','пнд','втр','срд','чтв','птн','сбт'],
+                                                                                dayNamesMin: ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'],
+                                                                                dateFormat: 'dd.mm.yy',
+                                                                                firstDay: 1,
+                                                                                isRTL: false
+                                                                            },
+                                                                            $.datepicker.setDefaults($.datepicker.regional['ru'])
+                                                                        );
+                                                                    }
+                                                                });
     </script>
-    }
+                        }
