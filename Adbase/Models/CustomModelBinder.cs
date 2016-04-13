@@ -62,17 +62,19 @@ namespace Sciencecom.Models
                 }
                 if (!string.IsNullOrWhiteSpace(request.Form.Get(themes[i])))
                 {
-                    theme = request.Form.Get(types[i]);
+                    theme = request.Form.Get(themes[i]);
                 }
                 DateTime u;
-                if (rentUntils[i] != null && DateTime.TryParse(rentUntils[i], out u))
+                
+                if (rentUntils[i] != null && DateTime.TryParse(request.Form.Get(rentUntils[i]), out u))
                 {
                     rentUntil = DateTime.Parse(request.Form.Get(rentUntils[i]));
+                    
                 }
                 DateTime a;
-                if (rentFroms[i] != null && DateTime.TryParse(rentFroms[i], out a))
+                if (rentFroms[i] != null && DateTime.TryParse(request.Form.Get(rentFroms[i]), out a))
                 {
-                    rentFrom = DateTime.Parse(rentFroms[i]);
+                    rentFrom = DateTime.Parse(request.Form.Get(rentFroms[i]));
                 }
                 if (!string.IsNullOrWhiteSpace(request.Form.Get(freeOrEngagedChckxs[i])))
                 {

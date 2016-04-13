@@ -138,10 +138,12 @@
         <div class="row left-align hideIfFree" name=@name>
             <div class="form-inline">
                 <div class="col-md-2">
+                    
                     <label>Тип рекламы</label>
                 </div>
                 <div class="col-md-2">
-                @Html.DropDownListFor(model => model[j - 1].Type, new SelectList(new[] { "", "Коммерческая реклама", "Социальная реклама" }), new { @class = "input-sm form-control", Name = "(" + ViewBag.Side + ")[" + (j - 1) + "].Type"})
+                  
+                    @Html.DropDownListFor(model => model[j - 1].Type, new SelectList(new[] {"", "Коммерческая реклама", "Социальная реклама"},Model.Single().Type), new {@class = "input-sm form-control", Name = "(" + ViewBag.Side + ")[" + (j - 1) + "].Type"})
                 </div>
             </div>
         </div>
@@ -150,7 +152,8 @@
             <label>Арендован с</label>
                  </div>
             <div class="col-md-2">
-            @Html.TextBoxFor(model => model[j - 1].RentFrom, new { @type = "date", @class = "input-sm form-control", Name = "(" + ViewBag.Side + ")[" + (j - 1) + "].RentFrom" })
+         
+            @Html.EditorFor(model => model[j - 1].RentFrom, new { htmlattributes =  new { type = "date", @class = "input-sm form-control", Name = "(" + ViewBag.Side + ")[" + (j - 1) + "].RentFrom" }})
             </div>
         </div>
 
@@ -159,7 +162,8 @@
                 <label>Арендован до</label>
             </div>
             <div class="col-md-2">
-                @Html.TextBoxFor(model => model[j - 1].RentUntil, new { @type = "date", @class = "input-sm form-control" , Name = "(" + ViewBag.Side + ")[" + (j - 1) + "].RentUntil" })
+               
+                @Html.EditorFor(model => model[j - 1].RentUntil, new { htmlattributes = new { @type = "date", @class = "input-sm form-control" , Name = "(" + ViewBag.Side + ")[" + (j - 1) + "].RentUntil"} })
             </div>
         </div>
         <div class="row left-align hideIfFree" name=@name>
@@ -250,10 +254,12 @@
         });
 
         var name = "@Html.Raw(HttpUtility.JavaScriptStringEncode(name))";
+      
        
         
         //var checkbox = $("input[name*='" + name + "']");
         var checkbox = $("input[type='radio']");
+      
         
         //$("div.hideIfFree > div > input, div.hideIfFree > div > div > select[name='" + name +"']").each(function(index, element)
         //{
@@ -261,6 +267,7 @@
         //});
         $(checkbox).filter(":even").each(function(ind, el)
         {
+         
             
             if (el.checked == true)
             {
@@ -283,6 +290,7 @@
        $(checkbox).off( "change" );
        $(checkbox).on('change', function azaza (evt)
        {
+         
           
         var wrapper = $(evt.target).parent().parent().parent().parent();
            
@@ -313,8 +321,10 @@
 
        });
        
+ 
        $(function(){           
         if (!Modernizr.inputtypes.date) {
+            /;
         // If not native HTML5 support, fallback to jQuery datePicker
             $('input[type=date]').datepicker({
                 // Consistent format with the HTML5 picker
@@ -324,6 +334,7 @@
                 showAnim: 'blind'
                 },
                 // Localization
+              
                 $.datepicker.regional['ru'] = {
 closeText: 'Закрыть',
 prevText: '&#x3c;Пред',
