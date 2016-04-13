@@ -1,15 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using Sciencecom.DAL;
 
 namespace Sciencecom.Controllers
 {
     using Models;
     using Models.MapJsonModels;
 
-    public class MapController : Controller
+    public class MapController : BaseDataController
     {
-        
+
+        SciencecomEntities _context = new SciencecomEntities();
 
         [Authorize]
         public ActionResult Index(string type = null, int? id = null)
@@ -18,7 +20,6 @@ namespace Sciencecom.Controllers
             Session["controller"] = RouteData.Values["controller"];
             ViewBag.Type = type;
             ViewBag.Id = id;
-       
             return View();
         }
      
@@ -29,33 +30,29 @@ namespace Sciencecom.Controllers
             string startEndDate, string endEndDate, string startStartDate, string endStartDate,
             string house1, string support, int? id = null)
         {
-
-
-            SciencecomEntities context = new SciencecomEntities();
             List<AdvertisingConstructionJsonModel> objectsForJson = new List<AdvertisingConstructionJsonModel>();
             List<Surface> Surfaces = new List<Surface>();
             if (id.HasValue)
             {
                 //используется для отображения едининого объекта при прееходе по ссылке "Показать на карте"
-
-                var construction = context.AdvertisingStructures.Single(a => a.Id_show == id);
+                var construction = _context.AdvertisingStructures.Single(a => a.Id_show == id);
                 
-                if (context.Owners.FirstOrDefault(a => a.Id == construction.Owner_Id) != null && !string.IsNullOrWhiteSpace(context.Owners.FirstOrDefault(a => a.Id == construction.Owner_Id).Name))
+                if (_context.Owners.FirstOrDefault(a => a.Id == construction.Owner_Id) != null && !string.IsNullOrWhiteSpace(_context.Owners.FirstOrDefault(a => a.Id == construction.Owner_Id).Name))
                 {
-                    var Owner = context.Owners.Single(a => a.Id == construction.Owner_Id).Name;
+                    var Owner = _context.Owners.Single(a => a.Id == construction.Owner_Id).Name;
                     construction.OwnerName = Owner;
                 }
                 
-                var enumeratorSide = context.AdvertisingStructures.Single(a => a.Id_show == id).Sides;
+                var enumeratorSide = _context.AdvertisingStructures.Single(a => a.Id_show == id).Sides;
 
                 for (int i = 0; i < enumeratorSide.Count; i++)
                 {
                     for (int j = 0;
-                        j < context.AdvertisingStructures.Single(a => a.Id_show == id).Sides.ElementAt(i).Surfaces.Count;
+                        j < _context.AdvertisingStructures.Single(a => a.Id_show == id).Sides.ElementAt(i).Surfaces.Count;
                         j++)
                     {
                         Surfaces.Add(
-                            context.AdvertisingStructures.Single(a => a.Id_show == id)
+                            _context.AdvertisingStructures.Single(a => a.Id_show == id)
                                 .Sides.ElementAt(i)
                                 .Surfaces.ElementAt(j));
                     }
@@ -67,8 +64,8 @@ namespace Sciencecom.Controllers
 
                 return Json(objectsForJson, JsonRequestBehavior.AllowGet);
             }
+
             DataController dataController = new DataController();
-          
 
             AdvertisingStructure mc = new AdvertisingStructure()
             {
@@ -76,9 +73,7 @@ namespace Sciencecom.Controllers
                 UniqueNumber = UniqueNumber,
                 House1 =House1,
                 C_ContractFinancialManagement = ContractFinancialManagement,
-                C_PassportAdvertising = PassportAdvertising,
-
-              
+                C_PassportAdvertising = PassportAdvertising
             };
             IEnumerable<AdvertisingStructure> result =
             dataController.SearchAdversing(mc, owner, TypeOfAdvertisingStructure, Locality, CountSize,
@@ -87,13 +82,84 @@ namespace Sciencecom.Controllers
             {
                 objectsForJson.Add(new AdvertisingConstructionJsonModel(result.ElementAt(i), null));
             }
-   
-
-
             return Json(objectsForJson, JsonRequestBehavior.AllowGet);
         }
- 
 
+        public string FindPictures(int id)
+        {
+            string markup = "";
+            AdvertisingStructure mc = _context.AdvertisingStructures.SingleOrDefault(a => a.Id_show == id);
+
+            if (mc == null)
+            {
+                return markup = "";
+            }
+
+            PhotoWorkerController phw = new PhotoWorkerController();
+            List<string> photoPathes = new List<string>();
+            List<string> docNames = new List<string>
+            {
+                "photo1",
+                "photo2"
+            };
+
+            if (mc.Code == "BB" | mc.Code == "LD")
+            {
+                photoPathes = phw.LoadPic(mc.Id_show.ToString());
+            }
+            
+            for (int i = 0; i < docNames.Count; i++)
+            {
+                string src = "~/Images/" + docNames[i] + "/" + mc.Id_show + docNames[i] + ".jpg";
+                string path = Server.MapPath(src);
+                if (System.IO.File.Exists(path))
+                {
+                    photoPathes.Add(src);
+                }
+            }
+            if (photoPathes.Count == 0)
+            {
+                return markup = "";
+            }
+
+            markup +="<div id = 'myCarousel' class='carousel slide' data-ride='carousel'>";
+            //Indicators
+            markup += "<ol class='carousel-indicators'>";
+            markup += "<li data-target='#carousel-example-generic' data-slide-to='0' class='active'></li>";
+            for (int i = 0; i < photoPathes.Count-1; i++)
+            {
+                markup += "<li data-target='#carousel-example-generic' data-slide-to='"+ (i+1) +"></li>";
+            }
+            markup += "</ol>";
  
+            //Wrapper for slides
+            markup += "<div class='carousel-inner'>";
+            markup += "<img src = '" + photoPathes[0] + "' alt='...'>";
+            markup += "<div class='carousel-caption'>";
+            markup += "<h3>Caption Text</h3>";
+            markup += "</div></div>";
+            for (int i = 1; i < photoPathes.Count; i++)
+            {
+                markup += "<div class='item'><img src = '" + photoPathes[i] + "' alt = '...' >< div class='carousel-caption'><h3>Caption Text</h3></div></div>";
+            }
+            markup += "</div>"; //carousel-inner
+            markup += "</div>"; //first carousel div
+            //Controls
+            markup += "<a class='left carousel-control' href='#carousel-example-generic' role='button' data-slide='prev'>";
+            markup += "<span class='glyphicon glyphicon-chevron-left'></span></a>";
+            markup += "<a class='right carousel-control' href='#carousel-example-generic' role='button' data-slide='next'>";
+            markup += "<span class='glyphicon glyphicon-chevron-right'></span></a>";
+            
+            return markup;
+        }
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _context.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
     }
 }

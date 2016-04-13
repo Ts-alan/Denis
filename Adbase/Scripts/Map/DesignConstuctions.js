@@ -28,157 +28,74 @@
         }
     }).success(function (data) {
         var colour, bct, bht, houseSupport;
-        if (data.length > 0) {
-
-            
-            function imageExists(image_url) {
-
-                var http = new XMLHttpRequest();
-
-                http.open('HEAD', image_url, false);
-                http.send();
-
-                return http.status != 404;
-
-            }
-            
+        if (data.length > 0)
+        {
+            var construction;
             for (var i = 0; i < data.length; i++)
             {
-                
-               
-               
-                if (data[i].Breadth == null | data[i].Height == null)
+                construction = data[i];
+
+                if (construction.Breadth == null | construction.Height == null)
                 {
                     continue;
                 }
-                if (data[i].NameOfAdvertisingStructure == "Щит")
+                if (construction.NameOfAdvertisingStructure == "Щит")
                 {
                     bct = "Щ";
                     bht = "Щит";
-                    houseSupport = '<b></br>Дом:&nbsp;' + data[i].House1 + "</b>";
+                    houseSupport = '<b></br>Дом:&nbsp;' + construction.House1 + "</b>";
                     //colour = '#0095b6';
                     colour = "yellow";
-                    indexhouseSupport = data[i].House1;
+                    indexhouseSupport = construction.House1;
                 }
 
-                if (data[i].NameOfAdvertisingStructure == "Металлический указатель") {
+                if (construction.NameOfAdvertisingStructure == "Металлический указатель") {
                     bct = "У";
                     bht = "Указатель";
                     //colour = '#0095b6';
                     colour = "blue";
-                    houseSupport = '<b></br>Номер опоры:&nbsp;' + data[i].Support_ + "</b>";
-                    indexhouseSupport = data[i].Support_;
+                    houseSupport = '<b></br>Номер опоры:&nbsp;' + construction.Support_ + "</b>";
+                    indexhouseSupport = construction.Support_;
                 }
-                if (data[i].NameOfAdvertisingStructure == "Световой короб") {
+                if (construction.NameOfAdvertisingStructure == "Световой короб") {
                     bct = "К";
                     bht = "Короб";
                     //colour = '#0095b6';
                     colour = "green";
-                    houseSupport = '<b></br>Номер опоры:&nbsp;' + data[i].Support_ + "</b>";
-                    indexhouseSupport = data[i].Support_;
+                    houseSupport = '<b></br>Номер опоры:&nbsp;' + construction.Support_ + "</b>";
+                    indexhouseSupport = construction.Support_;
                   
                     
                 }
-                if (data[i].NameOfAdvertisingStructure == "Неопознанная конструкция") {
+                if (construction.NameOfAdvertisingStructure == "Неопознанная конструкция") {
                     bct = "Н";
                     bht = "Неопознанная конструкция";
                     colour = 'red';
-                    houseSupport = '<b></br>Номер дома:&nbsp;' + data[i].House1+"</b>";
-                    indexhouseSupport = data[i].House1;
+                    houseSupport = '<b></br>Номер дома:&nbsp;' + construction.House1+"</b>";
+                    indexhouseSupport = construction.House1;
                 }
            
-                if (data[i].OwnerName != null) {
+                if (construction.OwnerName != null) {
                    
-                    StringBalun += '<b>Собственник:&nbsp;' + data[i].OwnerName+"<b>";
+                    StringBalun += '<b>Собственник:&nbsp;' + construction.OwnerName+"<b>";
                 }
-                if (data[i].NameOfAdvertisingStructure!=null) {
-                    StringBalun += '<b></br>Вид конструкции:&nbsp;' + data[i].NameOfAdvertisingStructure+"</b>";
+                if (construction.NameOfAdvertisingStructure!=null) {
+                    StringBalun += '<b></br>Вид конструкции:&nbsp;' + construction.NameOfAdvertisingStructure+"</b>";
                 }
-                if (data[i].Street1!=null) {
-                    StringBalun += '<b></br>Улица :&nbsp' + data[i].Street1+"</b>";
+                if (construction.Street1!=null) {
+                    StringBalun += '<b></br>Улица :&nbsp' + construction.Street1+"</b>";
                 }
                 if (indexhouseSupport != null) {
                     StringBalun += houseSupport;
                 }
-                StringBalun += getReferencesBillboard(data[i]);
-
-
-
-
-                //if (data[i].NameOfAdvertisingStructure == "Световой короб") {
-   
-
-                //if (imageExists("/Images/photo1/[1](1)photo" + data[0].Id_show + ".jpg")) {
-                //        StringBalun += "<br>Cторона 1";
-                //        StringBalun += "<br><img  style='witdh:150px;height:150px' src='/Images/photo1/[1](1)photo" + data[0].Id_show + ".jpg' >";
-                //};
-                //if (imageExists("/Images/photo1/[2](1)photo" + data[0].Id_show + ".jpg")) {
-                //    StringBalun += "<br>Cторона 2";
-                //    StringBalun += "<br><img  style='witdh:150px;height:150px' src='/Images/photo1/[2](1)photo" + data[0].Id_show + ".jpg' >";
-                //};
-
-                //}
-                //if (data[i].NameOfAdvertisingStructure == "Неопознанная конструкция") {
-                //    if (imageExists("/Images/photo1/" + data[0].Id_show + "photo1.jpg")) {
-                //       StringBalun += "<br>Фотография 1";
-                //       StringBalun += "<br><img  style='witdh:150px;height:150px' src='/Images/photo1/" + data[0].Id_show + "photo1.jpg' >";
-                //    };
-                //    if (imageExists("/Images/photo2/" + data[0].Id_show + "photo2.jpg")) {
-                //        StringBalun += "<br>Фотография 2";
-                //        StringBalun += "<br><img  style='witdh:150px;height:150px' src='/Images/photo2/" + data[0].Id_show + "photo2.jpg' >";
-                //    };
-                //}
+                StringBalun += getReferencesBillboard(construction);
                
-                //if (data[i].NameOfAdvertisingStructure == "Щит") {
-                //    StringBalun += '<br>  <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">' +
-                //        '<ol class="carousel-indicators" ></ol>' +
-                //        '<div class="carousel-inner" role="listbox">';
-                //    var firstelement = true;
-                //    for (var j = 1; j < 9; j++) {
-                //        for (var z = 1; z < 9; z++) {
-
-                //            if (imageExists("/Images/photo1/[" + z + "](" + j + ")photo" + data[0].Id_show + ".jpg")) {
-
-                //                if (firstelement) {
-                //                    StringBalun += '<div class="item active">' +
-                //                        "<img  style='witdh:150px;height:150px' src='/Images/photo1/[" + z + "](" + j + ")photo" + data[0].Id_show + ".jpg' >" +
-                //                        '</div>';
-                //                    firstelement = false;
-                //                } else {
-                //                    StringBalun += '<div class="item ">' +
-                //                        "<img  style='witdh:150px;height:150px' src='/Images/photo1/[" + z + "](" + j + ")photo" + data[0].Id_show + ".jpg' >" +
-                //                        '</div>';
-                //                }
-                //            }
-                //        }
-                //    }
-                  
-                //    StringBalun +=
-                        
-                  
-                //    '</div>'+
-                //    '<a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">'+
-                //        '<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>'+
-                //        '<span class="sr-only">Previous</span>'+
-                //    '</a>'+
-                //    '<a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">'+
-                //        '<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>'+
-                //        '<span class="sr-only">Next</span>'+
-                //    '</a>'+
-                //    '</div>';
-                //}
-                //if (data[i].NameOfAdvertisingStructure == "Металлический указатель") {
-                //    if (imageExists("/Images/photo1/" + data[0].Id_show + "photo1.jpg")) {
-                //        StringBalun += "<br>Cторона 1";
-                //        StringBalun += "<br><img  style='witdh:150px;height:150px' src='/Images/photo1/" + data[0].Id_show + "photo1.jpg' >";
-                //    };
-                //}
 
                 var placemark = new ymaps.GeoObject(
                  {
                      geometry: {
                          type: "Point",
-                         coordinates: [data[i].Breadth, data[i].Height]
+                         coordinates: [construction.Breadth, construction.Height]
                      },
                      properties: {
                          balloonContentBody: StringBalun,
@@ -192,23 +109,52 @@
                      preset: 'islands#redClusterIcons',
                      iconColor: colour
                  });
-                
 
-                    placemark.events.add('balloonopen', function(e)
+                //var fun = MakeFunc(data[i].Id_show);
+                //placemark.events.add('balloonopen', fun);
+
+                placemark.events.add('balloonopen', function(e)
+                {
+                    //console.log(e.get('target').properties._data.balloonContentBody);
+                    var contentString = e.get('target').properties._data.balloonContentBody;
+                    var slashIndexes = [], quoteIndexes = [], i = -1;
+                    for (i = 0; i < contentString.length; i++)
                     {
-                        console.log(e.get('target').properties);
-                        //console.log(e.get('target'));
+                       if (contentString[i] === "/")
+                       {
+                           slashIndexes.push(i);
+                       }
+                       if (contentString[i] === '"')
+                       {
+                           quoteIndexes.push(i);
+                       }
+                    }
+                    
+                    //console.log(slashIndexes);
+                    //console.log(quoteIndexes);
+                    var id = contentString.substring(slashIndexes[slashIndexes.length - 3] + 1, quoteIndexes[quoteIndexes.length - 1]);
+                    console.log(id);
+                    //e.get('target').properties._data.balloonContentBody = "ozoza";
+                    
+                    $.ajax({
+                        type: "GET",
+                        url: "/Map/FindPictures/" + id,
+                        async: true
+
+                    }).success(function(data)
+                    {
+                        e.get('target').properties._data.balloonContentBody += data;
                     });
-                    geoArray[i] = placemark;
+
+                });
+                geoArray[i] = placemark;
                 StringBalun = "";
             }
 
             clusterer.add(geoArray);
             if (geoArray.length == 1)
             {
-                    
                 myMap.panTo([[data[0].Breadth, data[0].Height]]);
-                       
             }
         }
         $("#hidden").remove();
@@ -254,8 +200,3 @@ function getReferencesBillboard(construction) {
     ;
     return result;
 }
-
-
-
-
-
