@@ -113,7 +113,6 @@
 
                 placemark.events.add('balloonopen', function(e)
                 {
-
                     var contentString = e.get('target').properties._data.balloonContentBody;
                     var slashIndexes = [], quoteIndexes = [], i = -1;
                     for (i = 0; i < contentString.length; i++)
@@ -133,28 +132,31 @@
                     
                     if (String(n) === id && n >= 0)
                     {
-                        var img = "<div><img src='/Images/ajax-loader.gif' style='display: block; margin-left: auto;margin-right: auto;'></div>";
-
-                        e.get('target').properties._data.balloonContentBody += img;
+                        var img = "<div id='gifContainer'><img src='/Images/ajax-loader.gif' style='display: block; margin-left: auto;margin-right: auto;'></div>";
                         
                         $.ajax({
                             type: "GET",
                             url: "/Map/FindPictures/" + id,
                             async: true,
                             timeout: 10000,
+                            beforeSend: function ()
+                            {
+                                $("[class*='balloon__content'] > ymaps > ymaps").append(img);
+                                e.get('target').properties._data.balloonContentBody += img;
+                                $("[class*='balloon__content']").parent().show();
+                            },
                             error: (function()
                             {
                                 e.get('target').properties._data.balloonContentBody += '<div><h4>Не удалось загрузить изображение</h4></div>';
-                                //e.get('target').properties._data.balloonContentBody = e.get('target').properties._data.balloonContentBody.replace("<div><img src='/Images/ajax-loader.gif' style='display: block; margin-left: auto;margin-right: auto;'></div>", "");
+                                $("#gifContainer").remove();
                                 e.get('target').properties._data.balloonContentBody = e.get('target').properties._data.balloonContentBody.replace(img, "");
                             })
                         }).success(function(data)
                         {
-                            //console.log("!!!");
+                            $("[class*='balloon__content'] > ymaps > ymaps").append(data);
                             e.get('target').properties._data.balloonContentBody += data;
-                            // console.log("!!!");
-                             //e.get('target').properties._data.balloonContentBody = e.get('target').properties._data.balloonContentBody.replace("<div><img src='/Images/ajax-loader.gif' style='display: block; margin-left: auto;margin-right: auto;'></div>", '');
-                             e.get('target').properties._data.balloonContentBody = e.get('target').properties._data.balloonContentBody.replace(img, '');
+                            $("#gifContainer").remove();
+                            e.get('target').properties._data.balloonContentBody = e.get('target').properties._data.balloonContentBody.replace(img, '');
                              console.log("");
                             });
                         //e.get('target').properties._data.balloonContentBody += "<img src='/Images/photo1/[1](1)photo101390.jpg' height='300' style='display: block; margin-left: auto;margin-right: auto;'>";
