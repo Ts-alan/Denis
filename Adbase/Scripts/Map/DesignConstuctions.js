@@ -116,36 +116,56 @@
                 placemark.events.add('balloonopen', function(e)
                 {
                     //console.log(e.get('target').properties._data.balloonContentBody);
-                    var contentString = e.get('target').properties._data.balloonContentBody;
-                    var slashIndexes = [], quoteIndexes = [], i = -1;
-                    for (i = 0; i < contentString.length; i++)
-                    {
-                       if (contentString[i] === "/")
-                       {
-                           slashIndexes.push(i);
-                       }
-                       if (contentString[i] === '"')
-                       {
-                           quoteIndexes.push(i);
-                       }
-                    }
+                    //var loaded;
+                    //if (loaded != true)
+                    //{
+                    //    loaded = true;
+                    //}
+                     var contentString = e.get('target').properties._data.balloonContentBody;
+                        var slashIndexes = [], quoteIndexes = [], i = -1;
+                        for (i = 0; i < contentString.length; i++)
+                        {
+                           if (contentString[i] === "/")
+                           {
+                               slashIndexes.push(i);
+                           }
+                           if (contentString[i] === '"')
+                           {
+                               quoteIndexes.push(i);
+                           }
+                        }
                     
-                    //console.log(slashIndexes);
-                    //console.log(quoteIndexes);
-                    var id = contentString.substring(slashIndexes[slashIndexes.length - 3] + 1, quoteIndexes[quoteIndexes.length - 1]);
-                    console.log(id);
-                    //e.get('target').properties._data.balloonContentBody = "ozoza";
+                        //console.log(slashIndexes);
+                        //console.log(quoteIndexes);
                     
-                    $.ajax({
-                        type: "GET",
-                        url: "/Map/FindPictures/" + id,
-                        async: true
+                        var id = contentString.substring(slashIndexes[slashIndexes.length - 4] + 1, quoteIndexes[quoteIndexes.length - 1]);
+                        //console.log(id);
+                        //e.get('target').properties._data.balloonContentBody = "ozoza";
 
-                    }).success(function(data)
-                    {
-                        e.get('target').properties._data.balloonContentBody += data;
-                    });
+                        //e.get('target').properties._data.balloonContentBody += "<div><h4>Загрузка изображения</h4></div>";
+                        
+                        $.ajax({
+                            type: "GET",
+                            url: "/Map/FindPictures/" + id,
+                            async: true
+                            //timeout: 10000
+                            //,
+                            //error: (function()
+                            //{
+                            //    e.get('target').properties._data.balloonContentBody += '<div><h4>Не удалось загрузить изображение</h4></div>';
+                            //    e.get('target').properties._data.balloonContentBody = e.get('target').properties._data.balloonContentBody.replace('<div><h4>Загрузка изображения</h4></div>', '');
+                            //})
+                        }).success(function(data)
+                            {
+                               // var q = data;
+                            //alert("qqq");
+                                
+                                e.get('target').properties._data.balloonContentBody += data;
+                                //e.get('target').properties._data.balloonContentBody = e.get('target').properties._data.balloonContentBody.replace('<div><h4>Загрузка изображения</h4></div>', '');
+                            });
 
+                        //e.get('target').properties._data.balloonContentBody += "<img src='/Images/photo1/[1](1)photo101390.jpg' height='300' style='display: block; margin-left: auto;margin-right: auto;'>";
+                    
                 });
                 geoArray[i] = placemark;
                 StringBalun = "";
@@ -167,7 +187,7 @@
 }
 
 function getReferencesBillboard(construction) {
-    var result = "";
+    var result = "<div>";
     var editLink;
     var viewLink;
     if (construction.NameOfAdvertisingStructure == "Щит")
@@ -194,7 +214,7 @@ function getReferencesBillboard(construction) {
     }
     result += '</br><a href="/Data/' + viewLink + construction.Id_show + '" >Показать данные о конструкции</a>'
         + '</br><a href="'+ editLink + construction.Id_show + '" >Изменить данные конструкции</a>'
-        + '</br><a href="/Data/DeleteAdvertisingDesign/' + construction.Id_show + '" >Удалить конструкцию</a></b>'
+        + '</br><a href="/Data/DeleteAdvertisingDesign/' + construction.Id_show + '" >Удалить конструкцию</a></b></div>'
 
  
     ;

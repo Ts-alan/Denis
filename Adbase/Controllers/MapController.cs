@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Sciencecom.DAL;
@@ -105,13 +106,17 @@ namespace Sciencecom.Controllers
 
             if (mc.Code == "BB" | mc.Code == "LD")
             {
-                photoPathes = phw.LoadPic(mc.Id_show.ToString());
+                foreach (string path in phw.LoadPic(mc.Id_show.ToString()))
+                {
+                    var s = path.Substring(path.IndexOf("Image", StringComparison.Ordinal));
+                    photoPathes.Add(s);
+                }
             }
             
             for (int i = 0; i < docNames.Count; i++)
             {
                 string src = "~/Images/" + docNames[i] + "/" + mc.Id_show + docNames[i] + ".jpg";
-                string path = Server.MapPath(src);
+                string path = Url.Content(src);
                 if (System.IO.File.Exists(path))
                 {
                     photoPathes.Add(src);
@@ -121,8 +126,10 @@ namespace Sciencecom.Controllers
             {
                 return markup = "";
             }
+            //Container for carousel
+            markup += "<div class=''>";
 
-            markup +="<div id = 'myCarousel' class='carousel slide' data-ride='carousel'>";
+            markup += "<div id = 'myCarousel' class='carousel slide carousel-fit' data-ride='carousel'>";
             //Indicators
             markup += "<ol class='carousel-indicators'>";
             markup += "<li data-target='#carousel-example-generic' data-slide-to='0' class='active'></li>";
@@ -134,22 +141,25 @@ namespace Sciencecom.Controllers
  
             //Wrapper for slides
             markup += "<div class='carousel-inner'>";
-            markup += "<img src = '" + photoPathes[0] + "' alt='...'>";
-            markup += "<div class='carousel-caption'>";
-            markup += "<h3>Caption Text</h3>";
-            markup += "</div></div>";
+            markup += "<img height='150' src = '" + photoPathes[0] + "' alt='...'>";
+            //markup += "<div class='carousel-caption'>";
+            //markup += "<h3>Caption Text</h3>";
+            //markup += "</div>";
+            markup += "</div>";
             for (int i = 1; i < photoPathes.Count; i++)
             {
-                markup += "<div class='item'><img src = '" + photoPathes[i] + "' alt = '...' >< div class='carousel-caption'><h3>Caption Text</h3></div></div>";
+                markup += "<div class='item'><img height='150' src = '" + photoPathes[i] + "' alt = '...' >< div class='carousel-caption'><h3>Caption Text</h3></div></div>";
             }
-            markup += "</div>"; //carousel-inner
-            markup += "</div>"; //first carousel div
+           
+            
             //Controls
             markup += "<a class='left carousel-control' href='#carousel-example-generic' role='button' data-slide='prev'>";
             markup += "<span class='glyphicon glyphicon-chevron-left'></span></a>";
             markup += "<a class='right carousel-control' href='#carousel-example-generic' role='button' data-slide='next'>";
             markup += "<span class='glyphicon glyphicon-chevron-right'></span></a>";
-            
+            markup += "</div>"; //carousel-inner
+            markup += "</div>"; //first carousel div
+            markup += "</div>"; //container div
             return markup;
         }
         protected override void Dispose(bool disposing)
