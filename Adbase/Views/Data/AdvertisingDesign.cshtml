@@ -22,6 +22,7 @@
     var $SaveIdForHideTooltip;
     var $Tablebacklight;
     var firstReauquest = true;
+    var firstCompleted = true;
     $(document).ready(function ()
     {
 
@@ -43,12 +44,8 @@
             gridPostData = $("#table").getGridParam("postData");
             gridPostData["НачалоРазреш_по"] = $("#НачалоРазреш_по").val();
             gridPostData["КонецРазреш_по"] = $("#КонецРазреш_по").val();
-            //console.log(gridPostData);
             $('#table').jqGrid('setGridParam', { postData: gridPostData });
             $('#table').trigger('reloadGrid');
-             
-            
-
         });
 
         //функция для скрывания открытых всплывающих окон
@@ -63,6 +60,37 @@
                 }
             }
         });
+
+        //Замена строчного инпута на кнопку в фильтертулбаре
+        function SwitchTextInputToButton()
+        {
+            var content = '<button class="btn btn-default" type="button" id="searchSurfaces"><span id="searcSpan" class="glyphicon glyphicon-search "></span></button>';
+            var container = $("#gs_Поверхности").parent();
+            //удаление tr с кнопкой очистки поиска
+            $(container).parent().find(".ui-search-clear").remove();
+            //удаление инпута для поиска
+            $("#gs_Поверхности").remove();
+            container.attr("id", "search_list");
+            container.attr("class", "ui-pg-button ui-corner-all");
+            $(container).append(content);
+            var button = $("#searchSurfaces");
+            $(button).click(function ()
+            {
+                $(button).toggleClass("active");
+                var tablePostData;
+                tablePostData = $("#table").getGridParam("postData");
+                if ($(button).hasClass("active"))
+                {
+                    tablePostData["Искать_поверхности"] = false;
+                }
+                else
+                {
+                    tablePostData["Искать_поверхности"] = true;
+                }
+                $('#table').jqGrid('setGridParam', { postData: tablePostData });
+                jQuery("#table")[0].triggerToolbar();
+            });
+        }
 
         //
         $("#table").bind('DOMNodeInserted DOMNodeRemoved', function ()
@@ -87,8 +115,8 @@
             rowList: [10, 20, 30],
             gridview: true,
             // autoencode: true,
-            cellEdit : false,
-	        cellsubmit : 'clientArray',
+            cellEdit: false,
+            cellsubmit: 'clientArray',
             pager: '#jpager',
             jsonReader: {
                 root: "Data",
@@ -131,32 +159,34 @@
                 { name: "Количество_сторон", align: "center", editable: false },
                 { name: "Количестов_поверхностей", align: "center", editable: false },
                 { name: "Площадь_конструкции", align: "center", editable: false },
-                { name: 'Поверхности', editable: false, edittype: 'select'}
-
+                { name: 'Поверхности', editable: false, edittype: 'select' }
             ],
-            onSearch: function ()
+            onSearch: function()
+            {
+                alert("1111");
+                $(this).setGridParam({ datatype: 'json' });
+                return true;
+            },
+            onReset: function()
             {
                 $(this).setGridParam({ datatype: 'json' });
                 return true;
             },
-            onReset: function ()
-            {
-                $(this).setGridParam({ datatype: 'json' });
-                return true;
-            },
-            beforeRequest: function ()
+            beforeRequest: function()
             {
                 if (firstReauquest)
                 {
                     LoadData();
                     firstReauquest = false;
                 }
-
                 SaveData();
+            },
+            gridComplete: function()
+            {
+                
             }
 
         });
-
 
         //Добавление строки с полями для поиска в таблице конструкций
         $('#table').jqGrid('filterToolbar',
@@ -169,7 +199,9 @@
 
                 }
             });
-        //$(".ui-jqgrid-bdiv").append("<h1 style=\"margin-left: 700px;margin-top: 300px\">Выберите параметры поиска</h1>");
+
+        SwitchTextInputToButton();
+        
 
         //подсветка
         $('table tr').on("click", function ()
@@ -202,7 +234,8 @@
                 $('#divEditStatusAD').css("visibility", "hidden");
             }
         });
-        //переход через ajax на edit billbord
+
+        @*//переход через ajax на edit billbord
         $('#EditBillbord').click(function ()
         {
             if ($Tablebacklight != "undefined")
@@ -216,12 +249,11 @@
                     alert("что то пошло не так");
                 });
             }
-        });
+        });*@
 
-        //сбор данные из поиска для передачи на сервер и записи в сессию
+        //сбор данных из панели поиска для передачи на сервер и записи в сессию
         function SaveData()
         {
-            
             var collectionMap = {};
             collectionMap.postdata = $("#table").getGridParam("postData");
 
@@ -395,6 +427,40 @@
     font-weight: bold;
     color: #0073ea;
     }
+
+    #searcSpan{
+     margin-left: 2px;
+    margin-top: -2px;
+}
+
+ #searchSurfaces{
+     color: rgb(0, 115, 234);
+    height: 23px;
+    width: 40px;
+     display: block;
+     margin: auto;
+    /*display: inline-block;
+    zoom: 1;
+    line-height: normal;
+    white-space: nowrap;
+    vertical-align: baseline;
+    text-align: center;
+    cursor: pointer;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    font-family: inherit;
+    font-family: arial;
+    font-size: 17px;
+    padding: .5em .9em .5em 2em;
+    text-decoration: none;
+    border-radius: 4px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, .2);*/
+}
+
+
 </style>
 <div id="Page">
 

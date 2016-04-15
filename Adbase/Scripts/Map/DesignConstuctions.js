@@ -121,13 +121,14 @@
                         {
                             slashIndexes.push(i);
                         }
-                        if (contentString[i] === '"')
+                        if (contentString[i] === "'")
                         {
                             quoteIndexes.push(i);
                         }
                     }
                     
-                    var id = contentString.substring(slashIndexes[slashIndexes.length - 4] + 1, quoteIndexes[quoteIndexes.length - 1]);
+                    var id = contentString.substring( quoteIndexes[quoteIndexes.length - 1] + 2, slashIndexes[slashIndexes.length - 1]-1);
+                    
                     var n = ~~Number(id);
                     
                     if (String(n) === id && n >= 0)
@@ -139,15 +140,15 @@
                             url: "/Map/FindPictures/" + id,
                             async: true,
                             timeout: 10000,
-                            beforeSend: function ()
-                            {
-                                $("[class*='balloon__content'] > ymaps > ymaps").append(img);
-                                e.get('target').properties._data.balloonContentBody += img;
-                                $("[class*='balloon__content']").parent().show();
-                            },
+                            //beforeSend: function ()
+                            //{
+                            //    $("[class*='balloon__content'] > ymaps > ymaps").append(img);
+                            //    e.get('target').properties._data.balloonContentBody += img;
+                            //    $("[class*='balloon__content']").parent().show();
+                            //},
                             error: (function()
                             {
-                                e.get('target').properties._data.balloonContentBody += '<div><h4>Не удалось загрузить изображение</h4></div>';
+                                //e.get('target').properties._data.balloonContentBody += '<div><h4>Не удалось загрузить изображение</h4></div>';
                                 $("#gifContainer").remove();
                                 e.get('target').properties._data.balloonContentBody = e.get('target').properties._data.balloonContentBody.replace(img, "");
                             })
@@ -158,7 +159,7 @@
                             $("#gifContainer").remove();
                             e.get('target').properties._data.balloonContentBody = e.get('target').properties._data.balloonContentBody.replace(img, '');
                              console.log("");
-                            });
+                        });
                         //e.get('target').properties._data.balloonContentBody += "<img src='/Images/photo1/[1](1)photo101390.jpg' height='300' style='display: block; margin-left: auto;margin-right: auto;'>";
                     }
                 });
@@ -208,10 +209,10 @@ function getReferencesBillboard(construction) {
         viewLink = "Illegal/";
     }
     result += '</br><a href="/Data/' + viewLink + construction.Id_show + '" >Показать данные о конструкции</a>'
-        + '</br><a href="'+ editLink + construction.Id_show + '" >Изменить данные конструкции</a>'
+        + '</br><a href="' + editLink + construction.Id_show + '" >Изменить данные конструкции</a>'
         + '</br><a href="/Data/DeleteAdvertisingDesign/' + construction.Id_show + '" >Удалить конструкцию</a></b></div>'
-
- 
-    ;
+        + "<div id='gifContainer'><img src='/Images/ajax-loader.gif' style='display: block; margin-left: auto;margin-right: auto;'></div>"
+        + "<div style='display:none;'>" + construction.Id_show + "</div>";
+    
     return result;
 }

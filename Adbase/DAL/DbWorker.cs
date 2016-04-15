@@ -22,7 +22,7 @@ namespace Sciencecom.DAL
             int rows, string Собственник, string Вид_конструкции, string Населенный_пункт,
             string Улица, string Со_стороны, string Ближайшая_по_ходу, string Дом, string Номер_опоры, string Количество_сторон, 
             string Количестов_поверхностей, string Площадь_конструкции, string Разреш_по, string НачалоРазреш_по, 
-            string КонецРазреш_по, string Разреш_с, string НачалоРазреш_с, string КонецРазреш_с)
+            string КонецРазреш_по, string Разреш_с, string НачалоРазреш_с, string КонецРазреш_с, bool? Искать_поверхности)
 
         {
 
@@ -142,7 +142,10 @@ namespace Sciencecom.DAL
             {
                 adbvertisingList = adbvertisingList.Where(x => x.Area == n);
             }
-
+            if (Искать_поверхности == false)
+            {
+                adbvertisingList = adbvertisingList.Where(x => x.Sides.Any(side => side.Surfaces.Any(o => o.FreeOrEngaged == false)));
+            }
             finalList = adbvertisingList.ToList();
             int adsCount = finalList.Count;
             double del = adsCount / rows;
