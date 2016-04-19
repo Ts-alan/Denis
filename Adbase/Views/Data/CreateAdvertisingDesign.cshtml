@@ -149,7 +149,7 @@
             //валидация
         }
         $("[side=" + i + "]").remove();
-
+       
 
         $.ajax('@Url.Action("AddSurface", "Data")', { data: { side: i, StartCountForSurface: StartCountForSurface, EndCountForSurface: EndCountForSurface } })
             .success(function(e)

@@ -3,7 +3,7 @@
 
 @for (int i = ViewBag.StartCountForSurface, j = 1; i < ViewBag.EndCountForSurface; i++, j++)
 {
-    <hr />
+   
     <div side="@ViewBag.Side" class="SideDiv">
         <input type="hidden" name="[@i].SideOfSurface" value="@ViewBag.Side">
         <h3 style="margin-left: 150px">Поверхность @j &nbsp; Стороны @ViewBag.Side </h3>
@@ -82,7 +82,7 @@
             </div>
         </div>
     </div>
-    <div class="hiddenInputWrapper">
+    <div class="hiddenInputWrapper" side="@ViewBag.Side">
         <div class="row left-align">
             <div class="form-inline">
                 <div class="col-md-2">
