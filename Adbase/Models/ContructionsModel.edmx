@@ -150,7 +150,7 @@
           <Property Name="RentUntil" Type="date" />
           <Property Name="Theme" Type="nvarchar(max)" />
           <Property Name="Type" Type="nvarchar" MaxLength="50" />
-          <Property Name="FreeOrEngaged" Type="bit" />
+          <Property Name="isFreeOrSocial" Type="bit" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -522,7 +522,6 @@
           <EntitySet Name="Sides" EntityType="SciencecomModel.Side" />
           <EntitySet Name="Status" EntityType="SciencecomModel.Status" />
           <EntitySet Name="Streets" EntityType="SciencecomModel.Street" />
-          <EntitySet Name="Surfaces" EntityType="SciencecomModel.Surface" />
           <EntitySet Name="sysdiagrams" EntityType="SciencecomModel.sysdiagram" />
           <EntitySet Name="TheElementOfTheRoadNetworks" EntityType="SciencecomModel.TheElementOfTheRoadNetwork" />
           <EntitySet Name="TypeOfAdvertisingStructures" EntityType="SciencecomModel.TypeOfAdvertisingStructure" />
@@ -583,6 +582,7 @@
             <End Role="Locality" EntitySet="Localities" />
             <End Role="Street" EntitySet="Streets" />
           </AssociationSet>
+          <EntitySet Name="Surfaces" EntityType="SciencecomModel.Surface" />
           <AssociationSet Name="FK_Surfaces_Sides" Association="SciencecomModel.FK_Surfaces_Sides">
             <End Role="Side" EntitySet="Sides" />
             <End Role="Surface" EntitySet="Surfaces" />
@@ -753,23 +753,6 @@
           <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CityId" Type="Guid" Nullable="false" />
           <NavigationProperty Name="Locality" Relationship="SciencecomModel.FK_Streets_Locality" FromRole="Street" ToRole="Locality" />
-        </EntityType>
-        <EntityType Name="Surface">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Height" Type="Double" Nullable="false" />
-          <Property Name="Width" Type="Double" Nullable="false" />
-          <Property Name="Space" Type="Double" Nullable="false" />
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Side_Id" Type="Guid" />
-          <Property Name="NumberSurface" Type="Int32" />
-          <NavigationProperty Name="Side" Relationship="SciencecomModel.FK_Surfaces_Sides" FromRole="Surface" ToRole="Side" />
-          <Property Name="RentFrom" Type="DateTime" Precision="0" />
-          <Property Name="RentUntil" Type="DateTime" Precision="0" />
-          <Property Name="Theme" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="FreeOrEngaged" Type="Boolean" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -977,6 +960,23 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Surface">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Height" Type="Double" Nullable="false" />
+          <Property Name="Width" Type="Double" Nullable="false" />
+          <Property Name="Space" Type="Double" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Side_Id" Type="Guid" />
+          <Property Name="NumberSurface" Type="Int32" />
+          <Property Name="RentFrom" Type="DateTime" Precision="0" />
+          <Property Name="RentUntil" Type="DateTime" Precision="0" />
+          <Property Name="Theme" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="isFreeOrSocial" Type="Boolean" />
+          <NavigationProperty Name="Side" Relationship="SciencecomModel.FK_Surfaces_Sides" FromRole="Surface" ToRole="Side" />
+        </EntityType>
         <Association Name="FK_Surfaces_Sides">
           <End Type="SciencecomModel.Side" Role="Side" Multiplicity="0..1" />
           <End Type="SciencecomModel.Surface" Role="Surface" Multiplicity="*" />
@@ -1162,23 +1162,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Surfaces">
-            <EntityTypeMapping TypeName="SciencecomModel.Surface">
-              <MappingFragment StoreEntitySet="Surfaces">
-                <ScalarProperty Name="FreeOrEngaged" ColumnName="FreeOrEngaged" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="Theme" ColumnName="Theme" />
-                <ScalarProperty Name="RentUntil" ColumnName="RentUntil" />
-                <ScalarProperty Name="RentFrom" ColumnName="RentFrom" />
-                <ScalarProperty Name="NumberSurface" ColumnName="NumberSurface" />
-                <ScalarProperty Name="Side_Id" ColumnName="Side_Id" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Space" ColumnName="Space" />
-                <ScalarProperty Name="Width" ColumnName="Width" />
-                <ScalarProperty Name="Height" ColumnName="Height" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
             <EntityTypeMapping TypeName="SciencecomModel.sysdiagram">
               <MappingFragment StoreEntitySet="sysdiagrams">
@@ -1213,6 +1196,23 @@
                 <ScalarProperty Name="OrderBy" ColumnName="OrderBy" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Surfaces">
+            <EntityTypeMapping TypeName="SciencecomModel.Surface">
+              <MappingFragment StoreEntitySet="Surfaces">
+                <ScalarProperty Name="isFreeOrSocial" ColumnName="isFreeOrSocial" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Theme" ColumnName="Theme" />
+                <ScalarProperty Name="RentUntil" ColumnName="RentUntil" />
+                <ScalarProperty Name="RentFrom" ColumnName="RentFrom" />
+                <ScalarProperty Name="NumberSurface" ColumnName="NumberSurface" />
+                <ScalarProperty Name="Side_Id" ColumnName="Side_Id" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Space" ColumnName="Space" />
+                <ScalarProperty Name="Width" ColumnName="Width" />
+                <ScalarProperty Name="Height" ColumnName="Height" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

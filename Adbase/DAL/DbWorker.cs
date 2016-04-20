@@ -144,7 +144,7 @@ namespace Sciencecom.DAL
             }
             if (Искать_поверхности == false)
             {
-                adbvertisingList = adbvertisingList.Where(x => x.Sides.Any(side => side.Surfaces.Any(o => o.FreeOrEngaged == false)));
+                adbvertisingList = adbvertisingList.Where(x => x.Sides.Any(side => side.Surfaces.Any(o => o.isFreeOrSocial == false)));
             }
             finalList = adbvertisingList.ToList();
             int adsCount = finalList.Count;

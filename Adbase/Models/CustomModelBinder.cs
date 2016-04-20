@@ -90,7 +90,7 @@ namespace Sciencecom.Models
                     Type = type,
                     RentFrom = rentFrom,
                     RentUntil = rentUntil,
-                    FreeOrEngaged = freeOrEngagedChckx
+                    isFreeOrSocial = freeOrEngagedChckx
                 });
 
             }

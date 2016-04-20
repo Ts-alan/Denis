@@ -16,7 +16,6 @@
         <EntityTypeShape EntityType="SciencecomModel.Side" Width="1.5" PointX="8.25" PointY="7.5" />
         <EntityTypeShape EntityType="SciencecomModel.Status" Width="1.5" PointX="3.75" PointY="30.375" />
         <EntityTypeShape EntityType="SciencecomModel.Street" Width="1.5" PointX="5.875" PointY="27.75" />
-        <EntityTypeShape EntityType="SciencecomModel.Surface" Width="1.5" PointX="10.5" PointY="7.625" />
         <EntityTypeShape EntityType="SciencecomModel.sysdiagram" Width="1.5" PointX="0.75" PointY="0.875" />
         <EntityTypeShape EntityType="SciencecomModel.TheElementOfTheRoadNetwork" Width="1.5" PointX="3.75" PointY="11.125" />
         <EntityTypeShape EntityType="SciencecomModel.TypeOfAdvertisingStructure" Width="1.5" PointX="0.75" PointY="7.75" />
@@ -26,7 +25,6 @@
         <AssociationConnector Association="SciencecomModel.FK_Increment_TypeOfAdvertisingStructures" />
         <AssociationConnector Association="SciencecomModel.FK_ListUniqueNumber_TypeOfAdvertisingStructures" />
         <AssociationConnector Association="SciencecomModel.FK_Streets_Locality" />
-        <AssociationConnector Association="SciencecomModel.FK_Surfaces_Sides" />
         <EntityTypeShape EntityType="SciencecomModel.AdvertisingStructure" Width="1.5" PointX="9" PointY="15.375" />
         <AssociationConnector Association="SciencecomModel.FK_AdvertisingStructures_Backlight" />
         <AssociationConnector Association="SciencecomModel.FK_AdvertisingStructures_Locality" />
@@ -37,6 +35,8 @@
         <AssociationConnector Association="SciencecomModel.FK_AdvertisingStructures_ViewBid" />
         <AssociationConnector Association="SciencecomModel.FK_Billboards1_Owners" />
         <AssociationConnector Association="SciencecomModel.FK_Sides_Billboards1" />
+        <EntityTypeShape EntityType="SciencecomModel.Surface" Width="1.5" PointX="10.5" PointY="7.25" />
+        <AssociationConnector Association="SciencecomModel.FK_Surfaces_Sides" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -57,7 +57,7 @@ namespace Sciencecom.Models.MapJsonModels
             Поверхности += "<select role='select' class='rowDropdown'>";
             for (int i = 0; i < sfs.Count; i++)
             {
-                Поверхности += "<option value='" + (i + 1) + "'>" + (sfs[i].FreeOrEngaged == true ? "П. " + (i + 1) + " занята" : "П. " + (i + 1) + " свободна") + "</option>";
+                Поверхности += "<option value='" + (i + 1) + "'>" + (sfs[i].isFreeOrSocial == true ? "П. " + (i + 1) + " занята" : "П. " + (i + 1) + " свободна") + "</option>";
             }
             Поверхности += "</select>";
 

@@ -92,7 +92,7 @@
                     @{ string name = ""; }
                     @if (@Model != null)
                     {
-                        if (@Model[j - 1].FreeOrEngaged == null)
+                        if (@Model[j - 1].isFreeOrSocial == null)
                         {
                             name = "(" + ViewBag.Side + ")[" + (j - 1) + "].FreeOrEngaged";
                             <text>
@@ -103,7 +103,7 @@
                         }
                         else
                         {
-                            if (@Model[j - 1].FreeOrEngaged == false)
+                            if (@Model[j - 1].isFreeOrSocial == false)
                             {
                                 name = "(" + ViewBag.Side + ")[" + (j - 1) + "].FreeOrEngaged";
                                 <text>
