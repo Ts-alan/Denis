@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Sciencecom.Models.Scheduler;
 
 namespace Sciencecom
 {
@@ -14,6 +15,7 @@ namespace Sciencecom
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AutoMapperConfig.RegisterMappings();
             DataAnnotationsModelValidatorProvider.AddImplicitRequiredAttributeForValueTypes = false;
+            Scheduler.Start();
         }
 
 
