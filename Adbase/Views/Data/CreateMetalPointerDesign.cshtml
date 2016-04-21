@@ -38,7 +38,7 @@
     var typedesign;
     $(document).ready(function() {
         
-        var name = "FreeOrEngaged";
+        var name = "isFreeOrSocial";
         var checkbox = $("input[name*='" + name + "']");
         $("div.hideIfFree > div > input, div.hideIfFree > div > div > select").each(function(index, element)
         {
@@ -637,8 +637,8 @@
    
         <div class="row" style="display: none">
         <div class="col-md-2">
-            <input type="radio" name="(1)[0].FreeOrEngaged" value="false" />Не занята<br>
-            <input type="radio" name="(1)[0].FreeOrEngaged" value="true" checked="checked">Занята<br>
+            <input type="radio" name="(1)[0].isFreeOrSocial" value="false" checked="checked"/>Не занята или социальная<br>
+            <input type="radio" name="(1)[0].isFreeOrSocial" value="true" >Занята<br>
         </div>
     </div>
 
