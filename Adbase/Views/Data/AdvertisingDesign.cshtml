@@ -76,9 +76,9 @@
             var button = $("#searchSurfaces");
             $(button).click(function ()
             {
-                $(button).toggleClass("active");
                 var tablePostData;
                 tablePostData = $("#table").getGridParam("postData");
+
                 if ($(button).hasClass("active"))
                 {
                     tablePostData["Искать_поверхности"] = false;
@@ -87,7 +87,9 @@
                 {
                     tablePostData["Искать_поверхности"] = true;
                 }
+
                 $('#table').jqGrid('setGridParam', { postData: tablePostData });
+                $(button).toggleClass("active");
                 jQuery("#table")[0].triggerToolbar();
             });
         }

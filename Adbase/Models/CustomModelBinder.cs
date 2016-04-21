@@ -21,7 +21,7 @@ namespace Sciencecom.Models
             List<string> themes = request.Form.AllKeys.Where(a => a.Contains("].Theme")).ToList();
             List<string> rentUntils = request.Form.AllKeys.Where(a => a.Contains("].RentUntil")).ToList();
             List<string> rentFroms = request.Form.AllKeys.Where(a => a.Contains("].RentFrom")).ToList();
-            List<string> freeOrEngagedChckxs = request.Form.AllKeys.Where(a => a.Contains(".FreeOrEngaged")).ToList();
+            List<string> isFreeOrSocialChckxs = request.Form.AllKeys.Where(a => a.Contains(".isFreeOrSocial")).ToList();
 
             
 
@@ -33,7 +33,7 @@ namespace Sciencecom.Models
             string theme = "";
             DateTime? rentUntil = null;
             DateTime? rentFrom = null;
-            bool freeOrEngagedChckx = false;
+            bool isFreeOrSocialChckx = false;
 
             for (int i=0; i<allKeysHeight.Count; i++)
             {
@@ -76,9 +76,9 @@ namespace Sciencecom.Models
                 {
                     rentFrom = DateTime.Parse(request.Form.Get(rentFroms[i]));
                 }
-                if (!string.IsNullOrWhiteSpace(request.Form.Get(freeOrEngagedChckxs[i])))
+                if (!string.IsNullOrWhiteSpace(request.Form.Get(isFreeOrSocialChckxs[i])))
                 {
-                    freeOrEngagedChckx = Boolean.Parse(request.Form.Get(freeOrEngagedChckxs[i]));
+                    isFreeOrSocialChckx = Boolean.Parse(request.Form.Get(isFreeOrSocialChckxs[i]));
                 }
 
                 listSurface.Add(new Surface() {
@@ -90,7 +90,7 @@ namespace Sciencecom.Models
                     Type = type,
                     RentFrom = rentFrom,
                     RentUntil = rentUntil,
-                    isFreeOrSocial = freeOrEngagedChckx
+                    isFreeOrSocial = isFreeOrSocialChckx
                 });
 
             }

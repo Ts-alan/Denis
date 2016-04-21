@@ -94,10 +94,10 @@
                     {
                         if (@Model[j - 1].isFreeOrSocial == null)
                         {
-                            name = "(" + ViewBag.Side + ")[" + (j - 1) + "].FreeOrEngaged";
+                            name = "(" + ViewBag.Side + ")[" + (j - 1) + "].isFreeOrSocial";
                             <text>
-                                <input type="radio" name=@name value="false" checked="checked" />Не занята<br />
-                                <input type="radio" name=@name value="true">Занята<br />
+                                <input type="radio" name=@name value="false" />Не занята или социальная<br />
+                                <input type="radio" name=@name value="true" checked="checked" >Занята<br />
                             </text>
 
                         }
@@ -105,27 +105,27 @@
                         {
                             if (@Model[j - 1].isFreeOrSocial == false)
                             {
-                                name = "(" + ViewBag.Side + ")[" + (j - 1) + "].FreeOrEngaged";
+                                name = "(" + ViewBag.Side + ")[" + (j - 1) + "].isFreeOrSocial";
                                 <text>
-                                    <input type="radio" name=@name value="false" checked="checked" />Не занята<br />
-                                    <input type="radio" name=@name value="true">Занята<br />
+                                    <input type="radio" name=@name value="false"  />Не занята или социальная<br />
+                                    <input type="radio" name=@name value="true" checked="checked">Занята<br />
                                 </text>
                             }
                             else
                             {
-                                name = "(" + ViewBag.Side + ")[" + (j - 1) + "].FreeOrEngaged";
+                                name = "(" + ViewBag.Side + ")[" + (j - 1) + "].isFreeOrSocial";
                                 <text>
-                                    <input type="radio" name=@name value="false" />Не занята<br />
-                                    <input type="radio" name=@name value="true" checked="checked">Занята<br />
+                                    <input type="radio" name=@name value="false" checked="checked"/>Не занята или социальная<br />
+                                    <input type="radio" name=@name value="true" >Занята<br />
                                 </text>
                             }
                         }
                     }
                     else
                     {
-                        name = "(" + ViewBag.Side + ")[" + (j - 1) + "].FreeOrEngaged";
+                        name = "(" + ViewBag.Side + ")[" + (j - 1) + "].isFreeOrSocial";
                         <text>
-                            <input type="radio" name=@name value="false" checked="checked" />Не занята<br />
+                            <input type="radio" name=@name value="false" checked="checked" />Не занята или социальная<br />
                             <input type="radio" name=@name value="true">Занята<br />
                         </text>
                     }

@@ -142,9 +142,9 @@ namespace Sciencecom.DAL
             {
                 adbvertisingList = adbvertisingList.Where(x => x.Area == n);
             }
-            if (Искать_поверхности == false)
+            if (Искать_поверхности == true)
             {
-                adbvertisingList = adbvertisingList.Where(x => x.Sides.Any(side => side.Surfaces.Any(o => o.isFreeOrSocial == false)));
+                adbvertisingList = adbvertisingList.Where(x => x.Sides.Any(side => side.Surfaces.Any(o => o.isFreeOrSocial == true)));
             }
             finalList = adbvertisingList.ToList();
             int adsCount = finalList.Count;
