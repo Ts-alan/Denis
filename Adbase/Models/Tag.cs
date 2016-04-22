@@ -15,18 +15,24 @@ namespace Sciencecom.Models
 using System;
     using System.Collections.Generic;
     
-public partial class Increment
+public partial class Tag
 {
 
-    public int id { get; set; }
+    public Tag()
+    {
 
-    public int Counter { get; set; }
+        this.AdvertisingStructures = new HashSet<AdvertisingStructure>();
 
-    public string Code_id { get; set; }
+    }
+
+
+    public int Id { get; set; }
+
+    public string TagText { get; set; }
 
 
 
-    public virtual TypeOfAdvertisingStructure TypeOfAdvertisingStructure { get; set; }
+    public virtual ICollection<AdvertisingStructure> AdvertisingStructures { get; set; }
 
 }
 

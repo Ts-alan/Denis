@@ -23,9 +23,25 @@
     var $Tablebacklight;
     var firstReauquest = true;
     var firstCompleted = true;
+
+    //Функция для редактирования поверхностей прямо из таблицы
+    function editSurface(surfaceId)
+    {
+        $.ajax('@Url.Action("EditSurface", "BackEndServices")', { async: true, data: { surfaceId: surfaceId} })
+        .success(function(e)
+        {
+            $("#EditSurfaceModalBody").html(e);
+        }).error(function(e)
+        {
+            alert("ошибка запроса");
+        });
+        $('#EditSurfaceModal').modal('show');
+    }
+
+
+
     $(document).ready(function ()
     {
-
         
         //функция для добавления новых параметров поиска и обновления таблицы
         $("#searchStartDateRange").click(function ()
@@ -65,11 +81,11 @@
         function SwitchTextInputToButton()
         {
             var content = '<button class="btn btn-default" type="button" id="searchSurfaces"><span id="searcSpan" class="glyphicon glyphicon-search "></span></button>';
-            var container = $("#gs_Поверхности").parent();
+            var container = $("#gs_Статус_поверхности").parent();
             //удаление tr с кнопкой очистки поиска
             $(container).parent().find(".ui-search-clear").remove();
             //удаление инпута для поиска
-            $("#gs_Поверхности").remove();
+            $("#gs_Статус_поверхности").remove();
             container.attr("id", "search_list");
             container.attr("class", "ui-pg-button ui-corner-all");
             $(container).append(content);
@@ -94,7 +110,8 @@
             });
         }
 
-        //
+        
+        
         $("#table").bind('DOMNodeInserted DOMNodeRemoved', function ()
         {
             fillDataForFunctionFT();
@@ -104,17 +121,45 @@
         {
             $('table[id="table"] > tbody > tr').hide();
         }
+
         var selectOp = "";
         function getSequenceNumbers()
         {
             selectOp += "'1': 'Option 1;'";
             console.log(selectOp);
         }
+
+        //Функция для таблицы, выдаёт атрибуты для скрывания/объединения ячеек соседних строк, 
+        //если они относятся к одной конструкции
+        var arrtSetting = function (rowId, val, rawObject, cm)
+        {
+            var attr;
+            var result ="";
+           
+            for (var i = 0; i < rawObject.attr.length; i++)
+            {
+                if (rawObject.attr[i].Key == cm.name)
+                {
+                    attr = rawObject.attr[i].Value;
+                }
+            }
+            
+        if (attr != undefined && attr[0].Key === "rowspan") {
+            result = ' rowspan=' + '"' + attr[0].Value + '"';
+        }
+        else if (attr != undefined && attr[0].Key === "display")
+        {
+            result = ' style="display:' + attr[0].Value + '"';
+        }
+            
+        return result;
+        };
+
         //создание таблицы
         tableToGrid("#table", {
             url: '@Url.Action("SearchAdvertisingDesign", "Data")',
             datatype: "json",
-            rowList: [10, 20, 30],
+            rowList: [20],
             gridview: true,
             // autoencode: true,
             cellEdit: false,
@@ -132,6 +177,10 @@
             colNames: [
                 "Собственник",
                 "Вид конструкции",
+                "Площадь поверхности",
+                "Номер поверхности",
+                "Цена",
+                "Статус поверхности",
                 "Населенный пункт",
                 "Улица",
                 "Со стороны",
@@ -140,17 +189,21 @@
                 "Номер опоры",
                 "Разреш с",
                 "Разреш по",
-                "Кол-во сторон",
                 "Кол-во пов.",
+                "Кол-во сторон",
                 "Площадь",
-                "Поверхности"
+                "Теги"
             ],
             forceFit: false,
             cmTemplate: { "resizable": false, sortable: false },
             colModel: [
-                { name: "Собственник", align: "center", editable: false },
-                { name: "Вид_конструкции", align: "center", editable: false },
-                { name: "Населенный_пункт", align: "center", editable: false },
+                { name: "Собственник", align: "center", editable: false, cellattr: arrtSetting },
+                { name: "Вид_конструкции", align: "center", editable: false, cellattr: arrtSetting  },
+                { name: "Площадь_поверхности", align: "center", editable: false },
+                { name: "Номер_поверхностин", align: "center", editable: false },
+                { name: "Цена_поверхности", align: "center", editable: false },
+                { name: "Статус_поверхности", align: "center", editable: false },
+                { name: "Населенный_пункт", align: "center", editable: false, cellattr: arrtSetting },
                 { name: "Улица", align: "center", editable: false },
                 { name: "Со_стороны", align: "center", editable: false },
                 { name: "Ближайшая_по_ходу", align: "center", editable: false },
@@ -158,14 +211,14 @@
                 { name: "Номер_опоры", align: "center", editable: false },
                 { name: "Разреш_с", align: "center", editable: false, searchoptions: { dataInit: function(el) { $(el).datepicker({ dateFormat: 'yy/mm/dd', changeMonth: true, changeYear: true }).change(function() { $("#table")[0].triggerToolbar(); }); } } },
                 { name: "Разреш_по", align: "center", editable: false, searchoptions: { dataInit: function(el) { $(el).datepicker({ dateFormat: 'yy/mm/dd', changeMonth: true, changeYear: true }).change(function() { $("#table")[0].triggerToolbar(); }); } } },
-                { name: "Количество_сторон", align: "center", editable: false },
-                { name: "Количестов_поверхностей", align: "center", editable: false },
-                { name: "Площадь_конструкции", align: "center", editable: false },
-                { name: 'Поверхности', editable: false, edittype: 'select' }
+                { name: "Количество_поверхностей", align: "center", editable: false, cellattr: arrtSetting },
+                { name: "Количество_сторон", align: "center", editable: false, cellattr: arrtSetting },
+                { name: "Площадь_конструкции", align: "center", editable: false, cellattr: arrtSetting },
+                { name: "Теги", align: "center", editable: false, cellattr: arrtSetting }
             ],
             onSearch: function()
             {
-                alert("1111");
+                
                 $(this).setGridParam({ datatype: 'json' });
                 return true;
             },
@@ -236,22 +289,6 @@
                 $('#divEditStatusAD').css("visibility", "hidden");
             }
         });
-
-        @*//переход через ajax на edit billbord
-        $('#EditBillbord').click(function ()
-        {
-            if ($Tablebacklight != "undefined")
-            {
-                var IdGuid = $Tablebacklight.children("td:last").children().text();
-                $.get('@Url.Action("EditAdvertisingDesign", "Data")', { id: IdGuid }).success(function (result)
-                {
-                    $("#Page").html(result);
-                }).error(function ()
-                {
-                    alert("что то пошло не так");
-                });
-            }
-        });*@
 
         //сбор данных из панели поиска для передачи на сервер и записи в сессию
         function SaveData()
@@ -462,7 +499,14 @@
     text-shadow: 0 1px 1px rgba(0, 0, 0, .2);*/
 }
 
-
+ .modal-dialog 
+ {
+     width: 800px;
+ }
+ .left-align {
+    margin-left: 0px;
+    margin-bottom: 8px;
+}
 </style>
 <div id="Page">
 
@@ -569,3 +613,26 @@
 @{ Html.RenderPartial("~/Views/Shared/PatialView/Modals.cshtml");}
 
 
+
+<!-- Modal -->
+<div id="EditSurfaceModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Редактирование поверхности</h4>
+      </div>
+      <div class="modal-body" id="EditSurfaceModalBody">
+        <p>Загрузка...</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="saveSurface()">Сохранить</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+@Scripts.Render("~/Content/SurfaceValidation");

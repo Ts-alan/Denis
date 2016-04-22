@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 
 namespace Sciencecom.Models.MapJsonModels
@@ -15,17 +16,25 @@ namespace Sciencecom.Models.MapJsonModels
         public String Дом { get; set; }
         public String Номер_опоры { get; set; }
         public String Количество_сторон { get; set; }
-        public String Количестов_поверхностей { get; set; }
+        public String Количество_поверхностей { get; set; }
         public double? Площадь_конструкции { get; set; }
         public String Разреш_по { get; set; }
         public String Разреш_с { get; set; }
         public String id { get; set; }
 
-        public String Поверхности { get; set; }
+        public String Статус_поверхности { get; set; }
+        public String Номер_Поверхности { get; set; }
+        public String Цена { get; set; }
+        public double? Площадь_поверхности { get; set; }
+        public String Теги { get; set; }
 
+        public dynamic attr = new ExpandoObject();
+        
         public JSONStructureForJQGrid(AdvertisingStructure adv)
         {
-           // Поверхности = new List<SurfaceJSONModel>();
+            
+            
+            // Поверхности = new List<SurfaceJSONModel>();
             double SurfaceSumm = 0;
             int SurfaceCOunt = adv.Sides.Sum(side => side.Surfaces.Count);
 
@@ -33,7 +42,7 @@ namespace Sciencecom.Models.MapJsonModels
             Номер_опоры = adv.Support_; 
             Площадь_конструкции = adv.Area;
             Количество_сторон = adv.Sides.Count.ToString();
-            Количестов_поверхностей = SurfaceCOunt.ToString();
+            Количество_поверхностей = SurfaceCOunt.ToString();
             if (adv.Owner != null)
             {
                 Собственник = adv.Owner.Name;
@@ -53,14 +62,16 @@ namespace Sciencecom.Models.MapJsonModels
                 Разреш_с = adv.StartDate.Value.ToShortDateString();
             }
             id = adv.Id_show.ToString();
-            List<Surface> sfs = adv.Sides.SelectMany(s => s.Surfaces).ToList();
-            Поверхности += "<select role='select' class='rowDropdown'>";
-            for (int i = 0; i < sfs.Count; i++)
-            {
-                Поверхности += "<option value='" + (i + 1) + "'>" + (sfs[i].isFreeOrSocial == true ? "П. " + (i + 1) + " свободна" :  "П. " + (i + 1) + " занята"  ) + "</option>";
-            }
-            Поверхности += "</select>";
 
+            if (adv.Tags.Count > 1)
+            {
+                Теги += "<select role='select' class='rowDropdown'>";
+                foreach (Tag tag in adv.Tags)
+                {
+                    Теги += "<option value=''>" + tag.TagText + "</option>";
+                }
+                Теги += "</select>";
+            }
         }
     }
 }

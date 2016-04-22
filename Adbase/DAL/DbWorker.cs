@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using Sciencecom.Models;
 using Sciencecom.Models.MapJsonModels;
@@ -15,6 +16,13 @@ namespace Sciencecom.DAL
         {
             AdvertisingStructure data = new AdvertisingStructure();
             data = Context.AdvertisingStructures.SingleOrDefault(a => a.Id_show == id);
+            return data;
+        }
+
+        public Surface RetrieveSurface(int? id)
+        {
+            Surface data = new Surface();
+            data = Context.Surfaces.SingleOrDefault(a => a.Id == id);
             return data;
         }
 
@@ -151,11 +159,71 @@ namespace Sciencecom.DAL
             double del = adsCount / rows;
             jd.Total = (int)Math.Ceiling(del) + 1;
             var filteredLifst = finalList.OrderBy(o => o.Id).Skip((page - 1) * rows).Take(rows).ToList();
-
-            foreach (AdvertisingStructure structure in filteredLifst)
+            while (filteredLifst.SelectMany(advs=> advs.Sides.SelectMany(side => side.Surfaces)).Count() > 20)
             {
-                js = new JSONStructureForJQGrid(structure);
-                jd.Data.Add(js);
+                filteredLifst.RemoveAt(filteredLifst.Count - 1);
+            }
+            bool attrNotChanged = true;
+            foreach (var structure in filteredLifst)
+            {
+                int sidesCount = structure.Sides.SelectMany(side => side.Surfaces).Count();
+                foreach (var surface in structure.Sides.SelectMany(side => side.Surfaces))
+                {
+                    js = new JSONStructureForJQGrid(structure);
+                    js.attr.Вид_конструкции = new ExpandoObject();
+                    js.attr.Собственник = new ExpandoObject();
+                    js.attr.Населенный_пункт = new ExpandoObject();
+                    js.attr.Площадь_конструкции = new ExpandoObject();
+                    js.attr.Количество_поверхностей = new ExpandoObject();
+                    js.attr.Количество_сторон = new ExpandoObject();
+                    js.attr.Теги = new ExpandoObject();
+                    js.Цена = surface.Price.ToString();
+                    js.Статус_поверхности += "<select id='" + surface.Id + "' role='select' onchange='editSurface(" + surface.Id + ")' class='rowDropdown'>";
+                    js.Статус_поверхности += "<option value=''" + (surface.isFreeOrSocial == true ? "selected='selected'" : "")  + ">Свободна</option>";
+                    js.Статус_поверхности += "<option value=''" + (surface.isFreeOrSocial != true ? "selected='selected'" : "") + ">Занята</option>";
+                    js.Статус_поверхности += "</select>";
+                    
+                    
+                    if (attrNotChanged)
+                    {
+                        
+                        js.attr.Вид_конструкции.rowspan = sidesCount;
+
+                        js.attr.Собственник.rowspan = sidesCount;   
+                                             
+                        js.attr.Населенный_пункт.rowspan = sidesCount;
+
+                        js.attr.Площадь_конструкции.rowspan = sidesCount;
+
+                        js.attr.Количество_поверхностей.rowspan = sidesCount;
+
+                        js.attr.Количество_сторон.rowspan = sidesCount;
+
+                        js.attr.Теги.rowspan = sidesCount;
+
+                        attrNotChanged = false;
+                    }
+                    else
+                    {
+                        
+                        js.attr.Вид_конструкции.display = "none";
+                        
+                        js.attr.Собственник.display = "none";
+                        
+                        js.attr.Населенный_пункт.display = "none";
+
+                        js.attr.Площадь_конструкции.display = "none";
+
+                        js.attr.Количество_поверхностей.display = "none";
+
+                        js.attr.Количество_сторон.display = "none";
+
+                        js.attr.Теги.display = "none";
+                    }
+                    
+                    jd.Data.Add(js);
+                }
+                attrNotChanged = true;
             }
 
            

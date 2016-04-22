@@ -75,6 +75,10 @@ namespace Sciencecom
             "~/Scripts/DateTimeFixer.js"
            ));
 
+            bundles.Add(new ScriptBundle("~/Content/SurfaceValidation").Include(
+           "~/Scripts/SurfaceGeometryValidation.js"
+          ));
+
         }
     }
 }

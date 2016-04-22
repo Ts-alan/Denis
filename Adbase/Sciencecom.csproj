@@ -278,6 +278,9 @@
       <DependentUpon>ContructionsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TableAdapterExtensions.cs" />
+    <Compile Include="Models\Tag.cs">
+      <DependentUpon>ContructionsModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TheElementOfTheRoadNetwork.cs">
       <DependentUpon>ContructionsModel.tt</DependentUpon>
     </Compile>

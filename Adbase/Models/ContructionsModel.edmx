@@ -5,6 +5,16 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="SciencecomModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'E:\PROJECTS\ADBASEBY\ADBASEBY\ADBASE\APP_DATA\SCIENCECOM.MDF.dbo.AdvertisingConstTags' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="AdvertisingConstTags">
+          <Key>
+            <PropertyRef Name="TagId" />
+            <PropertyRef Name="AdvertConstrucId" />
+          </Key>
+          <Property Name="TagId" Type="int" Nullable="false" />
+          <Property Name="AdvertConstrucId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
         <EntityType Name="AdvertisingStructures">
           <Key>
             <PropertyRef Name="Id" />
@@ -151,6 +161,7 @@
           <Property Name="Theme" Type="nvarchar(max)" />
           <Property Name="Type" Type="nvarchar" MaxLength="50" />
           <Property Name="isFreeOrSocial" Type="bit" />
+          <Property Name="Price" Type="money" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -161,6 +172,13 @@
           <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Tags">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="TagText" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="TheElementOfTheRoadNetwork">
           <Key>
@@ -185,6 +203,30 @@
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="OrderBy" Type="int" Nullable="false" />
         </EntityType>
+        <Association Name="FK_AdvertisingConstTags_AdvertisingStructures">
+          <End Role="AdvertisingStructures" Type="Self.AdvertisingStructures" Multiplicity="1" />
+          <End Role="AdvertisingConstTags" Type="Self.AdvertisingConstTags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AdvertisingStructures">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AdvertisingConstTags">
+              <PropertyRef Name="AdvertConstrucId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AdvertisingConstTags_Tags">
+          <End Role="Tags" Type="Self.Tags" Multiplicity="1" />
+          <End Role="AdvertisingConstTags" Type="Self.AdvertisingConstTags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tags">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AdvertisingConstTags">
+              <PropertyRef Name="TagId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_AdvertisingStructures_Backlight">
           <End Role="Backlight" Type="Self.Backlight" Multiplicity="0..1" />
           <End Role="AdvertisingStructures" Type="Self.AdvertisingStructures" Multiplicity="*" />
@@ -411,9 +453,24 @@
           <EntitySet Name="Streets" EntityType="Self.Streets" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Surfaces" EntityType="Self.Surfaces" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tags" EntityType="Self.Tags" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TheElementOfTheRoadNetwork" EntityType="Self.TheElementOfTheRoadNetwork" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TypeOfAdvertisingStructures" EntityType="Self.TypeOfAdvertisingStructures" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ViewBid" EntityType="Self.ViewBid" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AdvertisingConstTags" EntityType="Self.AdvertisingConstTags" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [AdvertisingConstTags].[TagId] AS [TagId], 
+    [AdvertisingConstTags].[AdvertConstrucId] AS [AdvertConstrucId]
+    FROM [dbo].[AdvertisingConstTags] AS [AdvertisingConstTags]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_AdvertisingConstTags_AdvertisingStructures" Association="Self.FK_AdvertisingConstTags_AdvertisingStructures">
+            <End Role="AdvertisingStructures" EntitySet="AdvertisingStructures" />
+            <End Role="AdvertisingConstTags" EntitySet="AdvertisingConstTags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AdvertisingConstTags_Tags" Association="Self.FK_AdvertisingConstTags_Tags">
+            <End Role="Tags" EntitySet="Tags" />
+            <End Role="AdvertisingConstTags" EntitySet="AdvertisingConstTags" />
+          </AssociationSet>
           <AssociationSet Name="FK_AdvertisingStructures_Backlight" Association="Self.FK_AdvertisingStructures_Backlight">
             <End Role="Backlight" EntitySet="Backlight" />
             <End Role="AdvertisingStructures" EntitySet="AdvertisingStructures" />
@@ -522,7 +579,9 @@
           <EntitySet Name="Sides" EntityType="SciencecomModel.Side" />
           <EntitySet Name="Status" EntityType="SciencecomModel.Status" />
           <EntitySet Name="Streets" EntityType="SciencecomModel.Street" />
+          <EntitySet Name="Surfaces" EntityType="SciencecomModel.Surface" />
           <EntitySet Name="sysdiagrams" EntityType="SciencecomModel.sysdiagram" />
+          <EntitySet Name="Tags" EntityType="SciencecomModel.Tag" />
           <EntitySet Name="TheElementOfTheRoadNetworks" EntityType="SciencecomModel.TheElementOfTheRoadNetwork" />
           <EntitySet Name="TypeOfAdvertisingStructures" EntityType="SciencecomModel.TypeOfAdvertisingStructure" />
           <EntitySet Name="ViewBids" EntityType="SciencecomModel.ViewBid" />
@@ -582,10 +641,13 @@
             <End Role="Locality" EntitySet="Localities" />
             <End Role="Street" EntitySet="Streets" />
           </AssociationSet>
-          <EntitySet Name="Surfaces" EntityType="SciencecomModel.Surface" />
           <AssociationSet Name="FK_Surfaces_Sides" Association="SciencecomModel.FK_Surfaces_Sides">
             <End Role="Side" EntitySet="Sides" />
             <End Role="Surface" EntitySet="Surfaces" />
+          </AssociationSet>
+          <AssociationSet Name="AdvertisingConstTags" Association="SciencecomModel.AdvertisingConstTags">
+            <End Role="AdvertisingStructure" EntitySet="AdvertisingStructures" />
+            <End Role="Tag" EntitySet="Tags" />
           </AssociationSet>
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
@@ -637,6 +699,7 @@
           <Property Name="ContentInformationDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="DateOfIssue" Type="DateTime" Precision="3" />
           <Property Name="Area" Type="Double" />
+          <Property Name="RowVersion" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
           <NavigationProperty Name="Backlight" Relationship="SciencecomModel.FK_AdvertisingStructures_Backlight" FromRole="AdvertisingStructure" ToRole="Backlight" />
           <NavigationProperty Name="Locality" Relationship="SciencecomModel.FK_AdvertisingStructures_Locality" FromRole="AdvertisingStructure" ToRole="Locality" />
           <NavigationProperty Name="PropertyLocation" Relationship="SciencecomModel.FK_AdvertisingStructures_PropertyLocation" FromRole="AdvertisingStructure" ToRole="PropertyLocation" />
@@ -646,7 +709,7 @@
           <NavigationProperty Name="ViewBid" Relationship="SciencecomModel.FK_AdvertisingStructures_ViewBid" FromRole="AdvertisingStructure" ToRole="ViewBid" />
           <NavigationProperty Name="Owner" Relationship="SciencecomModel.FK_Billboards1_Owners" FromRole="AdvertisingStructure" ToRole="Owner" />
           <NavigationProperty Name="Sides" Relationship="SciencecomModel.FK_Sides_Billboards1" FromRole="AdvertisingStructure" ToRole="Side" />
-          <Property Name="RowVersion" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
+          <NavigationProperty Name="Tags" Relationship="SciencecomModel.AdvertisingConstTags" FromRole="AdvertisingStructure" ToRole="Tag" />
         </EntityType>
         <EntityType Name="Backlight">
           <Key>
@@ -754,6 +817,24 @@
           <Property Name="CityId" Type="Guid" Nullable="false" />
           <NavigationProperty Name="Locality" Relationship="SciencecomModel.FK_Streets_Locality" FromRole="Street" ToRole="Locality" />
         </EntityType>
+        <EntityType Name="Surface">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Height" Type="Double" Nullable="false" />
+          <Property Name="Width" Type="Double" Nullable="false" />
+          <Property Name="Space" Type="Double" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Side_Id" Type="Guid" />
+          <Property Name="NumberSurface" Type="Int32" />
+          <Property Name="RentFrom" Type="DateTime" Precision="0" />
+          <Property Name="RentUntil" Type="DateTime" Precision="0" />
+          <Property Name="Theme" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="isFreeOrSocial" Type="Boolean" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Side" Relationship="SciencecomModel.FK_Surfaces_Sides" FromRole="Surface" ToRole="Side" />
+        </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
             <PropertyRef Name="diagram_id" />
@@ -763,6 +844,14 @@
           <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Tag">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="TagText" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AdvertisingStructures" Relationship="SciencecomModel.AdvertisingConstTags" FromRole="Tag" ToRole="AdvertisingStructure" />
         </EntityType>
         <EntityType Name="TheElementOfTheRoadNetwork">
           <Key>
@@ -960,23 +1049,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Surface">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Height" Type="Double" Nullable="false" />
-          <Property Name="Width" Type="Double" Nullable="false" />
-          <Property Name="Space" Type="Double" Nullable="false" />
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Side_Id" Type="Guid" />
-          <Property Name="NumberSurface" Type="Int32" />
-          <Property Name="RentFrom" Type="DateTime" Precision="0" />
-          <Property Name="RentUntil" Type="DateTime" Precision="0" />
-          <Property Name="Theme" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="isFreeOrSocial" Type="Boolean" />
-          <NavigationProperty Name="Side" Relationship="SciencecomModel.FK_Surfaces_Sides" FromRole="Surface" ToRole="Side" />
-        </EntityType>
         <Association Name="FK_Surfaces_Sides">
           <End Type="SciencecomModel.Side" Role="Side" Multiplicity="0..1" />
           <End Type="SciencecomModel.Surface" Role="Surface" Multiplicity="*" />
@@ -988,6 +1060,10 @@
               <PropertyRef Name="Side_Id" />
             </Dependent>
           </ReferentialConstraint>
+        </Association>
+        <Association Name="AdvertisingConstTags">
+          <End Type="SciencecomModel.AdvertisingStructure" Role="AdvertisingStructure" Multiplicity="*" />
+          <End Type="SciencecomModel.Tag" Role="Tag" Multiplicity="*" />
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -1162,6 +1238,24 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Surfaces">
+            <EntityTypeMapping TypeName="SciencecomModel.Surface">
+              <MappingFragment StoreEntitySet="Surfaces">
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="isFreeOrSocial" ColumnName="isFreeOrSocial" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Theme" ColumnName="Theme" />
+                <ScalarProperty Name="RentUntil" ColumnName="RentUntil" />
+                <ScalarProperty Name="RentFrom" ColumnName="RentFrom" />
+                <ScalarProperty Name="NumberSurface" ColumnName="NumberSurface" />
+                <ScalarProperty Name="Side_Id" ColumnName="Side_Id" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Space" ColumnName="Space" />
+                <ScalarProperty Name="Width" ColumnName="Width" />
+                <ScalarProperty Name="Height" ColumnName="Height" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
             <EntityTypeMapping TypeName="SciencecomModel.sysdiagram">
               <MappingFragment StoreEntitySet="sysdiagrams">
@@ -1170,6 +1264,14 @@
                 <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
                 <ScalarProperty Name="principal_id" ColumnName="principal_id" />
                 <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tags">
+            <EntityTypeMapping TypeName="SciencecomModel.Tag">
+              <MappingFragment StoreEntitySet="Tags">
+                <ScalarProperty Name="TagText" ColumnName="TagText" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1199,23 +1301,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Surfaces">
-            <EntityTypeMapping TypeName="SciencecomModel.Surface">
-              <MappingFragment StoreEntitySet="Surfaces">
-                <ScalarProperty Name="isFreeOrSocial" ColumnName="isFreeOrSocial" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="Theme" ColumnName="Theme" />
-                <ScalarProperty Name="RentUntil" ColumnName="RentUntil" />
-                <ScalarProperty Name="RentFrom" ColumnName="RentFrom" />
-                <ScalarProperty Name="NumberSurface" ColumnName="NumberSurface" />
-                <ScalarProperty Name="Side_Id" ColumnName="Side_Id" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Space" ColumnName="Space" />
-                <ScalarProperty Name="Width" ColumnName="Width" />
-                <ScalarProperty Name="Height" ColumnName="Height" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
+          <AssociationSetMapping Name="AdvertisingConstTags" TypeName="SciencecomModel.AdvertisingConstTags" StoreEntitySet="AdvertisingConstTags">
+            <EndProperty Name="Tag">
+              <ScalarProperty Name="Id" ColumnName="TagId" />
+            </EndProperty>
+            <EndProperty Name="AdvertisingStructure">
+              <ScalarProperty Name="Id" ColumnName="AdvertConstrucId" />
+            </EndProperty>
+          </AssociationSetMapping>
           </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>

@@ -22,12 +22,14 @@ namespace Sciencecom.Models
             List<string> rentUntils = request.Form.AllKeys.Where(a => a.Contains("].RentUntil")).ToList();
             List<string> rentFroms = request.Form.AllKeys.Where(a => a.Contains("].RentFrom")).ToList();
             List<string> isFreeOrSocialChckxs = request.Form.AllKeys.Where(a => a.Contains(".isFreeOrSocial")).ToList();
+            List<string> prices = request.Form.AllKeys.Where(a => a.Contains(".Price")).ToList();
 
             
 
             double height = 0;
             double space = 0;
             double width = 0;
+            decimal price = 0;
             var sideOfSurface = "";
             string type = "";
             string theme = "";
@@ -51,6 +53,11 @@ namespace Sciencecom.Models
                 if (double.TryParse(request.Form.Get(allKeysWidth[i]), out x))
                 {
                     width = double.Parse(request.Form.Get(allKeysWidth[i]), CultureInfo.InvariantCulture);
+                }
+                decimal p;
+                if (decimal.TryParse(request.Form.Get(prices[i]), out p))
+                {
+                    price = decimal.Parse(request.Form.Get(prices[i]), CultureInfo.InvariantCulture);
                 }
                 if (!string.IsNullOrWhiteSpace(request.Form.Get(allKeysSideOfSurface[i])))
                 {
@@ -90,7 +97,8 @@ namespace Sciencecom.Models
                     Type = type,
                     RentFrom = rentFrom,
                     RentUntil = rentUntil,
-                    isFreeOrSocial = isFreeOrSocialChckx
+                    isFreeOrSocial = isFreeOrSocialChckx,
+                    Price = price
                 });
 
             }
