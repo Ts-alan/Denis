@@ -27,11 +27,11 @@
     //Функция для редактирования поверхностей прямо из таблицы
     function editSurface(surfaceId)
     {
-        $.ajax('@Url.Action("EditSurface", "BackEndServices")', { async: true, data: { surfaceId: surfaceId} })
-        .success(function(e)
+        $.ajax('@Url.Action("EditSurface", "BackEndServices")', { async: true, data: { surfaceId: surfaceId } })
+        .success(function (e)
         {
             $("#EditSurfaceModalBody").html(e);
-        }).error(function(e)
+        }).error(function (e)
         {
             alert("ошибка запроса");
         });
@@ -42,7 +42,7 @@
 
     $(document).ready(function ()
     {
-        
+
         //функция для добавления новых параметров поиска и обновления таблицы
         $("#searchStartDateRange").click(function ()
         {
@@ -52,9 +52,9 @@
             gridPostData["КонецРазреш_с"] = $("#КонецРазреш_с").val();
             $('#table').jqGrid('setGridParam', { postData: gridPostData });
             jQuery("#table")[0].triggerToolbar();
-           
+
         });
-         $("#searchEndDateRange").click(function ()
+        $("#searchEndDateRange").click(function ()
         {
             var gridPostData;
             gridPostData = $("#table").getGridParam("postData");
@@ -110,8 +110,8 @@
             });
         }
 
-        
-        
+
+
         $("#table").bind('DOMNodeInserted DOMNodeRemoved', function ()
         {
             fillDataForFunctionFT();
@@ -129,13 +129,13 @@
             console.log(selectOp);
         }
 
-        //Функция для таблицы, выдаёт атрибуты для скрывания/объединения ячеек соседних строк, 
+        //Функция для таблицы, выдаёт атрибуты для скрывания/объединения ячеек соседних строк,
         //если они относятся к одной конструкции
         var arrtSetting = function (rowId, val, rawObject, cm)
         {
             var attr;
-            var result ="";
-           
+            var result = "";
+
             for (var i = 0; i < rawObject.attr.length; i++)
             {
                 if (rawObject.attr[i].Key == cm.name)
@@ -143,16 +143,17 @@
                     attr = rawObject.attr[i].Value;
                 }
             }
-            
-        if (attr != undefined && attr[0].Key === "rowspan") {
-            result = ' rowspan=' + '"' + attr[0].Value + '"';
-        }
-        else if (attr != undefined && attr[0].Key === "display")
-        {
-            result = ' style="display:' + attr[0].Value + '"';
-        }
-            
-        return result;
+
+            if (attr != undefined && attr[0].Key === "rowspan")
+            {
+                result = ' rowspan=' + '"' + attr[0].Value + '"';
+            }
+            else if (attr != undefined && attr[0].Key === "display")
+            {
+                result = ' style="display:' + attr[0].Value + '"';
+            }
+
+            return result;
         };
 
         //создание таблицы
@@ -198,7 +199,7 @@
             cmTemplate: { "resizable": false, sortable: false },
             colModel: [
                 { name: "Собственник", align: "center", editable: false, cellattr: arrtSetting },
-                { name: "Вид_конструкции", align: "center", editable: false, cellattr: arrtSetting  },
+                { name: "Вид_конструкции", align: "center", editable: false, cellattr: arrtSetting },
                 { name: "Площадь_поверхности", align: "center", editable: false },
                 { name: "Номер_поверхностин", align: "center", editable: false },
                 { name: "Цена_поверхности", align: "center", editable: false },
@@ -209,25 +210,25 @@
                 { name: "Ближайшая_по_ходу", align: "center", editable: false },
                 { name: "Дом", align: "center", editable: false },
                 { name: "Номер_опоры", align: "center", editable: false },
-                { name: "Разреш_с", align: "center", editable: false, searchoptions: { dataInit: function(el) { $(el).datepicker({ dateFormat: 'yy/mm/dd', changeMonth: true, changeYear: true }).change(function() { $("#table")[0].triggerToolbar(); }); } } },
-                { name: "Разреш_по", align: "center", editable: false, searchoptions: { dataInit: function(el) { $(el).datepicker({ dateFormat: 'yy/mm/dd', changeMonth: true, changeYear: true }).change(function() { $("#table")[0].triggerToolbar(); }); } } },
+                { name: "Разреш_с", align: "center", editable: false, searchoptions: { dataInit: function (el) { $(el).datepicker({ dateFormat: 'yy/mm/dd', changeMonth: true, changeYear: true }).change(function () { $("#table")[0].triggerToolbar(); }); } } },
+                { name: "Разреш_по", align: "center", editable: false, searchoptions: { dataInit: function (el) { $(el).datepicker({ dateFormat: 'yy/mm/dd', changeMonth: true, changeYear: true }).change(function () { $("#table")[0].triggerToolbar(); }); } } },
                 { name: "Количество_поверхностей", align: "center", editable: false, cellattr: arrtSetting },
                 { name: "Количество_сторон", align: "center", editable: false, cellattr: arrtSetting },
                 { name: "Площадь_конструкции", align: "center", editable: false, cellattr: arrtSetting },
                 { name: "Теги", align: "center", editable: false, cellattr: arrtSetting }
             ],
-            onSearch: function()
+            onSearch: function ()
             {
-                
+
                 $(this).setGridParam({ datatype: 'json' });
                 return true;
             },
-            onReset: function()
+            onReset: function ()
             {
                 $(this).setGridParam({ datatype: 'json' });
                 return true;
             },
-            beforeRequest: function()
+            beforeRequest: function ()
             {
                 if (firstReauquest)
                 {
@@ -236,9 +237,9 @@
                 }
                 SaveData();
             },
-            gridComplete: function()
+            gridComplete: function ()
             {
-                
+
             }
 
         });
@@ -256,7 +257,7 @@
             });
 
         SwitchTextInputToButton();
-        
+
 
         //подсветка
         $('table tr').on("click", function ()
@@ -336,59 +337,59 @@
                 //выпадающее меню для указателей
                 if (td[0].title == "Металлический указатель")
                 {
-                       content = '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
-                            '+<a href="/Map/Index/' + $(element)[0].id + '">Показать на карте</a></br>' +
-                            '+<a href="/Data/Pointer/' + $(element)[0].id + '">Показать данные о конструкции</a></br>' +
-                            '+<a href="/Data/EditMetalPointerDesign/' + $(element)[0].id + '">Изменить данные о конструкции</a></br>' +
-                            '+<a  href="/Data/DeleteAdvertisingDesign/' + $(element)[0].id + '">Удалить конструкцию</a></br>' +
-                            '</button>';
+                    content = '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
+                         '+<a href="/Map/Index/' + $(element)[0].id + '">Показать на карте</a></br>' +
+                         '+<a href="/Data/Pointer/' + $(element)[0].id + '">Показать данные о конструкции</a></br>' +
+                         '+<a href="/Data/EditMetalPointerDesign/' + $(element)[0].id + '">Изменить данные о конструкции</a></br>' +
+                         '+<a  href="/Data/DeleteAdvertisingDesign/' + $(element)[0].id + '">Удалить конструкцию</a></br>' +
+                         '</button>';
                 }
                 //выпадающее меню для щитов
                 if (td[0].title == "Щит")
                 {
-                        content = '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
-                            '+<a href="/Map/Index/' + $(element)[0].id + '">Показать на карте</a></br>' +
-                            '+<a href="/Data/Documents/' + $(element)[0].id + '">Показать данные о конструкции</a></br>' +
-                            '+<a href="/Data/EditAdvertisingDesign/' + $(element)[0].id + '">Изменить данные о конструкции</a></br>' +
-                            '+<a href="/Data/DeleteAdvertisingDesign/' + $(element)[0].id + '">Удалить конструкцию</a></br>' +
-                            '</button>';
+                    content = '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
+                        '+<a href="/Map/Index/' + $(element)[0].id + '">Показать на карте</a></br>' +
+                        '+<a href="/Data/Documents/' + $(element)[0].id + '">Показать данные о конструкции</a></br>' +
+                        '+<a href="/Data/EditAdvertisingDesign/' + $(element)[0].id + '">Изменить данные о конструкции</a></br>' +
+                        '+<a href="/Data/DeleteAdvertisingDesign/' + $(element)[0].id + '">Удалить конструкцию</a></br>' +
+                        '</button>';
                 }
                 //выпадающее меню для световых коробов
                 if (td[0].title == "Световой короб")
                 {
-                       content = '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
-                            '+<a href="/Map/Index/' + $(element)[0].id + '">Показать на карте</a></br>' +
-                            '+<a href="/Data/LightDuct/' + $(element)[0].id + '">Показать данные о конструкции</a></br>' +
-                            '+<a href="/Data/EditLightDuctDesign/' + $(element)[0].id + '">Изменить данные о конструкции</a></br>' +
-                            '+<a  href="/Data/DeleteAdvertisingDesign/' + $(element)[0].id + '">Удалить конструкцию</a></br>' +
-                            '</button>';
+                    content = '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
+                         '+<a href="/Map/Index/' + $(element)[0].id + '">Показать на карте</a></br>' +
+                         '+<a href="/Data/LightDuct/' + $(element)[0].id + '">Показать данные о конструкции</a></br>' +
+                         '+<a href="/Data/EditLightDuctDesign/' + $(element)[0].id + '">Изменить данные о конструкции</a></br>' +
+                         '+<a  href="/Data/DeleteAdvertisingDesign/' + $(element)[0].id + '">Удалить конструкцию</a></br>' +
+                         '</button>';
                 }
                 //выпадающее меню для неопознанных конструкций
                 if (td[0].title == "Неопознанная конструкция")
                 {
-                        content = '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
-                            '+<a href="/Map/Index/' + $(element)[0].id + '">Показать на карте</a></br>' +
-                            '+<a href="/Data/Illegal/' + $(element)[0].id + '">Показать данные о конструкции</a></br>' +
-                            '+<a href="/Data/EditIllegalDesign/' + $(element)[0].id + '">Изменить данные о конструкции</a></br>' +
-                            '+<a  href="/Data/DeleteAdvertisingDesign/' + $(element)[0].id + '">Удалить конструкцию</a></br>' +
-                            '</button>';
+                    content = '<button class="HideClass" hide=' + indx + ' style="padding: 5px;text-align: left;font-size: 11px;font-weight: bold">' +
+                        '+<a href="/Map/Index/' + $(element)[0].id + '">Показать на карте</a></br>' +
+                        '+<a href="/Data/Illegal/' + $(element)[0].id + '">Показать данные о конструкции</a></br>' +
+                        '+<a href="/Data/EditIllegalDesign/' + $(element)[0].id + '">Изменить данные о конструкции</a></br>' +
+                        '+<a  href="/Data/DeleteAdvertisingDesign/' + $(element)[0].id + '">Удалить конструкцию</a></br>' +
+                        '</button>';
                 }
-                 $(element).tooltipsy({
-                        alignTo: 'cursor',
-                        offset: [0, -85],
-                        hideEvent: 'focusout',
-                        content: content,
-                        show: function (e, $el)
-                        {
-                            $el.show(100);
-                        },
-                        hide: function (e, $el)
-                        {
-                        },
-                        delay: 200,
-                        className: 'tooltipsy',
-                        css: {}
-                    });
+                $(element).tooltipsy({
+                    alignTo: 'cursor',
+                    offset: [0, -85],
+                    hideEvent: 'focusout',
+                    content: content,
+                    show: function (e, $el)
+                    {
+                        $el.show(100);
+                    },
+                    hide: function (e, $el)
+                    {
+                    },
+                    delay: 200,
+                    className: 'tooltipsy',
+                    css: {}
+                });
             }
             );
         }
@@ -401,10 +402,10 @@
             {
                 collectionMap = JSON.parse('@(Html.Raw(Session["collectionMap"]))');
             }
-           
+
             if (collectionMap != "[]" && collectionMap != '' && collectionMap != undefined)
             {
-                
+
                 $('#table').jqGrid('setGridParam', { postData: collectionMap.postdata });
                 for (var prop in collectionMap.postdata)
                 {
@@ -450,7 +451,7 @@
                 FunctionalFortable(tr, tds[0]);
             }
         }
-       
+
     });
 
 </script>
@@ -461,24 +462,24 @@
         height: auto !important;
         padding: 2px;
     }
-    .rowDropdown 
-    {
-    font-weight: bold;
-    color: #0073ea;
+
+    .rowDropdown {
+        font-weight: bold;
+        color: #0073ea;
     }
 
-    #searcSpan{
-     margin-left: 2px;
-    margin-top: -2px;
-}
+    #searcSpan {
+        margin-left: 2px;
+        margin-top: -2px;
+    }
 
- #searchSurfaces{
-     color: rgb(0, 115, 234);
-    height: 23px;
-    width: 40px;
-     display: block;
-     margin: auto;
-    /*display: inline-block;
+    #searchSurfaces {
+        color: rgb(0, 115, 234);
+        height: 23px;
+        width: 40px;
+        display: block;
+        margin: auto;
+        /*display: inline-block;
     zoom: 1;
     line-height: normal;
     white-space: nowrap;
@@ -497,16 +498,19 @@
     text-decoration: none;
     border-radius: 4px;
     text-shadow: 0 1px 1px rgba(0, 0, 0, .2);*/
-}
+    }
 
- .modal-dialog 
- {
-     width: 800px;
- }
- .left-align {
-    margin-left: 0px;
-    margin-bottom: 8px;
-}
+    .modal-dialog {
+        width: 800px;
+    }
+
+    .left-align {
+        margin-left: 0px;
+        margin-bottom: 8px;
+    }
+    .tagsDiv {
+        
+    }
 </style>
 <div id="Page">
 
@@ -514,7 +518,7 @@
     <div class="zoom">
         <div class="row">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-5">
                 </div>
                 <div class="col-md-4">
                     <label>Временной интервал выдачи разрешения</label>
@@ -534,6 +538,9 @@
                         </p>
                     }
                 }
+            </div>
+            <div class="col-md-1 tagsDiv" style="padding-top: 21px">
+                <input type="button" value="Теги" id="AddConstruction" class="btn btn-default" data-toggle="modal" data-target="#myModal">
             </div>
             <div class="col-md-4">
                 <div class="form-inline">
@@ -570,9 +577,7 @@
         </div>
 
 
-        <table id="table" class="table-bordered" cellpadding="5" style="width: 100%">
-
-        </table>
+        <table id="table" class="table-bordered" cellpadding="5" style="width: 100%"></table>
         <div id="jpager"></div>
     </div>
 </div>
@@ -616,23 +621,23 @@
 
 <!-- Modal -->
 <div id="EditSurfaceModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Редактирование поверхности</h4>
-      </div>
-      <div class="modal-body" id="EditSurfaceModalBody">
-        <p>Загрузка...</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="saveSurface()">Сохранить</button>
-      </div>
-    </div>
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Редактирование поверхности</h4>
+            </div>
+            <div class="modal-body" id="EditSurfaceModalBody">
+                <p>Загрузка...</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="saveSurface()">Сохранить</button>
+            </div>
+        </div>
 
-  </div>
+    </div>
 </div>
 
 @Scripts.Render("~/Content/SurfaceValidation");
