@@ -179,9 +179,9 @@ namespace Sciencecom.DAL
                     js.attr.Количество_сторон = new ExpandoObject();
                     js.attr.Теги = new ExpandoObject();
                     js.Цена = surface.Price.ToString();
-                    js.Статус_поверхности += "<select id='" + surface.Id + "' role='select' onchange='editSurface(" + surface.Id + ")' class='rowDropdown'>";
-                    js.Статус_поверхности += "<option value=''" + (surface.isFreeOrSocial == true ? "selected='selected'" : "")  + ">Свободна</option>";
-                    js.Статус_поверхности += "<option value=''" + (surface.isFreeOrSocial != true ? "selected='selected'" : "") + ">Занята</option>";
+                    js.Статус_поверхности += "<select data-sideId='" + surface.Side.Id + "' data-side='" + surface.Side.Name + "' id='" + surface.Id + "' role='select' onchange='editSurface(" + surface.Id + ", this)' class='rowDropdown'>";
+                    js.Статус_поверхности += "<option value='0'" + (surface.isFreeOrSocial == true ? "selected='selected'" : "")  + ">Свободна</option>";
+                    js.Статус_поверхности += "<option value='1'" + (surface.isFreeOrSocial != true ? "selected='selected'" : "") + ">Занята</option>";
                     js.Статус_поверхности += "</select>";
                     
                     

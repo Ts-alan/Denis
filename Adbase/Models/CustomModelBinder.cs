@@ -17,7 +17,6 @@ namespace Sciencecom.Models
             List<string> allKeysWidth = request.Form.AllKeys.Where(a => a.Contains("].Width")).ToList();
             List<string> allKeysSpace = request.Form.AllKeys.Where(a => a.Contains("].Space")).ToList();
             List<string> allKeysSideOfSurface = request.Form.AllKeys.Where(a => a.Contains("].SideOfSurface")).ToList();
-            List<string> types = request.Form.AllKeys.Where(a => a.Contains("].Type")).ToList();
             List<string> themes = request.Form.AllKeys.Where(a => a.Contains("].Theme")).ToList();
             List<string> rentUntils = request.Form.AllKeys.Where(a => a.Contains("].RentUntil")).ToList();
             List<string> rentFroms = request.Form.AllKeys.Where(a => a.Contains("].RentFrom")).ToList();
@@ -63,10 +62,10 @@ namespace Sciencecom.Models
                 {
                     sideOfSurface = request.Form.Get(allKeysSideOfSurface[i]);
                 }
-                if (!string.IsNullOrWhiteSpace(request.Form.Get(types[i])))
-                {
-                    type = request.Form.Get(types[i]);
-                }
+                //if (!string.IsNullOrWhiteSpace(request.Form.Get(types[i])))
+                //{
+                //    type = request.Form.Get(types[i]);
+                //}
                 if (!string.IsNullOrWhiteSpace(request.Form.Get(themes[i])))
                 {
                     theme = request.Form.Get(themes[i]);
