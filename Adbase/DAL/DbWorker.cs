@@ -12,20 +12,21 @@ namespace Sciencecom.DAL
     {
         public SciencecomEntities Context = new SciencecomEntities();
 
-        public AdvertisingStructure RetrieveStructure(int? id)
+
+        protected internal int CountSurfaces(AdvertisingStructure adv)
         {
-            AdvertisingStructure data = new AdvertisingStructure();
-            data = Context.AdvertisingStructures.SingleOrDefault(a => a.Id_show == id);
-            return data;
+            return adv.Sides.Sum(side => side.Surfaces.Count);
         }
 
-        public Surface RetrieveSurface(int? id)
+        private double CountSquare(List<Surface> surfaces)
         {
-            Surface data = new Surface();
-            data = Context.Surfaces.SingleOrDefault(a => a.Id == id);
-            return data;
+            return surfaces.Sum(surface => surface.Space);
         }
 
+
+        #region Search
+
+        //Поиск из таблицы
         public JSONTableData SearchAdvertisingDesign(int page, string sidx, string sord,
             int rows, string Собственник, string Вид_конструкции, string Населенный_пункт,
             string Улица, string Со_стороны, string Ближайшая_по_ходу, string Дом, string Номер_опоры, string Количество_сторон, 
@@ -231,81 +232,8 @@ namespace Sciencecom.DAL
             return jd;
         }
 
-        public void DeleteAdvertisingDesign(int? id)
-        {
-            AdvertisingStructure mc = Context.AdvertisingStructures.Single(a => a.Id_show == id);
-            if (mc.UniqueNumber == null)
-            {
-                mc.UniqueNumber = TableAdapterExtensions.StringSymvol();
-            }
-            Context.ListUniqueNumbers.Add(new ListUniqueNumber() { UniqueNumber = mc.UniqueNumber, Code_id = mc.Code, TimeOpen = DateTime.Now });
-            foreach (var side in mc.Sides)
-            {
-                if (side.Surfaces.Count > 0)
-                {
-                    Context.Surfaces.RemoveRange(side.Surfaces);
-                }
-                
-            }
-            if (mc.Sides.Count > 0)
-            {
-                Context.Sides.RemoveRange(mc.Sides);
-                Context.SaveChanges();
-                //try
-                //{
-                    
-                //}
-                //catch (DbEntityValidationException dbEx)
-                //{
-                //    foreach (var validationErrors in dbEx.EntityValidationErrors)
-                //    {
-                //        foreach (var validationError in validationErrors.ValidationErrors)
-                //        {
-                //            Trace.TraceInformation("Property: {0} Error: {1}",
-                //                                    validationError.PropertyName,
-                //                                    validationError.ErrorMessage);
-                //        }
-                //    }
-                //}
-            }
-            Context.AdvertisingStructures.Remove(mc);
-            Context.SaveChanges();
-            //try
-            //{
-                
-            //}
-            //catch (DbEntityValidationException dbEx)
-            //{
-            //    foreach (var validationErrors in dbEx.EntityValidationErrors)
-            //    {
-            //        foreach (var validationError in validationErrors.ValidationErrors)
-            //        {
-            //            Trace.TraceInformation("Property: {0} Error: {1}",
-            //                                    validationError.PropertyName,
-            //                                    validationError.ErrorMessage);
-            //        }
-            //    }
-            //}
-           
-            //try
-            //{
-            //}
-            //catch (DbEntityValidationException e)
-            //{
-            //    foreach (DbEntityValidationResult validationError in e.EntityValidationErrors)
-            //    {
-            //        Response.Write("Object: " + validationError.Entry.Entity.ToString());
-            //        Response.Write("");
-            //        foreach (DbValidationError err in validationError.ValidationErrors)
-            //        {
-            //            Response.Write(err.ErrorMessage + "");
-            //        }
-            //    }
-            //}
-        }
-
-
-        public IEnumerable<AdvertisingStructure> SearchAdversing(AdvertisingStructure advertisin, string owner,
+           //Поиск конструкций с карты
+            public IEnumerable<AdvertisingStructure> SearchAdversing(AdvertisingStructure advertisin, string owner,
             string typeOfAdvertisingStructure, string locality, int? countSize, string backlight, string startEndDate, 
             string endEndDate, string startStartDate, string endStartDate, int? areaConstruction,int? CountSurface,
             string house1, string support)
@@ -524,20 +452,89 @@ namespace Sciencecom.DAL
             return result;
         }
 
-    
+
+        public IQueryable<Street> FindStreets(string term)
+        {
+            var streets = from m in Context.Streets where m.Street1.Contains(term) select m;
+            return streets;
+        }
+
+        #endregion
         
-        protected internal int CountSurfaces(AdvertisingStructure adv)
+        #region AdvertisingDesignCRUD
+
+        public void DeleteAdvertisingDesign(int? id)
         {
-            return adv.Sides.Sum(side => side.Surfaces.Count);
+            AdvertisingStructure mc = Context.AdvertisingStructures.Single(a => a.Id_show == id);
+            if (mc.UniqueNumber == null)
+            {
+                mc.UniqueNumber = TableAdapterExtensions.StringSymvol();
+            }
+            Context.ListUniqueNumbers.Add(new ListUniqueNumber() { UniqueNumber = mc.UniqueNumber, Code_id = mc.Code, TimeOpen = DateTime.Now });
+            foreach (var side in mc.Sides)
+            {
+                if (side.Surfaces.Count > 0)
+                {
+                    Context.Surfaces.RemoveRange(side.Surfaces);
+                }
+                
+            }
+            if (mc.Sides.Count > 0)
+            {
+                Context.Sides.RemoveRange(mc.Sides);
+                Context.SaveChanges();
+                //try
+                //{
+                    
+                //}
+                //catch (DbEntityValidationException dbEx)
+                //{
+                //    foreach (var validationErrors in dbEx.EntityValidationErrors)
+                //    {
+                //        foreach (var validationError in validationErrors.ValidationErrors)
+                //        {
+                //            Trace.TraceInformation("Property: {0} Error: {1}",
+                //                                    validationError.PropertyName,
+                //                                    validationError.ErrorMessage);
+                //        }
+                //    }
+                //}
+            }
+            Context.AdvertisingStructures.Remove(mc);
+            Context.SaveChanges();
+            //try
+            //{
+                
+            //}
+            //catch (DbEntityValidationException dbEx)
+            //{
+            //    foreach (var validationErrors in dbEx.EntityValidationErrors)
+            //    {
+            //        foreach (var validationError in validationErrors.ValidationErrors)
+            //        {
+            //            Trace.TraceInformation("Property: {0} Error: {1}",
+            //                                    validationError.PropertyName,
+            //                                    validationError.ErrorMessage);
+            //        }
+            //    }
+            //}
+           
+            //try
+            //{
+            //}
+            //catch (DbEntityValidationException e)
+            //{
+            //    foreach (DbEntityValidationResult validationError in e.EntityValidationErrors)
+            //    {
+            //        Response.Write("Object: " + validationError.Entry.Entity.ToString());
+            //        Response.Write("");
+            //        foreach (DbValidationError err in validationError.ValidationErrors)
+            //        {
+            //            Response.Write(err.ErrorMessage + "");
+            //        }
+            //    }
+            //}
         }
-
-        private double CountSquare(List<Surface> surfaces)
-        {
-            return surfaces.Sum(surface => surface.Space);
-        }
-
-     
-
 
 
         public void CreateAdvertisingDesign(AdvertisingStructure structure, List<Side> sides, List<Surface> surfaces, int countSize = 0)
@@ -546,6 +543,9 @@ namespace Sciencecom.DAL
             DeleteTempId(structure.UniqueNumber);
             ProcessStructureSidesAndSurfaces(sides, surfaces, countSize, structure);
         }
+
+        
+
         internal void DeleteTempId(string uniqueNumber)
         {
             if (Context.ListUniqueNumbers.Any(a => a.UniqueNumber == uniqueNumber))
@@ -645,14 +645,34 @@ namespace Sciencecom.DAL
             }
         }
 
-        public IQueryable<Street> FindStreets(string term)
-        {
-            var streets = from m in Context.Streets where m.Street1.Contains(term) select m;
-            return streets;
-        }
+        #endregion
+        
+
+        #region GetOperations
+
         public Owner Owner(string name)
         {
             return Context.Owners.First(m => m.Name == name);
         }
+
+        public List<Tag> GetAllTags()
+        {
+            return Context.Tags.ToList();
+        }
+
+        public Surface RetrieveSurface(int? id)
+        {
+            Surface data = new Surface();
+            data = Context.Surfaces.SingleOrDefault(a => a.Id == id);
+            return data;
+        }
+
+        public AdvertisingStructure RetrieveStructure(int? id)
+        {
+            AdvertisingStructure data = new AdvertisingStructure();
+            data = Context.AdvertisingStructures.SingleOrDefault(a => a.Id_show == id);
+            return data;
+        }
+        #endregion
     }
 }

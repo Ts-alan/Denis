@@ -27,6 +27,13 @@ namespace Sciencecom.Controllers
             return View("../Data/Surface", result);
         }
 
+
+        public JsonResult GetAllTags()
+        {
+            return Json(_dbw.GetAllTags(), JsonRequestBehavior.AllowGet);
+        }
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing){
