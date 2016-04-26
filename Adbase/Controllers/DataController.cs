@@ -57,6 +57,7 @@ namespace Sciencecom.Controllers
         {
             Session["action"] = RouteData.Values["action"];
             Session["controller"] = RouteData.Values["controller"];
+            ViewBag.Tags = _dbw.GetAllTags();
             return View();
         }
 
