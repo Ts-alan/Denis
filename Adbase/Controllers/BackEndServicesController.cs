@@ -12,7 +12,7 @@ namespace Sciencecom.Controllers
         [HttpPost]
         public void SaveSearch(string collectionMap)
         {
-            Session["collectionMap"] = collectionMap;
+            Session["collectionMap"] = new MvcHtmlString(collectionMap);
         }
 
         public ActionResult EditSurface(int surfaceId)

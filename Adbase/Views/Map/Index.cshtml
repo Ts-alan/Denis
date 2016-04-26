@@ -33,21 +33,17 @@
 <script src="~/Scripts/Map/DesignConstuctions.js"></script>
 
 <script type="text/javascript">
-    var param = true;
+    var param = false;
     var coord;
 
     function CreateMap(param) {
-        if ($("#gs_Населенный_пункт").val() == undefined || $("#gs_Населенный_пункт").val() == "")
-        {
+        if ($("#gs_Населенный_пункт").val() == undefined || $("#gs_Населенный_пункт").val() == "") {
             coord = [53.901, 27.5601];
             GetMap(coord);
-        }
-        else
-        {
+        } else {
             var myGeocoder = ymaps.geocode($("#gs_Населенный_пункт").val());
             myGeocoder.then(
-                function (res)
-                {
+                function(res) {
                     coord = res.geoObjects.get(0).geometry.getCoordinates();
                     GetMap(coord);
                 });
@@ -56,11 +52,11 @@
         var collectionMap = {};
         collectionMap["postdata"] = {};
         var inputs = $("input[type='text'], input[type='date']");
-        inputs.each(function(index, element)
-        {
+        inputs.each(function(index, element) {
             collectionMap.postdata[element.name] = element.value;
         });
-        var test = JSON.stringify(collectionMap);
+        if (param) {
+            var test = JSON.stringify(collectionMap);
 
             $.ajax({
                 url: '@Url.Action("SaveSearch", "BackEndServices")',
@@ -71,6 +67,8 @@
                     //alert(e);
                 }
             });
+        }
+        param = true;
     }
     function GetMap(coords) {
         

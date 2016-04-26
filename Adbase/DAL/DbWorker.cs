@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
+using Newtonsoft.Json.Linq;
 using Sciencecom.Models;
 using Sciencecom.Models.MapJsonModels;
 
@@ -23,6 +24,13 @@ namespace Sciencecom.DAL
             return surfaces.Sum(surface => surface.Space);
         }
 
+        public JsonReports SearchAdvertisingReports()
+        {
+            
+            JObject jObject = JObject.Parse(System.Web.HttpContext.Current.Session["collectionMap"].ToString());
+            int test =(int) jObject["postdata"]["rows"];
+            return null;
+        }
 
         #region Search
 

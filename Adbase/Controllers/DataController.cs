@@ -902,6 +902,11 @@ namespace Sciencecom.Controllers
             return RedirectToAction("AdvertisingDesign");
         }
 
+        public ActionResult Reports()
+        {
+            JsonReports result= _dbw.SearchAdvertisingReports();
+            return View();
+        }
         public ActionResult NotFound()
         {
             return View("DesignNotFound");

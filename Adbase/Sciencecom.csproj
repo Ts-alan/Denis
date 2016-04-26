@@ -256,6 +256,7 @@
       <DependentUpon>ContructionsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MapJsonModels\AdvertisingConstructionJsonModel.cs" />
+    <Compile Include="Models\MapJsonModels\JsonReports.cs" />
     <Compile Include="Models\MapJsonModels\JSONStructureForJQGrid.cs" />
     <Compile Include="Models\MapJsonModels\JSONTableData.cs" />
     <Compile Include="Models\ModelsSupportForEf.cs" />
@@ -1484,6 +1485,7 @@
     <Content Include="Views\Data\Illegal.cshtml" />
     <None Include="Views\Data\Pointer.cshtml" />
     <Content Include="Views\Shared\PatialView\ModalPicture.cshtml" />
+    <Content Include="Views\Data\Reports.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Start\App_Data\" />

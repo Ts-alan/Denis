@@ -297,17 +297,18 @@
             var collectionMap = {};
             collectionMap.postdata = $("#table").getGridParam("postData");
 
-            var test = JSON.stringify(collectionMap);
-
+            var jsonstring = JSON.stringify(collectionMap);
+    
             $.ajax({
                 url: '@Url.Action("SaveSearch", "BackEndServices")',
-                data: { collectionMap: test },
+                data: { collectionMap: jsonstring },
                 type: 'POST',
                 success: function (e)
                 {
-                    //alert(e);
+                  
                 }
             });
+          
         }
 
         //навешивание на строки таблицы всплывающий по двойному клику на строки окошек, подсветки
