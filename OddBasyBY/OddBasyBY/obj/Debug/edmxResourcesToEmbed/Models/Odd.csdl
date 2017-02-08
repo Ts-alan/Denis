@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Odd.AdbaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="OddAdbaseEntity" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="sysdiagrams" EntityType="Odd.AdbaseModel.sysdiagrams" />
+    <EntitySet Name="City" EntityType="Odd.AdbaseModel.City" />
+    <EntitySet Name="Segment" EntityType="Odd.AdbaseModel.Segment" />
+    <EntitySet Name="Street" EntityType="Odd.AdbaseModel.Street" />
+    <AssociationSet Name="FK_Street_City" Association="Odd.AdbaseModel.FK_Street_City">
+      <End Role="City" EntitySet="City" />
+      <End Role="Street" EntitySet="Street" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Segment_Street" Association="Odd.AdbaseModel.FK_Segment_Street">
+      <End Role="Street" EntitySet="Street" />
+      <End Role="Segment" EntitySet="Segment" />
+    </AssociationSet>
+    <EntitySet Name="IntelliSenseStreet" EntityType="Odd.AdbaseModel.IntelliSenseStreet" />
+  </EntityContainer>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="City">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Street" Relationship="Odd.AdbaseModel.FK_Street_City" FromRole="City" ToRole="Street" />
+  </EntityType>
+  <EntityType Name="Segment">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="Int32" Nullable="false" />
+    <Property Name="BreadthS" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="LengthS" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="BreadthE" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="LengthE" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Street_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Street" Relationship="Odd.AdbaseModel.FK_Segment_Street" FromRole="Segment" ToRole="Street" />
+  </EntityType>
+  <EntityType Name="Street">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="BreadthS" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="LengthS" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="BreadthE" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="LengthE" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="City_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="City" Relationship="Odd.AdbaseModel.FK_Street_City" FromRole="Street" ToRole="City" />
+    <NavigationProperty Name="Segment" Relationship="Odd.AdbaseModel.FK_Segment_Street" FromRole="Street" ToRole="Segment" />
+  </EntityType>
+  <Association Name="FK_Street_City">
+    <End Type="Odd.AdbaseModel.City" Role="City" Multiplicity="1" />
+    <End Type="Odd.AdbaseModel.Street" Role="Street" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Street">
+        <PropertyRef Name="City_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Segment_Street">
+    <End Type="Odd.AdbaseModel.Street" Role="Street" Multiplicity="1" />
+    <End Type="Odd.AdbaseModel.Segment" Role="Segment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Street">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Segment">
+        <PropertyRef Name="Street_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="IntelliSenseStreet">
+    <Key>
+      <PropertyRef Name="id" />
+      <PropertyRef Name="Street" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="Street" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+</Schema>

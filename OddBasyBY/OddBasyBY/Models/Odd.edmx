@@ -1,0 +1,285 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Odd.AdbaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'D:\PROJECT\ODDBASYBY\ODDBASYBY\APP_DATA\ODD.ADBASE.MDF.dbo.IntelliSenseStreet' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="IntelliSenseStreet">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="Street" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="Street" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Segment">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="int" Nullable="false" />
+          <Property Name="BreadthS" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="LengthS" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="BreadthE" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="LengthE" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Street_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Street">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="BreadthS" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="LengthS" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="BreadthE" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="LengthE" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="City_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_Segment_Street">
+          <End Role="Street" Type="Self.Street" Multiplicity="1" />
+          <End Role="Segment" Type="Self.Segment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Street">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Segment">
+              <PropertyRef Name="Street_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Street_City">
+          <End Role="City" Type="Self.City" Multiplicity="1" />
+          <End Role="Street" Type="Self.Street" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Street">
+              <PropertyRef Name="City_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="OddAdbaseModelStoreContainer">
+          <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Segment" EntityType="Self.Segment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Street" EntityType="Self.Street" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IntelliSenseStreet" EntityType="Self.IntelliSenseStreet" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [IntelliSenseStreet].[id] AS [id], 
+    [IntelliSenseStreet].[Street] AS [Street], 
+    [IntelliSenseStreet].[Type] AS [Type]
+    FROM [dbo].[IntelliSenseStreet] AS [IntelliSenseStreet]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Segment_Street" Association="Self.FK_Segment_Street">
+            <End Role="Street" EntitySet="Street" />
+            <End Role="Segment" EntitySet="Segment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Street_City" Association="Self.FK_Street_City">
+            <End Role="City" EntitySet="City" />
+            <End Role="Street" EntitySet="Street" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Odd.AdbaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="OddAdbaseEntity" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="sysdiagrams" EntityType="Odd.AdbaseModel.sysdiagrams" />
+          <EntitySet Name="City" EntityType="Odd.AdbaseModel.City" />
+          <EntitySet Name="Segment" EntityType="Odd.AdbaseModel.Segment" />
+          <EntitySet Name="Street" EntityType="Odd.AdbaseModel.Street" />
+          <AssociationSet Name="FK_Street_City" Association="Odd.AdbaseModel.FK_Street_City">
+            <End Role="City" EntitySet="City" />
+            <End Role="Street" EntitySet="Street" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Segment_Street" Association="Odd.AdbaseModel.FK_Segment_Street">
+            <End Role="Street" EntitySet="Street" />
+            <End Role="Segment" EntitySet="Segment" />
+          </AssociationSet>
+          <EntitySet Name="IntelliSenseStreet" EntityType="Odd.AdbaseModel.IntelliSenseStreet" />
+          </EntityContainer>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Street" Relationship="Odd.AdbaseModel.FK_Street_City" FromRole="City" ToRole="Street" />
+        </EntityType>
+        <EntityType Name="Segment">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="Int32" Nullable="false" />
+          <Property Name="BreadthS" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LengthS" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="BreadthE" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LengthE" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Street_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Street" Relationship="Odd.AdbaseModel.FK_Segment_Street" FromRole="Segment" ToRole="Street" />
+        </EntityType>
+        <EntityType Name="Street">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="BreadthS" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LengthS" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="BreadthE" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LengthE" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="City_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="City" Relationship="Odd.AdbaseModel.FK_Street_City" FromRole="Street" ToRole="City" />
+          <NavigationProperty Name="Segment" Relationship="Odd.AdbaseModel.FK_Segment_Street" FromRole="Street" ToRole="Segment" />
+        </EntityType>
+        <Association Name="FK_Street_City">
+          <End Type="Odd.AdbaseModel.City" Role="City" Multiplicity="1" />
+          <End Type="Odd.AdbaseModel.Street" Role="Street" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Street">
+              <PropertyRef Name="City_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Segment_Street">
+          <End Type="Odd.AdbaseModel.Street" Role="Street" Multiplicity="1" />
+          <End Type="Odd.AdbaseModel.Segment" Role="Segment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Street">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Segment">
+              <PropertyRef Name="Street_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="IntelliSenseStreet">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="Street" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="Street" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="OddAdbaseModelStoreContainer" CdmEntityContainer="OddAdbaseEntity">
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="Odd.AdbaseModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="City">
+            <EntityTypeMapping TypeName="Odd.AdbaseModel.City">
+              <MappingFragment StoreEntitySet="City">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Segment">
+            <EntityTypeMapping TypeName="Odd.AdbaseModel.Segment">
+              <MappingFragment StoreEntitySet="Segment">
+                <ScalarProperty Name="Street_id" ColumnName="Street_id" />
+                <ScalarProperty Name="LengthE" ColumnName="LengthE" />
+                <ScalarProperty Name="BreadthE" ColumnName="BreadthE" />
+                <ScalarProperty Name="LengthS" ColumnName="LengthS" />
+                <ScalarProperty Name="BreadthS" ColumnName="BreadthS" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Street">
+            <EntityTypeMapping TypeName="Odd.AdbaseModel.Street">
+              <MappingFragment StoreEntitySet="Street">
+                <ScalarProperty Name="City_id" ColumnName="City_id" />
+                <ScalarProperty Name="LengthE" ColumnName="LengthE" />
+                <ScalarProperty Name="BreadthE" ColumnName="BreadthE" />
+                <ScalarProperty Name="LengthS" ColumnName="LengthS" />
+                <ScalarProperty Name="BreadthS" ColumnName="BreadthS" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IntelliSenseStreet">
+            <EntityTypeMapping TypeName="Odd.AdbaseModel.IntelliSenseStreet">
+              <MappingFragment StoreEntitySet="IntelliSenseStreet">
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
